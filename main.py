@@ -63,7 +63,7 @@ async def on_message(message):
   test=await client.get_context(message)
   if (test.valid) == False:
     pass
-  #print(test.prefix)
+  print(test.prefix)
   
   await client.process_commands(message)
 
