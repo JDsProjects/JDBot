@@ -77,7 +77,7 @@ async def say(ctx,*,args=None):
 
 @client.command(help="a command that gives information on users",brief="this can work with mentions, ids, usernames, and even full names.")
 async def userinfo(ctx,*,user: BetterUserconverter = None):
-  if not user:
+  if user is None:
     user = ctx.author
 
   if user.bot:
