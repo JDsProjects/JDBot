@@ -25,7 +25,7 @@ class BetterUserconverter(commands.Converter):
       user=await commands.UserConverter().convert(ctx,argument)
     except commands.UserNotFound:
       user = None
-    if not user:
+    if not user and ctx.guild:
       user=ctx.guild.get_member_named(argument)
     if user == None:
       match = re.compile(r'([0-9]{15,21})$').match(argument) or re.match(r'<@!?([0-9]+)>$', argument)
@@ -85,22 +85,33 @@ async def userinfo(ctx,*,user: BetterUserconverter = None):
   if not user.bot:
     user_type = "User"
   
-  member_version=ctx.guild.get_member(user.id)
-  if member_version:
-    nickname = str(member_version.nick)
-    joined_guild = member_version.joined_at.strftime('%m/%d/%Y %H:%M:%S')
-    status = str(member_version.status).upper()
-    highest_role = member_version.roles[-1]
-  if not member_version:
-    nickname = str(member_version)
-    joined_guild = "N/A"
-    status = "Unknown"
-    for guild in client.guilds:
-      member=guild.get_member(user.id)
-      if member:
-        status=str(member.status).upper()
-        break
-    highest_role = "None Found"
+  if ctx.guild:
+    member_version=ctx.guild.get_member(user.id)
+    if member_version:
+      nickname = str(member_version.nick)
+      joined_guild = member_version.joined_at.strftime('%m/%d/%Y %H:%M:%S')
+      status = str(member_version.status).upper()
+      highest_role = member_version.roles[-1]
+    if not member_version:
+      nickname = str(member_version)
+      joined_guild = "N/A"
+      status = "Unknown"
+      for guild in client.guilds:
+        member=guild.get_member(user.id)
+        if member:
+          status=str(member.status).upper()
+          break
+      highest_role = "None Found"
+  if not ctx.guild:
+      nickname = "None"
+      joined_guild = "N/A"
+      status = "Unknown"
+      for guild in client.guilds:
+        member=guild.get_member(user.id)
+        if member:
+          status=str(member.status).upper()
+          break
+      highest_role = "None Found"
   
   guilds_list=[guild for guild in client.guilds if guild.get_member(user.id)]
   if not guilds_list:
