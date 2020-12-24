@@ -13,6 +13,20 @@ import re
 import asyncio
 #import typing
 import random
+import datetime
+
+
+async def status_task():
+  while True:
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="JDBot has returned"))
+    await asyncio.sleep(40)
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="New updates coming soon.."))
+    await asyncio.sleep(40)
+
+async def startup():
+  await client.wait_until_ready()
+  #client.lavalink=await asyncio.create_subprocess_shell('java -jar Lavalink.jar')
+  await status_task()
 
 logging.basicConfig(level=logging.WARNING)
 ratelimit_detection=logging.Filter(name='WARNING:discord.http:We are being rate limited.')
@@ -75,6 +89,49 @@ async def say(ctx,*,args=None):
   if args:
     await ctx.send(args)
 
+@client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
+async def mchistory(ctx,*,args=None):
+  if not args:
+    await ctx.send("Please pick a minecraft user.")
+  if args:
+    async with aiohttp.ClientSession() as cs:
+      async with cs.get(f'https://api.mojang.com/users/profiles/minecraft/{args}') as r:
+        if r.status == 200:
+          user_dict=await r.json()
+          minecraft_uuid=user_dict["id"]
+          async with aiohttp.ClientSession() as cs:
+            async with cs.get(f"https://api.mojang.com/user/profiles/{minecraft_uuid}/names") as r:
+              if r.status == 200:
+                user_history=await r.json()
+
+                y = 0
+                for x in user_history:
+                  if y == 0:
+                    minecraft_username = x["name"]
+                    embed=discord.Embed(title=f"Minecraft Username: {args}",color=random.randint(0, 16777215))
+                    embed.set_footer(text=f"Minecraft UUID: {minecraft_uuid}")
+                    embed.add_field(name="Orginal Name:",value=minecraft_username)
+
+                  if y > 0:
+                    username = (x["name"])
+                    date_changed=datetime.datetime.utcfromtimestamp(int(x["changedToAt"])/1000).strftime("%m/%d/%Y")
+                    time_changed=datetime.datetime.utcfromtimestamp(int(x["changedToAt"])/1000).strftime("%H:%M:%S")
+                    embed.add_field(name=f"Username:\n{username}",value=f"Date Changed:\n{date_changed}\n  \nTime Changed: \n {time_changed}")
+
+                  y = y + 1
+                
+                embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
+                await ctx.send(embed=embed)
+
+              if r.status == 500:
+                await ctx.send("Internal server error occured at Mojang. We're sorry :( ")
+
+
+          
+        if not r.status == 200:
+          await ctx.send("It doesn't like it didn't find the user.")
+          
+
 @client.command(help="a command that gives information on users",brief="this can work with mentions, ids, usernames, and even full names.")
 async def userinfo(ctx,*,user: BetterUserconverter = None):
   if user is None:
@@ -125,7 +182,6 @@ async def userinfo(ctx,*,user: BetterUserconverter = None):
       guild_list = guild_list + f", {g.name}"
     x = x + 1
 
-
   embed=discord.Embed(title=f"{user}",description=f"Type: {user_type}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
   embed.add_field(name="Username: ", value = user.name)
   embed.add_field(name="Discriminator:",value=user.discriminator)
@@ -166,4 +222,6 @@ async def on_message(message):
 
 B.b()
 
+
+client.loop.create_task(startup())
 client.run(os.environ["classic_token"])
