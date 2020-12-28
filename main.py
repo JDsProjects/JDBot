@@ -131,6 +131,19 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
       embed.set_footer(text="powered using the asuna.ga api")
       await ctx.send(content=target.mention,embed=embed) 
 
+@client.command(help="a command to look up foxes",brief="this known as wholesome fox to the asuna api")
+async def fox2(ctx):
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get('https://asuna.ga/api/wholesome_foxes/') as anime:
+        res = await anime.json()
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{ctx.author} requested a wholesome fox picture",icon_url=(ctx.author.avatar_url))
+      embed.set_image(url=res["url"])
+      embed.set_footer(text="powered using the asuna.ga api")
+      await ctx.send(embed=embed)
+  
+  
+
 
 @client.command(help="another command to give you pat gifs",brief="powered using the asuna api")
 async def pat2(ctx,*, Member: BetterMemberConverter= None):
@@ -260,6 +273,52 @@ async def neko(ctx):
       embed.set_image(url=res["url"])
       embed.set_footer(text="powered using the asuna.ga api")
       await ctx.send(embed=embed)
+
+@client.command(help="a command to send wink gifs",brief="you select a user to send it to and it will send it to you lol")
+async def wink(ctx,*, Member: BetterMemberConverter=None):
+  if Member is None:
+    Member = ctx.author
+    
+  if Member.id == ctx.author.id:
+    person = client.user
+    target = ctx.author
+  
+  if Member.id != ctx.author.id:
+    person = ctx.author
+    target = Member
+  
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get("https://some-random-api.ml/animu/wink") as anime:
+      res = await anime.json()
+
+    embed=discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"{person} winked at you",icon_url=(person.avatar_url))
+    embed.set_image(url=res["link"])
+    embed.set_footer(text="powered by some random api")
+    await ctx.send(content=target.mention,embed=embed)
+
+@client.command(help="a command to send facepalm gifs",brief="using some random api it sends you a facepalm gif lol")
+async def facepalm(ctx,*, Member: BetterMemberConverter=None):
+  if Member is None:
+    Member = ctx.author
+    
+  if Member.id == ctx.author.id:
+    person = client.user
+    target = ctx.author
+  
+  if Member.id != ctx.author.id:
+    person = ctx.author
+    target = Member
+  
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get("https://some-random-api.ml/animu/face-palm") as anime:
+        res = await anime.json()
+
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{target} you made {person} facepalm",icon_url=(person.avatar_url))
+      embed.set_image(url=res["link"])
+      embed.set_footer(text="powered by some random api")
+      await ctx.send(content=target.mention,embed=embed)
 
 
 @client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
