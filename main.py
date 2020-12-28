@@ -11,10 +11,7 @@ import aiohttp
 import typing
 import re
 import asyncio
-#import typing
-import random
 import datetime
-
 
 async def status_task():
   while True:
@@ -32,6 +29,24 @@ logging.basicConfig(level=logging.WARNING)
 ratelimit_detection=logging.Filter(name='WARNING:discord.http:We are being rate limited.')
 
 client = ClientConfig.client
+
+class BetterMemberConverter(commands.Converter):
+  async def convert(self,ctx,argument):
+    try:
+      user = await commands.MemberConverter().convert(ctx,argument)
+    except commands.MemberNotFound:
+      user = None
+
+    if user == None:
+      tag = re.match(r"#?(\d{4})",argument)
+      if tag:
+        test=discord.utils.get(ctx.guild.members, discriminator = tag.group(1))
+        if test:
+          user = test
+        if not test:
+          user=ctx.author
+    return user
+
 
 class BetterUserconverter(commands.Converter):
   async def convert(self, ctx, argument):
@@ -69,6 +84,9 @@ class BetterUserconverter(commands.Converter):
           user=ctx.author
     return user
 
+    
+  
+
 @client.command()
 async def ping(ctx):
   await ctx.send("Pong")
@@ -88,6 +106,54 @@ async def on_ready():
 async def say(ctx,*,args=None):
   if args:
     await ctx.send(args)
+
+
+
+
+@client.command(help="a hug command to hug people",brief="this the first command to hug.")
+async def hug(ctx,*, Member: BetterMemberConverter=None):
+  if Member is None:
+    Member = ctx.author
+    
+  if Member.id == ctx.author.id:
+    person = client.user
+    target = ctx.author
+  
+  if Member.id != ctx.author.id:
+    person = ctx.author
+    target = Member
+  
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get("https://some-random-api.ml/animu/hug") as anime:
+        res = await anime.json()
+
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
+      embed.set_image(url=res["link"])
+      await ctx.send(content=target.mention,embed=embed) 
+
+
+@client.command(help="a hug command to hug people",brief="this actually the second hug command and is quite powerful.")
+async def hug2(ctx,*, Member: BetterMemberConverter=None):
+  if Member is None:
+    Member = ctx.author
+    
+  if Member.id == ctx.author.id:
+    person = client.user
+    target = ctx.author
+  
+  if Member.id != ctx.author.id:
+    person = ctx.author
+    target = Member
+  
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get("https://asuna.ga/api/hug/") as anime:
+        res = await anime.json()
+
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
+      embed.set_image(url=res["url"])
+      await ctx.send(content=target.mention,embed=embed) 
 
 @client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
 async def mchistory(ctx,*,args=None):
@@ -125,9 +191,7 @@ async def mchistory(ctx,*,args=None):
 
               if r.status == 500:
                 await ctx.send("Internal server error occured at Mojang. We're sorry :( ")
-
-
-          
+                     
         if not r.status == 200:
           await ctx.send("It doesn't like it didn't find the user.")
           
