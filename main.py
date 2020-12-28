@@ -107,8 +107,7 @@ async def say(ctx,*,args=None):
   if args:
     await ctx.send(args)
 
-
-
+  
 
 @client.command(help="a hug command to hug people",brief="this the first command to hug.")
 async def hug(ctx,*, Member: BetterMemberConverter=None):
