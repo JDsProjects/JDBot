@@ -108,6 +108,54 @@ async def say(ctx,*,args=None):
     await ctx.send(args)
 
 
+@client.command(help= "a command to slap someone",brief="this sends slap gifs to the target user")
+async def slap(ctx,*, Member: BetterMemberConverter = None):
+  if Member is None:
+    Member = ctx.author
+    
+  if Member.id == ctx.author.id:
+    person = client.user
+    target = ctx.author
+  
+  if Member.id != ctx.author.id:
+    person = ctx.author
+    target = Member
+  
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get("https://asuna.ga/api/slap/") as anime:
+        res = await anime.json()
+
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{person} slapped you",icon_url=(person.avatar_url))
+      embed.set_image(url=res["url"])
+      embed.set_footer(text="powered using the asuna.ga api")
+      await ctx.send(content=target.mention,embed=embed) 
+
+
+@client.command(help="another command to give you pat gifs",brief="powered using the asuna api")
+async def pat2(ctx,*, Member: BetterMemberConverter= None):
+  if Member is None:
+    Member = ctx.author
+    
+  if Member.id == ctx.author.id:
+    person = client.user
+    target = ctx.author
+  
+  if Member.id != ctx.author.id:
+    person = ctx.author
+    target = Member
+  
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get("https://asuna.ga/api/pat/") as anime:
+        res = await anime.json()
+
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
+      embed.set_image(url=res["url"])
+      embed.set_footer(text="powered using the asuna.ga api")
+      await ctx.send(content=target.mention,embed=embed) 
+
+
 @client.command(help="a command to give you pat gifs",brief="using the sra api it gives you pat gifs")
 async def pat(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
@@ -122,12 +170,13 @@ async def pat(ctx,*, Member: BetterMemberConverter=None):
     target = Member
   
   async with aiohttp.ClientSession() as cs:
-      async with cs.get("https://some-random-api.ml/animu/hug") as anime:
+      async with cs.get("https://some-random-api.ml/animu/pat") as anime:
         res = await anime.json()
 
       embed=discord.Embed(color=random.randint(0, 16777215))
       embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
       embed.set_image(url=res["link"])
+      embed.set_footer(text="powered by some random api")
       await ctx.send(content=target.mention,embed=embed) 
   
 
@@ -151,6 +200,7 @@ async def hug(ctx,*, Member: BetterMemberConverter=None):
       embed=discord.Embed(color=random.randint(0, 16777215))
       embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
       embed.set_image(url=res["link"])
+      embed.set_footer(text="powered by some random api")
       await ctx.send(content=target.mention,embed=embed) 
 
 
@@ -174,7 +224,43 @@ async def hug2(ctx,*, Member: BetterMemberConverter=None):
       embed=discord.Embed(color=random.randint(0, 16777215))
       embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
       embed.set_image(url=res["url"])
+      embed.set_footer(text="powered using the asuna.ga api")
       await ctx.send(content=target.mention,embed=embed) 
+
+@client.command(help="a kiss command",brief="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)")
+async def kiss(ctx,*, Member: BetterMemberConverter=None):
+  if Member is None:
+    Member = ctx.author
+    
+  if Member.id == ctx.author.id:
+    person = client.user
+    target = ctx.author
+  
+  if Member.id != ctx.author.id:
+    person = ctx.author
+    target = Member
+  
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get("https://asuna.ga/api/kiss/") as anime:
+        res = await anime.json()
+        
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{person} kissed you",icon_url=(person.avatar_url))
+      embed.set_image(url=res["url"])
+      embed.set_footer(text="Why did I make this command? powered using the asuna.ga api")
+      await ctx.send(content=target.mention,embed=embed) 
+
+@client.command(help="a command to get a neko",brief="using the asuna.ga api you will get these images")
+async def neko(ctx):
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get('https://asuna.ga/api/neko') as anime:
+        res = await anime.json()
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{ctx.author} requested a neko picture",icon_url=(ctx.author.avatar_url))
+      embed.set_image(url=res["url"])
+      embed.set_footer(text="powered using the asuna.ga api")
+      await ctx.send(embed=embed)
+
 
 @client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
 async def mchistory(ctx,*,args=None):
@@ -280,6 +366,7 @@ async def userinfo(ctx,*,user: BetterUserconverter = None):
   embed.set_image(url=user.avatar_url)
   await ctx.send(embed=embed)
 
+
 @client.event
 async def on_message(message):
   if isinstance(message.channel, discord.DMChannel):
@@ -304,6 +391,7 @@ async def on_message(message):
         await client.get_channel(738912143679946783).send(embed=embed_message)
   
   await client.process_commands(message) 
+
 
 B.b()
 
