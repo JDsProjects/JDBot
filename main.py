@@ -12,6 +12,7 @@ import typing
 import re
 import asyncio
 import datetime
+from io import BytesIO
 
 async def status_task():
   while True:
@@ -84,8 +85,17 @@ class BetterUserconverter(commands.Converter):
           user=ctx.author
     return user
 
-    
-  
+async def triggered_converter(url,ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get(f"https://some-random-api.ml/canvas/triggered?avatar={url}") as anime:
+      image= BytesIO(await anime.read())
+    file=discord.File(image, "triggered.gif")
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
+    embed.set_image(url="attachment://triggered.gif")
+    embed.set_footer(text="powered by some random api")
+    return file,embed 
+
 
 @client.command()
 async def ping(ctx):
@@ -107,6 +117,23 @@ async def say(ctx,*,args=None):
   if args:
     await ctx.send(args)
 
+@client.command()
+async def triggered(ctx):
+  y = 0
+  if len(ctx.message.attachments) > 0:
+    for x in ctx.message.attachments:
+      if x.filename.endswith(".png"):
+        url = x.url
+        file,embed = await triggered_converter(url,ctx)
+        await ctx.send(file=file,embed=embed)
+        y = y + 1
+      if not x.filename.endswith(".png"):
+        pass
+
+  if len(ctx.message.attachments) == 0 or y == 0:
+    url = ctx.author.avatar_url_as(format="png")
+    file,embed = await triggered_converter(url,ctx)
+    await ctx.send(file=file,embed=embed)
 
 @client.command(help= "a command to slap someone",brief="this sends slap gifs to the target user")
 async def slap(ctx,*, Member: BetterMemberConverter = None):
@@ -141,9 +168,6 @@ async def fox2(ctx):
       embed.set_image(url=res["url"])
       embed.set_footer(text="powered using the asuna.ga api")
       await ctx.send(embed=embed)
-  
-  
-
 
 @client.command(help="another command to give you pat gifs",brief="powered using the asuna api")
 async def pat2(ctx,*, Member: BetterMemberConverter= None):
