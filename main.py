@@ -107,6 +107,28 @@ async def say(ctx,*,args=None):
   if args:
     await ctx.send(args)
 
+
+@client.command(help="a command to give you pat gifs",brief="using the sra api it gives you pat gifs")
+async def pat(ctx,*, Member: BetterMemberConverter=None):
+  if Member is None:
+    Member = ctx.author
+    
+  if Member.id == ctx.author.id:
+    person = client.user
+    target = ctx.author
+  
+  if Member.id != ctx.author.id:
+    person = ctx.author
+    target = Member
+  
+  async with aiohttp.ClientSession() as cs:
+      async with cs.get("https://some-random-api.ml/animu/hug") as anime:
+        res = await anime.json()
+
+      embed=discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
+      embed.set_image(url=res["link"])
+      await ctx.send(content=target.mention,embed=embed) 
   
 
 @client.command(help="a hug command to hug people",brief="this the first command to hug.")
