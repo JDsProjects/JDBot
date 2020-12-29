@@ -94,8 +94,7 @@ async def triggered_converter(url,ctx):
     embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
     embed.set_image(url="attachment://triggered.gif")
     embed.set_footer(text="powered by some random api")
-    return file,embed 
-
+    await ctx.send(file=file,embed=embed)
 
 @client.command()
 async def ping(ctx):
@@ -124,16 +123,14 @@ async def triggered(ctx):
     for x in ctx.message.attachments:
       if x.filename.endswith(".png"):
         url = x.url
-        file,embed = await triggered_converter(url,ctx)
-        await ctx.send(file=file,embed=embed)
+        await triggered_converter(url,ctx)
         y = y + 1
       if not x.filename.endswith(".png"):
         pass
 
   if len(ctx.message.attachments) == 0 or y == 0:
     url = ctx.author.avatar_url_as(format="png")
-    file,embed = await triggered_converter(url,ctx)
-    await ctx.send(file=file,embed=embed)
+    await triggered_converter(url,ctx)
 
 @client.command(help= "a command to slap someone",brief="this sends slap gifs to the target user")
 async def slap(ctx,*, Member: BetterMemberConverter = None):
@@ -384,7 +381,23 @@ async def mchistory(ctx,*,args=None):
                      
         if not r.status == 200:
           await ctx.send("It doesn't like it didn't find the user.")
-          
+
+@client.command(help="a command to get the avatar of a user",brief="using the userinfo technology it now powers avatar grabbing.")
+async def avatar(ctx,*,user: BetterUserconverter = None): 
+  if user is None:
+    user = ctx.author
+  embed = discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{user.name}'s avatar:",icon_url=(user.avatar_url))
+  embed.set_image(url=(user.avatar_url))
+  embed.set_footer(text=f"Requested by {ctx.author}")
+  await ctx.send(embed=embed)
+
+@client.command(help="gives you the milkman gif",brief="you summoned the milkman oh no")
+async def milk(ctx):
+  embed = discord.Embed(title="You have summoned the milkman",color=random.randint(0, 16777215))
+  embed.set_image(url="https://i.imgur.com/JdyaI1Y.gif")
+  embed.set_footer(text="his milk is delicious")
+  await ctx.send(embed=embed)
 
 @client.command(help="a command that gives information on users",brief="this can work with mentions, ids, usernames, and even full names.")
 async def userinfo(ctx,*,user: BetterUserconverter = None):
@@ -457,7 +470,7 @@ async def on_message(message):
     embed_message = discord.Embed(title=message.content, description=time_used, color=random.randint(0, 16777215))
     embed_message.set_author(name=f"Direct Message From {message.author}:",icon_url=(message.author.avatar_url))
     embed_message.set_footer(text = f"{message.author.id}")
-    embed_message.set_thumbnail(url = "https://media.discordapp.net/attachments/556242984241201167/763866804359135292/inbox.png?width=677&height=677")
+    embed_message.set_thumbnail(url = "https://i.imgur.com/ugKZ7lW.png")
     channel_usage=client.get_channel(738912143679946783)
     embed_message.add_field(name="Sent To:",value=str(channel_usage))
     await channel_usage.send(embed=embed_message)
@@ -470,14 +483,13 @@ async def on_message(message):
         embed_message = discord.Embed(title=f" {message.content}", description=time_used,color=random.randint(0, 16777215))
         embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar_url))
         embed_message.set_footer(text = f"{message.author.id}")
-        embed_message.set_thumbnail(url="https://media.discordapp.net/attachments/738912143679946783/763873708908478474/Warning.png")
+        embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
         await client.get_channel(738912143679946783).send(embed=embed_message)
   
   await client.process_commands(message) 
 
 
 B.b()
-
 
 client.loop.create_task(startup())
 client.run(os.environ["classic_token"])
