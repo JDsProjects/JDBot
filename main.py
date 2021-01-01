@@ -13,6 +13,9 @@ import re
 import asyncio
 import datetime
 from io import BytesIO
+import DatabaseConfig
+import DatabaseControl
+import money_system
 
 async def status_task():
   while True:
@@ -41,13 +44,21 @@ class BetterMemberConverter(commands.Converter):
     if user == None:
       tag = re.match(r"#?(\d{4})",argument)
       if tag:
-        test=discord.utils.get(ctx.guild.members, discriminator = tag.group(1))
-        if test:
-          user = test
-        if not test:
-          user=ctx.author
+        if ctx.guild:
+          test=discord.utils.get(ctx.guild.members, discriminator = tag.group(1))
+          if test:
+            user = test
+          if not test:
+            user=ctx.author
+        if ctx.guild is None:
+          user = await BetterUserconverter().convert(ctx,argument)
+          if user:
+            user = client.get_user(user.id)
+          if user is None:
+            user = ctx.author
+            
+          
     return user
-
 
 class BetterUserconverter(commands.Converter):
   async def convert(self, ctx, argument):
@@ -153,7 +164,19 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
       embed.set_author(name=f"{person} slapped you",icon_url=(person.avatar_url))
       embed.set_image(url=res["url"])
       embed.set_footer(text="powered using the asuna.ga api")
-      await ctx.send(content=target.mention,embed=embed) 
+
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send(content=target.mention,embed=embed) 
+
+      if isinstance(ctx.channel,discord.DMChannel):
+        if target.dm_channel is None:
+          await target.create_dm()
+        
+        try:
+          await target.send(content=target.mention,embed=embed)
+        except discord.Forbidden:
+          await ctx.author.send("Failed Dming them...")
+
 
 @client.command(help="a command to look up foxes",brief="this known as wholesome fox to the asuna api")
 async def fox2(ctx):
@@ -187,7 +210,18 @@ async def pat2(ctx,*, Member: BetterMemberConverter= None):
       embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
       embed.set_image(url=res["url"])
       embed.set_footer(text="powered using the asuna.ga api")
-      await ctx.send(content=target.mention,embed=embed) 
+      
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send(content=target.mention,embed=embed) 
+
+      if isinstance(ctx.channel,discord.DMChannel):
+        if target.dm_channel is None:
+          await target.create_dm()
+        
+        try:
+          await target.send(content=target.mention,embed=embed)
+        except discord.Forbidden:
+          await ctx.author.send("Failed Dming them...")
 
 
 @client.command(help="a command to give you pat gifs",brief="using the sra api it gives you pat gifs")
@@ -211,7 +245,18 @@ async def pat(ctx,*, Member: BetterMemberConverter=None):
       embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
       embed.set_image(url=res["link"])
       embed.set_footer(text="powered by some random api")
-      await ctx.send(content=target.mention,embed=embed) 
+      
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send(content=target.mention,embed=embed) 
+
+      if isinstance(ctx.channel,discord.DMChannel):
+        if target.dm_channel is None:
+          await target.create_dm()
+        
+        try:
+          await target.send(content=target.mention,embed=embed)
+        except discord.Forbidden:
+          await ctx.author.send("Failed Dming them...")
   
 
 @client.command(help="a hug command to hug people",brief="this the first command to hug.")
@@ -235,7 +280,18 @@ async def hug(ctx,*, Member: BetterMemberConverter=None):
       embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
       embed.set_image(url=res["link"])
       embed.set_footer(text="powered by some random api")
-      await ctx.send(content=target.mention,embed=embed) 
+      
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send(content=target.mention,embed=embed) 
+
+      if isinstance(ctx.channel,discord.DMChannel):
+        if target.dm_channel is None:
+          await target.create_dm()
+        
+        try:
+          await target.send(content=target.mention,embed=embed)
+        except discord.Forbidden:
+          await ctx.author.send("Failed Dming them...")
 
 
 @client.command(help="a hug command to hug people",brief="this actually the second hug command and is quite powerful.")
@@ -259,7 +315,68 @@ async def hug2(ctx,*, Member: BetterMemberConverter=None):
       embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
       embed.set_image(url=res["url"])
       embed.set_footer(text="powered using the asuna.ga api")
-      await ctx.send(content=target.mention,embed=embed) 
+      
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send(content=target.mention,embed=embed) 
+
+      if isinstance(ctx.channel,discord.DMChannel):
+        if target.dm_channel is None:
+          await target.create_dm()
+        
+        try:
+          await target.send(content=target.mention,embed=embed)
+        except discord.Forbidden:
+          await ctx.author.send("Failed Dming them...")
+
+def warn_permission(ctx):
+  if isinstance(ctx.channel, discord.TextChannel):
+    return ctx.author.guild_permissions.administrator
+
+  if isinstance(ctx.channel,discord.DMChannel):
+    return True
+
+@client.command()
+async def spam(ctx):
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_image(url="https://i.imgur.com/1LckTTu.gif")
+  await ctx.send(content="I hate spam",embed=embed)
+
+@client.command()
+async def warn(ctx,Member: BetterMemberConverter = None):
+  if warn_permission(ctx):
+
+    if Member is None:
+      Member = ctx.author
+
+    if Member:
+      embed = discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"You have been warned by {ctx.author}",icon_url=("https://i.imgur.com/vkleJ9a.png"))
+      embed.set_image(url="https://i.imgur.com/jDLcaYc.gif")
+      embed.set_footer(text = f"ID: {ctx.author.id}")
+
+      if Member.dm_channel is None:
+        await Member.create_dm()
+      
+      try:
+        await Member.send(embed=embed)
+
+      except discord.Forbidden:
+        await ctx.send("they don't seem like a valid user.")
+    
+    embed.set_footer(text = f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}")
+    await client.get_channel(738912143679946783).send(embed=embed) 
+
+    if (ctx.author.dm_channel is None):
+      await ctx.author.create_dm()
+
+    try:
+      await ctx.author.send(content=f"Why did you warn {Member}?")
+    except discord.Forbidden:
+      await ctx.send("we can't DM them :(")
+
+  if warn_permission(ctx) is False:
+    await ctx.send("You don't have permission to use that.")
+
 
 @client.command(help="a kiss command",brief="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)")
 async def kiss(ctx,*, Member: BetterMemberConverter=None):
@@ -282,7 +399,18 @@ async def kiss(ctx,*, Member: BetterMemberConverter=None):
       embed.set_author(name=f"{person} kissed you",icon_url=(person.avatar_url))
       embed.set_image(url=res["url"])
       embed.set_footer(text="Why did I make this command? powered using the asuna.ga api")
-      await ctx.send(content=target.mention,embed=embed) 
+      
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send(content=target.mention,embed=embed) 
+
+      if isinstance(ctx.channel,discord.DMChannel):
+        if target.dm_channel is None:
+          await target.create_dm()
+        
+        try:
+          await target.send(content=target.mention,embed=embed)
+        except discord.Forbidden:
+          await ctx.author.send("Failed Dming them...")
 
 @client.command(help="a command to get a neko",brief="using the asuna.ga api you will get these images")
 async def neko(ctx):
@@ -294,6 +422,18 @@ async def neko(ctx):
       embed.set_image(url=res["url"])
       embed.set_footer(text="powered using the asuna.ga api")
       await ctx.send(embed=embed)
+
+@client.command()
+async def work(ctx,*,args=None):
+  Member = ctx.author.id
+  if args is None:
+    money_system.add_money(Member,10,0)
+
+@client.command(help="a command to send how much money you have",brief="using the JDBot database you can see how much money you have")
+async def balance(ctx,*, Member: BetterMemberConverter=None):
+  if Member is None:
+    Member = ctx.author
+  money_system.display_account(Member.id)
 
 @client.command(help="a command to send wink gifs",brief="you select a user to send it to and it will send it to you lol")
 async def wink(ctx,*, Member: BetterMemberConverter=None):
@@ -316,7 +456,18 @@ async def wink(ctx,*, Member: BetterMemberConverter=None):
     embed.set_author(name=f"{person} winked at you",icon_url=(person.avatar_url))
     embed.set_image(url=res["link"])
     embed.set_footer(text="powered by some random api")
-    await ctx.send(content=target.mention,embed=embed)
+   
+    if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send(content=target.mention,embed=embed) 
+
+    if isinstance(ctx.channel,discord.DMChannel):
+      if target.dm_channel is None:
+        await target.create_dm()
+      
+      try:
+        await target.send(content=target.mention,embed=embed)
+      except discord.Forbidden:
+        await ctx.author.send("Failed Dming them...")
 
 @client.command(help="a command to send facepalm gifs",brief="using some random api it sends you a facepalm gif lol")
 async def facepalm(ctx,*, Member: BetterMemberConverter=None):
@@ -339,8 +490,122 @@ async def facepalm(ctx,*, Member: BetterMemberConverter=None):
       embed.set_author(name=f"{target} you made {person} facepalm",icon_url=(person.avatar_url))
       embed.set_image(url=res["link"])
       embed.set_footer(text="powered by some random api")
-      await ctx.send(content=target.mention,embed=embed)
+     
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send(content=target.mention,embed=embed) 
 
+      if isinstance(ctx.channel,discord.DMChannel):
+        if target.dm_channel is None:
+          await target.create_dm()
+        
+        try:
+          await target.send(content=target.mention,embed=embed)
+        except discord.Forbidden:
+          await ctx.author.send("Failed Dming them...")
+
+@client.command()
+async def webhook_update(ctx,*,args=None):
+  if await client.is_owner(ctx.author):
+    if args:
+
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.message.delete()
+
+      async with aiohttp.ClientSession() as session:
+        webhook=discord.Webhook.from_url(os.environ["webhook1"], adapter=discord.AsyncWebhookAdapter(session))
+        embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
+        embed.add_field(name="Update Info:",value=args)
+        embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
+        embed.set_footer(text="JDJG's Updates")
+        await webhook.execute(embed=embed)
+      
+      async with aiohttp.ClientSession() as session:
+        webhook=discord.Webhook.from_url(os.environ["webhook99"], adapter=discord.AsyncWebhookAdapter(session))
+        embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
+        embed.add_field(name="Update Info:",value=args)
+        embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
+        embed.set_footer(text="JDJG's Updates")
+        await webhook.execute(embed=embed)
+    if args is None:
+      await ctx.send("You sadly can't use it like that.")
+  if await client.is_owner(ctx.author) is False:
+    await ctx.send("You can't use that")
+
+@client.command()
+async def webhook_create(ctx,arg=None,*,args=None):
+  if isinstance(ctx.channel, discord.TextChannel):
+    if ctx.author.guild_permissions.manage_webhooks:
+      if arg:
+        if args is None:
+          webhook=await ctx.channel.create_webhook(name=arg)
+          embed = discord.Embed(title=f"{ctx.author}'s message:",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+          embed.add_field(name="Content:",value="Test")
+        if args:
+          webhook=await ctx.channel.create_webhook(name=arg,reason=args)
+          embed = discord.Embed(title=f"{ctx.author}'s message:",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+          embed.add_field(name="Content:",value=args)
+
+        if len(ctx.message.attachments) > 0:
+          image=await ctx.message.attachments[0].read()
+          pass_test = True
+          try:
+            discord.utils._get_mime_type_for_image(image)
+          except discord.errors.InvalidArgument:
+            pass_test = False
+          
+          if pass_test:
+            await webhook.edit(avatar=image)
+          if pass_test is False:
+            await ctx.send("not a valid image")
+        
+        await webhook.execute(embed=embed)
+        
+        if (ctx.author.dm_channel is None):
+          await ctx.author.create_dm()
+
+        try:
+          await ctx.author.send("Webhook url coming up")
+          await ctx.author.send(webhook.url)
+        except discord.Forbidden:
+          await ctx.send(f"We couldn't DM you {ctx.author.mention}")
+          
+      if arg is None:
+        await ctx.send("You need to use values for it to work")
+    if ctx.author.guild_permissions.manage_webhooks is False:
+      await ctx.send("you can't use that.")
+      
+
+  if isinstance(ctx.channel, discord.DMChannel):
+    await ctx.send("You can't use that silly")
+
+@client.command()
+async def webhook(ctx,*,args=None):
+  if args is None:
+    await ctx.send("You didn't send anything")
+
+  if args:
+    check=re.match(r"https://discord(?:app)?.com/api/webhooks/(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})",args)
+    if check:
+      args = args.replace(f"{check.group()} ","")
+      if args == check.group():
+        args = "No Content"
+
+      async with aiohttp.ClientSession() as session:
+        async with session.get(check.group()) as response:
+          if response.status == 200:
+            webhook=discord.Webhook.from_url(check.group(), adapter=discord.AsyncWebhookAdapter(session))
+            
+            embed = discord.Embed(title=f"Webhook {webhook.name}'s Message",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+            embed.add_field(name="Content:",value=args)
+            await webhook.execute(embed=embed)
+
+          if response.status != 200:
+            await ctx.send("Not a valid link or an error occured")
+
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.message.delete()
+
+  
 
 @client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
 async def mchistory(ctx,*,args=None):
@@ -477,7 +742,7 @@ async def on_message(message):
   
   test=await client.get_context(message)
   if (test.valid) == False:
-    if test.prefix != None:
+    if test.prefix != None and not client.user.mentioned_in(message):
       if test.command == None:
         time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
         embed_message = discord.Embed(title=f" {message.content}", description=time_used,color=random.randint(0, 16777215))
@@ -487,6 +752,15 @@ async def on_message(message):
         await client.get_channel(738912143679946783).send(embed=embed_message)
   
   await client.process_commands(message) 
+
+@client.event
+async def on_error(event,*args,**kwargs):
+  import traceback
+  more_information=os.sys.exc_info()
+  error_wanted=traceback.format_exc()
+  traceback.print_exc()
+  
+  #print(more_information[0])
 
 
 B.b()
