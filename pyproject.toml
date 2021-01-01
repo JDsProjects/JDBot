@@ -7,10 +7,9 @@ authors = ["repl.it user <replituser@example.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 "discord.py" = {extras = ["voice"], version = "^1.5.1"}
-pymongo = "^3.11.2"
-bson = "^0.5.10"
 dnspython = "^2.0.0"
 flask = "^1.1.2"
+pymongo = "^3.11.2"
 
 [tool.poetry.dev-dependencies]
 
