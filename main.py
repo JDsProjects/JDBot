@@ -16,6 +16,8 @@ from io import BytesIO
 import DatabaseConfig
 import DatabaseControl
 import money_system
+import requests
+#import gTTS
 
 async def status_task():
   while True:
