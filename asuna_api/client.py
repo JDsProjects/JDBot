@@ -26,6 +26,5 @@ class Client:
     url = response.get("url")
     return Image(self._http_client, url)
 
-
   async def close(self):
     await self._http_client.close()
