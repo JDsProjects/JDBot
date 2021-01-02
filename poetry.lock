@@ -18,6 +18,21 @@ speedups = ["aiodns", "brotlipy", "cchardet"]
 
 [[package]]
 category = "main"
+description = "Fork of the official ImgurPython library rewritten with aiohttp"
+name = "aioimgur"
+optional = false
+python-versions = "*"
+version = "0.1.0"
+
+[package.dependencies]
+aiohttp = "*"
+
+[package.source]
+reference = "06a3c93ef5a4dff93cbad14922736b461c30ff14"
+type = "git"
+url = "https://github.com/hatarist/aioimgur"
+[[package]]
+category = "main"
 description = "Timeout context manager for asyncio programs"
 name = "async-timeout"
 optional = false
@@ -293,7 +308,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "389ec34a3bedd2cd1e94b73de8b0faa5a9dbd916a51dd2d0fb1bfff197feceec"
+content-hash = "bec111db3750dc9e69eb2f9832ee770bb5a820c414500c3ecddd4342cd3d54f9"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -312,6 +327,7 @@ aiohttp = [
     {file = "aiohttp-3.6.3-cp37-cp37m-win_amd64.whl", hash = "sha256:687461cd974722110d1763b45c5db4d2cdee8d50f57b00c43c7590d1dd77fc5c"},
     {file = "aiohttp-3.6.3.tar.gz", hash = "sha256:698cd7bc3c7d1b82bb728bae835724a486a8c376647aec336aa21a60113c3645"},
 ]
+aioimgur = []
 async-timeout = [
     {file = "async-timeout-3.0.1.tar.gz", hash = "sha256:0c3c816a028d47f659d6ff5c745cb2acf1f966da1fe5c19c77a70282b25f4c5f"},
     {file = "async_timeout-3.0.1-py3-none-any.whl", hash = "sha256:4291ca197d287d274d0b6cb5d6f8f8f82d434ed288f962539ff18cc9012f9ea3"},
