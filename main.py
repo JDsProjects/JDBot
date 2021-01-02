@@ -216,7 +216,11 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
     async with cs.get("https://asuna.ga/api/slap/") as anime:
       res = await anime.json()
 
-  
+  import asuna_api
+  asuna = asuna_api.client()
+  slap_url = await asuna.get_gif("slap")
+  print(slap_url)
+  await asuna.close()
 
   embed=discord.Embed(color=random.randint(0, 16777215))
   embed.set_author(name=f"{person} slapped you",icon_url=(person.avatar_url))
