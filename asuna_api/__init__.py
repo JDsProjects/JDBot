@@ -1,1 +1,1 @@
-from .client import Client, InputError, InvalidUser
+from .client import Client, InputError
