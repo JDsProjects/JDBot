@@ -7,7 +7,7 @@ class InputError(Exception):
   __slots__ = ()
   pass
 
-class InvalidUsername(Exception):
+class InvalidUser(Exception):
   __slots__ = ()
   pass
 
@@ -36,7 +36,12 @@ class Client:
   
   async def get_mchistory(self,username):
     response = await self._http_client.get(self.mchistory_url(username))
-      
+
+    if isinstance(response,dict):
+      response.get("name")
+
+    if isinstance(response,bytes):
+      raise InvalidUser(username + " is not a valid option")
 
 
   async def close(self):

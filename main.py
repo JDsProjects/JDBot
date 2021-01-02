@@ -670,7 +670,10 @@ async def mchistory(ctx,*,args=None):
     await ctx.send("Please pick a minecraft user.")
   if args:
     asuna = asuna_api.Client()
-    await asuna.get_mchistory(args)
+    try:
+      await asuna.get_mchistory(args)
+    except asuna_api.InvalidUser:
+      await ctx.send("that was an invalid user")
     await asuna.close()
 
     async with aiohttp.ClientSession() as cs:
