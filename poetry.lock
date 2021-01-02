@@ -183,6 +183,20 @@ version = "4.7.6"
 
 [[package]]
 category = "main"
+description = "A small simple wrapper around the mystb.in API."
+name = "mystbin.py"
+optional = false
+python-versions = ">=3.6,<4.0"
+version = "1.0.1"
+
+[package.dependencies]
+aiohttp = ">=3.6.2,<4.0.0"
+
+[package.extras]
+requests = ["requests (>=2.24.0,<3.0.0)"]
+
+[[package]]
+category = "main"
 description = "C parser in Python"
 name = "pycparser"
 optional = false
@@ -245,6 +259,17 @@ version = "1.15.0"
 
 [[package]]
 category = "main"
+description = "An async wrapper for some-random-api"
+name = "sr-api"
+optional = false
+python-versions = "*"
+version = "1.1.3"
+
+[package.dependencies]
+aiohttp = "*"
+
+[[package]]
+category = "main"
 description = "The comprehensive WSGI web application library."
 name = "werkzeug"
 optional = false
@@ -268,7 +293,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "a90f915297e99aa3b91b5dd249dbe104673da0e748be3557aa153f68dab7fe87"
+content-hash = "389ec34a3bedd2cd1e94b73de8b0faa5a9dbd916a51dd2d0fb1bfff197feceec"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -423,6 +448,10 @@ multidict = [
     {file = "multidict-4.7.6-cp38-cp38-win_amd64.whl", hash = "sha256:7388d2ef3c55a8ba80da62ecfafa06a1c097c18032a501ffd4cabbc52d7f2b19"},
     {file = "multidict-4.7.6.tar.gz", hash = "sha256:fbb77a75e529021e7c4a8d4e823d88ef4d23674a202be4f5addffc72cbb91430"},
 ]
+"mystbin.py" = [
+    {file = "mystbin.py-1.0.1-py3-none-any.whl", hash = "sha256:319d71998298202f01757df7363059cefeee70fd15118e114f45df7880300747"},
+    {file = "mystbin.py-1.0.1.tar.gz", hash = "sha256:1580f0f81982016e8cffd4eb575bb03e39149cd1da0a77bcad76408c2fd82866"},
+]
 pycparser = [
     {file = "pycparser-2.20-py2.py3-none-any.whl", hash = "sha256:7582ad22678f0fcd81102833f60ef8d0e57288b6b5fb00323d101be910e35705"},
     {file = "pycparser-2.20.tar.gz", hash = "sha256:2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0"},
@@ -523,6 +552,9 @@ requests = [
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
     {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
+]
+sr-api = [
+    {file = "sr_api-1.1.3.tar.gz", hash = "sha256:e3279176071a514b155cdeacf9571c46a6e3760d35df8ced323dd8b03c54be3a"},
 ]
 werkzeug = [
     {file = "Werkzeug-1.0.1-py2.py3-none-any.whl", hash = "sha256:2de2a5db0baeae7b2d2664949077c2ac63fbd16d98da0ff71837f7d1dea3fd43"},

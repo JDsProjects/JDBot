@@ -16,8 +16,8 @@ from io import BytesIO
 import DatabaseConfig
 import DatabaseControl
 import money_system
-import requests
 import gtts
+import sr_api
 
 async def status_task():
   while True:
@@ -99,15 +99,17 @@ class BetterUserconverter(commands.Converter):
     return user
 
 async def triggered_converter(url,ctx):
-  async with aiohttp.ClientSession() as cs:
-    async with cs.get(f"https://some-random-api.ml/canvas/triggered?avatar={url}") as anime:
-      image= BytesIO(await anime.read())
-    file=discord.File(image, "triggered.gif")
-    embed = discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
-    embed.set_image(url="attachment://triggered.gif")
-    embed.set_footer(text="powered by some random api")
-    await ctx.send(file=file,embed=embed)
+  sr_client=sr_api.Client()
+  source_image=sr_client.filter(option="triggered",url=str(url))
+  image = BytesIO(await source_image.read())
+  await sr_client.close()
+
+  file=discord.File(image, "triggered.gif")
+  embed = discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
+  embed.set_image(url="attachment://triggered.gif")
+  embed.set_footer(text="powered by some random api")
+  await ctx.send(file=file,embed=embed)
 
 @client.command()
 async def ping(ctx):
@@ -123,6 +125,58 @@ async def on_ready():
   print("Bot is Ready")
   print(f"Logged in as {client.user}")
   print(f"Id: {client.user.id}")
+
+@client.command(help="a command meant to flips coins",brief="commands to flip coins, etc.")
+async def coin(ctx, *, args = None):
+  if args:
+    value = random.choice([True,False]) 
+    if args.lower().startswith("h") and value:
+      win = True
+    elif args.lower().startswith("t") and not value:
+      win = True
+    elif args.lower().startswith("h") and not value:
+      win = False
+    elif args.lower().startswith("t") and value:
+      win = False    
+    else:
+      await ctx.send("Please use heads or Tails as a value.")
+      return
+    
+    if(value):
+      pic_name = "heads"
+    else:
+      pic_name ="Tails"
+
+    url_dic = {"heads":"https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
+
+    embed = discord.Embed(title="coin flip",color=random.randint(0, 16777215))
+    embed.set_author(name=f"{ctx.author}",icon_url=(ctx.author.avatar_url))
+    embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {args}")
+    embed.set_image(url=url_dic[pic_name])
+
+    if win:
+      embed.add_field(name="Result: ",value="Won")
+    else:
+      embed.add_field(name="Result: ",value="Lost")
+    
+    await ctx.send(embed=embed)
+
+
+  if args is None:
+    await ctx.send("example: ```\ntest*coin heads \nnot test*coin```")
+
+@client.command(help="a command to talk to Google TTS",brief="using the power of the GTTS module you can now do tts")
+async def tts(ctx,*,args=None):
+  if args:
+    mp3_fp = BytesIO()
+    tts=gtts.gTTS(text=args,lang='en')
+    tts.write_to_fp(mp3_fp)
+    mp3_fp.seek(0)
+    file = discord.File(mp3_fp,"tts.mp3")
+    await ctx.send(file=file)
+  
+  if args is None:
+    await ctx.send("You didn't specify any value.")
 
 @client.command(help="repeats what you say",brief="a command that repeats what you say the orginal message is deleted")
 async def say(ctx,*,args=None):
@@ -238,27 +292,26 @@ async def pat(ctx,*, Member: BetterMemberConverter=None):
   if Member.id != ctx.author.id:
     person = ctx.author
     target = Member
-  
-  async with aiohttp.ClientSession() as cs:
-      async with cs.get("https://some-random-api.ml/animu/pat") as anime:
-        res = await anime.json()
+    
+  sr_client=sr_api.Client()
+  image=await sr_client.get_gif("pat")
+  await sr_client.close()
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
+  embed.set_image(url=image.url)
+  embed.set_footer(text="powered by some random api")
+    
+  if isinstance(ctx.channel, discord.TextChannel):
+    await ctx.send(content=target.mention,embed=embed) 
 
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
-      embed.set_image(url=res["link"])
-      embed.set_footer(text="powered by some random api")
-      
-      if isinstance(ctx.channel, discord.TextChannel):
-        await ctx.send(content=target.mention,embed=embed) 
-
-      if isinstance(ctx.channel,discord.DMChannel):
-        if target.dm_channel is None:
-          await target.create_dm()
-        
-        try:
-          await target.send(content=target.mention,embed=embed)
-        except discord.Forbidden:
-          await ctx.author.send("Failed Dming them...")
+  if isinstance(ctx.channel,discord.DMChannel):
+    if target.dm_channel is None:
+      await target.create_dm()
+    
+    try:
+      await target.send(content=target.mention,embed=embed)
+    except discord.Forbidden:
+      await ctx.author.send("Failed Dming them...")
   
 
 @client.command(help="a hug command to hug people",brief="this the first command to hug.")
@@ -273,27 +326,27 @@ async def hug(ctx,*, Member: BetterMemberConverter=None):
   if Member.id != ctx.author.id:
     person = ctx.author
     target = Member
+
+  sr_client=sr_api.Client()
+  image=await sr_client.get_gif("hug")
+  await sr_client.close()
+
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
+  embed.set_image(url=image.url)
+  embed.set_footer(text="powered by some random api")
   
-  async with aiohttp.ClientSession() as cs:
-      async with cs.get("https://some-random-api.ml/animu/hug") as anime:
-        res = await anime.json()
+  if isinstance(ctx.channel, discord.TextChannel):
+    await ctx.send(content=target.mention,embed=embed) 
 
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
-      embed.set_image(url=res["link"])
-      embed.set_footer(text="powered by some random api")
-      
-      if isinstance(ctx.channel, discord.TextChannel):
-        await ctx.send(content=target.mention,embed=embed) 
-
-      if isinstance(ctx.channel,discord.DMChannel):
-        if target.dm_channel is None:
-          await target.create_dm()
-        
-        try:
-          await target.send(content=target.mention,embed=embed)
-        except discord.Forbidden:
-          await ctx.author.send("Failed Dming them...")
+  if isinstance(ctx.channel,discord.DMChannel):
+    if target.dm_channel is None:
+      await target.create_dm()
+    
+    try:
+      await target.send(content=target.mention,embed=embed)
+    except discord.Forbidden:
+      await ctx.author.send("Failed Dming them...")
 
 
 @client.command(help="a hug command to hug people",brief="this actually the second hug command and is quite powerful.")
@@ -450,26 +503,26 @@ async def wink(ctx,*, Member: BetterMemberConverter=None):
     person = ctx.author
     target = Member
   
-  async with aiohttp.ClientSession() as cs:
-    async with cs.get("https://some-random-api.ml/animu/wink") as anime:
-      res = await anime.json()
+  sr_client=sr_api.Client()
+  image=await sr_client.get_gif("wink")
+  await sr_client.close()
 
-    embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{person} winked at you",icon_url=(person.avatar_url))
-    embed.set_image(url=res["link"])
-    embed.set_footer(text="powered by some random api")
-   
-    if isinstance(ctx.channel, discord.TextChannel):
-        await ctx.send(content=target.mention,embed=embed) 
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{person} winked at you",icon_url=(person.avatar_url))
+  embed.set_image(url=image.url)
+  embed.set_footer(text="powered by some random api")
 
-    if isinstance(ctx.channel,discord.DMChannel):
-      if target.dm_channel is None:
-        await target.create_dm()
-      
-      try:
-        await target.send(content=target.mention,embed=embed)
-      except discord.Forbidden:
-        await ctx.author.send("Failed Dming them...")
+  if isinstance(ctx.channel, discord.TextChannel):
+      await ctx.send(content=target.mention,embed=embed) 
+
+  if isinstance(ctx.channel,discord.DMChannel):
+    if target.dm_channel is None:
+      await target.create_dm()
+    
+    try:
+      await target.send(content=target.mention,embed=embed)
+    except discord.Forbidden:
+      await ctx.author.send("Failed Dming them...")
 
 @client.command(help="a command to send facepalm gifs",brief="using some random api it sends you a facepalm gif lol")
 async def facepalm(ctx,*, Member: BetterMemberConverter=None):
@@ -484,26 +537,26 @@ async def facepalm(ctx,*, Member: BetterMemberConverter=None):
     person = ctx.author
     target = Member
   
-  async with aiohttp.ClientSession() as cs:
-      async with cs.get("https://some-random-api.ml/animu/face-palm") as anime:
-        res = await anime.json()
+  sr_client=sr_api.Client()
+  image=await sr_client.get_gif("face-palm")
+  await sr_client.close()
 
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{target} you made {person} facepalm",icon_url=(person.avatar_url))
-      embed.set_image(url=res["link"])
-      embed.set_footer(text="powered by some random api")
-     
-      if isinstance(ctx.channel, discord.TextChannel):
-        await ctx.send(content=target.mention,embed=embed) 
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{target} you made {person} facepalm",icon_url=(person.avatar_url))
+  embed.set_image(url=image.url)
+  embed.set_footer(text="powered by some random api")
+  
+  if isinstance(ctx.channel, discord.TextChannel):
+    await ctx.send(content=target.mention,embed=embed) 
 
-      if isinstance(ctx.channel,discord.DMChannel):
-        if target.dm_channel is None:
-          await target.create_dm()
-        
-        try:
-          await target.send(content=target.mention,embed=embed)
-        except discord.Forbidden:
-          await ctx.author.send("Failed Dming them...")
+  if isinstance(ctx.channel,discord.DMChannel):
+    if target.dm_channel is None:
+      await target.create_dm()
+    
+    try:
+      await target.send(content=target.mention,embed=embed)
+    except discord.Forbidden:
+      await ctx.author.send("Failed Dming them...")
 
 @client.command()
 async def webhook_update(ctx,*,args=None):
