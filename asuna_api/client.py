@@ -7,6 +7,10 @@ class InputError(Exception):
   __slots__ = ()
   pass
 
+class InvalidUsername(Exception):
+  __slots__ = ()
+  pass
+
 class Client:
   __slots__ = ("_http_client")
    
@@ -32,7 +36,7 @@ class Client:
   
   async def get_mchistory(self,username):
     response = await self._http_client.get(self.mchistory_url(username))
-    print(response)
+      
 
 
   async def close(self):
