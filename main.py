@@ -18,6 +18,7 @@ import DatabaseControl
 import money_system
 import gtts
 import sr_api
+import super_api
 
 async def status_task():
   while True:
@@ -213,25 +214,30 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
     target = Member
   
   async with aiohttp.ClientSession() as cs:
-      async with cs.get("https://asuna.ga/api/slap/") as anime:
-        res = await anime.json()
+    async with cs.get("https://asuna.ga/api/slap/") as anime:
+      res = await anime.json()
 
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{person} slapped you",icon_url=(person.avatar_url))
-      embed.set_image(url=res["url"])
-      embed.set_footer(text="powered using the asuna.ga api")
+  super_client = super_api.Client()
+  slap_url = await super_client.get_gif("slap")
+  print(slap_url)
+  await super_client.close()
 
-      if isinstance(ctx.channel, discord.TextChannel):
-        await ctx.send(content=target.mention,embed=embed) 
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{person} slapped you",icon_url=(person.avatar_url))
+  embed.set_image(url=res["url"])
+  embed.set_footer(text="powered using the asuna.ga api")
 
-      if isinstance(ctx.channel,discord.DMChannel):
-        if target.dm_channel is None:
-          await target.create_dm()
-        
-        try:
-          await target.send(content=target.mention,embed=embed)
-        except discord.Forbidden:
-          await ctx.author.send("Failed Dming them...")
+  if isinstance(ctx.channel, discord.TextChannel):
+    await ctx.send(content=target.mention,embed=embed) 
+
+  if isinstance(ctx.channel,discord.DMChannel):
+    if target.dm_channel is None:
+      await target.create_dm()
+    
+    try:
+      await target.send(content=target.mention,embed=embed)
+    except discord.Forbidden:
+      await ctx.author.send("Failed Dming them...")
 
 
 @client.command(help="a command to look up foxes",brief="this known as wholesome fox to the asuna api")
