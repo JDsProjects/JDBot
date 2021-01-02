@@ -104,9 +104,9 @@ async def triggered_converter(url,ctx):
   source_image=sr_client.filter(option="triggered",url=str(url))
   await sr_client.close()
 
-  import imgurpython
-  imgur_client= imgurpython.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url= imgur_client.upload_from_url(source_image.url)
+  import aioimgur
+  imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_url= await imgur_client.upload_from_url(source_image.url)
 
   embed = discord.Embed(color=random.randint(0, 16777215))
   embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))

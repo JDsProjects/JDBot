@@ -145,17 +145,6 @@ version = "3.0"
 
 [[package]]
 category = "main"
-description = "Official Imgur python library with OAuth2 and samples"
-name = "imgurpython"
-optional = false
-python-versions = "*"
-version = "1.1.7"
-
-[package.dependencies]
-requests = "*"
-
-[[package]]
-category = "main"
 description = "Various helpers to pass data to untrusted environments and back."
 name = "itsdangerous"
 optional = false
@@ -304,7 +293,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "7519b1a16ed8e24f3a0e509433ed1d1aa2e00f07bf9f410d3c47adabf54881a4"
+content-hash = "389ec34a3bedd2cd1e94b73de8b0faa5a9dbd916a51dd2d0fb1bfff197feceec"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -396,9 +385,6 @@ gtts = [
 idna = [
     {file = "idna-3.0-py2.py3-none-any.whl", hash = "sha256:320229aadbdfc597bc28876748cc0c9d04d476e0fe6caacaaddea146365d9f63"},
     {file = "idna-3.0.tar.gz", hash = "sha256:c9a26e10e5558412384fac891eefb41957831d31be55f1e2c98ed97a70abb969"},
-]
-imgurpython = [
-    {file = "imgurpython-1.1.7.tar.gz", hash = "sha256:3ac28501c2f699a78f93a4ab34df7443cebd39a170c9de4adecf0f3852cbdc33"},
 ]
 itsdangerous = [
     {file = "itsdangerous-1.1.0-py2.py3-none-any.whl", hash = "sha256:b12271b2047cb23eeb98c8b5622e2e5c5e9abd9784a153e9d8ef9cb4dd09d749"},
