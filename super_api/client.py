@@ -2,6 +2,10 @@ import aiohttp
 from .http import HTTPClient
 from yarl import URL
 
+class InputError(Exception):
+  __slots__ = ()
+  pass
+
 class Client:
    __slots__ = ("_http_client")
    
@@ -18,6 +22,9 @@ class Client:
 
   async def get_gif(self,name):
     options = ("hug","kiss","neko","pat","slap","wholesome_foxes")
+    if not name.lower() in options:
+      raise InputError(name + " is not a valid option!")
+      
     response = await self._http_client.get(self.srapi_url(name))
     url = response.get("url")
     return Image(self._http_client, url)
