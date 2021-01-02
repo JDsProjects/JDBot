@@ -3,6 +3,8 @@ from .http import HTTPClient
 from yarl import URL
 
 class Client:
+   __slots__ = ("_http_client"
+   
   def __init__(self,session: aiohttp.ClientSession = None):
     self._http_client = HTTPClient(session)
 
