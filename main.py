@@ -18,6 +18,7 @@ import DatabaseControl
 import money_system
 import gtts
 import sr_api
+import asuna_api
 
 async def status_task():
   while True:
@@ -212,19 +213,13 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
     person = ctx.author
     target = Member
   
-  async with aiohttp.ClientSession() as cs:
-    async with cs.get("https://asuna.ga/api/slap/") as anime:
-      res = await anime.json()
-
-  import asuna_api
-  asuna = asuna_api.client()
-  slap_url = await asuna.get_gif("slap")
-  print(slap_url)
+  asuna = asuna_api.Client()
+  url = await asuna.get_gif("slap")
   await asuna.close()
 
   embed=discord.Embed(color=random.randint(0, 16777215))
   embed.set_author(name=f"{person} slapped you",icon_url=(person.avatar_url))
-  embed.set_image(url=res["url"])
+  embed.set_image(url=url.url)
   embed.set_footer(text="powered using the asuna.ga api")
 
   if isinstance(ctx.channel, discord.TextChannel):
@@ -242,14 +237,14 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
 
 @client.command(help="a command to look up foxes",brief="this known as wholesome fox to the asuna api")
 async def fox2(ctx):
-  async with aiohttp.ClientSession() as cs:
-      async with cs.get('https://asuna.ga/api/wholesome_foxes/') as anime:
-        res = await anime.json()
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{ctx.author} requested a wholesome fox picture",icon_url=(ctx.author.avatar_url))
-      embed.set_image(url=res["url"])
-      embed.set_footer(text="powered using the asuna.ga api")
-      await ctx.send(embed=embed)
+  asuna = asuna_api.Client()
+  url = await asuna.get_gif("wholesome_foxes")
+  await asuna.close()
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{ctx.author} requested a wholesome fox picture",icon_url=(ctx.author.avatar_url))
+  embed.set_image(url=url.url)
+  embed.set_footer(text="powered using the asuna.ga api")
+  await ctx.send(embed=embed)
 
 @client.command(help="another command to give you pat gifs",brief="powered using the asuna api")
 async def pat2(ctx,*, Member: BetterMemberConverter= None):
@@ -264,26 +259,26 @@ async def pat2(ctx,*, Member: BetterMemberConverter= None):
     person = ctx.author
     target = Member
   
-  async with aiohttp.ClientSession() as cs:
-      async with cs.get("https://asuna.ga/api/pat/") as anime:
-        res = await anime.json()
+  asuna = asuna_api.Client()
+  url = await asuna.get_gif("pat")
+  await asuna.close()
 
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
-      embed.set_image(url=res["url"])
-      embed.set_footer(text="powered using the asuna.ga api")
-      
-      if isinstance(ctx.channel, discord.TextChannel):
-        await ctx.send(content=target.mention,embed=embed) 
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
+  embed.set_image(url=url.url)
+  embed.set_footer(text="powered using the asuna.ga api")
+  
+  if isinstance(ctx.channel, discord.TextChannel):
+    await ctx.send(content=target.mention,embed=embed) 
 
-      if isinstance(ctx.channel,discord.DMChannel):
-        if target.dm_channel is None:
-          await target.create_dm()
-        
-        try:
-          await target.send(content=target.mention,embed=embed)
-        except discord.Forbidden:
-          await ctx.author.send("Failed Dming them...")
+  if isinstance(ctx.channel,discord.DMChannel):
+    if target.dm_channel is None:
+      await target.create_dm()
+    
+    try:
+      await target.send(content=target.mention,embed=embed)
+    except discord.Forbidden:
+      await ctx.author.send("Failed Dming them...")
 
 
 @client.command(help="a command to give you pat gifs",brief="using the sra api it gives you pat gifs")
@@ -368,26 +363,26 @@ async def hug2(ctx,*, Member: BetterMemberConverter=None):
     person = ctx.author
     target = Member
   
-  async with aiohttp.ClientSession() as cs:
-      async with cs.get("https://asuna.ga/api/hug/") as anime:
-        res = await anime.json()
+  asuna = asuna_api.Client()
+  url = await asuna.get_gif("hug")
+  await asuna.close()
 
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
-      embed.set_image(url=res["url"])
-      embed.set_footer(text="powered using the asuna.ga api")
-      
-      if isinstance(ctx.channel, discord.TextChannel):
-        await ctx.send(content=target.mention,embed=embed) 
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
+  embed.set_image(url=url.url)
+  embed.set_footer(text="powered using the asuna.ga api")
+  
+  if isinstance(ctx.channel, discord.TextChannel):
+    await ctx.send(content=target.mention,embed=embed) 
 
-      if isinstance(ctx.channel,discord.DMChannel):
-        if target.dm_channel is None:
-          await target.create_dm()
-        
-        try:
-          await target.send(content=target.mention,embed=embed)
-        except discord.Forbidden:
-          await ctx.author.send("Failed Dming them...")
+  if isinstance(ctx.channel,discord.DMChannel):
+    if target.dm_channel is None:
+      await target.create_dm()
+    
+    try:
+      await target.send(content=target.mention,embed=embed)
+    except discord.Forbidden:
+      await ctx.author.send("Failed Dming them...")
 
 def warn_permission(ctx):
   if isinstance(ctx.channel, discord.TextChannel):
@@ -452,37 +447,38 @@ async def kiss(ctx,*, Member: BetterMemberConverter=None):
     person = ctx.author
     target = Member
   
-  async with aiohttp.ClientSession() as cs:
-      async with cs.get("https://asuna.ga/api/kiss/") as anime:
-        res = await anime.json()
+  asuna = asuna_api.Client()
+  url = await asuna.get_gif("kiss")
+  await asuna.close()
         
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{person} kissed you",icon_url=(person.avatar_url))
-      embed.set_image(url=res["url"])
-      embed.set_footer(text="Why did I make this command? powered using the asuna.ga api")
-      
-      if isinstance(ctx.channel, discord.TextChannel):
-        await ctx.send(content=target.mention,embed=embed) 
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{person} kissed you",icon_url=(person.avatar_url))
+  embed.set_image(url=url.url)
+  embed.set_footer(text="Why did I make this command? powered using the asuna.ga api")
+  
+  if isinstance(ctx.channel, discord.TextChannel):
+    await ctx.send(content=target.mention,embed=embed) 
 
-      if isinstance(ctx.channel,discord.DMChannel):
-        if target.dm_channel is None:
-          await target.create_dm()
-        
-        try:
-          await target.send(content=target.mention,embed=embed)
-        except discord.Forbidden:
-          await ctx.author.send("Failed Dming them...")
+  if isinstance(ctx.channel,discord.DMChannel):
+    if target.dm_channel is None:
+      await target.create_dm()
+    
+    try:
+      await target.send(content=target.mention,embed=embed)
+    except discord.Forbidden:
+      await ctx.author.send("Failed Dming them...")
 
 @client.command(help="a command to get a neko",brief="using the asuna.ga api you will get these images")
 async def neko(ctx):
-  async with aiohttp.ClientSession() as cs:
-      async with cs.get('https://asuna.ga/api/neko') as anime:
-        res = await anime.json()
-      embed=discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"{ctx.author} requested a neko picture",icon_url=(ctx.author.avatar_url))
-      embed.set_image(url=res["url"])
-      embed.set_footer(text="powered using the asuna.ga api")
-      await ctx.send(embed=embed)
+  asuna = asuna_api.Client()
+  url = await asuna.get_gif("neko")
+  await asuna.close()
+  
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{ctx.author} requested a neko picture",icon_url=(ctx.author.avatar_url))
+  embed.set_image(url=url.url)
+  embed.set_footer(text="powered using the asuna.ga api")
+  await ctx.send(embed=embed)
 
 @client.command()
 async def work(ctx,*,args=None):
