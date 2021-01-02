@@ -669,6 +669,10 @@ async def mchistory(ctx,*,args=None):
   if not args:
     await ctx.send("Please pick a minecraft user.")
   if args:
+    asuna = asuna_api.Client()
+    await asuna.get_mchistory(args)
+    await asuna.close()
+
     async with aiohttp.ClientSession() as cs:
       async with cs.get(f'https://api.mojang.com/users/profiles/minecraft/{args}') as r:
         if r.status == 200:
