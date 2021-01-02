@@ -102,15 +102,17 @@ class BetterUserconverter(commands.Converter):
 async def triggered_converter(url,ctx):
   sr_client=sr_api.Client()
   source_image=sr_client.filter(option="triggered",url=str(url))
-  image = BytesIO(await source_image.read())
   await sr_client.close()
 
-  file=discord.File(image, "triggered.gif")
+  import imgurpython
+  imgur_client=imgurpython.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_url=imgur_client.upload_from_url(source_image.url)
+
   embed = discord.Embed(color=random.randint(0, 16777215))
   embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
-  embed.set_image(url="attachment://triggered.gif")
+  embed.set_image(url=imgur_url["link"])
   embed.set_footer(text="powered by some random api")
-  await ctx.send(file=file,embed=embed)
+  await ctx.send(embed=embed)
 
 @client.command()
 async def ping(ctx):
