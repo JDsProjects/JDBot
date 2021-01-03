@@ -22,11 +22,15 @@ description = "Fork of the official ImgurPython library rewritten with aiohttp"
 name = "aioimgur"
 optional = false
 python-versions = "*"
-version = "0.0.2"
+version = "0.1.0"
 
 [package.dependencies]
 aiohttp = "*"
 
+[package.source]
+reference = "06a3c93ef5a4dff93cbad14922736b461c30ff14"
+type = "git"
+url = "https://github.com/hatarist/aioimgur"
 [[package]]
 category = "main"
 description = "An AST unparser for Python"
@@ -419,7 +423,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "5e00201d03a600056ab9b9c56bbef25a77aa312d4f281d9c2b8da49277eb31c1"
+content-hash = "dad6b30a52895ee4ee5cae168b1a058d706b33eda68e688e127f797516a6e7a4"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -438,9 +442,7 @@ aiohttp = [
     {file = "aiohttp-3.6.3-cp37-cp37m-win_amd64.whl", hash = "sha256:687461cd974722110d1763b45c5db4d2cdee8d50f57b00c43c7590d1dd77fc5c"},
     {file = "aiohttp-3.6.3.tar.gz", hash = "sha256:698cd7bc3c7d1b82bb728bae835724a486a8c376647aec336aa21a60113c3645"},
 ]
-aioimgur = [
-    {file = "aioimgur-0.0.2.tar.gz", hash = "sha256:3a2942d0ef58c573c991254bdf9a5bb92c610aeb4dc9aa86f785bed5493df6c1"},
-]
+aioimgur = []
 astunparse = [
     {file = "astunparse-1.6.3-py2.py3-none-any.whl", hash = "sha256:c2652417f2c8b5bb325c885ae329bdf3f86424075c4fd1a128674bc6fba4b8e8"},
     {file = "astunparse-1.6.3.tar.gz", hash = "sha256:5ad93a8456f0d084c3456d059fd9a92cce667963232cbf763eac3bc5b7940872"},
