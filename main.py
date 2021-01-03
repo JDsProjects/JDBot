@@ -668,10 +668,13 @@ async def webhook(ctx,*,args=None):
 
 @client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
 async def mchistory(ctx,*,args=None):
+  asuna = asuna_api.Client()
+  minecraft_info=await asuna.get_mchistory(args)
+  await asuna.close()
+  
   if not args:
     await ctx.send("Please pick a minecraft user.")
   if args:
-
     async with aiohttp.ClientSession() as cs:
       async with cs.get(f'https://api.mojang.com/users/profiles/minecraft/{args}') as r:
         if r.status == 200:
