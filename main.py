@@ -19,6 +19,7 @@ import money_system
 import gtts
 import sr_api
 import asuna_api
+import aioimgur
 
 async def status_task():
   while True:
@@ -104,7 +105,6 @@ async def triggered_converter(url,ctx):
   source_image=sr_client.filter(option="triggered",url=str(url))
   await sr_client.close()
 
-  import aioimgur
   imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
   imgur_url= await imgur_client.upload_from_url(source_image.url)
 
