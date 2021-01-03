@@ -669,46 +669,28 @@ async def webhook(ctx,*,args=None):
 @client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
 async def mchistory(ctx,*,args=None):
   asuna = asuna_api.Client()
-  minecraft_info=await asuna.get_mchistory(args)
+  minecraft_info=await asuna.mc_user(args)
   await asuna.close()
   
   if not args:
     await ctx.send("Please pick a minecraft user.")
   if args:
-    async with aiohttp.ClientSession() as cs:
-      async with cs.get(f'https://api.mojang.com/users/profiles/minecraft/{args}') as r:
-        if r.status == 200:
-          user_dict=await r.json()
-          minecraft_uuid=user_dict["id"]
-          async with aiohttp.ClientSession() as cs:
-            async with cs.get(f"https://api.mojang.com/user/profiles/{minecraft_uuid}/names") as r:
-              if r.status == 200:
-                user_history=await r.json()
+    
+    embed=discord.Embed(title=f"Minecraft Username: {args}",color=random.randint(0, 16777215))
+    embed.set_footer(text=f"Minecraft UUID: {minecraft_info.uuid}")
+    embed.add_field(name="Orginal Name:",value=minecraft_info.name)
+    y = 0
+    for x in minecraft_info.history:
+      if y > 0:
+        username = x["name"]
+        date_changed=x["changedToAt"]
+        time_changed=x["timeChangedAt"]
+        embed.add_field(name=f"Username:\n{username}",value=f"Date Changed:\n{date_changed}\n \nTime Changed: \n {time_changed}")
 
-                y = 0
-                for x in user_history:
-                  if y == 0:
-                    minecraft_username = x["name"]
-                    embed=discord.Embed(title=f"Minecraft Username: {args}",color=random.randint(0, 16777215))
-                    embed.set_footer(text=f"Minecraft UUID: {minecraft_uuid}")
-                    embed.add_field(name="Orginal Name:",value=minecraft_username)
-
-                  if y > 0:
-                    username = (x["name"])
-                    date_changed=datetime.datetime.utcfromtimestamp(int(x["changedToAt"])/1000).strftime("%m/%d/%Y")
-                    time_changed=datetime.datetime.utcfromtimestamp(int(x["changedToAt"])/1000).strftime("%H:%M:%S")
-                    embed.add_field(name=f"Username:\n{username}",value=f"Date Changed:\n{date_changed}\n  \nTime Changed: \n {time_changed}")
-
-                  y = y + 1
-                
-                embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
-                await ctx.send(embed=embed)
-
-              if r.status == 500:
-                await ctx.send("Internal server error occured at Mojang. We're sorry :( ")
-                     
-        if not r.status == 200:
-          await ctx.send("It doesn't like it didn't find the user.")
+      y = y + 1
+    
+    embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
+    await ctx.send(embed=embed)
 
 @client.command(help="a command to get the avatar of a user",brief="using the userinfo technology it now powers avatar grabbing.")
 async def avatar(ctx,*,user: BetterUserconverter = None): 

@@ -41,11 +41,11 @@ wheel = ">=0.23.0,<1.0"
 
 [[package]]
 category = "main"
-description = "A python wrapper for the asuna api"
+description = "An async python wrapper for the asuna api"
 name = "asuna-api"
 optional = false
 python-versions = "*"
-version = "0.1"
+version = "0.2.3.1"
 
 [package.dependencies]
 aiohttp = "*"
@@ -419,7 +419,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "eafd63f76ea8b9c34f1059bc6b6a3c97aa1ff39f99e2806b703e8345123b1a3e"
+content-hash = "5e00201d03a600056ab9b9c56bbef25a77aa312d4f281d9c2b8da49277eb31c1"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -446,7 +446,7 @@ astunparse = [
     {file = "astunparse-1.6.3.tar.gz", hash = "sha256:5ad93a8456f0d084c3456d059fd9a92cce667963232cbf763eac3bc5b7940872"},
 ]
 asuna-api = [
-    {file = "asuna_api-0.1.tar.gz", hash = "sha256:8284d3e8c02bc17f2d20e0b35e09cc5f091b4484d714823670bfbffd149a57c7"},
+    {file = "asuna_api-0.2.3.1.tar.gz", hash = "sha256:efaba6a41c6cbcb84032b42b41df5f4bedfdb773dde08be87f97e24efda51d8b"},
 ]
 async-timeout = [
     {file = "async-timeout-3.0.1.tar.gz", hash = "sha256:0c3c816a028d47f659d6ff5c745cb2acf1f966da1fe5c19c77a70282b25f4c5f"},
