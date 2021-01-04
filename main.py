@@ -30,7 +30,6 @@ async def status_task():
 
 async def startup():
   await client.wait_until_ready()
-  #client.lavalink=await asyncio.create_subprocess_shell('java -jar Lavalink.jar')
   await status_task()
 
 logging.basicConfig(level=logging.WARNING)
@@ -674,8 +673,8 @@ async def mchistory(ctx,*,args=None):
   
   if not args:
     await ctx.send("Please pick a minecraft user.")
+
   if args:
-    
     embed=discord.Embed(title=f"Minecraft Username: {args}",color=random.randint(0, 16777215))
     embed.set_footer(text=f"Minecraft UUID: {minecraft_info.uuid}")
     embed.add_field(name="Orginal Name:",value=minecraft_info.name)
@@ -709,7 +708,63 @@ async def milk(ctx):
   embed.set_footer(text="his milk is delicious")
   await ctx.send(embed=embed)
 
-@client.command(help="a command that gives information on users",brief="this can work with mentions, ids, usernames, and even full names.")
+async def guildinfo(ctx,guild):
+  bots = 0
+  users = 0
+  for x in guild.members:
+    if x.bot is True:
+      bots = bots + 1
+    if x.bot is False:
+      users = users + 1
+  static_emojis = 0
+  animated_emojis = 0
+  usable_emojis = 0
+  for x in guild.emojis:
+    if x.animated is True:
+      animated_emojis = animated_emojis + 1
+    if x.animated is False:
+      static_emojis = static_emojis + 1
+    if x.available is True:
+      usable_emojis = usable_emojis + 1
+  
+  embed = discord.Embed(title="Guild Info:",color=random.randint(0, 16777215))
+  embed.add_field(name="Server Name:",value=guild.name)
+  embed.add_field(name="Server ID:",value=guild.id)
+  embed.add_field(name="Server region",value=guild.region)
+  embed.add_field(name="Server created at:",value=f"{guild.created_at} UTC")
+  embed.add_field(name="Server Owner:",value=guild.owner)
+  embed.add_field(name="Member Count:",value=guild.member_count)
+  embed.add_field(name="Users:",value=users)
+  embed.add_field(name="Bots:",value=bots)
+  embed.add_field(name="Channel Count:",value=len(guild.channels))
+  embed.add_field(name="Role Count:",value=len(guild.roles))
+  embed.set_thumbnail(url=(guild.icon_url))
+  embed.add_field(name="Emoji Limit:",value=guild.emoji_limit)
+  embed.add_field(name="Max File Size:",value=f"{guild.filesize_limit/1000000} MB")
+  embed.add_field(name="Shard ID:",value=guild.shard_id)
+  embed.add_field(name="Animated Icon",value=guild.is_icon_animated())
+  embed.add_field(name="Static Emojis",value=static_emojis)
+  embed.add_field(name="Animated Emojis",value=animated_emojis)
+  embed.add_field(name="Total Emojis:",value=f"{len(guild.emojis)}/{guild.emoji_limit*2}")
+  embed.add_field(name="Usable Emojis",value=usable_emojis)
+
+  await ctx.send(embed=embed)
+
+
+@client.command(aliases=["server_info","guild_fetch","guild_info","fetch_guild",])
+async def serverinfo(ctx,*,args=None):
+  if args:
+    match=re.match(r'(\d{16,21})',args)
+    guild=client.get_guild(int(match.group(0)))
+    if guild is None:
+      guild = ctx.guild
+
+  if args is None:
+    guild = ctx.guild
+  
+  await guildinfo(ctx,guild)
+
+@client.command(aliases=["user info", "user_info","user-info"],help="a command that gives information on users",brief="this can work with mentions, ids, usernames, and even full names.")
 async def userinfo(ctx,*,user: BetterUserconverter = None):
   if user is None:
     user = ctx.author
