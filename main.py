@@ -23,9 +23,9 @@ import aioimgur
 
 async def status_task():
   while True:
-    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="JDBot has returned"))
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name="the return of JDBot"))
     await asyncio.sleep(40)
-    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="New updates coming soon.."))
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="the new updates coming soon..."))
     await asyncio.sleep(40)
 
 async def startup():
@@ -59,8 +59,7 @@ class BetterMemberConverter(commands.Converter):
             user = client.get_user(user.id)
           if user is None:
             user = ctx.author
-            
-          
+               
     return user
 
 class BetterUserconverter(commands.Converter):
@@ -128,7 +127,7 @@ async def on_ready():
   print(f"Logged in as {client.user}")
   print(f"Id: {client.user.id}")
 
-@client.command(help="a command meant to flips coins",brief="commands to flip coins, etc.")
+@client.command(help="a command meant to flip coins",brief="commands to flip coins, etc.")
 async def coin(ctx, *, args = None):
   if args:
     value = random.choice([True,False]) 
@@ -157,27 +156,81 @@ async def coin(ctx, *, args = None):
     embed.set_image(url=url_dic[pic_name])
 
     if win:
-      embed.add_field(name="Result: ",value="Won")
+      embed.add_field(name="Result: ",value="You won")
     else:
-      embed.add_field(name="Result: ",value="Lost")
+      embed.add_field(name="Result: ",value="You lost")
     
     await ctx.send(embed=embed)
 
 
   if args is None:
-    await ctx.send("example: ```\ntest*coin heads \nnot test*coin```")
+    await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
+
+@client.command()
+async def reverse(ctx,*,args=None):
+  if args:
+    await ctx.send(args[::-1])
+  if args is None:
+    await ctx.send("Try sending actual to reverse")
+
+@client.command()
+async def scan(ctx):
+  import vt
+  vt_client = vt.Client(os.environ["virustotal_key"])
+  used = None
+
+  if len(ctx.message.attachments) > 0:
+    await ctx.send("If this takes a while, it probably means it was never on Virustotal before")
+    used = True
+  for x in ctx.message.attachments:
+    analysis = await vt_client.scan_file_async(await x.read(),wait_for_completion=True)
+    object_info = await vt_client.get_object_async("/analyses/{}", analysis.id)
+    print(object_info.id)
+  
+  if used:
+    await ctx.send(content="Scan completed")
+  await vt_client.close_async()
+
+@client.command(help="This gives random history using Sp46's api.",brief="a command that uses SP46's api's random history command to give you random history responses")
+async def random_history(ctx,*,args=None):
+  if args is None:
+    args = 1
+  asuna = asuna_api.Client()
+  response = await asuna.random_history(args)
+  await asuna.close()
+  for x in response:
+    await ctx.send(f":earth_africa: {x}")
+
+async def google_tts(ctx,text):
+  await ctx.send("if you have a lot of text it may take a bit")
+  mp3_fp = BytesIO()
+  tts=gtts.gTTS(text=text,lang='en')
+  tts.write_to_fp(mp3_fp)
+  mp3_fp.seek(0)
+  file = discord.File(mp3_fp,"tts.mp3")
+  await ctx.send(file=file)
 
 @client.command(help="a command to talk to Google TTS",brief="using the power of the GTTS module you can now do tts")
 async def tts(ctx,*,args=None):
+  import chardet
   if args:
-    mp3_fp = BytesIO()
-    tts=gtts.gTTS(text=args,lang='en')
-    tts.write_to_fp(mp3_fp)
-    mp3_fp.seek(0)
-    file = discord.File(mp3_fp,"tts.mp3")
-    await ctx.send(file=file)
+    await google_tts(ctx,args)
   
-  if args is None:
+  if ctx.message.attachments:
+    for x in ctx.message.attachments:
+      file=await x.read()
+      if len(file) > 0:
+        encoding=chardet.detect(file)["encoding"]
+        if encoding:
+          text = file.decode(encoding)
+          await google_tts(ctx,text)
+        if encoding is None:
+          await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439")
+      if len(file ) < 1:
+        await ctx.send("this doesn't contain any bytes.")
+        
+
+  if args is None and len(ctx.message.attachments) < 1:
     await ctx.send("You didn't specify any value.")
 
 @client.command(help="repeats what you say",brief="a command that repeats what you say the orginal message is deleted")
@@ -201,7 +254,7 @@ async def triggered(ctx):
     url = ctx.author.avatar_url_as(format="png")
     await triggered_converter(url,ctx)
 
-@client.command(help= "a command to slap someone",brief="this sends slap gifs to the target user")
+@client.command(help= "a command to slap someone",brief="this sends a slap gif to the target user")
 async def slap(ctx,*, Member: BetterMemberConverter = None):
   if Member is None:
     Member = ctx.author
@@ -219,7 +272,7 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
   await asuna.close()
 
   embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} slapped you",icon_url=(person.avatar_url))
+  embed.set_author(name=f"{person} slapped you! Ow...",icon_url=(person.avatar_url))
   embed.set_image(url=url.url)
   embed.set_footer(text="powered using the asuna.ga api")
 
@@ -233,7 +286,7 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
     try:
       await target.send(content=target.mention,embed=embed)
     except discord.Forbidden:
-      await ctx.author.send("Failed Dming them...")
+      await ctx.author.send("Failed DM'ing them...")
 
 
 @client.command(help="a command to look up foxes",brief="this known as wholesome fox to the asuna api")
@@ -265,7 +318,7 @@ async def pat2(ctx,*, Member: BetterMemberConverter= None):
   await asuna.close()
 
   embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
+  embed.set_author(name=f"{person} patted you! *pat pat pat*",icon_url=(person.avatar_url))
   embed.set_image(url=url.url)
   embed.set_footer(text="powered using the asuna.ga api")
   
@@ -279,7 +332,7 @@ async def pat2(ctx,*, Member: BetterMemberConverter= None):
     try:
       await target.send(content=target.mention,embed=embed)
     except discord.Forbidden:
-      await ctx.author.send("Failed Dming them...")
+      await ctx.author.send("Failed DM'ing them...")
 
 
 @client.command(help="a command to give you pat gifs",brief="using the sra api it gives you pat gifs")
@@ -334,7 +387,7 @@ async def hug(ctx,*, Member: BetterMemberConverter=None):
   await sr_client.close()
 
   embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
+  embed.set_author(name=f"{person} hugged you! Awwww...",icon_url=(person.avatar_url))
   embed.set_image(url=image.url)
   embed.set_footer(text="powered by some random api")
   
@@ -348,7 +401,7 @@ async def hug(ctx,*, Member: BetterMemberConverter=None):
     try:
       await target.send(content=target.mention,embed=embed)
     except discord.Forbidden:
-      await ctx.author.send("Failed Dming them...")
+      await ctx.author.send("Failed DM'ing them...")
 
 
 @client.command(help="a hug command to hug people",brief="this actually the second hug command and is quite powerful.")
@@ -369,7 +422,7 @@ async def hug2(ctx,*, Member: BetterMemberConverter=None):
   await asuna.close()
 
   embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} hugged you",icon_url=(person.avatar_url))
+  embed.set_author(name=f"{person} super hugged you!",icon_url=(person.avatar_url))
   embed.set_image(url=url.url)
   embed.set_footer(text="powered using the asuna.ga api")
   
@@ -383,7 +436,7 @@ async def hug2(ctx,*, Member: BetterMemberConverter=None):
     try:
       await target.send(content=target.mention,embed=embed)
     except discord.Forbidden:
-      await ctx.author.send("Failed Dming them...")
+      await ctx.author.send("Failed DM'ing them...")
 
 def warn_permission(ctx):
   if isinstance(ctx.channel, discord.TextChannel):
@@ -396,7 +449,7 @@ def warn_permission(ctx):
 async def spam(ctx):
   embed=discord.Embed(color=random.randint(0, 16777215))
   embed.set_image(url="https://i.imgur.com/1LckTTu.gif")
-  await ctx.send(content="I hate spam",embed=embed)
+  await ctx.send(content="I hate spam.",embed=embed)
 
 @client.command()
 async def warn(ctx,Member: BetterMemberConverter = None):
@@ -662,7 +715,6 @@ async def webhook(ctx,*,args=None):
 
       if isinstance(ctx.channel, discord.TextChannel):
         await ctx.message.delete()
-
   
 
 @client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
@@ -690,6 +742,8 @@ async def mchistory(ctx,*,args=None):
     
     embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
     await ctx.send(embed=embed)
+
+
 
 @client.command(help="a command to get the avatar of a user",brief="using the userinfo technology it now powers avatar grabbing.")
 async def avatar(ctx,*,user: BetterUserconverter = None): 
@@ -830,17 +884,19 @@ async def userinfo(ctx,*,user: BetterUserconverter = None):
 
 @client.event
 async def on_message(message):
-  if isinstance(message.channel, discord.DMChannel):
-    time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
-    embed_message = discord.Embed(title=message.content, description=time_used, color=random.randint(0, 16777215))
-    embed_message.set_author(name=f"Direct Message From {message.author}:",icon_url=(message.author.avatar_url))
-    embed_message.set_footer(text = f"{message.author.id}")
-    embed_message.set_thumbnail(url = "https://i.imgur.com/ugKZ7lW.png")
-    channel_usage=client.get_channel(738912143679946783)
-    embed_message.add_field(name="Sent To:",value=str(channel_usage))
-    await channel_usage.send(embed=embed_message)
-  
   test=await client.get_context(message)
+
+  if isinstance(message.channel, discord.DMChannel):
+    if message.author.id != client.user.id and test.valid == False:
+      time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
+      embed_message = discord.Embed(title=message.content, description=time_used, color=random.randint(0, 16777215))
+      embed_message.set_author(name=f"Direct Message From {message.author}:",icon_url=(message.author.avatar_url))
+      embed_message.set_footer(text = f"{message.author.id}")
+      embed_message.set_thumbnail(url = "https://i.imgur.com/ugKZ7lW.png")
+      channel_usage=client.get_channel(738912143679946783)
+      embed_message.add_field(name="Sent To:",value=str(channel_usage))
+      await channel_usage.send(embed=embed_message)
+
   if (test.valid) == False:
     if test.prefix != None and not client.user.mentioned_in(message):
       if test.command == None:
