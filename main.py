@@ -65,29 +65,21 @@ class BetterMemberConverter(commands.Converter):
 class BetterUserconverter(commands.Converter):
   async def convert(self, ctx, argument):
     try:
-      user=await commands.UserConverter().convert(ctx,argument)
+     user=await commands.UserConverter().convert(ctx,argument)
     except commands.UserNotFound:
       user = None
     if not user and ctx.guild:
       user=ctx.guild.get_member_named(argument)
     if user == None:
-      match = re.compile(r'([0-9]{15,21})$').match(argument) or re.match(r'<@!?([0-9]+)>$', argument)
-      if match:
-        argument = match.group(1)
 
-      #if not match:
-        #match2 = re.match(r'<@&([0-9]+)>$',argument)
-        #if match2:
-          #argument2=match2.group(1)
-          #role=ctx.guild.get_role(int(argument2))
-          #going to be around when 1.16 comes around lol
-      if argument.isdigit():
-        user=client.get_user(int(argument))
-        if user == None:
-          try:
-            user=await client.fetch_user(int(argument))
-          except:
-            user = None
+      match2 = re.match(r'<@&([0-9]+)>$',argument)
+      if match2:
+        argument2=match2.group(1)
+        role=ctx.guild.get_role(int(argument2))
+        if role.is_bot_managed:
+          for x in role.members:
+            user = x
+
     if user == None:
       tag = re.match(r"#?(\d{4})",argument)
       if tag:
@@ -162,7 +154,6 @@ async def coin(ctx, *, args = None):
     
     await ctx.send(embed=embed)
 
-
   if args is None:
     await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
 
@@ -184,6 +175,7 @@ async def scan(ctx):
     used = True
   for x in ctx.message.attachments:
     analysis = await vt_client.scan_file_async(await x.read(),wait_for_completion=True)
+    print(analysis.json)
     object_info = await vt_client.get_object_async("/analyses/{}", analysis.id)
     print(object_info.id)
   
