@@ -56,7 +56,7 @@ description = "An async python wrapper for the asuna api"
 name = "asuna-api"
 optional = false
 python-versions = "*"
-version = "0.2.3.1"
+version = "0.2.4"
 
 [package.dependencies]
 aiohttp = "*"
@@ -174,7 +174,7 @@ description = "DNS toolkit"
 name = "dnspython"
 optional = false
 python-versions = ">=3.6"
-version = "2.0.0"
+version = "2.1.0"
 
 [package.extras]
 curio = ["curio (>=1.2)", "sniffio (>=1.1)"]
@@ -218,14 +218,6 @@ six = "*"
 [package.extras]
 docs = ["sphinx", "sphinx-autobuild", "sphinx-rtd-theme", "sphinx-click", "towncrier"]
 tests = ["pytest (>=6.1)", "pytest-cov", "flake8", "testfixtures", "mock", "six"]
-
-[[package]]
-category = "main"
-description = "Backport of HTMLParser from python 2.7"
-name = "htmlparser"
-optional = false
-python-versions = "*"
-version = "0.0.2"
 
 [[package]]
 category = "main"
@@ -350,14 +342,6 @@ requests = ["requests (>=2.24.0,<3.0.0)"]
 
 [[package]]
 category = "main"
-description = "Python package to parse, read and write Microsoft OLE2 files (Structured Storage or Compound Document, Microsoft Office)"
-name = "olefile"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.46"
-
-[[package]]
-category = "main"
 description = "Python Imaging Library (Fork)"
 name = "pillow"
 optional = false
@@ -405,17 +389,6 @@ six = "*"
 [package.extras]
 docs = ["sphinx (>=1.6.5)", "sphinx-rtd-theme"]
 tests = ["pytest (>=3.2.1,<3.3.0 || >3.3.0)", "hypothesis (>=3.27.0)"]
-
-[[package]]
-category = "main"
-description = "Extensions to the standard Python datetime module"
-name = "python-dateutil"
-optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
-version = "2.8.1"
-
-[package.dependencies]
-six = ">=1.5"
 
 [[package]]
 category = "main"
@@ -477,30 +450,6 @@ aiohttp = "*"
 
 [[package]]
 category = "main"
-description = "module for creating simple ASCII tables"
-name = "texttable"
-optional = false
-python-versions = "*"
-version = "1.6.3"
-
-[[package]]
-category = "main"
-description = "VirusTotal Full API"
-name = "vt"
-optional = false
-python-versions = "*"
-version = "3.1.3.7"
-
-[package.dependencies]
-HTMLParser = "*"
-olefile = ">=0.42"
-python-dateutil = ">=1.5"
-requests = ">=2.5.0"
-six = "*"
-texttable = "*"
-
-[[package]]
-category = "main"
 description = "The official Python client library for VirusTotal"
 name = "vt-py"
 optional = false
@@ -558,7 +507,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "5e99005b971a5e43c0640b3fc301e353b347399ee16c7203161f3269ec0ef4d5"
+content-hash = "e5a1535e98a69a41b611736988dc329760f82bbc1904e3eb92d0b6a4d5f348a6"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -589,7 +538,7 @@ astunparse = [
     {file = "astunparse-1.6.3.tar.gz", hash = "sha256:5ad93a8456f0d084c3456d059fd9a92cce667963232cbf763eac3bc5b7940872"},
 ]
 asuna-api = [
-    {file = "asuna_api-0.2.3.1.tar.gz", hash = "sha256:efaba6a41c6cbcb84032b42b41df5f4bedfdb773dde08be87f97e24efda51d8b"},
+    {file = "asuna_api-0.2.4.tar.gz", hash = "sha256:103c3ef16106effe776472888ed203e1a93656678c20239bc828ea3b0fe6f12d"},
 ]
 async-timeout = [
     {file = "async-timeout-3.0.1.tar.gz", hash = "sha256:0c3c816a028d47f659d6ff5c745cb2acf1f966da1fe5c19c77a70282b25f4c5f"},
@@ -662,8 +611,8 @@ django = [
     {file = "Django-3.1.5.tar.gz", hash = "sha256:2d78425ba74c7a1a74b196058b261b9733a8570782f4e2828974777ccca7edf7"},
 ]
 dnspython = [
-    {file = "dnspython-2.0.0-py3-none-any.whl", hash = "sha256:40bb3c24b9d4ec12500f0124288a65df232a3aa749bb0c39734b782873a2544d"},
-    {file = "dnspython-2.0.0.zip", hash = "sha256:044af09374469c3a39eeea1a146e8cac27daec951f1f1f157b1962fc7cb9d1b7"},
+    {file = "dnspython-2.1.0-py3-none-any.whl", hash = "sha256:95d12f6ef0317118d2a1a6fc49aac65ffec7eb8087474158f42f26a639135216"},
+    {file = "dnspython-2.1.0.zip", hash = "sha256:e4a87f0b573201a0f3727fa18a516b055fd1107e0e5477cded4a2de497df1dd4"},
 ]
 flask = [
     {file = "Flask-1.1.2-py2.py3-none-any.whl", hash = "sha256:8a4fdd8936eba2512e9c85df320a37e694c93945b33ef33c89946a340a238557"},
@@ -672,9 +621,6 @@ flask = [
 gtts = [
     {file = "gTTS-2.2.1-py3-none-any.whl", hash = "sha256:900d086f3ac9534f53bf46e815697d8968a2495d1594872bba82c13eeb5ddd06"},
     {file = "gTTS-2.2.1.tar.gz", hash = "sha256:93d8f386336c81d3b1d257ed0b4d5ef72660dc38484b0e0df7849b161cbe6324"},
-]
-htmlparser = [
-    {file = "HTMLParser-0.0.2.tar.gz", hash = "sha256:c5681d3d8642767739e4c08b1b19b3ff44263280ff1923b1c5424052bedb2087"},
 ]
 humanize = [
     {file = "humanize-3.2.0-py3-none-any.whl", hash = "sha256:d47d80cd47c1511ed3e49ca5f10c82ed940ea020b45b49ab106ed77fa8bb9d22"},
@@ -764,9 +710,6 @@ multidict = [
 "mystbin.py" = [
     {file = "mystbin.py-1.0.1-py3-none-any.whl", hash = "sha256:319d71998298202f01757df7363059cefeee70fd15118e114f45df7880300747"},
     {file = "mystbin.py-1.0.1.tar.gz", hash = "sha256:1580f0f81982016e8cffd4eb575bb03e39149cd1da0a77bcad76408c2fd82866"},
-]
-olefile = [
-    {file = "olefile-0.46.zip", hash = "sha256:133b031eaf8fd2c9399b78b8bc5b8fcbe4c31e85295749bb17a87cba8f3c3964"},
 ]
 pillow = [
     {file = "Pillow-8.1.0-cp36-cp36m-macosx_10_10_x86_64.whl", hash = "sha256:d355502dce85ade85a2511b40b4c61a128902f246504f7de29bbeec1ae27933a"},
@@ -891,10 +834,6 @@ pynacl = [
     {file = "PyNaCl-1.3.0-cp38-cp38-win_amd64.whl", hash = "sha256:bf459128feb543cfca16a95f8da31e2e65e4c5257d2f3dfa8c0c1031139c9c92"},
     {file = "PyNaCl-1.3.0.tar.gz", hash = "sha256:0c6100edd16fefd1557da078c7a31e7b7d7a52ce39fdca2bec29d4f7b6e7600c"},
 ]
-python-dateutil = [
-    {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
-    {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
-]
 pytz = [
     {file = "pytz-2020.5-py2.py3-none-any.whl", hash = "sha256:16962c5fb8db4a8f63a26646d8886e9d769b6c511543557bc84e9569fb9a9cb4"},
     {file = "pytz-2020.5.tar.gz", hash = "sha256:180befebb1927b16f6b57101720075a984c019ac16b1b7575673bea42c6c3da5"},
@@ -917,13 +856,6 @@ sqlparse = [
 ]
 sr-api = [
     {file = "sr_api-1.1.3.tar.gz", hash = "sha256:e3279176071a514b155cdeacf9571c46a6e3760d35df8ced323dd8b03c54be3a"},
-]
-texttable = [
-    {file = "texttable-1.6.3-py2.py3-none-any.whl", hash = "sha256:f802f2ef8459058736264210f716c757cbf85007a30886d8541aa8c3404f1dda"},
-    {file = "texttable-1.6.3.tar.gz", hash = "sha256:ce0faf21aa77d806bbff22b107cc22cce68dc9438f97a2df32c93e9afa4ce436"},
-]
-vt = [
-    {file = "vt-3.1.3.7.tar.gz", hash = "sha256:58eeb14fddf8d4dc17fa12170176a6e99c94df83cb0f49ac8a2f21f7513bf63c"},
 ]
 vt-py = [
     {file = "vt-py-0.6.1.tar.gz", hash = "sha256:1c91e8b1c9d1d797bafe297b9176177691a84f262d9d031aa2addbcb8b9b969d"},
