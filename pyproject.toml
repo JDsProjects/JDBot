@@ -19,7 +19,7 @@ aioimgur = "^0.1.0"
 wavelink = "^0.9.6"
 vt-py = "^0.6.1"
 image = "^1.5.33"
-asuna-api = "^0.2.3"
+asuna-api = "^0.2.5"
 
 [tool.poetry.dev-dependencies]
 
