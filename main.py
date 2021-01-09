@@ -20,10 +20,14 @@ import gtts
 import sr_api
 import asuna_api
 import aioimgur
+import chardet
+import mystbin
 
 async def status_task():
   while True:
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name="the return of JDBot"))
+    await asyncio.sleep(40)
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(client.guilds)} servers | {len(client.users)} users"))
     await asyncio.sleep(40)
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="the new updates coming soon..."))
     await asyncio.sleep(40)
@@ -77,8 +81,10 @@ class BetterUserconverter(commands.Converter):
         argument2=match2.group(1)
         role=ctx.guild.get_role(int(argument2))
         if role.is_bot_managed:
-          for x in role.members:
-            user = x
+            user=role.tags.bot_id
+            user = client.get_user(user)
+            if user is None:
+              user = await client.fetch_user(user)
 
     if user == None:
       tag = re.match(r"#?(\d{4})",argument)
@@ -104,12 +110,12 @@ async def triggered_converter(url,ctx):
   embed.set_footer(text="powered by some random api")
   await ctx.send(embed=embed)
 
-@client.command()
+@client.command(help="sends pong and the time it took to do so.")
 async def ping(ctx):
   await ctx.send("Pong")
   await ctx.send(f"Response time: {client.latency*1000}")
 
-@client.command()
+@client.command(help="gives you the digits of pi that Python knows")
 async def pi(ctx):
   await ctx.send(math.pi)
 
@@ -157,31 +163,294 @@ async def coin(ctx, *, args = None):
   if args is None:
     await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
 
-@client.command()
+@client.command(help="a command to give information about a file")
+async def file(ctx):
+  if len(ctx.message.attachments) < 1:
+    await ctx.send(ctx.message.attachments)
+    await ctx.send("no file submitted")
+  if len(ctx.message.attachments) > 0:
+    embed = discord.Embed(title="Attachment info",color=random.randint(0, 16777215))
+    for x in ctx.message.attachments:
+      embed.add_field(name=f"ID: {x.id}",value=f"[{x.filename}]({x.url})")
+      embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
+    await ctx.send(embed=embed,content="\nThat's good")
+
+@client.command(help="reverses text")
 async def reverse(ctx,*,args=None):
   if args:
     await ctx.send(args[::-1])
   if args is None:
     await ctx.send("Try sending actual to reverse")
 
-@client.command()
-async def scan(ctx):
+@client.command(help="gives you an invite to invite the bot.")
+async def invite(ctx):
+  embed = discord.Embed(title="Invite link:",color=random.randint(0, 16777215))
+  embed.add_field(name="JDBot invite:",value=f"[JDBot invite url](https://discord.com/oauth2/authorize?client_id={client.user.id}&scope=bot&permissions=8)")
+  embed.add_field(name="Non Markdowned invite",value=f"https://discord.com/oauth2/authorize?client_id={client.user.id}&scope=bot&permissions=8")
+  embed.set_thumbnail(url=client.user.avatar_url)
+  await ctx.send(embed=embed)
+
+@client.command(help="gives you who the owner is.")
+async def owner(ctx):
+  info = await client.application_info()
+  if info.team is None:
+    owner = info.owner.id
+  if info.team:
+    owner = info.team.owner_id
+
+  support_guild=client.get_guild(736422329399246990)
+  owner=support_guild.get_member(owner)
+  if owner.bot:
+    user_type = "Bot"
+  if not owner.bot:
+    user_type = "User"
+
+  guilds_list=[guild for guild in client.guilds if guild.get_member(owner.id)]
+  if not guilds_list:
+    guild_list = "None"
+
+  x = 0
+  for g in guilds_list:
+    if x < 1:
+      guild_list = g.name
+    if x > 0:
+      guild_list = guild_list + f", {g.name}"
+    x = x + 1
+  
+  if owner:
+    nickname = str(owner.nick)
+    joined_guild = owner.joined_at.strftime('%m/%d/%Y %H:%M:%S')
+    status = str(owner.status).upper()
+    highest_role = owner.roles[-1]
+  
+  if owner is None:
+    nickname = "None"
+    joined_guild = "N/A"
+    status = "Unknown"
+    for guild in client.guilds:
+      member=guild.get_member(owner.id)
+      if member:
+        status=str(member.status).upper()
+        break
+    highest_role = "None Found"
+  
+  
+  embed=discord.Embed(title=f"Bot Owner: {owner}",description=f"Type: {user_type}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+  embed.add_field(name="Username:", value = owner.name)
+  embed.add_field(name="Discriminator:",value=owner.discriminator)
+  embed.add_field(name="Nickname: ", value = nickname)
+  embed.add_field(name="Joined Discord: ",value = (owner.created_at.strftime('%m/%d/%Y %H:%M:%S')))
+  embed.add_field(name="Joined Guild: ",value = joined_guild)
+  embed.add_field(name="Part of Guilds:", value=guild_list)
+  embed.add_field(name="ID:",value=owner.id)
+  embed.add_field(name="Status:",value=status)
+  embed.add_field(name="Highest Role:",value=highest_role)
+  embed.set_image(url=owner.avatar_url)
+  await ctx.send(embed=embed)
+
+@client.command(help="a command to find the nearest emoji")
+async def emote(ctx,*,args=None):
+  if args is None:
+    await ctx.send("Please specify an emote")
+  if args:
+    emoji=discord.utils.get(client.emojis,name=args)
+    if emoji is None:
+      await ctx.send("we haven't found anything")
+    if emoji:
+      await ctx.send(emoji)
+
+@client.command(help="this is a way to get the nearest channel.")
+async def closest_channel(ctx,*,args=None):
+  if args is None:
+    await ctx.send("Please specify a channel")
+  
+  if args:
+    if isinstance(ctx.channel, discord.TextChannel):
+      channel=discord.utils.get(ctx.guild.channels,name=args)
+      if channel:
+        await ctx.send(channel.mention)
+      if channel is None:
+        await ctx.send("Unforantely we haven't found anything")
+
+    if isinstance(ctx.channel,discord.DMChannel):
+      await ctx.send("You can't use it in a DM.")
+
+@client.command(help="a command to get the closest user.")
+async def closest_user(ctx,*,args=None):
+  if args is None:
+    await ctx.send("please specify a user")
+  if args:
+    from difflib import SequenceMatcher
+    userNearest = discord.utils.get(client.users,name=args)
+    user_nick = discord.utils.get(client.users,display_name=args)
+    if userNearest is None:
+      userNearest = sorted(client.users, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
+    if user_nick is None:
+      user_nick = sorted(client.users, key=lambda x: SequenceMatcher(None, x.display_name,args).ratio())[-1]
+    await ctx.send(f"Username: {userNearest}")
+    await ctx.send(f"Display name: {user_nick}")
+  
+  if isinstance(ctx.channel, discord.TextChannel):
+    member_list = []
+    for x in ctx.guild.members:
+      if x.nick is None:
+        pass
+      if x.nick:
+        member_list.append(x)
+    
+    nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick,args).ratio())[-1] 
+    await ctx.send(f"Nickname: {nearest_server_nick}")
+
+  if isinstance(ctx.channel,discord.DMChannel):
+    await ctx.send("You unforantely don't get the last value.")  
+
+@client.command(help="a command to roll d20",aliases=["roll20"])
+async def dice_roll20(ctx):
+  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,20)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+  embed_message.set_footer(text = f"{ctx.author.id}")
+  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
+  embed_message.set_author(name=f"d20 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
+  embed_message.set_image(url="https://i.imgur.com/9dbBkqj.gif")
+  await ctx.send(embed=embed_message)
+
+@client.command(help="a command to roll d6",aliases=["roll6"])
+async def dice_roll6(ctx):
+  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,6)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+  embed_message.set_footer(text = f"{ctx.author.id}")
+  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
+  embed_message.set_author(name=f"d6 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
+  embed_message.set_image(url="https://i.imgur.com/6ul8ZGY.gif")
+  await ctx.send(embed=embed_message)
+
+@client.command(help=" a command to roll d10",aliases=["roll10"])
+async def dice_roll10(ctx):
+  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,10)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+  embed_message.set_footer(text = f"{ctx.author.id}")
+  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
+  embed_message.set_author(name=f"d10 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
+  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
+  await ctx.send(embed=embed_message)
+
+@client.command(help=" a command to roll d100",aliases=["roll100"])
+async def dice_roll100(ctx):
+  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,100)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+  embed_message.set_footer(text = f"{ctx.author.id}")
+  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
+  embed_message.set_author(name=f"d100 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
+  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
+  await ctx.send(embed=embed_message)
+
+@client.command(help=" a command to roll d12",aliases=["roll12"])
+async def dice_roll12(ctx):
+  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,12)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+  embed_message.set_footer(text = f"{ctx.author.id}")
+  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
+  embed_message.set_author(name=f"d12 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
+  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
+  await ctx.send(embed=embed_message)
+
+@client.command(help=" a command to roll d8",aliases=["roll8"])
+async def dice_roll8(ctx):
+  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,8)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+  embed_message.set_footer(text = f"{ctx.author.id}")
+  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
+  embed_message.set_author(name=f"d8 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
+  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
+  await ctx.send(embed=embed_message)
+
+@client.command(help=" a command to roll d4",aliases=["roll4"])
+async def dice_roll4(ctx):
+  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,4)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+  embed_message.set_footer(text = f"{ctx.author.id}")
+  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
+  embed_message.set_author(name=f"d4 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
+  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
+  await ctx.send(embed=embed_message)
+
+@client.command(help="a command to tell you the channel id")
+async def this(ctx):
+  await ctx.send(ctx.channel.id)
+
+@client.command(help="a way to view open source",brief="you can see the open source with the link it provides",aliases=["open source"])
+async def open_source(ctx):
+  embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
+  embed.set_author(name=f"{client.user}'s source code:",icon_url=(client.user.avatar_url))
+  await ctx.send(embed=embed)
+
+@client.command(help=" a command to email you(work in progress)",brief="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
+async def email(ctx,*args):
+  print(args)
+
+@client.command(help="a command to backup text",brief="please don't upload any private files that aren't meant to be seen")
+async def text_backup(ctx):
+  if ctx.message.attachments:
+    for x in ctx.message.attachments:
+      file=await x.read()
+      if len(file) > 0:
+        encoding=chardet.detect(file)["encoding"]
+        if encoding:
+          text = file.decode(encoding)
+          mystbin_client = mystbin.Client()
+          paste = await mystbin_client.post(text)
+          await ctx.send(paste.url)
+          await mystbin_client.close()
+        if encoding is None:
+          await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
+      if len(file ) < 1:
+        await ctx.send("this doesn't contain any bytes.")
+
+@client.command(help=" a command that can scan urls(work in progress), and files",brief="please don't upload anything secret or send any secret url thank you :D")
+async def scan(ctx, *, args = None):
   import vt
   vt_client = vt.Client(os.environ["virustotal_key"])
   used = None
+
+  if args:
+    pass
 
   if len(ctx.message.attachments) > 0:
     await ctx.send("If this takes a while, it probably means it was never on Virustotal before")
     used = True
   for x in ctx.message.attachments:
     analysis = await vt_client.scan_file_async(await x.read(),wait_for_completion=True)
-    print(analysis.json)
     object_info = await vt_client.get_object_async("/analyses/{}", analysis.id)
-    print(object_info.id)
+  
   
   if used:
     await ctx.send(content="Scan completed")
   await vt_client.close_async()
+
+@client.command(help="gives the id of the current guild or DM if you are in one.")
+async def guild_get(ctx):
+  if isinstance(ctx.channel, discord.TextChannel):
+    await ctx.send(content=ctx.guild.id) 
+
+  if isinstance(ctx.channel,discord.DMChannel):
+    await ctx.send(ctx.channel.id)
+
+@client.command(help="a command to give information about the team",brief="this command works if you are in team otherwise it will just give the owner.")
+async def team(ctx):
+  information=await client.application_info()
+  if information.team == None:
+    true_owner=information.owner
+    team_members = []
+  if information.team != None:
+    true_owner = information.team.owner
+    team_members = information.team.members
+  embed=discord.Embed(title=information.name,color=random.randint(0, 16777215))
+  embed.add_field(name="Owner",value=true_owner)
+  embed.set_footer(text=f"ID: {true_owner.id}")
+  embed.set_image(url=(information.icon_url))
+  for x in team_members:
+    embed.add_field(name=x,value=x.id)
+  await ctx.send(embed=embed)
+
+@client.command(help="get the stats of users and members in the bot",brief="this is an alternative that just looking at the custom status time to time.")
+async def stats(ctx):
+  embed = discord.Embed(title="Bot stats",color=random.randint(0, 16777215))
+  embed.add_field(name="Guild count",value=len(client.guilds))
+  embed.add_field(name="User Count:",value=len(client.users))
+  await ctx.send(embed=embed)
 
 @client.command(help="This gives random history using Sp46's api.",brief="a command that uses SP46's api's random history command to give you random history responses")
 async def random_history(ctx,*,args=None):
@@ -204,7 +473,6 @@ async def google_tts(ctx,text):
 
 @client.command(help="a command to talk to Google TTS",brief="using the power of the GTTS module you can now do tts")
 async def tts(ctx,*,args=None):
-  import chardet
   if args:
     await google_tts(ctx,args)
   
@@ -230,7 +498,7 @@ async def say(ctx,*,args=None):
   if args:
     await ctx.send(args)
 
-@client.command()
+@client.command(help="takes a .png attachment or your avatar and makes a triggered version.")
 async def triggered(ctx):
   y = 0
   if len(ctx.message.attachments) > 0:
@@ -437,13 +705,18 @@ def warn_permission(ctx):
   if isinstance(ctx.channel,discord.DMChannel):
     return True
 
-@client.command()
+@client.command(help="a command to send I hate spam.")
 async def spam(ctx):
   embed=discord.Embed(color=random.randint(0, 16777215))
   embed.set_image(url="https://i.imgur.com/1LckTTu.gif")
   await ctx.send(content="I hate spam.",embed=embed)
 
-@client.command()
+@client.command(help="work in progress")
+async def headpat(ctx):
+  pass
+
+
+@client.command(help="a command to warn people, but if you aren't admin it doesn't penalize.")
 async def warn(ctx,Member: BetterMemberConverter = None):
   if warn_permission(ctx):
 
@@ -526,13 +799,13 @@ async def neko(ctx):
   embed.set_footer(text="powered using the asuna.ga api")
   await ctx.send(embed=embed)
 
-@client.command()
+@client.command(help="Currently work in progress")
 async def work(ctx,*,args=None):
   Member = ctx.author.id
   if args is None:
     money_system.add_money(Member,10,0)
 
-@client.command(help="a command to send how much money you have",brief="using the JDBot database you can see how much money you have")
+@client.command(help="a command to send how much money you have(work in progress)",brief="using the JDBot database you can see how much money you have")
 async def balance(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
     Member = ctx.author
@@ -606,11 +879,10 @@ async def facepalm(ctx,*, Member: BetterMemberConverter=None):
     except discord.Forbidden:
       await ctx.author.send("Failed Dming them...")
 
-@client.command()
+@client.command(help="only works with JDJG, but this command is meant to send updates to my webhook")
 async def webhook_update(ctx,*,args=None):
   if await client.is_owner(ctx.author):
     if args:
-
       if isinstance(ctx.channel, discord.TextChannel):
         await ctx.message.delete()
 
@@ -634,7 +906,7 @@ async def webhook_update(ctx,*,args=None):
   if await client.is_owner(ctx.author) is False:
     await ctx.send("You can't use that")
 
-@client.command()
+@client.command(help="a way to create webhooks",brief="make commands with this.")
 async def webhook_create(ctx,arg=None,*,args=None):
   if isinstance(ctx.channel, discord.TextChannel):
     if ctx.author.guild_permissions.manage_webhooks:
@@ -681,7 +953,7 @@ async def webhook_create(ctx,arg=None,*,args=None):
   if isinstance(ctx.channel, discord.DMChannel):
     await ctx.send("You can't use that silly")
 
-@client.command()
+@client.command(help=" a way to send stuff to webhooks.",brief="this uses webhook urls, and sends stuff to them")
 async def webhook(ctx,*,args=None):
   if args is None:
     await ctx.send("You didn't send anything")
@@ -737,7 +1009,7 @@ async def mchistory(ctx,*,args=None):
 
 
 
-@client.command(help="a command to get the avatar of a user",brief="using the userinfo technology it now powers avatar grabbing.")
+@client.command(help="a command to get the avatar of a user",brief="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp",])
 async def avatar(ctx,*,user: BetterUserconverter = None): 
   if user is None:
     user = ctx.author
@@ -872,7 +1144,6 @@ async def userinfo(ctx,*,user: BetterUserconverter = None):
   embed.add_field(name="Highest Role:",value=highest_role)
   embed.set_image(url=user.avatar_url)
   await ctx.send(embed=embed)
-
 
 @client.event
 async def on_message(message):
