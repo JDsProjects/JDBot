@@ -399,6 +399,25 @@ async def text_backup(ctx):
       if len(file ) < 1:
         await ctx.send("this doesn't contain any bytes.")
 
+@client.group(name="tenor",invoke_without_command=True)
+async def tenor(ctx,*,args=None):
+  if args is None:
+    await ctx.send("That doesn't have any value.")
+    await ctx.send("tenor")
+
+@tenor.command(help="work in progress")
+async def shuffle(ctx,*,args=None):
+  if args is None:
+    await ctx.send("That doesn't have any value.")
+    await ctx.send("tenor shuffle")
+
+@tenor.command(help="work in progress",aliases=["tenor-shuffle"])
+async def tenor_shuffle(ctx,*,args):
+  if args is None:
+    await ctx.send("That doesn't have any value.")
+    await ctx.send("tenor shuffle")
+
+
 @client.command(help=" a command that can scan urls(work in progress), and files",brief="please don't upload anything secret or send any secret url thank you :D")
 async def scan(ctx, *, args = None):
   import vt
@@ -406,7 +425,10 @@ async def scan(ctx, *, args = None):
   used = None
 
   if args:
-    pass
+    used = True
+    urls=re.findall(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",args)
+    for x in urls:
+      print(x)
 
   if len(ctx.message.attachments) > 0:
     await ctx.send("If this takes a while, it probably means it was never on Virustotal before")
@@ -415,10 +437,33 @@ async def scan(ctx, *, args = None):
     analysis = await vt_client.scan_file_async(await x.read(),wait_for_completion=True)
     object_info = await vt_client.get_object_async("/analyses/{}", analysis.id)
   
-  
   if used:
     await ctx.send(content="Scan completed")
   await vt_client.close_async()
+
+@client.group(name="apply",invoke_without_command=True)
+async def apply(ctx):
+  await ctx.send("this command is meant to apply")
+
+@apply.command(help="a command to apply for our Bloopers.")
+async def bloopers(ctx,*,args=None):
+  if args is None:
+    await ctx.send("You didn't give us any info.")
+  if args:
+    if isinstance(ctx.message.channel, discord.TextChannel):
+      await ctx.message.delete()
+
+    for x in [708167737381486614,168422909482762240]:
+      apply_user = client.get_user(x)
+    
+    if (apply_user.dm_channel is None):
+      await apply_user.create_dm()
+    
+    embed_message = discord.Embed(title=args,color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+    embed_message.set_author(name=f"Application from {ctx.author}",icon_url=(ctx.author.avatar_url))
+    embed_message.set_footer(text = f"{ctx.author.id}")
+    embed_message.set_thumbnail(url="https://i.imgur.com/PfWlEd5.png")
+    await apply_user.send(embed=embed_message)  
 
 @client.command(help="gives the id of the current guild or DM if you are in one.")
 async def guild_get(ctx):
