@@ -441,6 +441,23 @@ async def scan(ctx, *, args = None):
     await ctx.send(content="Scan completed")
   await vt_client.close_async()
 
+@client.command(help="learn about a secret custom xbox controller",brief="this will give you a message of JDJG's classic wanted xbox design.")
+async def secret_controller(ctx):
+  embed = discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name="Secret Xbox Image:")
+  embed.add_field(name="Body:",value="Zest Orange")
+  embed.add_field(name="Back:",value="Zest Orange")
+  embed.add_field(name="Bumpers:",value="Zest Orange")
+  embed.add_field(name="Triggers:",value="Zest Orange")
+  embed.add_field(name="D-pad:",value="Electric Green")
+  embed.add_field(name="Thumbsticks:",value="Electric Green")
+  embed.add_field(name="ABXY:",value="Colors on Black")
+  embed.add_field(name="View & Menu:",value="White on Black")
+  embed.add_field(name="Engraving(not suggested):",value="JDJG Inc.")
+  embed.set_image(url="https://i.imgur.com/QCh4M2W.png")
+  embed.set_footer(text="This is Xbox's custom controller design that I picked for myself.\nXbox is owned by Microsoft. I don't own the image")
+  await ctx.send(embed=embed)
+
 @client.group(name="apply",invoke_without_command=True)
 async def apply(ctx):
   await ctx.send("this command is meant to apply")
