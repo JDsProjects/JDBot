@@ -234,7 +234,6 @@ async def owner(ctx):
         break
     highest_role = "None Found"
   
-  
   embed=discord.Embed(title=f"Bot Owner: {owner}",description=f"Type: {user_type}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
   embed.add_field(name="Username:", value = owner.name)
   embed.add_field(name="Discriminator:",value=owner.discriminator)
@@ -417,13 +416,49 @@ async def tenor_shuffle(ctx,*,args):
     await ctx.send("That doesn't have any value.")
     await ctx.send("tenor shuffle")
 
+@client.command(help="Oh no Dad Jokes, AHHHHHH!")
+async def dadjoke(ctx):
+  async with aiohttp.ClientSession() as session:
+    async with session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"}) as response:
+      joke=await response.json()
+  embed = discord.Embed(title="Random Dad Joke:",color=random.randint(0, 16777215))
+  embed.set_author(name=f"Dad Joke Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
+  embed.add_field(name="Dad Joke:",value=joke["joke"])
+  embed.set_footer(text=f"View here:\n https://icanhazdadjoke.com/j/{joke['id']}")
+  await ctx.send(embed=embed)
+
+@client.command(help="gets a panel from the xkcd comic",aliases=["astrojoke","astro_joke"])
+async def xkcd(ctx):
+  async with aiohttp.ClientSession() as session:
+    async with session.get("https://xkcd.com/info.0.json") as response:
+      info=await response.json()
+
+  num = random.randint(1,info["num"])
+  async with aiohttp.ClientSession() as session:
+    async with session.get(f"https://xkcd.com/{num}/info.0.json") as comic:
+      epic_json=await comic.json()
+      title = epic_json["title"]
+      embed=discord.Embed(title=f"Title: {title}",color=random.randint(0, 16777215))
+      embed.set_image(url=epic_json["img"])
+      embed.set_footer(text=f"Made on {epic_json['month']}/{epic_json['day']}/{epic_json['year']}")
+      await ctx.send(embed=embed)
+
+@client.command(help="a set of rules we will follow")
+async def promise(ctx):
+  embed=discord.Embed(title="Promises we will follow:",color=random.randint(0, 16777215))
+  embed.add_field(name="Rule 1:",value="if you are worried about what the bot may collect, please send a DM to the bot, and we will try to compile the data the bot may have on you.")
+  embed.add_field(name="Rule 2:",value="in order to make sure our bot is safe, we will be making sure the token is secure and making sure anyone who works on the project is very trustworthy.")
+  embed.add_field(name="Rule 3:",value="we will not nuke your servers, as this happened to us before and we absolutely hated it.")
+  embed.add_field(name="Rule 4:",value="We will also give you a list of suspicious people")
+  embed.add_field(name="Rule 5:",value="we also made sure our code is open source so you can see what it does.")
+  embed.add_field(name="Rule 6:",value="We will also let you ask us questions directly, just DM me directly(the owner is listed in the owner command(and anyone should be able to friend me)")
+  await ctx.send(embed=embed)
 
 @client.command(help=" a command that can scan urls(work in progress), and files",brief="please don't upload anything secret or send any secret url thank you :D")
 async def scan(ctx, *, args = None):
   import vt
   vt_client = vt.Client(os.environ["virustotal_key"])
   used = None
-
   if args:
     used = True
     urls=re.findall(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",args)
@@ -441,6 +476,38 @@ async def scan(ctx, *, args = None):
     await ctx.send(content="Scan completed")
   await vt_client.close_async()
 
+@client.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(work in progress)")
+async def scan_guild(ctx):
+  with open('sus_users.json', 'r') as f:
+    sus_users=json.load(f)
+  if isinstance(ctx.channel, discord.TextChannel):
+    count = 0
+    for x in sus_users:
+      user=ctx.guild.get_member(int(x))
+      if user:
+        count = count + 1
+        await ctx.send(f"Found {x}. \nReason: {sus_users[x]}")
+    if count < 1:
+      await ctx.send("No Bad users found.")
+  if isinstance(ctx.channel,discord.DMChannel):
+    await ctx.send("please use the global version")
+
+@client.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (work in progress")
+async def report(ctx,*,args=None):
+  if args:
+    jdjg = client.get_user(168422909482762240)
+    if (jdjg.dm_channel is None):
+      await jdjg.create_dm()
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"Report by {ctx.author}",icon_url=(ctx.author.avatar_url))
+    embed.add_field(name="Details:",value=args)
+    embed.set_footer(text=f"Reporter's ID is {ctx.author.id}")
+    await jdjg.dm_channel.send(embed=embed)
+    await ctx.send(content="report sent to JDJG",embed=embed)
+  
+  if args is None:
+    await ctx.send("You didn't give enough information to use.")
+
 @client.command(help="learn about a secret custom xbox controller",brief="this will give you a message of JDJG's classic wanted xbox design.")
 async def secret_controller(ctx):
   embed = discord.Embed(color=random.randint(0, 16777215))
@@ -454,9 +521,39 @@ async def secret_controller(ctx):
   embed.add_field(name="ABXY:",value="Colors on Black")
   embed.add_field(name="View & Menu:",value="White on Black")
   embed.add_field(name="Engraving(not suggested):",value="JDJG Inc.")
+  embed.add_field(name="Disclaimer:",value="I do not work at microsoft,or suggest you buy this I just wanted a place to represent a controller that I designed a while back.")
   embed.set_image(url="https://i.imgur.com/QCh4M2W.png")
   embed.set_footer(text="This is Xbox's custom controller design that I picked for myself.\nXbox is owned by Microsoft. I don't own the image")
   await ctx.send(embed=embed)
+
+@client.command(help="emojis command(work in progress)")
+async def emoji(ctx,*emojis: typing.Union[discord.PartialEmoji, str]):
+  for x in emojis:
+    if isinstance(x,discord.PartialEmoji):
+      embed = discord.Embed(title=f"Emoji: **{x.name}**",color=random.randint(0, 16777215))
+      embed.set_image(url=x.url)
+      embed.set_footer(text=f"Emoji ID:{x.id}")
+      await ctx.send(embed=embed)
+    else:
+      pass
+
+@client.command(help="a command to give a list of servers(owner only)")
+async def servers(ctx):
+  if await client.is_owner(ctx.author):
+    send_list = [""]
+    guild_list = ["%d %s %d %s" % (len(g.members), g.name, g.id, (g.system_channel or g.text_channels[0]).mention) for g in client.guilds]
+    for i in guild_list:
+      if len(send_list[-1] + i) < 1000:
+        send_list[-1] += i + "\n"
+      else:
+        send_list += [i + "\n"]
+    if (ctx.author.dm_channel is None):
+      await ctx.author.create_dm()
+    await ctx.author.dm_channel.send("\n Servers:")
+    for i in send_list:
+      await ctx.author.dm_channel.send(i) 
+  if await client.is_owner(ctx.author) is False:
+    await ctx.send("You can't use that it's owner only")
 
 @client.group(name="apply",invoke_without_command=True)
 async def apply(ctx):
@@ -1059,17 +1156,11 @@ async def mchistory(ctx,*,args=None):
     y = 0
     for x in minecraft_info.history:
       if y > 0:
-        username = x["name"]
-        date_changed=x["changedToAt"]
-        time_changed=x["timeChangedAt"]
-        embed.add_field(name=f"Username:\n{username}",value=f"Date Changed:\n{date_changed}\n \nTime Changed: \n {time_changed}")
+        embed.add_field(name=f"Username:\n{x['name']}",value=f"Date Changed:\n{x['changedToAt']}\n \nTime Changed: \n {x['timeChangedAt']}")
 
       y = y + 1
-    
     embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
     await ctx.send(embed=embed)
-
-
 
 @client.command(help="a command to get the avatar of a user",brief="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp",])
 async def avatar(ctx,*,user: BetterUserconverter = None): 
@@ -1129,7 +1220,6 @@ async def guildinfo(ctx,guild):
   embed.add_field(name="Usable Emojis",value=usable_emojis)
 
   await ctx.send(embed=embed)
-
 
 @client.command(aliases=["server_info","guild_fetch","guild_info","fetch_guild",])
 async def serverinfo(ctx,*,args=None):
@@ -1245,6 +1335,5 @@ async def on_error(event,*args,**kwargs):
 
 
 B.b()
-
 client.loop.create_task(startup())
 client.run(os.environ["classic_token"])
