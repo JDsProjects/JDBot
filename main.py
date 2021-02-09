@@ -12,7 +12,7 @@ import typing
 import re
 import asyncio
 import datetime
-from io import BytesIO
+import io
 import DatabaseConfig
 import DatabaseControl
 import money_system
@@ -22,6 +22,9 @@ import asuna_api
 import aioimgur
 import chardet
 import mystbin
+import async_cse
+from difflib import SequenceMatcher
+import time
 
 async def status_task():
   while True:
@@ -36,8 +39,7 @@ async def startup():
   await client.wait_until_ready()
   await status_task()
 
-logging.basicConfig(level=logging.WARNING)
-ratelimit_detection=logging.Filter(name='WARNING:discord.http:We are being rate limited.')
+logging.basicConfig(level=logging.INFO)
 
 client = ClientConfig.client
 
@@ -110,12 +112,12 @@ async def triggered_converter(url,ctx):
   embed.set_footer(text="powered by some random api")
   await ctx.send(embed=embed)
 
-@client.command(help="sends pong and the time it took to do so.")
+@client.command(brief="sends pong and the time it took to do so.")
 async def ping(ctx):
   await ctx.send("Pong")
   await ctx.send(f"Response time: {client.latency*1000}")
 
-@client.command(help="gives you the digits of pi that Python knows")
+@client.command(brief="gives you the digits of pi that Python knows")
 async def pi(ctx):
   await ctx.send(math.pi)
 
@@ -125,7 +127,7 @@ async def on_ready():
   print(f"Logged in as {client.user}")
   print(f"Id: {client.user.id}")
 
-@client.command(help="a command meant to flip coins",brief="commands to flip coins, etc.")
+@client.command(brief="a command meant to flip coins",help="commands to flip coins, etc.")
 async def coin(ctx, *, args = None):
   if args:
     value = random.choice([True,False]) 
@@ -163,7 +165,7 @@ async def coin(ctx, *, args = None):
   if args is None:
     await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
 
-@client.command(help="a command to give information about a file")
+@client.command(brief="gives info about a file")
 async def file(ctx):
   if len(ctx.message.attachments) < 1:
     await ctx.send(ctx.message.attachments)
@@ -175,14 +177,14 @@ async def file(ctx):
       embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
     await ctx.send(embed=embed,content="\nThat's good")
 
-@client.command(help="reverses text")
+@client.command(brief="reverses text")
 async def reverse(ctx,*,args=None):
   if args:
     await ctx.send(args[::-1])
   if args is None:
     await ctx.send("Try sending actual to reverse")
 
-@client.command(help="gives you an invite to invite the bot.")
+@client.command(brief="gives you an invite to invite the bot.")
 async def invite(ctx):
   embed = discord.Embed(title="Invite link:",color=random.randint(0, 16777215))
   embed.add_field(name="JDBot invite:",value=f"[JDBot invite url](https://discord.com/oauth2/authorize?client_id={client.user.id}&scope=bot&permissions=8)")
@@ -190,7 +192,7 @@ async def invite(ctx):
   embed.set_thumbnail(url=client.user.avatar_url)
   await ctx.send(embed=embed)
 
-@client.command(help="gives you who the owner is.")
+@client.command(brief="gives you who the owner is.")
 async def owner(ctx):
   info = await client.application_info()
   if info.team is None:
@@ -247,7 +249,7 @@ async def owner(ctx):
   embed.set_image(url=owner.avatar_url)
   await ctx.send(embed=embed)
 
-@client.command(help="a command to find the nearest emoji")
+@client.command(brief="a command to find the nearest emoji")
 async def emote(ctx,*,args=None):
   if args is None:
     await ctx.send("Please specify an emote")
@@ -258,7 +260,19 @@ async def emote(ctx,*,args=None):
     if emoji:
       await ctx.send(emoji)
 
-@client.command(help="this is a way to get the nearest channel.")
+@client.command(help="a different method to find the nearest emoji")
+async def emote2(ctx,*,args=None):
+  if args is None:
+    await ctx.send("Please specify an emote")
+  if args:
+    emoji = sorted(client.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
+
+    if emoji is None:
+      await ctx.send("we haven't found anything")
+    if emoji:
+      await ctx.send(emoji)
+
+@client.command(brief="this is a way to get the nearest channel.")
 async def closest_channel(ctx,*,args=None):
   if args is None:
     await ctx.send("Please specify a channel")
@@ -274,12 +288,11 @@ async def closest_channel(ctx,*,args=None):
     if isinstance(ctx.channel,discord.DMChannel):
       await ctx.send("You can't use it in a DM.")
 
-@client.command(help="a command to get the closest user.")
+@client.command(brief="a command to get the closest user.")
 async def closest_user(ctx,*,args=None):
   if args is None:
     await ctx.send("please specify a user")
   if args:
-    from difflib import SequenceMatcher
     userNearest = discord.utils.get(client.users,name=args)
     user_nick = discord.utils.get(client.users,display_name=args)
     if userNearest is None:
@@ -303,7 +316,7 @@ async def closest_user(ctx,*,args=None):
   if isinstance(ctx.channel,discord.DMChannel):
     await ctx.send("You unforantely don't get the last value.")  
 
-@client.command(help="a command to roll d20",aliases=["roll20"])
+@client.command(brief="a command to roll d20",aliases=["roll20"])
 async def dice_roll20(ctx):
   embed_message = discord.Embed(title=f" Rolled a {random.randint(1,20)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
   embed_message.set_footer(text = f"{ctx.author.id}")
@@ -312,7 +325,7 @@ async def dice_roll20(ctx):
   embed_message.set_image(url="https://i.imgur.com/9dbBkqj.gif")
   await ctx.send(embed=embed_message)
 
-@client.command(help="a command to roll d6",aliases=["roll6"])
+@client.command(brief="a command to roll d6",aliases=["roll6"])
 async def dice_roll6(ctx):
   embed_message = discord.Embed(title=f" Rolled a {random.randint(1,6)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
   embed_message.set_footer(text = f"{ctx.author.id}")
@@ -321,7 +334,7 @@ async def dice_roll6(ctx):
   embed_message.set_image(url="https://i.imgur.com/6ul8ZGY.gif")
   await ctx.send(embed=embed_message)
 
-@client.command(help=" a command to roll d10",aliases=["roll10"])
+@client.command(brief=" a command to roll d10",aliases=["roll10"])
 async def dice_roll10(ctx):
   embed_message = discord.Embed(title=f" Rolled a {random.randint(1,10)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
   embed_message.set_footer(text = f"{ctx.author.id}")
@@ -330,7 +343,7 @@ async def dice_roll10(ctx):
   embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
   await ctx.send(embed=embed_message)
 
-@client.command(help=" a command to roll d100",aliases=["roll100"])
+@client.command(brief=" a command to roll d100",aliases=["roll100"])
 async def dice_roll100(ctx):
   embed_message = discord.Embed(title=f" Rolled a {random.randint(1,100)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
   embed_message.set_footer(text = f"{ctx.author.id}")
@@ -339,7 +352,7 @@ async def dice_roll100(ctx):
   embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
   await ctx.send(embed=embed_message)
 
-@client.command(help=" a command to roll d12",aliases=["roll12"])
+@client.command(brief=" a command to roll d12",aliases=["roll12"])
 async def dice_roll12(ctx):
   embed_message = discord.Embed(title=f" Rolled a {random.randint(1,12)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
   embed_message.set_footer(text = f"{ctx.author.id}")
@@ -348,7 +361,7 @@ async def dice_roll12(ctx):
   embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
   await ctx.send(embed=embed_message)
 
-@client.command(help=" a command to roll d8",aliases=["roll8"])
+@client.command(brief=" a command to roll d8",aliases=["roll8"])
 async def dice_roll8(ctx):
   embed_message = discord.Embed(title=f" Rolled a {random.randint(1,8)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
   embed_message.set_footer(text = f"{ctx.author.id}")
@@ -357,7 +370,7 @@ async def dice_roll8(ctx):
   embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
   await ctx.send(embed=embed_message)
 
-@client.command(help=" a command to roll d4",aliases=["roll4"])
+@client.command(brief=" a command to roll d4",aliases=["roll4"])
 async def dice_roll4(ctx):
   embed_message = discord.Embed(title=f" Rolled a {random.randint(1,4)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
   embed_message.set_footer(text = f"{ctx.author.id}")
@@ -366,21 +379,122 @@ async def dice_roll4(ctx):
   embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
   await ctx.send(embed=embed_message)
 
-@client.command(help="a command to tell you the channel id")
+@client.command(brief="a command to tell you the channel id")
 async def this(ctx):
   await ctx.send(ctx.channel.id)
 
-@client.command(help="a way to view open source",brief="you can see the open source with the link it provides",aliases=["open source"])
+@client.group(name="open",invoke_without_command=True)
+async def source(ctx):
+  embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
+  embed.set_author(name=f"{client.user}'s source code:",icon_url=(client.user.avatar_url))
+  await ctx.send(embed=embed)
+
+@client.command(brief="a way to view open source",help="you can see the open source with the link it provides")
 async def open_source(ctx):
   embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
   embed.set_author(name=f"{client.user}'s source code:",icon_url=(client.user.avatar_url))
   await ctx.send(embed=embed)
 
-@client.command(help=" a command to email you(work in progress)",brief="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
+@client.command(brief=" a command to email you(work in progress)",help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
 async def email(ctx,*args):
   print(args)
 
-@client.command(help="a command to backup text",brief="please don't upload any private files that aren't meant to be seen")
+#@client.command(brief="a command to send mail")
+#async def mail(ctx,*,user: discord.User=None,args=None):
+  #print(user)
+  #print(args)
+
+@client.group(name="order",invoke_without_command=True)
+async def order(ctx,*,args=None):
+  if args is None:
+    await ctx.send("You can't order nothing.")
+  if args:
+    time_before=time.process_time() 
+    image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
+    results = await image_client.search(args, safesearch=True, image_search=True)
+    emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url,args).ratio())[-1]
+    await image_client.close()
+    time_after=time.process_time()
+    try:
+      await ctx.message.delete()
+    except discord.errors.Forbidden:
+      pass
+  
+    embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+    embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
+    embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
+    embed.add_field(name="Powered by:",value="Google Images Api")
+    embed.set_image(url=emoji_image.image_url)
+    embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+    await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
+    await client.get_channel(738912143679946783).send(embed=embed)
+
+@order.command(brief="a command to shuffle images from google images")
+async def shuffle(ctx,*,args=None):
+  if args is None:
+    await ctx.send("You can't order nothing")
+  if args:
+    time_before=time.process_time() 
+    image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
+    results = await image_client.search(args, safesearch=True, image_search=True)
+    emoji_image = random.choice(results)
+    await image_client.close()
+    time_after=time.process_time()
+    try:
+      await ctx.message.delete()
+    except discord.errors.Forbidden:
+      pass
+
+    embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+    embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
+    embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
+    embed.add_field(name="Powered by:",value="Google Images Api")
+    embed.set_image(url=emoji_image.image_url)
+    embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+    await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
+    await client.get_channel(738912143679946783).send(embed=embed)
+
+@client.command(brief="a command to shuffle images from google images",aliases=["order-shuffle"])
+async def order_shuffle(ctx,*,args):
+  if args is None:
+    await ctx.send("You can't order nothing")
+  if args:
+    time_before=time.process_time() 
+    image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
+    results = await image_client.search(args, safesearch=True, image_search=True)
+    emoji_image = random.choice(results)
+    await image_client.close()
+    time_after=time.process_time()
+    try:
+      await ctx.message.delete()
+    except discord.errors.Forbidden:
+      pass
+
+    embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+    embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
+    embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
+    embed.add_field(name="Powered by:",value="Google Images Api")
+    embed.set_image(url=emoji_image.image_url)
+    embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+    await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
+    await client.get_channel(738912143679946783).send(embed=embed)
+
+@client.command(brief="Only owner command to change bot's nickname")
+async def change_nick(ctx,*,name=None):
+  if await client.is_owner(ctx.author):
+    if isinstance(ctx.channel, discord.TextChannel):
+      await ctx.send("Changing Nickname")
+      try:
+        await ctx.guild.me.edit(nick=name)
+      except discord.Forbidden:
+        await ctx.send("Appears not to have valid perms")
+    if isinstance(ctx.channel,discord.DMChannel):
+      await ctx.send("You can't use that in Dms.")
+    
+  if await client.is_owner(ctx.author) is False:
+    await ctx.send("You can't use that command")
+
+@client.command(brief="a command to backup text",help="please don't upload any private files that aren't meant to be seen")
 async def text_backup(ctx):
   if ctx.message.attachments:
     for x in ctx.message.attachments:
@@ -391,7 +505,7 @@ async def text_backup(ctx):
           text = file.decode(encoding)
           mystbin_client = mystbin.Client()
           paste = await mystbin_client.post(text)
-          await ctx.send(paste.url)
+          await ctx.send(content=f"Added text file to mystbin: \n{paste.url}")
           await mystbin_client.close()
         if encoding is None:
           await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
@@ -410,13 +524,13 @@ async def shuffle(ctx,*,args=None):
     await ctx.send("That doesn't have any value.")
     await ctx.send("tenor shuffle")
 
-@tenor.command(help="work in progress",aliases=["tenor-shuffle"])
+@client.command(help="work in progress",aliases=["tenor-shuffle"])
 async def tenor_shuffle(ctx,*,args):
   if args is None:
     await ctx.send("That doesn't have any value.")
     await ctx.send("tenor shuffle")
 
-@client.command(help="Oh no Dad Jokes, AHHHHHH!")
+@client.command(brief="Oh no Dad Jokes, AHHHHHH!")
 async def dadjoke(ctx):
   async with aiohttp.ClientSession() as session:
     async with session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"}) as response:
@@ -427,7 +541,7 @@ async def dadjoke(ctx):
   embed.set_footer(text=f"View here:\n https://icanhazdadjoke.com/j/{joke['id']}")
   await ctx.send(embed=embed)
 
-@client.command(help="gets a panel from the xkcd comic",aliases=["astrojoke","astro_joke"])
+@client.command(brief="gets a panel from the xkcd comic",aliases=["astrojoke","astro_joke"])
 async def xkcd(ctx):
   async with aiohttp.ClientSession() as session:
     async with session.get("https://xkcd.com/info.0.json") as response:
@@ -436,14 +550,14 @@ async def xkcd(ctx):
   num = random.randint(1,info["num"])
   async with aiohttp.ClientSession() as session:
     async with session.get(f"https://xkcd.com/{num}/info.0.json") as comic:
-      epic_json=await comic.json()
-      title = epic_json["title"]
+      data=await comic.json()
+      title = data["title"]
       embed=discord.Embed(title=f"Title: {title}",color=random.randint(0, 16777215))
-      embed.set_image(url=epic_json["img"])
-      embed.set_footer(text=f"Made on {epic_json['month']}/{epic_json['day']}/{epic_json['year']}")
+      embed.set_image(url=data["img"])
+      embed.set_footer(text=f"Made on {data['month']}/{data['day']}/{data['year']}")
       await ctx.send(embed=embed)
 
-@client.command(help="a set of rules we will follow")
+@client.command(brief="a set of rules we will follow")
 async def promise(ctx):
   embed=discord.Embed(title="Promises we will follow:",color=random.randint(0, 16777215))
   embed.add_field(name="Rule 1:",value="if you are worried about what the bot may collect, please send a DM to the bot, and we will try to compile the data the bot may have on you.")
@@ -454,7 +568,7 @@ async def promise(ctx):
   embed.add_field(name="Rule 6:",value="We will also let you ask us questions directly, just DM me directly(the owner is listed in the owner command(and anyone should be able to friend me)")
   await ctx.send(embed=embed)
 
-@client.command(help=" a command that can scan urls(work in progress), and files",brief="please don't upload anything secret or send any secret url thank you :D")
+@client.command(brief=" a command that can scan urls(work in progress), and files",help="please don't upload anything secret or send any secret url thank you :D")
 async def scan(ctx, *, args = None):
   import vt
   vt_client = vt.Client(os.environ["virustotal_key"])
@@ -526,6 +640,77 @@ async def secret_controller(ctx):
   embed.set_footer(text="This is Xbox's custom controller design that I picked for myself.\nXbox is owned by Microsoft. I don't own the image")
   await ctx.send(embed=embed)
 
+@client.command(help="Gives advice from JDJG api.",aliases=["ad"])
+async def advice(ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get('https://jdjgapi.nom.mu/api/advice') as r:
+      res = await r.json()
+  embed = discord.Embed(title = "Here is some advice for you!",color=random.randint(0, 16777215))
+  embed.add_field(name = f"{res['text']}", value = "Hopefully this helped!")
+  embed.set_footer(text="Powered by JDJG Api!")
+  await ctx.send(embed=embed)
+
+@client.command(help="gives a random objection",aliases=["obj","ob","object"])
+async def objection(ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get('https://jdjgapi.nom.mu/api/objection') as r:
+        res = await r.json()
+  embed = discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"{ctx.author} yelled OBJECTION!",icon_url=(ctx.author.avatar_url))
+  embed.set_image(url=res["url"])
+  embed.set_footer(text="Powered By JDJG Api!")
+  await ctx.send(embed=embed)
+
+@client.command(help="gives random compliment")
+async def compliment(ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get('https://jdjgapi.nom.mu/api/compliment') as r:
+      res = await r.json()
+  embed = discord.Embed(title = "Here is a compliment:",color=random.randint(0, 16777215))
+  embed.add_field(name = f"{res['text']}", value = "Hopefully this helped your day!")
+  embed.set_footer(text="Powered by JDJG Api!")
+  await ctx.send(embed=embed)
+
+@client.command(help="gives an insult")
+async def insult(ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get('https://jdjgapi.nom.mu/api/insult') as r:
+      res = await r.json()
+  embed = discord.Embed(title = "Here is a insult:",color=random.randint(0, 16777215))
+  embed.add_field(name = f"{res['text']}", value = "Hopefully this Helped?")
+  embed.set_footer(text="Powered by JDJG Api!")
+  await ctx.send(embed=embed)
+
+@client.command(help="gives response to slur")
+async def noslur(ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get('https://jdjgapi.nom.mu/api/noslur') as r:
+      res = await r.json()
+  embed = discord.Embed(title = "Don't Swear",color=random.randint(0, 16777215))
+  embed.add_field(name = f"{res['text']}", value = "WHY MUST YOU SWEAR?")
+  embed.set_footer(text="Powered by JDJG Api!")
+  await ctx.send(embed=embed)
+
+@client.command(help="gives the truth about opinions(may offend)",aliases=["opinion"])
+async def opinional(ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get('https://jdjgapi.nom.mu/api/opinional') as r:
+      res = await r.json()
+  embed = discord.Embed(title = "Truth about opinions(may offend some people):",color=random.randint(0, 16777215))
+  embed.set_image(url=res["url"])
+  embed.set_footer(text="Powered by JDJG Api!")
+  await ctx.send(embed=embed)
+
+@client.command(help="gives random message",aliases=["rm"])
+async def random_message(ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get('https://jdjgapi.nom.mu/api/randomMessage') as r:
+      res = await r.json()
+  embed = discord.Embed(title = "Random Message:",color=random.randint(0, 16777215))
+  embed.add_field(name="Here:",value=res["text"])
+  embed.set_footer(text="Powered by JDJG Api!")
+  await ctx.send(embed=embed)
+
 @client.command(help="emojis command(work in progress)")
 async def emoji(ctx,*emojis: typing.Union[discord.PartialEmoji, str]):
   for x in emojis:
@@ -536,8 +721,78 @@ async def emoji(ctx,*emojis: typing.Union[discord.PartialEmoji, str]):
       await ctx.send(embed=embed)
     else:
       pass
+  if len(emojis) < 1:
+    await ctx.send("Looks like there was no emojis.")
 
-@client.command(help="a command to give a list of servers(owner only)")
+@client.command(help="fetch invite details")
+async def fetch_invite(ctx,*invites:typing.Union[discord.Invite, str]):
+  for x in invites:
+    if isinstance(x,discord.Invite):
+      if x.guild:
+        image = x.guild.icon_url
+        guild = x.guild
+        guild_id = x.guild.id
+      if x.guild is None:
+        guild = "Group Chat"
+        image = "https://i.imgur.com/pQS3jkI.png"
+        guild_id = "Unknown"
+      embed=discord.Embed(title=f"Invite for {guild}:",color=random.randint(0, 16777215))
+      embed.set_author(name="Discord Invite Details:",icon_url=(image))
+      embed.add_field(name="Inviter:",value=f"{x.inviter}")
+      embed.add_field(name="User Count:",value=f"{x.approximate_member_count}")
+      embed.add_field(name="Active User Count:",value=f"{x.approximate_presence_count}")
+      embed.add_field(name="Invite Channel",value=f"{x.channel}")
+      embed.set_footer(text=f"ID: {guild_id}\nInvite Code: {x.code}\nInvite Url: {x.url}")
+      await ctx.send(embed=embed)
+      
+    if isinstance(x,str):
+      await ctx.send(content=f"it returned as {x}. It couldn't fetch it :(")
+
+async def headpat_converter(url,ctx):
+  sr_client=sr_api.Client(key=os.environ["sr_key"])
+  source_image=sr_client.petpet(avatar=str(url))
+  image = await source_image.read()
+  await sr_client.close()
+
+  imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_url = await imgur_client.upload(image)
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
+  embed.set_image(url=imgur_url["link"])
+  embed.set_footer(text="powered by some random api")
+  await ctx.send(embed=embed)
+
+@client.command(brief="uses our headpat program to pat you",help="a command that uses sra_api to make a headpat of you.")
+async def headpat2(ctx):
+  y = 0
+  if len(ctx.message.attachments) > 0:
+    for x in ctx.message.attachments:
+      if x.filename.endswith(".png"):
+        url = x.url
+        await headpat_converter(url,ctx)
+        y = y + 1
+      if not x.filename.endswith(".png"):
+        pass
+
+  if len(ctx.message.attachments) == 0 or y == 0:
+    url = ctx.author.avatar_url_as(format="png")
+    await headpat_converter(url,ctx)
+
+@client.command(brief="uploads your emojis into a mystbin link")
+async def look_at(ctx):
+  if isinstance(ctx.message.channel, discord.TextChannel):
+    message_emojis = ""
+    for x in ctx.guild.emojis:
+      message_emojis = message_emojis+" "+str(x)+"\n"
+    mystbin_client = mystbin.Client()
+    paste = await mystbin_client.post(message_emojis)
+    await mystbin_client.close()
+    await ctx.send(paste.url)
+    
+  if isinstance(ctx.channel,discord.DMChannel):
+    await ctx.send("We can't use that in DMS")
+
+@client.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
 async def servers(ctx):
   if await client.is_owner(ctx.author):
     send_list = [""]
@@ -559,7 +814,7 @@ async def servers(ctx):
 async def apply(ctx):
   await ctx.send("this command is meant to apply")
 
-@apply.command(help="a command to apply for our Bloopers.")
+@apply.command(brief="a command to apply for our Bloopers.",help="a command to apply for our bloopers.")
 async def bloopers(ctx,*,args=None):
   if args is None:
     await ctx.send("You didn't give us any info.")
@@ -623,7 +878,7 @@ async def random_history(ctx,*,args=None):
 
 async def google_tts(ctx,text):
   await ctx.send("if you have a lot of text it may take a bit")
-  mp3_fp = BytesIO()
+  mp3_fp = io.BytesIO()
   tts=gtts.gTTS(text=text,lang='en')
   tts.write_to_fp(mp3_fp)
   mp3_fp.seek(0)
@@ -652,10 +907,21 @@ async def tts(ctx,*,args=None):
   if args is None and len(ctx.message.attachments) < 1:
     await ctx.send("You didn't specify any value.")
 
-@client.command(help="repeats what you say",brief="a command that repeats what you say the orginal message is deleted")
+@client.command(brief="repeats what you say",help="a command that repeats what you say the orginal message is deleted")
 async def say(ctx,*,args=None):
   if args:
+    args = discord.utils.escape_mentions(args)
+    args=discord.utils.escape_markdown(args,as_needed=False,ignore_links=False)
+    try:
+      await ctx.message.delete()
+
+    except discord.errors.Forbidden:
+      pass
+
     await ctx.send(args)
+  
+  if args is None:
+    await ctx.send("You didn't give us any text to use.")
 
 @client.command(help="takes a .png attachment or your avatar and makes a triggered version.")
 async def triggered(ctx):
@@ -673,7 +939,7 @@ async def triggered(ctx):
     url = ctx.author.avatar_url_as(format="png")
     await triggered_converter(url,ctx)
 
-@client.command(help= "a command to slap someone",brief="this sends a slap gif to the target user")
+@client.command(brief= "a command to slap someone",help="this sends a slap gif to the target user")
 async def slap(ctx,*, Member: BetterMemberConverter = None):
   if Member is None:
     Member = ctx.author
@@ -708,7 +974,7 @@ async def slap(ctx,*, Member: BetterMemberConverter = None):
       await ctx.author.send("Failed DM'ing them...")
 
 
-@client.command(help="a command to look up foxes",brief="this known as wholesome fox to the asuna api")
+@client.command(brief="a command to look up foxes",help="this known as wholesome fox to the asuna api")
 async def fox2(ctx):
   asuna = asuna_api.Client()
   url = await asuna.get_gif("wholesome_foxes")
@@ -719,7 +985,7 @@ async def fox2(ctx):
   embed.set_footer(text="powered using the asuna.ga api")
   await ctx.send(embed=embed)
 
-@client.command(help="another command to give you pat gifs",brief="powered using the asuna api")
+@client.command(brief="another command to give you pat gifs",help="powered using the asuna api")
 async def pat2(ctx,*, Member: BetterMemberConverter= None):
   if Member is None:
     Member = ctx.author
@@ -754,7 +1020,7 @@ async def pat2(ctx,*, Member: BetterMemberConverter= None):
       await ctx.author.send("Failed DM'ing them...")
 
 
-@client.command(help="a command to give you pat gifs",brief="using the sra api it gives you pat gifs")
+@client.command(brief="a command to give you pat gifs",help="using the sra api it gives you pat gifs")
 async def pat(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
     Member = ctx.author
@@ -788,7 +1054,7 @@ async def pat(ctx,*, Member: BetterMemberConverter=None):
       await ctx.author.send("Failed Dming them...")
   
 
-@client.command(help="a hug command to hug people",brief="this the first command to hug.")
+@client.command(brief="a hug command to hug people",help="this the first command to hug.")
 async def hug(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
     Member = ctx.author
@@ -823,7 +1089,7 @@ async def hug(ctx,*, Member: BetterMemberConverter=None):
       await ctx.author.send("Failed DM'ing them...")
 
 
-@client.command(help="a hug command to hug people",brief="this actually the second hug command and is quite powerful.")
+@client.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
 async def hug2(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
     Member = ctx.author
@@ -864,18 +1130,17 @@ def warn_permission(ctx):
   if isinstance(ctx.channel,discord.DMChannel):
     return True
 
-@client.command(help="a command to send I hate spam.")
+@client.command(brief="a command to send I hate spam.")
 async def spam(ctx):
   embed=discord.Embed(color=random.randint(0, 16777215))
   embed.set_image(url="https://i.imgur.com/1LckTTu.gif")
   await ctx.send(content="I hate spam.",embed=embed)
 
-@client.command(help="work in progress")
+@client.command(brief="work in progress")
 async def headpat(ctx):
-  pass
+  await ctx.send("Currently working in progress")
 
-
-@client.command(help="a command to warn people, but if you aren't admin it doesn't penalize.")
+@client.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
 async def warn(ctx,Member: BetterMemberConverter = None):
   if warn_permission(ctx):
 
@@ -912,7 +1177,7 @@ async def warn(ctx,Member: BetterMemberConverter = None):
     await ctx.send("You don't have permission to use that.")
 
 
-@client.command(help="a kiss command",brief="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)")
+@client.command(brief="a kiss command",help="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)")
 async def kiss(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
     Member = ctx.author
@@ -946,7 +1211,7 @@ async def kiss(ctx,*, Member: BetterMemberConverter=None):
     except discord.Forbidden:
       await ctx.author.send("Failed Dming them...")
 
-@client.command(help="a command to get a neko",brief="using the asuna.ga api you will get these images")
+@client.command(brief="a command to get a neko",help="using the asuna.ga api you will get these images")
 async def neko(ctx):
   asuna = asuna_api.Client()
   url = await asuna.get_gif("neko")
@@ -958,19 +1223,19 @@ async def neko(ctx):
   embed.set_footer(text="powered using the asuna.ga api")
   await ctx.send(embed=embed)
 
-@client.command(help="Currently work in progress")
+@client.command(brief="Currently work in progress")
 async def work(ctx,*,args=None):
   Member = ctx.author.id
   if args is None:
     money_system.add_money(Member,10,0)
 
-@client.command(help="a command to send how much money you have(work in progress)",brief="using the JDBot database you can see how much money you have")
+@client.command(brief="a command to send how much money you have(work in progress)",help="using the JDBot database you can see how much money you have")
 async def balance(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
     Member = ctx.author
   money_system.display_account(Member.id)
 
-@client.command(help="a command to send wink gifs",brief="you select a user to send it to and it will send it to you lol")
+@client.command(brief="a command to send wink gifs",wink="you select a user to send it to and it will send it to you lol")
 async def wink(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
     Member = ctx.author
@@ -1004,7 +1269,7 @@ async def wink(ctx,*, Member: BetterMemberConverter=None):
     except discord.Forbidden:
       await ctx.author.send("Failed Dming them...")
 
-@client.command(help="a command to send facepalm gifs",brief="using some random api it sends you a facepalm gif lol")
+@client.command(brief="a command to send facepalm gifs",help="using some random api it sends you a facepalm gif lol")
 async def facepalm(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
     Member = ctx.author
@@ -1038,7 +1303,7 @@ async def facepalm(ctx,*, Member: BetterMemberConverter=None):
     except discord.Forbidden:
       await ctx.author.send("Failed Dming them...")
 
-@client.command(help="only works with JDJG, but this command is meant to send updates to my webhook")
+@client.command(brief="only works with JDJG, but this command is meant to send updates to my webhook")
 async def webhook_update(ctx,*,args=None):
   if await client.is_owner(ctx.author):
     if args:
@@ -1065,7 +1330,7 @@ async def webhook_update(ctx,*,args=None):
   if await client.is_owner(ctx.author) is False:
     await ctx.send("You can't use that")
 
-@client.command(help="a way to create webhooks",brief="make commands with this.")
+@client.command(brief="a way to create webhooks",help="make commands with this.")
 async def webhook_create(ctx,arg=None,*,args=None):
   if isinstance(ctx.channel, discord.TextChannel):
     if ctx.author.guild_permissions.manage_webhooks:
@@ -1112,7 +1377,7 @@ async def webhook_create(ctx,arg=None,*,args=None):
   if isinstance(ctx.channel, discord.DMChannel):
     await ctx.send("You can't use that silly")
 
-@client.command(help=" a way to send stuff to webhooks.",brief="this uses webhook urls, and sends stuff to them")
+@client.command(brief=" a way to send stuff to webhooks.",help="this uses webhook urls, and sends stuff to them")
 async def webhook(ctx,*,args=None):
   if args is None:
     await ctx.send("You didn't send anything")
@@ -1140,7 +1405,7 @@ async def webhook(ctx,*,args=None):
         await ctx.message.delete()
   
 
-@client.command(help="a way to look up minecraft usernames",brief="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
+@client.command(brief="a way to look up minecraft usernames",help="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
 async def mchistory(ctx,*,args=None):
   asuna = asuna_api.Client()
   minecraft_info=await asuna.mc_user(args)
@@ -1162,7 +1427,7 @@ async def mchistory(ctx,*,args=None):
     embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
     await ctx.send(embed=embed)
 
-@client.command(help="a command to get the avatar of a user",brief="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp",])
+@client.command(brief="a command to get the avatar of a user",help="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp",])
 async def avatar(ctx,*,user: BetterUserconverter = None): 
   if user is None:
     user = ctx.author
@@ -1172,7 +1437,7 @@ async def avatar(ctx,*,user: BetterUserconverter = None):
   embed.set_footer(text=f"Requested by {ctx.author}")
   await ctx.send(embed=embed)
 
-@client.command(help="gives you the milkman gif",brief="you summoned the milkman oh no")
+@client.command(brief="gives you the milkman gif",help="you summoned the milkman oh no")
 async def milk(ctx):
   embed = discord.Embed(title="You have summoned the milkman",color=random.randint(0, 16777215))
   embed.set_image(url="https://i.imgur.com/JdyaI1Y.gif")
@@ -1221,7 +1486,7 @@ async def guildinfo(ctx,guild):
 
   await ctx.send(embed=embed)
 
-@client.command(aliases=["server_info","guild_fetch","guild_info","fetch_guild",])
+@client.command(help="gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild",])
 async def serverinfo(ctx,*,args=None):
   if args:
     match=re.match(r'(\d{16,21})',args)
@@ -1234,7 +1499,7 @@ async def serverinfo(ctx,*,args=None):
   
   await guildinfo(ctx,guild)
 
-@client.command(aliases=["user info", "user_info","user-info"],help="a command that gives information on users",brief="this can work with mentions, ids, usernames, and even full names.")
+@client.command(aliases=["user info", "user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
 async def userinfo(ctx,*,user: BetterUserconverter = None):
   if user is None:
     user = ctx.author
@@ -1310,7 +1575,8 @@ async def on_message(message):
       embed_message.set_thumbnail(url = "https://i.imgur.com/ugKZ7lW.png")
       channel_usage=client.get_channel(738912143679946783)
       embed_message.add_field(name="Sent To:",value=str(channel_usage))
-      await channel_usage.send(embed=embed_message)
+      jdjg = client.get_user(168422909482762240)
+      await channel_usage.send(content=jdjg.mention,embed=embed_message)
 
   if (test.valid) == False:
     if test.prefix != None and not client.user.mentioned_in(message):

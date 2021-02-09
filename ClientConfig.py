@@ -3,7 +3,7 @@ import re
 from discord.ext import commands
 
 async def get_prefix(client,message):
-  extras = ["test*"]
+  extras = ["test*","te*"]
   comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
   match = comp.match(message.content)
   if match is not None:
@@ -13,3 +13,4 @@ async def get_prefix(client,message):
 client = commands.Bot(command_prefix=(get_prefix),intents = discord.Intents.all())
 
 client.load_extension('jishaku')
+
