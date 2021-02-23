@@ -1,6 +1,7 @@
 import discord
 import re
 from discord.ext import commands
+import os
 
 async def get_prefix(client,message):
   extras = ["test*","te*"]
@@ -14,3 +15,9 @@ client = commands.Bot(command_prefix=(get_prefix),intents = discord.Intents.all(
 
 client.load_extension('jishaku')
 
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+      try:
+        client.load_extension(f'cogs.{filename[:-3]}')
+      except commands.errors.NoEntryPointError:
+        pass

@@ -1,4 +1,4 @@
-from discord.etx import commands
+from discord.ext import commands
 import discord
 import wavelink
 import asyncio

@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import math
 import B
 import ClientConfig
@@ -22,7 +22,6 @@ import asuna_api
 import aioimgur
 import chardet
 import mystbin
-import async_cse
 from difflib import SequenceMatcher
 import time
 
@@ -316,69 +315,6 @@ async def closest_user(ctx,*,args=None):
   if isinstance(ctx.channel,discord.DMChannel):
     await ctx.send("You unforantely don't get the last value.")  
 
-@client.command(brief="a command to roll d20",aliases=["roll20"])
-async def dice_roll20(ctx):
-  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,20)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-  embed_message.set_footer(text = f"{ctx.author.id}")
-  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-  embed_message.set_author(name=f"d20 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
-  embed_message.set_image(url="https://i.imgur.com/9dbBkqj.gif")
-  await ctx.send(embed=embed_message)
-
-@client.command(brief="a command to roll d6",aliases=["roll6"])
-async def dice_roll6(ctx):
-  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,6)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-  embed_message.set_footer(text = f"{ctx.author.id}")
-  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-  embed_message.set_author(name=f"d6 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
-  embed_message.set_image(url="https://i.imgur.com/6ul8ZGY.gif")
-  await ctx.send(embed=embed_message)
-
-@client.command(brief=" a command to roll d10",aliases=["roll10"])
-async def dice_roll10(ctx):
-  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,10)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-  embed_message.set_footer(text = f"{ctx.author.id}")
-  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-  embed_message.set_author(name=f"d10 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
-  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
-  await ctx.send(embed=embed_message)
-
-@client.command(brief=" a command to roll d100",aliases=["roll100"])
-async def dice_roll100(ctx):
-  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,100)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-  embed_message.set_footer(text = f"{ctx.author.id}")
-  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-  embed_message.set_author(name=f"d100 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
-  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
-  await ctx.send(embed=embed_message)
-
-@client.command(brief=" a command to roll d12",aliases=["roll12"])
-async def dice_roll12(ctx):
-  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,12)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-  embed_message.set_footer(text = f"{ctx.author.id}")
-  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-  embed_message.set_author(name=f"d12 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
-  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
-  await ctx.send(embed=embed_message)
-
-@client.command(brief=" a command to roll d8",aliases=["roll8"])
-async def dice_roll8(ctx):
-  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,8)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-  embed_message.set_footer(text = f"{ctx.author.id}")
-  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-  embed_message.set_author(name=f"d8 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
-  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
-  await ctx.send(embed=embed_message)
-
-@client.command(brief=" a command to roll d4",aliases=["roll4"])
-async def dice_roll4(ctx):
-  embed_message = discord.Embed(title=f" Rolled a {random.randint(1,4)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-  embed_message.set_footer(text = f"{ctx.author.id}")
-  embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-  embed_message.set_author(name=f"d4 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
-  embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
-  await ctx.send(embed=embed_message)
-
 @client.command(brief="a command to tell you the channel id")
 async def this(ctx):
   await ctx.send(ctx.channel.id)
@@ -403,81 +339,6 @@ async def email(ctx,*args):
 #async def mail(ctx,*,user: discord.User=None,args=None):
   #print(user)
   #print(args)
-
-@client.group(name="order",invoke_without_command=True)
-async def order(ctx,*,args=None):
-  if args is None:
-    await ctx.send("You can't order nothing.")
-  if args:
-    time_before=time.process_time() 
-    image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
-    results = await image_client.search(args, safesearch=True, image_search=True)
-    emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url,args).ratio())[-1]
-    await image_client.close()
-    time_after=time.process_time()
-    try:
-      await ctx.message.delete()
-    except discord.errors.Forbidden:
-      pass
-  
-    embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
-    embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
-    embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
-    embed.add_field(name="Powered by:",value="Google Images Api")
-    embed.set_image(url=emoji_image.image_url)
-    embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-    await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-    await client.get_channel(738912143679946783).send(embed=embed)
-
-@order.command(brief="a command to shuffle images from google images")
-async def shuffle(ctx,*,args=None):
-  if args is None:
-    await ctx.send("You can't order nothing")
-  if args:
-    time_before=time.process_time() 
-    image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
-    results = await image_client.search(args, safesearch=True, image_search=True)
-    emoji_image = random.choice(results)
-    await image_client.close()
-    time_after=time.process_time()
-    try:
-      await ctx.message.delete()
-    except discord.errors.Forbidden:
-      pass
-
-    embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
-    embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
-    embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
-    embed.add_field(name="Powered by:",value="Google Images Api")
-    embed.set_image(url=emoji_image.image_url)
-    embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-    await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-    await client.get_channel(738912143679946783).send(embed=embed)
-
-@client.command(brief="a command to shuffle images from google images",aliases=["order-shuffle"])
-async def order_shuffle(ctx,*,args):
-  if args is None:
-    await ctx.send("You can't order nothing")
-  if args:
-    time_before=time.process_time() 
-    image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
-    results = await image_client.search(args, safesearch=True, image_search=True)
-    emoji_image = random.choice(results)
-    await image_client.close()
-    time_after=time.process_time()
-    try:
-      await ctx.message.delete()
-    except discord.errors.Forbidden:
-      pass
-
-    embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
-    embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
-    embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
-    embed.add_field(name="Powered by:",value="Google Images Api")
-    embed.set_image(url=emoji_image.image_url)
-    embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-    await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-    await client.get_channel(738912143679946783).send(embed=embed)
 
 @client.command(brief="Only owner command to change bot's nickname")
 async def change_nick(ctx,*,name=None):
@@ -511,24 +372,6 @@ async def text_backup(ctx):
           await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
       if len(file ) < 1:
         await ctx.send("this doesn't contain any bytes.")
-
-@client.group(name="tenor",invoke_without_command=True)
-async def tenor(ctx,*,args=None):
-  if args is None:
-    await ctx.send("That doesn't have any value.")
-    await ctx.send("tenor")
-
-@tenor.command(help="work in progress")
-async def shuffle(ctx,*,args=None):
-  if args is None:
-    await ctx.send("That doesn't have any value.")
-    await ctx.send("tenor shuffle")
-
-@client.command(help="work in progress",aliases=["tenor-shuffle"])
-async def tenor_shuffle(ctx,*,args):
-  if args is None:
-    await ctx.send("That doesn't have any value.")
-    await ctx.send("tenor shuffle")
 
 @client.command(brief="Oh no Dad Jokes, AHHHHHH!")
 async def dadjoke(ctx):
