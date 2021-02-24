@@ -331,9 +331,17 @@ async def open_source(ctx):
   embed.set_author(name=f"{client.user}'s source code:",icon_url=(client.user.avatar_url))
   await ctx.send(embed=embed)
 
-@client.command(brief=" a command to email you(work in progress)",help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
+@client.command(brief="a command to email you(work in progress)",help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
 async def email(ctx,*args):
   print(args)
+
+@client.command(brief="a magic 8ball command",aliases=["8ball"])
+async def _8ball(ctx,*,args=None):
+  if args is None:
+    await ctx.send("Please give us a value to work with.")
+  if args:
+    responses = ["As I see it, yes.","Ask again later.","Better not tell you now.","Cannot predict now.","Concentrate and ask again.","Don’t count on it.","It is certain.","It is decidedly so.","Most likely.","My reply is no.","My sources say no.","Outlook not so good.","Outlook good.","Reply hazy, try again.","Signs point to yes.","Very doubtful.","Without a doubt.","Yes.","Yes – definitely.","You may rely on it."]
+    await ctx.send(random.choice(responses))
 
 #@client.command(brief="a command to send mail")
 #async def mail(ctx,*,user: discord.User=None,args=None):
@@ -411,7 +419,7 @@ async def promise(ctx):
   embed.add_field(name="Rule 6:",value="We will also let you ask us questions directly, just DM me directly(the owner is listed in the owner command(and anyone should be able to friend me)")
   await ctx.send(embed=embed)
 
-@client.command(brief=" a command that can scan urls(work in progress), and files",help="please don't upload anything secret or send any secret url thank you :D")
+@client.command(brief="a command that can scan urls(work in progress), and files",help="please don't upload anything secret or send any secret url thank you :D")
 async def scan(ctx, *, args = None):
   import vt
   vt_client = vt.Client(os.environ["virustotal_key"])
@@ -782,7 +790,7 @@ async def triggered(ctx):
     url = ctx.author.avatar_url_as(format="png")
     await triggered_converter(url,ctx)
 
-@client.command(brief= "a command to slap someone",help="this sends a slap gif to the target user")
+@client.command(brief="a command to slap someone",help="this sends a slap gif to the target user")
 async def slap(ctx,*, Member: BetterMemberConverter = None):
   if Member is None:
     Member = ctx.author
@@ -1220,7 +1228,7 @@ async def webhook_create(ctx,arg=None,*,args=None):
   if isinstance(ctx.channel, discord.DMChannel):
     await ctx.send("You can't use that silly")
 
-@client.command(brief=" a way to send stuff to webhooks.",help="this uses webhook urls, and sends stuff to them")
+@client.command(brief="a way to send stuff to webhooks.",help="this uses webhook urls, and sends stuff to them")
 async def webhook(ctx,*,args=None):
   if args is None:
     await ctx.send("You didn't send anything")

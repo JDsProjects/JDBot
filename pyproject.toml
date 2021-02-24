@@ -26,6 +26,7 @@ google-api-python-client = "^1.12.8"
 aPRAW = "^0.6.8-alpha.0"
 sr-api = {git = "https://github.com/iDutchy/sr_api.git"}
 async-cse = "^0.3.0"
+discord-py-slash-command = "^1.0.9"
 
 [tool.poetry.dev-dependencies]
 

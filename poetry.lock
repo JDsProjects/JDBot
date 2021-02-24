@@ -201,6 +201,15 @@ version = "1.0.0a27+g6f2b873"
 reference = "6f2b873bf0d28903eb752aa1166b3aac26dc9007"
 type = "git"
 url = "https://github.com/Rapptz/discord-ext-menus"
+
+[[package]]
+category = "main"
+description = "A simple discord slash command handler for discord.py."
+name = "discord-py-slash-command"
+optional = false
+python-versions = ">=3.6"
+version = "1.0.9.5"
+
 [[package]]
 category = "main"
 description = "A Python wrapper for the Discord API"
@@ -699,6 +708,7 @@ yarl = "*"
 reference = "1c97c1b355f1ef12b1dc64a5e80ecba37ad3fc81"
 type = "git"
 url = "https://github.com/iDutchy/sr_api.git"
+
 [[package]]
 category = "main"
 description = "module for creating simple ASCII tables"
@@ -803,7 +813,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "5d3f78ea80f361e4161842bd9f121c5adaad1b6738a52d6b89a07461f0f91e92"
+content-hash = "26c01934b53181c3e75fbfa9d5a79264d7b3a1f5d0d0afe75cd1c154339af0fa"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -919,6 +929,10 @@ dblpy = [
     {file = "dblpy-0.4.0.tar.gz", hash = "sha256:744f5ee9493a945e5907466754b2dce4735715b34daabb9e6264f76ec79818c9"},
 ]
 discord-ext-menus = []
+discord-py-slash-command = [
+    {file = "discord-py-slash-command-1.0.9.5.tar.gz", hash = "sha256:d9ebe87656485e8230baa0ab849705e72e4fed9d65ee16ae017673ec1a5f00e8"},
+    {file = "discord_py_slash_command-1.0.9.5-py3-none-any.whl", hash = "sha256:821ae953a0d7f40820c308c45c8c0856bfd8bbf4ce390dbea9feb31af1081972"},
+]
 "discord.py" = [
     {file = "discord.py-1.6.0-py3-none-any.whl", hash = "sha256:3df148daf6fbcc7ab5b11042368a3cd5f7b730b62f09fb5d3cbceff59bcfbb12"},
     {file = "discord.py-1.6.0.tar.gz", hash = "sha256:ba8be99ff1b8c616f7b6dcb700460d0222b29d4c11048e74366954c465fdd05f"},

@@ -2,6 +2,7 @@ import discord
 import re
 from discord.ext import commands
 import os
+import discord_slash
 
 async def get_prefix(client,message):
   extras = ["test*","te*"]
@@ -12,6 +13,7 @@ async def get_prefix(client,message):
   return commands.when_mentioned_or(*extras)(client, message)
 
 client = commands.Bot(command_prefix=(get_prefix),intents = discord.Intents.all())
+slash = discord_slash.SlashCommand(client,override_type = True,sync_commands=True)
 
 client.load_extension('jishaku')
 
