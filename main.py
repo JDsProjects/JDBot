@@ -15,7 +15,6 @@ import datetime
 import io
 import DatabaseConfig
 import DatabaseControl
-import money_system
 import gtts
 import sr_api
 import asuna_api
@@ -24,6 +23,7 @@ import chardet
 import mystbin
 from difflib import SequenceMatcher
 import time
+from utils import BetterMemberConverter, BetterUserconverter
 
 async def status_task():
   while True:
@@ -41,61 +41,6 @@ async def startup():
 logging.basicConfig(level=logging.INFO)
 
 client = ClientConfig.client
-
-class BetterMemberConverter(commands.Converter):
-  async def convert(self,ctx,argument):
-    try:
-      user = await commands.MemberConverter().convert(ctx,argument)
-    except commands.MemberNotFound:
-      user = None
-
-    if user == None:
-      tag = re.match(r"#?(\d{4})",argument)
-      if tag:
-        if ctx.guild:
-          test=discord.utils.get(ctx.guild.members, discriminator = tag.group(1))
-          if test:
-            user = test
-          if not test:
-            user=ctx.author
-        if ctx.guild is None:
-          user = await BetterUserconverter().convert(ctx,argument)
-          if user:
-            user = client.get_user(user.id)
-          if user is None:
-            user = ctx.author
-               
-    return user
-
-class BetterUserconverter(commands.Converter):
-  async def convert(self, ctx, argument):
-    try:
-     user=await commands.UserConverter().convert(ctx,argument)
-    except commands.UserNotFound:
-      user = None
-    if not user and ctx.guild:
-      user=ctx.guild.get_member_named(argument)
-    if user == None:
-
-      match2 = re.match(r'<@&([0-9]+)>$',argument)
-      if match2:
-        argument2=match2.group(1)
-        role=ctx.guild.get_role(int(argument2))
-        if role.is_bot_managed:
-            user=role.tags.bot_id
-            user = client.get_user(user)
-            if user is None:
-              user = await client.fetch_user(user)
-
-    if user == None:
-      tag = re.match(r"#?(\d{4})",argument)
-      if tag:
-        test=discord.utils.get(client.users, discriminator = tag.group(1))
-        if test:
-          user = test
-        if not test:
-          user=ctx.author
-    return user
 
 async def triggered_converter(url,ctx):
   sr_client=sr_api.Client()
@@ -335,6 +280,36 @@ async def open_source(ctx):
 async def email(ctx,*args):
   print(args)
 
+@client.command(brief="Gives you a random waifu image.")
+async def waifu(ctx):
+  async with aiohttp.ClientSession() as cs:
+    async with cs.get('https://waifu.pics/api/sfw/waifu') as r:
+        res = await r.json()
+  embed=discord.Embed(color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+  embed.set_author(name=f"{ctx.author} Requested A Waifu")
+  embed.set_image(url=res["url"])
+  embed.set_footer(text="Powered by waifu.pics")
+  await ctx.send(embed=embed)
+
+@client.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.")
+async def emoji_spinner(ctx):
+  if isinstance(ctx.channel, discord.TextChannel):
+    if len(ctx.guild.emojis) > 0:
+      await ctx.send(random.choice(ctx.guild.emojis))
+    await ctx.send(random.choice(client.emojis))
+  if isinstance(ctx.channel,discord.DMChannel):
+    await ctx.send(random.choice(client.emojis))
+
+@client.command(brief="Work in Progress")
+async def status(ctx,*,args=None):
+  if await client.is_owner(ctx.author):
+    if args:
+      pass
+    if args is None:
+      await client.change_presence(status=discord.Status.do_not_disturb)
+  if await client.is_owner(ctx.author) is False:
+    await ctx.send("That's an owner only command")
+
 @client.command(brief="a magic 8ball command",aliases=["8ball"])
 async def _8ball(ctx,*,args=None):
   if args is None:
@@ -343,10 +318,29 @@ async def _8ball(ctx,*,args=None):
     responses = ["As I see it, yes.","Ask again later.","Better not tell you now.","Cannot predict now.","Concentrate and ask again.","Don’t count on it.","It is certain.","It is decidedly so.","Most likely.","My reply is no.","My sources say no.","Outlook not so good.","Outlook good.","Reply hazy, try again.","Signs point to yes.","Very doubtful.","Without a doubt.","Yes.","Yes – definitely.","You may rely on it."]
     await ctx.send(random.choice(responses))
 
-#@client.command(brief="a command to send mail")
-#async def mail(ctx,*,user: discord.User=None,args=None):
-  #print(user)
-  #print(args)
+@client.command(brief="a command to send mail")
+async def mail(ctx,*,user: BetterUserconverter=None):
+  if user is None:
+    await ctx.reply("User not found, returning Letter")
+    user = ctx.author
+  if user:
+    def check(m):
+      return m.author.id == ctx.author.id
+    await ctx.reply("Please give me a message to use.")
+    message = await client.wait_for("message",check=check)
+    embed_message = discord.Embed(title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215))
+    embed_message.set_author(name=f"Mail from: {ctx.author}",icon_url=(ctx.author.avatar_url))
+    embed_message.set_footer(text = f"{ctx.author.id}")
+    embed_message.set_thumbnail(url = "https://i.imgur.com/1XvDnqC.png")
+    if (user.dm_channel is None):
+      await user.create_dm()
+    try:
+      await user.send(embed=embed_message)
+    except:
+      user = ctx.author
+      await user.send(content="Message failed. sending",embed=embed_message)
+      embed_message.add_field(name="Sent To:",value=str(user))
+    await client.get_channel(738912143679946783).send(embed=embed_message)
 
 @client.command(brief="Only owner command to change bot's nickname")
 async def change_nick(ctx,*,name=None):
@@ -1074,18 +1068,6 @@ async def neko(ctx):
   embed.set_footer(text="powered using the asuna.ga api")
   await ctx.send(embed=embed)
 
-@client.command(brief="Currently work in progress")
-async def work(ctx,*,args=None):
-  Member = ctx.author.id
-  if args is None:
-    money_system.add_money(Member,10,0)
-
-@client.command(brief="a command to send how much money you have(work in progress)",help="using the JDBot database you can see how much money you have")
-async def balance(ctx,*, Member: BetterMemberConverter=None):
-  if Member is None:
-    Member = ctx.author
-  money_system.display_account(Member.id)
-
 @client.command(brief="a command to send wink gifs",wink="you select a user to send it to and it will send it to you lol")
 async def wink(ctx,*, Member: BetterMemberConverter=None):
   if Member is None:
@@ -1416,6 +1398,7 @@ async def userinfo(ctx,*,user: BetterUserconverter = None):
 @client.event
 async def on_message(message):
   test=await client.get_context(message)
+  await client.process_commands(message) 
 
   if isinstance(message.channel, discord.DMChannel):
     if message.author.id != client.user.id and test.valid == False:
@@ -1438,8 +1421,6 @@ async def on_message(message):
         embed_message.set_footer(text = f"{message.author.id}")
         embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
         await client.get_channel(738912143679946783).send(embed=embed_message)
-  
-  await client.process_commands(message) 
 
 @client.event
 async def on_error(event,*args,**kwargs):

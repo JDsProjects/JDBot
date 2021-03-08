@@ -1,14 +1,13 @@
 from discord.ext import commands
 import discord
 import random
-import asyncio
 
 class Dice(commands.Cog):
   def __init__(self,client):
     self.client = client
 
   @commands.command(brief="a command to roll d20",aliases=["roll20"])
-  async def dice_roll20(ctx):
+  async def dice_roll20(self,ctx):
     embed_message = discord.Embed(title=f" Rolled a {random.randint(1,20)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed_message.set_footer(text = f"{ctx.author.id}")
     embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
@@ -17,7 +16,7 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed_message)
 
   @commands.command(brief="a command to roll d6",aliases=["roll6"])
-  async def dice_roll6(ctx):
+  async def dice_roll6(self,ctx):
     embed_message = discord.Embed(title=f" Rolled a {random.randint(1,6)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed_message.set_footer(text = f"{ctx.author.id}")
     embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
@@ -26,7 +25,7 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed_message)
 
   @commands.command(brief="a command to roll d10",aliases=["roll10"])
-  async def dice_roll10(ctx):
+  async def dice_roll10(self,ctx):
     embed_message = discord.Embed(title=f" Rolled a {random.randint(1,10)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed_message.set_footer(text = f"{ctx.author.id}")
     embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
@@ -35,7 +34,7 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed_message)
 
   @commands.command(brief="a command to roll d100",aliases=["roll100"])
-  async def dice_roll100(ctx):
+  async def dice_roll100(self,ctx):
     embed_message = discord.Embed(title=f" Rolled a {random.randint(1,100)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed_message.set_footer(text = f"{ctx.author.id}")
     embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
@@ -44,7 +43,7 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed_message)
 
   @commands.command(brief="a command to roll d12",aliases=["roll12"])
-  async def dice_roll12(ctx):
+  async def dice_roll12(self,ctx):
     embed_message = discord.Embed(title=f" Rolled a {random.randint(1,12)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed_message.set_footer(text = f"{ctx.author.id}")
     embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
@@ -53,7 +52,7 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed_message)
 
   @commands.command(brief="a command to roll d8",aliases=["roll8"])
-  async def dice_roll8(ctx):
+  async def dice_roll8(self,ctx):
     embed_message = discord.Embed(title=f" Rolled a {random.randint(1,8)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed_message.set_footer(text = f"{ctx.author.id}")
     embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
@@ -62,7 +61,7 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed_message)
 
   @commands.command(brief="a command to roll d4",aliases=["roll4"])
-  async def dice_roll4(ctx):
+  async def dice_roll4(self,ctx):
     embed_message = discord.Embed(title=f" Rolled a {random.randint(1,4)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed_message.set_footer(text = f"{ctx.author.id}")
     embed_message.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
