@@ -71,14 +71,9 @@ class Dice(commands.Cog):
 
   @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.",aliases=["e_spin"])
   async def emoji_spinner(self,ctx):
-    #from nudenet import NudeClassifier
-    #import io
-    #classifier = NudeClassifier()
 
     emoji_choosen = random.choice(self.client.emojis)
-    #discord.File(io.BytesIO(await emoji_choosen.url.read(),filename="check.gif"))
-    #classs=classifier.classify("check.gif")
-    #print(classs)
+
     if emoji_choosen.available is False:
       emoji_choosen = emoji_choosen.url
     

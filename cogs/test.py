@@ -21,7 +21,10 @@ class Test(commands.Cog):
     print(numbers)
     if len(numbers) > 1:
       pass
-      
+    
+  @commands.command(brief="this command will error by sending no content")
+  async def te(self,ctx):
+    await ctx.send("")
 
   async def cog_check(self, ctx):
     return ctx.author.id in testers_list
