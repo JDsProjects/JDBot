@@ -65,12 +65,6 @@ async def ping(ctx):
 async def pi(ctx):
   await ctx.send(math.pi)
 
-@client.event
-async def on_ready():
-  print("Bot is Ready")
-  print(f"Logged in as {client.user}")
-  print(f"Id: {client.user.id}")
-
 @client.command(brief="a command meant to flip coins",help="commands to flip coins, etc.")
 async def coin(ctx, *, args = None):
   if args:
@@ -290,15 +284,6 @@ async def waifu(ctx):
   embed.set_image(url=res["url"])
   embed.set_footer(text="Powered by waifu.pics")
   await ctx.send(embed=embed)
-
-@client.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.")
-async def emoji_spinner(ctx):
-  if isinstance(ctx.channel, discord.TextChannel):
-    if len(ctx.guild.emojis) > 0:
-      await ctx.send(random.choice(ctx.guild.emojis))
-    await ctx.send(random.choice(client.emojis))
-  if isinstance(ctx.channel,discord.DMChannel):
-    await ctx.send(random.choice(client.emojis))
 
 @client.command(brief="Work in Progress")
 async def status(ctx,*,args=None):
@@ -1260,7 +1245,7 @@ async def mchistory(ctx,*,args=None):
     embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
     await ctx.send(embed=embed)
 
-@client.command(brief="a command to get the avatar of a user",help="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp",])
+@client.command(brief="a command to get the avatar of a user",help="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp","av"])
 async def avatar(ctx,*,user: BetterUserconverter = None): 
   if user is None:
     user = ctx.author
@@ -1394,43 +1379,6 @@ async def userinfo(ctx,*,user: BetterUserconverter = None):
   embed.add_field(name="Highest Role:",value=highest_role)
   embed.set_image(url=user.avatar_url)
   await ctx.send(embed=embed)
-
-@client.event
-async def on_message(message):
-  test=await client.get_context(message)
-  await client.process_commands(message) 
-
-  if isinstance(message.channel, discord.DMChannel):
-    if message.author.id != client.user.id and test.valid == False:
-      time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
-      embed_message = discord.Embed(title=message.content, description=time_used, color=random.randint(0, 16777215))
-      embed_message.set_author(name=f"Direct Message From {message.author}:",icon_url=(message.author.avatar_url))
-      embed_message.set_footer(text = f"{message.author.id}")
-      embed_message.set_thumbnail(url = "https://i.imgur.com/ugKZ7lW.png")
-      channel_usage=client.get_channel(738912143679946783)
-      embed_message.add_field(name="Sent To:",value=str(channel_usage))
-      jdjg = client.get_user(168422909482762240)
-      await channel_usage.send(content=jdjg.mention,embed=embed_message)
-
-  if (test.valid) == False:
-    if test.prefix != None and not client.user.mentioned_in(message):
-      if test.command == None:
-        time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
-        embed_message = discord.Embed(title=f" {message.content}", description=time_used,color=random.randint(0, 16777215))
-        embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar_url))
-        embed_message.set_footer(text = f"{message.author.id}")
-        embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
-        await client.get_channel(738912143679946783).send(embed=embed_message)
-
-@client.event
-async def on_error(event,*args,**kwargs):
-  import traceback
-  more_information=os.sys.exc_info()
-  error_wanted=traceback.format_exc()
-  traceback.print_exc()
-  
-  #print(more_information[0])
-
 
 B.b()
 client.loop.create_task(startup())

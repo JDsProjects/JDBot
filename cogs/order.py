@@ -38,7 +38,7 @@ class Order(commands.Cog):
   @order.command(brief="a command to shuffle images from google images")
   async def shuffle(self,ctx,*,args=None):
     if args is None:
-      await ctx.send("You can't order nothing")
+        await self.order(ctx,args="shuffle")
     if args:
       time_before=time.process_time() 
       image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
@@ -91,8 +91,8 @@ class Order(commands.Cog):
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor")
 
-  @tenor.command(help="work in progress")
-  async def shuffle(self,ctx,*,args=None):
+  @tenor.command(help="work in progress",name="shuffle")
+  async def tenor_random(self,ctx,*,args=None):
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor shuffle")
@@ -109,8 +109,8 @@ class Order(commands.Cog):
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor")
 
-  @giphy.command(help="work in progress")
-  async def shuffle(self,ctx,*,args=None):
+  @giphy.command(help="work in progress",name="shuffle")
+  async def giphy_random(self,ctx,*,args=None):
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("giphy shuffle")

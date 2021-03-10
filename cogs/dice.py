@@ -68,6 +68,31 @@ class Dice(commands.Cog):
     embed_message.set_author(name=f"d4 Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
     embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
     await ctx.send(embed=embed_message)
+
+  @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.",aliases=["e_spin"])
+  async def emoji_spinner(self,ctx):
+    #from nudenet import NudeClassifier
+    #import io
+    #classifier = NudeClassifier()
+
+    emoji_choosen = random.choice(self.client.emojis)
+    #discord.File(io.BytesIO(await emoji_choosen.url.read(),filename="check.gif"))
+    #classs=classifier.classify("check.gif")
+    #print(classs)
+    if emoji_choosen.available is False:
+      emoji_choosen = emoji_choosen.url
+    
+    if isinstance(ctx.channel, discord.TextChannel):
+      if len(ctx.guild.emojis) > 0:
+        emoji_choice=random.choice(ctx.guild.emojis)
+        if emoji_choice.available is False:
+          emoji_choice = emoji_choice.url
+        await ctx.send(emoji_choice)
+
+      await ctx.send(emoji_choosen)
+
+    if isinstance(ctx.channel,discord.DMChannel):
+      await ctx.send(emoji_choosen)
   
 def setup(client):
   client.add_cog(Dice(client))
