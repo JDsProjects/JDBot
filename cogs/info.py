@@ -4,6 +4,7 @@ import discord
 import random
 from utils import BetterMemberConverter, BetterUserconverter
 import mystbin
+import typing
 
 class Info(commands.Cog):
   def __init__(self,client):
@@ -148,6 +149,35 @@ class Info(commands.Cog):
 
     if isinstance(ctx.channel,discord.DMChannel):
       await ctx.send(ctx.channel.id)
+
+  @commands.command(brief="a command to tell you the channel id")
+  async def this(self,ctx):
+    await ctx.send(ctx.channel.id)
+
+  @commands.command(help="fetch invite details")
+  async def fetch_invite(self,ctx,*invites:typing.Union[discord.Invite, str]):
+    for x in invites:
+      if isinstance(x,discord.Invite):
+        if x.guild:
+          image = x.guild.icon_url
+          guild = x.guild
+          guild_id = x.guild.id
+        if x.guild is None:
+          guild = "Group Chat"
+          image = "https://i.imgur.com/pQS3jkI.png"
+          guild_id = "Unknown"
+        embed=discord.Embed(title=f"Invite for {guild}:",color=random.randint(0, 16777215))
+        embed.set_author(name="Discord Invite Details:",icon_url=(image))
+        embed.add_field(name="Inviter:",value=f"{x.inviter}")
+        embed.add_field(name="User Count:",value=f"{x.approximate_member_count}")
+        embed.add_field(name="Active User Count:",value=f"{x.approximate_presence_count}")
+        embed.add_field(name="Invite Channel",value=f"{x.channel}")
+        embed.set_footer(text=f"ID: {guild_id}\nInvite Code: {x.code}\nInvite Url: {x.url}")
+        await ctx.send(embed=embed)
+        
+      if isinstance(x,str):
+        await ctx.send(content=f"it returned as {x}. It couldn't fetch it :(")
+
 
 def setup(client):
   client.add_cog(Info(client))

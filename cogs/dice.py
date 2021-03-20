@@ -96,6 +96,52 @@ class Dice(commands.Cog):
     kawaii_emotes3 = self.client.get_guild(692576207404793946)
     emoji_choosen = random.choice(kawaii_emotes.emojis+kawaii_emotes2.emojis+kawaii_emotes3.emojis)
     await ctx.send(emoji_choosen)
-  
+
+  @commands.command(brief="a magic 8ball command",aliases=["8ball"])
+  async def _8ball(self,ctx,*,args=None):
+    if args is None:
+      await ctx.send("Please give us a value to work with.")
+    if args:
+      responses = ["As I see it, yes.","Ask again later.","Better not tell you now.","Cannot predict now.","Concentrate and ask again.","Don’t count on it.","It is certain.","It is decidedly so.","Most likely.","My reply is no.","My sources say no.","Outlook not so good.","Outlook good.","Reply hazy, try again.","Signs point to yes.","Very doubtful.","Without a doubt.","Yes.","Yes – definitely.","You may rely on it."]
+      await ctx.send(random.choice(responses))
+
+  @commands.command(brief="a command meant to flip coins",help="commands to flip coins, etc.")
+  async def coin(self,ctx, *, args = None):
+    if args:
+      value = random.choice([True,False]) 
+      if args.lower().startswith("h") and value:
+        win = True
+      elif args.lower().startswith("t") and not value:
+        win = True
+      elif args.lower().startswith("h") and not value:
+        win = False
+      elif args.lower().startswith("t") and value:
+        win = False    
+      else:
+        await ctx.send("Please use heads or Tails as a value.")
+        return
+      
+      if(value):
+        pic_name = "heads"
+      else:
+        pic_name ="Tails"
+
+      url_dic = {"heads":"https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
+
+      embed = discord.Embed(title="coin flip",color=random.randint(0, 16777215))
+      embed.set_author(name=f"{ctx.author}",icon_url=(ctx.author.avatar_url))
+      embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {args}")
+      embed.set_image(url=url_dic[pic_name])
+
+      if win:
+        embed.add_field(name="Result: ",value="You won")
+      else:
+        embed.add_field(name="Result: ",value="You lost")
+      
+      await ctx.send(embed=embed)
+
+    if args is None:
+      await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
+    
 def setup(client):
   client.add_cog(Dice(client))
