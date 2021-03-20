@@ -3,7 +3,6 @@ from discord.ext import commands, tasks
 import B
 import ClientConfig
 import os
-import random
 import logging
 import asyncio
 import DatabaseConfig
@@ -23,7 +22,6 @@ async def startup():
   await status_task()
 
 logging.basicConfig(level=logging.INFO)
-
 client = ClientConfig.client
 
 B.b()
