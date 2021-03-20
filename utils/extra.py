@@ -31,3 +31,10 @@ async def headpat_converter(url,ctx):
   embed.set_image(url=imgur_url["link"])
   embed.set_footer(text="powered by some random api")
   await ctx.send(embed=embed)
+
+def warn_permission(ctx):
+  if isinstance(ctx.channel, discord.TextChannel):
+    return ctx.author.guild_permissions.administrator
+
+  if isinstance(ctx.channel,discord.DMChannel):
+    return True

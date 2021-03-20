@@ -2,6 +2,8 @@ from discord.ext import commands
 from utils import BetterMemberConverter, BetterUserconverter
 import random
 import discord
+import aiohttp
+import os
 
 class Owner(commands.Cog):
   def __init__(self, client):
@@ -55,6 +57,77 @@ class Owner(commands.Cog):
 
   async def cog_check(self, ctx):
     return await self.client.is_owner(ctx.author)
+
+  @commands.command(brief="Work in Progress")
+  async def status(self , ctx , * , args=None):
+    if await self.client.is_owner(ctx.author):
+      if args:
+        pass
+      if args is None:
+        await self.client.change_presence(status=discord.Status.do_not_disturb)
+    if await self.client.is_owner(ctx.author) is False:
+      await ctx.send("That's an owner only command")
+  
+  @commands.command(brief="Only owner command to change bot's nickname")
+  async def change_nick(self, ctx ,*, name=None):
+    if await self.client.is_owner(ctx.author):
+      if isinstance(ctx.channel, discord.TextChannel):
+        await ctx.send("Changing Nickname")
+        try:
+          await ctx.guild.me.edit(nick=name)
+        except discord.Forbidden:
+          await ctx.send("Appears not to have valid perms")
+      if isinstance(ctx.channel,discord.DMChannel):
+        await ctx.send("You can't use that in Dms.")
+      
+    if await self.client.is_owner(ctx.author) is False:
+      await ctx.send("You can't use that command")
+
+  
+  @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
+  async def servers(self,ctx):
+    if await self.client.is_owner(ctx.author):
+      send_list = [""]
+      guild_list = ["%d %s %d %s" % (len(g.members), g.name, g.id, (g.system_channel or g.text_channels[0]).mention) for g in self.client.guilds]
+      for i in guild_list:
+        if len(send_list[-1] + i) < 1000:
+          send_list[-1] += i + "\n"
+        else:
+          send_list += [i + "\n"]
+      if (ctx.author.dm_channel is None):
+        await ctx.author.create_dm()
+      await ctx.author.dm_channel.send("\n Servers:")
+      for i in send_list:
+        await ctx.author.dm_channel.send(i) 
+    if await self.client.is_owner(ctx.author) is False:
+      await ctx.send("You can't use that it's owner only")
+
+  @commands.command(brief="only works with JDJG, but this command is meant to send updates to my webhook")
+  async def webhook_update(self,ctx,*,args=None):
+    if await self.client.is_owner(ctx.author):
+      if args:
+        if isinstance(ctx.channel, discord.TextChannel):
+          await ctx.message.delete()
+
+        async with aiohttp.ClientSession() as session:
+          webhook=discord.Webhook.from_url(os.environ["webhook1"], adapter=discord.AsyncWebhookAdapter(session))
+          embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
+          embed.add_field(name="Update Info:",value=args)
+          embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
+          embed.set_footer(text="JDJG's Updates")
+          await webhook.execute(embed=embed)
+        
+        async with aiohttp.ClientSession() as session:
+          webhook=discord.Webhook.from_url(os.environ["webhook99"], adapter=discord.AsyncWebhookAdapter(session))
+          embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
+          embed.add_field(name="Update Info:",value=args)
+          embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
+          embed.set_footer(text="JDJG's Updates")
+          await webhook.execute(embed=embed)
+      if args is None:
+        await ctx.send("You sadly can't use it like that.")
+    if await self.client.is_owner(ctx.author) is False:
+      await ctx.send("You can't use that")
 
 def setup(client):
   client.add_cog(Owner(client))

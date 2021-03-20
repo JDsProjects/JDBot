@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 import random
+from difflib import SequenceMatcher
 
 class Dice(commands.Cog):
   def __init__(self,client):
@@ -142,6 +143,29 @@ class Dice(commands.Cog):
 
     if args is None:
       await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
+
+  @commands.command(brief="a command to find the nearest emoji")
+  async def emote(self,ctx,*,args=None):
+    if args is None:
+      await ctx.send("Please specify an emote")
+    if args:
+      emoji=discord.utils.get(self.client.emojis,name=args)
+      if emoji is None:
+        await ctx.send("we haven't found anything")
+      if emoji:
+        await ctx.send(emoji)
+
+  @commands.command(help="a different method to find the nearest emoji")
+  async def emote2(self,ctx,*,args=None):
+    if args is None:
+      await ctx.send("Please specify an emote")
+    if args:
+      emoji = sorted(self.client.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
+
+      if emoji is None:
+        await ctx.send("we haven't found anything")
+      if emoji:
+        await ctx.send(emoji)
     
 def setup(client):
   client.add_cog(Dice(client))

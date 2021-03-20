@@ -79,7 +79,7 @@ class Order(commands.Cog):
       await self.client.get_channel(738912143679946783).send(embed=embed)
 
   @commands.command(brief="a command to shuffle images from google images",aliases=["order-shuffle"])
-  async def order_shuffle(self,ctx,*,args):
+  async def order_shuffle(self,ctx,*,args=None):
     if args is None:
       await ctx.send("You can't order nothing")
     if args:

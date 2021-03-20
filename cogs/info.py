@@ -5,6 +5,8 @@ import random
 from utils import BetterMemberConverter, BetterUserconverter
 import mystbin
 import typing
+from difflib import SequenceMatcher
+import typing
 
 class Info(commands.Cog):
   def __init__(self,client):
@@ -178,6 +180,85 @@ class Info(commands.Cog):
       if isinstance(x,str):
         await ctx.send(content=f"it returned as {x}. It couldn't fetch it :(")
 
+  @commands.command(brief="gives info about a file")
+  async def file(self,ctx):
+    if len(ctx.message.attachments) < 1:
+      await ctx.send(ctx.message.attachments)
+      await ctx.send("no file submitted")
+    if len(ctx.message.attachments) > 0:
+      embed = discord.Embed(title="Attachment info",color=random.randint(0, 16777215))
+      for x in ctx.message.attachments:
+        embed.add_field(name=f"ID: {x.id}",value=f"[{x.filename}]({x.url})")
+        embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
+      await ctx.send(embed=embed,content="\nThat's good")
+
+  @commands.command(brief="a command to get the avatar of a user",help="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp","av"])
+  async def avatar(self,ctx,*,user: BetterUserconverter = None): 
+    if user is None:
+      user = ctx.author
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"{user.name}'s avatar:",icon_url=(user.avatar_url))
+    embed.set_image(url=(user.avatar_url))
+    embed.set_footer(text=f"Requested by {ctx.author}")
+    await ctx.send(embed=embed)
+
+  @commands.command(brief="this is a way to get the nearest channel.")
+  async def closest_channel(self,ctx,*,args=None):
+    if args is None:
+      await ctx.send("Please specify a channel")
+    
+    if args:
+      if isinstance(ctx.channel, discord.TextChannel):
+        channel=discord.utils.get(ctx.guild.channels,name=args)
+        if channel:
+          await ctx.send(channel.mention)
+        if channel is None:
+          await ctx.send("Unforantely we haven't found anything")
+
+      if isinstance(ctx.channel,discord.DMChannel):
+        await ctx.send("You can't use it in a DM.")
+
+
+  @commands.command(brief="a command to get the closest user.")
+  async def closest_user(self,ctx,*,args=None):
+    if args is None:
+      await ctx.send("please specify a user")
+    if args:
+      userNearest = discord.utils.get(self.client.users,name=args)
+      user_nick = discord.utils.get(self.client.users,display_name=args)
+      if userNearest is None:
+        userNearest = sorted(self.client.users, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
+      if user_nick is None:
+        user_nick = sorted(self.client.users, key=lambda x: SequenceMatcher(None, x.display_name,args).ratio())[-1]
+      await ctx.send(f"Username: {userNearest}")
+      await ctx.send(f"Display name: {user_nick}")
+    
+    if isinstance(ctx.channel, discord.TextChannel):
+      member_list = []
+      for x in ctx.guild.members:
+        if x.nick is None:
+          pass
+        if x.nick:
+          member_list.append(x)
+      
+      nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick,args).ratio())[-1] 
+      await ctx.send(f"Nickname: {nearest_server_nick}")
+
+    if isinstance(ctx.channel,discord.DMChannel):
+      await ctx.send("You unforantely don't get the last value.")
+  
+  @commands.command(help="emojis command(work in progress)")
+  async def emoji(self,ctx,*emojis: typing.Union[discord.PartialEmoji, str]):
+    for x in emojis:
+      if isinstance(x,discord.PartialEmoji):
+        embed = discord.Embed(title=f"Emoji: **{x.name}**",color=random.randint(0, 16777215))
+        embed.set_image(url=x.url)
+        embed.set_footer(text=f"Emoji ID:{x.id}")
+        await ctx.send(embed=embed)
+      else:
+        await ctx.send(content=f"We can't fetch {x} yet")
+    if len(emojis) < 1:
+      await ctx.send("Looks like there was no emojis.")
 
 def setup(client):
   client.add_cog(Info(client))
