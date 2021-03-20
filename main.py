@@ -42,24 +42,12 @@ logging.basicConfig(level=logging.INFO)
 
 client = ClientConfig.client
 
-async def triggered_converter(url,ctx):
-  sr_client=sr_api.Client()
-  source_image=sr_client.filter(option="triggered",url=str(url))
-  await sr_client.close()
-
-  imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url= await imgur_client.upload_from_url(source_image.url)
-
-  embed = discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
-  embed.set_image(url=imgur_url["link"])
-  embed.set_footer(text="powered by some random api")
-  await ctx.send(embed=embed)
-
 @client.command(brief="sends pong and the time it took to do so.")
 async def ping(ctx):
-  await ctx.send("Pong")
-  await ctx.send(f"Response time: {client.latency*1000}")
+  start = time.perf_counter()
+  message=await ctx.send("Pong")
+  end = time.perf_counter()
+  await message.edit(content=f"Pong\nBot Latency: {((end - start)*1000)} MS\nWebsocket Response time: {client.latency*1000} MS")
 
 @client.command(brief="gives you the digits of pi that Python knows")
 async def pi(ctx):
@@ -273,6 +261,7 @@ async def open_source(ctx):
 @client.command(brief="a command to email you(work in progress)",help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
 async def email(ctx,*args):
   print(args)
+  await ctx.send("WIP")
 
 @client.command(brief="Gives you a random waifu image.")
 async def waifu(ctx):
@@ -376,6 +365,7 @@ async def promise(ctx):
 
 @client.command(brief="a command that can scan urls(work in progress), and files",help="please don't upload anything secret or send any secret url thank you :D")
 async def scan(ctx, *, args = None):
+  await ctx.send("WIP")
   import vt
   vt_client = vt.Client(os.environ["virustotal_key"])
   used = None
@@ -554,50 +544,6 @@ async def fetch_invite(ctx,*invites:typing.Union[discord.Invite, str]):
     if isinstance(x,str):
       await ctx.send(content=f"it returned as {x}. It couldn't fetch it :(")
 
-async def headpat_converter(url,ctx):
-  sr_client=sr_api.Client(key=os.environ["sr_key"])
-  source_image=sr_client.petpet(avatar=str(url))
-  image = await source_image.read()
-  await sr_client.close()
-
-  imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url = await imgur_client.upload(image)
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
-  embed.set_image(url=imgur_url["link"])
-  embed.set_footer(text="powered by some random api")
-  await ctx.send(embed=embed)
-
-@client.command(brief="uses our headpat program to pat you",help="a command that uses sra_api to make a headpat of you.")
-async def headpat2(ctx):
-  y = 0
-  if len(ctx.message.attachments) > 0:
-    for x in ctx.message.attachments:
-      if x.filename.endswith(".png"):
-        url = x.url
-        await headpat_converter(url,ctx)
-        y = y + 1
-      if not x.filename.endswith(".png"):
-        pass
-
-  if len(ctx.message.attachments) == 0 or y == 0:
-    url = ctx.author.avatar_url_as(format="png")
-    await headpat_converter(url,ctx)
-
-@client.command(brief="uploads your emojis into a mystbin link")
-async def look_at(ctx):
-  if isinstance(ctx.message.channel, discord.TextChannel):
-    message_emojis = ""
-    for x in ctx.guild.emojis:
-      message_emojis = message_emojis+" "+str(x)+"\n"
-    mystbin_client = mystbin.Client()
-    paste = await mystbin_client.post(message_emojis)
-    await mystbin_client.close()
-    await ctx.send(paste.url)
-    
-  if isinstance(ctx.channel,discord.DMChannel):
-    await ctx.send("We can't use that in DMS")
-
 @client.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
 async def servers(ctx):
   if await client.is_owner(ctx.author):
@@ -639,14 +585,6 @@ async def bloopers(ctx,*,args=None):
     embed_message.set_footer(text = f"{ctx.author.id}")
     embed_message.set_thumbnail(url="https://i.imgur.com/PfWlEd5.png")
     await apply_user.send(embed=embed_message)  
-
-@client.command(help="gives the id of the current guild or DM if you are in one.")
-async def guild_get(ctx):
-  if isinstance(ctx.channel, discord.TextChannel):
-    await ctx.send(content=ctx.guild.id) 
-
-  if isinstance(ctx.channel,discord.DMChannel):
-    await ctx.send(ctx.channel.id)
 
 @client.command(help="a command to give information about the team",brief="this command works if you are in team otherwise it will just give the owner.")
 async def team(ctx):
@@ -729,206 +667,6 @@ async def say(ctx,*,args=None):
   if args is None:
     await ctx.send("You didn't give us any text to use.")
 
-@client.command(help="takes a .png attachment or your avatar and makes a triggered version.")
-async def triggered(ctx):
-  y = 0
-  if len(ctx.message.attachments) > 0:
-    for x in ctx.message.attachments:
-      if x.filename.endswith(".png"):
-        url = x.url
-        await triggered_converter(url,ctx)
-        y = y + 1
-      if not x.filename.endswith(".png"):
-        pass
-
-  if len(ctx.message.attachments) == 0 or y == 0:
-    url = ctx.author.avatar_url_as(format="png")
-    await triggered_converter(url,ctx)
-
-@client.command(brief="a command to slap someone",help="this sends a slap gif to the target user")
-async def slap(ctx,*, Member: BetterMemberConverter = None):
-  if Member is None:
-    Member = ctx.author
-    
-  if Member.id == ctx.author.id:
-    person = client.user
-    target = ctx.author
-  
-  if Member.id != ctx.author.id:
-    person = ctx.author
-    target = Member
-  
-  asuna = asuna_api.Client()
-  url = await asuna.get_gif("slap")
-  await asuna.close()
-
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} slapped you! Ow...",icon_url=(person.avatar_url))
-  embed.set_image(url=url.url)
-  embed.set_footer(text="powered using the asuna.ga api")
-
-  if isinstance(ctx.channel, discord.TextChannel):
-    await ctx.send(content=target.mention,embed=embed) 
-
-  if isinstance(ctx.channel,discord.DMChannel):
-    if target.dm_channel is None:
-      await target.create_dm()
-    
-    try:
-      await target.send(content=target.mention,embed=embed)
-    except discord.Forbidden:
-      await ctx.author.send("Failed DM'ing them...")
-
-
-@client.command(brief="a command to look up foxes",help="this known as wholesome fox to the asuna api")
-async def fox2(ctx):
-  asuna = asuna_api.Client()
-  url = await asuna.get_gif("wholesome_foxes")
-  await asuna.close()
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{ctx.author} requested a wholesome fox picture",icon_url=(ctx.author.avatar_url))
-  embed.set_image(url=url.url)
-  embed.set_footer(text="powered using the asuna.ga api")
-  await ctx.send(embed=embed)
-
-@client.command(brief="another command to give you pat gifs",help="powered using the asuna api")
-async def pat2(ctx,*, Member: BetterMemberConverter= None):
-  if Member is None:
-    Member = ctx.author
-    
-  if Member.id == ctx.author.id:
-    person = client.user
-    target = ctx.author
-  
-  if Member.id != ctx.author.id:
-    person = ctx.author
-    target = Member
-  
-  asuna = asuna_api.Client()
-  url = await asuna.get_gif("pat")
-  await asuna.close()
-
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} patted you! *pat pat pat*",icon_url=(person.avatar_url))
-  embed.set_image(url=url.url)
-  embed.set_footer(text="powered using the asuna.ga api")
-  
-  if isinstance(ctx.channel, discord.TextChannel):
-    await ctx.send(content=target.mention,embed=embed) 
-
-  if isinstance(ctx.channel,discord.DMChannel):
-    if target.dm_channel is None:
-      await target.create_dm()
-    
-    try:
-      await target.send(content=target.mention,embed=embed)
-    except discord.Forbidden:
-      await ctx.author.send("Failed DM'ing them...")
-
-
-@client.command(brief="a command to give you pat gifs",help="using the sra api it gives you pat gifs")
-async def pat(ctx,*, Member: BetterMemberConverter=None):
-  if Member is None:
-    Member = ctx.author
-    
-  if Member.id == ctx.author.id:
-    person = client.user
-    target = ctx.author
-  
-  if Member.id != ctx.author.id:
-    person = ctx.author
-    target = Member
-    
-  sr_client=sr_api.Client()
-  image=await sr_client.get_gif("pat")
-  await sr_client.close()
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
-  embed.set_image(url=image.url)
-  embed.set_footer(text="powered by some random api")
-    
-  if isinstance(ctx.channel, discord.TextChannel):
-    await ctx.send(content=target.mention,embed=embed) 
-
-  if isinstance(ctx.channel,discord.DMChannel):
-    if target.dm_channel is None:
-      await target.create_dm()
-    
-    try:
-      await target.send(content=target.mention,embed=embed)
-    except discord.Forbidden:
-      await ctx.author.send("Failed Dming them...")
-  
-
-@client.command(brief="a hug command to hug people",help="this the first command to hug.")
-async def hug(ctx,*, Member: BetterMemberConverter=None):
-  if Member is None:
-    Member = ctx.author
-    
-  if Member.id == ctx.author.id:
-    person = client.user
-    target = ctx.author
-  
-  if Member.id != ctx.author.id:
-    person = ctx.author
-    target = Member
-
-  sr_client=sr_api.Client()
-  image=await sr_client.get_gif("hug")
-  await sr_client.close()
-
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} hugged you! Awwww...",icon_url=(person.avatar_url))
-  embed.set_image(url=image.url)
-  embed.set_footer(text="powered by some random api")
-  
-  if isinstance(ctx.channel, discord.TextChannel):
-    await ctx.send(content=target.mention,embed=embed) 
-
-  if isinstance(ctx.channel,discord.DMChannel):
-    if target.dm_channel is None:
-      await target.create_dm()
-    
-    try:
-      await target.send(content=target.mention,embed=embed)
-    except discord.Forbidden:
-      await ctx.author.send("Failed DM'ing them...")
-
-
-@client.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
-async def hug2(ctx,*, Member: BetterMemberConverter=None):
-  if Member is None:
-    Member = ctx.author
-    
-  if Member.id == ctx.author.id:
-    person = client.user
-    target = ctx.author
-  
-  if Member.id != ctx.author.id:
-    person = ctx.author
-    target = Member
-  
-  asuna = asuna_api.Client()
-  url = await asuna.get_gif("hug")
-  await asuna.close()
-
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} super hugged you!",icon_url=(person.avatar_url))
-  embed.set_image(url=url.url)
-  embed.set_footer(text="powered using the asuna.ga api")
-  
-  if isinstance(ctx.channel, discord.TextChannel):
-    await ctx.send(content=target.mention,embed=embed) 
-
-  if isinstance(ctx.channel,discord.DMChannel):
-    if target.dm_channel is None:
-      await target.create_dm()
-    
-    try:
-      await target.send(content=target.mention,embed=embed)
-    except discord.Forbidden:
-      await ctx.author.send("Failed DM'ing them...")
-
 def warn_permission(ctx):
   if isinstance(ctx.channel, discord.TextChannel):
     return ctx.author.guild_permissions.administrator
@@ -981,87 +719,6 @@ async def warn(ctx,Member: BetterMemberConverter = None):
 
   if warn_permission(ctx) is False:
     await ctx.send("You don't have permission to use that.")
-
-
-@client.command(brief="a kiss command",help="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)")
-async def kiss(ctx,*, Member: BetterMemberConverter=None):
-  if Member is None:
-    Member = ctx.author
-    
-  if Member.id == ctx.author.id:
-    person = client.user
-    target = ctx.author
-  
-  if Member.id != ctx.author.id:
-    person = ctx.author
-    target = Member
-  
-  asuna = asuna_api.Client()
-  url = await asuna.get_gif("kiss")
-  await asuna.close()
-        
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} kissed you",icon_url=(person.avatar_url))
-  embed.set_image(url=url.url)
-  embed.set_footer(text="Why did I make this command? powered using the asuna.ga api")
-  
-  if isinstance(ctx.channel, discord.TextChannel):
-    await ctx.send(content=target.mention,embed=embed) 
-
-  if isinstance(ctx.channel,discord.DMChannel):
-    if target.dm_channel is None:
-      await target.create_dm()
-    
-    try:
-      await target.send(content=target.mention,embed=embed)
-    except discord.Forbidden:
-      await ctx.author.send("Failed Dming them...")
-
-@client.command(brief="a command to get a neko",help="using the asuna.ga api you will get these images")
-async def neko(ctx):
-  asuna = asuna_api.Client()
-  url = await asuna.get_gif("neko")
-  await asuna.close()
-  
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{ctx.author} requested a neko picture",icon_url=(ctx.author.avatar_url))
-  embed.set_image(url=url.url)
-  embed.set_footer(text="powered using the asuna.ga api")
-  await ctx.send(embed=embed)
-
-@client.command(brief="a command to send wink gifs",wink="you select a user to send it to and it will send it to you lol")
-async def wink(ctx,*, Member: BetterMemberConverter=None):
-  if Member is None:
-    Member = ctx.author
-    
-  if Member.id == ctx.author.id:
-    person = client.user
-    target = ctx.author
-  
-  if Member.id != ctx.author.id:
-    person = ctx.author
-    target = Member
-  
-  sr_client=sr_api.Client()
-  image=await sr_client.get_gif("wink")
-  await sr_client.close()
-
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"{person} winked at you",icon_url=(person.avatar_url))
-  embed.set_image(url=image.url)
-  embed.set_footer(text="powered by some random api")
-
-  if isinstance(ctx.channel, discord.TextChannel):
-      await ctx.send(content=target.mention,embed=embed) 
-
-  if isinstance(ctx.channel,discord.DMChannel):
-    if target.dm_channel is None:
-      await target.create_dm()
-    
-    try:
-      await target.send(content=target.mention,embed=embed)
-    except discord.Forbidden:
-      await ctx.author.send("Failed Dming them...")
 
 @client.command(brief="a command to send facepalm gifs",help="using some random api it sends you a facepalm gif lol")
 async def facepalm(ctx,*, Member: BetterMemberConverter=None):
@@ -1236,124 +893,6 @@ async def milk(ctx):
   embed = discord.Embed(title="You have summoned the milkman",color=random.randint(0, 16777215))
   embed.set_image(url="https://i.imgur.com/JdyaI1Y.gif")
   embed.set_footer(text="his milk is delicious")
-  await ctx.send(embed=embed)
-
-async def guildinfo(ctx,guild):
-  bots = 0
-  users = 0
-  for x in guild.members:
-    if x.bot is True:
-      bots = bots + 1
-    if x.bot is False:
-      users = users + 1
-  static_emojis = 0
-  animated_emojis = 0
-  usable_emojis = 0
-  for x in guild.emojis:
-    if x.animated is True:
-      animated_emojis = animated_emojis + 1
-    if x.animated is False:
-      static_emojis = static_emojis + 1
-    if x.available is True:
-      usable_emojis = usable_emojis + 1
-  
-  embed = discord.Embed(title="Guild Info:",color=random.randint(0, 16777215))
-  embed.add_field(name="Server Name:",value=guild.name)
-  embed.add_field(name="Server ID:",value=guild.id)
-  embed.add_field(name="Server region",value=guild.region)
-  embed.add_field(name="Server created at:",value=f"{guild.created_at} UTC")
-  embed.add_field(name="Server Owner:",value=guild.owner)
-  embed.add_field(name="Member Count:",value=guild.member_count)
-  embed.add_field(name="Users:",value=users)
-  embed.add_field(name="Bots:",value=bots)
-  embed.add_field(name="Channel Count:",value=len(guild.channels))
-  embed.add_field(name="Role Count:",value=len(guild.roles))
-  embed.set_thumbnail(url=(guild.icon_url))
-  embed.add_field(name="Emoji Limit:",value=guild.emoji_limit)
-  embed.add_field(name="Max File Size:",value=f"{guild.filesize_limit/1000000} MB")
-  embed.add_field(name="Shard ID:",value=guild.shard_id)
-  embed.add_field(name="Animated Icon",value=guild.is_icon_animated())
-  embed.add_field(name="Static Emojis",value=static_emojis)
-  embed.add_field(name="Animated Emojis",value=animated_emojis)
-  embed.add_field(name="Total Emojis:",value=f"{len(guild.emojis)}/{guild.emoji_limit*2}")
-  embed.add_field(name="Usable Emojis",value=usable_emojis)
-
-  await ctx.send(embed=embed)
-
-@client.command(help="gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild",])
-async def serverinfo(ctx,*,args=None):
-  if args:
-    match=re.match(r'(\d{16,21})',args)
-    guild=client.get_guild(int(match.group(0)))
-    if guild is None:
-      guild = ctx.guild
-
-  if args is None:
-    guild = ctx.guild
-  
-  await guildinfo(ctx,guild)
-
-@client.command(aliases=["user info", "user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
-async def userinfo(ctx,*,user: BetterUserconverter = None):
-  if user is None:
-    user = ctx.author
-
-  if user.bot:
-    user_type = "Bot"
-  if not user.bot:
-    user_type = "User"
-  
-  if ctx.guild:
-    member_version=ctx.guild.get_member(user.id)
-    if member_version:
-      nickname = str(member_version.nick)
-      joined_guild = member_version.joined_at.strftime('%m/%d/%Y %H:%M:%S')
-      status = str(member_version.status).upper()
-      highest_role = member_version.roles[-1]
-    if not member_version:
-      nickname = str(member_version)
-      joined_guild = "N/A"
-      status = "Unknown"
-      for guild in client.guilds:
-        member=guild.get_member(user.id)
-        if member:
-          status=str(member.status).upper()
-          break
-      highest_role = "None Found"
-  if not ctx.guild:
-      nickname = "None"
-      joined_guild = "N/A"
-      status = "Unknown"
-      for guild in client.guilds:
-        member=guild.get_member(user.id)
-        if member:
-          status=str(member.status).upper()
-          break
-      highest_role = "None Found"
-  
-  guilds_list=[guild for guild in client.guilds if guild.get_member(user.id)]
-  if not guilds_list:
-    guild_list = "None"
-
-  x = 0
-  for g in guilds_list:
-    if x < 1:
-      guild_list = g.name
-    if x > 0:
-      guild_list = guild_list + f", {g.name}"
-    x = x + 1
-
-  embed=discord.Embed(title=f"{user}",description=f"Type: {user_type}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
-  embed.add_field(name="Username: ", value = user.name)
-  embed.add_field(name="Discriminator:",value=user.discriminator)
-  embed.add_field(name="Nickname: ", value = nickname)
-  embed.add_field(name="Joined Discord: ",value = (user.created_at.strftime('%m/%d/%Y %H:%M:%S')))
-  embed.add_field(name="Joined Guild: ",value = joined_guild)
-  embed.add_field(name="Part of Guilds:", value=guild_list)
-  embed.add_field(name="ID:",value=user.id)
-  embed.add_field(name="Status:",value=status)
-  embed.add_field(name="Highest Role:",value=highest_role)
-  embed.set_image(url=user.avatar_url)
   await ctx.send(embed=embed)
 
 B.b()

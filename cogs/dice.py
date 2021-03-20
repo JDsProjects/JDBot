@@ -69,7 +69,7 @@ class Dice(commands.Cog):
     embed_message.set_image(url="https://i.imgur.com/gaLM6AG.gif")
     await ctx.send(embed=embed_message)
 
-  @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.",aliases=["e_spin"])
+  @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.",aliases=["e_spin","emoji_spin"])
   async def emoji_spinner(self,ctx):
 
     emoji_choosen = random.choice(self.client.emojis)
@@ -88,6 +88,14 @@ class Dice(commands.Cog):
 
     if isinstance(ctx.channel,discord.DMChannel):
       await ctx.send(emoji_choosen)
+  
+  @commands.command(brief="gives a random kawaii emoji.",aliases=["ka"])
+  async def kawaii_random(self,ctx):
+    kawaii_emotes= self.client.get_guild(773571474761973840)
+    kawaii_emotes2 = self.client.get_guild(806669712410411068)
+    kawaii_emotes3 = self.client.get_guild(692576207404793946)
+    emoji_choosen = random.choice(kawaii_emotes.emojis+kawaii_emotes2.emojis+kawaii_emotes3.emojis)
+    await ctx.send(emoji_choosen)
   
 def setup(client):
   client.add_cog(Dice(client))

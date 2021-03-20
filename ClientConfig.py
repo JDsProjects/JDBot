@@ -18,8 +18,8 @@ slash = discord_slash.SlashCommand(client,override_type = True,sync_commands=Tru
 client.load_extension('jishaku')
 
 for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-      try:
-        client.load_extension(f'cogs.{filename[:-3]}')
-      except commands.errors.NoEntryPointError:
-        pass
+  if filename.endswith('.py'):
+    try:
+      client.load_extension(f'cogs.{filename[:-3]}')
+    except commands.errors.NoEntryPointError:
+      pass

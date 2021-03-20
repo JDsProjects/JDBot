@@ -5,6 +5,12 @@ import time
 import async_cse
 import random
 from difflib import SequenceMatcher
+import TenGiphPy
+
+#someday get https://github.com/NinjaSnail1080/akinator.py
+
+tenor_client = TenGiphPy.Tenor(token=os.environ["tenor_key"])
+giphy_client = TenGiphPy.Giphy(token=os.environ["giphy_token"])
 
 class Order(commands.Cog):
   def __init__(self,client):
@@ -17,8 +23,14 @@ class Order(commands.Cog):
     if args:
       time_before=time.process_time() 
       image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
-      results = await image_client.search(args, safesearch=True, image_search=True)
-      emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url,args).ratio())[-1]
+      try:
+        results = await image_client.search(args, safesearch=True, image_search=True)
+        emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url,args).ratio())[-1]
+      except async_cse.search.NoResults:
+        await ctx.send("No results found :(")
+        await image_client.close()
+        return
+
       await image_client.close()
       time_after=time.process_time()
       try:
@@ -42,7 +54,13 @@ class Order(commands.Cog):
     if args:
       time_before=time.process_time() 
       image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
-      results = await image_client.search(args, safesearch=True, image_search=True)
+      try:
+        results = await image_client.search(args, safesearch=True, image_search=True)
+      except async_cse.search.NoResults:
+        await ctx.send("No results found :(")
+        await image_client.close()
+        return
+
       emoji_image = random.choice(results)
       await image_client.close()
       time_after=time.process_time()
@@ -67,7 +85,13 @@ class Order(commands.Cog):
     if args:
       time_before=time.process_time() 
       image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
-      results = await image_client.search(args, safesearch=True, image_search=True)
+      try:
+        results = await image_client.search(args, safesearch=True, image_search=True)
+      except async_cse.search.NoResults:
+        await ctx.send("No results found :(")
+        await image_client.close()
+        return
+
       emoji_image = random.choice(results)
       await image_client.close()
       time_after=time.process_time()
@@ -87,6 +111,8 @@ class Order(commands.Cog):
     
   @commands.group(name="tenor",invoke_without_command=True)
   async def tenor(self,ctx,*,args=None):
+    #if args:
+      #tenor_client.
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor")

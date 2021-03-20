@@ -31,6 +31,28 @@ class Owner(commands.Cog):
         embed_message.add_field(name="Sent To:",value=str(user))
       await self.client.get_channel(738912143679946783).send(embed=embed_message)
 
+  @commands.command()
+  async def load(ctx,*,cog=None):
+    if cog:
+      pass
+    if cog is None:
+      await ctx.send("you can't ask to load no cogs.")
+  
+  @commands.command()
+  async def reload(ctx,*,cog=None):
+    if cog:
+      pass
+    if cog is None:
+      await ctx.send("you can't ask to reload no cogs")
+  
+  @commands.command()
+  async def unload(ctx,*,cog=None):
+    if cog:
+      pass
+    
+    if cog is None:
+      await ctx.send("you can't ask to reload no cogs")
+
   async def cog_check(self, ctx):
     return await self.client.is_owner(ctx.author)
 

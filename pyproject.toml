@@ -20,13 +20,13 @@ vt-py = "^0.6.1"
 "mystbin.py" = "^1.0.1"
 vt = "^3.1.3"
 gtts = "^2.2.1"
-"akinator.py" = {extras = ["async","fast_async"], version = "^4.1.0"}
 discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
 google-api-python-client = "^1.12.8"
 aPRAW = "^0.6.8-alpha.0"
 sr-api = {git = "https://github.com/iDutchy/sr_api.git"}
 async-cse = "^0.3.0"
 discord-py-slash-command = "^1.0.9"
+TenGiphPy = "^2.5.0"
 
 [tool.poetry.dev-dependencies]
 
