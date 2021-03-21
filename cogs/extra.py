@@ -4,8 +4,7 @@ import random
 import asuna_api
 import math
 import aiohttp
-import gtts, io, chardet
-import chardet
+import io, chardet, aiogtts
 import mystbin
 
 class Extra(commands.Cog):
@@ -135,8 +134,8 @@ class Extra(commands.Cog):
   async def google_tts(self,ctx,text):
     await ctx.send("if you have a lot of text it may take a bit")
     mp3_fp = io.BytesIO()
-    tts=gtts.gTTS(text=text,lang='en')
-    tts.write_to_fp(mp3_fp)
+    tts=aiogtts.aiogTTS()
+    await tts.write_to_fp(text,mp3_fp,lang='en')
     mp3_fp.seek(0)
     file = discord.File(mp3_fp,"tts.mp3")
     await ctx.send(file=file)

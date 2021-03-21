@@ -1,9 +1,24 @@
-from discord.ext import commands
+from discord.ext import commands, tasks
 import discord, random , time
+import asyncio
 
 class Bot(commands.Cog):
   def __init__(self,client):
     self.client = client
+    self.status_task.start()
+
+  @tasks.loop(seconds=40)
+  async def status_task(self):
+    await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name="the return of JDBot"))
+    await asyncio.sleep(40)
+    await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(self.client.guilds)} servers | {len(self.client.users)} users"))
+    await asyncio.sleep(40)
+    await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="the new updates coming soon..."))
+    await asyncio.sleep(40)
+
+  @status_task.before_loop
+  async def before_status_task(self):
+    await self.client.wait_until_ready()
 
   @commands.command(brief="sends pong and the time it took to do so.")
   async def ping(self,ctx):
@@ -99,6 +114,8 @@ class Bot(commands.Cog):
     embed = discord.Embed(title="Bot stats",color=random.randint(0, 16777215))
     embed.add_field(name="Guild count",value=len(self.client.guilds))
     embed.add_field(name="User Count:",value=len(self.client.users))
+    embed.add_field(name="True Command Count:",value=f"{len(list(self.client.walk_commands()))}")
+    embed.add_field(name="Command Count:",value=f"{len(self.client.commands)}")
     await ctx.send(embed=embed)
 
   @commands.command(brief="a way to view open source",help="you can see the open source with the link it provides")
