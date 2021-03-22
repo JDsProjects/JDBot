@@ -15,6 +15,7 @@ class Reddit(commands.Cog):
     subreddit = await self.reddit.subreddit("dankmemes")
     async for submission in subreddit.new():
       print(submission)
+    await ctx.send("Command still WIP")
 
   @commands.command(brief="Random meme from Dank Memes with aiohttp",help="Content returned may not be suitable to younger audiences")
   async def dankmeme2(self,ctx):

@@ -1,6 +1,6 @@
 import discord,sr_api,asuna_api,random , aiohttp
 from discord.ext import commands
-from utils import BetterMemberConverter, BetterUserconverter,triggered_converter, headpat_converter
+from utils import BetterMemberConverter, BetterUserconverter,triggered_converter, headpat_converter, invert_converter
 
 class Image(commands.Cog):
   def __init__(self, client):
@@ -378,6 +378,22 @@ class Image(commands.Cog):
     embed.set_image(url="https://i.imgur.com/JdyaI1Y.gif")
     embed.set_footer(text="his milk is delicious")
     await ctx.send(embed=embed)
+
+  @commands.command(help="inverts any valid image within the sr_api")
+  async def invert2(self,ctx):
+    y = 0
+    if len(ctx.message.attachments) > 0:
+      for x in ctx.message.attachments:
+        if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
+          url = x.url
+          await invert_converter(url,ctx)
+          y = y + 1
+        if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
+          pass
+
+    if len(ctx.message.attachments) == 0 or y == 0:
+      url = ctx.author.avatar_url_as(format="png")
+      await invert_converter(url,ctx)
 
 def setup(client):
   client.add_cog(Image(client))

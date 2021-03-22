@@ -111,38 +111,49 @@ class Order(commands.Cog):
     
   @commands.group(name="tenor",invoke_without_command=True)
   async def tenor(self,ctx,*,args=None):
-    #if args:
-      #tenor_client.
+    if args:
+      results = await tenor_client.asearch(args,safesearch=True, limit=10)
+      print(results)
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor")
 
   @tenor.command(help="work in progress",name="shuffle")
   async def tenor_random(self,ctx,*,args=None):
+    if args:
+      await ctx.send("WIP")
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor shuffle")
 
   @commands.command(help="work in progress",aliases=["tenor-shuffle"])
   async def tenor_shuffle(self,ctx,*,args):
+    if args:
+      await ctx.send("WIP")
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor shuffle")
   
   @commands.group(name="giphy",invoke_without_command=True)
   async def giphy(self,ctx,*,args=None):
+    if args:
+      await ctx.send("WIP")
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor")
 
   @giphy.command(help="work in progress",name="shuffle")
   async def giphy_random(self,ctx,*,args=None):
+    if args:
+      await ctx.send("WIP")
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("giphy shuffle")
   
   @commands.command(help="work in progress",aliases=["giphy-shuffle"])
   async def giphy_shuffle(self,ctx,*,args):
+    if args:
+      await ctx.send("WIP")
     if args is None:
         await ctx.send("That doesn't have any value.")
         await ctx.send("giphy shuffle")

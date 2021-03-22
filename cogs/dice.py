@@ -106,6 +106,17 @@ class Dice(commands.Cog):
       responses = ["As I see it, yes.","Ask again later.","Better not tell you now.","Cannot predict now.","Concentrate and ask again.","Don’t count on it.","It is certain.","It is decidedly so.","Most likely.","My reply is no.","My sources say no.","Outlook not so good.","Outlook good.","Reply hazy, try again.","Signs point to yes.","Very doubtful.","Without a doubt.","Yes.","Yes – definitely.","You may rely on it."]
       await ctx.send(random.choice(responses))
 
+  @commands.command(brief="gordon ramsay insults you(I don't own his likeness)",help="Please only use if you can handle insults :D (with some profanity)")
+  async def insult2(self,ctx,*,args=None):
+    ramsay_responses=["You are getting your kn*ckers in a twist! Calm down!", "WHAT ARE YOU? An idiot sandwich", "You fucking Donkey!", "How about a thank you, you miserable wee-bitch", "Hey, panini head, are you listening to me?", "For what we are about to eat, may the Lord make us truly not vomit", "Do you want a fucking medal?", "I wish you would go jump in the oven! It would make my life so much easier", "Your name is Elsa, isn't it? Because this shit is so fucking frozen", "This pork is so raw it's still singing Hakuna Matata", "Fuck off you bloody donut", "This crab is so raw it just offered me a krabby patty","The fucking bass is fucking RAW!","This chicken is so raw it's still asking why it crossed the road!","Hey excuse me madam, fuck me? How about fuck you."]
+
+    if args is None:
+      await ctx.send(content=f"{ctx.author}, {random.choice(ramsay_responses)}")
+
+    if args:
+
+      await ctx.send(random.choice(ramsay_responses))
+
   @commands.command(brief="a command meant to flip coins",help="commands to flip coins, etc.")
   async def coin(self,ctx, *, args = None):
     if args:
@@ -151,7 +162,7 @@ class Dice(commands.Cog):
     if args:
       emoji=discord.utils.get(self.client.emojis,name=args)
       if emoji is None:
-        await ctx.send("we haven't found anything")
+        await ctx.send("We haven't found anything")
       if emoji:
         await ctx.send(emoji)
 
@@ -163,7 +174,7 @@ class Dice(commands.Cog):
       emoji = sorted(self.client.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
 
       if emoji is None:
-        await ctx.send("we haven't found anything")
+        await ctx.send("We haven't found anything")
       if emoji:
         await ctx.send(emoji)
     

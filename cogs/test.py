@@ -3,8 +3,10 @@ import discord
 import os
 import itertools
 import re
+import functools
+from utils import invert_func
 
-testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450],703674286711373914
+testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
 
 class Test(commands.Cog):
   def __init__(self, client):
@@ -61,6 +63,31 @@ class Test(commands.Cog):
   @commands.command(brief="work in progress")
   async def headpat(self,ctx):
     await ctx.send("Currently working in progress")
+
+  @commands.command(brief="work in progress")
+  async def invert(self,ctx):
+    y = 0
+
+    if len(ctx.message.attachments) > 0:
+      for x in ctx.message.attachments:
+        try:
+          discord.utils._get_mime_type_for_image(await x.read())
+          passes = True
+        except commands.errors.CommandInvokeError:
+          passes = False
+        if passes is True:
+          y = y + 1
+          invert_time=functools.partial(invert_func,await x.read())
+          file = invert_time()
+          await ctx.send(file=file)
+        if passes is False:
+          pass
+
+    if len(ctx.message.attachments) == 0 or y == 0:
+      url = ctx.author.avatar_url_as(format="png")
+      invert_time=functools.partial(invert_func,await url.read())
+      file = invert_time()
+      await ctx.send(file=file)
 
 def setup(client):
   client.add_cog(Test(client))
