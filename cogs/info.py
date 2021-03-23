@@ -7,6 +7,7 @@ import mystbin
 import typing
 from difflib import SequenceMatcher
 import typing
+import emojis
 
 class Info(commands.Cog):
   def __init__(self,client):
@@ -256,9 +257,25 @@ class Info(commands.Cog):
         embed.set_footer(text=f"Emoji ID:{x.id}")
         await ctx.send(embed=embed)
       else:
-        await ctx.send(content=f"We can't fetch {x} yet")
+        await ctx.send(content=f"We can't fetch {x} yet",allowed_mentions=discord.AllowedMentions.none())
     if len(emojis) < 1:
       await ctx.send("Looks like there was no emojis.")
+
+  @commands.command()
+  async def fetch_content(self,ctx,*,args=None):
+    if args is None:
+      await ctx.send("please send actual text")
+    if args:
+      args=discord.utils.escape_mentions(args)
+      args=discord.utils.escape_markdown(args,as_needed=False,ignore_links=False)
+    for x in ctx.message.mentions:
+      args = args.replace(x.mention,f"\{x.mention}")
+    emojis_return = emojis.get(args)
+    for x in emojis_return:
+      args = args.replace(x,f"\{x}")
+    for x in re.findall(r':\w*:\d*',args):
+        args=args.replace(x,f"\{x}")
+    await ctx.send(f"{args}")
 
 def setup(client):
   client.add_cog(Info(client))

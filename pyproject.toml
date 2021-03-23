@@ -28,6 +28,7 @@ discord-py-slash-command = "^1.0.9"
 TenGiphPy = "^2.5.0"
 aiogTTS = "^1.1.0"
 motor = "^2.3.1"
+emojis = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 
