@@ -65,6 +65,9 @@ class Info(commands.Cog):
 
     if args is None:
       guild = ctx.guild
+
+    if guild is None:
+      await ctx.send("Guild wanted has not been found")
     
     await self.guildinfo(ctx,guild)
 

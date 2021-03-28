@@ -34,21 +34,21 @@ class Owner(commands.Cog):
       await self.client.get_channel(738912143679946783).send(embed=embed_message)
 
   @commands.command()
-  async def load(ctx,*,cog=None):
+  async def load(self,ctx,*,cog=None):
     if cog:
-      pass
+      await ctx.send("WIP")
     if cog is None:
       await ctx.send("you can't ask to load no cogs.")
   
   @commands.command()
-  async def reload(ctx,*,cog=None):
+  async def reload(self,ctx,*,cog=None):
     if cog:
       pass
     if cog is None:
       await ctx.send("you can't ask to reload no cogs")
   
   @commands.command()
-  async def unload(ctx,*,cog=None):
+  async def unload(self,ctx,*,cog=None):
     if cog:
       pass
     
@@ -58,11 +58,11 @@ class Owner(commands.Cog):
   async def cog_check(self, ctx):
     return await self.client.is_owner(ctx.author)
 
-  @commands.command(brief="Work in Progress")
+  @commands.command(brief="Changes Bot Status(Owner Only)")
   async def status(self , ctx , * , args=None):
     if await self.client.is_owner(ctx.author):
       if args:
-        pass
+        await self.client.change_presence(status=discord.Status.do_not_disturb, activity= discord.Activity(type=discord.ActivityType.watching,name=args))
       if args is None:
         await self.client.change_presence(status=discord.Status.do_not_disturb)
     if await self.client.is_owner(ctx.author) is False:

@@ -3,7 +3,7 @@ from threading import Thread
 app = Flask('')
 @app.route('/')
 def main():
-    return 'JDJG Bot is up and running!!'
+    return 'JDBot is up and running!!'
 
 def run():
     app.run(host='0.0.0.0', port=3000)
