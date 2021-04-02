@@ -81,6 +81,30 @@ class Extra(commands.Cog):
         embed.set_footer(text=f"Made on {data['month']}/{data['day']}/{data['year']}")
         await ctx.send(embed=embed)
 
+  @commands.command()
+  async def http_cat(self,ctx,args=None):
+    if args is None:
+      code = "404"
+    if args:
+      if args.isdigit():
+        if int(args) > 99 and int(args) < 600:
+          code = args
+      
+      if args.isdigit() is False:
+        await ctx.send("Not a valid arg using 404")
+        code = "404"
+
+    async with aiohttp.ClientSession() as session:
+      async with session.get(f"https://http.cat/{code}") as response:
+        if response.status:
+          image = f"https://http.cat/{code}.jpg"
+
+    embed=discord.Embed(title=f"Status Code: {code}",color=random.randint(0, 16777215))
+    embed.set_author(name=f"Requested by {ctx.author}",icon_url=ctx.author.avatar_url)
+    embed.set_image(url=image)
+    embed.set_footer(text="Powered by http.cat")
+    await ctx.send(embed=embed)
+
   @commands.command(help="Gives advice from JDJG api.",aliases=["ad"])
   async def advice(self,ctx):
     async with aiohttp.ClientSession() as cs:

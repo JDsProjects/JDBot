@@ -3,11 +3,13 @@ import discord
 from utils import BetterMemberConverter, warn_permission
 import random
 import json
+from discord.ext.commands.cooldowns import BucketType
 
 class Moderation(commands.Cog):
   def __init__(self, client):
     self.client = client
 
+  @commands.cooldown(1,90,BucketType.user)
   @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
   async def warn(self,ctx,Member: BetterMemberConverter = None):
     if warn_permission(ctx):
@@ -43,6 +45,10 @@ class Moderation(commands.Cog):
 
     if warn_permission(ctx) is False:
       await ctx.send("You don't have permission to use that.")
+
+  @warn.error
+  async def warn_errror(self,ctx,error):
+    await ctx.send(error)
 
   @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(work in progress)")
   async def scan_guild(self,ctx):
