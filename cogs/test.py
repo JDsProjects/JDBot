@@ -4,7 +4,7 @@ import os
 import itertools
 import re
 import functools
-from utils import invert_func, get_pet
+from utils import invert_func
 
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
 
@@ -59,15 +59,6 @@ class Test(commands.Cog):
     if used:
       await ctx.send(content="Scan completed")
     await vt_client.close_async()
-  
-  @commands.command(brief="work in progress")
-  async def headpat(self,ctx):
-    y = 0
-    if len(ctx.message.attachments) == 0 or y == 0:
-      url = ctx.author.avatar_url_as(format="png")
-      petpet=functools.partial(get_pet,await url.read())
-      file = petpet()
-      await ctx.send(file=file)
     
   @commands.command(brief="work in progress")
   async def invert(self,ctx):
