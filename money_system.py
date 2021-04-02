@@ -20,12 +20,9 @@ def display_account(userid):
   print("\tBank: "+str(doc["balance"]["bank"]))
   print("\tWallet: "+str(doc["balance"]["wallet"]))
 
-
 def get_document(userid):
   check_user_exists(userid)
   return bank.find_one({"user_id":userid})
-
-
 
 def add_money(userid, money, _type=0):
   doc = get_document(userid)
@@ -40,7 +37,6 @@ def add_money(userid, money, _type=0):
 
 
 def add_job(name, num):
-
   try:
     job_db.insert_one({"name":name,"total":num})
     return 1
@@ -62,8 +58,6 @@ def use_job(name):
     print("ERROR: JOB NOT FOUND")
   if(doc=="N"):
     pass
-
-
 
 def decode_job(id):
   job_list =["a","b","c"]

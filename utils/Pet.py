@@ -83,7 +83,7 @@ def new_paste(img,img1,):
 
 frames = []
 
-framePath = ["./petpet_images/1.png","./petpet_images/2.png",".petpet_images/3.png",".petpet_images/4.png",".petpet_images/5.png"]
+framePath = ["utils/petpet_images/1.png","utils/petpet_images/2.png","utils/petpet_images/3.png","utils/petpet_images/4.png","utils/petpet_images/5.png"]
 hand = aniRen(framePath,0.5,0.4)
 
 def get_pet(image_bytes):

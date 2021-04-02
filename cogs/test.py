@@ -62,8 +62,13 @@ class Test(commands.Cog):
   
   @commands.command(brief="work in progress")
   async def headpat(self,ctx):
-    await ctx.send("Currently working in progress")
-
+    y = 0
+    if len(ctx.message.attachments) == 0 or y == 0:
+      url = ctx.author.avatar_url_as(format="png")
+      petpet=functools.partial(get_pet,await url.read())
+      file = petpet()
+      await ctx.send(file=file)
+    
   @commands.command(brief="work in progress")
   async def invert(self,ctx):
     y = 0
