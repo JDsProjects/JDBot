@@ -115,8 +115,7 @@ class Order(commands.Cog):
       results = await self.client.loop.run_in_executor(None, tenor_client.search(args, safesearch=True, limit=10))
       print(results)
     if args is None:
-      await ctx.send("That doesn't have any value.")
-      await ctx.send("tenor")
+      await ctx.send("You can't search for nothing")
 
   @tenor.command(help="work in progress",name="shuffle")
   async def tenor_random(self,ctx,*,args=None):

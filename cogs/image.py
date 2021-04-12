@@ -1,6 +1,6 @@
 import discord,sr_api,asuna_api,random , aiohttp
 from discord.ext import commands
-from utils import BetterMemberConverter, BetterUserconverter,triggered_converter, headpat_converter, invert_converter, get_pet
+from utils import BetterMemberConverter, BetterUserconverter,triggered_converter, headpat_converter, invert_converter
 
 class Image(commands.Cog):
   def __init__(self, client):

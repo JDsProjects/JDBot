@@ -141,5 +141,18 @@ class Bot(commands.Cog):
     embed.add_field(name="Rule 6:",value="We will also let you ask us questions directly, just DM me directly(the owner is listed in the owner command(and anyone should be able to friend me)")
     await ctx.send(embed=embed)
 
+  @commands.command(brief="Privacy Policy",aliases=["privacy"])
+  async def promises(self,ctx):
+    embed=discord.Embed(title="Privacy Policies",color=random.randint(0, 16777215))
+    embed.add_field(name="1:",value="We have a channel that logs when the bot joins or leaves a guild")
+    embed.add_field(name="2:",value="We will store any errors(which may go back to you, but this is console only")
+    embed.add_field(name="3",value="we will only store user ids(in the future for balance commands and economy commands")
+    embed.add_field(name="4",value="We Store Dms(a.k.a so you can get support)")
+    embed.add_field(name="5.",value="we Finally store invalid commands")
+    embed.add_field(name="Final",value="There should be no more except the sus list(list of ids I put together by hand of people who probaly shouldn't hang out with)")
+    embed.add_field(name="Who Gets this info:",value="Only us, and our DB company MongoDB(but they are unlikely to use our data. Sus users do show up if they exist in the same guild though and the reason why.")
+    embed.add_field(name="More Info:",value="Contact me at JDJG Inc. Official#3493")
+    await ctx.send(embed=embed)
+
 def setup(client):
   client.add_cog(Bot(client))
