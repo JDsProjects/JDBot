@@ -34,7 +34,7 @@ async def headpat_converter(url,ctx):
 
 def warn_permission(ctx):
   if isinstance(ctx.channel, discord.TextChannel):
-    return ctx.author.guild_permissions.administrator
+    return ctx.author.guild_permissions.manage_messages
 
   if isinstance(ctx.channel,discord.DMChannel):
     return True
