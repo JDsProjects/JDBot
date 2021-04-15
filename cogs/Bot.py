@@ -50,7 +50,7 @@ class Bot(commands.Cog):
     if not owner.bot:
       user_type = "User"
 
-    guilds_list=[guild for guild in self.client.guilds if guild.get_member(owner.id)]
+    guilds_list=[guild for guild in self.client.guilds if guild.get_member(owner.id) and guild.get_member(ctx.author.id)]
     if not guilds_list:
       guild_list = "None"
 
@@ -153,6 +153,19 @@ class Bot(commands.Cog):
     embed.add_field(name="Who Gets this info:",value="Only us, and our DB company MongoDB(but they are unlikely to use our data. Sus users do show up if they exist in the same guild though and the reason why.")
     embed.add_field(name="More Info:",value="Contact me at JDJG Inc. Official#3493")
     await ctx.send(embed=embed)
+
+  @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
+  async def support_invite(self,ctx):
+    await ctx.send("You must say I agree this will send into the current channel.")
+    def check(m):
+      return m.author.id == ctx.author.id
+    message=await self.client.wait_for("message",check=check)
+    if message.content.lower() == "i agree":
+      await ctx.send("https://discord.gg/sHUQCch")
+
+  @commands.command(brief="This command gives you an alt bot to use",aliases=["alt_invite"])
+  async def verify_issue(self,ctx):
+    await ctx.send("You can invite the bot 831162894447804426(this will be an alt bot with almost the same code though some report functionalies will have their guild swapped :D")
 
 def setup(client):
   client.add_cog(Bot(client))

@@ -129,5 +129,24 @@ class Owner(commands.Cog):
     if await self.client.is_owner(ctx.author) is False:
       await ctx.send("You can't use that")
 
+  @commands.command(brief="Commands to see what guilds a person is in.")
+  async def mutualguilds(self,ctx,*,user:BetterUserconverter=None):
+    if user is None:
+      user = ctx.author.id
+    user_guildlist=[guild for guild in self.client.guilds if guild.get_member(user)]
+    send_list = [""]
+    for i in user_guildlist:
+      if len(send_list[-1] + i) < 1000:
+        send_list[-1] += i + "\n"
+      else:
+        send_list += [i + "\n"]
+    if (ctx.author.dm_channel is None):
+      await ctx.author.create_dm()
+      await ctx.author.dm_channel.send("\n Servers:")
+      for i in send_list:
+        await ctx.author.dm_channel.send(i) 
+      if len(send_list) < 1:
+       await ctx.author.dm_channel("No shared servers")
+
 def setup(client):
   client.add_cog(Owner(client))

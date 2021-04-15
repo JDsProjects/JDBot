@@ -109,7 +109,7 @@ class Info(commands.Cog):
             break
         highest_role = "None Found"
     
-    guilds_list=[guild for guild in self.client.guilds if guild.get_member(user.id)]
+    guilds_list=[guild for guild in self.client.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
     if not guilds_list:
       guild_list = "None"
 
@@ -127,7 +127,7 @@ class Info(commands.Cog):
     embed.add_field(name="Nickname: ", value = nickname)
     embed.add_field(name="Joined Discord: ",value = (user.created_at.strftime('%m/%d/%Y %H:%M:%S')))
     embed.add_field(name="Joined Guild: ",value = joined_guild)
-    embed.add_field(name="Part of Guilds:", value=guild_list)
+    embed.add_field(name="Mutual Guilds:", value=guild_list)
     embed.add_field(name="ID:",value=user.id)
     embed.add_field(name="Status:",value=status)
     embed.add_field(name="Highest Role:",value=highest_role)
