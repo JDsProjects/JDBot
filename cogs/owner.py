@@ -4,7 +4,6 @@ import random
 import discord
 import aiohttp
 import os
-import traceback
 
 class Owner(commands.Cog):
   def __init__(self, client):
@@ -67,8 +66,11 @@ class Owner(commands.Cog):
   @commands.command()
   async def unload(self,ctx,*,cog=None):
     if cog:
-      self.client.unload_extension(cog)
-    
+      try:
+        self.client.unload_extension(cog)
+      except commands.errors.ExtensionNotLoaded as e:
+        await ctx.send(e)
+      await ctx.send("Cog should be unloaded just fine :D.(check any errors)")
     if cog is None:
       await ctx.send("you can't ask to reload no cogs")
 
