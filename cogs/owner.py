@@ -4,6 +4,7 @@ import random
 import discord
 import aiohttp
 import os
+import traceback
 
 class Owner(commands.Cog):
   def __init__(self, client):
@@ -36,21 +37,37 @@ class Owner(commands.Cog):
   @commands.command()
   async def load(self,ctx,*,cog=None):
     if cog:
-      await ctx.send("WIP")
+      try:
+        self.client.load_extension(cog)
+      except Exception as e:
+        await ctx.send(e)
+      await ctx.send("Loaded cog(see if there's any errors)")
     if cog is None:
       await ctx.send("you can't ask to load no cogs.")
   
   @commands.command()
   async def reload(self,ctx,*,cog=None):
     if cog:
-      pass
+      if cog == "all":
+        for x in list(self.client.extensions):
+          try:
+            self.client.reload_extension(x)
+          except commands.errors.ExtensionNotLoaded as e:
+            await ctx.send(e)
+        await ctx.send("done reloading all cogs(check for any errors)")
+      if cog != "all":
+        try:
+          self.client.reload_extension(cog)
+        except commands.errors.ExtensionNotLoaded as e:
+          await ctx.send(e)
+      await ctx.send("Cog reloaded :D (check for any errors)")
     if cog is None:
       await ctx.send("you can't ask to reload no cogs")
   
   @commands.command()
   async def unload(self,ctx,*,cog=None):
     if cog:
-      pass
+      self.client.unload_extension(cog)
     
     if cog is None:
       await ctx.send("you can't ask to reload no cogs")
@@ -132,8 +149,8 @@ class Owner(commands.Cog):
   @commands.command(brief="Commands to see what guilds a person is in.")
   async def mutualguilds(self,ctx,*,user:BetterUserconverter=None):
     if user is None:
-      user = ctx.author.id
-    user_guildlist=[guild for guild in self.client.guilds if guild.get_member(user)]
+      user = ctx.author
+    user_guildlist=[guild.name for guild in self.client.guilds if guild.get_member(user.id)]
     send_list = [""]
     for i in user_guildlist:
       if len(send_list[-1] + i) < 1000:
@@ -142,11 +159,11 @@ class Owner(commands.Cog):
         send_list += [i + "\n"]
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
-      await ctx.author.dm_channel.send("\n Servers:")
-      for i in send_list:
-        await ctx.author.dm_channel.send(i) 
-      if len(send_list) < 1:
-       await ctx.author.dm_channel("No shared servers")
+    await ctx.author.dm_channel.send("\n Servers:")
+    for i in send_list:
+      await ctx.author.dm_channel.send(i) 
+    if len(send_list) < 1:
+      await ctx.author.dm_channel.send("No shared servers")
 
 def setup(client):
   client.add_cog(Owner(client))

@@ -21,5 +21,5 @@ for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
     try:
       client.load_extension(f'cogs.{filename[:-3]}')
-    except commands.errors.NoEntryPointError:
-      pass
+    except commands.errors.NoEntryPointError as e:
+      print(e)
