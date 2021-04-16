@@ -1,6 +1,5 @@
 from discord.ext import commands, tasks
-import discord, random , time
-import asyncio
+import discord, random , time, asyncio
 
 class Bot(commands.Cog):
   def __init__(self,client):
@@ -39,12 +38,14 @@ class Bot(commands.Cog):
   async def owner(self,ctx):
     info = await self.client.application_info()
     if info.team is None:
-      owner = info.owner.id
+      owner_id = info.owner.id
     if info.team:
-      owner = info.team.owner_id
+      owner_id = info.team.owner_id
 
     support_guild=self.client.get_guild(736422329399246990)
-    owner=support_guild.get_member(owner)
+    owner=support_guild.get_member(owner_id)
+    if owner is None:
+      owner = await support_guild.fetch_member(owner_id)
     if owner.bot:
       user_type = "Bot"
     if not owner.bot:

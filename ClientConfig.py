@@ -12,7 +12,11 @@ async def get_prefix(client,message):
     extras.append(match.group(1))
   return commands.when_mentioned_or(*extras)(client, message)
 
-client = commands.Bot(command_prefix=(get_prefix),intents = discord.Intents.all())
+intents = discord.Intents.all()
+intents.members = False
+intents.presences = False
+
+client = commands.Bot(command_prefix=(get_prefix),intents=intents)
 slash = discord_slash.SlashCommand(client,override_type = True,sync_commands=True)
 
 client.load_extension('jishaku')

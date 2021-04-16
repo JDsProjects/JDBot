@@ -153,7 +153,7 @@ class Owner(commands.Cog):
     if user is None:
       user = ctx.author
     user_guildlist=[guild.name for guild in self.client.guilds if guild.get_member(user.id)]
-    send_list = [""]
+    send_list = ["Servers:"]
     for i in user_guildlist:
       if len(send_list[-1] + i) < 1000:
         send_list[-1] += i + "\n"
@@ -161,7 +161,6 @@ class Owner(commands.Cog):
         send_list += [i + "\n"]
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
-    await ctx.author.dm_channel.send("\n Servers:")
     for i in send_list:
       await ctx.author.dm_channel.send(i) 
     if len(send_list) < 1:
