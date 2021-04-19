@@ -14,13 +14,9 @@ class Info(commands.Cog):
     self.client = client
 
   async def guildinfo(self,ctx,guild):
-    bots = 0
-    users = 0
-    for x in guild.members:
-      if x.bot is True:
-        bots = bots + 1
-      if x.bot is False:
-        users = users + 1
+    bots = sum(m.bot for m in guild.members)
+    users = sum(not m.bot for m in guild.members)
+
     static_emojis = 0
     animated_emojis = 0
     usable_emojis = 0
@@ -31,7 +27,24 @@ class Info(commands.Cog):
         static_emojis = static_emojis + 1
       if x.available is True:
         usable_emojis = usable_emojis + 1
-    
+
+    online_users = 0
+    dnd_users = 0
+    idle_users = 0
+    offline_users = 0
+    for x in guild.members:
+      if str(x.status) == "online":
+        online_users = online_users = online_users + 1
+
+      if str(x.status) == "dnd":
+        dnd_users = dnd_users + 1
+
+      if str(x.status) == "idle":
+        idle_users = idle_users + 1
+
+      if str(x.status) == "offline":
+        offline_users = offline_users + 1
+  
     embed = discord.Embed(title="Guild Info:",color=random.randint(0, 16777215))
     embed.add_field(name="Server Name:",value=guild.name)
     embed.add_field(name="Server ID:",value=guild.id)
@@ -52,6 +65,10 @@ class Info(commands.Cog):
     embed.add_field(name="Animated Emojis",value=animated_emojis)
     embed.add_field(name="Total Emojis:",value=f"{len(guild.emojis)}/{guild.emoji_limit*2}")
     embed.add_field(name="Usable Emojis",value=usable_emojis)
+    embed.add_field(name="Online Users:",value=f"{online_users}")
+    embed.add_field(name="DND Users:",value=f"{dnd_users}")
+    embed.add_field(name="Idle Users:",value=f"{idle_users}")
+    embed.add_field(name="Offline Users",value=f"{offline_users}")
 
     await ctx.send(embed=embed)
 

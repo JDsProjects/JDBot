@@ -18,7 +18,10 @@ class Events(commands.Cog):
     embed.add_field(name='Server region:',value=f'{guild.region}')
     embed.add_field(name='Server Creation Date:',value=f'{guild.created_at}')
     embed.add_field(name='Server Owner:',value=f'{guild.owner}')
-    embed.add_field(name='Server Owner ID:',value=f'{guild.owner.id}')
+    try:
+      embed.add_field(name='Server Owner ID:',value=f'{guild.owner.id}')
+    except:
+      pass
     embed.add_field(name='Member Count:',value=f'{guild.member_count}')
     embed.add_field(name='Amount of Channels:',value=f"{len(channels)}")
     embed.add_field(name='Amount of Roles:',value=f"{len(roles)}")
