@@ -48,7 +48,6 @@ class Image(commands.Cog):
     embed.set_image(url=url.url)
     embed.set_footer(text="powered using the asuna.ga api")
     await ctx.send(embed=embed)
-
   
   @commands.command(brief="another command to give you pat gifs",help="powered using the asuna api")
   async def pat2(self,ctx,*, Member: BetterMemberConverter= None):
@@ -172,14 +171,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png"):
           url = x.url
-          await headpat_converter(url,ctx)
+          await headpat_converter(self,url,ctx)
           y = y + 1
         if not x.filename.endswith(".png"):
           pass
 
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
-      await headpat_converter(url,ctx)
+      await headpat_converter(self,url,ctx)
 
   @commands.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
   async def hug2(self,ctx,*, Member: BetterMemberConverter=None):
@@ -293,9 +292,8 @@ class Image(commands.Cog):
 
   @commands.command(brief="Gives you a random waifu image.")
   async def waifu(self,ctx):
-    async with aiohttp.ClientSession() as cs:
-      async with cs.get('https://waifu.pics/api/sfw/waifu') as r:
-          res = await r.json()
+    r=await self.client.aiohttp_session.get('https://waifu.pics/api/sfw/waifu')
+    res = await r.json()
     embed=discord.Embed(color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed.set_author(name=f"{ctx.author} Requested A Waifu")
     embed.set_image(url=res["url"])
@@ -337,9 +335,8 @@ class Image(commands.Cog):
 
   @commands.command(help="gives a random objection",aliases=["obj","ob","object"])
   async def objection(self,ctx):
-    async with aiohttp.ClientSession() as cs:
-      async with cs.get('https://jdjgapi.nom.mu/api/objection') as r:
-          res = await r.json()
+    r=await self.client.aiohttp_session.get('https://jdjgapi.nom.mu/api/objection')
+    res = await r.json()
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"{ctx.author} yelled OBJECTION!",icon_url=(ctx.author.avatar_url))
     embed.set_image(url=res["url"])
@@ -348,9 +345,8 @@ class Image(commands.Cog):
 
   @commands.command(help="gives the truth about opinions(may offend)",aliases=["opinion"])
   async def opinional(self,ctx):
-    async with aiohttp.ClientSession() as cs:
-      async with cs.get('https://jdjgapi.nom.mu/api/opinional') as r:
-        res = await r.json()
+    r=await self.client.aiohttp_session.get('https://jdjgapi.nom.mu/api/opinional')
+    res = await r.json()
     embed = discord.Embed(title = "Truth about opinions(may offend some people):",color=random.randint(0, 16777215))
     embed.set_image(url=res["url"])
     embed.set_footer(text="Powered by JDJG Api!")
@@ -383,7 +379,7 @@ class Image(commands.Cog):
 
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
-      await invert_converter(url,ctx)
+      await invert_converter(self,url,ctx)
 
   @commands.command(help="Headpat generator :D")
   async def headpat(self,ctx):
@@ -392,14 +388,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.proxy_url
-          await headpat_converter2(url,ctx)
+          await headpat_converter2(self,url,ctx)
           y = y + 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
-      await headpat_converter2(url,ctx)
+      await headpat_converter2(self,url,ctx)
 
 def setup(client):
   client.add_cog(Image(client))

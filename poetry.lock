@@ -551,7 +551,7 @@ description = "A small simple wrapper around the mystb.in API."
 name = "mystbin.py"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "1.0.1"
+version = "2.0.1"
 
 [package.dependencies]
 aiohttp = ">=3.6.2,<4.0.0"
@@ -907,7 +907,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "42e4a3f465ece04c1dcd6a1d5255532a15714e097e775f7630b4d88681824927"
+content-hash = "80a19338d9c37db57fbd92b9011ca4ef7efa504de2774161e70aa7a905701208"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1236,8 +1236,8 @@ multidict = [
     {file = "multidict-5.1.0.tar.gz", hash = "sha256:25b4e5f22d3a37ddf3effc0710ba692cfc792c2b9edfb9c05aefe823256e84d5"},
 ]
 "mystbin.py" = [
-    {file = "mystbin.py-1.0.1-py3-none-any.whl", hash = "sha256:319d71998298202f01757df7363059cefeee70fd15118e114f45df7880300747"},
-    {file = "mystbin.py-1.0.1.tar.gz", hash = "sha256:1580f0f81982016e8cffd4eb575bb03e39149cd1da0a77bcad76408c2fd82866"},
+    {file = "mystbin.py-2.0.1-py3-none-any.whl", hash = "sha256:f572aa467d29e8233c2afe1ea21852a36ed0714c6f42ee56f40d9e5558117d15"},
+    {file = "mystbin.py-2.0.1.tar.gz", hash = "sha256:b91bf7d64ec5613f997769bf265534ac46a0594200c23ad7f1f93e40065024ff"},
 ]
 olefile = [
     {file = "olefile-0.46.zip", hash = "sha256:133b031eaf8fd2c9399b78b8bc5b8fcbe4c31e85295749bb17a87cba8f3c3964"},

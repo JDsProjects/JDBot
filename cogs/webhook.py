@@ -18,17 +18,17 @@ class Webhook(commands.Cog):
         if args == check.group():
           args = "No Content"
 
-        async with aiohttp.ClientSession() as session:
-          async with session.get(check.group()) as response:
-            if response.status == 200:
-              webhook=discord.Webhook.from_url(check.group(), adapter=discord.AsyncWebhookAdapter(session))
-              
-              embed = discord.Embed(title=f"Webhook {webhook.name}'s Message",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-              embed.add_field(name="Content:",value=args)
-              await webhook.execute(embed=embed)
+          session = self.client.aiohttp_session
+          response=await session.get(check.group())
+          if response.status == 200:
+            webhook=discord.Webhook.from_url(check.group(), adapter=discord.AsyncWebhookAdapter(session))
+            
+            embed = discord.Embed(title=f"Webhook {webhook.name}'s Message",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+            embed.add_field(name="Content:",value=args)
+            await webhook.execute(embed=embed)
 
-            if response.status != 200:
-              await ctx.send("Not a valid link or an error occured")
+          if response.status != 200:
+            await ctx.send("Not a valid link or an error occured")
 
         if isinstance(ctx.channel, discord.TextChannel):
           await ctx.message.delete()
