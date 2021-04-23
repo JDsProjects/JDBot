@@ -478,23 +478,30 @@ i18n = ["Babel (>=0.8)"]
 
 [[package]]
 name = "jishaku"
-version = "1.20.0.220"
+version = "2.0.0"
 description = "A discord.py extension including useful tools for bot development and debugging."
 category = "main"
 optional = false
-python-versions = ">=3.6.0"
+python-versions = ">=3.8.0"
+develop = false
 
 [package.dependencies]
 braceexpand = ">=0.1.5"
-"discord.py" = ">=1.4.0"
+"discord.py" = ">=1.5.0"
 humanize = "*"
 import-expression = ">=1.0.0,<2.0.0"
 
 [package.extras]
 docs = ["sphinx (>=3.1.2)", "sphinxcontrib-asyncio"]
 procinfo = ["psutil"]
-test = ["coverage", "flake8", "isort (<4.3.5)", "pylint", "pytest", "pytest-cov", "pytest-mock"]
-voice = ["PyNaCl (>=1.3.0)", "youtube-dl"]
+test = ["coverage", "flake8", "isort", "pylint", "pytest", "pytest-cov", "pytest-mock"]
+voice = ["discord.py[voice] (>=1.5.0)", "youtube-dl"]
+
+[package.source]
+type = "git"
+url = "https://github.com/Gorialis/jishaku.git"
+reference = "master"
+resolved_reference = "f18b40d39c1700e1739b799450b8dc4532c273a5"
 
 [[package]]
 name = "markupsafe"
@@ -742,7 +749,7 @@ yarl = "*"
 
 [package.source]
 type = "git"
-url = "https://github.com/iDutchy/sr_api.git"
+url = "https://github.com/iDutchy/sr_api"
 reference = "master"
 resolved_reference = "1c97c1b355f1ef12b1dc64a5e80ecba37ad3fc81"
 
@@ -836,7 +843,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "1812eab9456d22dd353513765483cd49842733d4d7648b3b65efd125546daf58"
+content-hash = "00cf011a8148822f0a42112687970e08cf4f5cd3cf31ca19bf2752f36b2ad397"
 
 [metadata.files]
 aiogtts = [
@@ -1055,14 +1062,7 @@ jinja2 = [
     {file = "Jinja2-2.11.3-py2.py3-none-any.whl", hash = "sha256:03e47ad063331dd6a3f04a43eddca8a966a26ba0c5b7207a9a9e4e08f1b29419"},
     {file = "Jinja2-2.11.3.tar.gz", hash = "sha256:a6d58433de0ae800347cab1fa3043cebbabe8baa9d29e668f1c768cb87a333c6"},
 ]
-jishaku = [
-    {file = "jishaku-1.20.0.220-py3-none-any.whl", hash = "sha256:2ced3fb5b5d3c82cd9e938591eb5867da06f8acefd71450a044d7e79e17e04d9"},
-    {file = "jishaku-1.20.0.220-py3.6.egg", hash = "sha256:2075e8aa8c6b24b0691df2471146b9a6a2285685639f27cb78f29bc5c4eca56b"},
-    {file = "jishaku-1.20.0.220-py3.7.egg", hash = "sha256:af565758d5ec2ab97df497bc3cd840b71660c58f66fb31d6042ce425f41849a5"},
-    {file = "jishaku-1.20.0.220-py3.8.egg", hash = "sha256:fbe6e9160df5688538becea0c32558ddccbd026cd0820cd83122c3419ec4625b"},
-    {file = "jishaku-1.20.0.220-py3.9.egg", hash = "sha256:ba4cdab5eb3893b213d0aaf82e711665d6dedab3182c6c071507f22ec7f981ff"},
-    {file = "jishaku-1.20.0.220.tar.gz", hash = "sha256:eb6d2e2fc9d4f89ca98d20be7487b3354ae745e0cf14e234d31df573054bcf9e"},
-]
+jishaku = []
 markupsafe = [
     {file = "MarkupSafe-1.1.1-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:09027a7803a62ca78792ad89403b1b7a73a01c8cb65909cd876f7fcebd79b161"},
     {file = "MarkupSafe-1.1.1-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:e249096428b3ae81b08327a63a485ad0878de3fb939049038579ac0ef61e17e7"},

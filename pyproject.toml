@@ -6,15 +6,6 @@ authors = ["repl.it user <replituser@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
-sr-api = {git = "https://github.com/iDutchy/sr_api.git"}
-aiogTTS = "^1.1.0"
-motor = "^2.4.0"
-emojis = "^0.6.0"
-ordereddict = "^1.1"
-asyncdagpi = "^3.3.2"
-jishaku = "^1.20.0.220"
-"mystbin.py" = "^2.0.2"
 dnspython = "^2.1.0"
 "discord.py" = {extras = ["voice"], version = "^1.7.1"}
 Flask = "^1.1.2"
@@ -29,6 +20,15 @@ aPRAW = "^0.6.8-alpha.0"
 async-cse = "^0.3.0"
 discord-py-slash-command = "^1.1.2"
 TenGiphPy = "^2.5.0"
+aiogTTS = "^1.1.0"
+motor = "^2.4.0"
+emojis = "^0.6.0"
+ordereddict = "^1.1"
+asyncdagpi = "^3.3.2"
+"mystbin.py" = "^2.0.2"
+discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
+sr-api = {git = "https://github.com/iDutchy/sr_api"}
+jishaku = {git = "https://github.com/Gorialis/jishaku.git"}
 
 [tool.poetry.dev-dependencies]
 
