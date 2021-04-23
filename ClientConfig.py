@@ -18,7 +18,7 @@ class JDBot(commands.Bot):
       super().__init__(*args, **kwargs)
 
   async def start(self,*args, **kwargs):
-    self.aiohttp_session= aiohttp.ClientSession()
+    self.aiohttp_session=aiohttp.ClientSession()
     await super().start(*args, **kwargs)
 
   async def close(self):

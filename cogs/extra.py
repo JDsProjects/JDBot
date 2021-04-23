@@ -229,7 +229,7 @@ class Extra(commands.Cog):
         if len(file ) < 1:
           await ctx.send("this doesn't contain any bytes.")
           
-  
+          
   @commands.group(name="apply",invoke_without_command=True)
   async def apply(self,ctx):
     await ctx.send("this command is meant to apply")

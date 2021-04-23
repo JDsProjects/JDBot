@@ -25,10 +25,10 @@ motor = "^2.4.0"
 emojis = "^0.6.0"
 ordereddict = "^1.1"
 asyncdagpi = "^3.3.2"
-"mystbin.py" = "^2.0.2"
 discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
 sr-api = {git = "https://github.com/iDutchy/sr_api"}
 jishaku = {git = "https://github.com/Gorialis/jishaku.git"}
+"mystbin.py" = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
 

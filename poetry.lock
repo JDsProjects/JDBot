@@ -535,11 +535,11 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "mystbin.py"
-version = "2.0.2"
+version = "2.1.0"
 description = "A small simple wrapper around the mystb.in API."
 category = "main"
 optional = false
-python-versions = ">=3.6,<4.0"
+python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
 aiohttp = ">=3.6.2,<4.0.0"
@@ -843,7 +843,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "00cf011a8148822f0a42112687970e08cf4f5cd3cf31ca19bf2752f36b2ad397"
+content-hash = "e91a4cde6384e817af882ae62f8e40e4d1f3fdcf56f34e9c95dfb1781a35e3f4"
 
 [metadata.files]
 aiogtts = [
@@ -1161,8 +1161,8 @@ multidict = [
     {file = "multidict-5.1.0.tar.gz", hash = "sha256:25b4e5f22d3a37ddf3effc0710ba692cfc792c2b9edfb9c05aefe823256e84d5"},
 ]
 "mystbin.py" = [
-    {file = "mystbin.py-2.0.2-py3-none-any.whl", hash = "sha256:00b16b1f5fba37bca3870b5d9d43f049f654b1f355e207eda3a9ad9bd2a622ce"},
-    {file = "mystbin.py-2.0.2.tar.gz", hash = "sha256:6b7aa45cbc227bdc0b25940591eb0b1171cd22b6e12009f3a15d9c1d5c84ce81"},
+    {file = "mystbin.py-2.1.0-py3-none-any.whl", hash = "sha256:3abc8494079309630c8a8381489241342bc6baadd2a8f368f8493ef85eed3848"},
+    {file = "mystbin.py-2.1.0.tar.gz", hash = "sha256:0e330717a6b2b80c2e84b4b3795f9c71a4ac8d36efc88319743c5f6acc4fbffa"},
 ]
 ordereddict = [
     {file = "ordereddict-1.1.tar.gz", hash = "sha256:1c35b4ac206cef2d24816c89f89cf289dd3d38cf7c449bb3fab7bf6d43f01b1f"},
