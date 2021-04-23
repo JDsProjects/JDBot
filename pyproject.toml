@@ -11,7 +11,6 @@ dnspython = "^2.0.0"
 flask = "^1.1.2"
 pymongo = "^3.11.2"
 dblpy = "^0.4.0"
-jishaku = "^1.20.0"
 aioimgur = "^0.1.0"
 wavelink = "^0.9.6"
 image = "^1.5.33"
@@ -30,6 +29,8 @@ aiogTTS = "^1.1.0"
 motor = "^2.3.1"
 emojis = "^0.6.0"
 ordereddict = "^1.1"
+asyncdagpi = "^3.3.2"
+jishaku = "^1.20.0"
 
 [tool.poetry.dev-dependencies]
 

@@ -111,6 +111,17 @@ version = "3.0.1"
 
 [[package]]
 category = "main"
+description = "An Asynchronos API wrapper for https://dagpi.xyz"
+name = "asyncdagpi"
+optional = false
+python-versions = ">=3.6,<4.0"
+version = "3.3.2"
+
+[package.dependencies]
+aiohttp = ">=3.7.3,<4.0.0"
+
+[[package]]
+category = "main"
 description = "Classes Without Boilerplate"
 name = "attrs"
 optional = false
@@ -219,6 +230,7 @@ version = "1.0.0a30+g309c702"
 reference = "309c70222eec33acacb8c21bbb0fbe9bc57de661"
 type = "git"
 url = "https://github.com/Rapptz/discord-ext-menus"
+
 [[package]]
 category = "main"
 description = "A simple discord slash command handler for discord.py."
@@ -418,7 +430,7 @@ description = "Python humanize utilities"
 name = "humanize"
 optional = false
 python-versions = ">=3.6"
-version = "3.4.0"
+version = "3.4.1"
 
 [package.dependencies]
 setuptools = "*"
@@ -771,6 +783,7 @@ yarl = "*"
 reference = "1c97c1b355f1ef12b1dc64a5e80ecba37ad3fc81"
 type = "git"
 url = "https://github.com/iDutchy/sr_api.git"
+
 [[package]]
 category = "main"
 description = "API Wrapper for the Gif library Tenor and Giphy. Join my server: https://discord.gg/uFdVUMH"
@@ -894,7 +907,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "d41fe8668de3d634a98cb0a82c2aa6c26c299181da287a3ed285667576c65796"
+content-hash = "42e4a3f465ece04c1dcd6a1d5255532a15714e097e775f7630b4d88681824927"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -965,6 +978,10 @@ async-cse = [
 async-timeout = [
     {file = "async-timeout-3.0.1.tar.gz", hash = "sha256:0c3c816a028d47f659d6ff5c745cb2acf1f966da1fe5c19c77a70282b25f4c5f"},
     {file = "async_timeout-3.0.1-py3-none-any.whl", hash = "sha256:4291ca197d287d274d0b6cb5d6f8f8f82d434ed288f962539ff18cc9012f9ea3"},
+]
+asyncdagpi = [
+    {file = "asyncdagpi-3.3.2-py3-none-any.whl", hash = "sha256:d7f86ab50e2a82de1dd7486d3944cf71f322da7306809ea0de0e2ef1fd00b725"},
+    {file = "asyncdagpi-3.3.2.tar.gz", hash = "sha256:7f9d9e436ecbf8b46638673194394d99cd416197401f5d293635f9974bb62626"},
 ]
 attrs = [
     {file = "attrs-20.3.0-py2.py3-none-any.whl", hash = "sha256:31b2eced602aa8423c2aea9c76a724617ed67cf9513173fd3a4f03e3a929c7e6"},
@@ -1091,8 +1108,8 @@ httplib2 = [
     {file = "httplib2-0.19.1.tar.gz", hash = "sha256:0b12617eeca7433d4c396a100eaecfa4b08ee99aa881e6df6e257a7aad5d533d"},
 ]
 humanize = [
-    {file = "humanize-3.4.0-py3-none-any.whl", hash = "sha256:d292736d81da462b84b78eee0c9bba26bdbfa10112e302c4fcddb6621d2a08dd"},
-    {file = "humanize-3.4.0.tar.gz", hash = "sha256:096b9ae6d1d56321d3d81f17117c2068179d7b4f7f73ba4baf302726923b48ec"},
+    {file = "humanize-3.4.1-py3-none-any.whl", hash = "sha256:c2ccaea7f8cbcd883ec420279d6e71ad20371bb36dbf5100b178d9756563289e"},
+    {file = "humanize-3.4.1.tar.gz", hash = "sha256:6e04cdd75d66074c34ff93c30a2ad6d19d91202a65c1bd400b2edeedae399bda"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},

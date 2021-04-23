@@ -14,6 +14,8 @@ class Info(commands.Cog):
     self.client = client
 
   async def guildinfo(self,ctx,guild):
+
+   
     bots = sum(m.bot for m in guild.members)
     users = sum(not m.bot for m in guild.members)
 

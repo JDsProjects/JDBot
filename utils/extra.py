@@ -3,11 +3,11 @@ import discord
 import random
 import sr_api
 import os
+import asyncdagpi
 
-async def triggered_converter(url,ctx):
-  sr_client=sr_api.Client()
+async def triggered_converter(self,url,ctx):
+  sr_client=sr_api.Client(session=self.client.aiohttp_session)
   source_image=sr_client.filter(option="triggered",url=str(url))
-  await sr_client.close()
 
   imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
   imgur_url= await imgur_client.upload_from_url(source_image.url)
@@ -53,3 +53,9 @@ async def invert_converter(url,ctx):
   embed.set_footer(text="powered by some random api")
   await ctx.send(embed=embed)
 
+async def headpat_converter2(url,ctx):
+  dagpi_client=asyncdagpi.Client(os.environ["dagpi_key"])
+  image=await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(),str(url))
+  file = discord.File(fp=image.image,filename=f"headpat.{image.format}")
+  await ctx.send(file=file)
+  await dagpi_client.close()

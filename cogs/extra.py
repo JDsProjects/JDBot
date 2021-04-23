@@ -18,9 +18,8 @@ class Extra(commands.Cog):
       await ctx.send("Please pick a minecraft user.")
 
     if args:
-      asuna = asuna_api.Client()
+      asuna = asuna_api.Client(self.client.aiohttp_session)
       minecraft_info=await asuna.mc_user(args)
-      await asuna.close()
       embed=discord.Embed(title=f"Minecraft Username: {args}",color=random.randint(0, 16777215))
       embed.set_footer(text=f"Minecraft UUID: {minecraft_info.uuid}")
       embed.add_field(name="Orginal Name:",value=minecraft_info.name)
@@ -37,9 +36,8 @@ class Extra(commands.Cog):
   async def random_history(self,ctx,*,args=None):
     if args is None:
       args = 1
-    asuna = asuna_api.Client()
+    asuna = asuna_api.Client(self.client.aiohttp_session)
     response = await asuna.random_history(args)
-    await asuna.close()
     for x in response:
       await ctx.send(f":earth_africa: {x}")
 
@@ -56,9 +54,9 @@ class Extra(commands.Cog):
 
   @commands.command(brief="Oh no Dad Jokes, AHHHHHH!")
   async def dadjoke(self,ctx):
-    async with aiohttp.ClientSession() as session:
-      async with session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"}) as response:
-        joke=await response.json()
+    session = self.client.aiohttp_session
+    response=await session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"})
+    joke=await response.json()
     embed = discord.Embed(title="Random Dad Joke:",color=random.randint(0, 16777215))
     embed.set_author(name=f"Dad Joke Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
     embed.add_field(name="Dad Joke:",value=joke["joke"])
@@ -67,19 +65,18 @@ class Extra(commands.Cog):
 
   @commands.command(brief="gets a panel from the xkcd comic",aliases=["astrojoke","astro_joke"])
   async def xkcd(self,ctx):
-    async with aiohttp.ClientSession() as session:
-      async with session.get("https://xkcd.com/info.0.json") as response:
-        info=await response.json()
+    session = self.client.aiohttp_session
+    response=await session.get("https://xkcd.com/info.0.json")
+    info=await response.json()
 
     num = random.randint(1,info["num"])
-    async with aiohttp.ClientSession() as session:
-      async with session.get(f"https://xkcd.com/{num}/info.0.json") as comic:
-        data=await comic.json()
-        title = data["title"]
-        embed=discord.Embed(title=f"Title: {title}",color=random.randint(0, 16777215))
-        embed.set_image(url=data["img"])
-        embed.set_footer(text=f"Made on {data['month']}/{data['day']}/{data['year']}")
-        await ctx.send(embed=embed)
+    comic = await session.get(f"https://xkcd.com/{num}/info.0.json")
+    data=await comic.json()
+    title = data["title"]
+    embed=discord.Embed(title=f"Title: {title}",color=random.randint(0, 16777215))
+    embed.set_image(url=data["img"])
+    embed.set_footer(text=f"Made on {data['month']}/{data['day']}/{data['year']}")
+    await ctx.send(embed=embed)
 
   @commands.command()
   async def http_cat(self,ctx,args=None):

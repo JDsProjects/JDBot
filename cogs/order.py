@@ -7,8 +7,6 @@ import random
 from difflib import SequenceMatcher
 import TenGiphPy
 
-#someday get https://github.com/NinjaSnail1080/akinator.py
-
 tenor_client = TenGiphPy.Tenor(token=os.environ["tenor_key"])
 giphy_client = TenGiphPy.Giphy(token=os.environ["giphy_token"])
 
