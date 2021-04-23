@@ -6,30 +6,30 @@ authors = ["repl.it user <replituser@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-"discord.py" = {extras = ["voice"], version = "^1.6"}
+"discord.py" = {extras = ["voice"], version = "^1.7.1"}
 dnspython = "^2.0.0"
 flask = "^1.1.2"
-pymongo = "^3.11.2"
+pymongo = "^3.11.3"
 dblpy = "^0.4.0"
-aioimgur = "^0.1.0"
-wavelink = "^0.9.6"
+aioimgur = "^0.1.1"
+wavelink = "^0.9.9"
 image = "^1.5.33"
-asuna-api = "^0.2.5"
+asuna-api = "^0.2.6"
 vt-py = "^0.6.1"
-vt = "^3.1.3"
 discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
-google-api-python-client = "^1.12.8"
-aPRAW = "^0.6.8-alpha.0"
+google-api-python-client = "^2.2.0"
+aPRAW = "^0.6.8a0"
 sr-api = {git = "https://github.com/iDutchy/sr_api.git"}
 async-cse = "^0.3.0"
-discord-py-slash-command = "^1.0.9"
+discord-py-slash-command = "^1.1.2"
 TenGiphPy = "^2.5.0"
 aiogTTS = "^1.1.0"
-motor = "^2.3.1"
+motor = "^2.4.0"
 emojis = "^0.6.0"
 ordereddict = "^1.1"
 asyncdagpi = "^3.3.2"
-jishaku = "^1.20.0"
+jishaku = "^1.20.0.220"
+"mystbin.py" = "^2.0.2"
 
 [tool.poetry.dev-dependencies]
 

@@ -230,6 +230,7 @@ version = "1.0.0a30+g309c702"
 reference = "309c70222eec33acacb8c21bbb0fbe9bc57de661"
 type = "git"
 url = "https://github.com/Rapptz/discord-ext-menus"
+
 [[package]]
 category = "main"
 description = "A simple discord slash command handler for discord.py."
@@ -344,13 +345,13 @@ category = "main"
 description = "Google API Client Library for Python"
 name = "google-api-python-client"
 optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
-version = "1.12.8"
+python-versions = ">=3.6"
+version = "2.2.0"
 
 [package.dependencies]
 google-api-core = ">=1.21.0,<2dev"
-google-auth = ">=1.16.0"
-google-auth-httplib2 = ">=0.0.3"
+google-auth = ">=1.16.0,<2dev"
+google-auth-httplib2 = ">=0.1.0"
 httplib2 = ">=0.15.0,<1dev"
 six = ">=1.13.0,<2dev"
 uritemplate = ">=3.0.0,<4dev"
@@ -404,14 +405,6 @@ protobuf = ">=3.12.0"
 
 [package.extras]
 grpc = ["grpcio (>=1.0.0)"]
-
-[[package]]
-category = "main"
-description = "Backport of HTMLParser from python 2.7"
-name = "htmlparser"
-optional = false
-python-versions = "*"
-version = "0.0.2"
 
 [[package]]
 category = "main"
@@ -547,11 +540,17 @@ version = "5.1.0"
 
 [[package]]
 category = "main"
-description = "Python package to parse, read and write Microsoft OLE2 files (Structured Storage or Compound Document, Microsoft Office)"
-name = "olefile"
+description = "A small simple wrapper around the mystb.in API."
+name = "mystbin.py"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.46"
+python-versions = ">=3.6,<4.0"
+version = "2.0.2"
+
+[package.dependencies]
+aiohttp = ">=3.6.2,<4.0.0"
+
+[package.extras]
+requests = ["requests (>=2.24.0,<3.0.0)"]
 
 [[package]]
 category = "main"
@@ -662,17 +661,6 @@ version = "2.4.7"
 
 [[package]]
 category = "main"
-description = "Extensions to the standard Python datetime module"
-name = "python-dateutil"
-optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
-version = "2.8.1"
-
-[package.dependencies]
-six = ">=1.5"
-
-[[package]]
-category = "main"
 description = "World timezone definitions, modern and historical"
 name = "pytz"
 optional = false
@@ -769,6 +757,7 @@ yarl = "*"
 reference = "1c97c1b355f1ef12b1dc64a5e80ecba37ad3fc81"
 type = "git"
 url = "https://github.com/iDutchy/sr_api.git"
+
 [[package]]
 category = "main"
 description = "API Wrapper for the Gif library Tenor and Giphy. Join my server: https://discord.gg/uFdVUMH"
@@ -779,14 +768,6 @@ version = "2.5.0"
 
 [package.dependencies]
 requests = "*"
-
-[[package]]
-category = "main"
-description = "module for creating simple ASCII tables"
-name = "texttable"
-optional = false
-python-versions = "*"
-version = "1.6.3"
 
 [[package]]
 category = "main"
@@ -816,22 +797,6 @@ version = "1.26.4"
 brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
 socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
-
-[[package]]
-category = "main"
-description = "VirusTotal Full API"
-name = "vt"
-optional = false
-python-versions = "*"
-version = "3.1.3.7"
-
-[package.dependencies]
-HTMLParser = "*"
-olefile = ">=0.42"
-python-dateutil = ">=1.5"
-requests = ">=2.5.0"
-six = "*"
-texttable = "*"
 
 [[package]]
 category = "main"
@@ -892,7 +857,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "58f4ddab81e01e8767415fb39902442cf7eb8bec57fd5a6c8a6edac0e8f9e0b0"
+content-hash = "c1f1e29e4f766f53b8a67ccbc0f9fe476041d8c4776f27c7835d279f42ac7f06"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1070,8 +1035,8 @@ google-api-core = [
     {file = "google_api_core-1.26.3-py2.py3-none-any.whl", hash = "sha256:099762d4b4018cd536bcf85136bf337957da438807572db52f21dc61251be089"},
 ]
 google-api-python-client = [
-    {file = "google-api-python-client-1.12.8.tar.gz", hash = "sha256:f3b9684442eec2cfe9f9bb48e796ef919456b82142c7528c5fd527e5224f08bb"},
-    {file = "google_api_python_client-1.12.8-py2.py3-none-any.whl", hash = "sha256:3c4c4ca46b5c21196bec7ee93453443e477d82cbfa79234d1ce0645f81170eaf"},
+    {file = "google-api-python-client-2.2.0.tar.gz", hash = "sha256:29447c8e95c23ae76fcf9817432f5ed015495513abeac564905640a0ef7d1898"},
+    {file = "google_api_python_client-2.2.0-py2.py3-none-any.whl", hash = "sha256:9edac3b071588e08e4b3d14455f2a3c2a57637cab6535f70cff0c01200e22909"},
 ]
 google-auth = [
     {file = "google-auth-1.29.0.tar.gz", hash = "sha256:010f011c4e27d3d5eb01106fba6aac39d164842dfcd8709955c4638f5b11ccf8"},
@@ -1084,9 +1049,6 @@ google-auth-httplib2 = [
 googleapis-common-protos = [
     {file = "googleapis-common-protos-1.53.0.tar.gz", hash = "sha256:a88ee8903aa0a81f6c3cec2d5cf62d3c8aa67c06439b0496b49048fb1854ebf4"},
     {file = "googleapis_common_protos-1.53.0-py2.py3-none-any.whl", hash = "sha256:f6d561ab8fb16b30020b940e2dd01cd80082f4762fa9f3ee670f4419b4b8dbd0"},
-]
-htmlparser = [
-    {file = "HTMLParser-0.0.2.tar.gz", hash = "sha256:c5681d3d8642767739e4c08b1b19b3ff44263280ff1923b1c5424052bedb2087"},
 ]
 httplib2 = [
     {file = "httplib2-0.19.1-py3-none-any.whl", hash = "sha256:2ad195faf9faf079723f6714926e9a9061f694d07724b846658ce08d40f522b4"},
@@ -1220,8 +1182,9 @@ multidict = [
     {file = "multidict-5.1.0-cp39-cp39-win_amd64.whl", hash = "sha256:7df80d07818b385f3129180369079bd6934cf70469f99daaebfac89dca288359"},
     {file = "multidict-5.1.0.tar.gz", hash = "sha256:25b4e5f22d3a37ddf3effc0710ba692cfc792c2b9edfb9c05aefe823256e84d5"},
 ]
-olefile = [
-    {file = "olefile-0.46.zip", hash = "sha256:133b031eaf8fd2c9399b78b8bc5b8fcbe4c31e85295749bb17a87cba8f3c3964"},
+"mystbin.py" = [
+    {file = "mystbin.py-2.0.2-py3-none-any.whl", hash = "sha256:00b16b1f5fba37bca3870b5d9d43f049f654b1f355e207eda3a9ad9bd2a622ce"},
+    {file = "mystbin.py-2.0.2.tar.gz", hash = "sha256:6b7aa45cbc227bdc0b25940591eb0b1171cd22b6e12009f3a15d9c1d5c84ce81"},
 ]
 ordereddict = [
     {file = "ordereddict-1.1.tar.gz", hash = "sha256:1c35b4ac206cef2d24816c89f89cf289dd3d38cf7c449bb3fab7bf6d43f01b1f"},
@@ -1411,10 +1374,6 @@ pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
-python-dateutil = [
-    {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
-    {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
-]
 pytz = [
     {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},
     {file = "pytz-2021.1.tar.gz", hash = "sha256:83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"},
@@ -1451,10 +1410,6 @@ sr_api = []
 tengiphpy = [
     {file = "TenGiphPy-2.5.0-py3-none-any.whl", hash = "sha256:b69401a4dd95de7030fb878a8ca7079351f8b543cced73ed4bd8e1240770c561"},
 ]
-texttable = [
-    {file = "texttable-1.6.3-py2.py3-none-any.whl", hash = "sha256:f802f2ef8459058736264210f716c757cbf85007a30886d8541aa8c3404f1dda"},
-    {file = "texttable-1.6.3.tar.gz", hash = "sha256:ce0faf21aa77d806bbff22b107cc22cce68dc9438f97a2df32c93e9afa4ce436"},
-]
 typing-extensions = [
     {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
     {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
@@ -1467,9 +1422,6 @@ uritemplate = [
 urllib3 = [
     {file = "urllib3-1.26.4-py2.py3-none-any.whl", hash = "sha256:2f4da4594db7e1e110a944bb1b551fdf4e6c136ad42e4234131391e21eb5b0df"},
     {file = "urllib3-1.26.4.tar.gz", hash = "sha256:e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"},
-]
-vt = [
-    {file = "vt-3.1.3.7.tar.gz", hash = "sha256:58eeb14fddf8d4dc17fa12170176a6e99c94df83cb0f49ac8a2f21f7513bf63c"},
 ]
 vt-py = [
     {file = "vt-py-0.6.1.tar.gz", hash = "sha256:1c91e8b1c9d1d797bafe297b9176177691a84f262d9d031aa2addbcb8b9b969d"},
