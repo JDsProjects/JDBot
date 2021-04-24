@@ -13,7 +13,14 @@ class Music(commands.Cog):
 
   async def start_nodes(self):
     await self.bot.wait_until_ready()
-    await self.bot.wavelink.initiate_node(host='https://51.38.117.19', port=1038, rest_uri='https://51.38.117.19:1038', password='TechHost-lavalink', identifier='MusicBot', region='us_central')
+    await self.bot.wavelink.initiate_node(host='lava.link', port=80, rest_uri='lava.link:80', password='something.host', identifier='MusicBot', region='us_central')
+
+  async def stop_nodes(self):
+    await self.bot.wavelink.destroy_node( identifier="MusicBot")
+
+  def cog_unload(self):
+    self.bot.loop.create_task(self.stop_nodes())
+    super().cog_unload()
 
   @commands.command(name='connect')
   async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
