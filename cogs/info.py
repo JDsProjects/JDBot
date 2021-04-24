@@ -159,9 +159,8 @@ class Info(commands.Cog):
       message_emojis = ""
       for x in ctx.guild.emojis:
         message_emojis = message_emojis+" "+str(x)+"\n"
-      mystbin_client = mystbin.Client()
+      mystbin_client = mystbin.Client(session=self.client.aiohttp_session)
       paste = await mystbin_client.post(message_emojis)
-      await mystbin_client.close()
       await ctx.send(paste.url)
       
     if isinstance(ctx.channel,discord.DMChannel):
