@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 from utils import BetterMemberConverter, warn_permission
 import random
-import json, asyncpg
+import json
 from discord.ext.commands.cooldowns import BucketType
 
 class Moderation(commands.Cog):
