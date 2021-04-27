@@ -1,4 +1,4 @@
-import discord,  re, os, discord_slash, aiohttp
+import discord,  re, os, discord_slash, aiohttp, contextlib
 from discord.ext import commands
 
 async def get_prefix(client,message):
@@ -24,6 +24,12 @@ class JDBot(commands.Bot):
   async def close(self):
     await self.aiohttp_session.close()
     await super().close()
+
+  async def getch_member(self,guild,member_id):
+    member = None
+    with contextlib.suppress(discord.Forbidden, discord.HTTPException):
+      member = guild.get_member(member_id) or await guild.fetch_member(member_id)
+    return member
 
 client = JDBot(command_prefix=(get_prefix),intents=intents)
 slash = discord_slash.SlashCommand(client,override_type = True,sync_commands=True)
