@@ -1,24 +1,21 @@
 from discord.ext import commands
-import re
-import discord
-import random
+import re, discord , random , mystbin , typing , emojis , collections
 from utils import BetterMemberConverter, BetterUserconverter
-import mystbin
-import typing
 from difflib import SequenceMatcher
-import typing,emojis, collections
 
 class Info(commands.Cog):
   def __init__(self,client):
     self.client = client
 
   async def guildinfo(self,ctx,guild):
-    #base_user=collections.Counter([ e.animated for e in guild.emojis])
-    bots = sum(m.bot for m in guild.members)
-    users = sum(not m.bot for m in guild.members)
+    base_user=collections.Counter([u.bot for u in guild.members])
+    bots = base_user[True]
+    users = base_user[False]
 
-    static_emojis = sum(not e.animated for e in guild.emojis)
-    animated_emojis = sum(e.animated for e in guild.emojis)
+    base_animated = collections.Counter([e.animated for e in guild.emojis])
+    static_emojis = base_animated[False]
+    animated_emojis = base_animated[True]
+    
     usable_emojis = sum(e.available for e in guild.emojis)
 
     base = collections.Counter([x.status for x in guild.members])
