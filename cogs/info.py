@@ -6,15 +6,14 @@ from utils import BetterMemberConverter, BetterUserconverter
 import mystbin
 import typing
 from difflib import SequenceMatcher
-import typing
-import emojis
+import typing,emojis, collections
 
 class Info(commands.Cog):
   def __init__(self,client):
     self.client = client
 
   async def guildinfo(self,ctx,guild):
-   
+    #base_user=collections.Counter([ e.animated for e in guild.emojis])
     bots = sum(m.bot for m in guild.members)
     users = sum(not m.bot for m in guild.members)
 
@@ -22,22 +21,12 @@ class Info(commands.Cog):
     animated_emojis = sum(e.animated for e in guild.emojis)
     usable_emojis = sum(e.available for e in guild.emojis)
 
-    online_users = 0
-    dnd_users = 0
-    idle_users = 0
-    offline_users = 0
-    for x in guild.members:
-      if str(x.status) == "online":
-        online_users = online_users = online_users + 1
+    base = collections.Counter([x.status for x in guild.members])
 
-      if str(x.status) == "dnd":
-        dnd_users = dnd_users + 1
-
-      if str(x.status) == "idle":
-        idle_users = idle_users + 1
-
-      if str(x.status) == "offline":
-        offline_users = offline_users + 1
+    online_users = base[discord.Status.online]
+    dnd_users = base[discord.Status.dnd]
+    idle_users = base[discord.Status.idle]
+    offline_users = base[discord.Status.offline]
   
     embed = discord.Embed(title="Guild Info:",color=random.randint(0, 16777215))
     embed.add_field(name="Server Name:",value=guild.name)
