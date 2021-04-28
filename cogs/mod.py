@@ -50,16 +50,16 @@ class Moderation(commands.Cog):
 
   @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(work in progress)")
   async def scan_guild(self,ctx):
-    conn = await aiosqlite3.connect('sus_users.db')
-    cur = await conn.cursor()
-    data = [n for n in await cur.execute("SELECT * FROM SUS_USERS;")]
-    await cur.close()
-    await conn.close()
 
     if isinstance(ctx.channel, discord.TextChannel):
+      conn = await aiosqlite3.connect('sus_users.db')
+      cur = await conn.cursor()
+      sus_users=dict([n for n in await cur.execute("SELECT * FROM SUS_USERS;")])
+      await cur.close()
+      await conn.close()
       count = 0
       for x in sus_users:
-        user=ctx.guild.get_member(int(x))
+        user=ctx.guild.get_member(x)
         if user:
           count = count + 1
           await ctx.send(f"Found {x}. \nReason: {sus_users[x]}")
