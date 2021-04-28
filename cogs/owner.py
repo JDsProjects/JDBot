@@ -1,9 +1,6 @@
 from discord.ext import commands
 from utils import BetterMemberConverter, BetterUserconverter
-import random
-import discord
-import aiohttp
-import os
+import random , discord , aiohttp , os , aiosqlite3
 
 class Owner(commands.Cog):
   def __init__(self, client):
@@ -166,7 +163,18 @@ class Owner(commands.Cog):
     if len(send_list) < 1:
       await ctx.author.dm_channel.send("No shared servers")
 
+  @commands.command(brief="A command to add sus_users with a reason")
+  async def addsus(self,ctx,*,user:BetterUserconverter=None):
+    if user is None:
+      await ctx.send("can't have a user be none.")
     
+    if user:
+      def check(m):
+        return m.author.id == ctx.author.id
+      await ctx.reply("Please give me a reason why:")
+      reason = await self.client.wait_for("message",check=check)
+      
+      
 
 def setup(client):
   client.add_cog(Owner(client))

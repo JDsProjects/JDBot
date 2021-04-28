@@ -1,9 +1,5 @@
 from discord.ext import commands
-import discord
-import apraw
-import os
-import random
-import aiohttp
+import discord, apraw, os, random, aiohttp
 
 class Reddit(commands.Cog):
   def __init__(self, client):

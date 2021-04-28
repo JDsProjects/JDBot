@@ -1,9 +1,4 @@
-import aioimgur
-import discord
-import random
-import sr_api
-import os
-import asyncdagpi
+import aioimgur, discord, random, sr_api, os, asyncdagpi
 
 async def triggered_converter(self,url,ctx):
   sr_client=sr_api.Client(session=self.client.aiohttp_session)

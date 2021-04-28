@@ -1,6 +1,5 @@
 from discord.ext import commands
-import discord
-import re, random, aiohttp
+import discord, re, random, aiohttp
 
 class Webhook(commands.Cog):
   def __init__(self, client):

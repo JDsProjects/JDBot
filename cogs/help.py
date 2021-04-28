@@ -1,6 +1,5 @@
-from discord.ext import commands
+from discord.ext import commands, menus
 import discord
-from discord.ext import menus
 
 #class MyHelp(commands.MinimalHelpCommand):
 #async def send_bot_help(self,mapping):

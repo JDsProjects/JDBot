@@ -1,12 +1,6 @@
-import discord
+import discord, os, logging, asyncio
 from discord.ext import commands, tasks
-import B
-import ClientConfig
-import os
-import logging
-import asyncio
-import DatabaseConfig
-import DatabaseControl
+import B, ClientConfig,  DatabaseConfig , DatabaseControl
 
 logging.basicConfig(level=logging.INFO)
 client = ClientConfig.client

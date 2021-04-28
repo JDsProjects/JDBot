@@ -1,7 +1,5 @@
 from discord.ext import commands
-import discord
-import random
-import os
+import discord, random, os
 
 class Events(commands.Cog):
   def __init__(self,client):

@@ -1,11 +1,6 @@
-import os
+import os, discord, time, async_cse, random, TenGiphPy
 from discord.ext import commands
-import discord
-import time
-import async_cse
-import random
 from difflib import SequenceMatcher
-import TenGiphPy
 
 tenor_client = TenGiphPy.Tenor(token=os.environ["tenor_key"])
 giphy_client = TenGiphPy.Giphy(token=os.environ["giphy_token"])

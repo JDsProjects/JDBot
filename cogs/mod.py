@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, json, aiosqlite3
+import discord, random, aiosqlite3
 from utils import BetterMemberConverter, warn_permission
 from discord.ext.commands.cooldowns import BucketType
 

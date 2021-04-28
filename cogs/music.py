@@ -1,7 +1,5 @@
 from discord.ext import commands
-import discord
-import wavelink
-import asyncio
+import discord, wavelink, asyncio
 
 class Music(commands.Cog):
   def __init__(self,bot):

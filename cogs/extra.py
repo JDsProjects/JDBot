@@ -1,11 +1,5 @@
 from discord.ext import commands
-import discord
-import random
-import asuna_api
-import math
-import aiohttp
-import io, chardet, aiogtts
-import mystbin
+import discord, random, asuna_api, math, aiohttp, io, chardet, aiogtts, mystbin
 
 class Extra(commands.Cog):
   def __init__(self,client):

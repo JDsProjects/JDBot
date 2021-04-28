@@ -1,6 +1,5 @@
 from discord.ext import commands
-import discord
-import random
+import discord, random
 from difflib import SequenceMatcher
 
 class Dice(commands.Cog):
