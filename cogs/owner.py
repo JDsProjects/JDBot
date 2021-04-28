@@ -166,5 +166,7 @@ class Owner(commands.Cog):
     if len(send_list) < 1:
       await ctx.author.dm_channel.send("No shared servers")
 
+    
+
 def setup(client):
   client.add_cog(Owner(client))

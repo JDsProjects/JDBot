@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, json
+import discord, random, json, aiosqlite3
 from utils import BetterMemberConverter, warn_permission
 from discord.ext.commands.cooldowns import BucketType
 
@@ -50,8 +50,12 @@ class Moderation(commands.Cog):
 
   @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(work in progress)")
   async def scan_guild(self,ctx):
-    with open('sus_users.json', 'r') as f:
-      sus_users=json.load(f)
+    conn = await aiosqlite3.connect('sus_users.db')
+    cur = await conn.cursor()
+    data = [n for n in await cur.execute("SELECT * FROM SUS_USERS;")]
+    await cur.close()
+    await conn.close()
+
     if isinstance(ctx.channel, discord.TextChannel):
       count = 0
       for x in sus_users:
