@@ -15,15 +15,16 @@ class Info(commands.Cog):
     base_animated = collections.Counter([e.animated for e in guild.emojis])
     static_emojis = base_animated[False]
     animated_emojis = base_animated[True]
-    
-    usable_emojis = sum(e.available for e in guild.emojis)
 
-    base = collections.Counter([x.status for x in guild.members])
+    base_available = collections.Counter([e.available for e in guild.emojis])
+    usable_emojis = base_available[True]
 
-    online_users = base[discord.Status.online]
-    dnd_users = base[discord.Status.dnd]
-    idle_users = base[discord.Status.idle]
-    offline_users = base[discord.Status.offline]
+    base_status = collections.Counter([x.status for x in guild.members])
+
+    online_users = base_status[discord.Status.online]
+    dnd_users = base_status[discord.Status.dnd]
+    idle_users = base_status[discord.Status.idle]
+    offline_users = base_status[discord.Status.offline]
   
     embed = discord.Embed(title="Guild Info:",color=random.randint(0, 16777215))
     embed.add_field(name="Server Name:",value=guild.name)
