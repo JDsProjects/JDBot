@@ -45,6 +45,17 @@ aiohttp = "*"
 
 [[package]]
 category = "main"
+description = "sqlite3 support for asyncio."
+name = "aiosqlite3"
+optional = false
+python-versions = "*"
+version = "0.3.0"
+
+[package.extras]
+sa = ["sqlalchemy (>=0.9)"]
+
+[[package]]
+category = "main"
 description = "aPRAW is an asynchronous Reddit API wrapper written in Python."
 name = "apraw"
 optional = false
@@ -924,7 +935,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "de27813415fc5f4fada842c22ae1e2dd2dfd6e8371a74c51226b6f62b1d27bff"
+content-hash = "511b99bb00416ceb480295f10989bdf570ddd8a69d5a39fcba00e205c03c9b46"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -973,6 +984,9 @@ aiohttp = [
 ]
 aioimgur = [
     {file = "aioimgur-0.1.1.tar.gz", hash = "sha256:7684079e3cd804b30198913e302a19f58c4c589d160865d466cfced4ba827527"},
+]
+aiosqlite3 = [
+    {file = "aiosqlite3-0.3.0-py3-none-any.whl", hash = "sha256:11efa1b61bdf621f1ba5568bd4ac7db6387b49cf11f4b99f6aa5e6668591ae85"},
 ]
 apraw = [
     {file = "aPRAW-0.6.8a0-py3-none-any.whl", hash = "sha256:3e22de0a39307293974f1fca5d4801a10f312f5c34fe2af40f0c9c32026a0766"},

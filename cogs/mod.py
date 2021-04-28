@@ -1,8 +1,6 @@
 from discord.ext import commands
-import discord
+import discord, random, json
 from utils import BetterMemberConverter, warn_permission
-import random
-import json
 from discord.ext.commands.cooldowns import BucketType
 
 class Moderation(commands.Cog):
