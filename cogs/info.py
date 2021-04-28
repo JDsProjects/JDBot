@@ -14,21 +14,13 @@ class Info(commands.Cog):
     self.client = client
 
   async def guildinfo(self,ctx,guild):
-
    
     bots = sum(m.bot for m in guild.members)
     users = sum(not m.bot for m in guild.members)
 
-    static_emojis = 0
-    animated_emojis = 0
-    usable_emojis = 0
-    for x in guild.emojis:
-      if x.animated is True:
-        animated_emojis = animated_emojis + 1
-      if x.animated is False:
-        static_emojis = static_emojis + 1
-      if x.available is True:
-        usable_emojis = usable_emojis + 1
+    static_emojis = sum(not e.animated for e in guild.emojis)
+    animated_emojis = sum(e.animated for e in guild.emojis)
+    usable_emojis = sum(e.available for e in guild.emojis)
 
     online_users = 0
     dnd_users = 0

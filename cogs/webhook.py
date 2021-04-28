@@ -80,5 +80,9 @@ class Webhook(commands.Cog):
     if isinstance(ctx.channel, discord.DMChannel):
       await ctx.send("You can't use that silly")
 
+  @webhook_create.error
+  async def webhook_create_error(self,ctx,error):
+    await ctx.send(error)
+
 def setup(client):
   client.add_cog(Webhook(client))
