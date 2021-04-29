@@ -9,15 +9,21 @@ class Reddit(commands.Cog):
   @commands.command(brief="Random Meme from Dank Memes with Apraw")
   async def dankmeme(self,ctx):
     subreddit = await self.reddit.subreddit("dankmemes")
+    meme_list = []
     async for submission in subreddit.new():
-      print(submission)
-    await ctx.send("Command still WIP")
+      meme_list.append(submission)
+
+    data = random.choice(meme_list)
+    embed = discord.Embed(title="r/dankmemes",description=f"[{data.title}](https://reddit.com{data.permalink})", color=0x00FF00)
+    embed.set_image(url=data.url)
+    embed.set_footer(text=f"Upvote ratio : {data.ups}")
+    await ctx.send(embed=embed)
 
   @commands.command(brief="Random meme from Dank Memes with aiohttp",help="Content returned may not be suitable to younger audiences")
   async def dankmeme2(self,ctx):
     e = await self.client.aiohttp_session.get("https://www.reddit.com/r/dankmemes/.json")
     data = random.choice((await e.json())["data"]["children"])["data"]
-    embed = discord.Embed(title=data["title"], color=0x00FF00)
+    embed = discord.Embed(title="r/dankmemes",description=f'[{data["title"]}](https://reddit.com{data["permalink"]})', color=0x00FF00)
     embed.set_image(url=data["url"])
     embed.set_footer(text=f"Upvote ratio : {data['upvote_ratio']}")
     await ctx.send(embed=embed)

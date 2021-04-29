@@ -3,8 +3,9 @@ from utils import BetterMemberConverter, BetterUserconverter
 import random , discord , aiohttp , os , aiosqlite3
 
 class Owner(commands.Cog):
-  def __init__(self, client):
-    self.client = client
+  def __init__(self, bot):
+    self.client = bot
+    self.bot = bot
 
   @commands.command(brief="a command to send mail")
   async def mail(self,ctx,*,user: BetterUserconverter=None):
@@ -125,7 +126,7 @@ class Owner(commands.Cog):
         if isinstance(ctx.channel, discord.TextChannel):
           await ctx.message.delete()
 
-        async with aiohttp.ClientSession() as session:
+          session = self.client.aiohttp_session
           webhook=discord.Webhook.from_url(os.environ["webhook1"], adapter=discord.AsyncWebhookAdapter(session))
           embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
           embed.add_field(name="Update Info:",value=args)
@@ -133,7 +134,7 @@ class Owner(commands.Cog):
           embed.set_footer(text="JDJG's Updates")
           await webhook.execute(embed=embed)
         
-        async with aiohttp.ClientSession() as session:
+          session = self.client.aiohttp_session
           webhook=discord.Webhook.from_url(os.environ["webhook99"], adapter=discord.AsyncWebhookAdapter(session))
           embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
           embed.add_field(name="Update Info:",value=args)
@@ -173,8 +174,28 @@ class Owner(commands.Cog):
         return m.author.id == ctx.author.id
       await ctx.reply("Please give me a reason why:")
       reason = await self.client.wait_for("message",check=check)
-      
-      
+      cur = await self.client.sus_users.cursor()
+      await cur.execute("INSERT INTO sus_users VALUES (?, ?)", (user.id, reason.content))
+      await self.client.sus_users.commit()
+      await cur.close()
+
+  @commands.command(brief="a command to grab all in the sus_users list")
+  async def sus_users(self,ctx):
+    cur = await self.client.sus_users.cursor()
+    sus_users=dict([n for n in await cur.execute("SELECT * FROM SUS_USERS;")])
+    await cur.close()
+    await self.client.sus_users.commit()
+    for x in sus_users:
+      await ctx.send(content=f"{x}: {sus_users[x]}")
+
+  @commands.command()
+  async def update_sus(self,ctx):
+    await self.client.sus_users.commit()
+    await ctx.send("Updated SQL boss.")
+
+  @update_sus.error
+  async def update_sus_error(self,ctx,error):
+    await ctx.send(error)
 
 def setup(client):
   client.add_cog(Owner(client))
