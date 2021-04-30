@@ -1,12 +1,16 @@
 import dbl
 import discord
 from discord.ext import commands, tasks
-import os, logging
+import os, logging, discordlists
 
 class DSLCount(commands.Cog):
-  def __init__(self, client):
-    self.client = client
+  def __init__(self, bot):
+    self.client = bot
+    self.bot = bot
     self.token = os.environ["topgg_key"]
+    self.api = discordlists.Client(self.bot)  
+    self.api.set_auth("disforge.com",os.environ["disforge_key"])
+    self.api.start_loop()
     self.dblpy = dbl.DBLClient(self.client,self.token)
     self.update_stats.start()
   

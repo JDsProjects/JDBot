@@ -271,6 +271,17 @@ voice = ["PyNaCl (>=1.3.0,<1.5)"]
 
 [[package]]
 category = "main"
+description = "A simple API wrapper for botblock.org providing server count posting to all bot lists and fetching botinformation from all."
+name = "discordlists.py"
+optional = false
+python-versions = ">= 3.5"
+version = "1.1.1"
+
+[package.dependencies]
+aiohttp = "*"
+
+[[package]]
+category = "main"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 name = "django"
 optional = false
@@ -935,7 +946,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "511b99bb00416ceb480295f10989bdf570ddd8a69d5a39fcba00e205c03c9b46"
+content-hash = "7c1cbf655348424734d7a6da2108b2e60d6203f6eb76e73b153ce9a609b64d5a"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1094,6 +1105,11 @@ discord-py-slash-command = [
 "discord.py" = [
     {file = "discord.py-1.7.1-py3-none-any.whl", hash = "sha256:399b80d576a63fa901300e80080568e1d9cd9c21260ca622fd7145c0009278fa"},
     {file = "discord.py-1.7.1.tar.gz", hash = "sha256:82bc5e6325ab7557db9c466f638c98e18be03c330f56ad9bf4c18bdcf19faf55"},
+]
+"discordlists.py" = [
+    {file = "discordlists.py-1.1.1-py3-none-any.whl", hash = "sha256:0211aecde3c3b3881239511aadc0c753f3cece423d8374d01fa815e958ca2537"},
+    {file = "discordlists.py-1.1.1-py3.6.egg", hash = "sha256:3ef38ee36fe469dce267a85633067087bb92c0840f8eb60033df05f5866f3bbe"},
+    {file = "discordlists.py-1.1.1.tar.gz", hash = "sha256:f6d49c93c3eb1d5ffbaeddf663d3bfa80bb3073a4fc43787b832ea55de49113d"},
 ]
 django = [
     {file = "Django-3.2-py3-none-any.whl", hash = "sha256:0604e84c4fb698a5e53e5857b5aea945b2f19a18f25f10b8748dbdf935788927"},
