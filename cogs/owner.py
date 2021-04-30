@@ -197,28 +197,5 @@ class Owner(commands.Cog):
   async def update_sus_error(self,ctx,error):
     await ctx.send(error)
 
-  @commands.command()
-  async def kawaii_hc(self,ctx):
-    await ctx.send("Checking if any of the kawaii guilds have matching emojis by hash.")
-    kawaii_emotes= self.client.get_guild(773571474761973840)
-    kawaii_emotes2 = self.client.get_guild(806669712410411068)
-    kawaii_emotes3 = self.client.get_guild(692576207404793946)
-    
-    emoji_list =( kawaii_emotes2.emojis+kawaii_emotes3.emojis)
-
-    for x,y in zip(kawaii_emotes.emojis, emoji_list):
-      if hash(await x.url.read()) == hash(await y.url.read()):
-        await ctx.send(f"{x}: {y}")
-
-    for x,y in zip(kawaii_emotes2.emojis,kawaii_emotes3.emojis):
-      if hash(await x.url.read()) == hash(await y.url.read()):
-        await ctx.send(f"{x}: {y}")
-
-    await ctx.send("Done :D")
-
-  @kawaii_hc.error
-  async def kawaii_hc_error(self,ctx,error):
-    await ctx.send(error)
-
 def setup(client):
   client.add_cog(Owner(client))
