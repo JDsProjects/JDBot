@@ -72,7 +72,10 @@ class Owner(commands.Cog):
     if cog is None:
       await ctx.send("you can't ask to reload no cogs")
 
-  
+  @commands.command()
+  async def shutdown(self,ctx):
+    await ctx.send("shutdown/logout time happening.")
+    await self.bot.close()
 
   async def cog_check(self, ctx):
     return await self.client.is_owner(ctx.author)
