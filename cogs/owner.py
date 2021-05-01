@@ -213,20 +213,16 @@ class Owner(commands.Cog):
   @commands.command(aliases=["bypass_command"])
   async def command_bypass(self,ctx,user:BetterUserconverter=None,*,command=None):
     #make sure to swap to autoconverter if it gets added.
-    if user is None:
-      user = ctx.author
-    if user:
-      if command:
-        def check(m):
-          return m.author.id == user.id
-        command_wanted=self.bot.get_command(command)
-        if command_wanted:
-          await ctx.send(f"{command_wanted.name} now accessible for the {user} for one command usage!")
-          self.bot.special_access={user.id:command_wanted.name}
-        if command_wanted is None:
-          await ctx.send("Please specify a valid command.")
-      if command is None:
-        await ctx.send("select a command :(")
+    user = user or ctx.author
+    if command:
+      command_wanted=self.bot.get_command(command)
+      if command_wanted:
+        await ctx.send(f"{command_wanted.name} now accessible for the {user} for one command usage!")
+        self.bot.special_access[user.id]=command_wanted.name
+      if command_wanted is None:
+        await ctx.send("Please specify a valid command.")
+    if command is None:
+      await ctx.send("select a command :(")
 
 def setup(client):
   client.add_cog(Owner(client))
