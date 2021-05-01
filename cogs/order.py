@@ -107,6 +107,7 @@ class Order(commands.Cog):
     if args:
       results = await self.client.loop.run_in_executor(None, tenor_client.search(args, safesearch=True, limit=10))
       print(results)
+      #going to be swapping to an async Tenorgiphy soon lol.
     if args is None:
       await ctx.send("You can't search for nothing")
 

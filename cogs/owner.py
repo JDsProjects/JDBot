@@ -175,8 +175,8 @@ class Owner(commands.Cog):
     if user is None:
       await ctx.send("can't have a user be none.")
     
-      def check(m):
-        return m.author.id == ctx.author.id
+    def check(m):
+      return m.author.id == ctx.author.id
 
     if user:
       await ctx.reply("Please give me a reason why:")

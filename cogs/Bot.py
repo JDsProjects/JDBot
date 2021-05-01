@@ -43,9 +43,7 @@ class Bot(commands.Cog):
       owner_id = info.team.owner_id
 
     support_guild=self.client.get_guild(736422329399246990)
-    owner=support_guild.get_member(owner_id)
-    if owner is None:
-      owner = await support_guild.fetch_member(owner_id)
+    owner= await self.client.getch_member(support_guild,owner_id)
     if owner.bot:
       user_type = "Bot"
     if not owner.bot:
