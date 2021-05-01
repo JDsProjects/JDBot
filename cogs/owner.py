@@ -72,6 +72,8 @@ class Owner(commands.Cog):
     if cog is None:
       await ctx.send("you can't ask to reload no cogs")
 
+  
+
   async def cog_check(self, ctx):
     return await self.client.is_owner(ctx.author)
 
