@@ -15,7 +15,8 @@ intents.presences = False
 
 class JDBot(commands.Bot):
   def __init__(self, *args, **kwargs):
-      super().__init__(*args, **kwargs)
+    super().__init__(*args, **kwargs)
+    self.special_access = {}
 
   async def start(self,*args, **kwargs):
     self.aiohttp_session=aiohttp.ClientSession()
@@ -34,6 +35,16 @@ class JDBot(commands.Bot):
     return member
 
 client = JDBot(command_prefix=(get_prefix),intents=intents)
+bot = client
+
+@bot.check
+async def check_command_access(ctx):
+  if ctx.author.id in bot.special_access:
+    if ctx.command.name == bot.special_access.get(ctx.author.id):
+      await ctx.command.reinvoke(ctx)
+    del bot.special_access[ctx.author.id]
+  return True
+
 slash = discord_slash.SlashCommand(client,override_type = True,sync_commands=True)
 
 client.load_extension('jishaku')

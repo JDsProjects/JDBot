@@ -1,4 +1,4 @@
-from discord.ext import commands
+from discord.ext import commands, menus
 from utils import BetterMemberConverter, BetterUserconverter
 import random , discord , aiohttp , os , aiosqlite3
 
@@ -13,9 +13,9 @@ class Owner(commands.Cog):
       await ctx.reply("User not found, returning Letter")
       user = ctx.author
     if user:
+      await ctx.reply("Please give me a message to use.")
       def check(m):
         return m.author.id == ctx.author.id
-      await ctx.reply("Please give me a message to use.")
       message = await self.client.wait_for("message",check=check)
       embed_message = discord.Embed(title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215))
       embed_message.set_author(name=f"Mail from: {ctx.author}",icon_url=(ctx.author.avatar_url))
@@ -74,6 +74,12 @@ class Owner(commands.Cog):
 
   async def cog_check(self, ctx):
     return await self.client.is_owner(ctx.author)
+
+  async def cog_command_error(self,ctx,error):
+    if ctx.command and ctx.command.has_error_handler():
+      pass
+    else:
+      await ctx.send(error)
 
   @commands.command(brief="Changes Bot Status(Owner Only)")
   async def status(self , ctx , * , args=None):
@@ -169,9 +175,10 @@ class Owner(commands.Cog):
     if user is None:
       await ctx.send("can't have a user be none.")
     
-    if user:
       def check(m):
         return m.author.id == ctx.author.id
+
+    if user:
       await ctx.reply("Please give me a reason why:")
       reason = await self.client.wait_for("message",check=check)
       cur = await self.client.sus_users.cursor()
@@ -179,14 +186,20 @@ class Owner(commands.Cog):
       await self.client.sus_users.commit()
       await cur.close()
 
+  class SusUsersEmbed(menus.ListPageSource):
+    async def format_page(self, menu, item):
+      embed=discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
+      embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
+      return embed
+
   @commands.command(brief="a command to grab all in the sus_users list")
   async def sus_users(self,ctx):
     cur = await self.client.sus_users.cursor()
-    sus_users=dict([n for n in await cur.execute("SELECT * FROM SUS_USERS;")])
+    sus_users=([n for n in await cur.execute("SELECT * FROM SUS_USERS;")])
     await cur.close()
-    await self.client.sus_users.commit()
-    for x in sus_users:
-      await ctx.send(content=f"{x}: {sus_users[x]}")
+    await self.client.sus_users.commit()  
+    menu = menus.MenuPages(self.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
+    await menu.start(ctx)
 
   @commands.command()
   async def update_sus(self,ctx):
@@ -196,6 +209,24 @@ class Owner(commands.Cog):
   @update_sus.error
   async def update_sus_error(self,ctx,error):
     await ctx.send(error)
+
+  @commands.command(aliases=["bypass_command"])
+  async def command_bypass(self,ctx,user:BetterUserconverter=None,*,command=None):
+    #make sure to swap to autoconverter if it gets added.
+    if user is None:
+      user = ctx.author
+    if user:
+      if command:
+        def check(m):
+          return m.author.id == user.id
+        command_wanted=self.bot.get_command(command)
+        if command_wanted:
+          await ctx.send(f"{command_wanted.name} now accessible for the {user} for one command usage!")
+          self.bot.special_access={user.id:command_wanted.name}
+        if command_wanted is None:
+          await ctx.send("Please specify a valid command.")
+      if command is None:
+        await ctx.send("select a command :(")
 
 def setup(client):
   client.add_cog(Owner(client))

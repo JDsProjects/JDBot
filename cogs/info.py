@@ -219,7 +219,6 @@ class Info(commands.Cog):
       if isinstance(ctx.channel,discord.DMChannel):
         await ctx.send("You can't use it in a DM.")
 
-
   @commands.command(brief="a command to get the closest user.")
   async def closest_user(self,ctx,*,args=None):
     if args is None:
