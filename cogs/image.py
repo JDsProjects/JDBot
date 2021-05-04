@@ -292,7 +292,7 @@ class Image(commands.Cog):
 
   @commands.command(brief="Gives you a random waifu image.")
   async def waifu(self,ctx):
-    r=await self.client.aiohttp_session.get('https://waifu.pics/api/sfw/waifu')
+    r=await self.client.aiohttp_session.get('https://api.waifu.pics/sfw/waifu')
     res = await r.json()
     embed=discord.Embed(color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed.set_author(name=f"{ctx.author} Requested A Waifu")
