@@ -37,6 +37,17 @@ braceexpand = "^0.1.6"
 humanize = "^3.5.0"
 import-expression = "^1.1.4"
 youtube-dl = "^2021.4.26"
+importlib-metadata = "^4.0.1"
+ipaddr = "^2.2.0"
+zipp = "^3.4.1"
+keyring = "^23.0.1"
+lockfile = "^0.12.2"
+mypy-extensions = "^0.4.3"
+cryptography = "^3.4.7"
+lxml = "^4.6.3"
+python-ntlm = "^1.1.0"
+typing-extensions = "^3.10.0"
+brotli = "^1.0.9"
 
 [tool.poetry.dev-dependencies]
 
