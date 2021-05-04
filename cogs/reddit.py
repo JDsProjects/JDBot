@@ -35,7 +35,7 @@ class Reddit(commands.Cog):
 
   @commands.command(brief="Random meme from Dank Memes with aiohttp",help="Content returned may not be suitable to younger audiences")
   async def dankmeme2(self,ctx):
-    e = await self.client.aiohttp_session.get("https://www.reddit.com/r/dankmemes/.json")
+    e = await self.client.session.get("https://www.reddit.com/r/dankmemes/.json")
     data = random.choice((await e.json())["data"]["children"])["data"]
     embed = discord.Embed(title="r/dankmemes",description=f'[{data["title"]}](https://reddit.com{data["permalink"]})', color=0x00FF00)
     embed.set_image(url=data["url"])

@@ -1,7 +1,7 @@
 import aioimgur, discord, random, sr_api, os, asyncdagpi
 
 async def triggered_converter(self,url,ctx):
-  sr_client=sr_api.Client(session=self.client.aiohttp_session)
+  sr_client=sr_api.Client(session=self.client.session)
   source_image=sr_client.filter(option="triggered",url=str(url))
 
   imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
@@ -14,7 +14,7 @@ async def triggered_converter(self,url,ctx):
   await ctx.send(embed=embed)
 
 async def headpat_converter(self,url,ctx):
-  sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.aiohttp_session)
+  sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.session)
   source_image=sr_client.petpet(avatar=str(url))
   image = await source_image.read()
 
@@ -34,7 +34,7 @@ def warn_permission(ctx):
     return True
 
 async def invert_converter(self,url,ctx):
-  sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.aiohttp_session)
+  sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.session)
   source_image=sr_client.filter("invert",url=str(url))
   image = await source_image.read()
 
@@ -47,7 +47,7 @@ async def invert_converter(self,url,ctx):
   await ctx.send(embed=embed)
 
 async def headpat_converter2(self,url,ctx):
-  dagpi_client=asyncdagpi.Client(os.environ["dagpi_key"],session=self.client.aiohttp_session)
+  dagpi_client=asyncdagpi.Client(os.environ["dagpi_key"],session=self.client.session)
   image=await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(),str(url))
   file = discord.File(fp=image.image,filename=f"headpat.{image.format}")
   await ctx.send(file=file)

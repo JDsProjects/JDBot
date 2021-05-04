@@ -138,7 +138,7 @@ class Info(commands.Cog):
       message_emojis = ""
       for x in ctx.guild.emojis:
         message_emojis = message_emojis+" "+str(x)+"\n"
-      mystbin_client = mystbin.Client(session=self.client.aiohttp_session)
+      mystbin_client = mystbin.Client(session=self.client.session)
       paste = await mystbin_client.post(message_emojis)
       await ctx.send(paste.url)
       

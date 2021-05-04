@@ -17,7 +17,7 @@ class Webhook(commands.Cog):
         if args == check.group():
           args = "No Content"
 
-          session = self.client.aiohttp_session
+          session = self.client.session
           response=await session.get(check.group())
           if response.status == 200:
             webhook=discord.Webhook.from_url(check.group(), adapter=discord.AsyncWebhookAdapter(session))

@@ -12,7 +12,7 @@ class Extra(commands.Cog):
       await ctx.send("Please pick a minecraft user.")
 
     if args:
-      asuna = asuna_api.Client(self.client.aiohttp_session)
+      asuna = asuna_api.Client(self.client.session)
       minecraft_info=await asuna.mc_user(args)
       embed=discord.Embed(title=f"Minecraft Username: {args}",color=random.randint(0, 16777215))
       embed.set_footer(text=f"Minecraft UUID: {minecraft_info.uuid}")
@@ -30,7 +30,7 @@ class Extra(commands.Cog):
   async def random_history(self,ctx,*,args=None):
     if args is None:
       args = 1
-    asuna = asuna_api.Client(self.client.aiohttp_session)
+    asuna = asuna_api.Client(self.client.session)
     response = await asuna.random_history(args)
     for x in response:
       await ctx.send(f":earth_africa: {x}")
@@ -48,7 +48,7 @@ class Extra(commands.Cog):
 
   @commands.command(brief="Oh no Dad Jokes, AHHHHHH!")
   async def dadjoke(self,ctx):
-    response=await self.client.aiohttp_session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"})
+    response=await self.client.session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"})
     joke=await response.json()
     embed = discord.Embed(title="Random Dad Joke:",color=random.randint(0, 16777215))
     embed.set_author(name=f"Dad Joke Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
@@ -58,11 +58,11 @@ class Extra(commands.Cog):
 
   @commands.command(brief="gets a panel from the xkcd comic",aliases=["astrojoke","astro_joke"])
   async def xkcd(self,ctx):
-    response=await self.client.aiohttp_session.get("https://xkcd.com/info.0.json")
+    response=await self.client.session.get("https://xkcd.com/info.0.json")
     info=await response.json()
 
     num = random.randint(1,info["num"])
-    comic = await self.client.aiohttp_session.get(f"https://xkcd.com/{num}/info.0.json")
+    comic = await self.client.session.get(f"https://xkcd.com/{num}/info.0.json")
     data=await comic.json()
     title = data["title"]
     embed=discord.Embed(title=f"Title: {title}",color=random.randint(0, 16777215))
@@ -83,7 +83,7 @@ class Extra(commands.Cog):
         await ctx.send("Not a valid arg using 404")
         code = "404"
     
-    response = await self.client.aiohttp_session.get(f"https://http.cat/{code}")
+    response = await self.client.session.get(f"https://http.cat/{code}")
     if response.status:
       image = f"https://http.cat/{code}.jpg"
 
@@ -95,7 +95,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="Gives advice from JDJG api.",aliases=["ad"])
   async def advice(self,ctx):
-    r=await self.client.aiohttp_session.get('https://jdjgapi.nom.mu/api/advice')
+    r=await self.client.session.get('https://jdjgapi.nom.mu/api/advice')
     res = await r.json()
     embed = discord.Embed(title = "Here is some advice for you!",color=random.randint(0, 16777215))
     embed.add_field(name = f"{res['text']}", value = "Hopefully this helped!")
@@ -107,7 +107,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="gives random compliment")
   async def compliment(self,ctx):
-    r=await self.client.aiohttp_session.get('https://jdjgapi.nom.mu/api/compliment')
+    r=await self.client.session.get('https://jdjgapi.nom.mu/api/compliment')
     res = await r.json()
     embed = discord.Embed(title = "Here is a compliment:",color=random.randint(0, 16777215))
     embed.add_field(name = f"{res['text']}", value = "Hopefully this helped your day!")
@@ -116,7 +116,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="gives an insult")
   async def insult(self,ctx):
-    r=await self.client.aiohttp_session.get('https://jdjgapi.nom.mu/api/insult')
+    r=await self.client.session.get('https://jdjgapi.nom.mu/api/insult')
     res = await r.json()
     embed = discord.Embed(title = "Here is a insult:",color=random.randint(0, 16777215))
     embed.add_field(name = f"{res['text']}", value = "Hopefully this Helped?")
@@ -125,7 +125,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="gives response to slur")
   async def noslur(self,ctx):
-    r=await self.client.aiohttp_session.get('https://jdjgapi.nom.mu/api/noslur')
+    r=await self.client.session.get('https://jdjgapi.nom.mu/api/noslur')
     res = await r.json()
     embed = discord.Embed(title = "Don't Swear",color=random.randint(0, 16777215))
     embed.add_field(name = f"{res['text']}", value = "WHY MUST YOU SWEAR?")
@@ -134,7 +134,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="gives random message",aliases=["rm"])
   async def random_message(self,ctx):
-    r=await self.client.aiohttp_session.get('https://jdjgapi.nom.mu/api/randomMessage')
+    r=await self.client.session.get('https://jdjgapi.nom.mu/api/randomMessage')
     res = await r.json()
     embed = discord.Embed(title = "Random Message:",color=random.randint(0, 16777215))
     embed.add_field(name="Here:",value=res["text"])
@@ -215,7 +215,7 @@ class Extra(commands.Cog):
           encoding=chardet.detect(file)["encoding"]
           if encoding:
             text = file.decode(encoding)
-            mystbin_client = mystbin.Client(session=self.client.aiohttp_session)
+            mystbin_client = mystbin.Client(session=self.client.session)
             paste = await mystbin_client.post(text)
             await ctx.send(content=f"Added text file to mystbin: \n{paste.url}")
           if encoding is None:
