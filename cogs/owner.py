@@ -190,6 +190,19 @@ class Owner(commands.Cog):
       await cur.execute("INSERT INTO sus_users VALUES (?, ?)", (user.id, reason.content))
       await self.client.sus_users.commit()
       await cur.close()
+      await ctx.send("added sus users, succesfully")
+
+  @commands.command(brief="a command to remove sus users.")
+  async def removesus(self,ctx,*,user:BetterUserconverter=None):
+    if user is None:
+      await ctx.send("You can't have a none user.")
+
+    if user:
+      cur = await self.client.sus_users.cursor()
+      await cur.execute("DELETE FROM sus_users WHERE user_id = ?", (user.id,))
+      await self.client.sus_users.commit()
+      await cur.close()
+      await ctx.send("Removed sus users.")
 
   class SusUsersEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
