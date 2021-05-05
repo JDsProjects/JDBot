@@ -166,5 +166,9 @@ class Bot(commands.Cog):
   async def verify_issue(self,ctx):
     await ctx.send("You can invite the bot 831162894447804426(this will be an alt bot with almost the same code though some report functionalies will have their guild swapped :D")
 
+  @commands.command()
+  async def whyprefixtest(self,ctx):
+    await ctx.send("Because I don't have any alternative suggestions, and I don't feel like changing it to jd! or something. I can confirm this isn't a test bot :D")
+
 def setup(client):
   client.add_cog(Bot(client))
