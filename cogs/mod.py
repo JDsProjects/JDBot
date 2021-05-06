@@ -59,7 +59,7 @@ class Moderation(commands.Cog):
         user=ctx.guild.get_member(x)
         if user:
           count = count + 1
-          await ctx.send(f"Found {x}. \nReason: {sus_users[x]}")
+          await ctx.send(f"Found {x}. \nUsername:{user.name} \nReason: {sus_users[x]}")
       if count < 1:
         await ctx.send("No Bad users found.")
     if isinstance(ctx.channel,discord.DMChannel):
