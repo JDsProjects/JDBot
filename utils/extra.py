@@ -50,4 +50,9 @@ async def headpat_converter2(self,url,ctx):
   dagpi_client=asyncdagpi.Client(os.environ["dagpi_key"],session=self.client.session)
   image=await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(),str(url))
   file = discord.File(fp=image.image,filename=f"headpat.{image.format}")
-  await ctx.send(file=file)
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
+  embed.set_image(url=f"attachment://headpat.{image.format}")
+  embed.set_footer(text="powered by dagpi")
+  await ctx.send(file=file,embed=embed)
+  
