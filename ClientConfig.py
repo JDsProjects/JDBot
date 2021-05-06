@@ -34,7 +34,7 @@ class JDBot(commands.Bot):
       member = guild.get_member(member_id) or await guild.fetch_member(member_id)
     return member
 
-client = JDBot(command_prefix=(get_prefix),intents=intents)
+client = JDBot(command_prefix=(get_prefix),intents=intents,chunk_guilds_at_startup=False)
 bot = client
 
 @bot.check
