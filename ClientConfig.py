@@ -1,4 +1,5 @@
-import discord,  re, os, discord_slash, aiohttp, contextlib, aiosqlite3, configparser
+import discord,  re, os, discord_slash, aiohttp, contextlib, aiosqlite3
+import config_val
 from discord.ext import commands
 
 async def get_prefix(client,message):
@@ -17,11 +18,8 @@ class JDBot(commands.Bot):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     self.special_access = {}
-    #speacil config stuff here now.
-    self.config = configparser.ConfigParser()
-    self.config.read('config.ini')
-    self.config_values=self.config.sections()
-    #a speacil config to make it forkable.
+    self.config = config_val
+    #made the config a py file, because this is easier for now lol.
 
   async def start(self,*args, **kwargs):
     self.session=aiohttp.ClientSession()
