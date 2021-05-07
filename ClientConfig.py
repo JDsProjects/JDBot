@@ -17,7 +17,6 @@ class JDBot(commands.Bot):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     self.special_access = {}
-    self.config = config_val
     #made the config a py file, because this is easier for now lol.
 
   async def start(self,*args, **kwargs):
