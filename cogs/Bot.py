@@ -8,7 +8,7 @@ class Bot(commands.Cog):
 
   @tasks.loop(seconds=40)
   async def status_task(self):
-    await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name="the return of JDBot"))
+    await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=f"the return of {self.client.user.name}"))
     await asyncio.sleep(40)
     await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(self.client.guilds)} servers | {len(self.client.users)} users"))
     await asyncio.sleep(40)

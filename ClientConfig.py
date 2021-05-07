@@ -17,8 +17,9 @@ class JDBot(commands.Bot):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     self.special_access = {}
-    config_read = configparser.ConfigParser()
-    self.config=config_read.read("config.ini")
+    config_read = configparser.ConfigParser().read("config.ini")
+    #self.config = config_read.sections()
+    #print(self.config)
     #a speacil config to make it work with multiple people.
 
   async def start(self,*args, **kwargs):
