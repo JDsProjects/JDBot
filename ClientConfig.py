@@ -1,5 +1,4 @@
 import discord,  re, os, discord_slash, aiohttp, contextlib, aiosqlite3
-import config_val
 from discord.ext import commands
 
 async def get_prefix(client,message):
