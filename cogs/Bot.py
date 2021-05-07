@@ -29,7 +29,7 @@ class Bot(commands.Cog):
   @commands.command(brief="gives you an invite to invite the bot.")
   async def invite(self,ctx):
     embed = discord.Embed(title="Invite link:",color=random.randint(0, 16777215))
-    embed.add_field(name="JDBot invite:",value=f"[JDBot invite url](https://discord.com/oauth2/authorize?client_id={self.client.user.id}&scope=bot&permissions=8)")
+    embed.add_field(name=f"{self.client.user.name} invite:",value=f"[{self.client.user.name} invite url](https://discord.com/oauth2/authorize?client_id={self.client.user.id}&scope=bot&permissions=8)")
     embed.add_field(name="Non Markdowned invite",value=f"https://discord.com/oauth2/authorize?client_id={self.client.user.id}&scope=bot&permissions=8")
     embed.set_thumbnail(url=self.client.user.avatar_url)
     await ctx.send(embed=embed)
@@ -43,6 +43,7 @@ class Bot(commands.Cog):
       owner_id = info.team.owner_id
 
     support_guild=self.client.get_guild(736422329399246990)
+    #change this into a config grabbing type.
     owner= await self.client.getch_member(support_guild,owner_id)
     if owner.bot:
       user_type = "Bot"

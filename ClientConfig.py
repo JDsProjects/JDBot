@@ -17,9 +17,9 @@ class JDBot(commands.Bot):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     self.special_access = {}
-
-    #speacil values that will be used for config(will swap to something else.)
-    #self.log_channel=738912143679946783
+    config_read = configparser.ConfigParser()
+    self.config=config_read.read("config.ini")
+    #a speacil config to make it work with multiple people.
 
   async def start(self,*args, **kwargs):
     self.session=aiohttp.ClientSession()
