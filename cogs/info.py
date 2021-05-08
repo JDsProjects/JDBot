@@ -7,7 +7,7 @@ class Info(commands.Cog):
   def __init__(self,client):
     self.client = client
 
-  @commands.command(help="gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild",])
+  @commands.command(help="gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild","guildinfo",])
   async def serverinfo(self,ctx,*,args=None):
     if args:
       match=re.match(r'(\d{16,21})',args)
