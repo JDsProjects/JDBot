@@ -159,8 +159,7 @@ class Owner(commands.Cog):
 
   @commands.command(brief="Commands to see what guilds a person is in.")
   async def mutualguilds(self,ctx,*,user:BetterUserconverter=None):
-    if user is None:
-      user = ctx.author
+    user = user or ctx.author
     user_guildlist=[guild.name for guild in self.client.guilds if guild.get_member(user.id)]
     send_list = ["Servers:"]
     for i in user_guildlist:

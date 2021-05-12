@@ -12,8 +12,7 @@ class Moderation(commands.Cog):
   async def warn(self,ctx,Member: BetterMemberConverter = None):
     if warn_permission(ctx):
 
-      if Member is None:
-        Member = ctx.author
+      Member = Member or ctx.author
 
       if Member:
         embed = discord.Embed(color=random.randint(0, 16777215))

@@ -8,15 +8,8 @@ class Info(commands.Cog):
     self.client = client
 
   @commands.command(help="gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild","guildinfo",])
-  async def serverinfo(self,ctx,*,args=None):
-    if args:
-      match=re.match(r'(\d{16,21})',args)
-      guild=self.client.get_guild(int(match.group(0)))
-      if guild is None:
-        guild = ctx.guild
-
-    if args is None:
-      guild = ctx.guild
+  async def serverinfo(self,ctx,*,guild: typing.Optional[discord.Guild]=None):
+    guild = guild or ctx.guild
 
     if guild is None:
       await ctx.send("Guild wanted has not been found")
@@ -25,8 +18,7 @@ class Info(commands.Cog):
 
   @commands.command(aliases=["user info", "user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
   async def userinfo(self,ctx,*,user: BetterUserconverter = None):
-    if user is None:
-      user = ctx.author
+    user = user or ctx.author
 
     if user.bot:
       user_type = "Bot"
@@ -149,8 +141,7 @@ class Info(commands.Cog):
 
   @commands.command(brief="a command to get the avatar of a user",help="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp","av"])
   async def avatar(self,ctx,*,user: BetterUserconverter = None): 
-    if user is None:
-      user = ctx.author
+    user = user or ctx.author
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"{user.name}'s avatar:",icon_url=(user.avatar_url))
     embed.set_image(url=(user.avatar_url))

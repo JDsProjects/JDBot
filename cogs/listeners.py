@@ -68,9 +68,7 @@ class Events(commands.Cog):
           embed_message.set_thumbnail(url = "https://i.imgur.com/ugKZ7lW.png")
           channel_usage=self.client.get_channel(738912143679946783)
           embed_message.add_field(name="Sent To:",value=str(channel_usage))
-          jdjg = self.client.get_user(168422909482762240)
-          if jdjg is None:
-            jdjg=await self.client.fetch_user(168422909482762240)
+          jdjg = self.client.get_user(168422909482762240) or await self.client.fetch_user(168422909482762240)
           await channel_usage.send(content=jdjg.mention,embed=embed_message)
 
     if (test.valid) == False:

@@ -25,7 +25,7 @@ class Test(commands.Cog):
   @commands.command()
   async def role_info(self,ctx,*,role:typing.Optional[discord.Role]=None):
     await ctx.send(f"Role: {role}")
-    
+
   @commands.command(brief="this command will error by sending no content")
   async def te(self,ctx):
     await ctx.send("")
