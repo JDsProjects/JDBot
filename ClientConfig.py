@@ -43,6 +43,7 @@ async def check_command_access(ctx):
     if ctx.command.name == bot.special_access.get(ctx.author.id):
       await ctx.command.reinvoke(ctx)
     del bot.special_access[ctx.author.id]
+  
   return True
 
 slash = discord_slash.SlashCommand(client,override_type = True,sync_commands=True)

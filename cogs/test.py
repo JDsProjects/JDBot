@@ -26,6 +26,15 @@ class Test(commands.Cog):
   async def role_info(self,ctx,*,role:typing.Optional[discord.Role]=None):
     await ctx.send(f"Role: {role}")
 
+  @commands.command()
+  async def jokeapi(self,ctx):
+    jokeapi_grab=await self.client.session.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun,Spooky,Christmas?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single")
+    await ctx.send(await jokeapi_grab.json())
+
+  @jokeapi.error
+  async def jokeapi_error(self,ctx,error):
+    await ctx.send(error)
+
   @commands.command(brief="this command will error by sending no content")
   async def te(self,ctx):
     await ctx.send("")

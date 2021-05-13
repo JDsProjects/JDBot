@@ -1,7 +1,8 @@
-from discord.ext import commands
+from discord.ext import commands, menus
 import re, discord , random , mystbin , typing , emojis
-from utils import BetterMemberConverter, BetterUserconverter, guildinfo
+from utils import BetterMemberConverter, BetterUserconverter, guildinfo, InviteInfoEmbed
 from difflib import SequenceMatcher
+from discord.ext.commands.cooldowns import BucketType
 
 class Info(commands.Cog):
   def __init__(self,client):
@@ -19,11 +20,7 @@ class Info(commands.Cog):
   @commands.command(aliases=["user info", "user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
   async def userinfo(self,ctx,*,user: BetterUserconverter = None):
     user = user or ctx.author
-
-    if user.bot:
-      user_type = "Bot"
-    if not user.bot:
-      user_type = "User"
+    user_type = user_type = ['User', 'Bot'][user.bot]
     
     if ctx.guild:
       member_version=ctx.guild.get_member(user.id)
@@ -103,29 +100,18 @@ class Info(commands.Cog):
   async def this(self,ctx):
     await ctx.send(ctx.channel.id)
 
+  @commands.cooldown(1,30,BucketType.user)
   @commands.command(help="fetch invite details")
   async def fetch_invite(self,ctx,*invites:typing.Union[discord.Invite, str]):
-    for x in invites:
-      if isinstance(x,discord.Invite):
-        if x.guild:
-          image = x.guild.icon_url
-          guild = x.guild
-          guild_id = x.guild.id
-        if x.guild is None:
-          guild = "Group Chat"
-          image = "https://i.imgur.com/pQS3jkI.png"
-          guild_id = "Unknown"
-        embed=discord.Embed(title=f"Invite for {guild}:",color=random.randint(0, 16777215))
-        embed.set_author(name="Discord Invite Details:",icon_url=(image))
-        embed.add_field(name="Inviter:",value=f"{x.inviter}")
-        embed.add_field(name="User Count:",value=f"{x.approximate_member_count}")
-        embed.add_field(name="Active User Count:",value=f"{x.approximate_presence_count}")
-        embed.add_field(name="Invite Channel",value=f"{x.channel}")
-        embed.set_footer(text=f"ID: {guild_id}\nInvite Code: {x.code}\nInvite Url: {x.url}")
-        await ctx.send(embed=embed)
-        
-      if isinstance(x,str):
-        await ctx.send(content=f"it returned as {x}. It couldn't fetch it :(")
+    if len(invites) > 0:
+      menu = menus.MenuPages(InviteInfoEmbed(invites, per_page=1),delete_message_after=True)
+      await menu.start(ctx)
+    if len(invites) < 1:
+      await ctx.send("Please get actual invites to attempt grab")
+
+  @fetch_invite.error
+  async def fetch_invite_error(self,ctx,error):
+    await ctx.send(error)
 
   @commands.command(brief="gives info about a file")
   async def file(self,ctx):
