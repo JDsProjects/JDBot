@@ -1,6 +1,6 @@
 from discord.ext import commands
-import discord, os, itertools, re, functools, typing
-from utils import invert_func
+import discord, os, itertools, re, functools, typing, random
+from utils import invert_func, EmojiBasic
 
 
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
@@ -30,6 +30,16 @@ class Test(commands.Cog):
   async def jokeapi(self,ctx):
     jokeapi_grab=await self.client.session.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun,Spooky,Christmas?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single")
     await ctx.send(await jokeapi_grab.json())
+
+  @commands.command()
+  async def emoji_id(self,ctx,*, emoji: EmojiBasic=None):
+    if emoji:
+      embed = discord.Embed(description=f" Emoji ID: {emoji.id}",color=random.randint(0, 16777215))
+      embed.set_image(url=emoji.url)
+      await ctx.send(embed=embed)
+
+    else:
+      await ctx.send("Not a valid emoji id.")
 
   @jokeapi.error
   async def jokeapi_error(self,ctx,error):

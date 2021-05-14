@@ -1,5 +1,6 @@
-import discord, re, collections, random
+import discord, re, collections, random, emoji
 from discord.ext import commands
+from discord.http import Route
 
 class BetterMemberConverter(commands.Converter):
   async def convert(self,ctx,argument):
@@ -56,6 +57,26 @@ class BetterUserconverter(commands.Converter):
           user=ctx.author
     return user
 
+  
+class EmojiBasic:
+  def __init__(self, id: int, url: str):
+    self.id = id
+    self.url = url
+
+  @classmethod
+  async def convert(cls,ctx,argument):
+    match=re.match(r'(?P<id>[0-9]{15,21})',argument)
+    if match:
+      emoji_id=(match.group(0))
+      extentions = ["gif","png"]
+
+      for x in extentions:
+        response=await ctx.bot.session.get(f"https://cdn.discordapp.com/emojis/{emoji_id}.{x}")
+        if response.ok:
+          return cls(emoji_id,response.real_url)
+
+    else:
+      return None
 
 async def guildinfo(ctx,guild):
     base_user=collections.Counter([u.bot for u in guild.members])
@@ -102,3 +123,14 @@ async def guildinfo(ctx,guild):
     embed.add_field(name="Offline Users",value=f"{offline_users}")
 
     await ctx.send(embed=embed)
+
+class EmojiConverter(commands.Converter):
+  async def convert(self, ctx: commands.Context, arg: str): 
+    emojis = emoji.unicode_codes.EMOJI_UNICODE["en"].values()
+    try:
+      return await commands.PartialEmojiConverter().convert(ctx,arg)
+    except commands.PartialEmojiConversionFailure: pass
+    if arg.rstrip("\N{variation selector-16}") in emojis or arg in emojis:
+      return discord.PartialEmoji(name=arg)
+    else:
+      raise commands.BadArgument(f"{arg} is not an emoji")
