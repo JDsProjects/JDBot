@@ -105,5 +105,9 @@ class Test(commands.Cog):
       file = invert_time()
       await ctx.send(file=file)
 
+  @invert.error
+  async def invert_error(self,ctx,error):
+    await ctx.send(error)
+
 def setup(client):
   client.add_cog(Test(client))

@@ -1,6 +1,7 @@
 import os, discord, time, async_cse, random, TenGiphPy
 from discord.ext import commands
 from difflib import SequenceMatcher
+from discord.ext.commands.cooldowns import BucketType
 
 tenor_client = TenGiphPy.Tenor(token=os.environ["tenor_key"])
 giphy_client = TenGiphPy.Giphy(token=os.environ["giphy_token"])
@@ -9,6 +10,7 @@ class Order(commands.Cog):
   def __init__(self,client):
     self.client = client
 
+  @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="order",invoke_without_command=True)
   async def order(self,ctx,*,args=None):
     if args is None:
@@ -40,6 +42,7 @@ class Order(commands.Cog):
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
       await self.client.get_channel(738912143679946783).send(embed=embed)
 
+  @commands.cooldown(1,30,BucketType.user)
   @order.command(brief="a command to shuffle images from google images")
   async def shuffle(self,ctx,*,args=None):
     if args is None:
@@ -71,6 +74,7 @@ class Order(commands.Cog):
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
       await self.client.get_channel(738912143679946783).send(embed=embed)
 
+  @commands.cooldown(1,30,BucketType.user)
   @commands.command(brief="a command to shuffle images from google images",aliases=["order-shuffle"])
   async def order_shuffle(self,ctx,*,args=None):
     if args is None:
@@ -101,7 +105,8 @@ class Order(commands.Cog):
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
       await self.client.get_channel(738912143679946783).send(embed=embed)
-    
+
+  @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="tenor",invoke_without_command=True)
   async def tenor(self,ctx,*,args=None):
     if args:
@@ -150,6 +155,12 @@ class Order(commands.Cog):
     if args is None:
         await ctx.send("That doesn't have any value.")
         await ctx.send("giphy shuffle")
+
+  async def cog_command_error(self,ctx,error):
+    if ctx.command and ctx.command.has_error_handler():
+      pass
+    else:
+      await ctx.send(error)
 
 def setup(client):
   client.add_cog(Order(client))
