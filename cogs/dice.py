@@ -159,10 +159,9 @@ class Dice(commands.Cog):
       await ctx.send("Please specify an emote")
     if args:
       emoji=discord.utils.get(self.client.emojis,name=args)
-      if emoji is None:
-        await ctx.send("We haven't found anything")
-      if emoji:
-        await ctx.send(emoji)
+    
+      emoji = emoji or "We haven't found anything"
+      await ctx.send(emoji)
 
   @commands.command(help="a different method to find the nearest emoji")
   async def emote2(self,ctx,*,args=None):
@@ -171,10 +170,8 @@ class Dice(commands.Cog):
     if args:
       emoji = sorted(self.client.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
 
-      if emoji is None:
-        await ctx.send("We haven't found anything")
-      if emoji:
-        await ctx.send(emoji)
+      emoji = emoji or "We haven't found anything"
+      await ctx.send(emoji)
     
 def setup(client):
   client.add_cog(Dice(client))
