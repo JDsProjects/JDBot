@@ -26,23 +26,19 @@ class Dice(commands.Cog):
 
   @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.",aliases=["e_spin","emoji_spin"])
   async def emoji_spinner(self,ctx):
-
     emoji_choosen = random.choice(self.client.emojis)
 
-    if emoji_choosen.available is False:
-      emoji_choosen = emoji_choosen.url
+    if emoji_choosen.available is False: emoji_choosen = emoji_choosen.url
     
     if isinstance(ctx.channel, discord.TextChannel):
       if len(ctx.guild.emojis) > 0:
         emoji_choice=random.choice(ctx.guild.emojis)
-        if emoji_choice.available is False:
-          emoji_choice = emoji_choice.url
+        if emoji_choice.available is False: emoji_choice = emoji_choice.url
         await ctx.send(emoji_choice)
 
       await ctx.send(emoji_choosen)
 
-    if isinstance(ctx.channel,discord.DMChannel):
-      await ctx.send(emoji_choosen)
+    if isinstance(ctx.channel,discord.DMChannel): await ctx.send(emoji_choosen)
   
   @commands.command(brief="gives a random kawaii emoji.",aliases=["ka"])
   async def kawaii_random(self,ctx):
