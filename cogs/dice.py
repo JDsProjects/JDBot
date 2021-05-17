@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random
+import discord, random, typing
 from difflib import SequenceMatcher
 
 class Dice(commands.Cog):
@@ -23,8 +23,8 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="A command to roll random dnd dice.",aliases=["roll"])
-  async def diceroll(self,ctx,number=None):
-    if number and number.isdigit(): await self.generate_embed(ctx,int(number))
+  async def diceroll(self,ctx,number:typing.Optional[int]=1):
+    if number : await self.generate_embed(ctx,int(number))
     else: await ctx.send("None that's bad.")
 
   @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.",aliases=["e_spin","emoji_spin"])
