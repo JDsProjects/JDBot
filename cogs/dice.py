@@ -24,11 +24,8 @@ class Dice(commands.Cog):
 
   @commands.command(brief="A command to roll random dnd dice.",aliases=["roll"])
   async def diceroll(self,ctx,number=None):
-    if number:
-      if number.isdigit(): await self.generate_embed(ctx,int(number))
-      else: number = None
-    if number is None:
-      await ctx.send("None that's bad.")
+    if number and number.isdigit(): await self.generate_embed(ctx,int(number))
+    else: await ctx.send("None that's bad.")
 
   @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.",aliases=["e_spin","emoji_spin"])
   async def emoji_spinner(self,ctx):
