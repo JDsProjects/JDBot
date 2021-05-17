@@ -9,11 +9,8 @@ class Dice(commands.Cog):
   async def generate_embed(self,ctx,number):
     if str(number) is "20": url = "https://i.imgur.com/9dbBkqj.gif"
     if str(number) is "6": url = "https://i.imgur.com/6ul8ZGY.gif"
+    if number < 1:  return await ctx.send("NO")
     else: url = "https://i.imgur.com/gaLM6AG.gif"
-
-    if number < 1:  
-      await ctx.send("NO")
-      return
 
     embed = discord.Embed(title=f" Rolled a {random.randint(1,number)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed.set_footer(text = f"{ctx.author.id}")
@@ -23,7 +20,7 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="A command to roll random dnd dice.",aliases=["roll"])
-  async def diceroll(self,ctx,number:typing.Optional[int]=1):
+  async def diceroll(self,ctx,number:typing.Optional[int]=None):
     if number : await self.generate_embed(ctx,int(number))
     else: await ctx.send("None that's bad.")
 
@@ -77,22 +74,16 @@ class Dice(commands.Cog):
   async def coin(self,ctx, *, args = None):
     if args:
       value = random.choice([True,False]) 
-      if args.lower().startswith("h") and value:
-        win = True
-      elif args.lower().startswith("t") and not value:
-        win = True
-      elif args.lower().startswith("h") and not value:
-        win = False
-      elif args.lower().startswith("t") and value:
-        win = False    
+      if args.lower().startswith("h") and value: win = True
+      elif args.lower().startswith("t") and not value:  win = True
+      elif args.lower().startswith("h") and not value: win = False
+      elif args.lower().startswith("t") and value: win = False    
       else:
         await ctx.send("Please use heads or Tails as a value.")
         return
       
-      if(value):
-        pic_name = "heads"
-      else:
-        pic_name ="Tails"
+      if(value): pic_name = "heads"
+      else: pic_name ="Tails"
 
       url_dic = {"heads":"https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
 
