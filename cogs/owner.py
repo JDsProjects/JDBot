@@ -1,5 +1,5 @@
 from discord.ext import commands, menus
-from utils import BetterMemberConverter, BetterUserconverter
+from utils import BetterMemberConverter, BetterUserconverter, check
 import random , discord , aiohttp , os , aiosqlite3
 
 class Owner(commands.Cog):
@@ -14,9 +14,7 @@ class Owner(commands.Cog):
       user = ctx.author
     if user:
       await ctx.reply("Please give me a message to use.")
-      def check(m):
-        return m.author.id == ctx.author.id
-      message = await self.client.wait_for("message",check=check)
+      message = await self.client.wait_for("message",check=check(ctx))
       embed_message = discord.Embed(title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215))
       embed_message.set_author(name=f"Mail from: {ctx.author}",icon_url=(ctx.author.avatar_url))
       embed_message.set_footer(text = f"{ctx.author.id}")
@@ -111,22 +109,23 @@ class Owner(commands.Cog):
     if await self.client.is_owner(ctx.author) is False:
       await ctx.send("You can't use that command")
 
+  class ServersEmbed(menus.ListPageSource):
+    async def format_page(self, menu, item):
+      embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
+      return embed
   
   @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
   async def servers(self,ctx):
     if await self.client.is_owner(ctx.author):
-      send_list = [""]
-      guild_list = ["%d %s %d %s" % (len(g.members), g.name, g.id, (g.system_channel or g.text_channels[0]).mention) for g in self.client.guilds]
-      for i in guild_list:
-        if len(send_list[-1] + i) < 1000:
-          send_list[-1] += i + "\n"
-        else:
-          send_list += [i + "\n"]
-      if (ctx.author.dm_channel is None):
-        await ctx.author.create_dm()
-      await ctx.author.dm_channel.send("\n Servers:")
-      for i in send_list:
-        await ctx.author.dm_channel.send(i) 
+
+      pag = commands.Paginator()
+      for g in self.client.guilds:
+       pag.add_line(f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}")
+
+      pages = [page.strip("`") for page in pag.pages]
+      menu = menus.MenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
+      await menu.start(ctx,channel=ctx.author.dm_channel)
+      
     if await self.client.is_owner(ctx.author) is False:
       await ctx.send("You can't use that it's owner only")
 
@@ -178,13 +177,10 @@ class Owner(commands.Cog):
   async def addsus(self,ctx,*,user:BetterUserconverter=None):
     if user is None:
       await ctx.send("can't have a user be none.")
-    
-    def check(m):
-      return m.author.id == ctx.author.id
 
     if user:
       await ctx.reply("Please give me a reason why:")
-      reason = await self.client.wait_for("message",check=check)
+      reason = await self.client.wait_for("message",check=check(ctx))
       cur = await self.client.sus_users.cursor()
       await cur.execute("INSERT INTO sus_users VALUES (?, ?)", (user.id, reason.content))
       await self.client.sus_users.commit()

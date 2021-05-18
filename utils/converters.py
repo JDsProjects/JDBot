@@ -134,3 +134,8 @@ class EmojiConverter(commands.Converter):
       return discord.PartialEmoji(name=arg)
     else:
       raise commands.BadArgument(f"{arg} is not an emoji")
+
+def check(self,ctx):
+  def inner(m):
+    return m.author == ctx.author
+  return inner

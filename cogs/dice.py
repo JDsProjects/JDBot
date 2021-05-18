@@ -7,10 +7,11 @@ class Dice(commands.Cog):
     self.client = client
 
   async def generate_embed(self,ctx,number):
-    if str(number) is "20": url = "https://i.imgur.com/9dbBkqj.gif"
-    if str(number) is "6": url = "https://i.imgur.com/6ul8ZGY.gif"
-    if number < 1:  return await ctx.send("NO")
-    else: url = "https://i.imgur.com/gaLM6AG.gif"
+    if number < 1:  
+      return await ctx.send("NO")
+
+    url_dict = {20 : "https://i.imgur.com/9dbBkqj.gif", 6:"https://i.imgur.com/6ul8ZGY.gif"}
+    url = url_dict.get(number, "https://i.imgur.com/gaLM6AG.gif")
 
     embed = discord.Embed(title=f" Rolled a {random.randint(1,number)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed.set_footer(text = f"{ctx.author.id}")
@@ -74,9 +75,7 @@ class Dice(commands.Cog):
       elif args.lower().startswith("t") and not value:  win = True
       elif args.lower().startswith("h") and not value: win = False
       elif args.lower().startswith("t") and value: win = False    
-      else:
-        await ctx.send("Please use heads or Tails as a value.")
-        return
+      else: return await ctx.send("Please use heads or Tails as a value.")
       
       if(value): pic_name = "heads"
       else: pic_name ="Tails"
@@ -88,15 +87,12 @@ class Dice(commands.Cog):
       embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {args}")
       embed.set_image(url=url_dic[pic_name])
 
-      if win:
-        embed.add_field(name="Result: ",value="You won")
-      else:
-        embed.add_field(name="Result: ",value="You lost")
+      if win: embed.add_field(name="Result: ",value="You won")
+      else: embed.add_field(name="Result: ",value="You lost")
       
       await ctx.send(embed=embed)
 
-    if args is None:
-      await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
+    if args is None: await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
 
   @commands.command(brief="a command to find the nearest emoji")
   async def emote(self,ctx,*,args=None):

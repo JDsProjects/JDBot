@@ -1,5 +1,6 @@
 from discord.ext import commands, tasks
 import discord, random , time, asyncio
+import utils
 
 class Bot(commands.Cog):
   def __init__(self,client):
@@ -153,9 +154,7 @@ class Bot(commands.Cog):
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self,ctx):
     await ctx.send("You must say I agree this will send into the current channel.")
-    def check(m):
-      return m.author.id == ctx.author.id
-    message=await self.client.wait_for("message",check=check)
+    message=await self.client.wait_for("message",check=utils.check(ctx))
     if message.content.lower() == "i agree":
       await ctx.send("https://discord.gg/sHUQCch")
 
