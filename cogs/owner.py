@@ -156,22 +156,24 @@ class Owner(commands.Cog):
     if await self.client.is_owner(ctx.author) is False:
       await ctx.send("You can't use that")
 
+  class mutualGuildsEmbed(menus.ListPageSource):
+    async def format_page(self, menu, item):
+      embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
+      return embed
+
   @commands.command(brief="Commands to see what guilds a person is in.")
   async def mutualguilds(self,ctx,*,user:BetterUserconverter=None):
     user = user or ctx.author
-    user_guildlist=[guild.name for guild in self.client.guilds if guild.get_member(user.id)]
-    send_list = ["Servers:"]
-    for i in user_guildlist:
-      if len(send_list[-1] + i) < 1000:
-        send_list[-1] += i + "\n"
-      else:
-        send_list += [i + "\n"]
-    if (ctx.author.dm_channel is None):
-      await ctx.author.create_dm()
-    for i in send_list:
-      await ctx.author.dm_channel.send(i) 
-    if len(send_list) < 1:
-      await ctx.author.dm_channel.send("No shared servers")
+    pag = commands.Paginator()
+
+    for g in user.mutual_guilds:
+      pag.add_line(f"{g}")
+
+    pages = [page.strip("`") for page in pag.pages]
+    pages = pages or ["No shared servers"]
+
+    menu = menus.MenuPages(self.mutualGuildsEmbed(pages, per_page=1),delete_message_after=True)
+    await menu.start(ctx,channel=ctx.author.dm_channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
   async def addsus(self,ctx,*,user:BetterUserconverter=None):
