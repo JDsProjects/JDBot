@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, wavelink, asyncio
+import discord, wavelink, asyncio, os
 
 class Music(commands.Cog):
   def __init__(self,bot):
@@ -11,10 +11,10 @@ class Music(commands.Cog):
 
   async def start_nodes(self):
     await self.bot.wait_until_ready()
-    await self.bot.wavelink.initiate_node(host='lava.link', port=80, rest_uri='https://lava.link', password='something.host', identifier='MusicBot', region='us_central')
+    await self.bot.wavelink.initiate_node(host=os.environ["wavelink_host"], port=int(os.environ["wavelink_port"]), rest_uri=os.environ["wavelink_uri"], password=os.environ["wavelink_pass"], identifier="JDBot", region='us_central')
 
   async def stop_nodes(self):
-    await self.bot.wavelink.destroy_node( identifier="MusicBot")
+    await self.bot.wavelink.destroy_node( identifier="JDBot")
 
   def cog_unload(self):
     self.bot.loop.create_task(self.stop_nodes())

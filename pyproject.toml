@@ -46,6 +46,7 @@ typing-extensions = "^3.10.0"
 brotli = "^1.0.9"
 emoji = "^1.2.0"
 twemoji-parser = "^0.5.1"
+"alexflipnote.py" = "^2.4.0"
 
 [tool.poetry.dev-dependencies]
 
