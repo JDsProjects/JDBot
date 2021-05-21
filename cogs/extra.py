@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, asuna_api, math, aiohttp, io, chardet, aiogtts, mystbin
+import discord, random, asuna_api, math, aiohttp, io, chardet, aiogtts, mystbin, alexflipnote, os
 
 class Extra(commands.Cog):
   def __init__(self,client):
@@ -247,6 +247,12 @@ class Extra(commands.Cog):
       embed_message.set_footer(text = f"{ctx.author.id}")
       embed_message.set_thumbnail(url="https://i.imgur.com/PfWlEd5.png")
       await apply_user.send(embed=embed_message)
+
+  @commands.command()
+  async def caw(self,ctx):
+    alex_api = alexflipnote.Client(os.environ["alex_apikey"],session=self.client.session)
+    url=await alex_api.birb()
+    await ctx.send(url)
   
 def setup(client):
   client.add_cog(Extra(client))
