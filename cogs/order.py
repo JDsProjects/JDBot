@@ -108,7 +108,7 @@ class Order(commands.Cog):
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="tenor",invoke_without_command=True)
-  async def tenor(self,ctx,*,args=None):
+  async def tenor(self, ctx, *, args = None):
     if args:
       results = await self.client.loop.run_in_executor(None, tenor_client.search(args, safesearch=True, limit=10))
       print(results)

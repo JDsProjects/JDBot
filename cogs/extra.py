@@ -192,20 +192,18 @@ class Extra(commands.Cog):
 
   @commands.command(brief="repeats what you say",help="a command that repeats what you say the orginal message is deleted")
   async def say(self,ctx,*,args=None):
-    if args:
-      args = discord.utils.escape_mentions(args)
-      args=discord.utils.escape_markdown(args,as_needed=False,ignore_links=False)
-      try:
-        await ctx.message.delete()
-
-      except discord.errors.Forbidden:
-        pass
-
-      await ctx.send(args)
-    
     if args is None:
-      await ctx.send("You didn't give us any text to use.")
-  
+      args = "You didn't give us any text to use."
+
+    args=discord.utils.escape_markdown(args,as_needed=False,ignore_links=False)
+    try:
+      await ctx.message.delete()
+
+    except discord.errors.Forbidden:
+      pass
+
+    await ctx.send(args,allowed_mentions=discord.AllowedMentions.none())
+
   @commands.command(brief="a command to backup text",help="please don't upload any private files that aren't meant to be seen")
   async def text_backup(self,ctx):
     if ctx.message.attachments:
