@@ -93,6 +93,7 @@ async def guildinfo(ctx,guild):
     embed.add_field(name="Server region",value=guild.region)
     embed.add_field(name="Server created at:",value=f"{guild.created_at} UTC")
     embed.add_field(name="Server Owner:",value=guild.owner)
+    embed.add_field(name="Server Owner ID:",value=guild.owner_id)
     embed.add_field(name="Member Count:",value=guild.member_count)
     embed.add_field(name="Users:",value=users)
     embed.add_field(name="Bots:",value=bots)
