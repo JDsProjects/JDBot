@@ -38,9 +38,7 @@ class BetterUserconverter(commands.Converter):
         role=ctx.guild.get_role(int(argument2))
         if role.is_bot_managed:
             user=role.tags.bot_id
-            user = ctx.bot.get_user(user)
-            if user is None:
-              user = await ctx.bot.fetch_user(user)
+            user = ctx.bot.get_user(user) or await ctx.bot.fetch_user(user)
 
     if user == None:
       tag = re.match(r"#?(\d{4})",argument)
