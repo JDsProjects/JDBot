@@ -1,5 +1,5 @@
 from discord.ext import commands, tasks
-import discord, random , time, asyncio
+import discord, random , time, asyncio, difflib
 import utils
 
 class Bot(commands.Cog):
@@ -170,6 +170,21 @@ class Bot(commands.Cog):
   @commands.command()
   async def whyprefixtest(self,ctx):
     await ctx.send("Because I don't have any alternative suggestions, and I don't feel like changing it to jd! or something. I can confirm this isn't a test bot :D")
+
+  @commands.command()
+  async def closest_command(self,ctx,*,command=None):
+    if command is None:
+      await ctx.send("Please provide an arg.")
+
+    if command:
+      command_names = [str(x) for x in ctx.bot.commands]
+      matches = difflib.get_close_matches(command, command_names)
+      
+      if matches:
+        await ctx.send(f"Did you mean... `{matches[0]}`?")
+
+      else:
+        await ctx.send("got nothing sorry.")
 
 def setup(client):
   client.add_cog(Bot(client))
