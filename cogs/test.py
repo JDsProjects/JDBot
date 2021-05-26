@@ -10,13 +10,13 @@ class Test(commands.Cog):
     self.client = client
 
   @commands.command()
-  async def random_number(self,ctx,*numbers):
+  async def random_number(self,ctx,*numbers: typing.Union[int,str]):
     tmp = []
     for x in numbers:
       tmp.append(x)
     numbers = tmp
     for x in numbers:
-      if x.isdigit() is False:
+      if isinstance(x, str) :
         numbers.remove(x)
     print(numbers)
     if len(numbers) > 1:
