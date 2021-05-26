@@ -141,8 +141,8 @@ class Bot(commands.Cog):
     embed.add_field(name="Rule 9:",value="If our bot doesn't do the giveaway requirements we're actually safe, as we don't require it, however please report this to us, so we can contact them to get them to stop, Thanks. if they don't listen we'll tell you, then you can report them.")
     await ctx.send(embed=embed)
 
-  @commands.command(brief="Privacy Policy",aliases=["privacy"])
-  async def promises(self,ctx):
+  @commands.command(brief="Privacy Policy",aliases=["privacy","promises"])
+  async def privacypolicy(self,ctx):
  #   embed=discord.Embed(title="Privacy Policies",color=random.randint(0, 16777215))
  #   embed.add_field(name="1:",value="We have a channel that logs when the bot joins or leaves a guild")
  #   embed.add_field(name="2:",value="We will store any errors(which may go back to you, but this is console only.) This is in memory anyway, thus it doesn't store in any of our DBs.")
