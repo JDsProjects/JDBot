@@ -142,7 +142,7 @@ class Bot(commands.Cog):
     #await ctx.send(embed=embed)
     embed=discord.Embed(title="Basic rights that we guarantee", description="The promises we make about our privacy policy", color=0xffb300)
     embed.add_field(name="\u2800", value="If you wish to know what the bot knows about you please send a DM to the bot, and we will try to compile the data the bot may have on you.", inline=True)
-    embed.add_field(name="\u2800", value="For the safety of the bot w, we will be making sure the token is secure and making sure anyone who works on the project is very trustworthy.", inline=True)
+    embed.add_field(name="\u2800", value="For the safety of the bot, we will be making sure the token is secure and making sure anyone who works on the project is very trustworthy.", inline=True)
     embed.add_field(name="\u2800", value="We will not nuke your servers, as this happened to us before and we absolutely hated it.", inline=True)
     await ctx.send(embed=embed)
     embed=discord.Embed(title="Basic rights that we guarantee", description="The promises we make about our privacy policy", color=0xffb300)
