@@ -145,7 +145,7 @@ class Bot(commands.Cog):
     embed.add_field(name="\u2800", value="For the safety of the bot, we will be making sure the token is secure and making sure anyone who works on the project is very trustworthy.", inline=True)
     embed.add_field(name="\u2800", value="We will not nuke your servers, as this happened to us before and we absolutely hated it.", inline=True)
     await ctx.send(embed=embed)
-    embed=discord.Embed(title="Basic rights that we guarantee", description="The promises we make about our privacy policy", color=0xffb300)
+    embedtwo=discord.Embed(title="Basic rights that we guarantee", description="The promises we make about our privacy policy", color=0xffb300)
     embedtwo.set_author(name="Page 2")
     embedtwo.add_field(name="\u2800", value="The bot also has a feature to give you a list of suspicious people which shall never be removed", inline=True)
     embedtwo.add_field(name="\u2800", value="The bot source code is open source and that allows you to make sure the bot is safe and secure and even host your own instance", inline=True)
