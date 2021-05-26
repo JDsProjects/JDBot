@@ -158,7 +158,7 @@ class Bot(commands.Cog):
      embed=discord.Embed(title="Our privacy policy ", description="This privacy policy applies to JDbot and other services ", color=0xffb300)
      embed.add_field(name="Our data request policy ", value="If you wish to know what the bot knows about you please send a DM to the bot, and we will try to compile the data the bot may have on you.", inline=True)
      embed.add_field(name="The data we collect ", value="We have a channel that logs when the bot joins or leaves a guild", inline=True)
-     embed.add_field(name="----", value="We will store any errors(which may go back to you, but this is console only.) This is in memory anyway, thus it doesn't store in any of our DBs.", inline=True)
+     embed.add_field(name="----", value="We will store any errors(which may go back to you, but this is console only.) This is in memory anyway, thus it doesn't store in any of our DBs.", inline=False)
      embed.set_footer(text="For more info please contact me at JDJG Inc. Official#3493 ")
      await ctx.send(embed=embed)
 
