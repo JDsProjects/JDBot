@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, os, itertools, re, functools, typing, random
+import discord, os, itertools, re, functools, typing, random, collections
 from utils import invert_func, EmojiBasic
 
 
@@ -10,17 +10,8 @@ class Test(commands.Cog):
     self.client = client
 
   @commands.command()
-  async def random_number(self,ctx,*numbers: typing.Union[int,str]):
-    tmp = []
-    for x in numbers:
-      tmp.append(x)
-    numbers = tmp
-    for x in numbers:
-      if isinstance(x, str) :
-        numbers.remove(x)
-    print(numbers)
-    if len(numbers) > 1:
-      pass
+  async def random_number(self , ctx , *numbers: typing.Union[int,str]):
+    print("test")
   
   @commands.command()
   async def role_info(self,ctx,*,role:typing.Optional[discord.Role]=None):
