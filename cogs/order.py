@@ -1,10 +1,10 @@
-import os, discord, time, async_cse, random, TenGiphPy
+import os, discord, time, async_cse, random
 from discord.ext import commands
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 
-tenor_client = TenGiphPy.Tenor(token=os.environ["tenor_key"])
-giphy_client = TenGiphPy.Giphy(token=os.environ["giphy_token"])
+#tenor_client = TenGiphPy.Tenor(token=os.environ["tenor_key"])
+#giphy_client = TenGiphPy.Giphy(token=os.environ["giphy_token"])
 
 class Order(commands.Cog):
   def __init__(self,client):
@@ -110,8 +110,9 @@ class Order(commands.Cog):
   @commands.group(name="tenor",invoke_without_command=True)
   async def tenor(self, ctx, *, args = None):
     if args:
-      results = await self.client.loop.run_in_executor(None, tenor_client.search(args, safesearch=True, limit=10))
-      print(results)
+      #results = await self.client.loop.run_in_executor(None, tenor_client.search(args, safesearch=True, limit=10))
+      #print(results)
+      pass
       #going to be swapping to an async Tenorgiphy soon lol. This is true :D
     if args is None:
       await ctx.send("You can't search for nothing")

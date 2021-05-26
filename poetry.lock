@@ -908,17 +908,6 @@ url = "https://github.com/iDutchy/sr_api"
 
 [[package]]
 category = "main"
-description = "API Wrapper for the Gif library Tenor and Giphy. Join my server: https://discord.gg/uFdVUMH"
-name = "tengiphpy"
-optional = false
-python-versions = "*"
-version = "2.5.0"
-
-[package.dependencies]
-requests = "*"
-
-[[package]]
-category = "main"
 description = "module for creating simple ASCII tables"
 name = "texttable"
 optional = false
@@ -1062,7 +1051,7 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "6d9ed16d96198daafe0bdf5a929bf016b6a8e5498693903b286c834b52d7b9f3"
+content-hash = "b4275e6ed5f7df9e807bfbb1cc44d54e3571258db9fe99b0422a5aacf6a38317"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1551,6 +1540,7 @@ pillow = [
     {file = "Pillow-8.2.0-pp37-pypy37_pp73-manylinux2010_i686.whl", hash = "sha256:aac00e4bc94d1b7813fe882c28990c1bc2f9d0e1aa765a5f2b516e8a6a16a9e4"},
     {file = "Pillow-8.2.0-pp37-pypy37_pp73-manylinux2010_x86_64.whl", hash = "sha256:22fd0f42ad15dfdde6c581347eaa4adb9a6fc4b865f90b23378aa7914895e120"},
     {file = "Pillow-8.2.0-pp37-pypy37_pp73-win32.whl", hash = "sha256:e98eca29a05913e82177b3ba3d198b1728e164869c613d76d0de4bde6768a50e"},
+    {file = "Pillow-8.2.0-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:8b56553c0345ad6dcb2e9b433ae47d67f95fc23fe28a0bde15a120f25257e291"},
     {file = "Pillow-8.2.0.tar.gz", hash = "sha256:a787ab10d7bb5494e5f76536ac460741788f1fbce851068d73a87ca7c35fc3e1"},
 ]
 protobuf = [
@@ -1770,9 +1760,6 @@ sqlparse = [
     {file = "sqlparse-0.4.1.tar.gz", hash = "sha256:0f91fd2e829c44362cbcfab3e9ae12e22badaa8a29ad5ff599f9ec109f0454e8"},
 ]
 sr_api = []
-tengiphpy = [
-    {file = "TenGiphPy-2.5.0-py3-none-any.whl", hash = "sha256:b69401a4dd95de7030fb878a8ca7079351f8b543cced73ed4bd8e1240770c561"},
-]
 texttable = [
     {file = "texttable-1.6.3-py2.py3-none-any.whl", hash = "sha256:f802f2ef8459058736264210f716c757cbf85007a30886d8541aa8c3404f1dda"},
     {file = "texttable-1.6.3.tar.gz", hash = "sha256:ce0faf21aa77d806bbff22b107cc22cce68dc9438f97a2df32c93e9afa4ce436"},
