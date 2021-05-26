@@ -12,6 +12,10 @@ class Test(commands.Cog):
   @commands.command()
   async def random_number(self , ctx , *numbers: typing.Union[int,str]):
     print("test")
+
+  @commands.command()
+  async def ticket_make(self,ctx):
+    await ctx.send("WIP, will make ticket soon..")
   
   @commands.command()
   async def role_info(self,ctx,*,role:typing.Optional[discord.Role]=None):
