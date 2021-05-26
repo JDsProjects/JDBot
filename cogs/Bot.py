@@ -136,7 +136,7 @@ class Bot(commands.Cog):
     await ctx.send(embed=embed)
     embedtwo=discord.Embed(title="Basic rights that we guarantee", description="The promises we make about our privacy policy", color=0xffb300)
     embedtwo.set_author(name="Page 2")
-    embedtwo.add_field(name="\u2800", value="The bot also has a feature to give you a list of suspicious people which shall never be removed", inline=True)
+    embedtwo.add_field(name="\u2800", value="The bot has the ability to give you a list of people who are considered suspicious to us", inline=True)
     embedtwo.add_field(name="\u2800", value="The bot source code is open source and that allows you to make sure the bot is safe and secure and even host your own instance", inline=True)
     embedtwo.add_field(name="\u2800", value="We also let you ask us questions directly, just DM me or any other maintainer directly (the owner is listed in the owner command(and anyone should be able to friend me or the maintaners)", inline=True)
     await ctx.send(embed=embedtwo)
