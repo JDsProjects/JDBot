@@ -195,7 +195,9 @@ class Bot(commands.Cog):
 
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self,ctx):
-    await ctx.send("You must say I agree this will send into the current channel.")
+    embed=discord.Embed(title="Consention requirement", description="This command will send a discord invite in the channel you typed the command in", color=0x008080)
+    embed.add_field(name="To consent", value="Type i agree in lower case into the channel", inline=True)
+    await ctx.send(embed=embed)
     message=await self.client.wait_for("message",check=utils.check(ctx))
     if message.content.lower() == "i agree":
       await ctx.send("https://discord.gg/sHUQCch")
