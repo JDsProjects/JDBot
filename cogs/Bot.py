@@ -145,7 +145,7 @@ class Bot(commands.Cog):
   async def promises(self,ctx):
     embed=discord.Embed(title="Privacy Policies",color=random.randint(0, 16777215))
     embed.add_field(name="1:",value="We have a channel that logs when the bot joins or leaves a guild")
-    embed.add_field(name="2:",value="We will store any errors(which may go back to you, but this is console only")
+    embed.add_field(name="2:",value="We will store any errors(which may go back to you, but this is console only.) This is in memory anyway, thus it doesn't store in any of our DBs.")
     embed.add_field(name="3:",value="we will only store user ids(in the future for balance commands and economy commands(opt in only)")
     embed.add_field(name="4:",value="We will store user id, and channel id(our channel), and last active, for ticket support if you need support. (is opt in)")
     embed.add_field(name="5:",value="we Finally store invalid commands")
