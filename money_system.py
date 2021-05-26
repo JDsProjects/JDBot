@@ -2,7 +2,6 @@ import DatabaseConfig
 import ClientConfig
 
 bank = DatabaseConfig.db.money_system
-
 job_db = DatabaseConfig.db.job_listing
 
 def check_user_exists(userid):
