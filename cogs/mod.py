@@ -74,7 +74,7 @@ class Moderation(commands.Cog):
       embed.set_author(name=f"Report by {ctx.author}",icon_url=(ctx.author.avatar_url))
       embed.add_field(name="Details:",value=args)
       embed.set_footer(text=f"Reporter's ID is {ctx.author.id}")
-      await jdjg.dm_channel.send(embed=embed)
+      await jdjg.send(embed=embed)
       await ctx.send(content="report sent to JDJG",embed=embed)
     
     if args is None:
