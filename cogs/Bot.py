@@ -167,7 +167,7 @@ class Bot(commands.Cog):
      embedtwo.add_field(name="----", value="We currently store user ids, and channel ids(our channel), and last active channel, for ticket support if you will require support. (Opt in) ", inline=False)
      embedtwo.set_footer(text="For more info please contact me at JDJG Inc. Official#3493 ")
      await ctx.send(embed=embedtwo)
-     embedfinal=discord.Embed(title="Our privacy policy", description="This privacy policy applies to JDbot and other services", color=0xf8cb81)
+     embedfinal=discord.Embed(title="Our privacy policy", description="This privacy policy applies to JDbot and other services", color=0xffb300)
      embedfinal.add_field(name="Continuation of previous page", value="We may reserve the right to look at your mutual guilds with our bot in it or the list of servers our bot is in, with some information, just to test some things(like if a command is going hayware) or prevent abuse. If you want to look at the embeds with this, just ask, We will show you.", inline=True)
      embedfinal.add_field(name="----", value="We also have a suspicious users list that is used to store a list of users who may cause problems on your servers and that you should probably avoid ", inline=True)
      embedfinal.add_field(name="----", value="This data can be accessed only by us, and our DB provider MongoDB(but they are unlikely to use our data). Suspicious users will show up if they exist in the same guild though and the reason why.", inline=True)
