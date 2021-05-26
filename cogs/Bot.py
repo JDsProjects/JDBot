@@ -161,6 +161,12 @@ class Bot(commands.Cog):
      embed.add_field(name="----", value="We will store any errors(which may go back to you, but this is console only.) This is in memory anyway, thus it doesn't store in any of our DBs.", inline=False)
      embed.set_footer(text="For more info please contact me at JDJG Inc. Official#3493 ")
      await ctx.send(embed=embed)
+     embedtwo=discord.Embed(title="Our privacy policy ", description="This privacy policy applies to JDbot and other services ", color=0xffb300)
+     embedtwo.add_field(name="Continuation of previous page", value="We store the inputted invalid commands", inline=True)
+     embedtwo.add_field(name="----", value="We will in the future store user ids for balance commands and economy commands(opt in only) ", inline=True)
+     embedtwo.add_field(name="----", value="We currently store user ids, and channel ids(our channel), and last active channel, for ticket support if you will require support. (Opt in) ", inline=False)
+     embedtwo.set_footer(text="For more info please contact me at JDJG Inc. Official#3493 ")
+     await ctx.send(embed=embedtwo)
 
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self,ctx):
