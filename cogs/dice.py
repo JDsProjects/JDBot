@@ -100,19 +100,22 @@ class Dice(commands.Cog):
       await ctx.send("Please specify an emote")
     if args:
       emoji=discord.utils.get(self.client.emojis,name=args)
-    
+      emoji = emoji or sorted(self.client.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
       emoji = emoji or "We haven't found anything"
+
       await ctx.send(emoji)
 
-  @commands.command(help="a different method to find the nearest emoji")
-  async def emote2(self,ctx,*,args=None):
-    if args is None:
-      await ctx.send("Please specify an emote")
-    if args:
-      emoji = sorted(self.client.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
+  @commands.command(brief="takes smallest and largest numbers then does a random number between.")
+  async def random_number(self , ctx , *numbers: typing.Union[int,str]):
+    numbers=sorted(list(filter(lambda x: isinstance(x, int), numbers)))
+    if len(numbers) < 2:
+      await ctx.send("Not enough numbers")
 
-      emoji = emoji or "We haven't found anything"
-      await ctx.send(emoji)
+    else:
+      embed = discord.Embed(title=f"Random Number: {random.randint(numbers[0],numbers[-1])} ",color=random.randint(0, 16777215))
+      embed.add_field(name="Lowest Number:",value=f"{numbers[0]}")
+      embed.add_field(name="Highest Number:",value=f"{numbers[-1]}")
+      await ctx.send(embed=embed)
     
 def setup(client):
   client.add_cog(Dice(client))

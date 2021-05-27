@@ -9,15 +9,6 @@ class Test(commands.Cog):
   def __init__(self, client):
     self.client = client
 
-  @commands.command(brief="takes smallest and largest numbers then does a random number between.")
-  async def random_number(self , ctx , *numbers: typing.Union[int,str]):
-    numbers=sorted(list(filter(lambda x: isinstance(x, int), numbers)))
-    if len(numbers) < 2:
-      await ctx.send("Not enough numbers")
-
-    else:
-      await ctx.send(f"Your random number is {random.randint(numbers[0],numbers[-1])} from {numbers[0]} to {numbers[-1]}")
-
   @commands.command()
   async def ticket_make(self,ctx):
     await ctx.send("WIP, will make ticket soon..")
