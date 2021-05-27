@@ -26,10 +26,24 @@ class Test(commands.Cog):
   async def role_info(self,ctx,*,role:typing.Optional[discord.Role]=None):
     await ctx.send(f"Role: {role}")
 
-  @commands.command()
+  @commands.command(aliases=["joke"])
   async def jokeapi(self,ctx):
     jokeapi_grab=await self.client.session.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun,Spooky,Christmas?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single")
     await ctx.send(await jokeapi_grab.json())
+
+  @commands.command()
+  async def pypi(self,ctx,*,args=None):
+    #https://pypi.org/simple/
+    if args:
+      pypi_response=await self.client.session.get(f"https://pypi.org/pypi/{args}/json")
+      if pypi_response.ok:
+        print(await pypi_response.json())
+      else:
+        await ctx.send(f"Could not find package **{args}** on pypi.")
+
+    else:
+      await ctx.send("Please look for a library to get the info of.")
+
 
   @commands.command()
   async def emoji_id(self,ctx,*, emoji: EmojiBasic=None):
