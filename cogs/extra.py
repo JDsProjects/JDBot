@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, asuna_api, math, aiohttp, io, chardet, aiogtts, mystbin, alexflipnote, os
+import discord, random, asuna_api, math, aiohttp, io, chardet, aiogtts, mystbin, alexflipnote, os, typing
 
 class Extra(commands.Cog):
   def __init__(self,client):
@@ -71,15 +71,15 @@ class Extra(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command()
-  async def http_cat(self,ctx,args=None):
-    if args is None:
-      code = "404"
+  async def http_cat(self, ctx, * , args : typing.Optional[typing.Union[int,str]] = None ):
+    if args is None: code = "404"
+
     if args:
-      if args.isdigit():
-        if int(args) > 99 and int(args) < 600:
-          code = args
+      if isinstance(args,int):
+        if args > 99 and args < 600: code = args
+        else: code = "404"
       
-      if args.isdigit() is False:
+      else:
         await ctx.send("Not a valid arg using 404")
         code = "404"
     

@@ -5,9 +5,10 @@ from discord.ext.commands.cooldowns import BucketType
 
 #tenor_client = TenGiphPy.Tenor(token=os.environ["tenor_key"])
 #giphy_client = TenGiphPy.Giphy(token=os.environ["giphy_token"])
+#move these into the __init__
 
 class Order(commands.Cog):
-  def __init__(self,client):
+  def __init__(self, client):
     self.client = client
 
   @commands.cooldown(1,30,BucketType.user)

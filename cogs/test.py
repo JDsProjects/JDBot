@@ -26,10 +26,35 @@ class Test(commands.Cog):
   async def role_info(self,ctx,*,role:typing.Optional[discord.Role]=None):
     await ctx.send(f"Role: {role}")
 
-  @commands.command()
-  async def jokeapi(self,ctx):
+  @commands.command(aliases=["joke"])
+  async def jokeapi(self, ctx):
     jokeapi_grab=await self.client.session.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun,Spooky,Christmas?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single")
-    await ctx.send(await jokeapi_grab.json())
+    response_dict=await jokeapi_grab.json()
+    embed=discord.Embed(title=f"{response_dict['joke']}",color=random.randint(0, 16777215))
+    embed.set_author(name=f"{response_dict['category']} Joke:")
+    embed.add_field(name="Language:",value=f"{response_dict['lang']}")
+    embed.add_field(name=f"Joke ID:",value=f"{response_dict['id']}")
+    embed.add_field(name="Type:",value=f"{response_dict['type']}")
+    embed.set_footer(text=f"Powered by jokeapi.dev")
+    await ctx.send(embed=embed)
+
+  @jokeapi.error
+  async def jokeapi_error(self,ctx,error):
+    await ctx.send(error)
+
+  @commands.command()
+  async def pypi(self,ctx,*,args=None):
+    #https://pypi.org/simple/
+    if args:
+      pypi_response=await self.client.session.get(f"https://pypi.org/pypi/{args}/json")
+      if pypi_response.ok:
+        print(await pypi_response.json())
+      else:
+        await ctx.send(f"Could not find package **{args}** on pypi.")
+
+    else:
+      await ctx.send("Please look for a library to get the info of.")
+
 
   @commands.command()
   async def emoji_id(self,ctx,*, emoji: EmojiBasic=None):
@@ -40,10 +65,6 @@ class Test(commands.Cog):
 
     else:
       await ctx.send("Not a valid emoji id.")
-
-  @jokeapi.error
-  async def jokeapi_error(self,ctx,error):
-    await ctx.send(error)
 
   @commands.command(brief="this command will error by sending no content")
   async def te(self,ctx):

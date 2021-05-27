@@ -21,7 +21,7 @@ class Dice(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="A command to roll random dnd dice.",aliases=["roll"])
-  async def diceroll(self,ctx,number:typing.Optional[int]=None):
+  async def diceroll(self, ctx, * , number:typing.Optional[int]=None):
     if number : await self.generate_embed(ctx,int(number))
     else: await ctx.send("None that's bad.")
 
