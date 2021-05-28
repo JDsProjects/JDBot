@@ -105,5 +105,33 @@ class Test(commands.Cog):
   async def invert_error(self,ctx,error):
     await ctx.send(error)
 
+  async def quick_convert(self, *emojis: typing.Union[discord.PartialEmoji , str]):
+    return emojis
+
+  @commands.command()
+  async def emoji_dump(self,ctx):
+    await ctx.send("emoji dump time.")
+    import mystbin
+    mystbin_client = mystbin.Client(session=self.client.session)
+
+    paste=await mystbin_client.get("https://mystb.in/CompetingGlobeParental")
+    paste2 = await mystbin_client.get("https://mystb.in/PersianMentalMission")
+    paste3 = await mystbin_client.get("https://mystb.in/FoldingTherapeuticPlain")
+    paste4 = await mystbin_client.get("https://mystb.in/OrangePrintableSeven")
+
+    list_results= await self.quick_convert(paste.paste_content.replace("\n"," "))+await self.quick_convert(paste2.paste_content.replace("\n"," "))+await self.quick_convert(paste3.paste_content.replace("\n"," "))+await self.quick_convert(paste4.paste_content.replace("\n"," "))
+    for x in list_results:
+      print(f"\n{x}")
+
+    #webhook=await ctx.channel.create_webhook(name="emoji dump")
+
+  @commands.command(brief="Lists the current used prefix",aliases=["prefix"])
+  async def currentprefix(self,ctx):
+    await ctx.send(f"{ctx.prefix}")
+
+  @commands.command()
+  async def setprefix(self,ctx):
+    await ctx.send("WIP")
+
 def setup(client):
   client.add_cog(Test(client))
