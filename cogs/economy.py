@@ -19,4 +19,4 @@ class Economy(commands.Cog):
     money_system.display_account(Member.id)
 
 def setup(client):
-  client.add_cog(Work(client))
+  client.add_cog(Economy(client))
