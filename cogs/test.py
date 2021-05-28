@@ -129,6 +129,11 @@ class Test(commands.Cog):
   async def currentprefix(self,ctx):
     await ctx.send(f"{ctx.prefix}")
 
+  @commands.command(brief="Lists the current prefixes that could be used.")
+  async def prefixes(self,ctx):
+    prefixes=await self.client.get_prefix(ctx.message)
+    await ctx.send(f"{prefixes}")
+
   @commands.command()
   async def setprefix(self,ctx):
     await ctx.send("WIP")
