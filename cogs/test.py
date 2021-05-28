@@ -134,8 +134,8 @@ class Test(commands.Cog):
     prefixes=await self.client.get_prefix(ctx.message)
     await ctx.send(f"{prefixes}")
 
-  @commands.command()
-  async def setprefix(self,ctx):
+  @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
+  async def setprefix(self,ctx,arg=None):
     await ctx.send("WIP")
 
 def setup(client):

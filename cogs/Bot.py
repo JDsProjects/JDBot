@@ -51,13 +51,9 @@ class Bot(commands.Cog):
     if not guilds_list:
       guild_list = "None"
 
-    x = 0
-    for g in guilds_list:
-      if x < 1:
-        guild_list = g.name
-      if x > 0:
-        guild_list = guild_list + f", {g.name}"
-      x = x + 1
+
+    if guilds_list:
+      guild_list= ", ".join(map(str, guilds_list))
     
     if owner:
       nickname = str(owner.nick)

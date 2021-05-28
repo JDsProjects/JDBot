@@ -39,6 +39,7 @@ class Info(commands.Cog):
           if member:
             status=str(member.status).upper()
             break
+            
         highest_role = "None Found"
     if not ctx.guild:
         nickname = "None"

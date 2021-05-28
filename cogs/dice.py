@@ -25,7 +25,7 @@ class Dice(commands.Cog):
     if number : await self.generate_embed(ctx,int(number))
     else: await ctx.send("None that's bad.")
 
-  @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use wisely.",aliases=["e_spin","emoji_spin"])
+  @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use this wisely.",aliases=["e_spin","emoji_spin"])
   async def emoji_spinner(self,ctx):
     emoji_choosen = random.choice(self.client.emojis)
 
