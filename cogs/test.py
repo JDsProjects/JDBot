@@ -9,15 +9,6 @@ class Test(commands.Cog):
   def __init__(self, client):
     self.client = client
 
-  @commands.command(brief="takes smallest and largest numbers then does a random number between.")
-  async def random_number(self , ctx , *numbers: typing.Union[int,str]):
-    numbers=sorted(list(filter(lambda x: isinstance(x, int), numbers)))
-    if len(numbers) < 2:
-      await ctx.send("Not enough numbers")
-
-    else:
-      await ctx.send(f"Your random number is {random.randint(numbers[0],numbers[-1])} from {numbers[0]} to {numbers[-1]}")
-
   @commands.command()
   async def ticket_make(self,ctx):
     await ctx.send("WIP, will make ticket soon..")
@@ -113,6 +104,39 @@ class Test(commands.Cog):
   @invert.error
   async def invert_error(self,ctx,error):
     await ctx.send(error)
+
+  async def quick_convert(self, *emojis: typing.Union[discord.PartialEmoji , str]):
+    return emojis
+
+  @commands.command()
+  async def emoji_dump(self,ctx):
+    await ctx.send("emoji dump time.")
+    import mystbin
+    mystbin_client = mystbin.Client(session=self.client.session)
+
+    paste=await mystbin_client.get("https://mystb.in/CompetingGlobeParental")
+    paste2 = await mystbin_client.get("https://mystb.in/PersianMentalMission")
+    paste3 = await mystbin_client.get("https://mystb.in/FoldingTherapeuticPlain")
+    paste4 = await mystbin_client.get("https://mystb.in/OrangePrintableSeven")
+
+    list_results= await self.quick_convert(paste.paste_content.replace("\n"," "))+await self.quick_convert(paste2.paste_content.replace("\n"," "))+await self.quick_convert(paste3.paste_content.replace("\n"," "))+await self.quick_convert(paste4.paste_content.replace("\n"," "))
+    for x in list_results:
+      print(f"\n{x}")
+
+    #webhook=await ctx.channel.create_webhook(name="emoji dump")
+
+  @commands.command(brief="Lists the current used prefix",aliases=["prefix"])
+  async def currentprefix(self,ctx):
+    await ctx.send(f"{ctx.prefix}")
+
+  @commands.command(brief="Lists the current prefixes that could be used.")
+  async def prefixes(self,ctx):
+    prefixes=await self.client.get_prefix(ctx.message)
+    await ctx.send(f"{prefixes}")
+
+  @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
+  async def setprefix(self,ctx,arg=None):
+    await ctx.send("WIP")
 
 def setup(client):
   client.add_cog(Test(client))
