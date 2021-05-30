@@ -144,7 +144,7 @@ class Bot(commands.Cog):
         if information.team is None:
             true_owner = information.owner
             team_members = []
-        if information.team != None:
+        if information.team is not None:
             true_owner = information.team.owner
             team_members = information.team.members
         embed = discord.Embed(title=information.name,
