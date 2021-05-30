@@ -55,10 +55,8 @@ def use_job(name):
     doc = job_db.find_one({"name":name})
   except:
     print("ERROR: JOB NOT FOUND")
-  if(doc=="N"):
-    pass
 
 def decode_job(id):
   job_list =["a","b","c"]
-  for num in range(len(job_list)):
-    return job_list[num]
+  for job in job_list:
+    return job

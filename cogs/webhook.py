@@ -53,14 +53,14 @@ class Webhook(commands.Cog):
               discord.utils._get_mime_type_for_image(image)
             except discord.errors.InvalidArgument:
               pass_test = False
-            
+
             if pass_test:
               await webhook.edit(avatar=image)
-            if pass_test is False:
+            if not pass_test:
               await ctx.send("not a valid image")
-          
+
           await webhook.execute(embed=embed)
-          
+
           if (ctx.author.dm_channel is None):
             await ctx.author.create_dm()
 
@@ -69,12 +69,12 @@ class Webhook(commands.Cog):
             await ctx.author.send(webhook.url)
           except discord.Forbidden:
             await ctx.send(f"We couldn't DM you {ctx.author.mention}")
-            
+
         if arg is None:
           await ctx.send("You need to use values for it to work")
       if ctx.author.guild_permissions.manage_webhooks is False:
         await ctx.send("you can't use that.")
-        
+
 
     if isinstance(ctx.channel, discord.DMChannel):
       await ctx.send("You can't use that silly")

@@ -79,9 +79,7 @@ class Owner(commands.Cog):
     return await self.client.is_owner(ctx.author)
 
   async def cog_command_error(self,ctx,error):
-    if ctx.command and ctx.command.has_error_handler():
-      pass
-    else:
+    if not ctx.command or not ctx.command.has_error_handler():
       await ctx.send(error)
 
   @commands.command(brief="Changes Bot Status(Owner Only)")
@@ -111,8 +109,8 @@ class Owner(commands.Cog):
 
   class ServersEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
-      embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
-      return embed
+      return discord.Embed(
+          title="Servers:", description=item, color=random.randint(0, 16777215))
   
   @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
   async def servers(self,ctx):
@@ -132,25 +130,24 @@ class Owner(commands.Cog):
   @commands.command(brief="only works with JDJG, but this command is meant to send updates to my webhook")
   async def webhook_update(self,ctx,*,args=None):
     if await self.client.is_owner(ctx.author):
-      if args:
-        if isinstance(ctx.channel, discord.TextChannel):
-          await ctx.message.delete()
+      if args and isinstance(ctx.channel, discord.TextChannel):
+        await ctx.message.delete()
 
-          session = self.client.session
-          webhook=discord.Webhook.from_url(os.environ["webhook1"], adapter=discord.AsyncWebhookAdapter(session))
-          embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
-          embed.add_field(name="Update Info:",value=args)
-          embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
-          embed.set_footer(text="JDJG's Updates")
-          await webhook.execute(embed=embed)
-        
-          session = self.client.session
-          webhook=discord.Webhook.from_url(os.environ["webhook99"], adapter=discord.AsyncWebhookAdapter(session))
-          embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
-          embed.add_field(name="Update Info:",value=args)
-          embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
-          embed.set_footer(text="JDJG's Updates")
-          await webhook.execute(embed=embed)
+        session = self.client.session
+        webhook=discord.Webhook.from_url(os.environ["webhook1"], adapter=discord.AsyncWebhookAdapter(session))
+        embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
+        embed.add_field(name="Update Info:",value=args)
+        embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
+        embed.set_footer(text="JDJG's Updates")
+        await webhook.execute(embed=embed)
+
+        session = self.client.session
+        webhook=discord.Webhook.from_url(os.environ["webhook99"], adapter=discord.AsyncWebhookAdapter(session))
+        embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
+        embed.add_field(name="Update Info:",value=args)
+        embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
+        embed.set_footer(text="JDJG's Updates")
+        await webhook.execute(embed=embed)
       if args is None:
         await ctx.send("You sadly can't use it like that.")
     if await self.client.is_owner(ctx.author) is False:
@@ -158,8 +155,8 @@ class Owner(commands.Cog):
 
   class mutualGuildsEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
-      embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
-      return embed
+      return discord.Embed(
+          title="Servers:", description=item, color=random.randint(0, 16777215))
 
   @commands.command(brief="Commands to see what guilds a person is in.")
   async def mutualguilds(self,ctx,*,user:BetterUserconverter=None):
