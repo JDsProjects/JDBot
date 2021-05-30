@@ -239,5 +239,11 @@ class Owner(commands.Cog):
     if command is None:
       await ctx.send("select a command :(")
 
+  @commands.command()
+  async def leave_guild(self, ctx, *, guild: discord.Guild = None):
+    guild = guild or ctx.guild
+    if guild is None: return await ctx.send("Guild is None can't do anything.")
+    print(guild)
+
 def setup(client):
   client.add_cog(Owner(client))

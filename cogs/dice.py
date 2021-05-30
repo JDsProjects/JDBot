@@ -77,8 +77,7 @@ class Dice(commands.Cog):
       elif args.lower().startswith("t") and value: win = False    
       else: return await ctx.send("Please use heads or Tails as a value.")
       
-      if(value): pic_name = "heads"
-      else: pic_name ="Tails"
+      pic_name = "heads" if (value) else "Tails"
 
       url_dic = {"heads":"https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
 
