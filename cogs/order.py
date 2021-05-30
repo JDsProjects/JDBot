@@ -159,9 +159,7 @@ class Order(commands.Cog):
         await ctx.send("giphy shuffle")
 
   async def cog_command_error(self,ctx,error):
-    if ctx.command and ctx.command.has_error_handler():
-      pass
-    else:
+    if not ctx.command or not ctx.command.has_error_handler():
       await ctx.send(error)
 
 def setup(client):

@@ -70,16 +70,14 @@ class Dice(commands.Cog):
   @commands.command(brief="a command meant to flip coins",help="commands to flip coins, etc.")
   async def coin(self,ctx, *, args = None):
     if args:
-      value = random.choice([True,False]) 
+      value = random.choice([True,False])
       if args.lower().startswith("h") and value: win = True
       elif args.lower().startswith("t") and not value:  win = True
       elif args.lower().startswith("h") and not value: win = False
       elif args.lower().startswith("t") and value: win = False    
       else: return await ctx.send("Please use heads or Tails as a value.")
-      
-      if(value): pic_name = "heads"
-      else: pic_name ="Tails"
 
+      pic_name = "heads" if (value) else "Tails"
       url_dic = {"heads":"https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
 
       embed = discord.Embed(title="coin flip",color=random.randint(0, 16777215))
@@ -89,7 +87,7 @@ class Dice(commands.Cog):
 
       if win: embed.add_field(name="Result: ",value="You won")
       else: embed.add_field(name="Result: ",value="You lost")
-      
+
       await ctx.send(embed=embed)
 
     if args is None: await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")

@@ -88,7 +88,7 @@ class Bot(commands.Cog):
   @commands.command(help="a command to give information about the team",brief="this command works if you are in team otherwise it will just give the owner.")
   async def team(self,ctx):
     information=await self.client.application_info()
-    if information.team == None:
+    if information.team is None:
       true_owner=information.owner
       team_members = []
     if information.team != None:

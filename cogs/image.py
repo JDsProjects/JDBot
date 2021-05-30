@@ -152,7 +152,7 @@ class Image(commands.Cog):
         if x.filename.endswith(".png"):
           url = x.url
           await triggered_converter(self,url,ctx)
-          y = y + 1
+          y += 1
         if not x.filename.endswith(".png"):
           pass
 
@@ -168,7 +168,7 @@ class Image(commands.Cog):
         if x.filename.endswith(".png"):
           url = x.url
           await headpat_converter(self,url,ctx)
-          y = y + 1
+          y += 1
         if not x.filename.endswith(".png"):
           pass
 
@@ -365,7 +365,7 @@ class Image(commands.Cog):
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.url
           await invert_converter(url,ctx)
-          y = y + 1
+          y += 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
@@ -381,7 +381,7 @@ class Image(commands.Cog):
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.proxy_url
           await headpat_converter2(self,url,ctx)
-          y = y + 1
+          y += 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 

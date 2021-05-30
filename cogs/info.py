@@ -166,16 +166,10 @@ class Info(commands.Cog):
         user_nick = sorted(self.client.users, key=lambda x: SequenceMatcher(None, x.display_name,args).ratio())[-1]
       await ctx.send(f"Username: {userNearest}")
       await ctx.send(f"Display name: {user_nick}")
-    
+
     if isinstance(ctx.channel, discord.TextChannel):
-      member_list = []
-      for x in ctx.guild.members:
-        if x.nick is None:
-          pass
-        if x.nick:
-          member_list.append(x)
-      
-      nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick,args).ratio())[-1] 
+      member_list = [x for x in ctx.guild.members if x.nick]
+      nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick,args).ratio())[-1]
       await ctx.send(f"Nickname: {nearest_server_nick}")
 
     if isinstance(ctx.channel,discord.DMChannel):

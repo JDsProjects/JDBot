@@ -87,14 +87,11 @@ class Test(commands.Cog):
           passes = True
         except commands.errors.CommandInvokeError:
           passes = False
-        if passes is True:
-          y = y + 1
+        if passes:
+          y += 1
           invert_time=functools.partial(invert_func,await x.read())
           file = invert_time()
           await ctx.send(file=file)
-        if passes is False:
-          pass
-
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
       invert_time=functools.partial(invert_func,await url.read())

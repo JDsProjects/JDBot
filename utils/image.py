@@ -16,10 +16,6 @@ def invert_func(bytes_returned):
 
     buffer = io.BytesIO()
     final_transparent_image.save(buffer,image.format)
-    buffer.seek(0)
-    file = discord.File(buffer,filename=f"inverted.{image.format}")
-    return file
-
   else:
     try:
       inverted_image = ImageOps.invert(image)
@@ -29,6 +25,6 @@ def invert_func(bytes_returned):
       return file
     buffer = io.BytesIO()
     inverted_image.save(buffer,image.format)
-    buffer.seek(0)
-    file = discord.File(buffer,filename=f"inverted.{image.format}")
-    return file
+  buffer.seek(0)
+  file = discord.File(buffer,filename=f"inverted.{image.format}")
+  return file

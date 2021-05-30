@@ -9,7 +9,7 @@ class BetterMemberConverter(commands.Converter):
     except commands.MemberNotFound:
       user = None
 
-    if user == None:
+    if user is None:
       tag = re.match(r"#?(\d{4})",argument)
       if tag:
         if ctx.guild:
@@ -19,7 +19,7 @@ class BetterMemberConverter(commands.Converter):
         if ctx.guild is None:
           user = await BetterUserconverter().convert(ctx,argument)
           user = user or ctx.author
-               
+
     return user
 
 class BetterUserconverter(commands.Converter):
@@ -40,7 +40,7 @@ class BetterUserconverter(commands.Converter):
             user=role.tags.bot_id
             user = ctx.bot.get_user(user) or await ctx.bot.fetch_user(user)
 
-    if user == None:
+    if user is None:
       tag = re.match(r"#?(\d{4})",argument)
       if tag:
         test=discord.utils.get(ctx.bot.users, discriminator = tag.group(1))

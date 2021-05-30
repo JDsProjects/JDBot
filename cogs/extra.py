@@ -17,12 +17,10 @@ class Extra(commands.Cog):
       embed=discord.Embed(title=f"Minecraft Username: {args}",color=random.randint(0, 16777215))
       embed.set_footer(text=f"Minecraft UUID: {minecraft_info.uuid}")
       embed.add_field(name="Orginal Name:",value=minecraft_info.name)
-      y = 0
-      for x in minecraft_info.history:
+      for y, x in enumerate(minecraft_info.history):
         if y > 0:
           embed.add_field(name=f"Username:\n{x['name']}",value=f"Date Changed:\n{x['changedToAt']}\n \nTime Changed: \n {x['timeChangedAt']}")
 
-        y = y + 1
       embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
       await ctx.send(embed=embed)
 
@@ -206,20 +204,21 @@ class Extra(commands.Cog):
 
   @commands.command(brief="a command to backup text",help="please don't upload any private files that aren't meant to be seen")
   async def text_backup(self,ctx):
-    if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        file=await x.read()
-        if len(file) > 0:
-          encoding=chardet.detect(file)["encoding"]
-          if encoding:
-            text = file.decode(encoding)
-            mystbin_client = mystbin.Client(session=self.client.session)
-            paste = await mystbin_client.post(text)
-            await ctx.send(content=f"Added text file to mystbin: \n{paste.url}")
-          if encoding is None:
-            await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
-        if len(file ) < 1:
-          await ctx.send("this doesn't contain any bytes.")
+    if not ctx.message.attachments:
+      return
+    for x in ctx.message.attachments:
+      file=await x.read()
+      if len(file) > 0:
+        encoding=chardet.detect(file)["encoding"]
+        if encoding:
+          text = file.decode(encoding)
+          mystbin_client = mystbin.Client(session=self.client.session)
+          paste = await mystbin_client.post(text)
+          await ctx.send(content=f"Added text file to mystbin: \n{paste.url}")
+        if encoding is None:
+          await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
+      if len(file ) < 1:
+        await ctx.send("this doesn't contain any bytes.")
           
           
   @commands.group(name="apply",invoke_without_command=True)

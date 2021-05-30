@@ -41,15 +41,12 @@ class EmojiInfoEmbed(menus.ListPageSource):
         embed.add_field(name="Credit:",value=f"[[Site 1]](https://github.com/Rapptz/RoboDanny/blob/rewrite/cogs/meta.py#L250-L264)")
         embed.set_image(url=emoji_url)
         embed.set_footer(text=f"click the title for more unicode data")
-        return embed
-
       else:
         embed = discord.Embed(title=f"Custom Emoji: **{item.name}**",color=random.randint(0, 16777215))
         embed.set_image(url=item.url)
         embed.set_footer(text=f"Emoji ID:{item.id}")
-        return embed
-
     else:
       embed=discord.Embed(title="Failed grabbing emoji:",description=f"Discord couldn't fetch the emoji with regex: {item}",color=random.randint(0, 16777215))
-      return embed
+
+    return embed
 
