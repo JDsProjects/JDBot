@@ -1,9 +1,11 @@
-from discord.ext import commands, tasks
-import discord
-import random
-import time
 import asyncio
 import difflib
+import random
+import time
+
+import discord
+from discord.ext import commands, tasks
+
 import utils
 
 
