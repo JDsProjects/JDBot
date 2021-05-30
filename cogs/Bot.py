@@ -15,6 +15,7 @@ class Bot(commands.Cog):
     await asyncio.sleep(40)
     await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="the new updates coming soon..."))
     await asyncio.sleep(40)
+    
 
   @status_task.before_loop
   async def before_status_task(self):
@@ -35,6 +36,7 @@ class Bot(commands.Cog):
     embed.set_thumbnail(url=self.client.user.avatar_url)
     await ctx.send(embed=embed)
 
+    
   @commands.command(brief="gives you who the owner is.")
   async def owner(self,ctx):
     info = await self.client.application_info()
