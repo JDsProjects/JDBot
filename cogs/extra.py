@@ -268,6 +268,18 @@ class Extra(commands.Cog):
   @jokeapi.error
   async def jokeapi_error(self,ctx,error):
     await ctx.send(error)
+
+  @commands.command()
+  async def cookieclicker_save(self,ctx):
+    import io
+
+    mystbin_client = mystbin.Client(session=self.client.session)
+    paste=await mystbin_client.get("https://mystb.in/ClubsFloppyElections.perl")
+    s = io.StringIO()
+    s.write(paste.paste_content)
+    s.seek(0)
+    await ctx.reply("The save editor used: https://coderpatsy.bitbucket.io/cookies/v10466/editor.html \n Warning may be a bit cursed. (because of the grandmas having madness at this level.) \n To be Used with https://orteil.dashnet.org/cookieclicker/",file=discord.File(s, filename="cookie_save.txt"))
+
   
 def setup(client):
   client.add_cog(Extra(client))
