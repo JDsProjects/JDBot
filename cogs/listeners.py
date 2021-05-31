@@ -60,8 +60,9 @@ class Events(commands.Cog):
     if (test.valid) == False:
       if test.prefix != None and not self.client.user.mentioned_in(message):
         if test.command is None:
+
           time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
-          embed_message = discord.Embed(title=f" {message.content}", description=time_used,color=random.randint(0, 16777215))
+          embed_message = discord.Embed(title=f" {test.prefix}{test.invoked_with}", description=time_used,color=random.randint(0, 16777215))
           embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar_url))
           embed_message.set_footer(text = f"{message.author.id}")
           embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
