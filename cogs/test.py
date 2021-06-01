@@ -88,7 +88,7 @@ class Test(commands.Cog):
         except commands.errors.CommandInvokeError:
           passes = False
         if passes is True:
-          y = y + 1
+          y += 1
           invert_time=functools.partial(invert_func,await x.read())
           file = await self.client.loop.run_in_executor(None, invert_time)
           await ctx.send(file=file)

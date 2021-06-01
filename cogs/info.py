@@ -168,12 +168,7 @@ class Info(commands.Cog):
       await ctx.send(f"Display name: {user_nick}")
     
     if isinstance(ctx.channel, discord.TextChannel):
-      member_list = []
-      for x in ctx.guild.members:
-        if x.nick is None:
-          pass
-        if x.nick:
-          member_list.append(x)
+      member_list = [x for x in ctx.guild.members if x.nick]
       
       nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick,args).ratio())[-1] 
       await ctx.send(f"Nickname: {nearest_server_nick}")
