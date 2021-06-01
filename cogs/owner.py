@@ -245,5 +245,13 @@ class Owner(commands.Cog):
     if guild is None: return await ctx.send("Guild is None can't do anything.")
     print(guild)
 
+  
+  @commands.command()
+  async def aioinput_test(self,ctx,*,args=None):
+    args = args or "Test"
+
+    result=await self.bot.loop.run_in_executor(None, input, (f"{args}:"))
+    await ctx.send(f"Result of the input was {result}")
+
 def setup(client):
   client.add_cog(Owner(client))
