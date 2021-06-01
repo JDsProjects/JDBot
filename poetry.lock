@@ -255,14 +255,6 @@ url = "https://github.com/Rapptz/discord-ext-menus"
 
 [[package]]
 category = "main"
-description = "A simple discord slash command handler for discord.py."
-name = "discord-py-slash-command"
-optional = false
-python-versions = ">=3.6"
-version = "1.2.0"
-
-[[package]]
-category = "main"
 description = "A Python wrapper for the Discord API"
 name = "discord.py"
 optional = false
@@ -874,7 +866,7 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "f00fed2770093420dc6958f2a3ef1946c7dd48fa6f9bb0078d57b45c6d4b8db9"
+content-hash = "6b02c51f16a4f8fa4f3480d13be413011975202c5af2bfab864db337bff03d91"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1072,10 +1064,6 @@ dblpy = [
     {file = "dblpy-0.4.0.tar.gz", hash = "sha256:744f5ee9493a945e5907466754b2dce4735715b34daabb9e6264f76ec79818c9"},
 ]
 discord-ext-menus = []
-discord-py-slash-command = [
-    {file = "discord-py-slash-command-1.2.0.tar.gz", hash = "sha256:12d8ea27a4863dfd1a1e97dd213ad6ed1f72f42738a49c24337e105c6264a926"},
-    {file = "discord_py_slash_command-1.2.0-py3-none-any.whl", hash = "sha256:9b2b722ec75d97f26c42fcc28a9cac46dbb676f6a764e0a7ca6eaa4d4e060b60"},
-]
 "discord.py" = [
     {file = "discord.py-1.7.2-py3-none-any.whl", hash = "sha256:f179db299c949a8cf0a12c1b1b94d0da9a18e088857154d93ae5ab1d807ec61d"},
     {file = "discord.py-1.7.2.tar.gz", hash = "sha256:114e76cd27362fb919abf7f001a2dbdc77c9a67cff74ed6a89aecd6582ee298e"},

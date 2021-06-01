@@ -1,4 +1,4 @@
-import discord,  re, os, discord_slash, aiohttp, contextlib, aiosqlite3
+import discord,  re, os, aiohttp, contextlib, aiosqlite3
 from discord.ext import commands
 
 async def get_prefix(client,message):
@@ -45,8 +45,6 @@ async def check_command_access(ctx):
     del bot.special_access[ctx.author.id]
   
   return True
-
-slash = discord_slash.SlashCommand(client,override_type = True,sync_commands=True)
 
 client.load_extension('jishaku')
 
