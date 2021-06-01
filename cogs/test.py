@@ -139,5 +139,10 @@ class Test(commands.Cog):
   async def setprefix(self,ctx,arg=None):
     await ctx.send("WIP")
 
+  @commands.command()
+  async def letsnot(self,ctx):
+    emoji=discord.utils.get(self.client.emojis,name="commandfail")
+    await ctx.send(f"Let's not go like {emoji} instead let's try to be nice about this. \nGet a copy of this image from imgur: https://i.imgur.com/CykdOIz.png")
+
 def setup(client):
   client.add_cog(Test(client))

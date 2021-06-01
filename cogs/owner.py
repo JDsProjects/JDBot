@@ -1,6 +1,6 @@
 from discord.ext import commands, menus
 from utils import BetterMemberConverter, BetterUserconverter, check
-import random , discord , aiohttp , os , aiosqlite3
+import random , discord , aiohttp , os , aiosqlite3, importlib
 
 class Owner(commands.Cog):
   def __init__(self, bot):
@@ -252,6 +252,19 @@ class Owner(commands.Cog):
 
     result=await self.bot.loop.run_in_executor(None, input, (f"{args}:"))
     await ctx.send(f"Result of the input was {result}")
+
+  @commands.command(brief="a powerful owner tool to reload local files that aren't reloadable.")
+  async def reload_basic(self ,ctx, *, args = None):
+    if args is None:await ctx.send("Can't reload module named None")
+
+    if args:
+      try: module = importlib.import_module(name=args)
+      except Exception as e: return await ctx.send(e)
+
+      try: value=importlib.reload(module)
+      except Exception as e: return await ctx.send(e)
+
+      await ctx.send(f"Sucessfully reloaded {value.__name__} \nMain Package: {value.__package__}")
 
 def setup(client):
   client.add_cog(Owner(client))
