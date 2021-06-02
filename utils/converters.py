@@ -126,7 +126,7 @@ class EmojiConverter(commands.Converter):
     else:
       raise commands.BadArgument(f"{arg} is not an emoji")
 
-def check(self,ctx):
+def check(ctx):
   def inner(m):
     return m.author == ctx.author
   return inner

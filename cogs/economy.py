@@ -1,5 +1,4 @@
-from utils import BetterMemberConverter, BetterUserconverter
-import money_system
+import money_system, utils
 from discord.ext import commands
 
 class Economy(commands.Cog):
@@ -13,7 +12,7 @@ class Economy(commands.Cog):
       money_system.add_money(Member,10,0)
 
   @commands.command(brief="a command to send how much money you have(work in progress)",help="using the JDBot database you can see how much money you have")
-  async def balance(self,ctx,*, Member: BetterMemberConverter=None):
+  async def balance(self,ctx,*, Member: utils.BetterMemberConverter = None):
     if Member is None:
       Member = ctx.author
     money_system.display_account(Member.id)

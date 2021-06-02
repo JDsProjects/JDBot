@@ -1,13 +1,13 @@
-import discord,sr_api,asuna_api,random , aiohttp
+import discord, sr_api, asuna_api, random, aiohttp
 from discord.ext import commands
-from utils import BetterMemberConverter, BetterUserconverter,triggered_converter, headpat_converter, invert_converter, headpat_converter2
+import utils
 
 class Image(commands.Cog):
   def __init__(self, client): 
     self.client = client
 
   @commands.command(brief="a command to slap someone",help="this sends a slap gif to the target user")
-  async def slap(self,ctx,*, Member: BetterMemberConverter = None):
+  async def slap(self,ctx,*, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
@@ -49,7 +49,7 @@ class Image(commands.Cog):
     await ctx.send(embed=embed)
   
   @commands.command(brief="another command to give you pat gifs",help="powered using the asuna api")
-  async def pat2(self,ctx,*, Member: BetterMemberConverter= None):
+  async def pat2(self,ctx,*, Member: utils.BetterMemberConverter= None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
@@ -81,7 +81,7 @@ class Image(commands.Cog):
         await ctx.author.send("Failed DM'ing them...")
 
   @commands.command(brief="a command to give you pat gifs",help="using the sra api it gives you pat gifs")
-  async def pat(self,ctx,*, Member: BetterMemberConverter=None):
+  async def pat(self,ctx,*, Member: utils.BetterMemberConverter=None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
@@ -113,7 +113,7 @@ class Image(commands.Cog):
   
 
   @commands.command(brief="a hug command to hug people",help="this the first command to hug.")
-  async def hug(self,ctx,*, Member: BetterMemberConverter=None):
+  async def hug(self,ctx,*, Member: utils.BetterMemberConverter=None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
@@ -151,14 +151,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png"):
           url = x.url
-          await triggered_converter(self,url,ctx)
+          await utils.triggered_converter(self,url,ctx)
           y += 1
         if not x.filename.endswith(".png"):
           pass
 
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
-      await triggered_converter(self,url,ctx)
+      await utils.triggered_converter(self,url,ctx)
 
   @commands.command(brief="uses our headpat program to pat you",help="a command that uses sra_api to make a headpat of you.")
   async def headpat2(self,ctx):
@@ -167,17 +167,17 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png"):
           url = x.url
-          await headpat_converter(self,url,ctx)
+          await utils.headpat_converter(self,url,ctx)
           y += 1
         if not x.filename.endswith(".png"):
           pass
 
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
-      await headpat_converter(self,url,ctx)
+      await utils.headpat_converter(self,url,ctx)
 
   @commands.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
-  async def hug2(self,ctx,*, Member: BetterMemberConverter=None):
+  async def hug2(self,ctx,*, Member: utils.BetterMemberConverter=None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
@@ -209,7 +209,7 @@ class Image(commands.Cog):
         await ctx.author.send("Failed DM'ing them...")
 
   @commands.command(brief="a kiss command",help="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)")
-  async def kiss(self,ctx,*, Member: BetterMemberConverter=None):
+  async def kiss(self,ctx,*, Member: utils.BetterMemberConverter=None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
@@ -252,7 +252,7 @@ class Image(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="a command to send wink gifs",wink="you select a user to send it to and it will send it to you lol")
-  async def wink(self,ctx,*, Member: BetterMemberConverter=None):
+  async def wink(self,ctx,*, Member: utils.BetterMemberConverter=None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
@@ -294,7 +294,7 @@ class Image(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="a command to send facepalm gifs",help="using some random api it sends you a facepalm gif lol")
-  async def facepalm(self,ctx,*, Member: BetterMemberConverter=None):
+  async def facepalm(self,ctx,*, Member: utils.BetterMemberConverter=None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
@@ -364,14 +364,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.url
-          await invert_converter(url,ctx)
+          await utils.invert_converter(url,ctx)
           y += 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
-      await invert_converter(self,url,ctx)
+      await utils.invert_converter(self,url,ctx)
 
   @commands.command(help="Headpat generator :D")
   async def headpat(self,ctx):
@@ -380,14 +380,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.proxy_url
-          await headpat_converter2(self,url,ctx)
+          await utils.headpat_converter2(self,url,ctx)
           y += 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
-      await headpat_converter2(self,url,ctx)
+      await utils.headpat_converter2(self,url,ctx)
 
   
 

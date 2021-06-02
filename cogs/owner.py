@@ -14,7 +14,7 @@ class Owner(commands.Cog):
       user = ctx.author
     if user:
       await ctx.reply("Please give me a message to use.")
-      message = await self.client.wait_for("message",check=utils.check(ctx))
+      message = await self.client.wait_for("message",check =utils.check(ctx))
       embed_message = discord.Embed(title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215))
       embed_message.set_author(name=f"Mail from: {ctx.author}",icon_url=(ctx.author.avatar_url))
       embed_message.set_footer(text = f"{ctx.author.id}")
