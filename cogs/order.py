@@ -17,7 +17,7 @@ class Order(commands.Cog):
     if args is None:
       await ctx.send("You can't order nothing.")
     if args:
-      time_before=time.process_time() 
+      time_before=time.perf_counter()  
       image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
       try:
         results = await image_client.search(args, safesearch=True, image_search=True)
@@ -28,7 +28,7 @@ class Order(commands.Cog):
         return
 
       await image_client.close()
-      time_after=time.process_time()
+      time_after=time.perf_counter() 
       try:
         await ctx.message.delete()
       except discord.errors.Forbidden:
@@ -49,7 +49,7 @@ class Order(commands.Cog):
     if args is None:
         await self.order(ctx,args="shuffle")
     if args:
-      time_before=time.process_time() 
+      time_before=time.perf_counter()  
       image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
       try:
         results = await image_client.search(args, safesearch=True, image_search=True)
@@ -60,7 +60,7 @@ class Order(commands.Cog):
 
       emoji_image = random.choice(results)
       await image_client.close()
-      time_after=time.process_time()
+      time_after=time.perf_counter() 
       try:
         await ctx.message.delete()
       except discord.errors.Forbidden:
@@ -81,7 +81,7 @@ class Order(commands.Cog):
     if args is None:
       await ctx.send("You can't order nothing")
     if args:
-      time_before=time.process_time() 
+      time_before=time.perf_counter()  
       image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
       try:
         results = await image_client.search(args, safesearch=True, image_search=True)
@@ -92,7 +92,7 @@ class Order(commands.Cog):
 
       emoji_image = random.choice(results)
       await image_client.close()
-      time_after=time.process_time()
+      time_after=time.perf_counter() 
       try:
         await ctx.message.delete()
       except discord.errors.Forbidden:

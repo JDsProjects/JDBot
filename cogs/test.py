@@ -147,9 +147,9 @@ class Test(commands.Cog):
   async def tts_test(self,ctx, *, args= None):
     args = args or "Test"
 
-    time_before=time.process_time() 
+    time_before=time.perf_counter() 
     file1=await utils.google_tts(args)
-    time_after=time.process_time()
+    time_after=time.perf_counter()
 
     await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS(Using default calling of an async function using aiogtts)",file=file1)
 
