@@ -1,5 +1,23 @@
 [[package]]
 category = "main"
+description = "An async ready wrapper for the NASA Open API's"
+name = "aiogifs"
+optional = false
+python-versions = "*"
+version = "1.0.0a0"
+
+[package.dependencies]
+aiohttp = "*"
+
+[package.extras]
+speedups = ["aiohttp"]
+
+[package.source]
+reference = "6f6fe21a3b2c545b4dfb7f527f4e26419a259c7f"
+type = "git"
+url = "https://github.com/muunie/aiogifs.git"
+[[package]]
+category = "main"
 description = "A Python library to interface with Google Translate text-to-speech API"
 name = "aiogtts"
 optional = false
@@ -280,7 +298,7 @@ description = "A high-level Python Web framework that encourages rapid developme
 name = "django"
 optional = false
 python-versions = ">=3.6"
-version = "3.2.3"
+version = "3.2.4"
 
 [package.dependencies]
 asgiref = ">=3.3.2,<4"
@@ -836,10 +854,11 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "e34d549566030acceb3152e2c8b991d91e1343cff4f493effe5147c05ca40580"
+content-hash = "b3f857e0015423d5ac9c00db81b5784f391f2cf24c3daaa9322ef869c5e87db8"
 python-versions = "^3.8"
 
 [metadata.files]
+aiogifs = []
 aiogtts = [
     {file = "aiogTTS-1.1.0-py3-none-any.whl", hash = "sha256:ae2a063e85ac46d73d5d08927a6bbc6b448a05c41842b76d7cd8295853f9aa19"},
     {file = "aiogTTS-1.1.0.tar.gz", hash = "sha256:295a488e6a09c58ecd8d3c9a2797cf7ad18fb22c2e3f2b2853a0fe47257b0727"},
@@ -1040,8 +1059,8 @@ discord-ext-menus = []
     {file = "discordlists.py-1.1.1.tar.gz", hash = "sha256:f6d49c93c3eb1d5ffbaeddf663d3bfa80bb3073a4fc43787b832ea55de49113d"},
 ]
 django = [
-    {file = "Django-3.2.3-py3-none-any.whl", hash = "sha256:7e0a1393d18c16b503663752a8b6790880c5084412618990ce8a81cc908b4962"},
-    {file = "Django-3.2.3.tar.gz", hash = "sha256:13ac78dbfd189532cad8f383a27e58e18b3d33f80009ceb476d7fcbfc5dcebd8"},
+    {file = "Django-3.2.4-py3-none-any.whl", hash = "sha256:ea735cbbbb3b2fba6d4da4784a0043d84c67c92f1fdf15ad6db69900e792c10f"},
+    {file = "Django-3.2.4.tar.gz", hash = "sha256:66c9d8db8cc6fe938a28b7887c1596e42d522e27618562517cc8929eb7e7f296"},
 ]
 dnspython = [
     {file = "dnspython-2.1.0-py3-none-any.whl", hash = "sha256:95d12f6ef0317118d2a1a6fc49aac65ffec7eb8087474158f42f26a639135216"},

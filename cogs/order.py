@@ -1,15 +1,15 @@
-import os, discord, time, async_cse, random
+import os, discord, time, async_cse, random, aiogifs
 from discord.ext import commands
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 
-#tenor_client = TenGiphPy.Tenor(token=os.environ["tenor_key"])
-#giphy_client = TenGiphPy.Giphy(token=os.environ["giphy_token"])
-#move these into the __init__
-
 class Order(commands.Cog):
   def __init__(self, client):
     self.client = client
+
+    self.tenor_client = aiogifs.tenor.client.TenorClient (api_key=os.environ["tenor_key"], session = client.session)
+    
+    self.giphy_client = aiogifs.giphy.client.GiphyClient(api_key=os.environ["giphy_token"], session = client.session)
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="order",invoke_without_command=True)
