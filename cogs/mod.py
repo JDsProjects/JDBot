@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord, random, aiosqlite3
-from utils import BetterMemberConverter, warn_permission
+import utils
 from discord.ext.commands.cooldowns import BucketType
 
 class Moderation(commands.Cog):
@@ -9,8 +9,8 @@ class Moderation(commands.Cog):
 
   @commands.cooldown(1,90,BucketType.user)
   @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
-  async def warn(self,ctx,Member: BetterMemberConverter = None):
-    if warn_permission(ctx):
+  async def warn(self,ctx,Member: utils.BetterMemberConverter = None):
+    if utils.warn_permission(ctx):
 
       Member = Member or ctx.author
 
@@ -40,7 +40,7 @@ class Moderation(commands.Cog):
       except discord.Forbidden:
         await ctx.send("we can't DM them :(")
 
-    if warn_permission(ctx) is False:
+    if utils.warn_permission(ctx) is False:
       await ctx.send("You don't have permission to use that.")
 
   @warn.error

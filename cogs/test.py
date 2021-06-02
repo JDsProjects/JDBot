@@ -1,7 +1,6 @@
 from discord.ext import commands
 import discord, os, itertools, re, functools, typing, random, collections
-from utils import invert_func, EmojiBasic
-
+import utils
 
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
 
@@ -32,7 +31,7 @@ class Test(commands.Cog):
 
 
   @commands.command()
-  async def emoji_id(self,ctx,*, emoji: EmojiBasic=None):
+  async def emoji_id(self,ctx,*, emoji: utils.EmojiBasic=None):
     if emoji:
       embed = discord.Embed(description=f" Emoji ID: {emoji.id}",color=random.randint(0, 16777215))
       embed.set_image(url=emoji.url)
@@ -89,7 +88,7 @@ class Test(commands.Cog):
           passes = False
         if passes is True:
           y += 1
-          invert_time=functools.partial(invert_func,await x.read())
+          invert_time=functools.partial(utils.invert_func,await x.read())
           file = await self.client.loop.run_in_executor(None, invert_time)
           await ctx.send(file=file)
         if passes is False:
@@ -97,7 +96,7 @@ class Test(commands.Cog):
 
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
-      invert_time=functools.partial(invert_func,await url.read() )
+      invert_time=functools.partial(utils.invert_func,await url.read() )
 
       file = await self.client.loop.run_in_executor(None, invert_time)
       await ctx.send(file=file)
