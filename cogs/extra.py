@@ -1,5 +1,6 @@
 from discord.ext import commands
-import discord, random, asuna_api, math, aiohttp, io, chardet, aiogtts, mystbin, alexflipnote, os, typing
+import discord, random, asuna_api, math, aiohttp, chardet, mystbin, alexflipnote, os, typing
+import utils
 
 class Extra(commands.Cog):
   def __init__(self,client):
@@ -142,19 +143,12 @@ class Extra(commands.Cog):
     embed.set_footer(text="Powered by JDJG Api!")
     await ctx.send(embed=embed)
 
-  async def google_tts(self,ctx,text):
-    await ctx.send("if you have a lot of text it may take a bit")
-    mp3_fp = io.BytesIO()
-    tts=aiogtts.aiogTTS()
-    await tts.write_to_fp(text,mp3_fp,lang='en')
-    mp3_fp.seek(0)
-    file = discord.File(mp3_fp,"tts.mp3")
-    await ctx.send(file=file)
-
   @commands.command(help="a command to talk to Google TTS",brief="using the power of the GTTS module you can now do tts")
   async def tts(self,ctx,*,args=None):
     if args:
-      await self.google_tts(ctx,args)
+      await ctx.send("if you have a lot of text it may take a bit")
+      tts_file = await utils.google_tts(args)
+      await ctx.send(file=tts_file)
     
     if ctx.message.attachments:
       for x in ctx.message.attachments:
@@ -163,7 +157,10 @@ class Extra(commands.Cog):
           encoding=chardet.detect(file)["encoding"]
           if encoding:
             text = file.decode(encoding)
-            await self.google_tts(ctx,text)
+            await ctx.send("if you have a lot of text it may take a bit")
+            tts_file = await utils.google_tts(text)
+            await ctx.send(file=tts_file)
+
           if encoding is None:
             await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439")
         if len(file ) < 1:

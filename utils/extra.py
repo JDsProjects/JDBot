@@ -1,4 +1,5 @@
-import aioimgur, discord, random, sr_api, os, asyncdagpi
+import aioimgur, discord, random, sr_api, asyncdagpi, aiogtts
+import os, io
 
 async def triggered_converter(self,url,ctx):
   sr_client=sr_api.Client(session=self.client.session)
@@ -55,4 +56,11 @@ async def headpat_converter2(self,url,ctx):
   embed.set_image(url=f"attachment://headpat.{image.format}")
   embed.set_footer(text="powered by dagpi")
   await ctx.send(file=file,embed=embed)
-  
+
+async def google_tts(text):
+  mp3_fp = io.BytesIO()
+  tts=aiogtts.aiogTTS()
+  await tts.write_to_fp(text,mp3_fp,lang='en')
+  mp3_fp.seek(0)
+  file = discord.File(mp3_fp,"tts.mp3")
+  return file
