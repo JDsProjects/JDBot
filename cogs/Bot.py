@@ -91,6 +91,7 @@ class Bot(commands.Cog):
     if information.team == None:
       true_owner=information.owner
       team_members = []
+      
     if information.team != None:
       true_owner = information.team.owner
       team_members = information.team.members

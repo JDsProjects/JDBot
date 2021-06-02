@@ -1,4 +1,4 @@
-import os, discord, time, async_cse, random
+import os, discord, time, async_cse, random, aiogifs
 from discord.ext import commands
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType

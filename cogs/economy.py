@@ -5,7 +5,7 @@ class Economy(commands.Cog):
   def __init__(self, client):
     self.client = client
 
-  @commands.command(brief="Currently work in progress")
+  @commands.command(brief="Currently work in progress(WIP)")
   async def work(self,ctx,*,args=None):
     Member = ctx.author.id
     if args is None:
