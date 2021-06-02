@@ -1,5 +1,5 @@
 from discord.ext import commands, menus
-from utils import BetterMemberConverter, BetterUserconverter, check
+import utils
 import random , discord , aiohttp , os , aiosqlite3, importlib
 
 class Owner(commands.Cog):
@@ -8,13 +8,13 @@ class Owner(commands.Cog):
     self.bot = bot
 
   @commands.command(brief="a command to send mail")
-  async def mail(self,ctx,*,user: BetterUserconverter=None):
+  async def mail(self,ctx,*,user: utils.BetterUserconverter=None):
     if user is None:
       await ctx.reply("User not found, returning Letter")
       user = ctx.author
     if user:
       await ctx.reply("Please give me a message to use.")
-      message = await self.client.wait_for("message",check=check(ctx))
+      message = await self.client.wait_for("message",check=utils.check(ctx))
       embed_message = discord.Embed(title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215))
       embed_message.set_author(name=f"Mail from: {ctx.author}",icon_url=(ctx.author.avatar_url))
       embed_message.set_footer(text = f"{ctx.author.id}")
@@ -162,7 +162,7 @@ class Owner(commands.Cog):
       return embed
 
   @commands.command(brief="Commands to see what guilds a person is in.")
-  async def mutualguilds(self,ctx,*,user:BetterUserconverter=None):
+  async def mutualguilds(self,ctx,*,user: utils.BetterUserconverter=None):
     user = user or ctx.author
     pag = commands.Paginator()
 
@@ -176,13 +176,13 @@ class Owner(commands.Cog):
     await menu.start(ctx,channel=ctx.author.dm_channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
-  async def addsus(self,ctx,*,user:BetterUserconverter=None):
+  async def addsus(self,ctx,*,user: utils.BetterUserconverter=None):
     if user is None:
       await ctx.send("can't have a user be none.")
 
     if user:
       await ctx.reply("Please give me a reason why:")
-      reason = await self.client.wait_for("message",check=check(ctx))
+      reason = await self.client.wait_for("message",check= utils.check(ctx))
       cur = await self.client.sus_users.cursor()
       await cur.execute("INSERT INTO sus_users VALUES (?, ?)", (user.id, reason.content))
       await self.client.sus_users.commit()
@@ -190,7 +190,7 @@ class Owner(commands.Cog):
       await ctx.send("added sus users, succesfully")
 
   @commands.command(brief="a command to remove sus users.")
-  async def removesus(self,ctx,*,user:BetterUserconverter=None):
+  async def removesus(self,ctx,*,user: utils.BetterUserconverter=None):
     if user is None:
       await ctx.send("You can't have a none user.")
 
@@ -226,7 +226,7 @@ class Owner(commands.Cog):
     await ctx.send(error)
 
   @commands.command(aliases=["bypass_command"])
-  async def command_bypass(self,ctx,user:BetterUserconverter=None,*,command=None):
+  async def command_bypass(self,ctx,user: utils.BetterUserconverter=None,*,command=None):
     #make sure to swap to autoconverter if it gets added.
     user = user or ctx.author
     if command:
