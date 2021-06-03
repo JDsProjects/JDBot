@@ -23,6 +23,8 @@ class DSLCount(commands.Cog):
     except Exception as e:
       logger.exception('Failed to post server count\n{}: {}'.format(type(e).__name__, e))
 
+  def cog_unload(self):
+    self.update_stats.stop()
   
 def setup(client):
   global logger

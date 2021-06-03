@@ -18,7 +18,6 @@ class Music(commands.Cog):
 
   def cog_unload(self):
     self.bot.loop.create_task(self.stop_nodes())
-    super().cog_unload()
 
   @commands.command(name='connect')
   async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):

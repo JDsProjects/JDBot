@@ -14,7 +14,7 @@ class Help(commands.Cog):
     self.bot.help_command.cog = self
 
 def cog_unload(self):
-  self.t.help_command = self._original_help_command
+  self.help_command = self._original_help_command
 
 def setup(client):
   client.add_cog(Help(client))

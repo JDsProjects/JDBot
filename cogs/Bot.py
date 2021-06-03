@@ -20,6 +20,9 @@ class Bot(commands.Cog):
   async def before_status_task(self):
     await self.client.wait_until_ready()
 
+  def cog_unload(self):
+    self.status_task.stop()
+
   @commands.command(brief="sends pong and the time it took to do so.")
   async def ping(self,ctx):
     start = time.perf_counter()
