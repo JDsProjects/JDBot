@@ -14,28 +14,32 @@ class Order(commands.Cog):
   async def __ainit__(self):
     await self.bot.wait_until_ready()
     tenor_key = os.environ["tenor_key"]
-    giphy_key = os.environ["giphy_token"]    
+    giphy_key = os.environ["giphy_token"] 
 
-    self.tenor_client = TenorClient (api_key=tenor_key, session = self.bot.session)
-    self.giphy_client = GiphyClient(api_key=giphy_key, session = self.bot.session)
+    image_api_key = os.environ["image_api_key"]  
+    image_engine_key = os.environ["google_image_key"] 
+
+    #self.tenor_client = TenorClient (api_key=tenor_key, session = self.bot.session)
+    #self.giphy_client = GiphyClient(api_key=giphy_key, session = self.bot.session)
+
+    self.image_client=async_cse.Search(image_api_key,engine_id=image_engine_key, session = self.bot.session)
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="order",invoke_without_command=True)
-  async def order(self,ctx,*,args=None):
+  async def order(self, ctx, *, args = None):
     if args is None:
       await ctx.send("You can't order nothing.")
+
     if args:
       time_before=time.perf_counter()  
-      image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
+      
       try:
-        results = await image_client.search(args, safesearch=True, image_search=True)
+        results = await self.image_client.search(args, safesearch=True, image_search=True)
         emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url,args).ratio())[-1]
       except async_cse.search.NoResults:
         await ctx.send("No results found :(")
-        await image_client.close()
-        return
+        return 
 
-      await image_client.close()
       time_after=time.perf_counter() 
       try:
         await ctx.message.delete()
@@ -57,17 +61,14 @@ class Order(commands.Cog):
     if args is None:
         await self.order(ctx,args="shuffle")
     if args:
-      time_before=time.perf_counter()  
-      image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
+      time_before=time.perf_counter()
       try:
-        results = await image_client.search(args, safesearch=True, image_search=True)
+        results = await self.image_client.search(args, safesearch=True, image_search=True)
       except async_cse.search.NoResults:
-        await ctx.send("No results found :(")
-        await image_client.close()
-        return
+        return await ctx.send("No results found :(")
+
 
       emoji_image = random.choice(results)
-      await image_client.close()
       time_after=time.perf_counter() 
       try:
         await ctx.message.delete()
@@ -90,16 +91,13 @@ class Order(commands.Cog):
       await ctx.send("You can't order nothing")
     if args:
       time_before=time.perf_counter()  
-      image_client=async_cse.Search(os.environ["image_api_key"],engine_id=os.environ["google_image_key"])
       try:
-        results = await image_client.search(args, safesearch=True, image_search=True)
+        results = await self.image_client.search(args, safesearch=True, image_search=True)
       except async_cse.search.NoResults:
-        await ctx.send("No results found :(")
-        await image_client.close()
-        return
+        return await ctx.send("No results found :(")
 
       emoji_image = random.choice(results)
-      await image_client.close()
+
       time_after=time.perf_counter() 
       try:
         await ctx.message.delete()
@@ -113,7 +111,7 @@ class Order(commands.Cog):
       embed.set_image(url=emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-      await self.client.get_channel(738912143679946783).send(embed=embed)
+      await self.bot.get_channel(738912143679946783).send(embed=embed)
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="tenor",invoke_without_command=True)
@@ -121,7 +119,7 @@ class Order(commands.Cog):
     if args:
 
       safesearch_type = ContentFilter.high()
-      results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
+      #results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
 
       #print(results)
 
