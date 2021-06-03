@@ -177,7 +177,7 @@ class Bot(commands.Cog):
       await ctx.send("Please provide an arg.")
 
     if command:
-      command_names = [str(x) for x in ctx.bot.commands]
+      command_names = [f"{x}" for x in ctx.bot.commands]
       matches = difflib.get_close_matches(command, command_names)
       
       if matches:

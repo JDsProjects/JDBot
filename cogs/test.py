@@ -5,8 +5,8 @@ import utils
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
 
 class Test(commands.Cog):
-  def __init__(self, client):
-    self.client = client
+  def __init__(self, bot):
+    self.bot = bot
 
   @commands.command()
   async def ticket_make(self,ctx):
@@ -20,7 +20,7 @@ class Test(commands.Cog):
   async def pypi(self,ctx,*,args=None):
     #https://pypi.org/simple/
     if args:
-      pypi_response=await self.client.session.get(f"https://pypi.org/pypi/{args}/json")
+      pypi_response=await self.bot.session.get(f"https://pypi.org/pypi/{args}/json")
       if pypi_response.ok:
         print(await pypi_response.json())
       else:
@@ -89,7 +89,7 @@ class Test(commands.Cog):
         if passes is True:
           y += 1
           invert_time=functools.partial(utils.invert_func,await x.read())
-          file = await self.client.loop.run_in_executor(None, invert_time)
+          file = await self.bot.loop.run_in_executor(None, invert_time)
           await ctx.send(file=file)
         if passes is False:
           pass
@@ -98,7 +98,7 @@ class Test(commands.Cog):
       url = ctx.author.avatar_url_as(format="png")
       invert_time=functools.partial(utils.invert_func,await url.read() )
 
-      file = await self.client.loop.run_in_executor(None, invert_time)
+      file = await self.bot.loop.run_in_executor(None, invert_time)
       await ctx.send(file=file)
 
   @invert.error
@@ -112,7 +112,7 @@ class Test(commands.Cog):
   async def emoji_dump(self,ctx):
     await ctx.send("emoji dump time.")
     import mystbin
-    mystbin_client = mystbin.Client(session=self.client.session)
+    mystbin_client = mystbin.Client(session=self.bot.session)
 
     paste=await mystbin_client.get("https://mystb.in/CompetingGlobeParental")
     paste2 = await mystbin_client.get("https://mystb.in/PersianMentalMission")
@@ -131,7 +131,7 @@ class Test(commands.Cog):
 
   @commands.command(brief="Lists the current prefixes that could be used.")
   async def prefixes(self,ctx):
-    prefixes=await self.client.get_prefix(ctx.message)
+    prefixes=await self.bot.get_prefix(ctx.message)
     await ctx.send(f"{prefixes}")
 
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
@@ -140,7 +140,7 @@ class Test(commands.Cog):
 
   @commands.command()
   async def letsnot(self,ctx):
-    emoji=discord.utils.get(self.client.emojis,name="commandfail")
+    emoji=discord.utils.get(self.bot.emojis,name="commandfail")
     await ctx.send(f"Let's not go like {emoji} instead let's try to be nice about this. \nGet a copy of this image from imgur: https://i.imgur.com/CykdOIz.png")
 
   @commands.command()
@@ -153,6 +153,11 @@ class Test(commands.Cog):
 
     await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS(Using default calling of an async function using aiogtts)",file=file1)
 
+  @commands.command()
+  async def test_filter(self, ctx):
+    await self.bot.help_command.prepare_help_command(ctx, command=None)
+
+    return[f"{x}" for x in await self.bot.help_command.filter_commands(self.bot.commands)]
 
 def setup(client):
   client.add_cog(Test(client))

@@ -18,7 +18,7 @@ class Info(commands.Cog):
     if guild:
       await utils.guildinfo(ctx,guild)
 
-  @commands.command(aliases=["user info", "user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
+  @commands.command(aliases=["user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
   async def userinfo(self,ctx,*,user: utils.BetterUserconverter = None):
     user = user or ctx.author
     user_type = user_type = ['User', 'Bot'][user.bot]
