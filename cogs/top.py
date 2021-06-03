@@ -25,6 +25,9 @@ class DSLCount(commands.Cog):
 
   def cog_unload(self):
     self.update_stats.stop()
+    self.api.stop()
+    
+    #not sure if doing self.api is okay, but it should be.
   
 def setup(client):
   global logger
