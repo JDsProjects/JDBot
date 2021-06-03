@@ -12,6 +12,8 @@ class Reddit(commands.Cog):
     async for submission in subreddit.new():
       meme_list.append(submission)
 
+    meme_list= [submission async for submission in subreddit.new()]
+
     data = random.choice(meme_list)
     embed = discord.Embed(title=f"{data.subreddit_name_prefixed}",description=f"[{data.title}](https://reddit.com{data.permalink})", color=0x00FF00)
     embed.set_image(url=data.url)
