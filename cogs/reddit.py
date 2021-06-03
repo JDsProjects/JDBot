@@ -2,9 +2,10 @@ from discord.ext import commands
 import discord, apraw, os, random, aiohttp
 
 class Reddit(commands.Cog):
-  def __init__(self, client):
-    self.client = client
-    self.reddit =  apraw.Reddit(client_id=os.getenv("reddit_client_id"), client_secret=os.getenv("reddit_client_secret"),password= os.getenv("reddit_password"), user_agent="JDBot 1.0", username= os.getenv("reddit_username"))
+  def __init__(self, bot):
+    self.bot = bot
+
+    self.reddit =  apraw.Reddit(client_id=os.getenv("reddit_client_id"), client_secret=os.getenv("reddit_client_secret"),password= os.getenv("reddit_password"), user_agent="JDBot 1.0", username= os.getenv("reddit_username"),requestor_kwargs={"session": self.bot.session})
 
   async def apraw_handler(self,sub_name):
     subreddit = await self.reddit.subreddit(sub_name)
@@ -37,12 +38,12 @@ class Reddit(commands.Cog):
 
   @commands.command(brief="Random meme from Dank Memes with aiohttp",help="Content returned may not be suitable to younger audiences")
   async def dankmeme2(self,ctx):
-    e = await self.client.session.get("https://www.reddit.com/r/dankmemes/.json")
+    e = await self.bot.session.get("https://www.reddit.com/r/dankmemes/.json")
     data = random.choice((await e.json())["data"]["children"])["data"]
     embed = discord.Embed(title="r/dankmemes",description=f'[{data["title"]}](https://reddit.com{data["permalink"]})', color=0x00FF00)
     embed.set_image(url=data["url"])
     embed.set_footer(text=f"Upvote ratio : {data['upvote_ratio']}")
     await ctx.send(embed=embed)
 
-def setup(client):
-  client.add_cog(Reddit(client))
+def setup(bot):
+  bot.add_cog(Reddit(bot))

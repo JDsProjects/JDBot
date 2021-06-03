@@ -155,8 +155,8 @@ class Test(commands.Cog):
 
   @commands.command()
   async def test_filter(self, ctx):
+    
     await self.bot.help_command.prepare_help_command(ctx, command=None)
-
     return[f"{x}" for x in await self.bot.help_command.filter_commands(self.bot.commands)]
 
 def setup(client):
