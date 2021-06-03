@@ -1,5 +1,13 @@
 [[package]]
 category = "main"
+description = "File support for asyncio."
+name = "aiofiles"
+optional = false
+python-versions = ">=3.6,<4.0"
+version = "0.7.0"
+
+[[package]]
+category = "main"
 description = "An async ready wrapper for the NASA Open API's"
 name = "aiogifs"
 optional = false
@@ -16,6 +24,7 @@ speedups = ["aiohttp"]
 reference = "6f6fe21a3b2c545b4dfb7f527f4e26419a259c7f"
 type = "git"
 url = "https://github.com/muunie/aiogifs.git"
+
 [[package]]
 category = "main"
 description = "A Python library to interface with Google Translate text-to-speech API"
@@ -85,18 +94,6 @@ aiohttp = "*"
 
 [[package]]
 category = "main"
-description = "aPRAW is an asynchronous Reddit API wrapper written in Python."
-name = "apraw"
-optional = false
-python-versions = ">=3.6"
-version = "0.6.8a0"
-
-[package.dependencies]
-aiohttp = ">=3.6.2"
-reactivepy = ">=1.9.0.dev0"
-
-[[package]]
-category = "main"
 description = "ASGI specs, helper code, and adapters"
 name = "asgiref"
 optional = false
@@ -159,6 +156,44 @@ version = "3.3.3"
 
 [package.dependencies]
 aiohttp = ">=3.7.3,<4.0.0"
+
+[[package]]
+category = "main"
+description = "Async PRAW, an abbreviation for `Asynchronous Python Reddit API Wrapper`, is a python package that allows for simple access to reddit's API."
+name = "asyncpraw"
+optional = false
+python-versions = ">=3.6"
+version = "7.2.0"
+
+[package.dependencies]
+aiofiles = "*"
+asyncprawcore = ">=2,<3"
+update-checker = ">=0.18"
+
+[package.extras]
+ci = ["coveralls"]
+dev = ["packaging", "pre-commit", "black", "docstrfmt", "flake8", "flynt", "isort", "pydocstyle", "sphinx", "sphinx-rtd-theme", "sphinxcontrib-trio", "asynctest (>=0.13.0)", "mock (>=0.8)", "pytest (>=2.7.3)", "pytest-asyncio", "pytest-vcr", "testfixtures (>4.13.2,<7)", "vcrpy (4.0.2)"]
+lint = ["black", "docstrfmt", "flake8", "flynt", "isort", "pydocstyle", "sphinx", "sphinx-rtd-theme", "sphinxcontrib-trio"]
+readthedocs = ["sphinx", "sphinxcontrib-trio"]
+test = ["asynctest (>=0.13.0)", "mock (>=0.8)", "pytest (>=2.7.3)", "pytest-asyncio", "pytest-vcr", "testfixtures (>4.13.2,<7)", "vcrpy (4.0.2)"]
+
+[[package]]
+category = "main"
+description = "Low-level asynchronous communication layer for Async PRAW 7+."
+name = "asyncprawcore"
+optional = false
+python-versions = ">=3.6"
+version = "2.0.1"
+
+[package.dependencies]
+aiohttp = "*"
+yarl = "*"
+
+[package.extras]
+ci = ["coveralls"]
+dev = ["black", "flake8", "pre-commit", "pydocstyle", "flynt", "pytest-vcr", "vcrpy (4.0.2)", "mock (>=0.8)", "pytest", "testfixtures (>4.13.2,<7)", "asynctest (>=0.13.0)"]
+lint = ["black", "flake8", "pre-commit", "pydocstyle", "flynt"]
+test = ["pytest-vcr", "vcrpy (4.0.2)", "mock (>=0.8)", "pytest", "testfixtures (>4.13.2,<7)", "asynctest (>=0.13.0)"]
 
 [[package]]
 category = "main"
@@ -270,6 +305,7 @@ version = "1.0.0a30+g309c702"
 reference = "309c70222eec33acacb8c21bbb0fbe9bc57de661"
 type = "git"
 url = "https://github.com/Rapptz/discord-ext-menus"
+
 [[package]]
 category = "main"
 description = "A Python wrapper for the Discord API"
@@ -488,6 +524,7 @@ voice = ["discord.py (>=1.5.0)", "youtube-dl"]
 reference = "873f863052a663efab3b6184d2516e03bf16bcf9"
 type = "git"
 url = "https://github.com/Gorialis/jishaku"
+
 [[package]]
 category = "main"
 description = "Platform-independent file locking module"
@@ -679,14 +716,6 @@ test = ["pytest (>=3.0)", "pytest-asyncio"]
 
 [[package]]
 category = "main"
-description = "Reactive properties and owners for Python classes."
-name = "reactivepy"
-optional = false
-python-versions = ">=3.6"
-version = "2.0.0.dev0"
-
-[[package]]
-category = "main"
 description = "Python HTTP for Humans."
 name = "requests"
 optional = false
@@ -744,6 +773,7 @@ yarl = "*"
 reference = "598357981652217cd7845b0cd61a336b5adcd5f2"
 type = "git"
 url = "https://github.com/iDutchy/sr_api"
+
 [[package]]
 category = "main"
 description = "module for creating simple ASCII tables"
@@ -772,6 +802,22 @@ name = "typing-extensions"
 optional = false
 python-versions = "*"
 version = "3.10.0.0"
+
+[[package]]
+category = "main"
+description = "A python module that will check for package updates."
+name = "update-checker"
+optional = false
+python-versions = "*"
+version = "0.18.0"
+
+[package.dependencies]
+requests = ">=2.3.0"
+
+[package.extras]
+dev = ["black", "flake8", "pytest (>=2.7.3)"]
+lint = ["black", "flake8"]
+test = ["pytest (>=2.7.3)"]
 
 [[package]]
 category = "main"
@@ -881,10 +927,14 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "b3f857e0015423d5ac9c00db81b5784f391f2cf24c3daaa9322ef869c5e87db8"
+content-hash = "d4fe56e8f093490776053e38cd3103b25cf757e3f063687a60c6adfb10ec74b5"
 python-versions = "^3.8"
 
 [metadata.files]
+aiofiles = [
+    {file = "aiofiles-0.7.0-py3-none-any.whl", hash = "sha256:c67a6823b5f23fcab0a2595a289cec7d8c863ffcb4322fb8cd6b90400aedfdbc"},
+    {file = "aiofiles-0.7.0.tar.gz", hash = "sha256:a1c4fc9b2ff81568c83e21392a82f344ea9d23da906e4f6a52662764545e19d4"},
+]
 aiogifs = []
 aiogtts = [
     {file = "aiogTTS-1.1.0-py3-none-any.whl", hash = "sha256:ae2a063e85ac46d73d5d08927a6bbc6b448a05c41842b76d7cd8295853f9aa19"},
@@ -939,10 +989,6 @@ aiosqlite3 = [
     {file = "alexflipnote.py-2.4.0-py3-none-any.whl", hash = "sha256:c09797724a9ddb98a06cc7e8b37245b6cbd24fccd241dda2abc3785df1329196"},
     {file = "alexflipnote.py-2.4.0.tar.gz", hash = "sha256:70f99929cc7eccd850acf3f695f54ce7881cce968d51706dc7f287ebdaee6b9a"},
 ]
-apraw = [
-    {file = "aPRAW-0.6.8a0-py3-none-any.whl", hash = "sha256:3e22de0a39307293974f1fca5d4801a10f312f5c34fe2af40f0c9c32026a0766"},
-    {file = "aPRAW-0.6.8a0.tar.gz", hash = "sha256:57c98ef53bddd779fd253d5bf15d5079b756b7c6d1348822b2681e952145b22c"},
-]
 asgiref = [
     {file = "asgiref-3.3.4-py3-none-any.whl", hash = "sha256:92906c611ce6c967347bbfea733f13d6313901d54dcca88195eaeb52b2a8e8ee"},
     {file = "asgiref-3.3.4.tar.gz", hash = "sha256:d1216dfbdfb63826470995d31caed36225dcaf34f182e0fa257a4dd9e86f1b78"},
@@ -964,6 +1010,14 @@ async-timeout = [
 asyncdagpi = [
     {file = "asyncdagpi-3.3.3-py3-none-any.whl", hash = "sha256:15bcea8c79edf35c999ec43b62813468684bfd62604a11016d46391d082db3ff"},
     {file = "asyncdagpi-3.3.3.tar.gz", hash = "sha256:dab2d21d0273ddb502a0b237ab49d29d903fea9824f542b7384074e78f2c20c7"},
+]
+asyncpraw = [
+    {file = "asyncpraw-7.2.0-py3-none-any.whl", hash = "sha256:817a4881ce84bda17a207f93156419825c7934b227244a8f05bdfcf557134181"},
+    {file = "asyncpraw-7.2.0.tar.gz", hash = "sha256:7890414f0c5f8f3747dfe8a4a1ca3348064ef124f17b744cf0d12f8e202d38cd"},
+]
+asyncprawcore = [
+    {file = "asyncprawcore-2.0.1-py3-none-any.whl", hash = "sha256:d800228a8009644d42d01d1adf16379f41f661a6344dc1fe07060a3abe4354e5"},
+    {file = "asyncprawcore-2.0.1.tar.gz", hash = "sha256:79ac9b4518888d877e19e88d8685dea619f7ae59a41bde19724fcf529d24870e"},
 ]
 attrs = [
     {file = "attrs-21.2.0-py2.py3-none-any.whl", hash = "sha256:149e90d6d8ac20db7a955ad60cf0e6881a3f20d37096140088356da6c716b0b1"},
@@ -1456,10 +1510,6 @@ ratelimiter = [
     {file = "ratelimiter-1.2.0.post0-py3-none-any.whl", hash = "sha256:a52be07bc0bb0b3674b4b304550f10c769bbb00fead3072e035904474259809f"},
     {file = "ratelimiter-1.2.0.post0.tar.gz", hash = "sha256:5c395dcabdbbde2e5178ef3f89b568a3066454a6ddc223b76473dac22f89b4f7"},
 ]
-reactivepy = [
-    {file = "ReactivePy-2.0.0.dev0-py3-none-any.whl", hash = "sha256:30b43d8b58a117e9dfc1c98601650c038330483b0f24c279557e219a532ed823"},
-    {file = "ReactivePy-2.0.0.dev0.tar.gz", hash = "sha256:d811e491a22ce480b6fb9b7969ede1bdb34bcc2034bf5e5bcf119bedab29a98a"},
-]
 requests = [
     {file = "requests-2.25.1-py2.py3-none-any.whl", hash = "sha256:c210084e36a42ae6b9219e00e48287def368a26d03a048ddad7bfee44f75871e"},
     {file = "requests-2.25.1.tar.gz", hash = "sha256:27973dd4a904a4f13b263a19c866c13b92a39ed1c964655f025f3f8d3d75b804"},
@@ -1488,6 +1538,10 @@ typing-extensions = [
     {file = "typing_extensions-3.10.0.0-py2-none-any.whl", hash = "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497"},
     {file = "typing_extensions-3.10.0.0-py3-none-any.whl", hash = "sha256:779383f6086d90c99ae41cf0ff39aac8a7937a9283ce0a414e5dd782f4c94a84"},
     {file = "typing_extensions-3.10.0.0.tar.gz", hash = "sha256:50b6f157849174217d0656f99dc82fe932884fb250826c18350e159ec6cdf342"},
+]
+update-checker = [
+    {file = "update_checker-0.18.0-py3-none-any.whl", hash = "sha256:cbba64760a36fe2640d80d85306e8fe82b6816659190993b7bdabadee4d4bbfd"},
+    {file = "update_checker-0.18.0.tar.gz", hash = "sha256:6a2d45bb4ac585884a6b03f9eade9161cedd9e8111545141e9aa9058932acb13"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.5-py2.py3-none-any.whl", hash = "sha256:753a0374df26658f99d826cfe40394a686d05985786d946fbe4165b5148f5a7c"},

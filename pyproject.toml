@@ -15,7 +15,6 @@ wavelink = "^0.9.9"
 image = "^1.5.33"
 asuna-api = "^0.2.6"
 vt-py = "^0.6.1"
-aPRAW = "^0.6.8-alpha.0"
 async-cse = "^0.3.0"
 aiogTTS = "^1.1.0"
 motor = "^2.4.0"
@@ -45,6 +44,7 @@ emoji = "^1.2.0"
 twemoji-parser = "^0.5.1"
 "alexflipnote.py" = "^2.4.0"
 aiogifs = {git = "https://github.com/muunie/aiogifs.git", branch = "main"} 
+asyncpraw = "^7.2.0"
 
 [tool.poetry.dev-dependencies]
 

@@ -5,13 +5,14 @@ import os, logging, discordlists
 
 class DSLCount(commands.Cog):
   def __init__(self, bot):
-    self.client = bot
     self.bot = bot
     self.token = os.environ["topgg_key"]
+
     self.api = discordlists.Client(self.bot)  
     self.api.set_auth("disforge.com",os.environ["disforge_key"])
     self.api.start_loop()
-    self.dblpy = dbl.DBLClient(self.client,self.token)
+
+    self.dblpy = dbl.DBLClient(self.bot,self.token)
     self.update_stats.start()
   
   @tasks.loop(minutes=5)
@@ -29,7 +30,7 @@ class DSLCount(commands.Cog):
     
     #not sure if doing self.api is okay, but it should be.
   
-def setup(client):
+def setup(bot):
   global logger
-  logger = logging.getLogger('client')
-  client.add_cog(DSLCount(client))
+  logger = logging.getLogger('bot')
+  bot.add_cog(DSLCount(bot))
