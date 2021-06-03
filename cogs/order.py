@@ -37,8 +37,7 @@ class Order(commands.Cog):
         results = await self.image_client.search(args, safesearch=True, image_search=True)
         emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url,args).ratio())[-1]
       except async_cse.search.NoResults:
-        await ctx.send("No results found :(")
-        return 
+        return await ctx.send("No results found :(")
 
       time_after=time.perf_counter() 
       try:
