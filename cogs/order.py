@@ -1,15 +1,20 @@
-import os, discord, time, async_cse, random, aiogifs
+import os, discord, time, async_cse, random
 from discord.ext import commands
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 
-class Order(commands.Cog):
-  def __init__(self, client):
-    self.client = client
+from aiogifs.tenor import TenorClient, ContentFilter
+from aiogifs.giphy import GiphyClient
 
-    self.tenor_client = aiogifs.tenor.client.TenorClient (api_key=os.environ["tenor_key"], session = client.session)
-    
-    self.giphy_client = aiogifs.giphy.client.GiphyClient(api_key=os.environ["giphy_token"], session = client.session)
+class Order(commands.Cog):
+  def __init__(self, bot):
+    self.bot = bot
+
+    tenor_key = os.environ["tenor_key"]
+    giphy_key = os.environ["giphy_token"]    
+
+    self.tenor_client = TenorClient (api_key=tenor_key, session = bot.session)
+    self.giphy_client = GiphyClient(api_key=giphy_key, session = bot.session)
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="order",invoke_without_command=True)
@@ -41,7 +46,7 @@ class Order(commands.Cog):
       embed.set_image(url=emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-      await self.client.get_channel(738912143679946783).send(embed=embed)
+      await self.bot.get_channel(738912143679946783).send(embed=embed)
 
   @commands.cooldown(1,30,BucketType.user)
   @order.command(brief="a command to shuffle images from google images")
@@ -73,7 +78,7 @@ class Order(commands.Cog):
       embed.set_image(url=emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-      await self.client.get_channel(738912143679946783).send(embed=embed)
+      await self.bot.get_channel(738912143679946783).send(embed=embed)
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.command(brief="a command to shuffle images from google images",aliases=["order-shuffle"])
@@ -111,10 +116,12 @@ class Order(commands.Cog):
   @commands.group(name="tenor",invoke_without_command=True)
   async def tenor(self, ctx, *, args = None):
     if args:
-      #results = await self.client.loop.run_in_executor(None, tenor_client.search(args, safesearch=True, limit=10))
+
+      safesearch_type = ContentFilter.high()
+      results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
+
       #print(results)
-      pass
-      #going to be swapping to an async Tenorgiphy soon lol. This is true :D
+
     if args is None:
       await ctx.send("You can't search for nothing")
 
@@ -164,5 +171,5 @@ class Order(commands.Cog):
     else:
       await ctx.send(error)
 
-def setup(client):
-  client.add_cog(Order(client))
+def setup(bot):
+  bot.add_cog(Order(bot))

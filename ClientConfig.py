@@ -1,4 +1,4 @@
-import discord,  re, os, aiohttp, contextlib, aiosqlite3
+import discord,  re, os, aiohttp, contextlib, aiosqlite3, traceback
 from discord.ext import commands
 
 async def get_prefix(client,message):
@@ -52,5 +52,5 @@ for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
     try:
       client.load_extension(f'cogs.{filename[:-3]}')
-    except commands.errors.NoEntryPointError as e:
-      print(e)
+    except commands.errors.ExtensionError:
+      traceback.print_exc()
