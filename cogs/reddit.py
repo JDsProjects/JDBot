@@ -7,9 +7,7 @@ class Reddit(commands.Cog):
     bot.loop.create_task(self.__ainit__())
 
   async def __ainit__(self):
-
     await self.bot.wait_until_ready()
-    
     self.reddit = asyncpraw.Reddit(client_id=os.getenv("reddit_client_id"), client_secret=os.getenv("reddit_client_secret"), user_agent="JDBot 1.0", username= os.getenv("reddit_username"), password = os.getenv("reddit_password"),requestor_kwargs={"session": self.bot.session})
 
   async def asyncpraw_handler(self,sub_name):
