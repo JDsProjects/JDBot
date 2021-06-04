@@ -3,22 +3,22 @@ import discord, random , time, asyncio, difflib
 import utils
 
 class Bot(commands.Cog):
-  def __init__(self,client):
-    self.client = client
+  def __init__(self,bot):
+    self.bot = bot
     self.status_task.start()
 
   @tasks.loop(seconds=40)
   async def status_task(self):
-    await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=f"the return of {self.client.user.name}"))
+    await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=f"the return of {self.bot.user.name}"))
     await asyncio.sleep(40)
-    await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(self.client.guilds)} servers | {len(self.client.users)} users"))
+    await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(self.bot.guilds)} servers | {len(self.bot.users)} users"))
     await asyncio.sleep(40)
-    await self.client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="the new updates coming soon..."))
+    await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="the new updates coming soon..."))
     await asyncio.sleep(40)
 
   @status_task.before_loop
   async def before_status_task(self):
-    await self.client.wait_until_ready()
+    await self.bot.wait_until_ready()
 
   def cog_unload(self):
     self.status_task.stop()
@@ -28,29 +28,29 @@ class Bot(commands.Cog):
     start = time.perf_counter()
     message=await ctx.send("Pong")
     end = time.perf_counter()
-    await message.edit(content=f"Pong\nBot Latency: {((end - start)*1000)} MS\nWebsocket Response time: {self.client.latency*1000} MS")
+    await message.edit(content=f"Pong\nBot Latency: {((end - start)*1000)} MS\nWebsocket Response time: {self.bot.latency*1000} MS")
   
   @commands.command(brief="gives you an invite to invite the bot.")
   async def invite(self,ctx):
     embed = discord.Embed(title="Invite link:",color=random.randint(0, 16777215))
-    embed.add_field(name=f"{self.client.user.name} invite:",value=f"[{self.client.user.name} invite url](https://discord.com/oauth2/authorize?client_id={self.client.user.id}&scope=bot&permissions=8)")
-    embed.add_field(name="Non Markdowned invite",value=f"https://discord.com/oauth2/authorize?client_id={self.client.user.id}&scope=bot&permissions=8")
-    embed.set_thumbnail(url=self.client.user.avatar_url)
+    embed.add_field(name=f"{self.bot.user.name} invite:",value=f"[{self.bot.user.name} invite url](https://discord.com/oauth2/authorize?bot_id={self.bot.user.id}&scope=bot&permissions=8)")
+    embed.add_field(name="Non Markdowned invite",value=f"https://discord.com/oauth2/authorize?bot_id={self.bot.user.id}&scope=bot&permissions=8")
+    embed.set_thumbnail(url=self.bot.user.avatar_url)
     await ctx.send(embed=embed)
 
   @commands.command(brief="gives you who the owner is.")
   async def owner(self,ctx):
-    info = await self.client.application_info()
+    info = await self.bot.application_info()
     if info.team is None:
       owner_id = info.owner.id
     if info.team:
       owner_id = info.team.owner_id
 
-    support_guild=self.client.get_guild(736422329399246990)
-    owner= await self.client.getch_member(support_guild,owner_id)
+    support_guild=self.bot.get_guild(736422329399246990)
+    owner= await self.bot.getch_member(support_guild,owner_id)
     user_type = user_type = ['User', 'Bot'][owner.bot]
 
-    guilds_list=[guild for guild in self.client.guilds if guild.get_member(owner.id) and guild.get_member(ctx.author.id)]
+    guilds_list=[guild for guild in self.bot.guilds if guild.get_member(owner.id) and guild.get_member(ctx.author.id)]
     if not guilds_list:
       guild_list = "None"
 
@@ -68,7 +68,7 @@ class Bot(commands.Cog):
       nickname = "None"
       joined_guild = "N/A"
       status = "Unknown"
-      for guild in self.client.guilds:
+      for guild in self.bot.guilds:
         member=guild.get_member(owner.id)
         if member:
           status=str(member.status).upper()
@@ -90,7 +90,7 @@ class Bot(commands.Cog):
 
   @commands.command(help="a command to give information about the team",brief="this command works if you are in team otherwise it will just give the owner.")
   async def team(self,ctx):
-    information=await self.client.application_info()
+    information=await self.bot.application_info()
     if information.team == None:
       true_owner=information.owner
       team_members = []
@@ -109,22 +109,22 @@ class Bot(commands.Cog):
   @commands.command(help="get the stats of users and members in the bot",brief="this is an alternative that just looking at the custom status time to time.")
   async def stats(self,ctx):
     embed = discord.Embed(title="Bot stats",color=random.randint(0, 16777215))
-    embed.add_field(name="Guild count",value=len(self.client.guilds))
-    embed.add_field(name="User Count:",value=len(self.client.users))
-    embed.add_field(name="True Command Count:",value=f"{len(list(self.client.walk_commands()))}")
-    embed.add_field(name="Command Count:",value=f"{len(self.client.commands)}")
+    embed.add_field(name="Guild count",value=len(self.bot.guilds))
+    embed.add_field(name="User Count:",value=len(self.bot.users))
+    embed.add_field(name="True Command Count:",value=f"{len(list(self.bot.walk_commands()))}")
+    embed.add_field(name="Command Count:",value=f"{len(self.bot.commands)}")
     await ctx.send(embed=embed)
 
   @commands.command(brief="a way to view open source",help="you can see the open source with the link it provides")
   async def open_source(self,ctx):
     embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
-    embed.set_author(name=f"{self.client.user}'s source code:",icon_url=(self.client.user.avatar_url))
+    embed.set_author(name=f"{self.bot.user}'s source code:",icon_url=(self.bot.user.avatar_url))
     await ctx.send(embed=embed)
 
   @commands.group(name="open",invoke_without_command=True)
   async def source(self,ctx):
     embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
-    embed.set_author(name=f"{self.client.user}'s source code:",icon_url=(self.client.user.avatar_url))
+    embed.set_author(name=f"{self.bot.user}'s source code:",icon_url=(self.bot.user.avatar_url))
     await ctx.send(embed=embed)  
   
   @commands.command(brief="a set of rules we will follow")
@@ -159,7 +159,7 @@ class Bot(commands.Cog):
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self,ctx):
     await ctx.send("You must say I agree this will send into the current channel.")
-    message=await self.client.wait_for("message",check=utils.check(ctx))
+    message=await self.bot.wait_for("message",check=utils.check(ctx))
     if message.content.lower() == "i agree":
       await ctx.send("https://discord.gg/sHUQCch")
 
@@ -172,12 +172,17 @@ class Bot(commands.Cog):
     await ctx.send("Because I don't have any alternative suggestions, and I don't feel like changing it to jd! or something. I can confirm this isn't a test bot :D")
 
   @commands.command()
-  async def closest_command(self,ctx,*,command=None):
+  async def closest_command(self, ctx, *, command=None):
     if command is None:
       await ctx.send("Please provide an arg.")
 
     if command:
-      command_names = [f"{x}" for x in ctx.bot.commands]
+
+      all_commands=list(self.bot.walk_commands())
+      command_names = [x for x in await self.bot.filter_commands(ctx, all_commands)]
+
+      #only reason why it's like this is uh, it's a bit long together.
+
       matches = difflib.get_close_matches(command, command_names)
       
       if matches:
@@ -186,5 +191,5 @@ class Bot(commands.Cog):
       else:
         await ctx.send("got nothing sorry.")
 
-def setup(client):
-  client.add_cog(Bot(client))
+def setup(bot):
+  bot.add_cog(Bot(bot))
