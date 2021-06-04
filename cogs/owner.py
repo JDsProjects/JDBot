@@ -276,15 +276,15 @@ class Owner(commands.Cog):
     mystbin_client = mystbin.Client(session=self.client.session)
     paste = await mystbin_client.post(page)
 
-    await ctx.author.dm_channel.send(content=f"Added text file to mystbin: \n{paste.url}")
+    await ctx.author.send(content=f"Added text file to mystbin: \n{paste.url}")
 
   @channel_backup.error
   async def channel_backup_error(self, ctx, error):
     etype = type(error)
     trace = error.__traceback__
 
-    values=''.join(traceback.format_exception(etype, error, trace))
-
+    values=''.join(map(str,traceback.format_exception(etype, error, trace)))
+ 
     pages = textwrap.wrap(values, width = 1992)
 
     menu = menus.MenuPages(utils.ErrorEmbed(pages, per_page=1),delete_message_after=True)
@@ -292,9 +292,9 @@ class Owner(commands.Cog):
     await menu.start(ctx,channel=ctx.author.dm_channel)
 
     mystbin_client = mystbin.Client(session=self.client.session)
-    paste = await mystbin_client.post(page)
+    paste = await mystbin_client.post(values)
 
-    await ctx.send(f"{error occured} \nTraceback: {paste.url} ")
+    await ctx.send(f"Traceback: {paste.url}")
      
 
 

@@ -21,17 +21,12 @@ class Order(commands.Cog):
 
     self.tenor_client = TenorClient (api_key=tenor_key, session = self.bot.session)
     
-    #self.giphy_client = GiphyClient(api_key=giphy_key, session = self.bot.session)
+    self.giphy_client = GiphyClient(api_key=giphy_key, session = self.bot.session)
 
     await self.tenor_client.connect()
+    await self.giphy_client.connect()
 
     self.image_client=async_cse.Search(image_api_key,engine_id=image_engine_key, session = self.bot.session)
-
-  async def cleanup(self):
-    await self.tenor_client.new()
-
-  def cog_unload(self):
-    self.bot.loop.create_task(self.cleanup())
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="order",invoke_without_command=True)
@@ -127,9 +122,8 @@ class Order(commands.Cog):
     if args:
 
       safesearch_type = ContentFilter.high()
-      #results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
+      results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
 
-      #print(results)
 
     if args is None:
       await ctx.send("You can't search for nothing")

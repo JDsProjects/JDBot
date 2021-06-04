@@ -55,5 +55,8 @@ class EmojiInfoEmbed(menus.ListPageSource):
 
 class ErrorEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
-    return discord.Embed(title="Error",description=item, color=random.randint(0, 16777215))
+
+    item = discord.utils.escape_markdown(item, as_needed=False, ignore_links=True)
+    
+    return discord.Embed(title="Error", description=item, color=random.randint(0, 16777215))
 
