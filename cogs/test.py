@@ -1,4 +1,4 @@
-from discord.ext import commands, menus
+from discord.ext import commands
 import discord, os, itertools, re, functools, typing, random, collections, time
 import utils
 
@@ -152,39 +152,6 @@ class Test(commands.Cog):
     time_after=time.perf_counter()
 
     await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS(Using default calling of an async function using aiogtts)",file=file1)
-
-  async def filter_commands(self, ctx, command_list):
-
-    def check(cmd, ctx):
-      try:
-        return await cmd.can_run(ctx)
-
-      except:
-        return False
-
-    return [cmd for cmd in command_list if check(cmd, ctx)]
-
-  class CommandsFilterTest(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed=discord.Embed(title="Commands you can run",description=item)
-      return embed
-
-  @commands.command()
-  async def test_filter(self, ctx):
-
-    pag = commands.Paginator()
-
-    hopefully_worked = [x for x in await self.filter_commands(ctx, list(self.bot.walk_commands()) ) if isinstance(x,commands.Cog)]
-
-    for cmd in hopefully_worked:
-      pag.add_line(f"{cmd}")
-
-    pages = [page.strip("`") for page in pag.pages]
-
-    menu = menus.MenuPages(self.CommandsFilterTest(pages, per_page=1),delete_message_after=True)
-
-    await menu.start(ctx)
-
 
 def setup(client):
   client.add_cog(Test(client))

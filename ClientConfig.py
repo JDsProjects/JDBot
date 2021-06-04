@@ -34,6 +34,17 @@ class JDBot(commands.Bot):
       member = guild.get_member(member_id) or await guild.fetch_member(member_id)
     return member
 
+  async def filter_commands(self, ctx, command_list):
+
+    async def check(cmd, ctx):
+      try:
+        return await cmd.can_run(ctx)
+
+      except:
+        return False
+        
+    return [cmd for cmd in command_list if await check(cmd, ctx)]
+
 client = JDBot(command_prefix=(get_prefix),intents=intents,chunk_guilds_at_startup=False)
 bot = client
 
