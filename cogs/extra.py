@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, asuna_api, math, aiohttp, chardet, mystbin, alexflipnote, os, typing
+import discord, random, asuna_api, math, aiohttp, chardet, mystbin, alexflipnote, os, typing, aioimgur
 import utils
 
 class Extra(commands.Cog):
@@ -277,6 +277,18 @@ class Extra(commands.Cog):
     s.seek(0)
     await ctx.reply("The save editor used: https://coderpatsy.bitbucket.io/cookies/v10466/editor.html \n Warning may be a bit cursed. (because of the grandmas having madness at this level.) \n To be Used with https://orteil.dashnet.org/cookieclicker/",file=discord.File(s, filename="cookie_save.txt"))
 
+  @commands.command()
+  async def call_text(self, ctx, *, args = None):
+
+    alex_api = alexflipnote.Client(os.environ["alex_apikey"],session=self.client.session)
+
+    args = args or "You called No one :("
+    image=await alex_api.calling(text=args)
+
+    imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"]) 
+
+    imgur_url = await imgur_client.upload(await image.read())
+    await ctx.send(imgur_url)
   
 def setup(client):
   client.add_cog(Extra(client))
