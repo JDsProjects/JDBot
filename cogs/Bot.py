@@ -178,10 +178,10 @@ class Bot(commands.Cog):
 
     if command:
 
-      all_commands=list(self.bot.walk_commands())
-      command_names = [x for x in await self.bot.filter_commands(ctx, all_commands)]
+      all_commands = list(self.bot.walk_commands())
+      command_names = [f"{x}" for x in await self.bot.filter_commands(ctx, all_commands)]
 
-      #only reason why it's like this is uh, it's a bit long together.
+      #only reason why it's like this is uh, it's a bit in variable.
 
       matches = difflib.get_close_matches(command, command_names)
       
