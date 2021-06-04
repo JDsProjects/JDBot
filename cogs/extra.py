@@ -288,7 +288,8 @@ class Extra(commands.Cog):
     imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"]) 
 
     imgur_url = await imgur_client.upload(await image.read())
-    await ctx.send(imgur_url)
+
+    await ctx.send(imgur_url["link"])
   
 def setup(client):
   client.add_cog(Extra(client))

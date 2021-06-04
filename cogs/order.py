@@ -19,13 +19,19 @@ class Order(commands.Cog):
     image_api_key = os.environ["image_api_key"]  
     image_engine_key = os.environ["google_image_key"] 
 
-    #self.tenor_client = TenorClient (api_key=tenor_key, session = self.bot.session)
+    self.tenor_client = TenorClient (api_key=tenor_key, session = self.bot.session)
     
     #self.giphy_client = GiphyClient(api_key=giphy_key, session = self.bot.session)
 
-    #await self.tenor_client.http.open_session()
+    await self.tenor_client.connect()
 
     self.image_client=async_cse.Search(image_api_key,engine_id=image_engine_key, session = self.bot.session)
+
+  async def cleanup(self):
+    await self.tenor_client.new()
+
+  def cog_unload(self):
+    self.bot.loop.create_task(self.cleanup())
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="order",invoke_without_command=True)

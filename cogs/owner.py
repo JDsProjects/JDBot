@@ -1,6 +1,7 @@
 from discord.ext import commands, menus
 import utils
-import random , discord , aiohttp , os , aiosqlite3, importlib
+import random , discord , aiohttp , os , aiosqlite3, importlib, mystbin
+import traceback, textwrap
 
 class Owner(commands.Cog):
   def __init__(self, bot):
@@ -47,13 +48,13 @@ class Owner(commands.Cog):
         for x in list(self.client.extensions):
           try:
             self.client.reload_extension(x)
-          except commands.errors.ExtensionNotLoaded as e:
+          except commands.errors.ExtensionError as e:
             await ctx.send(e)
         await ctx.send("done reloading all cogs(check for any errors)")
       if cog != "all":
         try:
           self.client.reload_extension(cog)
-        except commands.errors.ExtensionNotLoaded as e:
+        except commands.errors.ExtensionError as e:
           await ctx.send(e)
       await ctx.send("Cog reloaded :D (check for any errors)")
     if cog is None:
@@ -64,7 +65,7 @@ class Owner(commands.Cog):
     if cog:
       try:
         self.client.unload_extension(cog)
-      except commands.errors.ExtensionNotLoaded as e:
+      except commands.errors.ExtensionError as e:
         await ctx.send(e)
       await ctx.send("Cog should be unloaded just fine :D.(check any errors)")
     if cog is None:
@@ -263,6 +264,39 @@ class Owner(commands.Cog):
       except Exception as e: return await ctx.send(e)
 
       await ctx.send(f"Sucessfully reloaded {value.__name__} \nMain Package: {value.__package__}")
+
+
+  @commands.command(brief="backs up a channel and then sends it into a file or mystbin")
+  async def channel_backup(self, ctx):
+
+    messages = await ctx.channel.history(limit=None, oldest_first=True).flatten()
+
+    page = [f"{msg.author} ({['User', 'Bot'][msg.author.bot]}): {msg.content}" for msg in messages]
+
+    mystbin_client = mystbin.Client(session=self.client.session)
+    paste = await mystbin_client.post(page)
+
+    await ctx.author.dm_channel.send(content=f"Added text file to mystbin: \n{paste.url}")
+
+  @channel_backup.error
+  async def channel_backup_error(self, ctx, error):
+    etype = type(error)
+    trace = error.__traceback__
+
+    values=''.join(traceback.format_exception(etype, error, trace))
+
+    pages = textwrap.wrap(values, width = 1992)
+
+    menu = menus.MenuPages(utils.ErrorEmbed(pages, per_page=1),delete_message_after=True)
+
+    await menu.start(ctx,channel=ctx.author.dm_channel)
+
+    mystbin_client = mystbin.Client(session=self.client.session)
+    paste = await mystbin_client.post(page)
+
+    await ctx.send(f"{error occured} \nTraceback: {paste.url} ")
+     
+
 
 def setup(client):
   client.add_cog(Owner(client))

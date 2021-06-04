@@ -53,3 +53,7 @@ class EmojiInfoEmbed(menus.ListPageSource):
       embed=discord.Embed(title="Failed grabbing emoji:",description=f"Discord couldn't fetch the emoji with regex: {item}",color=random.randint(0, 16777215))
       return embed
 
+class ErrorEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    return discord.Embed(title="Error",description=item, color=random.randint(0, 16777215))
+

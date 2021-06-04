@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, os, itertools, re, functools, typing, random, collections, time
+import discord, os, itertools, re, functools, typing, random, collections, time, io
 import utils
 
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
