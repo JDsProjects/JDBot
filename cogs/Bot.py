@@ -1,5 +1,5 @@
 from discord.ext import commands, tasks
-import discord, random , time, asyncio, difflib
+import discord, random , time, asyncio, difflib, typing
 import utils
 
 class Bot(commands.Cog):
@@ -122,10 +122,14 @@ class Bot(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.group(name="open",invoke_without_command=True)
-  async def source(self,ctx):
+  async def open(self,ctx):
     embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
     embed.set_author(name=f"{self.bot.user}'s source code:",icon_url=(self.bot.user.avatar_url))
     await ctx.send(embed=embed)  
+  
+  @open.command(brief="a way to view open source",help="you can see the open source with the link it provides")
+  async def source(self, ctx):
+    await self.open(ctx)
   
   @commands.command(brief="a set of rules we will follow")
   async def promise(self,ctx):
@@ -172,19 +176,20 @@ class Bot(commands.Cog):
     await ctx.send("Because I don't have any alternative suggestions, and I don't feel like changing it to jd! or something. I can confirm this isn't a test bot :D")
 
   @commands.command()
-  async def closest_command(self, ctx, *, command=None):
+  async def closest_command(self, ctx, *, command = None):
     if command is None:
       await ctx.send("Please provide an arg.")
 
     if command:
 
       all_commands = list(self.bot.walk_commands())
+    
       command_names = [f"{x}" for x in await self.bot.filter_commands(ctx, all_commands)]
 
       #only reason why it's like this is uh, it's a bit in variable.
 
       matches = difflib.get_close_matches(command, command_names)
-      
+    
       if matches:
         await ctx.send(f"Did you mean... `{matches[0]}`?")
 
