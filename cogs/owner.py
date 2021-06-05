@@ -271,7 +271,7 @@ class Owner(commands.Cog):
 
     messages = await ctx.channel.history(limit=None, oldest_first=True).flatten()
 
-    page = [f"{msg.author} ({['User', 'Bot'][msg.author.bot]}): {msg.content}" for msg in messages]
+    page = "\n".join(f"{msg.author} ({['User', 'Bot'][msg.author.bot]}) : {msg.content}" for msg in messages)
 
     mystbin_client = mystbin.Client(session=self.client.session)
     paste = await mystbin_client.post(page)
