@@ -124,7 +124,6 @@ class Order(commands.Cog):
       safesearch_type = ContentFilter.high()
       results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
 
-
     if args is None:
       await ctx.send("You can't search for nothing")
 

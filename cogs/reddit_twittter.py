@@ -44,5 +44,7 @@ class Reddit(commands.Cog):
     embed.set_footer(text=f"Upvote ratio : {data['upvote_ratio']}")
     await ctx.send(embed=embed)
 
+
+
 def setup(bot):
   bot.add_cog(Reddit(bot))
