@@ -57,16 +57,14 @@ class Events(commands.Cog):
         if message.author.id != self.client.user.id and test.valid is False:
           await message.channel.send("Ticket Support is coming soon. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493")
 
-    if (test.valid) == False:
-      if test.prefix != None and not self.client.user.mentioned_in(message):
-        if test.command is None:
-
-          time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
-          embed_message = discord.Embed(title=f" {test.prefix}{test.invoked_with}", description=time_used,color=random.randint(0, 16777215))
-          embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar_url))
-          embed_message.set_footer(text = f"{message.author.id}")
-          embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
-          await self.client.get_channel(738912143679946783).send(embed=embed_message)
+    if (test.valid) == False and test.prefix != None and test.command is None:
+      
+      time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
+      embed_message = discord.Embed(title=f" {test.prefix}{test.invoked_with}", description=time_used,color=random.randint(0, 16777215))
+      embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar_url))
+      embed_message.set_footer(text = f"{message.author.id}")
+      embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
+      await self.client.get_channel(738912143679946783).send(embed=embed_message)
   
   @commands.Cog.listener()
   async def on_error(event,*args,**kwargs):
