@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, asyncpraw , os, random
+import discord, asyncpraw , os, random, tweepy, functools
 
 class Reddit(commands.Cog):
   def __init__(self, bot):
@@ -10,9 +10,10 @@ class Reddit(commands.Cog):
     await self.bot.wait_until_ready()
     self.reddit = asyncpraw.Reddit(client_id=os.getenv("reddit_client_id"), client_secret=os.getenv("reddit_client_secret"), user_agent="JDBot 1.0", username= os.getenv("reddit_username"), password = os.getenv("reddit_password"),requestor_kwargs={"session": self.bot.session})
 
-  async def asyncpraw_handler(self,sub_name):
+  async def asyncpraw_handler(self, sub_name):
     subreddit = await self.reddit.subreddit(sub_name)
-    meme_list= [result async for result in subreddit.new()]
+
+    meme_list = [result async for result in subreddit.new()]
 
     data = random.choice(meme_list)
     embed = discord.Embed(title=f"{data.subreddit_name_prefixed}",description=f"[{data.title}](https://reddit.com{data.permalink})", color=0x00FF00)
@@ -44,7 +45,14 @@ class Reddit(commands.Cog):
     embed.set_footer(text=f"Upvote ratio : {data['upvote_ratio']}")
     await ctx.send(embed=embed)
 
+class Twitter(commands.Cog):
+  def __init__(self, bot):
+    self.bot = bot
+  
+  
+  
 
 
 def setup(bot):
   bot.add_cog(Reddit(bot))
+  bot.add_cog(Twitter(bot))
