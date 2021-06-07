@@ -290,6 +290,14 @@ class Extra(commands.Cog):
     imgur_url = await imgur_client.upload(await image.read())
 
     await ctx.send(imgur_url["link"])
+
+  @commands.command(brief="allows you to quote a user, without pings")
+  async def quote(self, ctx, *, message = None):
+
+    message =  message or "Empty Message :("
+
+    await ctx.send(f"> {message} \n -{ctx.message.author}",allowed_mentions=discord.AllowedMentions.none())
+
   
 def setup(client):
   client.add_cog(Extra(client))
