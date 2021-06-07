@@ -124,11 +124,13 @@ class Order(commands.Cog):
       safesearch_type = ContentFilter.high()
       results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
 
+      await ctx.send("WIP for now.")
+
     if args is None:
       await ctx.send("You can't search for nothing")
 
   @tenor.command(help="work in progress",name="shuffle")
-  async def tenor_random(self,ctx,*,args=None):
+  async def tenor_random(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
     if args is None:
@@ -136,7 +138,7 @@ class Order(commands.Cog):
       await ctx.send("tenor shuffle")
 
   @commands.command(help="work in progress",aliases=["tenor-shuffle"])
-  async def tenor_shuffle(self,ctx,*,args):
+  async def tenor_shuffle(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
     if args is None:
@@ -144,7 +146,7 @@ class Order(commands.Cog):
       await ctx.send("tenor shuffle")
   
   @commands.group(name="giphy",invoke_without_command=True)
-  async def giphy(self,ctx,*,args=None):
+  async def giphy(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
     if args is None:

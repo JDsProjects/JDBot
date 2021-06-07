@@ -33,8 +33,8 @@ class Bot(commands.Cog):
   @commands.command(brief="gives you an invite to invite the bot.")
   async def invite(self,ctx):
     embed = discord.Embed(title="Invite link:",color=random.randint(0, 16777215))
-    embed.add_field(name=f"{self.bot.user.name} invite:",value=f"[{self.bot.user.name} invite url](https://discord.com/oauth2/authorize?bot_id={self.bot.user.id}&scope=bot&permissions=8)")
-    embed.add_field(name="Non Markdowned invite",value=f"https://discord.com/oauth2/authorize?bot_id={self.bot.user.id}&scope=bot&permissions=8")
+    embed.add_field(name=f"{self.bot.user.name} invite:",value=f"[{self.bot.user.name} invite url](https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8)")
+    embed.add_field(name="Non Markdowned invite",value=f"https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8")
     embed.set_thumbnail(url=self.bot.user.avatar_url)
     await ctx.send(embed=embed)
 
