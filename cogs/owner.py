@@ -79,8 +79,9 @@ class Owner(commands.Cog):
     return await self.bot.is_owner(ctx.author)
 
   async def cog_command_error(self, ctx, error):
-    if not ctx.command and ctx.command.has_error_handler():
+    if not ctx.command or not ctx.command.has_error_handler():
       await ctx.send(error)
+    #I need to fix all cog_command_error
 
   @commands.command(brief="Changes Bot Status(Owner Only)")
   async def status(self , ctx , * , args=None):
@@ -215,12 +216,6 @@ class Owner(commands.Cog):
     await self.bot.sus_users.commit()  
     menu = menus.MenuPages(self.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
-
-  @sus_users.error
-  async def sus_users_error(self, ctx, error):
-    await ctx.send(error)
-    import traceback
-    traceback.print_exec
 
   @commands.command()
   async def update_sus(self,ctx):

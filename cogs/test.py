@@ -55,6 +55,8 @@ class Test(commands.Cog):
   async def cog_command_error(self, ctx, error):
     if not ctx.command and ctx.command.has_error_handler():
       await ctx.send(error)
+      
+    #I need to fix all cog_command_error
   
   @commands.command(brief="a command to email you(work in progress)",help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
   async def email(self,ctx,*args):
