@@ -221,14 +221,14 @@ class DevTools(commands.Cog):
       "python": "https://docs.python.org/3",
       "python-jp": "https://docs.python.org/ja/3",
       "master": "https://discordpy.readthedocs.io/en/master",
-      "jishaku" : "jishaku.readthedocs.io/en/latest",
+      "jishaku" : "https://jishaku.readthedocs.io/en/latest",
       "asyncpg" : "https://magicstack.github.io/asyncpg/current",
       "tweepy" : "https://docs.tweepy.org/en/latest/",
       "aiogifs" : "https://aiogifs.readthedocs.io/en/latest/",
       "python-cse" : "https://python-cse.readthedocs.io/en/latest/",
       "wavelink" : "https://wavelink.readthedocs.io/en/latest/",
       "motor" : "https://motor.readthedocs.io/en/stable/",
-      "motor-lastest" : "https://motor.readthedocs.io/en/latest/"
+      "motor-latest" : "https://motor.readthedocs.io/en/latest/"
       }
 
     if not args:
@@ -245,45 +245,56 @@ class DevTools(commands.Cog):
       else:
         return results
 
+  async def rtfm_send(self, ctx, results):
+
+    if isinstance(results, str):
+      await ctx.send(results, allowed_mentions = discord.AllowedMentions.none())
+
+    else: 
+      embed = discord.Embed(color = random.randint(0, 16777215))
+
+      embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
+
+      reference = utils.reference(ctx.message)
+      await ctx.send(embed=embed, reference = reference)
+
 
   @commands.group(aliases=["rtd"], invoke_without_command = True, brief="most of this is based on R.danny including the reference. But it's my own implentation of it")
   async def rtfm(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="latest", args = args)
-    
-    if isinstance(results, str):
-      await ctx.send(results, allowed_mentions = discord.AllowedMentions.none())
-
-    else: 
-      embed = discord.Embed(color = random.randint(0, 16777215))
-
-      embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
-
-      reference = utils.reference(ctx.message)
-      await ctx.send(embed=embed, reference = reference)
-
+    await self.rtfm_send(ctx, results)
 
   @rtfm.command(brief = "a command using japanese discord.py (based on R.danny's command", name = "jp")
   async def rtfm_jp(self, ctx, *, args = None):
-    
+
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="latest-jp", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command", aliases=["py"], name="python")
+  async def rtfm_python(self, ctx, *, args = None):
+
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="python", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command(japanese)", aliases=["py-ja"], name="py-jp")
+  async def rtfm_python_jp(self, ctx, *, args = None):
+
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="python-jp", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(name = "master", brief = "a command to lookup stuff from newer discord.py a.k.a newer version.")
+  async def rtfm_master(self, ctx, *, args = None):
     
-    if isinstance(results, str):
-      await ctx.send(results, allowed_mentions = discord.AllowedMentions.none())
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="master", args = args)
+    await self.rtfm_send(ctx, results)
 
-    else: 
-      embed = discord.Embed(color = random.randint(0, 16777215))
-
-      embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
-
-      reference = utils.reference(ctx.message)
-      await ctx.send(embed=embed, reference = reference)
-
-  
-
-
+  #cover  "jishaku, asyncpg", "tweepy",  "aiogifs", python-cse", wavelink" "https://wavelink.readthedocs.io/en/latest/", motor" : "https://motor.readthedocs.io/en/stable/", "motor-latest" for rtfm()
 
 def setup(bot):
   bot.add_cog(Info(bot))
