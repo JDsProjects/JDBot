@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, asuna_api, math, aiohttp, chardet, mystbin, alexflipnote, os, typing, aioimgur
+import discord, random, asuna_api, math, aiohttp, chardet, mystbin, alexflipnote, os, typing, aioimgur, time
 import utils
 
 class Extra(commands.Cog):
@@ -169,6 +169,30 @@ class Extra(commands.Cog):
 
     if args is None and len(ctx.message.attachments) < 1:
       await ctx.send("You didn't specify any value.")
+
+  @commands.command()
+  async def tts_test(self, ctx, *, args = None):
+    args = args or "Test"
+
+    time_before=time.perf_counter() 
+    file1=await utils.google_tts(args)
+    time_after=time.perf_counter()
+
+    await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS",file=file1)
+
+  @commands.command(brief="Uses google translate to make text to latin in a voice mode :D",aliases=["latin_tts"])
+  async def tts_latin(self, ctx, *, args = None):
+    if not args:
+
+      await ctx.send("you can't have No text to say")
+
+    else:
+      
+      time_before=time.perf_counter() 
+      file=await utils.latin_google_tts(args)
+      time_after=time.perf_counter()
+
+      await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS",file=file)
 
   @commands.command(help="learn about a secret custom xbox controller",brief="this will give you a message of JDJG's classic wanted xbox design.")
   async def secret_controller(self,ctx):

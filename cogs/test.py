@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, os, itertools, re, functools, typing, random, collections, time, io
+import discord, os, itertools, re, functools, typing, random, collections, io
 import utils
 
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
@@ -142,16 +142,6 @@ class Test(commands.Cog):
   async def letsnot(self,ctx):
     emoji=discord.utils.get(self.bot.emojis,name="commandfail")
     await ctx.send(f"Let's not go like {emoji} instead let's try to be nice about this. \nGet a copy of this image from imgur: https://i.imgur.com/CykdOIz.png")
-
-  @commands.command()
-  async def tts_test(self,ctx, *, args= None):
-    args = args or "Test"
-
-    time_before=time.perf_counter() 
-    file1=await utils.google_tts(args)
-    time_after=time.perf_counter()
-
-    await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS(Using default calling of an async function using aiogtts)",file=file1)
 
 def setup(client):
   client.add_cog(Test(client))
