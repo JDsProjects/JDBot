@@ -3,6 +3,7 @@ import re, discord , random , mystbin , typing, emoji
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
+from doc_search import AsyncScraper
 
 class Info(commands.Cog):
   def __init__(self, bot):
@@ -205,9 +206,83 @@ class Info(commands.Cog):
 class DevTools(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
+    bot.loop.create_task(self.__ainit__())
+  
+  async def __ainit__(self):
+    await self.bot.wait_until_ready()
+
+    self.scraper = AsyncScraper(self.bot.session)
+
+  async def rtfm_lookup(self, program = None, *, args = None):
+    
+    rtfm_dictionary = {
+      "latest": "https://discordpy.readthedocs.io/en/latest",
+      "latest-jp": "https://discordpy.readthedocs.io/ja/latest",
+      "python": "https://docs.python.org/3",
+      "python-jp": "https://docs.python.org/ja/3",
+      "master": "https://discordpy.readthedocs.io/en/master",
+      "jishaku" : "jishaku.readthedocs.io/en/latest",
+      "asyncpg" : "https://magicstack.github.io/asyncpg/current",
+      "tweepy" : "https://docs.tweepy.org/en/latest/",
+      "aiogifs" : "https://aiogifs.readthedocs.io/en/latest/",
+      "python-cse" : "https://python-cse.readthedocs.io/en/latest/",
+      "wavelink" : "https://wavelink.readthedocs.io/en/latest/",
+      "motor" : "https://motor.readthedocs.io/en/stable/",
+      "motor-lastest" : "https://motor.readthedocs.io/en/latest/"
+      }
+
+    if not args:
+      return rtfm_dictionary.get(program)
+
+    else:
+      url = rtfm_dictionary.get(program)
+
+      results = await self.scraper.search(args, page=url)
+
+      if not results:
+        return f"Could not find anything with {args}."
+
+      else:
+        return results
+
+
+  @commands.group(aliases=["rtd"], invoke_without_command = True, brief="most of this is based on R.danny including the reference. But it's my own implentation of it")
+  async def rtfm(self, ctx, *, args = None):
+
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="latest", args = args)
+    
+    if isinstance(results, str):
+      await ctx.send(results, allowed_mentions = discord.AllowedMentions.none())
+
+    else: 
+      embed = discord.Embed(color = random.randint(0, 16777215))
+
+      embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
+
+      reference = utils.reference(ctx.message)
+      await ctx.send(embed=embed, reference = reference)
+
+
+  @rtfm.command(brief = "a command using japanese discord.py (based on R.danny's command", name = "jp")
+  async def rtfm_jp(self, ctx, *, args = None):
+    
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="latest-jp", args = args)
+    
+    if isinstance(results, str):
+      await ctx.send(results, allowed_mentions = discord.AllowedMentions.none())
+
+    else: 
+      embed = discord.Embed(color = random.randint(0, 16777215))
+
+      embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
+
+      reference = utils.reference(ctx.message)
+      await ctx.send(embed=embed, reference = reference)
 
   
-  
+
 
 
 def setup(bot):

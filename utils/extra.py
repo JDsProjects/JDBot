@@ -72,3 +72,11 @@ async def latin_google_tts(text):
   mp3_fp.seek(0)
   file = discord.File(mp3_fp,"latin_tts.mp3")
   return file
+
+def reference(message):
+  reference = message.reference
+
+  if reference and isinstance(reference.resolved, discord.Message):
+    return reference.resolved_to_reference()
+
+  return None
