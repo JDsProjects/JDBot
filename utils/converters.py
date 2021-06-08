@@ -30,11 +30,12 @@ class BetterUserconverter(commands.Converter):
       user = None
     if not user and ctx.guild:
       user=ctx.guild.get_member_named(argument)
+
     if user == None:
       role = None
-      
+
       with contextlib.suppress(commands.RoleNotFound, commands.NoPrivateMessage):
-        role = await commands.RoleConverter.convert(ctx, argument)
+        role = await commands.RoleConverter().convert(ctx, argument)
       
       if role:
         if role.is_bot_managed:
