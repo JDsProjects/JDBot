@@ -1,8 +1,8 @@
 import discord,  re, os, aiohttp, contextlib, aiosqlite3, traceback
 from discord.ext import commands
 
-async def get_prefix(client,message):
-  extras = ["test*","te*"]
+async def get_prefix(client, message):
+  extras = ["test*","te*", "t*"]
   comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
   match = comp.match(message.content)
   if match is not None:

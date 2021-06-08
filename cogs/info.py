@@ -231,7 +231,11 @@ class DevTools(commands.Cog):
       "motor-latest" : "https://motor.readthedocs.io/en/latest/",
       "dagpi" : "https://asyncdagpi.readthedocs.io/en/latest/",
       "pymongo" : "https://pymongo.readthedocs.io/en/stable/",
-      "pymongo-latest" : "https://pymongo.readthedocs.io/en/latest/"
+      "pymongo-latest" : "https://pymongo.readthedocs.io/en/latest/",
+      "aiohttp" : "https://docs.aiohttp.org/en/stable/",
+      "aiohttp-latest" : "https://docs.aiohttp.org/en/latest/",
+      "wand" : "https://docs.wand-py.org/en/stable/",
+      "pillow" : "https://pillow.readthedocs.io/en/stable/"
       }
 
     if not args:
@@ -362,6 +366,30 @@ class DevTools(commands.Cog):
   async def pymongo_latest(self, ctx, *, args = None):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="pymongo-latest", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.group(brief = "a command to parse from aiohttp", invoke_without_command = True)
+  async def aiohttp(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="aiohttp", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @aiohttp.command(brief = "a command to parse from aiohttp latest", name="latest")
+  async def aiohttp_latest(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="aiohttp-latest", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to parse from wand")
+  async def wand(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="wand", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to parse from pillow")
+  async def pillow(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="pillow", args = args)
     await self.rtfm_send(ctx, results)
 
 def setup(bot):

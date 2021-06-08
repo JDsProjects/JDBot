@@ -1,9 +1,9 @@
-import discord, re, collections, random, emoji
+import discord, re, collections, random, emoji, contextlib
 from discord.ext import commands
 from discord.http import Route
 
 class BetterMemberConverter(commands.Converter):
-  async def convert(self,ctx,argument):
+  async def convert(self, ctx, argument):
     try:
       user = await commands.MemberConverter().convert(ctx,argument)
     except commands.MemberNotFound:
@@ -31,14 +31,15 @@ class BetterUserconverter(commands.Converter):
     if not user and ctx.guild:
       user=ctx.guild.get_member_named(argument)
     if user == None:
-
-      match2 = re.match(r'<@&([0-9]+)>$',argument)
-      if match2:
-        argument2=match2.group(1)
-        role=ctx.guild.get_role(int(argument2))
+      role = None
+      
+      with contextlib.suppress(commands.RoleNotFound, commands.NoPrivateMessage):
+        role = await commands.RoleConverter.convert(ctx, argument)
+      
+      if role:
         if role.is_bot_managed:
-            user=role.tags.bot_id
-            user = ctx.bot.get_user(user) or await ctx.bot.fetch_user(user)
+          user=role.tags.bot_id
+          user = ctx.bot.get_user(user) or await ctx.bot.fetch_user(user)
 
     if user == None:
       tag = re.match(r"#?(\d{4})",argument)
