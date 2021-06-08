@@ -51,7 +51,8 @@ class Moderation(commands.Cog):
   async def scan_guild(self,ctx):
     if isinstance(ctx.channel, discord.TextChannel):
       cur = await self.client.sus_users.cursor()
-      sus_users=dict([n for n in await cur.execute("SELECT * FROM SUS_USERS;")])
+      cursor = await cur.execute("SELECT * FROM SUS_USERS;")
+      sus_users = dict(await cursor.fetchall())
       await cur.close()
       count = 0
       for x in sus_users:

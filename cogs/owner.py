@@ -203,7 +203,6 @@ class Owner(commands.Cog):
   class SusUsersEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
       embed=discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
-      print(item)
       embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
       return embed
 
@@ -211,11 +210,15 @@ class Owner(commands.Cog):
   async def sus_users(self, ctx):
     cur = await self.bot.sus_users.cursor()
     cursor = await cur.execute("SELECT * FROM SUS_USERS;")
-    sus_users = dict(await cursor.fetchall())
+    sus_users = tuple(await cursor.fetchall())
     await cur.close()
     await self.bot.sus_users.commit()  
     menu = menus.MenuPages(self.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
+
+  @sus_users.error
+  async def sus_users_error(self, ctx, error):
+    await ctx.send(error)
 
   @commands.command()
   async def update_sus(self,ctx):
