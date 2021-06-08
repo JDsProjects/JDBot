@@ -5,8 +5,8 @@ from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 
 class Info(commands.Cog):
-  def __init__(self,client):
-    self.client = client
+  def __init__(self, bot):
+    self.bot = bot
 
   @commands.command(help="gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild","guildinfo",])
   async def serverinfo(self,ctx,*,guild: typing.Optional[discord.Guild]=None):
@@ -34,7 +34,7 @@ class Info(commands.Cog):
         nickname = str(member_version)
         joined_guild = "N/A"
         status = "Unknown"
-        for guild in self.client.guilds:
+        for guild in self.bot.guilds:
           member=guild.get_member(user.id)
           if member:
             status=str(member.status).upper()
@@ -45,14 +45,14 @@ class Info(commands.Cog):
         nickname = "None"
         joined_guild = "N/A"
         status = "Unknown"
-        for guild in self.client.guilds:
+        for guild in self.bot.guilds:
           member=guild.get_member(user.id)
           if member:
             status=str(member.status).upper()
             break
         highest_role = "None Found"
     
-    guilds_list=[guild for guild in self.client.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
+    guilds_list=[guild for guild in self.bot.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
     if not guilds_list:
       guild_list = "None"
 
@@ -109,8 +109,8 @@ class Info(commands.Cog):
     if len(invites) > 50:
       await ctx.send("Reporting using more than 50 invites in this command. This is to prevent ratelimits with the api.")
 
-      jdjg = self.client.get_user(168422909482762240) or await self.client.fetch_user(168422909482762240)
-      await self.client.get_channel(738912143679946783).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
+      jdjg = self.bot.get_user(168422909482762240) or await self.bot.fetch_user(168422909482762240)
+      await self.bot.get_channel(738912143679946783).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
 
   @fetch_invite.error
   async def fetch_invite_error(self,ctx,error):
@@ -158,12 +158,12 @@ class Info(commands.Cog):
     if args is None:
       await ctx.send("please specify a user")
     if args:
-      userNearest = discord.utils.get(self.client.users,name=args)
-      user_nick = discord.utils.get(self.client.users,display_name=args)
+      userNearest = discord.utils.get(self.bot.users,name=args)
+      user_nick = discord.utils.get(self.bot.users,display_name=args)
       if userNearest is None:
-        userNearest = sorted(self.client.users, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
+        userNearest = sorted(self.bot.users, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
       if user_nick is None:
-        user_nick = sorted(self.client.users, key=lambda x: SequenceMatcher(None, x.display_name,args).ratio())[-1]
+        user_nick = sorted(self.bot.users, key=lambda x: SequenceMatcher(None, x.display_name,args).ratio())[-1]
       await ctx.send(f"Username: {userNearest}")
       await ctx.send(f"Display name: {user_nick}")
     
@@ -185,7 +185,7 @@ class Info(commands.Cog):
       await ctx.send("Looks like there was no emojis.")
 
   @commands.command()
-  async def fetch_content(self,ctx,*,args=None):
+  async def fetch_content(self, ctx, *, args = None):
     if args is None:
       await ctx.send("please send actual text")
     if args:
@@ -202,5 +202,14 @@ class Info(commands.Cog):
     await ctx.send(f"{args}")
 
 
-def setup(client):
-  client.add_cog(Info(client))
+class DevTools(commands.Cog):
+  def __init__(self, bot):
+    self.bot = bot
+
+  
+  
+
+
+def setup(bot):
+  bot.add_cog(Info(bot))
+  bot.add_cog(DevTools(bot))
