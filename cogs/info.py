@@ -229,7 +229,9 @@ class DevTools(commands.Cog):
       "wavelink" : "https://wavelink.readthedocs.io/en/latest/",
       "motor" : "https://motor.readthedocs.io/en/stable/",
       "motor-latest" : "https://motor.readthedocs.io/en/latest/",
-      "dagpi" : "https://asyncdagpi.readthedocs.io/en/latest/"
+      "dagpi" : "https://asyncdagpi.readthedocs.io/en/latest/",
+      "pymongo" : "https://pymongo.readthedocs.io/en/stable/",
+      "pymongo-latest" : "https://pymongo.readthedocs.io/en/latest/"
       }
 
     if not args:
@@ -344,10 +346,22 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program="motor-latest", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.group(brief = "a command to parse from dagpi")
+  @rtfm.command(brief = "a command to parse from dagpi")
   async def dagpi(self, ctx, *, args = None):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="dagpi", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.group(brief = "a command to parse from pymongo", invoke_without_command = True)
+  async def pymongo(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="pymongo", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @pymongo.command(brief = "a command to parse from pymongo latest", name="latest")
+  async def pymongo_latest(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="pymongo-latest", args = args)
     await self.rtfm_send(ctx, results)
 
 def setup(bot):
