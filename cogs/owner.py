@@ -174,7 +174,7 @@ class Owner(commands.Cog):
     await menu.start(ctx,channel=ctx.author.dm_channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
-  async def addsus(self,ctx,*,user: utils.BetterUserconverter=None):
+  async def addsus(self, ctx, *, user: utils.BetterUserconverter = None):
     if user is None:
       await ctx.send("can't have a user be none.")
 
@@ -202,18 +202,25 @@ class Owner(commands.Cog):
   class SusUsersEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
       embed=discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
+      print(item)
       embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
       return embed
 
   @commands.command(brief="a command to grab all in the sus_users list")
-  async def sus_users(self,ctx):
+  async def sus_users(self, ctx):
     cur = await self.bot.sus_users.cursor()
     cursor = await cur.execute("SELECT * FROM SUS_USERS;")
-    sus_users = await cursor.fetchall()
+    sus_users = dict(await cursor.fetchall())
     await cur.close()
     await self.bot.sus_users.commit()  
     menu = menus.MenuPages(self.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
+
+  @sus_users.error
+  async def sus_users_error(self, ctx, error):
+    await ctx.send(error)
+    import traceback
+    traceback.print_exec
 
   @commands.command()
   async def update_sus(self,ctx):
@@ -221,7 +228,7 @@ class Owner(commands.Cog):
     await ctx.send("Updated SQL boss.")
 
   @update_sus.error
-  async def update_sus_error(self,ctx,error):
+  async def update_sus_error(self, ctx, error):
     await ctx.send(error)
 
   @commands.command(aliases=["bypass_command"])
