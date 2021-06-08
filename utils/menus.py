@@ -60,3 +60,6 @@ class ErrorEmbed(menus.ListPageSource):
     
     return discord.Embed(title="Error", description=item, color=random.randint(0, 16777215))
 
+class charinfoMenu(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    return discord.Embed(description = item, color = random.randint(0, 16777215))

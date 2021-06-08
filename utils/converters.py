@@ -38,7 +38,7 @@ class BetterUserconverter(commands.Converter):
         role = await commands.RoleConverter().convert(ctx, argument)
       
       if role:
-        if role.is_bot_managed:
+        if role.is_bot_managed():
           user=role.tags.bot_id
           user = ctx.bot.get_user(user) or await ctx.bot.fetch_user(user)
 
@@ -89,7 +89,7 @@ async def guildinfo(ctx,guild):
     idle_users = base_status[discord.Status.idle]
     offline_users = base_status[discord.Status.offline]
   
-    embed = discord.Embed(title="Guild Info:",color=random.randint(0, 16777215))
+    embed = discord.Embed(title="Guild Info:", color = random.randint(0, 16777215))
     embed.add_field(name="Server Name:",value=guild.name)
     embed.add_field(name="Server ID:",value=guild.id)
     embed.add_field(name="Server region",value=guild.region)
@@ -117,6 +117,8 @@ async def guildinfo(ctx,guild):
 
     await ctx.send(embed=embed)
 
+
+
 class EmojiConverter(commands.Converter):
   async def convert(self, ctx: commands.Context, arg: str): 
     emojis = emoji.unicode_codes.EMOJI_UNICODE["en"].values()
@@ -132,3 +134,40 @@ def check(ctx):
   def inner(m):
     return m.author == ctx.author
   return inner
+
+
+async def roleinfo(ctx, role):
+  role_members=collections.Counter([u.bot for u in role.members])
+  role_bots = role_members[True]
+  role_users = role_members[False]
+
+  role_time = role.created_at.strftime('%m/%d/%Y %H:%M:%S')
+  embed = discord.Embed(title = "Role Info:" ,color = random.randint(0, 16777215) )
+  embed.add_field(name="Name:", value = f"{role}")
+  embed.add_field(name = "Mention:", value = f"{role.mention}")
+  embed.add_field(name = "ID:", value = f"{role.id}")
+  embed.add_field(name = "Guild Name:", value = f"{role.guild}")
+  embed.add_field(name = "Created at", value = f"{role_time}")
+  embed.add_field(name="Bot Member Count:", value = f"{role_bots}")
+  embed.add_field(name = "User Member Count:", value = f"{role_users}")
+  embed.add_field(name = "Position", value = f"{role.position}")
+  embed.add_field(name = "Hoisted:", value = f"{role.hoist}")
+  embed.add_field(name = "Managed", value = f"{role.managed}")
+  embed.add_field(name = "Mentionable", value = f"{role.mentionable}")
+  embed.add_field(name = "Permissions:", value = f"{role.permissions.value}")
+  embed.add_field(name="Color:", value = f"{role.colour}")
+  embed.add_field(name = "Default Role", value = f"{role.is_default()}")
+  embed.add_field(name = "Bot Manged:", value = f"{role.is_bot_managed()} ")
+
+  if role.tags: 
+    embed.add_field(name = "Bot Managed ID:", value = f"{role.tags.bot_id}")
+
+  if not role.tags:
+    embed.add_field(name = "Bot Managed ID:", value = f"{None}")
+
+  embed.add_field(name = "Booster Role:", value = f"{role.is_premium_subscriber()}")
+  embed.add_field(name = "Integrated Role:", value = f"{role.is_integration()}")
+
+  embed.set_thumbnail(url = "https://i.imgur.com/liABFL4.png")
+
+  await ctx.send(embed=embed)

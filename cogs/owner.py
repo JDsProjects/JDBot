@@ -79,7 +79,7 @@ class Owner(commands.Cog):
   async def cog_check(self, ctx):
     return await self.client.is_owner(ctx.author)
 
-  async def cog_command_error(self,ctx,error):
+  async def cog_command_error(self, ctx, error):
     if not ctx.command and ctx.command.has_error_handler():
       await ctx.send(error)
 

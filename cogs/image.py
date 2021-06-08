@@ -293,6 +293,16 @@ class Image(commands.Cog):
     embed.set_footer(text="Powered by waifu.pics")
     await ctx.send(embed=embed)
 
+  @commands.command(brief = "Gives you a random bonk picture")
+  async def bonk(self, ctx):
+    r=await self.client.session.get('https://api.waifu.pics/sfw/bonk')
+    res = await r.json()
+    embed=discord.Embed(color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+    embed.set_author(name=f"{ctx.author} Requested A Waifu")
+    embed.set_image(url=res["url"])
+    embed.set_footer(text="Powered by waifu.pics")
+    await ctx.send(embed=embed)
+
   @commands.command(brief="a command to send facepalm gifs",help="using some random api it sends you a facepalm gif lol")
   async def facepalm(self,ctx,*, Member: utils.BetterMemberConverter=None):
     Member = Member or ctx.author

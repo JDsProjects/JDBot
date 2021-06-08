@@ -1,5 +1,5 @@
 from discord.ext import commands, menus
-import re, discord , random , mystbin , typing, emoji
+import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
@@ -391,6 +391,26 @@ class DevTools(commands.Cog):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="pillow", args = args)
     await self.rtfm_send(ctx, results)
+
+  def charinfo_converter(self, string):
+    digit = f"{ord(string):x}"
+    name = unicodedata.name(string, "The unicode was not found")
+    return f"`\\U{digit:>08}`: {name} - {string} \N{EM DASH} <http://www.fileformat.info/info/unicode/char/{digit}>"
+
+  @commands.command(brief = "Gives you data about charinfo (based on R.danny's command)")
+  async def charinfo(self, ctx, *, args = None):
+    
+    if not args:
+      return await ctx.send("That doesn't help out all :(")
+    
+    values = '\n'.join(map(self.charinfo_converter, set(args))) 
+
+    content = textwrap.wrap(values, width=2000)
+
+    menu = menus.MenuPages(utils.charinfoMenu(content, per_page=1),delete_message_after=True)
+
+    await menu.start(ctx)
+   
 
 def setup(bot):
   bot.add_cog(Info(bot))
