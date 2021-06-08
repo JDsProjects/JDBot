@@ -266,35 +266,37 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program="latest", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command using japanese discord.py (based on R.danny's command", name = "jp")
-  async def rtfm_jp(self, ctx, *, args = None):
+  @rtfm.command(brief = "a command using japanese discord.py (based on R.danny's command")
+  async def jp(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="latest-jp", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command", aliases=["py"], name="python")
-  async def rtfm_python(self, ctx, *, args = None):
+  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command", aliases=["py"])
+  async def python(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="python", args = args)
     await self.rtfm_send(ctx, results)
 
   @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command(japanese)", aliases=["py-ja"], name="py-jp")
-  async def rtfm_python_jp(self, ctx, *, args = None):
+  async def python_jp(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="python-jp", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(name = "master", brief = "a command to lookup stuff from newer discord.py a.k.a newer version.")
-  async def rtfm_master(self, ctx, *, args = None):
+  @rtfm.command(brief = "a command to lookup stuff from newer discord.py a.k.a newer version.")
+  async def master(self, ctx, *, args = None):
     
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="master", args = args)
     await self.rtfm_send(ctx, results)
 
-  #cover  "jishaku, asyncpg", "tweepy",  "aiogifs", python-cse", wavelink" "https://wavelink.readthedocs.io/en/latest/", motor" : "https://motor.readthedocs.io/en/stable/", "motor-latest" for rtfm()
+
+
+  #cover  "jishaku, asyncpg", "tweepy",  "aiogifs", python-cse", wavelink" "https://wavelink.readthedocs.io/en/latest/", motor" : "https://motor.readthedocs.io/en/stable/", "motor-latest" for rtfm(WIP)
 
 def setup(bot):
   bot.add_cog(Info(bot))
