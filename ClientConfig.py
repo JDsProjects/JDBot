@@ -1,4 +1,4 @@
-import discord,  re, os, aiohttp, contextlib, aiosqlite3, traceback
+import discord,  re, os, aiohttp, contextlib, aiosqlite, traceback
 from discord.ext import commands
 
 async def get_prefix(client, message):
@@ -20,7 +20,7 @@ class JDBot(commands.Bot):
 
   async def start(self,*args, **kwargs):
     self.session=aiohttp.ClientSession()
-    self.sus_users = await aiosqlite3.connect('sus_users.db')
+    self.sus_users = await aiosqlite.connect('sus_users.db')
     await super().start(*args, **kwargs)
 
   async def close(self):

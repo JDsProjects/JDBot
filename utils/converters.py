@@ -135,6 +135,9 @@ def check(ctx):
     return m.author == ctx.author
   return inner
 
+def reaction_check(ctx, reactions : list):
+  def inner(reaction, user):
+    return str(reaction.emoji) in reactions and user == ctx.author
 
 async def roleinfo(ctx, role):
   role_members=collections.Counter([u.bot for u in role.members])

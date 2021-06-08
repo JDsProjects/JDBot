@@ -196,5 +196,11 @@ class Bot(commands.Cog):
       else:
         await ctx.send("got nothing sorry.")
 
+
+  @commands.command(brief = "a command to automatically summon by creating an invite and having jdjg look at something if it's there something wrong")
+  async def jdjgsummon(self, ctx):
+
+    await ctx.send("I had WIP code: https://mystb.in/SpecialLuxuryMacedonia.python don't really like it tbh.")
+
 def setup(bot):
   bot.add_cog(Bot(bot))

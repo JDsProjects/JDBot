@@ -235,7 +235,8 @@ class DevTools(commands.Cog):
       "aiohttp" : "https://docs.aiohttp.org/en/stable/",
       "aiohttp-latest" : "https://docs.aiohttp.org/en/latest/",
       "wand" : "https://docs.wand-py.org/en/stable/",
-      "pillow" : "https://pillow.readthedocs.io/en/stable/"
+      "pillow" : "https://pillow.readthedocs.io/en/stable/",
+      "aiosqlite" : "https://aiosqlite.omnilib.dev/en/stable/"
       }
 
     if not args:
@@ -390,6 +391,12 @@ class DevTools(commands.Cog):
   async def pillow(self, ctx, *, args = None):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="pillow", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to parse from aiosqlite")
+  async def aiosqlite(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="aiosqlite", args = args)
     await self.rtfm_send(ctx, results)
 
   def charinfo_converter(self, string):
