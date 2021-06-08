@@ -10,7 +10,7 @@ class Info(commands.Cog):
     self.bot = bot
 
   @commands.command(help="gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild","guildinfo",])
-  async def serverinfo(self,ctx,*,guild: typing.Optional[discord.Guild]=None):
+  async def serverinfo(self, ctx, *, guild: typing.Optional[discord.Guild] = None):
     guild = guild or ctx.guild
 
     if guild is None:
@@ -20,7 +20,7 @@ class Info(commands.Cog):
       await utils.guildinfo(ctx,guild)
 
   @commands.command(aliases=["user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
-  async def userinfo(self,ctx,*,user: utils.BetterUserconverter = None):
+  async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
     user = user or ctx.author
     user_type = ['User', 'Bot'][user.bot]
     
@@ -211,7 +211,7 @@ class DevTools(commands.Cog):
   async def __ainit__(self):
     await self.bot.wait_until_ready()
 
-    self.scraper = AsyncScraper(self.bot.session)
+    self.scraper = AsyncScraper(session = self.bot.session)
 
   async def rtfm_lookup(self, program = None, *, args = None):
     
@@ -228,7 +228,8 @@ class DevTools(commands.Cog):
       "python-cse" : "https://python-cse.readthedocs.io/en/latest/",
       "wavelink" : "https://wavelink.readthedocs.io/en/latest/",
       "motor" : "https://motor.readthedocs.io/en/stable/",
-      "motor-latest" : "https://motor.readthedocs.io/en/latest/"
+      "motor-latest" : "https://motor.readthedocs.io/en/latest/",
+      "dagpi" : "https://asyncdagpi.readthedocs.io/en/latest/"
       }
 
     if not args:
@@ -253,6 +254,7 @@ class DevTools(commands.Cog):
     else: 
       embed = discord.Embed(color = random.randint(0, 16777215))
 
+      results = results[:10]
       embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
 
       reference = utils.reference(ctx.message)
@@ -294,9 +296,59 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program="master", args = args)
     await self.rtfm_send(ctx, results)
 
+  @rtfm.command(brief="a command to look up stuff from jishaku", aliases=["jsk"])
+  async def jishaku(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="jishaku", args = args)
+    await self.rtfm_send(ctx, results)
 
+  @rtfm.command(brief = "a command to parse stuff from asyncpg")
+  async def asyncpg(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="asyncpg", args = args)
+    await self.rtfm_send(ctx, results)
 
-  #cover  "jishaku, asyncpg", "tweepy",  "aiogifs", python-cse", wavelink", motor", "motor-latest" for rtfm(WIP)
+  @rtfm.command(brief= "a command to parse from tweepy")
+  async def tweepy(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="tweepy", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to parse from aiogifs")
+  async def aiogifs(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="aiogifs", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to parse from python-cse",name="python-cse")
+  async def python_cse(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="python-cse", args = args)
+    await self.rtfm_send(ctx, results)
+  
+  @rtfm.command(brief = "a command to parse from wavelink")
+  async def wavelink(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="wavelink", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.group(invoke_without_command = True, brief = "look up parser for motor")
+  async def motor(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="motor", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @motor.command(brief = "a command to parse from motor latest")
+  async def latest(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="motor-latest", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.group(brief = "a command to parse from dagpi")
+  async def dagpi(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="dagpi", args = args)
+    await self.rtfm_send(ctx, results)
 
 def setup(bot):
   bot.add_cog(Info(bot))
