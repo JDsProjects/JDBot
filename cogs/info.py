@@ -296,7 +296,7 @@ class DevTools(commands.Cog):
 
 
 
-  #cover  "jishaku, asyncpg", "tweepy",  "aiogifs", python-cse", wavelink" "https://wavelink.readthedocs.io/en/latest/", motor" : "https://motor.readthedocs.io/en/stable/", "motor-latest" for rtfm(WIP)
+  #cover  "jishaku, asyncpg", "tweepy",  "aiogifs", python-cse", wavelink", motor", "motor-latest" for rtfm(WIP)
 
 def setup(bot):
   bot.add_cog(Info(bot))
