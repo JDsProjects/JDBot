@@ -1,8 +1,7 @@
-import os
-import pymongo
-import dns
+import os, pymongo, dns, motor, motor.motor_asyncio
+
 DB_logindetails = str(os.environ['DB_data'])
-DB_client = pymongo.MongoClient(DB_logindetails)
+DB_client = motor.motor_asyncio.AsyncIOMotorClient(DB_logindetails)
 
 db = DB_client.JDBot_data
 content_database=db.list_collection_names()

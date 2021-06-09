@@ -30,12 +30,16 @@ class Bot(commands.Cog):
     end = time.perf_counter()
     await message.edit(content=f"Pong\nBot Latency: {((end - start)*1000)} MS\nWebsocket Response time: {self.bot.latency*1000} MS")
   
-  @commands.command(brief="gives you an invite to invite the bot.")
-  async def invite(self,ctx):
+  @commands.command(brief="gives you an invite to invite the bot.", aliases = ["inv"])
+  async def invite(self, ctx):
+    normal_inv = discord.utils.oauth_url(self.bot.user.id, permissions = discord.Permissions(permissions = 8))
+    minimial_invite = discord.utils.oauth_url(self.bot.user.id, permissions = discord.Permissions(permissions = 70635073))
+
     embed = discord.Embed(title="Invite link:",color=random.randint(0, 16777215))
-    embed.add_field(name=f"{self.bot.user.name} invite:",value=f"[{self.bot.user.name} invite url](https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8)")
-    embed.add_field(name="Non Markdowned invite",value=f"https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8")
+    embed.add_field(name=f"{self.bot.user.name} invite:",value=f"[{self.bot.user.name} invite url]({normal_inv}) \nNon Markdowned invite : {normal_inv}")
+    embed.add_field(name = "Minimial permisions", value = f"{ minimial_invite}")
     embed.set_thumbnail(url=self.bot.user.avatar_url)
+    embed.set_footer(text = f"not all features may work if you invite with minimal perms, if you invite with 0 make sure these permissions are in a Bots/Bot role.")
     await ctx.send(embed=embed)
 
   @commands.command(brief="gives you who the owner is.")
