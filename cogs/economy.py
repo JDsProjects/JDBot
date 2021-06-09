@@ -2,8 +2,8 @@ import money_system, utils
 from discord.ext import commands
 
 class Economy(commands.Cog):
-  def __init__(self, client):
-    self.client = client
+  def __init__(self, bot):
+    self.bot = bot
 
   @commands.command(brief="Currently work in progress(WIP)")
   async def work(self,ctx,*,args=None):
@@ -17,5 +17,5 @@ class Economy(commands.Cog):
       Member = ctx.author
     money_system.display_account(Member.id)
 
-def setup(client):
-  client.add_cog(Economy(client))
+def setup(bot):
+  bot.add_cog(Economy(bot))

@@ -4,8 +4,8 @@ import utils
 from discord.ext.commands.cooldowns import BucketType
 
 class Moderation(commands.Cog):
-  def __init__(self, client):
-    self.client = client
+  def __init__(self, bot):
+    self.bot = bot
 
   @commands.cooldown(1,90,BucketType.user)
   @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
@@ -30,7 +30,7 @@ class Moderation(commands.Cog):
           await ctx.send("they don't seem like a valid user.")
       
       embed.set_footer(text = f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}")
-      await self.client.get_channel(738912143679946783).send(embed=embed) 
+      await self.bot.get_channel(738912143679946783).send(embed=embed) 
 
       if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
@@ -50,7 +50,7 @@ class Moderation(commands.Cog):
   @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(work in progress)")
   async def scan_guild(self,ctx):
     if isinstance(ctx.channel, discord.TextChannel):
-      cur = await self.client.sus_users.cursor()
+      cur = await self.bot.sus_users.cursor()
       cursor = await cur.execute("SELECT * FROM SUS_USERS;")
       sus_users = dict(await cursor.fetchall())
       await cur.close()
@@ -65,10 +65,30 @@ class Moderation(commands.Cog):
     if isinstance(ctx.channel,discord.DMChannel):
       await ctx.send("please use the global version")
 
+  @commands.command(brief= "scan globally per guild")
+  async def scan_global(self, ctx):
+    cur = await self.bot.sus_users.cursor()
+    cursor = await cur.execute("SELECT * FROM SUS_USERS;")
+    sus_users = dict(await cursor.fetchall())
+    await cur.close()
+
+    
+    ss_users = [u for u in sus_users if await self.bot.getch_user(u)]
+
+    if not(ss_users):
+      await ctx.send("no sus users found")
+
+    else:
+      print("oh no")
+
+  @commands.command(brief = "gives sus stats")
+  async def sus_users_stats(self, ctx):
+    print("oh")
+
   @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (work in progress")
   async def report(self,ctx,*,args=None):
     if args:
-      jdjg = self.client.get_user(168422909482762240)
+      jdjg = self.bot.get_user(168422909482762240)
       if (jdjg.dm_channel is None):
         await jdjg.create_dm()
       embed = discord.Embed(color=random.randint(0, 16777215))
@@ -82,5 +102,5 @@ class Moderation(commands.Cog):
       await ctx.send("You didn't give enough information to use.")
   
 
-def setup(client):
-  client.add_cog(Moderation(client))
+def setup(bot):
+  bot.add_cog(Moderation(bot))

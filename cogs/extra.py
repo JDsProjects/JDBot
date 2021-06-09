@@ -3,8 +3,8 @@ import discord, random, asuna_api, math, aiohttp, chardet, mystbin, alexflipnote
 import utils
 
 class Extra(commands.Cog):
-  def __init__(self,client):
-    self.client = client
+  def __init__(self, bot):
+    self.bot = bot
 
   @commands.command(brief="a way to look up minecraft usernames",help="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
   async def mchistory(self,ctx,*,args=None):
@@ -13,7 +13,7 @@ class Extra(commands.Cog):
       await ctx.send("Please pick a minecraft user.")
 
     if args:
-      asuna = asuna_api.Client(self.client.session)
+      asuna = asuna_api.Client(self.bot.session)
       minecraft_info=await asuna.mc_user(args)
       embed=discord.Embed(title=f"Minecraft Username: {args}",color=random.randint(0, 16777215))
       embed.set_footer(text=f"Minecraft UUID: {minecraft_info.uuid}")
@@ -32,7 +32,7 @@ class Extra(commands.Cog):
   async def random_history(self,ctx,*,args=None):
     if args is None:
       args = 1
-    asuna = asuna_api.Client(self.client.session)
+    asuna = asuna_api.Client(self.bot.session)
     response = await asuna.random_history(args)
     for x in response:
       await ctx.send(f":earth_africa: {x}")
@@ -50,7 +50,7 @@ class Extra(commands.Cog):
 
   @commands.command(brief="Oh no Dad Jokes, AHHHHHH!")
   async def dadjoke(self,ctx):
-    response=await self.client.session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"})
+    response=await self.bot.session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"})
     joke=await response.json()
     embed = discord.Embed(title="Random Dad Joke:",color=random.randint(0, 16777215))
     embed.set_author(name=f"Dad Joke Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
@@ -60,11 +60,11 @@ class Extra(commands.Cog):
 
   @commands.command(brief="gets a panel from the xkcd comic",aliases=["astrojoke","astro_joke"])
   async def xkcd(self,ctx):
-    response=await self.client.session.get("https://xkcd.com/info.0.json")
+    response=await self.bot.session.get("https://xkcd.com/info.0.json")
     info=await response.json()
 
     num = random.randint(1,info["num"])
-    comic = await self.client.session.get(f"https://xkcd.com/{num}/info.0.json")
+    comic = await self.bot.session.get(f"https://xkcd.com/{num}/info.0.json")
     data=await comic.json()
     title = data["title"]
     embed=discord.Embed(title=f"Title: {title}",color=random.randint(0, 16777215))
@@ -85,7 +85,7 @@ class Extra(commands.Cog):
         await ctx.send("Not a valid arg using 404")
         code = "404"
     
-    response = await self.client.session.get(f"https://http.cat/{code}")
+    response = await self.bot.session.get(f"https://http.cat/{code}")
     if response.status:
       image = f"https://http.cat/{code}.jpg"
 
@@ -97,7 +97,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="Gives advice from JDJG api.",aliases=["ad"])
   async def advice(self,ctx):
-    r=await self.client.session.get('https://jdjgapi.nom.mu/api/advice')
+    r=await self.bot.session.get('https://jdjgapi.nom.mu/api/advice')
     res = await r.json()
     embed = discord.Embed(title = "Here is some advice for you!",color=random.randint(0, 16777215))
     embed.add_field(name = f"{res['text']}", value = "Hopefully this helped!")
@@ -109,7 +109,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="gives random compliment")
   async def compliment(self,ctx):
-    r=await self.client.session.get('https://jdjgapi.nom.mu/api/compliment')
+    r=await self.bot.session.get('https://jdjgapi.nom.mu/api/compliment')
     res = await r.json()
     embed = discord.Embed(title = "Here is a compliment:",color=random.randint(0, 16777215))
     embed.add_field(name = f"{res['text']}", value = "Hopefully this helped your day!")
@@ -118,7 +118,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="gives an insult")
   async def insult(self,ctx):
-    r=await self.client.session.get('https://jdjgapi.nom.mu/api/insult')
+    r=await self.bot.session.get('https://jdjgapi.nom.mu/api/insult')
     res = await r.json()
     embed = discord.Embed(title = "Here is a insult:",color=random.randint(0, 16777215))
     embed.add_field(name = f"{res['text']}", value = "Hopefully this Helped?")
@@ -127,7 +127,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="gives response to slur")
   async def noslur(self,ctx):
-    r=await self.client.session.get('https://jdjgapi.nom.mu/api/noslur')
+    r=await self.bot.session.get('https://jdjgapi.nom.mu/api/noslur')
     res = await r.json()
     embed = discord.Embed(title = "Don't Swear",color=random.randint(0, 16777215))
     embed.add_field(name = f"{res['text']}", value = "WHY MUST YOU SWEAR?")
@@ -136,7 +136,7 @@ class Extra(commands.Cog):
 
   @commands.command(help="gives random message",aliases=["rm"])
   async def random_message(self,ctx):
-    r=await self.client.session.get('https://jdjgapi.nom.mu/api/randomMessage')
+    r=await self.bot.session.get('https://jdjgapi.nom.mu/api/randomMessage')
     res = await r.json()
     embed = discord.Embed(title = "Random Message:",color=random.randint(0, 16777215))
     embed.add_field(name="Here:",value=res["text"])
@@ -235,7 +235,7 @@ class Extra(commands.Cog):
           encoding=chardet.detect(file)["encoding"]
           if encoding:
             text = file.decode(encoding)
-            mystbin_client = mystbin.Client(session=self.client.session)
+            mystbin_client = mystbin.Client(session=self.bot.session)
             paste = await mystbin_client.post(text)
             await ctx.send(content=f"Added text file to mystbin: \n{paste.url}")
           if encoding is None:
@@ -257,7 +257,7 @@ class Extra(commands.Cog):
         await ctx.message.delete()
 
       for x in [708167737381486614,168422909482762240]:
-        apply_user = self.client.get_user(x)
+        apply_user = self.bot.get_user(x)
       
       if (apply_user.dm_channel is None):
         await apply_user.create_dm()
@@ -270,13 +270,13 @@ class Extra(commands.Cog):
 
   @commands.command()
   async def caw(self,ctx):
-    alex_api = alexflipnote.Client(os.environ["alex_apikey"],session=self.client.session)
+    alex_api = alexflipnote.Client(os.environ["alex_apikey"],session=self.bot.session)
     url=await alex_api.birb()
     await ctx.send(url)
 
   @commands.command(aliases=["joke"])
   async def jokeapi(self, ctx):
-    jokeapi_grab=await self.client.session.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun,Spooky,Christmas?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single")
+    jokeapi_grab=await self.bot.session.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun,Spooky,Christmas?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single")
     response_dict=await jokeapi_grab.json()
     embed=discord.Embed(title=f"{response_dict['joke']}",color=random.randint(0, 16777215))
     embed.set_author(name=f"{response_dict['category']} Joke:")
@@ -294,7 +294,7 @@ class Extra(commands.Cog):
   async def cookieclicker_save(self,ctx):
     import io
 
-    mystbin_client = mystbin.Client(session=self.client.session)
+    mystbin_client = mystbin.Client(session=self.bot.session)
     paste=await mystbin_client.get("https://mystb.in/ClubsFloppyElections.perl")
     s = io.StringIO()
     s.write(paste.paste_content)
@@ -304,7 +304,7 @@ class Extra(commands.Cog):
   @commands.command()
   async def call_text(self, ctx, *, args = None):
 
-    alex_api = alexflipnote.Client(os.environ["alex_apikey"],session=self.client.session)
+    alex_api = alexflipnote.Client(os.environ["alex_apikey"],session=self.bot.session)
 
     args = args or "You called No one :("
     image=await alex_api.calling(text=args)
@@ -323,5 +323,5 @@ class Extra(commands.Cog):
     await ctx.send(f"> {message} \n -{ctx.message.author}",allowed_mentions=discord.AllowedMentions.none())
 
   
-def setup(client):
-  client.add_cog(Extra(client))
+def setup(bot):
+  bot.add_cog(Extra(bot))

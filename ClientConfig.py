@@ -34,6 +34,14 @@ class JDBot(commands.Bot):
       member = guild.get_member(member_id) or await guild.fetch_member(member_id)
     return member
 
+  async def getch_user(self, user_id):
+    user = None
+
+    with contextlib.suppress(discord.NotFound, discord.HTTPException):
+      user = self.get_user(user_id) or await self.fetch_user(user_id)
+    return user
+
+
   async def filter_commands(self, ctx, command_list):
 
     async def check(cmd, ctx):

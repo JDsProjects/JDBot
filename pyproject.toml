@@ -9,7 +9,6 @@ python = "^3.8"
 dnspython = "^2.1.0"
 "discord.py" = {extras = ["voice"], version = "^1.7.1"}
 Flask = "^1.1.2"
-dblpy = "^0.4.0"
 aioimgur = "^0.1.1"
 wavelink = "^0.9.9"
 image = "^1.5.33"
@@ -47,6 +46,7 @@ asyncpraw = "^7.2.0"
 tweepy = {git = "https://github.com/tweepy/tweepy.git"}
 doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
 aiosqlite = "^0.17.0"
+topggpy = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 

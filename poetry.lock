@@ -260,19 +260,6 @@ version = "7.1.2"
 
 [[package]]
 category = "main"
-description = "A simple API wrapper for top.gg written in Python."
-name = "dblpy"
-optional = false
-python-versions = ">= 3.5.3"
-version = "0.4.0"
-
-[package.dependencies]
-aiohttp = "*"
-"discord.py" = "*"
-ratelimiter = "*"
-
-[[package]]
-category = "main"
 description = "An extension module to make reaction based menus with discord.py"
 name = "discord-ext-menus"
 optional = false
@@ -689,17 +676,6 @@ version = "2021.1"
 
 [[package]]
 category = "main"
-description = "Simple python rate limiting object"
-name = "ratelimiter"
-optional = false
-python-versions = "*"
-version = "1.2.0.post0"
-
-[package.extras]
-test = ["pytest (>=3.0)", "pytest-asyncio"]
-
-[[package]]
-category = "main"
 description = "Python HTTP for Humans."
 name = "requests"
 optional = false
@@ -774,6 +750,17 @@ name = "texttable"
 optional = false
 python-versions = "*"
 version = "1.6.3"
+
+[[package]]
+category = "main"
+description = "A simple API wrapper for Top.gg written in Python."
+name = "topggpy"
+optional = false
+python-versions = ">= 3.6"
+version = "1.1.0"
+
+[package.dependencies]
+"discord.py" = "*"
 
 [[package]]
 category = "main"
@@ -930,7 +917,7 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "9694d0a361871a74fa35e427364b57e2ec72d791a88ac99f4f330856a91217dd"
+content-hash = "e323565c787b185f5a442e181eef3886634301528737e655415c99dcbd3577c4"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1077,10 +1064,6 @@ chardet = [
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
     {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
-]
-dblpy = [
-    {file = "dblpy-0.4.0-py3-none-any.whl", hash = "sha256:2d7d746ee7e7b3a2597f485ebf4089e7baabdcf1717743228991bd988c69e1b5"},
-    {file = "dblpy-0.4.0.tar.gz", hash = "sha256:744f5ee9493a945e5907466754b2dce4735715b34daabb9e6264f76ec79818c9"},
 ]
 discord-ext-menus = []
 "discord.py" = [
@@ -1436,10 +1419,6 @@ pytz = [
     {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},
     {file = "pytz-2021.1.tar.gz", hash = "sha256:83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"},
 ]
-ratelimiter = [
-    {file = "ratelimiter-1.2.0.post0-py3-none-any.whl", hash = "sha256:a52be07bc0bb0b3674b4b304550f10c769bbb00fead3072e035904474259809f"},
-    {file = "ratelimiter-1.2.0.post0.tar.gz", hash = "sha256:5c395dcabdbbde2e5178ef3f89b568a3066454a6ddc223b76473dac22f89b4f7"},
-]
 requests = [
     {file = "requests-2.15.1-py2.py3-none-any.whl", hash = "sha256:ff753b2196cd18b1bbeddc9dcd5c864056599f7a7d9a4fb5677e723efa2b7fb9"},
     {file = "requests-2.15.1.tar.gz", hash = "sha256:e5659b9315a0610505e050bb7190bf6fa2ccee1ac295f2b760ef9d8a03ebbb2e"},
@@ -1465,6 +1444,10 @@ sr_api = []
 texttable = [
     {file = "texttable-1.6.3-py2.py3-none-any.whl", hash = "sha256:f802f2ef8459058736264210f716c757cbf85007a30886d8541aa8c3404f1dda"},
     {file = "texttable-1.6.3.tar.gz", hash = "sha256:ce0faf21aa77d806bbff22b107cc22cce68dc9438f97a2df32c93e9afa4ce436"},
+]
+topggpy = [
+    {file = "topggpy-1.1.0-py3-none-any.whl", hash = "sha256:479de0ad14f8a1f86e4acfdb0da457d4598f6b6a9b6a93f44487a73a2709f67e"},
+    {file = "topggpy-1.1.0.tar.gz", hash = "sha256:99eeb228c2c09e95231093d2b18fd2c8278c467dccb0fe309726aee93edca1d6"},
 ]
 tweepy = []
 twemoji-parser = [
