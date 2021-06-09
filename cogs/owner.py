@@ -81,6 +81,9 @@ class Owner(commands.Cog):
   async def cog_command_error(self, ctx, error):
     if not ctx.command or not ctx.command.has_error_handler():
       await ctx.send(error)
+      import traceback
+      traceback.print_exc()
+
     #I need to fix all cog_command_error
 
   @commands.command(brief="Changes Bot Status(Owner Only)")
@@ -300,8 +303,6 @@ class Owner(commands.Cog):
     paste = await mystbin_client.post(values)
 
     await ctx.send(f"Traceback: {paste.url}")
-     
-
 
 def setup(client):
   client.add_cog(Owner(client))

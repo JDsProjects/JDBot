@@ -70,7 +70,7 @@ class EmojiBasic:
     else:
       return None
 
-async def guildinfo(ctx,guild):
+async def guildinfo(ctx, guild):
     base_user=collections.Counter([u.bot for u in guild.members])
     bots = base_user[True]
     users = base_user[False]
@@ -95,7 +95,7 @@ async def guildinfo(ctx,guild):
     embed.add_field(name="Server Region:" ,value=guild.region)
     embed.add_field(name="Server Creation:",value=f"{guild.created_at} UTC")
 
-    embed.add_field(name="Server Owner Info:", value = f"Owner : {guild.owner} \n Owner ID : {guild.owner_id}")
+    embed.add_field(name="Server Owner Info:", value = f"Owner : {guild.owner} \nOwner ID : {guild.owner_id}")
 
     embed.add_field(name = "Member info", value = f"Member Count : {guild.member_count}\nUsers : {users} \nBots : {bots} ")
 
@@ -103,7 +103,7 @@ async def guildinfo(ctx,guild):
     embed.add_field(name="Role Count:", value = len(guild.roles))
     embed.set_thumbnail(url = (guild.icon_url))
 
-    embed.add_field(name="Emojis Info:", value = f"Limit : {guild.emoji_limit}\n Static : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}")
+    embed.add_field(name="Emojis Info:", value = f"Limit : {guild.emoji_limit}\nStatic : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}")
 
     embed.add_field(name="Max File Size:",value=f"{guild.filesize_limit/1000000} MB")
     embed.add_field(name="Shard ID:",value=guild.shard_id)
@@ -156,7 +156,7 @@ async def roleinfo(ctx, role):
 
   embed.add_field(name = "Position Info:", value = f"Position : {role.position} \nHoisted : {role.hoist}")
 
-  embed.add_field(name = "Managed Info:", value = f"Managed : {role.managed} \n Bot : {role.is_bot_managed()} \nBot ID : {role_bot_id} \nDefault : {role.is_default()} \nBooster Role : {role.is_premium_subscriber()} \n Integrated : {role.is_integration()} \nMentionable : {role.mentionable} ")
+  embed.add_field(name = "Managed Info:", value = f"Managed : {role.managed} \nBot : {role.is_bot_managed()} \nBot ID : {role_bot_id} \nDefault : {role.is_default()} \nBooster Role : {role.is_premium_subscriber()} \nIntegrated : {role.is_integration()} \nMentionable : {role.mentionable} ")
 
   embed.add_field(name = "Permissions:", value = f"{role.permissions.value}")
   embed.add_field(name="Color:", value = f"{role.colour}")
