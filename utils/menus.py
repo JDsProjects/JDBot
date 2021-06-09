@@ -63,3 +63,21 @@ class ErrorEmbed(menus.ListPageSource):
 class charinfoMenu(menus.ListPageSource):
   async def format_page(self, menu, item):
     return discord.Embed(description = item, color = random.randint(0, 16777215))
+
+
+class JDJGsummon(menus.Menu):
+  async def send_initial_message(self, ctx, channel):
+    return await channel.send("react with \N{WHITE HEAVY CHECK MARK} if you want me to be summoned if not use \N{CROSS MARK}")
+
+  @menus.button('\N{WHITE HEAVY CHECK MARK}')
+  async def on_checkmark(self, payload):
+    await self.ctx.send(content=f'Summon JDJG now a.k.a the owner to the guild make sure invite permissions are open!')
+    await self.message.delete()
+
+    
+
+  @menus.button('\N{CROSS MARK}')
+  async def on_crossmark(self, payload):
+    await self.ctx.send(content=f"You didn't agree to summoning me. So I will not be invited.")
+    await self.message.delete()
+

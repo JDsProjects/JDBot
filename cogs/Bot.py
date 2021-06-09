@@ -203,8 +203,10 @@ class Bot(commands.Cog):
 
   @commands.command(brief = "a command to automatically summon by creating an invite and having jdjg look at something if it's there something wrong")
   async def jdjgsummon(self, ctx):
-
-    await ctx.send("I had WIP code: https://mystb.in/SpecialLuxuryMacedonia.python don't really like it tbh.")
+    m = utils.JDJGsummon()
+    
+    await m.start(ctx)
+    
 
 def setup(bot):
   bot.add_cog(Bot(bot))

@@ -1,4 +1,4 @@
-import money_system, utils, discord
+import utils, discord
 from discord.ext import commands
 
 import DatabaseConfig
@@ -75,7 +75,7 @@ class Economy(commands.Cog):
   @commands.command(brief="a command to send how much money you have(work in progress)",help="using the JDBot database you can see how much money you have")
   async def balance(self ,ctx, *, member: utils.BetterMemberConverter = None):
     
-    
+
     member = member or ctx.author
     values = await display_account(member.id)
     money = values[member.id]
