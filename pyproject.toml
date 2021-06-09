@@ -47,6 +47,7 @@ tweepy = {git = "https://github.com/tweepy/tweepy.git"}
 doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
 aiosqlite = "^0.17.0"
 topggpy = "^1.1.0"
+requests-oauthlib = "^1.3.0"
 
 [tool.poetry.dev-dependencies]
 

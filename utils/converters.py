@@ -139,6 +139,12 @@ async def roleinfo(ctx, role):
   role_members=collections.Counter([u.bot for u in role.members])
   role_bots = role_members[True]
   role_users = role_members[False]
+  
+  if role.tags: 
+    role_bot_id = role.tags.bot_id
+
+  if not role.tags:
+    role_bot_id = None
 
   role_time = role.created_at.strftime('%m/%d/%Y %H:%M:%S')
   embed = discord.Embed(title = f"{role} Info:" ,color = random.randint(0, 16777215) )
@@ -146,26 +152,14 @@ async def roleinfo(ctx, role):
   embed.add_field(name = "ID:", value = f"{role.id}")
   embed.add_field(name = "Created at:", value = f"{role_time}")
 
-  embed.add_field(name="Bot Member Count:", value = f"{role_bots}")
-  embed.add_field(name = "User Member Count:", value = f"{role_users}")
+  embed.add_field(name="Member Count:", value = f"Bot Count : {role_bots} \nUser Count : {role_users}" )
 
-  embed.add_field(name = "Position:", value = f"{role.position}")
-  embed.add_field(name = "Hoisted:", value = f"{role.hoist}")
-  embed.add_field(name = "Managed:", value = f"{role.managed}")
-  embed.add_field(name = "Mentionable:", value = f"{role.mentionable}")
+  embed.add_field(name = "Position Info:", value = f"Position : {role.position} \nHoisted : {role.hoist}")
+
+  embed.add_field(name = "Managed Info:", value = f"Managed : {role.managed} \n Bot : {role.is_bot_managed()} \nBot ID : {role_bot_id} \nDefault : {role.is_default()} \nBooster Role : {role.is_premium_subscriber()} \n Integrated : {role.is_integration()} \nMentionable : {role.mentionable} ")
+
   embed.add_field(name = "Permissions:", value = f"{role.permissions.value}")
   embed.add_field(name="Color:", value = f"{role.colour}")
-  embed.add_field(name = "Default Role:", value = f"{role.is_default()}")
-  embed.add_field(name = "Bot Manged:", value = f"{role.is_bot_managed()} ")
-
-  if role.tags: 
-    embed.add_field(name = "Bot Managed ID:", value = f"{role.tags.bot_id}")
-
-  if not role.tags:
-    embed.add_field(name = "Bot Managed ID:", value = f"{None}")
-
-  embed.add_field(name = "Booster Role:", value = f"{role.is_premium_subscriber()}")
-  embed.add_field(name = "Integrated Role:", value = f"{role.is_integration()}")
 
   embed.set_thumbnail(url = "https://i.imgur.com/liABFL4.png")
 

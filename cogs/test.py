@@ -11,15 +11,6 @@ class Test(commands.Cog):
   @commands.command()
   async def ticket_make(self,ctx):
     await ctx.send("WIP, will make ticket soon..")
-  
-  @commands.command(brief = "gives info about a role.", aliases = ["roleinfo"])
-  async def role_info(self, ctx, *, role : typing.Optional[discord.Role] = None):
-
-    if role:
-      await utils.roleinfo(ctx, role)
-
-    if not role:
-      await ctx.send(f"The role you wanted was not found.")
 
   @commands.command()
   async def pypi(self,ctx,*,args=None):
@@ -46,14 +37,14 @@ class Test(commands.Cog):
       await ctx.send("Not a valid emoji id.")
 
   @commands.command(brief="this command will error by sending no content")
-  async def te(self,ctx):
+  async def te(self, ctx):
     await ctx.send("")
 
   async def cog_check(self, ctx):
     return ctx.author.id in testers_list
 
   async def cog_command_error(self, ctx, error):
-    if not ctx.command and ctx.command.has_error_handler():
+    if ctx.command and not ctx.command.has_error_handler():
       await ctx.send(error)
       
     #I need to fix all cog_command_error

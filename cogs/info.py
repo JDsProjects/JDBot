@@ -202,6 +202,15 @@ class Info(commands.Cog):
         args=args.replace(x,f"\{x}")
     await ctx.send(f"{args}")
 
+  @commands.command(brief = "gives info about a role.", aliases = ["roleinfo"])
+  async def role_info(self, ctx, *, role : typing.Optional[discord.Role] = None):
+
+    if role:
+      await utils.roleinfo(ctx, role)
+
+    if not role:
+      await ctx.send(f"The role you wanted was not found.")
+
 
 class DevTools(commands.Cog):
   def __init__(self, bot):
