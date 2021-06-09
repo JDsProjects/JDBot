@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, aiosqlite
+import discord, random, aiosqlite, typing
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
@@ -47,6 +47,7 @@ class Moderation(commands.Cog):
   async def warn_errror(self,ctx,error):
     await ctx.send(error)
 
+  @commands.cooldown(1,90,BucketType.user)
   @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(work in progress)")
   async def scan_guild(self,ctx):
     if isinstance(ctx.channel, discord.TextChannel):
@@ -65,6 +66,7 @@ class Moderation(commands.Cog):
     if isinstance(ctx.channel,discord.DMChannel):
       await ctx.send("please use the global version")
 
+  @commands.cooldown(1,90,BucketType.user)
   @commands.command(brief= "scan globally per guild")
   async def scan_global(self, ctx):
     cur = await self.bot.sus_users.cursor()
@@ -79,11 +81,42 @@ class Moderation(commands.Cog):
       await ctx.send("no sus users found")
 
     else:
-      print("oh no")
+      await ctx.send("There are in fact sus_users in the program ")
 
-  @commands.command(brief = "gives sus stats")
+
+  async def cog_command_error(self, ctx, error):
+    if not ctx.command or not ctx.command.has_error_handler():
+      await ctx.send(error)
+    #I need to fix all cog_command_error
+
+
+  @commands.command(brief = "gives stats about the sus users", aliases = ["sususers_stats"])
   async def sus_users_stats(self, ctx):
-    print("oh")
+    cur = await self.bot.sus_users.cursor()
+    cursor = await cur.execute("SELECT * FROM SUS_USERS;")
+    sus_users = dict(await cursor.fetchall())
+    await cur.close()
+
+    await ctx.send(content = f"Total sus user count: {len(sus_users)}")
+
+
+  @commands.command(brief = "gives you info if someone is a sus user or etc")
+  async def is_sus(self, ctx, *, user : typing.Optional[discord.User] = None):
+    user = user or ctx.author
+
+    cur = await self.bot.sus_users.cursor()
+    cursor = await cur.execute("SELECT * FROM SUS_USERS;")
+    sus_users = dict(await cursor.fetchall())
+    await cur.close()
+
+    truth=sus_users.get(user.id)
+
+    if not truth:
+      await ctx.send(f"{user} is not in the sus list.")
+
+    else:
+      await ctx.send(f"{user} for {truth}")
+
 
   @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (work in progress")
   async def report(self,ctx,*,args=None):
