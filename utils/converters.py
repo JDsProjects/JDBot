@@ -92,10 +92,10 @@ async def guildinfo(ctx,guild):
     embed = discord.Embed(title="Guild Info:", color = random.randint(0, 16777215))
     embed.add_field(name="Server Name:",value=guild.name)
     embed.add_field(name="Server ID:",value=guild.id)
-    embed.add_field(name="Server region",value=guild.region)
-    embed.add_field(name="Server created at:",value=f"{guild.created_at} UTC")
+    embed.add_field(name="Server Region:" ,value=guild.region)
+    embed.add_field(name="Server Creation:",value=f"{guild.created_at} UTC")
 
-    embed.add_field(name="Server Owner Info:",value = f"Server info : {guild.owner} \n Server Owned ID : {guild.owner_id}")
+    embed.add_field(name="Server Owner Info:", value = f"Owner : {guild.owner} \n Owner ID : {guild.owner_id}")
 
     embed.add_field(name = "Member info", value = f"Member Count : {guild.member_count}\nUsers : {users} \nBots : {bots} ")
 
@@ -103,7 +103,7 @@ async def guildinfo(ctx,guild):
     embed.add_field(name="Role Count:", value = len(guild.roles))
     embed.set_thumbnail(url = (guild.icon_url))
 
-    embed.add_field(name="Emojis Info:", value = f"Emoji Limit: {guild.emoji_limit}\n Static Emojis: {static_emojis} \nAnimated Emojis : {animated_emojis} \nTotal Emojis : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable emojis : {usable_emojis}")
+    embed.add_field(name="Emojis Info:", value = f"Limit : {guild.emoji_limit}\n Static : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}")
 
     embed.add_field(name="Max File Size:",value=f"{guild.filesize_limit/1000000} MB")
     embed.add_field(name="Shard ID:",value=guild.shard_id)
@@ -145,8 +145,10 @@ async def roleinfo(ctx, role):
   embed.add_field(name = "Mention:", value = f"{role.mention}")
   embed.add_field(name = "ID:", value = f"{role.id}")
   embed.add_field(name = "Created at:", value = f"{role_time}")
+
   embed.add_field(name="Bot Member Count:", value = f"{role_bots}")
   embed.add_field(name = "User Member Count:", value = f"{role_users}")
+
   embed.add_field(name = "Position:", value = f"{role.position}")
   embed.add_field(name = "Hoisted:", value = f"{role.hoist}")
   embed.add_field(name = "Managed:", value = f"{role.managed}")

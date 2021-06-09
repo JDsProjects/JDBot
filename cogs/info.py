@@ -236,7 +236,9 @@ class DevTools(commands.Cog):
       "aiohttp-latest" : "https://docs.aiohttp.org/en/latest/",
       "wand" : "https://docs.wand-py.org/en/stable/",
       "pillow" : "https://pillow.readthedocs.io/en/stable/",
-      "aiosqlite" : "https://aiosqlite.omnilib.dev/en/stable/"
+      "aiosqlite" : "https://aiosqlite.omnilib.dev/en/stable/",
+      "pytube" : "https://pytube.io/en/latest/",
+
       }
 
     if not args:
@@ -397,6 +399,12 @@ class DevTools(commands.Cog):
   async def aiosqlite(self, ctx, *, args = None):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="aiosqlite", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to parse from pytube")
+  async def pytube(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="pytube", args = args)
     await self.rtfm_send(ctx, results)
 
   def charinfo_converter(self, string):
