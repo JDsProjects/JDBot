@@ -79,7 +79,7 @@ class Owner(commands.Cog):
     return await self.bot.is_owner(ctx.author)
 
   async def cog_command_error(self, ctx, error):
-    if not ctx.command or not ctx.command.has_error_handler():
+    if ctx.command or not ctx.command.has_error_handler():
       await ctx.send(error)
       import traceback
       traceback.print_exc()
@@ -303,6 +303,29 @@ class Owner(commands.Cog):
     paste = await mystbin_client.post(values)
 
     await ctx.send(f"Traceback: {paste.url}")
+
+  @commands.command(brief = "adds packages and urls to rtfm DB")
+  async def addrtfm(self, ctx, name = None, *, url = None):
+    if not name or not url or not name and not url:
+      return await ctx.send("You need a name and also url.")
+
+    cur = await self.bot.rtfm.cursor()
+    await cur.execute("INSERT INTO RTFM_DICTIONARY VALUES (?, ?)", (name, url))
+    await self.bot.rtfm.commit()
+    await cur.close()
+
+    await ctx.send(f"added {name} and {url} to the rtfm DB")
+
+  @commands.command(brief = "removes packages from the rtfm DB")
+  async def removertfm(self, ctx, *, name = None):
+    if name is None:
+      return await ctx.send("You can't remove None")
+
+    cur = await self.bot.rtfm.cursor()
+    await cur.execute("DELETE FROM RTFM_DICTIONARY WHERE name = ?", (name,))
+    await self.bot.rtfm.commit()
+    await cur.close()
+    await ctx.send(f"Removed the rfm value {name}.")
 
 def setup(client):
   client.add_cog(Owner(client))
