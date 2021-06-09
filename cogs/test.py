@@ -13,7 +13,7 @@ class Test(commands.Cog):
     await ctx.send("WIP, will make ticket soon..")
 
   @commands.command()
-  async def pypi(self,ctx,*,args=None):
+  async def pypi(self, ctx, *, args = None):
     #https://pypi.org/simple/
     if args:
       pypi_response=await self.bot.session.get(f"https://pypi.org/pypi/{args}/json")
@@ -27,7 +27,7 @@ class Test(commands.Cog):
 
 
   @commands.command()
-  async def emoji_id(self,ctx,*, emoji: utils.EmojiBasic=None):
+  async def emoji_id(self, ctx, *, emoji: utils.EmojiBasic = None):
     if emoji:
       embed = discord.Embed(description=f" Emoji ID: {emoji.id}",color=random.randint(0, 16777215))
       embed.set_image(url=emoji.url)
@@ -139,11 +139,6 @@ class Test(commands.Cog):
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
   async def setprefix(self,ctx,arg=None):
     await ctx.send("WIP")
-
-  @commands.command()
-  async def letsnot(self,ctx):
-    emoji=discord.utils.get(self.bot.emojis,name="commandfail")
-    await ctx.send(f"Let's not go like {emoji} instead let's try to be nice about this. \nGet a copy of this image from imgur: https://i.imgur.com/CykdOIz.png")
 
 def setup(client):
   client.add_cog(Test(client))

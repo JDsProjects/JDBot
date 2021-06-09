@@ -322,6 +322,11 @@ class Extra(commands.Cog):
 
     await ctx.send(f"> {message} \n -{ctx.message.author}",allowed_mentions=discord.AllowedMentions.none())
 
+  @commands.command(brief = "hopefully use this to show to not laugh but instead help out and such lol")
+  async def letsnot(self, ctx):
+    emoji=discord.utils.get(self.bot.emojis,name="commandfail")
+    await ctx.send(f"Let's not go like {emoji} instead let's try to be nice about this. \nGet a copy of this image from imgur: https://i.imgur.com/CykdOIz.png")
+
   
 def setup(bot):
   bot.add_cog(Extra(bot))
