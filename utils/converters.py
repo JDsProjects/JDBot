@@ -94,26 +94,22 @@ async def guildinfo(ctx,guild):
     embed.add_field(name="Server ID:",value=guild.id)
     embed.add_field(name="Server region",value=guild.region)
     embed.add_field(name="Server created at:",value=f"{guild.created_at} UTC")
-    embed.add_field(name="Server Owner:",value=guild.owner)
-    embed.add_field(name="Server Owner ID:",value=guild.owner_id)
-    embed.add_field(name="Member Count:",value=guild.member_count)
-    embed.add_field(name="Users:",value=users)
-    embed.add_field(name="Bots:",value=bots)
-    embed.add_field(name="Channel Count:",value=len(guild.channels))
-    embed.add_field(name="Role Count:",value=len(guild.roles))
-    embed.set_thumbnail(url=(guild.icon_url))
-    embed.add_field(name="Emoji Limit:",value=guild.emoji_limit)
+
+    embed.add_field(name="Server Owner Info:",value = f"Server info : {guild.owner} \n Server Owned ID : {guild.owner_id}")
+
+    embed.add_field(name = "Member info", value = f"Member Count : {guild.member_count}\nUsers : {users} \nBots : {bots} ")
+
+    embed.add_field(name="Channel Count:",value = len(guild.channels))
+    embed.add_field(name="Role Count:", value = len(guild.roles))
+    embed.set_thumbnail(url = (guild.icon_url))
+
+    embed.add_field(name="Emojis Info:", value = f"Emoji Limit: {guild.emoji_limit}\n Static Emojis: {static_emojis} \nAnimated Emojis : {animated_emojis} \nTotal Emojis : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable emojis : {usable_emojis}")
+
     embed.add_field(name="Max File Size:",value=f"{guild.filesize_limit/1000000} MB")
     embed.add_field(name="Shard ID:",value=guild.shard_id)
     embed.add_field(name="Animated Icon",value=guild.is_icon_animated())
-    embed.add_field(name="Static Emojis",value=static_emojis)
-    embed.add_field(name="Animated Emojis",value=animated_emojis)
-    embed.add_field(name="Total Emojis:",value=f"{len(guild.emojis)}/{guild.emoji_limit*2}")
-    embed.add_field(name="Usable Emojis",value=usable_emojis)
-    embed.add_field(name="Online Users:",value=f"{online_users}")
-    embed.add_field(name="DND Users:",value=f"{dnd_users}")
-    embed.add_field(name="Idle Users:",value=f"{idle_users}")
-    embed.add_field(name="Offline Users",value=f"{offline_users}")
+    
+    embed.add_field(name="User Presences Info:", value = f"Online Users: {online_users} \nDND Users: {dnd_users} \nIdle Users : {idle_users} \nOffline Users : {offline_users}")
 
     await ctx.send(embed=embed)
 
@@ -145,21 +141,19 @@ async def roleinfo(ctx, role):
   role_users = role_members[False]
 
   role_time = role.created_at.strftime('%m/%d/%Y %H:%M:%S')
-  embed = discord.Embed(title = "Role Info:" ,color = random.randint(0, 16777215) )
-  embed.add_field(name="Name:", value = f"{role}")
+  embed = discord.Embed(title = f"{role} Info:" ,color = random.randint(0, 16777215) )
   embed.add_field(name = "Mention:", value = f"{role.mention}")
   embed.add_field(name = "ID:", value = f"{role.id}")
-  embed.add_field(name = "Guild Name:", value = f"{role.guild}")
-  embed.add_field(name = "Created at", value = f"{role_time}")
+  embed.add_field(name = "Created at:", value = f"{role_time}")
   embed.add_field(name="Bot Member Count:", value = f"{role_bots}")
   embed.add_field(name = "User Member Count:", value = f"{role_users}")
-  embed.add_field(name = "Position", value = f"{role.position}")
+  embed.add_field(name = "Position:", value = f"{role.position}")
   embed.add_field(name = "Hoisted:", value = f"{role.hoist}")
-  embed.add_field(name = "Managed", value = f"{role.managed}")
-  embed.add_field(name = "Mentionable", value = f"{role.mentionable}")
+  embed.add_field(name = "Managed:", value = f"{role.managed}")
+  embed.add_field(name = "Mentionable:", value = f"{role.mentionable}")
   embed.add_field(name = "Permissions:", value = f"{role.permissions.value}")
   embed.add_field(name="Color:", value = f"{role.colour}")
-  embed.add_field(name = "Default Role", value = f"{role.is_default()}")
+  embed.add_field(name = "Default Role:", value = f"{role.is_default()}")
   embed.add_field(name = "Bot Manged:", value = f"{role.is_bot_managed()} ")
 
   if role.tags: 
@@ -172,5 +166,7 @@ async def roleinfo(ctx, role):
   embed.add_field(name = "Integrated Role:", value = f"{role.is_integration()}")
 
   embed.set_thumbnail(url = "https://i.imgur.com/liABFL4.png")
+
+  embed.set_footer(text = f"Guild: {role.guild}")
 
   await ctx.send(embed=embed)
