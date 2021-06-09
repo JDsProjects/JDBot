@@ -1,4 +1,4 @@
-import money_system, utils
+import money_system, utils, discord
 from discord.ext import commands
 
 import DatabaseConfig
@@ -15,10 +15,8 @@ async def check_user_exists(userid):
 async def display_account(userid):
   await check_user_exists(userid)
   doc = await bank.find_one({"user_id":userid})
-  print("Userid: "+str(userid))
-  print("Balance:")
-  print("\tBank: "+str(doc["balance"]["bank"]))
-  print("\tWallet: "+str(doc["balance"]["wallet"]))
+  balance = doc["balance"]
+  return { userid  : balance}
 
 async def get_document(userid):
   await check_user_exists(userid)
@@ -75,10 +73,17 @@ class Economy(commands.Cog):
       await add_money(Member,10,0)
 
   @commands.command(brief="a command to send how much money you have(work in progress)",help="using the JDBot database you can see how much money you have")
-  async def balance(self,ctx,*, Member: utils.BetterMemberConverter = None):
-    if Member is None:
-      Member = ctx.author
-    await display_account(Member.id)
+  async def balance(self ,ctx, *, member: utils.BetterMemberConverter = None):
+    
+    
+    member = member or ctx.author
+    values = await display_account(member.id)
+    money = values[member.id]
+    wallet_value = money.get("wallet")
+    bank_value = money.get("bank")
+
+    embed = discord.Embed(title=f"{member.name}'s Balance:", description = f"Wallet : {wallet_value} \nBank : {bank_value}")
+    await ctx.send(embed = embed)
 
 def setup(bot):
   bot.add_cog(Economy(bot))
