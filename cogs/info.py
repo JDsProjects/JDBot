@@ -258,7 +258,7 @@ class DevTools(commands.Cog):
       await ctx.send(embed=embed, reference = reference)
 
 
-  @commands.group(aliases=["rtd"], invoke_without_command = True, brief="most of this is based on R.danny including the reference. But it's my own implentation of it")
+  @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief="most of this is based on R.danny including the reference. But it's my own implentation of it")
   async def rtfm(self, ctx, *, args = None):
 
     await ctx.trigger_typing()

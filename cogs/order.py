@@ -4,7 +4,7 @@ from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 
 from aiogifs.tenor import TenorClient, ContentFilter
-from aiogifs.giphy import GiphyClient
+from aiogifs.giphy import GiphyClient, AgeRating
 
 class Order(commands.Cog):
   def __init__(self, bot):
@@ -22,9 +22,6 @@ class Order(commands.Cog):
     self.tenor_client = TenorClient (api_key=tenor_key, session = self.bot.session)
     
     self.giphy_client = GiphyClient(api_key=giphy_key, session = self.bot.session)
-
-    await self.tenor_client.connect()
-    await self.giphy_client.connect()
 
     self.image_client=async_cse.Search(image_api_key,engine_id=image_engine_key, session = self.bot.session)
 
@@ -133,9 +130,12 @@ class Order(commands.Cog):
   async def tenor_random(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
+
     if args is None:
+
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor shuffle")
+
 
   @commands.command(help="work in progress",aliases=["tenor-shuffle"])
   async def tenor_shuffle(self, ctx, *, args = None):
@@ -148,7 +148,12 @@ class Order(commands.Cog):
   @commands.group(name="giphy",invoke_without_command=True)
   async def giphy(self, ctx, *, args = None):
     if args:
+
+      safesearch_type = AgeRating.g()
+      results = await self.giphy_client.search(args, rating = safesearch_type, limit = 10)
+
       await ctx.send("WIP")
+
     if args is None:
       await ctx.send("That doesn't have any value.")
       await ctx.send("tenor")
@@ -170,7 +175,7 @@ class Order(commands.Cog):
         await ctx.send("giphy shuffle")
 
   async def cog_command_error(self,ctx,error):
-    if not ctx.command and ctx.command.has_error_handler():
+    if ctx.command and not ctx.command.has_error_handler():
       await ctx.send(error)
       
     #I need to fix all cog_command_error

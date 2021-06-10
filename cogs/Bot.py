@@ -1,6 +1,7 @@
 from discord.ext import commands, tasks
 import discord, random , time, asyncio, difflib, typing
 import utils
+from discord.ext.commands.cooldowns import BucketType
 
 class Bot(commands.Cog):
   def __init__(self,bot):
@@ -45,10 +46,7 @@ class Bot(commands.Cog):
   @commands.command(brief="gives you who the owner is.")
   async def owner(self,ctx):
     info = await self.bot.application_info()
-    if info.team is None:
-      owner_id = info.owner.id
-    if info.team:
-      owner_id = info.team.owner_id
+    owner_id = info.team.owner_id if info.team else info.owner.id
 
     support_guild=self.bot.get_guild(736422329399246990)
     owner= await self.bot.getch_member(support_guild,owner_id)
@@ -85,7 +83,7 @@ class Bot(commands.Cog):
     embed.add_field(name="Nickname: ", value = nickname)
     embed.add_field(name="Joined Discord: ",value = (owner.created_at.strftime('%m/%d/%Y %H:%M:%S')))
     embed.add_field(name="Joined Guild: ",value = joined_guild)
-    embed.add_field(name="Part of Guilds:", value=guild_list)
+    embed.add_field(name="Mutual Guilds:", value=guild_list)
     embed.add_field(name="ID:",value=owner.id)
     embed.add_field(name="Status:",value=status)
     embed.add_field(name="Highest Role:",value=highest_role)
@@ -200,12 +198,19 @@ class Bot(commands.Cog):
       else:
         await ctx.send("got nothing sorry.")
 
-
+ 
+  @commands.cooldown(1,30,BucketType.user)
   @commands.command(brief = "a command to automatically summon by creating an invite and having jdjg look at something if it's there something wrong")
   async def jdjgsummon(self, ctx):
     m = utils.JDJGsummon()
-    
     await m.start(ctx)
+
+  async def cog_command_error(self, ctx, error):
+    if ctx.command or not ctx.command.has_error_handler():
+      await ctx.send(error)
+      import traceback
+      traceback.print_exc()
+
     
 
 def setup(bot):

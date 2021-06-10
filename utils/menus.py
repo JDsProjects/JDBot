@@ -1,4 +1,4 @@
-import discord, re, collections, random, twemoji_parser
+import discord, re, collections, random, twemoji_parser, contextlib, asyncio
 from discord.ext import commands, menus
 
 class InviteInfoEmbed(menus.ListPageSource):
@@ -71,10 +71,35 @@ class JDJGsummon(menus.Menu):
 
   @menus.button('\N{WHITE HEAVY CHECK MARK}')
   async def on_checkmark(self, payload):
-    await self.ctx.send(content=f'Summon JDJG now a.k.a the owner to the guild make sure invite permissions are open!')
+    msg = await self.ctx.send(content=f'Summon JDJG now a.k.a the owner to the guild make sure invite permissions are open!')
     await self.message.delete()
 
-    
+    if isinstance(self.ctx.channel, discord.TextChannel):
+      await asyncio.sleep(1)
+      await msg.edit(content = "This is attempting to make an invite")
+
+      invite = None
+      with contextlib.suppress(discord.NotFound, discord.HTTPException):
+        invite = await self.ctx.channel.create_invite(max_uses = 0)
+
+      if invite:
+        await asyncio.sleep(1)
+        await msg.edit(content = "Contacting JDJG...")
+
+        jdjg = await self.bot.getch_user(168422909482762240)
+
+        embed = discord.Embed(title = f"{self.ctx.author} wants your help", description = f"Invite: {invite.url} \nChannel : {self.ctx.channel.mention} {self.ctx.channel}", color = random.randint(0, 16777215) )
+        embed.set_footer(text = f"Guild: {self.ctx.guild} \nGuild ID: {self.ctx.guild.id}")
+
+        await jdjg.send(embed=embed)
+
+      else:
+        await asyncio.sleep(1)
+        return await msg.edit(content = "Failed making an invite.")
+
+    if isinstance(self.ctx.channel,discord.DMChannel):
+      await asyncio.sleep(1)
+      return await msg.edit(content = "This is meant for guilds not Dm channel if you want support in DM channel contact the owner, By DMS at JDJG Inc. Official#3493.")
 
   @menus.button('\N{CROSS MARK}')
   async def on_crossmark(self, payload):

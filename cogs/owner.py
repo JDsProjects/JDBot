@@ -42,6 +42,7 @@ class Owner(commands.Cog):
   
   @commands.command()
   async def reload(self,ctx,*,cog=None):
+    cog = cog or "all"
     if cog:
       if cog == "all":
         for x in list(self.bot.extensions):
@@ -246,6 +247,22 @@ class Owner(commands.Cog):
     if command is None:
       await ctx.send("select a command :(")
 
+  @commands.command(brief = "resets cooldown for you.",aliases = ["reset_cooldown"])
+  async def resetcooldown(self, ctx, *, command = None):
+    if not command:
+      return await ctx.send("please specificy a command")
+    
+    command_wanted = self.bot.get_command(command)
+
+    if not command_wanted:
+      return await ctx.send("please specify a command")
+
+    if not command_wanted.is_on_cooldown(ctx):
+      return await ctx.send("That doesn't have a cooldown/isn't on a cooldown.")
+
+    command_wanted.reset_cooldown(ctx)
+    await ctx.send(f"reset cooldown of {command_wanted}")
+
   @commands.command()
   async def leave_guild(self, ctx, *, guild: discord.Guild = None):
     guild = guild or ctx.guild
@@ -304,7 +321,7 @@ class Owner(commands.Cog):
 
     await ctx.send(f"Traceback: {paste.url}")
 
-  @commands.command(brief = "adds packages and urls to rtfm DB")
+  @commands.command(brief = "adds packages and urls to rtfm DB", aliases=["add_rtfm"])
   async def addrtfm(self, ctx, name = None, *, url = None):
     if not name or not url or not name and not url:
       return await ctx.send("You need a name and also url.")
@@ -316,7 +333,7 @@ class Owner(commands.Cog):
 
     await ctx.send(f"added {name} and {url} to the rtfm DB")
 
-  @commands.command(brief = "removes packages from the rtfm DB")
+  @commands.command(brief = "removes packages from the rtfm DB", aliases = ["remove_rtfm"])
   async def removertfm(self, ctx, *, name = None):
     if name is None:
       return await ctx.send("You can't remove None")
