@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, asuna_api, math, aiohttp, chardet, mystbin, alexflipnote, os, typing, aioimgur, time
+import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio
 import utils
 
 class Extra(commands.Cog):
@@ -327,6 +327,11 @@ class Extra(commands.Cog):
     emoji=discord.utils.get(self.bot.emojis,name="commandfail")
     await ctx.send(f"Let's not go like {emoji} instead let's try to be nice about this. \nGet a copy of this image from imgur: https://i.imgur.com/CykdOIz.png")
 
+  @commands.command(brief = "edits a message with a specific twist(100)% lol")
+  async def edit_that(self, ctx):
+    message = await ctx.send("Hello guys I am going to be edited")
+    await asyncio.sleep(2)
+    await message.edit(content = "hello guys I am going to be edited \u202B  Heck yeah")
   
 def setup(bot):
   bot.add_cog(Extra(bot))
