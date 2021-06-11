@@ -227,7 +227,7 @@ class Extra(commands.Cog):
     await ctx.send(args,allowed_mentions=discord.AllowedMentions.none())
 
   @commands.command(brief="a command to backup text",help="please don't upload any private files that aren't meant to be seen")
-  async def text_backup(self,ctx):
+  async def text_backup(self, ctx, *, args = None):
     if ctx.message.attachments:
       for x in ctx.message.attachments:
         file=await x.read()
@@ -242,6 +242,12 @@ class Extra(commands.Cog):
             await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
         if len(file ) < 1:
           await ctx.send("this doesn't contain any bytes.")
+
+    if args:
+      await ctx.send("this is meant to backup text files and such.")
+
+    if not args and not ctx.message.attachments:
+      await ctx.send("you didn't give it any attachments.")
           
           
   @commands.group(name="apply",invoke_without_command=True)

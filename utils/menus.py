@@ -88,7 +88,7 @@ class JDJGsummon(menus.Menu):
 
         jdjg = await self.bot.getch_user(168422909482762240)
 
-        embed = discord.Embed(title = f"{self.ctx.author} wants your help", description = f"Invite: {invite.url} \nChannel : {self.ctx.channel.mention} {self.ctx.channel}", color = random.randint(0, 16777215) )
+        embed = discord.Embed(title = f"{self.ctx.author} wants your help", description = f"Invite: {invite.url} \nChannel : {self.ctx.channel.mention} \nName : {self.ctx.channel}", color = random.randint(0, 16777215) )
         embed.set_footer(text = f"Guild: {self.ctx.guild} \nGuild ID: {self.ctx.guild.id}")
 
         await jdjg.send(embed=embed)
