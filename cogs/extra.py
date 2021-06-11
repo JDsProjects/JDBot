@@ -72,7 +72,7 @@ class Extra(commands.Cog):
     embed.set_footer(text=f"Made on {data['month']}/{data['day']}/{data['year']}")
     await ctx.send(embed=embed)
 
-  @commands.command()
+  @commands.command(brief = "Gets a cat based on http status code", aliases = ["http"])
   async def http_cat(self, ctx, * , args : typing.Optional[typing.Union[int,str]] = None ):
     if args is None: code = "404"
 

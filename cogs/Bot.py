@@ -49,7 +49,7 @@ class Bot(commands.Cog):
     owner_id = info.team.owner_id if info.team else info.owner.id
 
     support_guild=self.bot.get_guild(736422329399246990)
-    owner= await self.bot.getch_member(support_guild,owner_id)
+    owner= await self.bot.getch_member(support_guild,owner_id) or await self.bot.getch_user(owner_id)
     user_type = user_type = ['User', 'Bot'][owner.bot]
 
     guilds_list=[guild for guild in self.bot.guilds if guild.get_member(owner.id) and guild.get_member(ctx.author.id)]
@@ -70,7 +70,7 @@ class Bot(commands.Cog):
       nickname = "None"
       joined_guild = "N/A"
       status = "Unknown"
-      for guild in self.bot.guilds:
+      for guild in owner.mutual_guilds:
         member=guild.get_member(owner.id)
         if member:
           status=str(member.status).upper()
