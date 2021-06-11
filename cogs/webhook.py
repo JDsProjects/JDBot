@@ -32,6 +32,9 @@ class Webhook(commands.Cog):
         if isinstance(ctx.channel, discord.TextChannel):
           await ctx.message.delete()
 
+      if not check:
+        await ctx.send("not a proper webhook url.")
+
   @commands.command(brief="a way to create webhooks",help="make commands with this.")
   async def webhook_create(self,ctx,arg=None,*,args=None):
     if isinstance(ctx.channel, discord.TextChannel):

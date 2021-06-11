@@ -59,7 +59,7 @@ class Extra(commands.Cog):
     await ctx.send(error)
 
   @commands.command(brief="gives you the digits of pi that Python knows")
-  async def pi(self,ctx):
+  async def pi(self, ctx):
     await ctx.send(math.pi)
 
   @commands.command(brief="reverses text")
@@ -193,7 +193,7 @@ class Extra(commands.Cog):
           
 
     if args is None and len(ctx.message.attachments) < 1:
-      await ctx.send("You didn't specify any value.")
+      await ctx.send("You didn't specify any text.")
 
   @commands.command()
   async def tts_test(self, ctx, *, args = None):

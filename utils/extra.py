@@ -15,9 +15,13 @@ async def triggered_converter(self,url,ctx):
   await ctx.send(embed=embed)
 
 async def headpat_converter(self,url,ctx):
-  sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.session)
-  source_image=sr_client.petpet(avatar=str(url))
-  image = await source_image.read()
+  try:
+    sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.session)
+    source_image=sr_client.petpet(avatar=str(url))
+    image = await source_image.read()
+  except Exception as e:
+    print(e)
+    return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
   imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
   imgur_url = await imgur_client.upload(image)
@@ -35,9 +39,12 @@ def warn_permission(ctx):
     return True
 
 async def invert_converter(self,url,ctx):
-  sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.session)
-  source_image=sr_client.filter("invert",url=str(url))
-  image = await source_image.read()
+  try:
+    sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.session)
+    source_image=sr_client.filter("invert",url=str(url))
+    image = await source_image.read()
+  except:
+    return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
   imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
   imgur_url = await imgur_client.upload(image)

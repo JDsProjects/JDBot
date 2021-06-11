@@ -93,11 +93,19 @@ class Music(commands.Cog):
     if player.is_paused is False:
       await player.set_pause(True)
 
+  @pause.error
+  async def pause_error(self, ctx, error):
+    await ctx.send(error)
+
   @commands.command()
   async def resume(self,ctx):
     player = self.bot.wavelink.get_player(ctx.guild.id)
     if player.is_paused:
       await player.set_pause(True)
+
+  @resume.error
+  async def resume_error(self, ctx, error):
+    await ctx.send(error)
 
 def setup(bot):
   bot.add_cog(Music(bot))
