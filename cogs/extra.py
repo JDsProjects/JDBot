@@ -1,4 +1,4 @@
-from discord.ext import commands
+from discord.ext import commands, menus
 import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio
 import utils
 
@@ -28,14 +28,35 @@ class Extra(commands.Cog):
       embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
       await ctx.send(embed=embed)
 
+  @mchistory.error
+  async def mchistory_error(self, ctx, error):
+    await ctx.send(error)
+
+  class RandomHistoryEmbed(menus.ListPageSource):
+    async def format_page(self, menu, item):
+      embed=discord.Embed(title = "Random History:", description = f"{item}", color = random.randint(0, 16777215))
+      embed.set_footer(text = "powered by Sp46's api: \nhistory.geist.ga")
+      return embed
+
   @commands.command(help="This gives random history using Sp46's api.",brief="a command that uses SP46's api's random history command to give you random history responses")
   async def random_history(self,ctx,*,args=None):
     if args is None:
       args = 1
     asuna = asuna_api.Client(self.bot.session)
     response = await asuna.random_history(args)
+
+    pag = commands.Paginator()
     for x in response:
-      await ctx.send(f":earth_africa: {x}")
+      pag.add_line(f":earth_africa: {x}")
+    
+    pages = [page.strip("`") for page in pag.pages]
+
+    menu = menus.MenuPages(self.RandomHistoryEmbed(pages, per_page=1),delete_message_after=True)
+    await menu.start(ctx)
+
+  @random_history.error
+  async def random_history_error(self, ctx, error):
+    await ctx.send(error)
 
   @commands.command(brief="gives you the digits of pi that Python knows")
   async def pi(self,ctx):
@@ -44,7 +65,11 @@ class Extra(commands.Cog):
   @commands.command(brief="reverses text")
   async def reverse(self,ctx,*,args=None):
     if args:
-      await ctx.send(args[::-1])
+
+      reversed = args[::-1]
+
+      await ctx.send(content = f"{reversed}", allowed_mentions=discord.AllowedMentions.none())
+      
     if args is None:
       await ctx.send("Try sending actual to reverse")
 

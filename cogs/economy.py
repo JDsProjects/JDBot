@@ -71,6 +71,11 @@ class Economy(commands.Cog):
     Member = ctx.author.id
     if args is None:
       await add_money(Member,10,0)
+    if args:
+      return await ctx.send("doing a specific job isn't out yet.")
+      
+    await ctx.send("You worked cool :D")
+
 
   @commands.command(brief="a command to send how much money you have(work in progress)",help="using the JDBot database you can see how much money you have")
   async def balance(self ,ctx, *, member: utils.BetterMemberConverter = None):

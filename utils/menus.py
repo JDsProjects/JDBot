@@ -106,3 +106,5 @@ class JDJGsummon(menus.Menu):
     await self.ctx.send(content=f"You didn't agree to summoning me. So I will not be invited.")
     await self.message.delete()
 
+  
+
