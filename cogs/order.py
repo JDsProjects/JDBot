@@ -155,7 +155,7 @@ class Order(commands.Cog):
 
     if args is None:
       await ctx.send("That doesn't have any value.")
-      await ctx.send("tenor")
+      await ctx.send("giphy")
 
   @giphy.command(help="work in progress",name="shuffle")
   async def giphy_random(self,ctx,*,args=None):

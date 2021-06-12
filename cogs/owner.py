@@ -193,7 +193,7 @@ class Owner(commands.Cog):
       await ctx.send("added sus users, succesfully")
 
   @commands.command(brief="a command to remove sus users.")
-  async def removesus(self,ctx,*,user: utils.BetterUserconverter=None):
+  async def removesus(self, ctx, *, user: utils.BetterUserconverter = None):
     if user is None:
       await ctx.send("You can't have a none user.")
 
