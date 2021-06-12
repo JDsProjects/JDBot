@@ -94,7 +94,7 @@ class Dice(commands.Cog):
     if args is None: await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
 
   @commands.command(brief="a command to find the nearest emoji")
-  async def emote(self,ctx,*,args=None):
+  async def emote(self, ctx, *, args=None):
     if args is None:
       await ctx.send("Please specify an emote")
     if args:

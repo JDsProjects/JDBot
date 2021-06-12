@@ -120,6 +120,9 @@ class Order(commands.Cog):
       safesearch_type = ContentFilter.high()
       results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
 
+      if not results:
+        return await ctx.send("I got no one results from tenor.")
+
       await ctx.send("WIP for now.")
 
     if args is None:
