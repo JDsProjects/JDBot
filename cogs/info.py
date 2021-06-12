@@ -1,5 +1,5 @@
 from discord.ext import commands, menus
-import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap
+import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
@@ -184,6 +184,24 @@ class Info(commands.Cog):
       await menu.start(ctx)
     if len(emojis) < 1:
       await ctx.send("Looks like there was no emojis.")
+
+  @commands.command(brief = "gives info on emoji_id and emoji image.")
+  async def emoji_id(self, ctx, *, emoji : typing.Optional [typing.Union[discord.PartialEmoji, discord.Message, utils.EmojiBasic]] = None):
+
+    if isinstance(emoji, discord.Message):
+      emoji_message = emoji.content
+      emoji = None
+      
+      with contextlib.suppress(commands.CommandError, commands.BadArgument):
+        emoji = await utils.EmojiBasic.convert(ctx, emoji_message) or await commands.PartialEmojiConverter().convert(ctx, emoji_message)
+
+    if emoji:
+      embed = discord.Embed(description=f" Emoji ID: {emoji.id}",color=random.randint(0, 16777215))
+      embed.set_image(url=emoji.url)
+      await ctx.send(embed=embed)
+
+    else:
+      await ctx.send("Not a valid emoji id.")
 
   @commands.command()
   async def fetch_content(self, ctx, *, args = None):

@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, os, itertools, re, functools, typing, random, collections, io, contextlib
+import discord, os, itertools, re, functools, typing, random, collections, io
 import utils
 
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
@@ -26,25 +26,9 @@ class Test(commands.Cog):
       await ctx.send("Please look for a library to get the info of.")
 
 
-  @commands.command(brief = "gives info on emoji_id and emoji image.")
-  async def emoji_id(self, ctx, *, emoji : typing.Optional[typing.Union[discord.PartialEmoji, discord.Message, utils.EmojiBasic]] = None):
-
-    if isinstance(emoji, discord.Message):
-      emoji_message = emoji.content
-      emoji = None
-      with contextlib.suppress(commands.CommandError, commands.BadArgument):
-        emoji = await utils.EmojiBasic.convert(ctx, emoji_message) or commands.PartialEmojiConverter().convert(ctx, emoji_message.content)
-
-    if emoji:
-      embed = discord.Embed(description=f" Emoji ID: {emoji.id}",color=random.randint(0, 16777215))
-      embed.set_image(url=emoji.url)
-      await ctx.send(embed=embed)
-
-    else:
-      await ctx.send("Not a valid emoji id.")
-
   @commands.command(brief="this command will error by sending no content")
   async def te(self, ctx):
+    await ctx.send("this command will likely error...")
     await ctx.send("")
 
   async def cog_check(self, ctx):
