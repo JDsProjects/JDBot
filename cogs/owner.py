@@ -1,6 +1,6 @@
 from discord.ext import commands, menus
 import utils
-import random , discord , aiohttp , os , aiosqlite, importlib, mystbin
+import random , discord , aiohttp , os , aiosqlite, importlib, mystbin, typing
 import traceback, textwrap
 
 class Owner(commands.Cog):
@@ -263,12 +263,16 @@ class Owner(commands.Cog):
     command_wanted.reset_cooldown(ctx)
     await ctx.send(f"reset cooldown of {command_wanted}")
 
-  @commands.command()
-  async def leave_guild(self, ctx, *, guild: discord.Guild = None):
+  @commands.command(brief = "leaves a guild only use when needed or really wanted. Otherwise no thanks.")
+  async def leave_guild(self, ctx, *, guild: typing.Optional[discord.Guild] = None):
     guild = guild or ctx.guild
     if guild is None: return await ctx.send("Guild is None can't do anything.")
-    print(guild)
-
+    await ctx.send("Bot leaving guild :(")
+    try:
+     await guild.leave()
+    
+    except Exception as e:
+      await ctx.send(f"Somehow an error occured: {e}")
   
   @commands.command()
   async def aioinput_test(self, ctx, *, args = None):
