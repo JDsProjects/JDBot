@@ -119,7 +119,7 @@ class Bot(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="a way to view open source",help="you can see the open source with the link it provides")
-  async def open_source(self,ctx):
+  async def open_source(self, ctx):
     embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
     embed.set_author(name=f"{self.bot.user}'s source code:",icon_url=(self.bot.user.avatar_url))
     await ctx.send(embed=embed)
