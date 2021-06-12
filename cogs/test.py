@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, os, itertools, re, functools, typing, random, collections, io
+import discord, os, itertools, re, functools, typing, random, collections, io, contextlib
 import utils
 
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
@@ -12,7 +12,7 @@ class Test(commands.Cog):
   async def ticket_make(self,ctx):
     await ctx.send("WIP, will make ticket soon..")
 
-  @commands.command()
+  @commands.command(brief = "Gives info on pypi packages")
   async def pypi(self, ctx, *, args = None):
     #https://pypi.org/simple/
     if args:
@@ -26,8 +26,15 @@ class Test(commands.Cog):
       await ctx.send("Please look for a library to get the info of.")
 
 
-  @commands.command()
-  async def emoji_id(self, ctx, *, emoji: utils.EmojiBasic = None):
+  @commands.command(brief = "gives info on emoji_id and emoji image.")
+  async def emoji_id(self, ctx, *, emoji : typing.Optional[typing.Union[discord.PartialEmoji, discord.Message, utils.EmojiBasic]] = None):
+
+    if isinstance(emoji, discord.Message):
+      emoji_message = emoji.content
+      emoji = None
+      with contextlib.suppress(commands.CommandError, commands.BadArgument):
+        emoji = await utils.EmojiBasic.convert(ctx, emoji_message) or commands.PartialEmojiConverter().convert(ctx, emoji_message.content)
+
     if emoji:
       embed = discord.Embed(description=f" Emoji ID: {emoji.id}",color=random.randint(0, 16777215))
       embed.set_image(url=emoji.url)
