@@ -468,12 +468,49 @@ class DevTools(commands.Cog):
   async def pep8(self, ctx, *, args = None):
     if not args:
       return await ctx.send("You need to give it code to work with it.")
+    
+    import autopep8
+    code = autopep8.fix_code(args)
+    
+    await ctx.send(content = f"code returned: \n{code}")
+
+  @commands.command(brief = "normal pep8 but more agressive")
+  async def pep8_agressive(self, ctx, *, args = None):
+    if not args:
+      return await ctx.send("You need to give it code to work with it.")
+    
+    import autopep8
+    code = autopep8.fix_code(args,options={'aggressive': 3})
+    
+    await ctx.send(content = f"code returned: \n{code}")
 
 
   @commands.command(brief = "a command like pep8 but with google's yapf tool.")
   async def pep8_2(self, ctx, *, args = None):
     if not args:
       return await ctx.send("you need code for it to work with.")
+
+    from yapf.yapflib.yapf_api import FormatCode   
+    
+    args = args.strip("```python```")
+    args = args.strip("```")
+    code = FormatCode(args, style_config = "pep8")
+    await ctx.send(content = f"code returned: \n```{code}```")
+    await ctx.send("may return weirdly from yapf I have no idea why.")
+
+  @commands.command(brief = "a command that autoformats to google's standards")
+  async def pep8_google(self, ctx, *, args = None):
+
+    if not args:
+      return await ctx.send("you need code for it to work with.")
+
+    from yapf.yapflib.yapf_api import FormatCode   
+
+    args = args.strip("```python```")
+    args = args.strip("```")
+    code = FormatCode(args, style_config = "google")
+    await ctx.send(content = f"code returned: \n```{code}```")
+    await ctx.send("may return weirdly from yapf I have no idea why.")
 
   @commands.command(brief = "grabs your pfp's image")
   async def pfp_grab(self, ctx):
@@ -490,7 +527,12 @@ class DevTools(commands.Cog):
     print(len(buffer.getvalue()))
 
     file = discord.File(buffer, filename=f"pfp{save_type}")
-    await ctx.send(content = "here's your avatar:",file = file)
+    try:
+      await ctx.send(content = "here's your avatar:",file = file)
+    
+    except:
+      await ctx.send("it looks like it couldn't send the pfp.")
+    
    
 
 def setup(bot):

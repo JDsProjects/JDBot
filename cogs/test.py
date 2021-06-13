@@ -46,7 +46,7 @@ class Test(commands.Cog):
     await ctx.send("WIP")
 
   @commands.command(brief="a command that can scan urls(work in progress), and files",help="please don't upload anything secret or send any secret url thank you :D")
-  async def scan(self,ctx, *, args = None):
+  async def scan(self, ctx, *, args = None):
     await ctx.send("WIP")
     import vt
     vt_client = vt.Client(os.environ["virustotal_key"])
