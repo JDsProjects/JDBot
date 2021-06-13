@@ -41,7 +41,7 @@ class Test(commands.Cog):
     #I need to fix all cog_command_error
   
   @commands.command(brief="a command to email you(work in progress)",help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
-  async def email(self,ctx,*args):
+  async def email(self, ctx, *args):
     print(args)
     await ctx.send("WIP")
 

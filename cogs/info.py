@@ -471,8 +471,9 @@ class DevTools(commands.Cog):
     
     import autopep8
     code = autopep8.fix_code(args)
-    
-    await ctx.send(content = f"code returned: \n{code}")
+    args = args.strip("```python```")
+    args = args.strip("```")
+    await ctx.send(content = f"code returned: \n```{code}```")
 
   @commands.command(brief = "normal pep8 but more agressive")
   async def pep8_agressive(self, ctx, *, args = None):
@@ -481,8 +482,9 @@ class DevTools(commands.Cog):
     
     import autopep8
     code = autopep8.fix_code(args,options={'aggressive': 3})
-    
-    await ctx.send(content = f"code returned: \n{code}")
+    args = args.strip("```python```")
+    args = args.strip("```")
+    await ctx.send(content = f"code returned: \n```{code}```")
 
 
   @commands.command(brief = "a command like pep8 but with google's yapf tool.")
@@ -495,7 +497,7 @@ class DevTools(commands.Cog):
     args = args.strip("```python```")
     args = args.strip("```")
     code = FormatCode(args, style_config = "pep8")
-    await ctx.send(content = f"code returned: \n```{code}```")
+    await ctx.send(content = f"code returned: \n```{code[0]}```")
     await ctx.send("may return weirdly from yapf I have no idea why.")
 
   @commands.command(brief = "a command that autoformats to google's standards")
@@ -509,7 +511,7 @@ class DevTools(commands.Cog):
     args = args.strip("```python```")
     args = args.strip("```")
     code = FormatCode(args, style_config = "google")
-    await ctx.send(content = f"code returned: \n```{code}```")
+    await ctx.send(content = f"code returned: \n```{code[0]}```")
     await ctx.send("may return weirdly from yapf I have no idea why.")
 
   @commands.command(brief = "grabs your pfp's image")
