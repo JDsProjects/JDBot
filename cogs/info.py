@@ -524,7 +524,7 @@ class DevTools(commands.Cog):
     icon_file = await author_url.read()
     buffer = io.BytesIO(icon_file)
     buffer.seek(0)
-    print(len(buffer.getvalue()))
+    #print(len(buffer.getvalue()))
 
     file = discord.File(buffer, filename=f"pfp{save_type}")
     try:
