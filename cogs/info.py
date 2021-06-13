@@ -1,5 +1,5 @@
 from discord.ext import commands, menus
-import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib
+import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib, io
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
@@ -463,6 +463,34 @@ class DevTools(commands.Cog):
 
     menu = menus.MenuPages(self.RtfmEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
+
+  @commands.command(brief = "a command to autoformat your python code to pep8")
+  async def pep8(self, ctx, *, args = None):
+    if not args:
+      return await ctx.send("You need to give it code to work with it.")
+
+
+  @commands.command(brief = "a command like pep8 but with google's yapf tool.")
+  async def pep8_2(self, ctx, *, args = None):
+    if not args:
+      return await ctx.send("you need code for it to work with.")
+
+  @commands.command(brief = "grabs your pfp's image")
+  async def pfp_grab(self, ctx):
+    
+    if_animated = ctx.author.is_avatar_animated()
+
+    author_url =  ctx.author.avatar_url_as(format = "gif") if if_animated else ctx.author.avatar_url_as(format = "png", static_format = "png")
+
+    save_type = ".gif" if if_animated else ".png"
+
+    icon_file = await author_url.read()
+    buffer = io.BytesIO(icon_file)
+    buffer.seek(0)
+    print(len(buffer.getvalue()))
+
+    file = discord.File(buffer, filename=f"pfp{save_type}")
+    await ctx.send(content = "here's your avatar:",file = file)
    
 
 def setup(bot):
