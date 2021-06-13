@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord, os, itertools, re, functools, typing, random, collections, io
 import utils
 
-testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914]
+testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914, 732278462571610173]
 
 class Test(commands.Cog):
   def __init__(self, bot):
@@ -119,7 +119,7 @@ class Test(commands.Cog):
     #webhook=await ctx.channel.create_webhook(name="emoji dump")
 
   @commands.command(brief="Lists the current used prefix",aliases=["prefix"])
-  async def currentprefix(self,ctx):
+  async def currentprefix(self, ctx):
     await ctx.send(f"{ctx.prefix}")
 
   @commands.command(brief="Lists the current prefixes that could be used.")
@@ -128,7 +128,7 @@ class Test(commands.Cog):
     await ctx.send(f"{prefixes}")
 
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
-  async def setprefix(self,ctx,arg=None):
+  async def setprefix(self, ctx, arg=None):
     await ctx.send("WIP")
 
 def setup(client):

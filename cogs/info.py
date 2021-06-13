@@ -534,6 +534,12 @@ class DevTools(commands.Cog):
     
     except:
       await ctx.send("it looks like it couldn't send the pfp.")
+
+  async def cog_command_error(self, ctx, error):
+    if ctx.command or not ctx.command.has_error_handler():
+      await ctx.send(error)
+      import traceback
+      traceback.print_exc()
     
    
 
