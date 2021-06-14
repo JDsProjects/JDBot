@@ -1,5 +1,6 @@
 from discord.ext import commands, menus
-import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio
+from discord.ext.commands.cooldowns import BucketType
+import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib
 import utils
 
 class Extra(commands.Cog):
@@ -363,6 +364,46 @@ class Extra(commands.Cog):
     message = await ctx.send("Hello guys I am going to be edited")
     await asyncio.sleep(2)
     await message.edit(content = "hello guys I am going to be edited \u202B  Heck yeah")
+
+  
+  @commands.cooldown(1, 30, BucketType.user)
+  @commands.command(brief = "cleansup bot message's history in a channel if need be.(Doesn't cleanup other people's message history)")
+  async def cleanup(self, ctx,  *,  amount : typing.Optional[int] = None):
+
+    if isinstance(ctx.channel,discord.DMChannel):
+      return await ctx.send("doesn't work in DMS")
+
+    amount = amount or 10
+    if amount > 100:
+      await ctx.send("max 100 messages, going to 10 messages.")
+
+      amount = 10
+
+    if not utils.cleanup_permission(ctx):
+      amount = 10
+
+      await ctx.send("you don't have manage permissions nor is it a dm")
+
+    await ctx.send("attempting to delete history of commands")
+
+    messages = None
+    with contextlib.suppress(discord.Forbidden, discord.HTTPException):  
+      messages = await ctx.channel.purge(limit = amount , bulk = False, check = utils.Membercheck(ctx))
+      
+    if not messages:
+      return await ctx.send("it likely errored")
+
+    page = "\n".join(f"{msg.author} ({['User', 'Bot'][msg.author.bot]}) : {msg.content}" for msg in messages)
+
+    mystbin_client = mystbin.Client(session=self.bot.session)
+    try:
+      paste = await mystbin_client.post(page)
+    except:
+      return await ctx.send("failed posting back of messages")
+
+    await ctx.author.send(content=f"Added text file to mystbin: \n{paste.url}")
+
+
   
 def setup(bot):
   bot.add_cog(Extra(bot))

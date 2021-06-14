@@ -131,6 +131,11 @@ def check(ctx):
     return m.author == ctx.author
   return inner
 
+def Membercheck(ctx):
+  def inner(m):
+    return m.author == ctx.guild.me
+  return inner
+
 def reaction_check(ctx, reactions : list):
   def inner(reaction, user):
     return str(reaction.emoji) in reactions and user == ctx.author

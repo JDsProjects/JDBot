@@ -89,3 +89,11 @@ def reference(message):
     return reference.resolved.to_reference()
 
   return None
+
+
+def cleanup_permission(ctx):
+  if isinstance(ctx.channel, discord.TextChannel):
+    return ctx.author.guild_permissions.manage_messages
+
+  if isinstance(ctx.channel, discord.DMChannel):
+    return True

@@ -54,14 +54,16 @@ class Test(commands.Cog):
     if args:
       used = True
       urls=re.findall(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",args)
-      for x in urls:
-        print(x)
+      for u in urls:
+        response = await vt_client.scan_url_async(u, wait_for_completion = True)
+        print(response())
 
     if len(ctx.message.attachments) > 0:
       await ctx.send("If this takes a while, it probably means it was never on Virustotal before")
       used = True
-    for x in ctx.message.attachments:
-      analysis = await vt_client.scan_file_async(await x.read(),wait_for_completion=True)
+    for f in ctx.message.attachments:
+      analysis = await vt_client.scan_file_async(await f.read(),wait_for_completion=True)
+      print(analysis())
       object_info = await vt_client.get_object_async("/analyses/{}", analysis.id)
     
     if used:
