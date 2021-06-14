@@ -9,10 +9,9 @@ class Moderation(commands.Cog):
 
   @commands.cooldown(1,90,BucketType.user)
   @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
-  async def warn(self,ctx,Member: utils.BetterMemberConverter = None):
-    if utils.warn_permission(ctx):
-
-      Member = Member or ctx.author
+  async def warn(self, ctx, Member: utils.BetterMemberConverter = None):
+    Member = Member or ctx.author
+    if utils.warn_permission(ctx, Member):
 
       if Member:
         embed = discord.Embed(color=random.randint(0, 16777215))
@@ -40,16 +39,19 @@ class Moderation(commands.Cog):
       except discord.Forbidden:
         await ctx.send("we can't DM them :(")
 
-    if utils.warn_permission(ctx) is False:
+    if utils.warn_permission(ctx, Member) is False:
       await ctx.send("You don't have permission to use that.")
 
   @warn.error
-  async def warn_errror(self,ctx,error):
+  async def warn_errror(self, ctx, error):
     await ctx.send(error)
+
+    import traceback
+    traceback.print_exc()
 
   @commands.cooldown(1,90,BucketType.user)
   @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(work in progress)")
-  async def scan_guild(self,ctx):
+  async def scan_guild(self, ctx):
     if isinstance(ctx.channel, discord.TextChannel):
       cur = await self.bot.sus_users.cursor()
       cursor = await cur.execute("SELECT * FROM SUS_USERS;")
@@ -119,7 +121,7 @@ class Moderation(commands.Cog):
 
 
   @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (work in progress")
-  async def report(self,ctx,*,args=None):
+  async def report(self, ctx, *, args = None):
     if args:
       jdjg = self.bot.get_user(168422909482762240)
       if (jdjg.dm_channel is None):

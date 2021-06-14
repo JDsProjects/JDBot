@@ -212,6 +212,9 @@ class Bot(commands.Cog):
       import traceback
       traceback.print_exc()
 
+  @commands.command(brief = "this command tells you to how to report ex issues to owner")
+  async def report_issue(self, ctx):
+    await ctx.send("if you have an issue please join the support server, create a ticket,  or Dm the owner at JDJG Inc. Official#3493. Thanks :D!")
     
 
 def setup(bot):

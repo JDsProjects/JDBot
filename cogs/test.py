@@ -123,7 +123,7 @@ class Test(commands.Cog):
     await ctx.send(f"{ctx.prefix}")
 
   @commands.command(brief="Lists the current prefixes that could be used.")
-  async def prefixes(self,ctx):
+  async def prefixes(self, ctx):
     prefixes=await self.bot.get_prefix(ctx.message)
     await ctx.send(f"{prefixes}")
 

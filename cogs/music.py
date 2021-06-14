@@ -29,7 +29,11 @@ class Music(commands.Cog):
 
     player = self.bot.wavelink.get_player(ctx.guild.id)
     await ctx.send(f'Connecting to **`{channel.name}`**')
-    await player.connect(channel.id)
+    try:
+      await player.connect(channel.id)
+    
+    except Exception as e:
+      await ctx.send(f"You forgot to give it permissions to join or some error occured. Error from the bot was {e}")
   
   @connect_.error
   async def connect_error(self,ctx,error):
@@ -47,10 +51,14 @@ class Music(commands.Cog):
       await ctx.invoke(self.connect_)
 
     await ctx.send(f'Added {str(tracks[0])} to the queue.')
-    await player.play(tracks[0])
+    try:
+      await player.play(tracks[0])
+
+    except Exception as e:
+      await ctx.send(f"It likely can't play in this channel if this is a problem provide the error {e} to the owner thanks :D")
 
   @play.error
-  async def play_error(self,ctx,error):
+  async def play_error(self, ctx, error):
     await ctx.send(error)
 
   @commands.command()
