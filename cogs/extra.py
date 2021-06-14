@@ -382,7 +382,7 @@ class Extra(commands.Cog):
     if not utils.cleanup_permission(ctx):
       amount = 10
 
-      await ctx.send("you don't have manage permissions nor is it a dm")
+      await ctx.send("you don't have manage messages permissions nor is it a dm")
 
     await ctx.send("attempting to delete history of commands")
 

@@ -41,11 +41,19 @@ class Webhook(commands.Cog):
       if ctx.author.guild_permissions.manage_webhooks:
         if arg:
           if args is None:
-            webhook=await ctx.channel.create_webhook(name=arg)
+            try:
+              webhook=await ctx.channel.create_webhook(name=arg)
+            except Exception as e:
+              return await ctx.send(f"give the bot manage webhook permissions for this to work and give the error to {e} if an issue.")
             embed = discord.Embed(title=f"{ctx.author}'s message:",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
             embed.add_field(name="Content:",value="Test")
           if args:
-            webhook=await ctx.channel.create_webhook(name=arg,reason=args)
+            try:
+              webhook=await ctx.channel.create_webhook(name=arg,reason=args)
+
+            except Exception as e:
+              return await ctx.send(f"give the bot manage webhook permissions for this to work and give the error to {e} if an issue.")
+
             embed = discord.Embed(title=f"{ctx.author}'s message:",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
             embed.add_field(name="Content:",value=args)
 

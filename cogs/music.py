@@ -29,11 +29,11 @@ class Music(commands.Cog):
 
     player = self.bot.wavelink.get_player(ctx.guild.id)
     await ctx.send(f'Connecting to **`{channel.name}`**')
-    try:
-      await player.connect(channel.id)
-    
-    except Exception as e:
-      await ctx.send(f"You forgot to give it permissions to join the channel or some error occured. Error from the bot was {e}")
+    await player.connect(channel.id)
+
+    bot_permissions = channel.permissions_for(ctx.guild.me)
+    if not bot_permissions.connect:
+      await ctx.send(f"You forgot to give it permissions to join the channel or some error occured.")
   
   @connect_.error
   async def connect_error(self,ctx,error):
@@ -51,11 +51,13 @@ class Music(commands.Cog):
       await ctx.invoke(self.connect_)
 
     await ctx.send(f'Added {str(tracks[0])} to the queue.')
-    try:
-      await player.play(tracks[0])
+    await player.play(tracks[0])
 
-    except Exception as e:
-      await ctx.send(f"It likely can't play in this channel(due to not having speaking perms) if this is a problem provide the error {e} to the owner thanks :D")
+    channel = self.bot.get_channel(player.channel_id)
+    bot_permissions = channel.permissions_for(ctx.guild.me)
+    
+    if not bot_permissions.speak:
+      await ctx.send(f"It likely can't play in this channel(due to not having speaking perms).")
 
   @play.error
   async def play_error(self, ctx, error):
