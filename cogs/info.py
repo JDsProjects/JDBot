@@ -498,7 +498,6 @@ class DevTools(commands.Cog):
     args = args.strip("```")
     code = FormatCode(args, style_config = "pep8")
     await ctx.send(content = f"code returned: \n```{code[0]}```")
-    await ctx.send("may return weirdly from yapf I have no idea why.")
 
   @commands.command(brief = "a command that autoformats to google's standards")
   async def pep8_google(self, ctx, *, args = None):
@@ -512,7 +511,6 @@ class DevTools(commands.Cog):
     args = args.strip("```")
     code = FormatCode(args, style_config = "google")
     await ctx.send(content = f"code returned: \n```{code[0]}```")
-    await ctx.send("may return weirdly from yapf I have no idea why.")
 
   @commands.command(brief = "grabs your pfp's image")
   async def pfp_grab(self, ctx):
