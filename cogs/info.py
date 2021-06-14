@@ -276,28 +276,28 @@ class DevTools(commands.Cog):
       await ctx.send(embed=embed, reference = reference)
 
 
-  @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief="most of this is based on R.danny including the reference. But it's my own implentation of it")
+  @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief="most of this is based on R.danny including the reference(but this is my own code). But it's my own implentation of it")
   async def rtfm(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="latest", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command using japanese discord.py (based on R.danny's command")
+  @rtfm.command(brief = "a command using japanese discord.py (based on R.danny's command my own code")
   async def jp(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="latest-jp", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command", aliases=["py"])
+  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command idea", aliases=["py"])
   async def python(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="python", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command(japanese)", aliases=["py-ja"], name="py-jp")
+  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command idea(japanese)", aliases=["py-ja"], name="py-jp")
   async def python_jp(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
