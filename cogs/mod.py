@@ -26,7 +26,7 @@ class Moderation(commands.Cog):
           await Member.send(embed=embed)
 
         except discord.Forbidden:
-          await ctx.send("they don't seem like a valid user.")
+          await ctx.send("they don't seem like a valid user or they weren't DMable.")
       
       embed.set_footer(text = f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}")
       await self.bot.get_channel(738912143679946783).send(embed=embed) 
@@ -40,7 +40,7 @@ class Moderation(commands.Cog):
         await ctx.send("we can't DM them :(")
 
     if utils.warn_permission(ctx, Member) is False:
-      await ctx.send("You don't have permission to use that.")
+      await ctx.send("You don't have permission to use that. You need to have manage_messages, have a higher hieracy in a guild, and have higher permissions than the target to use that.")
 
   @warn.error
   async def warn_errror(self, ctx, error):
@@ -83,7 +83,7 @@ class Moderation(commands.Cog):
       await ctx.send("no sus users found")
 
     else:
-      await ctx.send("There are in fact sus_users in the program ")
+      await ctx.send("There are in fact sus_users in the program but it's currently handling how to send to you.")
 
 
   async def cog_command_error(self, ctx, error):

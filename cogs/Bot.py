@@ -170,6 +170,9 @@ class Bot(commands.Cog):
     if message.content.lower() == "i agree":
       await ctx.send("https://discord.gg/sHUQCch")
 
+    else:
+      await ctx.send("looks like you didn't agree.")
+
   @commands.command(brief="This command gives you an alt bot to use",aliases=["alt_invite"])
   async def verify_issue(self,ctx):
     await ctx.send("You can invite the bot 831162894447804426(this will be an alt bot with almost the same code though some report functionalies will have their guild swapped :D")

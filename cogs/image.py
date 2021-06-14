@@ -36,7 +36,7 @@ class Image(commands.Cog):
       try:
         await target.send(content=target.mention,embed=embed)
       except discord.Forbidden:
-        await ctx.author.send("Failed DM'ing them...")
+        await ctx.author.send("Failed DM'ing them... likely didn't make us able to dm them or they blocked us.")
 
   @commands.command(brief="a command to look up foxes",help="this known as wholesome fox to the asuna api")
   async def fox2(self,ctx):

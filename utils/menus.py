@@ -95,7 +95,7 @@ class JDJGsummon(menus.Menu):
 
       else:
         await asyncio.sleep(1)
-        return await msg.edit(content = "Failed making an invite.")
+        return await msg.edit(content = "Failed making an invite. You likely didn't give it proper permissions(a.k.a create invite permissions) or it errored for not being found.")
 
     if isinstance(self.ctx.channel,discord.DMChannel):
       await asyncio.sleep(1)

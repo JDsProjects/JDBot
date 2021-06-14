@@ -134,7 +134,7 @@ class Extra(commands.Cog):
       await ctx.send("was too long...")
 
   @commands.command(help="gives random compliment")
-  async def compliment(self,ctx):
+  async def compliment(self, ctx):
     r=await self.bot.session.get('https://jdjgapi.nom.mu/api/compliment')
     res = await r.json()
     embed = discord.Embed(title = "Here is a compliment:",color=random.randint(0, 16777215))
@@ -391,7 +391,7 @@ class Extra(commands.Cog):
       messages = await ctx.channel.purge(limit = amount , bulk = False, check = utils.Membercheck(ctx))
       
     if not messages:
-      return await ctx.send("it likely errored")
+      return await ctx.send("it likely errored with not having the proper manage message permissions(shouldn't happen), or any http exception happened.")
 
     page = "\n".join(f"{msg.author} ({['User', 'Bot'][msg.author.bot]}) : {msg.content}" for msg in messages)
 

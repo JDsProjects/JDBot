@@ -84,7 +84,7 @@ class Info(commands.Cog):
       await ctx.send(paste.url)
       
     if isinstance(ctx.channel,discord.DMChannel):
-      await ctx.send("We can't use that in DMS")
+      await ctx.send("We can't use that in DMS as it takes emoji regex and puts it into a paste.")
 
   @commands.command(help="gives the id of the current guild or DM if you are in one.")
   async def guild_get(self,ctx):
@@ -114,7 +114,7 @@ class Info(commands.Cog):
       await self.bot.get_channel(738912143679946783).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
 
   @fetch_invite.error
-  async def fetch_invite_error(self,ctx,error):
+  async def fetch_invite_error(self, ctx, error):
     await ctx.send(error)
 
   @commands.command(brief="gives info about a file")
@@ -218,7 +218,7 @@ class Info(commands.Cog):
       args = args.replace(x,f"\{x}")
     for x in re.findall(r':\w*:\d*',args):
         args=args.replace(x,f"\{x}")
-    await ctx.send(f"{args}")
+    await ctx.send(f"{args}", allowed_mentions = discord.AllowedMentions.none())
 
   @commands.command(brief = "gives info about a role.", aliases = ["roleinfo"])
   async def role_info(self, ctx, *, role : typing.Optional[discord.Role] = None):
@@ -531,7 +531,7 @@ class DevTools(commands.Cog):
       await ctx.send(content = "here's your avatar:",file = file)
     
     except:
-      await ctx.send("it looks like it couldn't send the pfp.")
+      await ctx.send("it looks like it couldn't send the pfp due to the file size.")
 
   async def cog_command_error(self, ctx, error):
     if ctx.command or not ctx.command.has_error_handler():
