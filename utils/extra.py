@@ -83,9 +83,7 @@ async def latin_google_tts(text):
 def reference(message):
 
   reference = message.reference
-
   if reference and isinstance(reference.resolved, discord.Message):
-
     return reference.resolved.to_reference()
 
   return None

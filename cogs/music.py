@@ -28,7 +28,7 @@ class Music(commands.Cog):
           raise discord.DiscordException('No channel to join. Please either specify a valid channel or join one.')
 
     player = self.bot.wavelink.get_player(ctx.guild.id)
-    await ctx.send(f'Connecting to **`{channel.name}`**')
+    await ctx.send(f'Connecting to **`{channel.name}`**', allowed_mentions = discord.AllowedMentions.none())
     await player.connect(channel.id)
 
     bot_permissions = channel.permissions_for(ctx.guild.me)
@@ -41,7 +41,7 @@ class Music(commands.Cog):
 
   @commands.command()
   async def play(self, ctx, *, query: str):
-    tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
+    tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}', allowed_mentions = discord.AllowedMentions.none())
 
     if not tracks:
       return await ctx.send('Could not find any songs with that query.')
@@ -50,7 +50,7 @@ class Music(commands.Cog):
     if not player.is_connected:
       await ctx.invoke(self.connect_)
 
-    await ctx.send(f'Added {str(tracks[0])} to the queue.')
+    await ctx.send(f'Added {str(tracks[0])} to the queue.', allowed_mentions = discord.AllowedMentions.none())
     await player.play(tracks[0])
 
     channel = self.bot.get_channel(player.channel_id)
