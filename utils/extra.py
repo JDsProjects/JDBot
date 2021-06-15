@@ -67,11 +67,7 @@ async def headpat_converter2(self,url,ctx):
 async def google_tts(text):
   mp3_fp = io.BytesIO()
   tts=aiogtts.aiogTTS()
-  import time
-  start=time.perf_counter()
   await tts.write_to_fp(text,mp3_fp,lang='en')
-  end=time.perf_counter()
-  print(f"{((end - start)1000)} MS")
   mp3_fp.seek(0)
   file = discord.File(mp3_fp,"tts.mp3")
   return file
