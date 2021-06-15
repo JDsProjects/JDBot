@@ -41,7 +41,7 @@ class Music(commands.Cog):
 
   @commands.command()
   async def play(self, ctx, *, query: str):
-    tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}', allowed_mentions = discord.AllowedMentions.none())
+    tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
 
     if not tracks:
       return await ctx.send('Could not find any songs with that query.')
