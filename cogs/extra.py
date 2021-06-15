@@ -180,9 +180,11 @@ class Extra(commands.Cog):
       for x in ctx.message.attachments:
         file=await x.read()
         if len(file) > 0:
+
           encoding=chardet.detect(file)["encoding"]
           if encoding:
             text = file.decode(encoding)
+            
             await ctx.send("if you have a lot of text it may take a bit")
             tts_file = await utils.google_tts(text)
             await ctx.send(file=tts_file)
