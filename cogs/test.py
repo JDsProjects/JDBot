@@ -13,36 +13,6 @@ class Test(commands.Cog):
   async def ticket_make(self,ctx):
     await ctx.send("WIP, will make ticket soon..")
 
-  @commands.command(brief = "Gives info on pypi packages")
-  async def pypi(self, ctx, *, args = None):
-    #https://pypi.org/simple/
-    if args:
-      pypi_response=await self.bot.session.get(f"https://pypi.org/pypi/{args}/json")
-      if pypi_response.ok:
-
-        pypi_response=await pypi_response.json()
-
-        pypi_data = pypi_response["info"]
-
-        if pypi_data['docs_url'] == "None":
-          pypi_dat
-
-        embed = discord.Embed(title = f"{pypi_data.get('name')} {pypi_data.get('version')}", url = f"{pypi_data.get('release_url')}", description = f"{pypi_data.get('summary', 'None provided...')}")
-
-        embed.set_thumbnail(url = "https://i.imgur.com/oP0e7jK.png")
-
-        embed.add_field(name = "**Author Info**", value = f"**Author Name:** {pypi_data.get('author')}\n**Author Email:** {pypi_data.get('author_email', 'None provided...')}", inline = False)
-        embed.add_field(name = "**Package Info**", value = f"**Download URL**: {pypi_data.get('download_url', 'None provided...')}\n**Documentation URL:** {pypi_data.get('docs_url')}\n**Home Page:** {pypi_data.get('home_page', 'None provided...')}\n**Keywords:** {pypi_data.get('keywords', 'None provided...')}\n**License:** {pypi_data.get('license','None provided...')}", inline = False)
-        
-        await ctx.send(embed=embed)
-
-      else:
-        await ctx.send(f"Could not find package **{args}** on pypi.", allowed_mentions = discord.AllowedMentions.none())
-
-    else:
-      await ctx.send("Please look for a library to get the info of.")
-
-
   @commands.command(brief="this command will error by sending no content")
   async def te(self, ctx):
     await ctx.send("this command will likely error...")
