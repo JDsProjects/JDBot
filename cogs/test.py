@@ -1,4 +1,4 @@
-from discord.ext import commands
+from discord.ext import commands, menus
 import discord, os, itertools, re, functools, typing, random, collections, io
 import utils
 from discord.ext.commands.cooldowns import BucketType
@@ -111,11 +111,6 @@ class Test(commands.Cog):
   @commands.command(brief="Lists the current used prefix",aliases=["prefix"])
   async def currentprefix(self, ctx):
     await ctx.send(f"{ctx.prefix}")
-
-  @commands.command(brief="Lists the current prefixes that could be used.")
-  async def prefixes(self, ctx):
-    prefixes=await self.bot.get_prefix(ctx.message)
-    await ctx.send(f"{prefixes}")
 
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
   async def setprefix(self, ctx, arg=None):

@@ -12,7 +12,6 @@ class Reddit(commands.Cog):
 
   async def asyncpraw_handler(self, sub_name):
     subreddit = await self.reddit.subreddit(sub_name)
-
     meme_list = [result async for result in subreddit.new()]
 
     data = random.choice(meme_list)
@@ -44,6 +43,14 @@ class Reddit(commands.Cog):
     embed.set_image(url=data["url"])
     embed.set_footer(text=f"Upvote ratio : {data['upvote_ratio']}")
     await ctx.send(embed=embed)
+
+  async def cog_command_error(self, ctx, error):
+    if ctx.command and not ctx.command.has_error_handler():
+      await ctx.send(error)
+      import traceback
+      traceback.print_exc()
+      
+    #I need to fix all cog_command_error
 
 class Twitter(commands.Cog):
   def __init__(self, bot):
