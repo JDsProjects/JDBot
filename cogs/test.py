@@ -92,7 +92,7 @@ class Test(commands.Cog):
     return emojis
 
   @commands.command()
-  async def emoji_dump(self,ctx):
+  async def emoji_dump(self, ctx):
     await ctx.send("emoji dump time.")
     import mystbin
     mystbin_client = mystbin.Client(session=self.bot.session)
@@ -108,12 +108,8 @@ class Test(commands.Cog):
 
     #webhook=await ctx.channel.create_webhook(name="emoji dump")
 
-  @commands.command(brief="Lists the current used prefix",aliases=["prefix"])
-  async def currentprefix(self, ctx):
-    await ctx.send(f"{ctx.prefix}")
-
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
-  async def setprefix(self, ctx, arg=None):
+  async def setprefix(self, ctx, *, arg=None):
     await ctx.send("WIP")
 
 def setup(client):

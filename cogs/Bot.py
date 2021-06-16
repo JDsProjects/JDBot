@@ -252,6 +252,10 @@ class Bot(commands.Cog):
     menu = menus.MenuPages(self.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
     
+  @commands.command(brief="Lists the current used prefix",aliases=["prefix"])
+  async def currentprefix(self, ctx):
+    embed = discord.Embed(title = "Current Prefix:", description = f"{ctx.prefix}", color=random.randint(0, 16777215))
+    await ctx.send(content = f"Current Prefix: {ctx.prefix}", embed = embed, allowed_mentions = discord.AllowedMentions.none())
 
 def setup(bot):
   bot.add_cog(Bot(bot))
