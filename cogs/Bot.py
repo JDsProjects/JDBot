@@ -227,8 +227,13 @@ class Bot(commands.Cog):
     embed = discord.Embed(title = f"{ctx.author} requested to be a tester.", description = f"For the reason of {reason}", color=random.randint(0, 16777215))
     embed.set_footer(text=f"User ID: {ctx.author.id}")
 
+    shadi = await self.bot.getch_user(717822288375971900) 
     jdjg = await self.bot.getch_user(168422909482762240) 
-    await jdjg.send(embed=embed)
+    
+    await jdjg.send(embed = embed)
+    await shadi.send(embed = embed)
+
+    await ctx.send("the application went through to JDJG, please make your DMs open to JDJG so we can talk to you. Don't send it again.")
     
 
 def setup(bot):
