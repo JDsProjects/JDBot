@@ -3,7 +3,7 @@ import discord, os, itertools, re, functools, typing, random, collections, io
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
-testers_list =  [524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914, 732278462571610173, 459185417678487552]
+testers_list =  [524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914, 732278462571610173, 459185417678487552, 766343727743631361, 540142383270985738]
 
 class Test(commands.Cog):
   def __init__(self, bot):
@@ -87,26 +87,6 @@ class Test(commands.Cog):
   @invert.error
   async def invert_error(self,ctx,error):
     await ctx.send(error)
-
-  async def quick_convert(self, *emojis: typing.Union[discord.PartialEmoji , str]):
-    return emojis
-
-  @commands.command()
-  async def emoji_dump(self, ctx):
-    await ctx.send("emoji dump time.")
-    import mystbin
-    mystbin_client = mystbin.Client(session=self.bot.session)
-
-    paste=await mystbin_client.get("https://mystb.in/CompetingGlobeParental")
-    paste2 = await mystbin_client.get("https://mystb.in/PersianMentalMission")
-    paste3 = await mystbin_client.get("https://mystb.in/FoldingTherapeuticPlain")
-    paste4 = await mystbin_client.get("https://mystb.in/OrangePrintableSeven")
-
-    list_results= await self.quick_convert(paste.paste_content.replace("\n"," "))+await self.quick_convert(paste2.paste_content.replace("\n"," "))+await self.quick_convert(paste3.paste_content.replace("\n"," "))+await self.quick_convert(paste4.paste_content.replace("\n"," "))
-    for x in list_results:
-      print(f"\n{x}")
-
-    #webhook=await ctx.channel.create_webhook(name="emoji dump")
 
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
   async def setprefix(self, ctx, *, arg=None):
