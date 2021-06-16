@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord, os, itertools, re, functools, typing, random, collections, io
 import utils
+from discord.ext.commands.cooldowns import BucketType
 
 testers_list =  [652910142534320148,524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914, 732278462571610173, 459185417678487552]
 
@@ -18,9 +19,25 @@ class Test(commands.Cog):
     if args:
       pypi_response=await self.bot.session.get(f"https://pypi.org/pypi/{args}/json")
       if pypi_response.ok:
-        print(await pypi_response.json())
+
+        pypi_response=await pypi_response.json()
+
+        pypi_data = pypi_response["info"]
+
+        if pypi_data['docs_url'] == "None":
+          pypi_dat
+
+        embed = discord.Embed(title = f"{pypi_data.get('name')} {pypi_data.get('version')}", url = f"{pypi_data.get('release_url')}", description = f"{pypi_data.get('summary', 'None provided...')}")
+
+        embed.set_thumbnail(url = "https://i.imgur.com/oP0e7jK.png")
+
+        embed.add_field(name = "**Author Info**", value = f"**Author Name:** {pypi_data.get('author')}\n**Author Email:** {pypi_data.get('author_email', 'None provided...')}", inline = False)
+        embed.add_field(name = "**Package Info**", value = f"**Download URL**: {pypi_data.get('download_url', 'None provided...')}\n**Documentation URL:** {pypi_data.get('docs_url')}\n**Home Page:** {pypi_data.get('home_page', 'None provided...')}\n**Keywords:** {pypi_data.get('keywords', 'None provided...')}\n**License:** {pypi_data.get('license','None provided...')}", inline = False)
+        
+        await ctx.send(embed=embed)
+
       else:
-        await ctx.send(f"Could not find package **{args}** on pypi.")
+        await ctx.send(f"Could not find package **{args}** on pypi.", allowed_mentions = discord.AllowedMentions.none())
 
     else:
       await ctx.send("Please look for a library to get the info of.")
@@ -45,6 +62,7 @@ class Test(commands.Cog):
     print(args)
     await ctx.send("WIP")
 
+  @commands.cooldown(1,40,BucketType.user)
   @commands.command(brief="a command that can scan urls(work in progress), and files",help="please don't upload anything secret or send any secret url thank you :D")
   async def scan(self, ctx, *, args = None):
     await ctx.send("WIP")
@@ -56,14 +74,14 @@ class Test(commands.Cog):
       urls=re.findall(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",args)
       for u in urls:
         response = await vt_client.scan_url_async(u, wait_for_completion = True)
-        print(response())
+        print(response)
 
     if len(ctx.message.attachments) > 0:
       await ctx.send("If this takes a while, it probably means it was never on Virustotal before")
       used = True
     for f in ctx.message.attachments:
       analysis = await vt_client.scan_file_async(await f.read(),wait_for_completion=True)
-      print(analysis())
+      print(analysis)
       object_info = await vt_client.get_object_async("/analyses/{}", analysis.id)
     
     if used:
