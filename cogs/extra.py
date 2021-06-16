@@ -291,7 +291,7 @@ class Extra(commands.Cog):
         await ctx.message.delete()
 
       for x in [708167737381486614,168422909482762240]:
-        apply_user = self.bot.get_user(x)
+        apply_user = await self.bot.getch_user(x)
       
       if (apply_user.dm_channel is None):
         await apply_user.create_dm()

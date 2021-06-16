@@ -123,7 +123,7 @@ class Moderation(commands.Cog):
   @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (work in progress")
   async def report(self, ctx, *, args = None):
     if args:
-      jdjg = self.bot.get_user(168422909482762240)
+      jdjg = await self.bot.getch_user(168422909482762240) 
       if (jdjg.dm_channel is None):
         await jdjg.create_dm()
       embed = discord.Embed(color=random.randint(0, 16777215))

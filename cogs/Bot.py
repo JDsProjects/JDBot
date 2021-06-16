@@ -218,6 +218,17 @@ class Bot(commands.Cog):
   @commands.command(brief = "this command tells you to how to report ex issues to owner")
   async def report_issue(self, ctx):
     await ctx.send("if you have an issue please join the support server, create a ticket,  or Dm the owner at JDJG Inc. Official#3493. Thanks :D!")
+
+  @commands.command(brief = "apply for tester")
+  async def apply_tester(self, ctx, *, reason = None):
+    if not reason:
+      return await ctx.send("Give us a reason why please.")
+
+    embed = discord.Embed(title = f"{ctx.author} requested to be a tester.", description = f"For the reason of {reason}", color=random.randint(0, 16777215))
+    embed.set_footer(text=f"User ID: {ctx.author.id}")
+
+    jdjg = await self.bot.getch_user(168422909482762240) 
+    await jdjg.send(embed=embed)
     
 
 def setup(bot):
