@@ -554,17 +554,20 @@ class DevTools(commands.Cog):
         grab2 = pypi_data.get('download_url')
         grab3 = pypi_data.get('docs_url')
         grab4=pypi_data.get('keywords')
+        grab5=pypi_data.get('license')
+
         pypi_data['author_email'] = grab if grab else "None provided..."
         pypi_data['download_url'] = grab2 if grab2 else "None provided..."
         pypi_data['docs_url'] = grab3 if grab3 else "None provided..."
         pypi_data['keywords'] = grab4 if grab4 else "None provided..."
+        pypi_data['license'] = grab5 if grab5 else "None provided..."
 
-        embed = discord.Embed(title = f"{pypi_data.get('name')} {pypi_data.get('version')}", url = f"{pypi_data.get('release_url')}", description = f"{pypi_data.get('summary', 'None provided...')}")
+        embed = discord.Embed(title = f"{pypi_data.get('name')} {pypi_data.get('version')}", url = f"{pypi_data.get('release_url')}", description = f"{pypi_data.get('summary', 'None provided...')}", color=random.randint(0, 16777215))
 
         embed.set_thumbnail(url = "https://i.imgur.com/oP0e7jK.png")
 
         embed.add_field(name = "**Author Info**", value = f"**Author Name:** {pypi_data.get('author')}\n**Author Email:** {pypi_data.get('author_email')}", inline = False)
-        embed.add_field(name = "**Package Info**", value = f"**Download URL**: {pypi_data.get('download_url')}\n**Documentation URL:** {pypi_data.get('docs_url')}\n**Home Page:** {pypi_data.get('home_page', 'None provided...')}\n**Keywords:** {pypi_data.get('keywords')}\n**License:** {pypi_data.get('license','None provided...')}", inline = False)
+        embed.add_field(name = "**Package Info**", value = f"**Download URL**: {pypi_data.get('download_url')}\n**Documentation URL:** {pypi_data.get('docs_url')}\n**Home Page:** {pypi_data.get('home_page', 'None provided...')}\n**Keywords:** {pypi_data.get('keywords')}\n**License:** {pypi_data.get('license')}", inline = False)
         
         await ctx.send(embed=embed)
 
