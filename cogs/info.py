@@ -119,10 +119,10 @@ class Info(commands.Cog):
 
   @commands.command(brief="gives info about a file")
   async def file(self,ctx):
-    if len(ctx.message.attachments) < 1:
+    if not ctx.message.attachments:
       await ctx.send(ctx.message.attachments)
       await ctx.send("no file submitted")
-    if len(ctx.message.attachments) > 0:
+    if ctx.message.attachments:
       embed = discord.Embed(title="Attachment info",color=random.randint(0, 16777215))
       for x in ctx.message.attachments:
         embed.add_field(name=f"ID: {x.id}",value=f"[{x.filename}]({x.url})")

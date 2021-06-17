@@ -6,7 +6,7 @@ class Webhook(commands.Cog):
     self.client = client
 
   @commands.command(brief="a way to send stuff to webhooks.",help="this uses webhook urls, and sends stuff to them")
-  async def webhook(self,ctx,*,args=None):
+  async def webhook(self, ctx, *, args=None):
     if args is None:
       await ctx.send("You didn't send anything")
 
@@ -36,7 +36,7 @@ class Webhook(commands.Cog):
         await ctx.send("not a proper webhook url.")
 
   @commands.command(brief="a way to create webhooks",help="make commands with this.")
-  async def webhook_create(self,ctx,arg=None,*,args=None):
+  async def webhook_create(self, ctx, arg = None, *, args = None):
     if isinstance(ctx.channel, discord.TextChannel):
       if ctx.author.guild_permissions.manage_webhooks:
         if arg:
@@ -57,7 +57,7 @@ class Webhook(commands.Cog):
             embed = discord.Embed(title=f"{ctx.author}'s message:",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
             embed.add_field(name="Content:",value=args)
 
-          if len(ctx.message.attachments) > 0:
+          if ctx.message.attachments:
             image=await ctx.message.attachments[0].read()
             pass_test = True
             try:
@@ -91,7 +91,7 @@ class Webhook(commands.Cog):
       await ctx.send("You can't use that silly")
 
   @webhook_create.error
-  async def webhook_create_error(self,ctx,error):
+  async def webhook_create_error(self, ctx, error):
     await ctx.send(error)
 
 def setup(client):

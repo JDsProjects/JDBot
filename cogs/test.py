@@ -48,7 +48,7 @@ class Test(commands.Cog):
         response = await vt_client.scan_url_async(u, wait_for_completion = True)
         print(response)
 
-    if len(ctx.message.attachments) > 0:
+    if ctx.message.attachments:
       await ctx.send("If this takes a while, it probably means it was never on Virustotal before")
       used = True
     for f in ctx.message.attachments:
@@ -61,10 +61,11 @@ class Test(commands.Cog):
     await vt_client.close_async()
     
   @commands.command(brief="work in progress")
-  async def invert(self,ctx):
+  async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
+    Member = Member or ctx.author
     y = 0
 
-    if len(ctx.message.attachments) > 0:
+    if ctx.message.attachments:
       for x in ctx.message.attachments:
         try:
           discord.utils._get_mime_type_for_image(await x.read())
@@ -79,8 +80,8 @@ class Test(commands.Cog):
         if passes is False:
           pass
 
-    if len(ctx.message.attachments) == 0 or y == 0:
-      url = ctx.author.avatar_url_as(format="png")
+    if not ctx.message.attachments or y == 0:
+      url = Member.avatar_url_as(format="png")
       invert_time=functools.partial(utils.invert_func,await url.read() )
 
       file = await self.bot.loop.run_in_executor(None, invert_time)

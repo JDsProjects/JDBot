@@ -195,7 +195,7 @@ class Extra(commands.Cog):
           await ctx.send("this doesn't contain any bytes.")
           
 
-    if args is None and len(ctx.message.attachments) < 1:
+    if args is None and not ctx.message.attachments:
       await ctx.send("You didn't specify any text.")
 
   @commands.command()
