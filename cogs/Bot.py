@@ -164,17 +164,13 @@ class Bot(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
-  async def support_invite(self,ctx):
-    await ctx.send("You must agree with **I agree** to have an invite link to our support server sent here before we can invite you")
-    message=await self.bot.wait_for("message",check=utils.check(ctx))
-    if message.content.lower() == "i agree":
-      await ctx.send("https://discord.gg/sHUQCch")
+  async def support_invite(self, ctx):
 
-    else:
-      await ctx.send("looks like you didn't agree.")
+    m = utils.SupportInvite()
+    await m.start(ctx)
 
   @commands.command(brief="This command gives you an alt bot to use",aliases=["alt_invite"])
-  async def verify_issue(self,ctx):
+  async def verify_issue(self, ctx):
     await ctx.send("You can invite the bot 831162894447804426(this will be an alt bot with almost the same code though some report functionalies will have their guild swapped :D")
 
   @commands.command()
