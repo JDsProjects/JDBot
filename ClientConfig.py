@@ -58,7 +58,7 @@ class JDBot(commands.Bot):
 client = JDBot(command_prefix=(get_prefix),intents=intents,chunk_guilds_at_startup=False, strip_after_prefix = True)
 bot = client
 
-bot.launch_time = datetime.utcnow()
+bot.launch_time = datetime.datetime.utcnow()
 
 @bot.check
 async def check_command_access(ctx):
