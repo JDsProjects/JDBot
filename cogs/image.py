@@ -411,11 +411,11 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         try:
           convert_time=functools.partial(self.convert_svg, await x.read())
-          file = await self.bot.loop.run_in_executor(None, convert_time)
+          file = await self.client.loop.run_in_executor(None, convert_time)
           await ctx.send(file = file)
 
-        except:
-          await ctx.send("couldn't conver that :(")
+        except Exception as e:
+          await ctx.send(f"couldn't convert that :( due to error: {e}")
 
     else:
       await ctx.send("you need attachments")
