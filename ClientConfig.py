@@ -1,4 +1,4 @@
-import discord,  re, os, aiohttp, contextlib, aiosqlite, traceback
+import discord,  re, os, aiohttp, contextlib, aiosqlite, traceback, datetime
 from discord.ext import commands
 
 async def get_prefix(client, message):
@@ -58,6 +58,8 @@ class JDBot(commands.Bot):
 client = JDBot(command_prefix=(get_prefix),intents=intents,chunk_guilds_at_startup=False, strip_after_prefix = True)
 bot = client
 
+bot.launch_time = datetime.utcnow()
+
 @bot.check
 async def check_command_access(ctx):
   if ctx.author.id in bot.special_access:
@@ -75,3 +77,4 @@ for filename in os.listdir('./cogs'):
       client.load_extension(f'cogs.{filename[:-3]}')
     except commands.errors.ExtensionError:
       traceback.print_exc()
+
