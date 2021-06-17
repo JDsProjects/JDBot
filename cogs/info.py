@@ -573,8 +573,7 @@ class DevTools(commands.Cog):
 
   @commands.command(brief = "make a quick bot invite with 0 perms")
   async def invite_bot(self, ctx, *, user : typing.Optional[discord.User] = None):
-    if not user:
-      return await ctx.send("Not a valid user :(")
+    user = user or ctx.author
 
     if not user.bot:
       return await ctx.send("That's not a legit bot")

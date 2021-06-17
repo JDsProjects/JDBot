@@ -1,4 +1,4 @@
-import discord, sr_api, asuna_api, random, aiohttp
+import discord, sr_api, asuna_api, random, aiohttp, io, cairosvg, functools
 from discord.ext import commands
 import utils
 
@@ -398,6 +398,27 @@ class Image(commands.Cog):
     if len(ctx.message.attachments) == 0 or y == 0:
       url = ctx.author.avatar_url_as(format="png")
       await utils.headpat_converter2(self,url,ctx)
+
+  def convert_svg(self, svg_image):
+    converted_bytes = cairosvg.svg2png(bytestring = svg_image)
+    buffer = io.BytesIO(converted_bytes)
+    buffer.seek(0)
+    return discord.File(buffer ,filename=f"converted.png")
+
+  @commands.command()
+  async def svgconvert(self, ctx):
+    if ctx.message.attachments: 
+      for x in ctx.message.attachments:
+        try:
+          convert_time=functools.partial(self.convert_svg, await x.read())
+          file = await self.bot.loop.run_in_executor(None, convert_time)
+          await ctx.send(file = file)
+
+        except:
+          await ctx.send("couldn't conver that :(")
+
+    else:
+      await ctx.send("you need attachments")
 
   
 

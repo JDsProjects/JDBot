@@ -24,6 +24,8 @@ class Test(commands.Cog):
   async def cog_command_error(self, ctx, error):
     if ctx.command and not ctx.command.has_error_handler():
       await ctx.send(error)
+      import traceback
+      traceback.print_exc()
       
     #I need to fix all cog_command_error
   
@@ -91,6 +93,7 @@ class Test(commands.Cog):
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
   async def setprefix(self, ctx, *, arg=None):
     await ctx.send("WIP")
+    
 
 def setup(client):
   client.add_cog(Test(client))
