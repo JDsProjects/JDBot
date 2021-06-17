@@ -179,7 +179,7 @@ class Extra(commands.Cog):
     if ctx.message.attachments:
       for x in ctx.message.attachments:
         file=await x.read()
-        if len(file) > 0:
+        if file:
 
           encoding=chardet.detect(file)["encoding"]
           if encoding:
@@ -191,7 +191,7 @@ class Extra(commands.Cog):
 
           if encoding is None:
             await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439")
-        if len(file ) < 1:
+        if not file:
           await ctx.send("this doesn't contain any bytes.")
           
 
@@ -259,7 +259,7 @@ class Extra(commands.Cog):
     if ctx.message.attachments:
       for x in ctx.message.attachments:
         file=await x.read()
-        if len(file) > 0:
+        if file:
           encoding=chardet.detect(file)["encoding"]
           if encoding:
             text = file.decode(encoding)
@@ -268,7 +268,7 @@ class Extra(commands.Cog):
             await ctx.send(content=f"Added text file to mystbin: \n{paste.url}")
           if encoding is None:
             await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
-        if len(file ) < 1:
+        if not file:
           await ctx.send("this doesn't contain any bytes.")
 
     if args:

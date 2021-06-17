@@ -100,11 +100,11 @@ class Info(commands.Cog):
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.command(help="fetch invite details")
-  async def fetch_invite(self,ctx,*invites:typing.Union[discord.Invite, str]):
-    if len(invites) > 0:
+  async def fetch_invite(self, ctx, *invites:typing.Union[discord.Invite, str]):
+    if invites:
       menu = menus.MenuPages(utils.InviteInfoEmbed(invites, per_page=1),delete_message_after=True)
       await menu.start(ctx)
-    if len(invites) < 1:
+    if not invites:
       await ctx.send("Please get actual invites to attempt grab")
 
     if len(invites) > 50:
@@ -179,10 +179,10 @@ class Info(commands.Cog):
   
   @commands.command(help="gives info on default emoji and custom emojis",name="emoji")
   async def emoji_info(self,ctx,*emojis: typing.Union[utils.EmojiConverter ,str]):
-    if len(emojis) > 0:
+    if emojis:
       menu = menus.MenuPages(utils.EmojiInfoEmbed(emojis, per_page=1),delete_message_after=True)
       await menu.start(ctx)
-    if len(emojis) < 1:
+    if not emojis:
       await ctx.send("Looks like there was no emojis.")
 
   @commands.command(brief = "gives info on emoji_id and emoji image.")
