@@ -165,7 +165,7 @@ class Bot(commands.Cog):
 
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self,ctx):
-    await ctx.send("You must say I agree this will send into the current channel.")
+    await ctx.send("You must agree with **I agree** to have an invite link to our support server sent here before we can invite you")
     message=await self.bot.wait_for("message",check=utils.check(ctx))
     if message.content.lower() == "i agree":
       await ctx.send("https://discord.gg/sHUQCch")

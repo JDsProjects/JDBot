@@ -74,7 +74,7 @@ class Test(commands.Cog):
           passes = False
         if passes is True:
           y += 1
-          invert_time=functools.partial(utils.invert_func,await x.read())
+          invert_time=functools.partial(utils.invert_func, await x.read())
           file = await self.bot.loop.run_in_executor(None, invert_time)
           await ctx.send(file=file)
         if passes is False:
@@ -88,7 +88,7 @@ class Test(commands.Cog):
       await ctx.send(file=file)
 
   @invert.error
-  async def invert_error(self,ctx,error):
+  async def invert_error(self, ctx, error):
     await ctx.send(error)
 
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
