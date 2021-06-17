@@ -147,7 +147,7 @@ class Image(commands.Cog):
   @commands.command(help="takes a .png attachment or your avatar and makes a triggered version.")
   async def triggered(self,ctx):
     y = 0
-    if len(ctx.message.attachments) > 0:
+    if ctx.message.attachments:
       for x in ctx.message.attachments:
         if x.filename.endswith(".png"):
           url = x.url
@@ -156,7 +156,7 @@ class Image(commands.Cog):
         if not x.filename.endswith(".png"):
           pass
 
-    if len(ctx.message.attachments) == 0 or y == 0:
+    if not ctx.message.attachments or y == 0:
       url = ctx.author.avatar_url_as(format="png")
       await utils.triggered_converter(self,url,ctx)
 
@@ -418,7 +418,7 @@ class Image(commands.Cog):
           await ctx.send(f"couldn't convert that :( due to error: {e}")
 
     else:
-      await ctx.send("you need attachments")
+      await ctx.send("you need svg attachments")
 
   
 
