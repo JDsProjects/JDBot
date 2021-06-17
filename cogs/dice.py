@@ -49,13 +49,13 @@ class Dice(commands.Cog):
     emoji_choosen = random.choice(kawaii_emotes.emojis+kawaii_emotes2.emojis+kawaii_emotes3.emojis)
     await ctx.send(emoji_choosen)
 
-  @commands.command(brief="a magic 8ball command",aliases=["8ball"])
-  async def _8ball(self,ctx,*,args=None):
+  @commands.command(brief="a magic 8ball command(uses rng)",aliases=["8ball"])
+  async def _8ball(self, ctx, *, args = None):
     if args is None:
       await ctx.send("Please give us a value to work with.")
     if args:
       responses = ["As I see it, yes.","Ask again later.","Better not tell you now.","Cannot predict now.","Concentrate and ask again.","Don’t count on it.","It is certain.","It is decidedly so.","Most likely.","My reply is no.","My sources say no.","Outlook not so good.","Outlook good.","Reply hazy, try again.","Signs point to yes.","Very doubtful.","Without a doubt.","Yes.","Yes – definitely.","You may rely on it."]
-      await ctx.send(random.choice(responses))
+      await ctx.send(f"{random.choice(responses)}")
 
   @commands.command(brief="gordon ramsay insults you(I don't own his likeness)",help="Please only use if you can handle insults :D (with some profanity)")
   async def insult2(self,ctx,*,args=None):

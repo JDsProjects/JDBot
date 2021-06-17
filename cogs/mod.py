@@ -50,7 +50,7 @@ class Moderation(commands.Cog):
     traceback.print_exc()
 
   @commands.cooldown(1,90,BucketType.user)
-  @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(work in progress)")
+  @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(WIP)")
   async def scan_guild(self, ctx):
     if isinstance(ctx.channel, discord.TextChannel):
       cur = await self.bot.sus_users.cursor()
@@ -120,7 +120,7 @@ class Moderation(commands.Cog):
       await ctx.send(f"{user} for {truth}")
 
 
-  @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (work in progress")
+  @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)")
   async def report(self, ctx, *, args = None):
     if args:
       jdjg = await self.bot.getch_user(168422909482762240) 
