@@ -52,7 +52,7 @@ class Order(commands.Cog):
       embed.set_image(url=emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-      await self.bot.get_channel(738912143679946783).send(embed=embed)
+      await self.bot.get_channel(855217084710912050).send(embed=embed)
 
   @commands.cooldown(1,30,BucketType.user)
   @order.command(brief="a command to shuffle images from google images")
@@ -81,7 +81,7 @@ class Order(commands.Cog):
       embed.set_image(url=emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-      await self.bot.get_channel(738912143679946783).send(embed=embed)
+      await self.bot.get_channel(855217084710912050).send(embed=embed)
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.command(brief="a command to shuffle images from google images",aliases=["order-shuffle"])
@@ -110,7 +110,7 @@ class Order(commands.Cog):
       embed.set_image(url=emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-      await self.bot.get_channel(738912143679946783).send(embed=embed)
+      await self.bot.get_channel(855217084710912050).send(embed=embed)
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.group(name="tenor",invoke_without_command=True)

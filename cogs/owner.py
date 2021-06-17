@@ -27,7 +27,7 @@ class Owner(commands.Cog):
         user = ctx.author
         await user.send(content="Message failed. sending",embed=embed_message)
         embed_message.add_field(name="Sent To:",value=str(user))
-      await self.bot.get_channel(738912143679946783).send(embed=embed_message)
+      await self.bot.get_channel(855217084710912050).send(embed=embed_message)
 
   @commands.command()
   async def load(self,ctx,*,cog=None):

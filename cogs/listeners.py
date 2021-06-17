@@ -6,7 +6,7 @@ class Events(commands.Cog):
     self.bot = bot
   
   @commands.Cog.listener()
-  async def on_guild_join(self,guild):
+  async def on_guild_join(self, guild):
     channels = [channel for channel in guild.channels]
     roles = roles= [role for role in guild.roles]
     embed = discord.Embed(title="Bot just joined: "+str(guild.name), color=random.randint(0,16777215))
@@ -20,10 +20,10 @@ class Events(commands.Cog):
     embed.add_field(name='Member Count:',value=f'{guild.member_count}')
     embed.add_field(name='Amount of Channels:',value=f"{len(channels)}")
     embed.add_field(name='Amount of Roles:',value=f"{len(roles)}")
-    await self.bot.get_channel(738912143679946783).send(embed=embed)
+    await self.bot.get_channel(855217084710912050).send(embed=embed)
 
   @commands.Cog.listener()
-  async def on_guild_remove(self,guild):
+  async def on_guild_remove(self, guild):
     channels = [channel for channel in guild.channels]
     roles = roles= [role for role in guild.roles]
     embed = discord.Embed(title="Bot just left: "+str(guild.name), color=random.randint(0,16777215))
@@ -40,7 +40,7 @@ class Events(commands.Cog):
       pass
     embed.add_field(name='Amount of Channels:',value=f"{len(channels)}")
     embed.add_field(name='Amount of Roles:',value=f"{len(roles)}")
-    await self.bot.get_channel(738912143679946783).send(embed=embed)
+    await self.bot.get_channel(855217084710912050).send(embed=embed)
 
   @commands.Cog.listener()
   async def on_ready(self):
@@ -64,7 +64,7 @@ class Events(commands.Cog):
       embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar_url))
       embed_message.set_footer(text = f"{message.author.id}")
       embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
-      await self.bot.get_channel(738912143679946783).send(embed=embed_message)
+      await self.bot.get_channel(855217084710912050).send(embed=embed_message)
   
   @commands.Cog.listener()
   async def on_error(event,*args,**kwargs):

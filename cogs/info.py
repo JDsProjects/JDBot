@@ -111,7 +111,7 @@ class Info(commands.Cog):
       await ctx.send("Reporting using more than 50 invites in this command. This is to prevent ratelimits with the api.")
 
       jdjg = await self.bot.getch_user(168422909482762240) 
-      await self.bot.get_channel(738912143679946783).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
+      await self.bot.get_channel(855217084710912050).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
 
   @fetch_invite.error
   async def fetch_invite_error(self, ctx, error):

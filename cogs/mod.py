@@ -29,7 +29,7 @@ class Moderation(commands.Cog):
           await ctx.send("they don't seem like a valid user or they weren't DMable.")
       
       embed.set_footer(text = f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}")
-      await self.bot.get_channel(738912143679946783).send(embed=embed) 
+      await self.bot.get_channel(855217084710912050).send(embed=embed) 
 
       if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
