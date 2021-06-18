@@ -18,6 +18,10 @@ class Test(commands.Cog):
     await ctx.send("this command will likely error...")
     await ctx.send("")
 
+  @commands.command(brief = "WIP command to verify")
+  async def verify(self, ctx):
+    await ctx.send("WIP will make this soon..")
+
   async def cog_check(self, ctx):
     return ctx.author.id in testers_list
 
@@ -93,6 +97,18 @@ class Test(commands.Cog):
 
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
   async def setprefix(self, ctx, *, arg=None):
+    await ctx.send("WIP")
+
+  @commands.command(brief = "WIP thing for birthday set up lol")
+  async def birthday_setup(self, ctx):
+    await ctx.send("WIP")
+
+  @commands.command(brief ="sleep time")
+  async def set_sleeptime(self, ctx):
+    await ctx.send("WIP")
+
+  @commands.command(brief = "wakeup time")
+  async def set_wakeuptime(self, ctx):
     await ctx.send("WIP")
     
 
