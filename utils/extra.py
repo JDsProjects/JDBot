@@ -10,7 +10,7 @@ async def triggered_converter(self,url,ctx):
 
   embed = discord.Embed(color=random.randint(0, 16777215))
   embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
-  embed.set_image(url=imgur_url["link"])
+  embed.set_image(url = imgur_url["link"])
   embed.set_footer(text="powered by some random api")
   await ctx.send(embed=embed)
 

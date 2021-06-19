@@ -8,7 +8,7 @@ class Extra(commands.Cog):
     self.bot = bot
 
   @commands.command(brief="a way to look up minecraft usernames",help="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
-  async def mchistory(self,ctx,*,args=None):
+  async def mchistory(self, ctx, *, args = None):
     
     if args is None:
       await ctx.send("Please pick a minecraft user.")
@@ -380,13 +380,16 @@ class Extra(commands.Cog):
       await ctx.send("max 100 messages, going to 10 messages.")
 
       amount = 10
+      amount += 1
 
     if not utils.cleanup_permission(ctx):
       amount = 10
 
       await ctx.send("you don't have manage messages permissions nor is it a dm")
+      amount += 1
 
     await ctx.send("attempting to delete history of commands")
+    amount += 1
 
     messages = None
     with contextlib.suppress(discord.Forbidden, discord.HTTPException):  
@@ -405,6 +408,18 @@ class Extra(commands.Cog):
 
     await ctx.author.send(content=f"Added text file to mystbin: \n{paste.url}")
 
+  @commands.cooldown(1, 40, BucketType.user)
+  @commands.command(brief = "allows you to review recent embeds", aliases = ["embedhistory", "embed_history"])
+  async def closest_embed(self, ctx):
+    embed_history = await ctx.channel.history(limit = 50).flatten()
+    embeds = [embed for e in embed_history for embed in e.embeds][:10]
+    menu = menus.MenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after=True)
+
+    if not embeds:
+      return await ctx.send("No embeds found :D")
+
+    await ctx.send("Sending you the previous 10 embeds sent in 50 messages if under 10 well the amount that exists, if none well you get none.")
+    await menu.start(ctx)
 
   
 def setup(bot):

@@ -38,7 +38,7 @@ class Test(commands.Cog):
     print(args)
     await ctx.send("WIP")
 
-  @commands.cooldown(1,40,BucketType.user)
+  @commands.cooldown(1, 40, BucketType.user)
   @commands.command(brief="a command that can scan urls(work in progress), and files",help="please don't upload anything secret or send any secret url thank you :D")
   async def scan(self, ctx, *, args = None):
     await ctx.send("WIP")
@@ -113,7 +113,25 @@ class Test(commands.Cog):
     
   @commands.command(brief = "a command to save images to imgur(for owner only lol)")
   async def save_image(self, ctx):
-    await ctx.send("WIP command this is command is only open to testers for now..")
+    import aioimgur
+    if not ctx.message.attachments:
+      return await ctx.send("You need to provide some attachments.")
+
+      for x in ctx.message.attachments:
+        try:
+          x_bytes=await x.read()
+          discord.utils._get_mime_type_for_image(x_bytes)
+
+        except Exception as e:
+          await ctx.send(e)
+
+        imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
+
+        imgur_url = await imgur_client.upload(await x.read())
+        print(imgur_url)
+        await ctx.send(f"{imgur_url['link']}")
+
+    #doesn't seem to work :(
 
   @commands.command(brief = "a command that takes a url and sees if it's an image.")
   async def image_check(self, ctx, *, args = None):
@@ -131,12 +149,7 @@ class Test(commands.Cog):
   async def _time(self, ctx):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
-
-  @commands.command(brief = "allows you to review recent embeds")
-  async def closest_embed(self, ctx):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
-
+    
   @commands.command(brief = "a command to create a voice channel")
   async def voice_create(self, ctx, *, args = None):
     await ctx.send("WIP")

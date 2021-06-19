@@ -138,3 +138,8 @@ class SupportInvite(menus.Menu):
   @menus.button('\N{CROSS MARK}')
   async def on_crossmark(self, payload):
     await self.ctx.send(content=f"looks like you didn't agree to be invited. So We will not invite you!")
+
+class QuickMenu(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    return item
+    #returns the embed here lol.
