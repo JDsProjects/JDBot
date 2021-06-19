@@ -373,7 +373,7 @@ class Extra(commands.Cog):
   async def cleanup(self, ctx,  *,  amount : typing.Optional[int] = None):
 
     if isinstance(ctx.channel,discord.DMChannel):
-      return await ctx.send("doesn't work in DMS")
+      return await ctx.send("doesn't work in DMS, due to discord limitations about builking deletes messages(if we could we would)")
 
     amount = amount or 10
     if amount > 100:
@@ -421,6 +421,57 @@ class Extra(commands.Cog):
     await ctx.send("Sending you the previous 10 embeds sent in 50 messages if under 10 well the amount that exists, if none well you get none.")
     await menu.start(ctx)
 
+  @commands.command(brief = "takes two numbers and does a cool command")
+  async def radical(self, ctx, *numbers : typing.Union[int, str]):
+    
+    if not numbers:
+      return await ctx.send("sorry boss you didn't give us any numbers to use.")
+
+    numbers=sorted(list(filter(lambda x: isinstance(x, int), numbers)))
+
+    if not numbers:
+      return await ctx.send("Not enough numbers")
+
+    elif len(numbers) < 2:
+      num = 1
+      
+    elif len(numbers) > 1:
+      num = numbers[0]
+    
+    root = numbers[-1]
+
+    embed = discord.Embed(title = "The Radical Function Has Been Completed!",color=random.randint(0, 16777215))
+
+    embed.set_footer(text = f"{ctx.author} | {ctx.author.id}")
+    embed.set_thumbnail(url="https://i.imgur.com/E7GIyu6.png")
+    embed.add_field(name = f"Formula: {num}√ {root}", value = f"Result: {int(root**(1/num))}")
+
+    await ctx.send(embed = embed)
+
+  @commands.command(brief = "takes two numbers and does a cool command")
+  async def power(self, ctx, *numbers : typing.Union[int, str]):
+    
+    if not numbers:
+      return await ctx.send("sorry boss you didn't give us any numbers to use.")
+
+    numbers=sorted(list(filter(lambda x: isinstance(x, int), numbers)))
+
+    if not numbers:
+      return await ctx.send("Not enough numbers")
+
+    elif len(numbers) < 2:
+      root = 1
+      
+    elif len(numbers) > 1:
+      root = numbers[0]
+    
+    num = numbers[-1]
+
+    embed = discord.Embed(title = f"Result of the function",color=random.randint(0, 16777215))
+    embed.add_field(name = f"Formula: {num} ^ {root}", value = f"Result: {(num**root)}")
+    embed.set_footer(text = f"{ctx.author.id}")
+    embed.set_thumbnail(url="https://i.imgur.com/E7GIyu6.png")
+    await ctx.send(embed = embed)
   
 def setup(bot):
   bot.add_cog(Extra(bot))

@@ -102,6 +102,7 @@ class Dice(commands.Cog):
       emoji = emoji or sorted(self.client.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
       emoji = emoji or "We haven't found anything"
 
+      if not emoji.available: emoji = emoji.url
       await ctx.send(emoji)
 
   @commands.command(brief="takes smallest and largest numbers then does a random number between.")

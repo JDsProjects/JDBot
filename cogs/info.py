@@ -595,7 +595,22 @@ class DevTools(commands.Cog):
       return await ctx.send("no guild to get the icon of.")
 
     await ctx.send(f"{guild.icon_url}")
-   
+
+  @commands.command(brief = "some old fooz command..")
+  async def fooz(self, ctx, *, args = None):
+    if not args:
+      await ctx.send("success")
+
+    if args:
+      await ctx.send("didn't use it properly :(")
+
+  @commands.command(brief = "puts the message time as a timestamp")
+  async def message_time(self, ctx):
+    
+    embed = discord.Embed(title = "Message Time", color = random.randint(0, 16777215),timestamp = ctx.message.created_at)
+    embed.set_footer(text = f"{ctx.message.id}")
+
+    await ctx.send(content = f"Only here cause JDJG Bot has it and why not have it here now.",embed = embed)
 
 def setup(bot):
   bot.add_cog(Info(bot))
