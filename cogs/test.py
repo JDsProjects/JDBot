@@ -226,6 +226,12 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
 
+  @commands.command(brief = "runs something in le console")
+  async def console(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal and other evals also well look at run commands too
+
+  #look at global_chat stuff for global_chat features, rank for well rank, add an update system too, add cc_ over. nick too, as well as kick and ban, ofc unban and other guild ban moderation stuff. Port over emoji_check but public and make that do it's best to upload less than 256 kB, try to freeze bot with suspend, or somehow, basically make it in unresponsive mode(maybe), and ofc an os emulation mode.
  
 
 def setup(client):
