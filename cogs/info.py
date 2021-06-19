@@ -94,7 +94,7 @@ class Info(commands.Cog):
     if isinstance(ctx.channel,discord.DMChannel):
       await ctx.send(ctx.channel.id)
 
-  @commands.command(brief="a command to tell you the channel id")
+  @commands.command(brief="a command to tell you the channel id", aliases = ["GetChannelId"])
   async def this(self, ctx):
     await ctx.send(ctx.channel.id)
 

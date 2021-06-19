@@ -111,6 +111,122 @@ class Test(commands.Cog):
   async def set_wakeuptime(self, ctx):
     await ctx.send("WIP")
     
+  @commands.command(brief = "a command to save images to imgur(for owner only lol)")
+  async def save_image(self, ctx):
+    await ctx.send("WIP command this is command is only open to testers for now..")
+
+  @commands.command(brief = "a command that takes a url and sees if it's an image.")
+  async def image_check(self, ctx, *, args = None):
+    if not args:
+      return await ctx.send("please give args so it can do a url.")
+      #look at the JDJG Bot orginal
+
+    await ctx.send("WIP command.")
+
+  @commands.command(brief = "like other Bot info commands but more info?")
+  async def about(self, ctx):
+    await ctx.send("WIP for rn.")
+
+  @commands.command(bried = "tells you the server's current time.", name = "time")
+  async def _time(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "allows you to review recent embeds")
+  async def closest_embed(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "a command to create a voice channel")
+  async def voice_create(self, ctx, *, args = None):
+    await ctx.send("WIP")
+     #look at the JDJG Bot orginal
+
+  @commands.command(brief  = "a command to create a text channel")
+  async def channel_create(self, ctx, *, args = None):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "deletes a webhook by url")
+  async def webhook_delete(self, ctx, *, args = None):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+   
+  @commands.command(brief = "tells you a webhook's avatar.")
+  async def webhook_avatar(self, ctx, *, args = None):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.group(name = "support", invoke_without_command=True)
+  async def support(self, ctx):
+    await ctx.send("please run the subcommands.")
+
+  @support.command(brief = "a command that Dms support help to JDJG", name = "dm")
+  async def support_dm(self, ctx, *, args = None):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @support.command(brief = "a command that sends support help to our log channel", name = "channel")
+  async def support_channel(self, ctx, *, args = None):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "takes two numbers and does a cool command")
+  async def radical(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+  
+  @commands.command(brief = "takes two numbers and does a cool command")
+  async def power(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "sees how compatitable something is(two things)")
+  async def works(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.group(brief = "converts info about colors for you.")
+  async def color(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "puts the message time as a timestamp")
+  async def message_time(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "cleat amount/purge messages above to 100 msgs each", aliases = ["purge"])
+  async def clear(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "takes three values lol")
+  async def arithmetic(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "sends tweet to JDBot Twitter")
+  async def send_tweet(self, ctx, *, args = None):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "gets tweets from a username")
+  async def tweet(self, ctx, *, args = None):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "add emoji to your guild lol")
+  async def emoji_add(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+  @commands.command(brief = "sends a emoji to me to review(a.k.a reviewed in the review channel)")
+  async def emoji_save(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal
+
+ 
 
 def setup(client):
   client.add_cog(Test(client))
