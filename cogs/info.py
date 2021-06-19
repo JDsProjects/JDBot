@@ -95,8 +95,14 @@ class Info(commands.Cog):
       await ctx.send(ctx.channel.id)
 
   @commands.command(brief="a command to tell you the channel id")
-  async def this(self,ctx):
+  async def this(self, ctx):
     await ctx.send(ctx.channel.id)
+
+  @commands.command(brief = "Gives you mention info don't abuse(doesn't mention tho)")
+  async def mention(self, ctx, *, user : utils.BetterUserconverter = None):
+    user = user or ctx.author
+
+    await ctx.send(f"Discord Mention: {user.mention} \nRaw Mention:  {discord.utils.escape_mentions(user.mention)}", allowed_mentions = discord.AllowedMentions.none())
 
   @commands.cooldown(1,30,BucketType.user)
   @commands.command(help="fetch invite details")
