@@ -110,38 +110,14 @@ class Test(commands.Cog):
   @commands.command(brief = "wakeup time")
   async def set_wakeuptime(self, ctx):
     await ctx.send("WIP")
-    
-  @commands.command(brief = "a command to save images to imgur(for owner only lol)")
-  async def save_image(self, ctx):
-    import aioimgur
-    if not ctx.message.attachments:
-      return await ctx.send("You need to provide some attachments.")
-
-      for x in ctx.message.attachments:
-        try:
-          x_bytes=await x.read()
-          discord.utils._get_mime_type_for_image(x_bytes)
-
-        except Exception as e:
-          await ctx.send(e)
-
-        print(x)
-
-        imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-
-        imgur_url = await imgur_client.upload(await x.read())
-        print(imgur_url)
-        await ctx.send(f"{imgur_url['link']}")
-
-    #doesn't seem to work :(
 
   @commands.command(brief = "a command that takes a url and sees if it's an image.")
   async def image_check(self, ctx, *, args = None):
     if not args:
       return await ctx.send("please give args so it can do a url.")
-      #look at the JDJG Bot orginal
-
-    await ctx.send("WIP command.")
+      
+    
+    
 
   @commands.command(brief = "like other Bot info commands but more info?")
   async def about(self, ctx):
@@ -213,10 +189,7 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
 
-  @commands.command(brief = "cleat amount/purge messages above to 100 msgs each", aliases = ["purge"])
-  async def clear(self, ctx):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
+  
 
   @commands.command(brief = "takes three values lol")
   async def arithmetic(self, ctx):

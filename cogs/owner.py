@@ -1,6 +1,6 @@
 from discord.ext import commands, menus
 import utils
-import random , discord , aiohttp , os , aiosqlite, importlib, mystbin, typing
+import random , discord , aiohttp , os , aiosqlite, importlib, mystbin, typing, aioimgur
 import traceback, textwrap
 
 class Owner(commands.Cog):
@@ -347,6 +347,26 @@ class Owner(commands.Cog):
     await self.bot.rtfm.commit()
     await cur.close()
     await ctx.send(f"Removed the rfm value {name}.")
+
+  @commands.command(brief = "a command to save images to imgur(for owner only lol)")
+  async def save_image(self, ctx):
+    if not ctx.message.attachments:
+      return await ctx.send("You need to provide some attachments.")
+
+    await ctx.send("JDJG doesn't take any responbility for what you upload here :eyes: don't upload anything bad okay?")
+
+    for x in ctx.message.attachments:
+      try:
+        discord.utils._get_mime_type_for_image(await x.read())
+
+      except Exception as e:
+        return await ctx.send(e)
+
+      
+      imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
+
+      imgur_url = await imgur_client.upload(await x.read())
+      await ctx.send(f"{imgur_url['link']}")
 
 def setup(client):
   client.add_cog(Owner(client))

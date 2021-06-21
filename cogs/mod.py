@@ -135,6 +135,30 @@ class Moderation(commands.Cog):
     
     if args is None:
       await ctx.send("You didn't give enough information to use.")
+
+  @commands.command(brief = "cleat amount/purge messages above to 100 msgs each", aliases = ["purge"])
+  async def clear(self, ctx, *, amount: typing.Optional[int] = None):
+    
+    if not amount:
+      return await ctx.send("you didn't give an amount to use to clear.") 
+
+    if not utils.clear_permission(ctx):
+      return await ctx.send("you can't use that(you don't have manage messages).")
+
+    
+    if not ctx.guild.me.guild_permissions.manage_messages:
+      return await ctx.send("Bot can't use that it doesn't have manage messages :(")
+
+    amount += 1
+
+    if amount > 100:
+      await ctx.send('too high setting to 100')
+      amount = 101
+
+    try:
+      await ctx.channel.purge(limit = amount)
+    except Exception as e:
+      await ctx.send(f"An Error occured with {e}")
   
 
 def setup(bot):

@@ -38,6 +38,14 @@ def warn_permission(ctx, Member):
   if isinstance(ctx.channel,discord.DMChannel):
     return True
 
+def clear_permission(ctx):
+  if isinstance(ctx.channel, discord.TextChannel):
+    return ctx.author.guild_permissions.manage_messages
+
+  if isinstance(ctx.channel,discord.DMChannel):
+    return False
+
+
 async def invert_converter(self,url,ctx):
   try:
     sr_client=sr_api.Client(key=os.environ["sr_key"],session=self.client.session)

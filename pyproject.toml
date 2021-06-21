@@ -49,6 +49,7 @@ htmlparser = "^0.0.2"
 autopep8 = "^1.5.7"
 yapf = "^0.31.0"
 CairoSVG = "^2.5.2"
+python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 
 [tool.poetry.dev-dependencies]
 
