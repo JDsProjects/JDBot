@@ -38,7 +38,7 @@ python-ntlm = "^1.1.0"
 typing-extensions = "^3.10.0"
 emoji = "^1.2.0"
 "alexflipnote.py" = "^2.4.0"
-aiogifs = {git = "https://github.com/moanie/aiogifs", branch = "main"} 
+aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"} 
 asyncpraw = "^7.2.0"
 tweepy = {git = "https://github.com/tweepy/tweepy.git"}
 doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
