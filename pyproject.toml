@@ -7,7 +7,7 @@ authors = ["repl.it user <replituser@example.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 dnspython = "^2.1.0"
-"discord.py" = {extras = ["voice"], version = "^1.7.3"}
+"discord.py" = {extras = ["voice"], version = "^1.7.1"}
 Flask = "^1.1.2"
 aioimgur = "^0.1.1"
 wavelink = "^0.9.9"
@@ -38,6 +38,7 @@ python-ntlm = "^1.1.0"
 typing-extensions = "^3.10.0"
 emoji = "^1.2.0"
 "alexflipnote.py" = "^2.4.0"
+aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"} 
 asyncpraw = "^7.2.0"
 tweepy = {git = "https://github.com/tweepy/tweepy.git"}
 doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
@@ -50,7 +51,6 @@ yapf = "^0.31.0"
 CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 async-cleverbot = "^0.2.2"
-aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
 
 [tool.poetry.dev-dependencies]
 
