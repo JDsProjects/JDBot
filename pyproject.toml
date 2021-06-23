@@ -50,6 +50,7 @@ autopep8 = "^1.5.7"
 yapf = "^0.31.0"
 CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
+async-cleverbot = "^0.2.2"
 
 [tool.poetry.dev-dependencies]
 

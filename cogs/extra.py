@@ -1,11 +1,18 @@
 from discord.ext import commands, menus
 from discord.ext.commands.cooldowns import BucketType
-import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib
+import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib, async_cleverbot
 import utils
 
 class Extra(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
+    bot.loop.create_task(self.__ainit__())
+
+  async def __ainit__(self):
+    await self.bot.wait_until_ready()
+
+    self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session = self.bot.session)
+
 
   @commands.command(brief="a way to look up minecraft usernames",help="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
   async def mchistory(self, ctx, *, args = None):
@@ -484,6 +491,40 @@ class Extra(commands.Cog):
     embed.set_footer(text = f"{ctx.author.id}")
     embed.set_thumbnail(url="https://i.imgur.com/E7GIyu6.png")
     await ctx.send(embed = embed)
+
+  @commands.command(brief = "a way to talk to cleverbot", aliases = ["chatbot"])
+  async def cleverbot(self, ctx, *, args = None):
+    
+    args = args or "Hello CleverBot"
+
+    await ctx.reply("we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.) use chat*stop, chat*close, or chat*cancel to stop the chatbot link. (powered by Travita api and the wrapper async_cleverbot)")
+
+    res = await self.cleverbot.ask(args, ctx.author.id)
+    await ctx.reply(res.text, mention_author=False, allowed_mentions=discord.AllowedMentions.none())
+
+    while True:
+      try:
+        msg = await self.bot.wait_for("message", check=lambda msg: msg.author == ctx.author and msg.channel == ctx.channel, timeout=30)
+      except asyncio.TimeoutError:
+        await ctx.send(f"Shut it off as {ctx.author} didn't respond :(")
+        break
+      
+      else:
+        if msg.content.lower() in ["chat*stop", "chat*close", "chat*cancel"]:
+          await ctx.send("shut off chatbot.")
+          break
+        else:
+          async with ctx.typing():
+            res = await self.cleverbot.ask(msg.content, msg.author.id)
+            await msg.reply(res.text, mention_author=False, allowed_mentions=discord.AllowedMentions.none())
+
+    return
+
+  @cleverbot.error
+  async def cleverbot_error(self, ctx, error):
+    await ctx.send(error)
+    import traceback
+    traceback.print_exec()
   
 def setup(bot):
   bot.add_cog(Extra(bot))

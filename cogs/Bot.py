@@ -268,10 +268,12 @@ class Bot(commands.Cog):
 
     embed = discord.Embed(title = f"New Suggestion requested by {ctx.author}", description = f"Suggestion: {args}", timestamp = ctx.message.created_at, color = random.randint(0, 16777215))
 
+    embed.set_footer(text = f"User ID: {ctx.author.id}")
+
     jdjg = await self.bot.getch_user(168422909482762240)
     await jdjg.send(f"New suggestion from {ctx.author}", embed = embed)
 
-    await ctx.send("Sent suggestion to JDJG!")
+    await ctx.send("Sent suggestion to JDJG! You agree to being Dmed about this suggestion or somehow contacted(it makes some things easier lol)")
 
 def setup(bot):
   bot.add_cog(Bot(bot))
