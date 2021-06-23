@@ -67,7 +67,7 @@ class Economy(commands.Cog):
     self.bot = bot
 
   @commands.command(brief="Currently work in progress(WIP)")
-  async def work(self,ctx,*,args=None):
+  async def work(self, ctx,*, args=None):
     Member = ctx.author.id
     if args is None:
       await add_money(Member,10,0)
@@ -77,8 +77,8 @@ class Economy(commands.Cog):
     await ctx.send("You worked cool :D")
 
 
-  @commands.command(brief="a command to send how much money you have(work in progress)",help="using the JDBot database you can see how much money you have")
-  async def balance(self ,ctx, *, member: utils.BetterMemberConverter = None):
+  @commands.command(brief="a command to send how much money you have(work in progress)",help="using the JDBot database you can see how much money you have", aliases = ["bal"])
+  async def balance(self, ctx, *, member: utils.BetterMemberConverter = None):
     
 
     member = member or ctx.author
