@@ -261,5 +261,17 @@ class Bot(commands.Cog):
     days, hours = divmod(hours, 24)
     await ctx.send(f"Days: {days}d, \nHours: {hours}h, \nMinutes: {minutes}m, \nSeconds: {seconds}s")
 
+  @commands.command(brief = "make a suggestion to the bot owner of a command to add", aliases = ["suggestion"])
+  async def suggest(self, ctx, *, args = None):
+    if not args:
+      return await ctx.send("You didn't give me a command to add to the suggestion.")
+
+    embed = discord.Embed(title = f"New Suggestion requested by {ctx.author}", description = f"Suggestion: {args}", timestamp = ctx.message.created_at, color = random.randint(0, 16777215))
+
+    jdjg = await self.bot.getch_user(168422909482762240)
+    await jdjg.send(f"New suggestion from {ctx.author}", embed = embed)
+
+    await ctx.send("Sent suggestion to JDJG!")
+
 def setup(bot):
   bot.add_cog(Bot(bot))

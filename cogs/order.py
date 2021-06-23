@@ -112,7 +112,7 @@ class Order(commands.Cog):
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
       await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-  @commands.cooldown(1,30,BucketType.user)
+  @commands.cooldown(1, 30, BucketType.user)
   @commands.group(name="tenor", invoke_without_command=True)
   async def tenor(self, ctx, *, args = None):
     if args:
