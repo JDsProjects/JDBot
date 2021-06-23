@@ -38,9 +38,8 @@ python-ntlm = "^1.1.0"
 typing-extensions = "^3.10.0"
 emoji = "^1.2.0"
 "alexflipnote.py" = "^2.4.0"
-aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"} 
 asyncpraw = "^7.2.0"
-tweepy = {git = "https://github.com/tweepy/tweepy.git"}
+tweepy = {git = "https://github.com/tweepy/tweepy"}
 doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
 aiosqlite = "^0.17.0"
 topggpy = "^1.1.0"
@@ -51,6 +50,7 @@ yapf = "^0.31.0"
 CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 async-cleverbot = "^0.2.2"
+aiogifs = {git = "https://github.com/moanie/aiogifs", branch = "main"}
 
 [tool.poetry.dev-dependencies]
 
