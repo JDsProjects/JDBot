@@ -491,20 +491,21 @@ class Extra(commands.Cog):
     embed.set_footer(text = f"{ctx.author.id}")
     embed.set_thumbnail(url="https://i.imgur.com/E7GIyu6.png")
     await ctx.send(embed = embed)
-
+  
+  @commands.max_concurrency(number = 1, per = BucketType.channel, wait = True)
   @commands.command(brief = "a way to talk to cleverbot", aliases = ["chatbot"])
   async def cleverbot(self, ctx, *, args = None):
     
     args = args or "Hello CleverBot"
 
-    await ctx.reply("we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.) use chat*stop, chat*close, or chat*cancel to stop the chatbot link. (powered by Travita api and the wrapper async_cleverbot)")
+    await ctx.reply("we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.) use chat*stop, chat*close, or chat*cancel to stop the chatbot link. (powered by Travita api and the wrapper async_cleverbot). if someone else runs a different session, they will need to wait")
 
     res = await self.cleverbot.ask(args, ctx.author.id)
     await ctx.reply(res.text, mention_author=False, allowed_mentions=discord.AllowedMentions.none())
 
     while True:
       try:
-        msg = await self.bot.wait_for("message", check=lambda msg: msg.author == ctx.author and msg.channel == ctx.channel, timeout=30)
+        msg = await self.bot.wait_for("message", check=lambda msg: msg.author.id == ctx.author.id and msg.channel.id == ctx.channel.id, timeout=30)
       except asyncio.TimeoutError:
         await ctx.send(f"Shut it off as {ctx.author} didn't respond :(")
         break
@@ -524,7 +525,7 @@ class Extra(commands.Cog):
   async def cleverbot_error(self, ctx, error):
     await ctx.send(error)
     import traceback
-    traceback.print_exec()
+    traceback.print_exc()
   
 def setup(bot):
   bot.add_cog(Extra(bot))
