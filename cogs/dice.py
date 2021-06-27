@@ -103,7 +103,7 @@ class Dice(commands.Cog):
       emoji = emoji or "We haven't found anything"
 
       if not emoji.available: emoji = emoji.url
-      await ctx.send(emoji)
+      await ctx.send(emoji, reference = ctx.message.reference, mention_author = False)
 
   @commands.command(brief="takes smallest and largest numbers then does a random number between.")
   async def random_number(self , ctx , *numbers: typing.Union[int,str]):

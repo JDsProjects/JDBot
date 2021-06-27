@@ -493,6 +493,7 @@ class Extra(commands.Cog):
     await ctx.send(embed = embed)
   
   @commands.max_concurrency(number = 1, per = BucketType.channel, wait = True)
+  @commands.max_concurrency(number = 1, per = BucketType.user, wait = False)
   @commands.command(brief = "a way to talk to cleverbot", aliases = ["chatbot"])
   async def cleverbot(self, ctx, *, args = None):
     
