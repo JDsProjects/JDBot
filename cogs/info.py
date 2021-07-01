@@ -19,22 +19,28 @@ class Info(commands.Cog):
     if guild:
       await utils.guildinfo(ctx, guild)
 
-  @commands.command(aliases=["user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
-  async def userinfo(self, ctx, *, user: utils.BetterMemberConverter = None):
+  @commands.command(aliases=["user_info", "user-info", "ui", "whois"], brief="a command that gives information on users", help="this can work with mentions, ids, usernames, and even full names.")
+  async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
     user = user or ctx.author
     user_type = ['User', 'Bot'][user.bot]
     
     if ctx.guild:
+
       member_version = await self.bot.getch_member(ctx.guild, user.id)
+  
       if member_version:
         nickname = str(member_version.nick)
         joined_guild = member_version.joined_at.strftime('%m/%d/%Y %H:%M:%S')
         status = str(member_version.status).upper()
-        highest_role = member_version.roles[-1]
+        highest_role = member_version.top_role
+        
       if not member_version:
+
         nickname = str(member_version)
+
         joined_guild = "N/A"
         status = "Unknown"
+
         for guild in self.bot.guilds:
           member=guild.get_member(user.id)
           if member:
@@ -42,6 +48,7 @@ class Info(commands.Cog):
             break
             
         highest_role = "None Found"
+
     if not ctx.guild:
         nickname = "None"
         joined_guild = "N/A"
