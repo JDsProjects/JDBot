@@ -17,15 +17,15 @@ class Info(commands.Cog):
       await ctx.send("Guild wanted has not been found")
     
     if guild:
-      await utils.guildinfo(ctx,guild)
+      await utils.guildinfo(ctx, guild)
 
   @commands.command(aliases=["user_info","user-info"],brief="a command that gives information on users",help="this can work with mentions, ids, usernames, and even full names.")
-  async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
+  async def userinfo(self, ctx, *, user: utils.BetterMemberConverter = None):
     user = user or ctx.author
     user_type = ['User', 'Bot'][user.bot]
     
     if ctx.guild:
-      member_version=ctx.guild.get_member(user.id)
+      member_version = await self.bot.getch_member(ctx.guild, user.id)
       if member_version:
         nickname = str(member_version.nick)
         joined_guild = member_version.joined_at.strftime('%m/%d/%Y %H:%M:%S')

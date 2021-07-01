@@ -30,7 +30,7 @@ class JDBot(commands.Bot):
     await self.rtfm.close()
     await super().close()
 
-  async def getch_member(self,guild,member_id):
+  async def getch_member(self, guild, member_id):
     member = None
     with contextlib.suppress(discord.Forbidden, discord.HTTPException):
       member = guild.get_member(member_id) or await guild.fetch_member(member_id)
