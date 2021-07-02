@@ -131,10 +131,12 @@ class Info(commands.Cog):
     await ctx.send(error)
 
   @commands.command(brief="gives info about a file")
-  async def file(self,ctx):
+  async def file(self, ctx):
+
     if not ctx.message.attachments:
       await ctx.send(ctx.message.attachments)
       await ctx.send("no file submitted")
+
     if ctx.message.attachments:
       embed = discord.Embed(title="Attachment info",color=random.randint(0, 16777215))
       for x in ctx.message.attachments:
