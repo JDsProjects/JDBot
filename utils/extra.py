@@ -38,6 +38,9 @@ def warn_permission(ctx, Member):
   if isinstance(ctx.channel,discord.DMChannel):
     return True
 
+def create_channel_permission(ctx):
+  return ctx.author.guild_permissions.manage_channels
+
 def clear_permission(ctx):
   if isinstance(ctx.channel, discord.TextChannel):
     return ctx.author.guild_permissions.manage_messages

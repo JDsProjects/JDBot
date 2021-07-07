@@ -527,6 +527,29 @@ class Extra(commands.Cog):
     await ctx.send(error)
     import traceback
     traceback.print_exc()
+
+  @commands.command(brief = "a command to create a voice channel")
+  async def voice_create(self, ctx, *, args = None):
+   
+    if isinstance(ctx.channel,discord.DMChannel):
+      return await ctx.send("you can't make a voice channel in a DM")
+
+    if not args:
+      return await ctx.send("You need to give me some text to use.")
+
+    if not utils.create_channel_permission(ctx):
+      return await ctx.send("you don't have permission to use that.")
+
+    if not ctx.me.guild_permissions.manage_channels:
+      return await ctx.send("I can't make a voice channel :(")
+
+    channel = await ctx.guild.create_voice_channel(args)
+
+    invite = "N/A"
+    if channel.permissions_for(ctx.me).create_instant_invite:
+      invite = await channel.create_invite()
+
+    await ctx.send(f"join the channel at {channel.mention} \n Invite to join: {invite}")
   
 def setup(bot):
   bot.add_cog(Extra(bot))

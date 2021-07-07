@@ -3,11 +3,11 @@ import discord, os, itertools, re, functools, typing, random, collections, io
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
-testers_list =  [524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914, 732278462571610173, 459185417678487552, 766343727743631361, 540142383270985738]
-
 class Test(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
+
+    self.testers_list =  [524916724223705108,168422909482762240,742214686144987150,813445268624244778,700210850513944576,717822288375971900,218481166142013450,703674286711373914, 732278462571610173, 459185417678487552, 766343727743631361, 540142383270985738]
 
   @commands.command()
   async def ticket_make(self,ctx):
@@ -23,7 +23,7 @@ class Test(commands.Cog):
     await ctx.send("WIP will make this soon..")
 
   async def cog_check(self, ctx):
-    return ctx.author.id in testers_list
+    return ctx.author.id in self.testers_list
 
   async def cog_command_error(self, ctx, error):
     if ctx.command and not ctx.command.has_error_handler():
@@ -127,11 +127,6 @@ class Test(commands.Cog):
   async def _time(self, ctx):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
-    
-  @commands.command(brief = "a command to create a voice channel")
-  async def voice_create(self, ctx, *, args = None):
-    await ctx.send("WIP")
-     #look at the JDJG Bot orginal
 
   @commands.command(brief  = "a command to create a text channel")
   async def channel_create(self, ctx, *, args = None):
