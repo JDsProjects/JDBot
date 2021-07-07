@@ -330,9 +330,9 @@ class Owner(commands.Cog):
     if not name or not url or not name and not url:
       return await ctx.send("You need a name and also url.")
 
-    cur = await self.bot.rtfm.cursor()
+    cur = await self.bot.sus_users.cursor()
     await cur.execute("INSERT INTO RTFM_DICTIONARY VALUES (?, ?)", (name, url))
-    await self.bot.rtfm.commit()
+    await self.bot.sus_users.commit()
     await cur.close()
 
     await ctx.send(f"added {name} and {url} to the rtfm DB")
@@ -342,9 +342,9 @@ class Owner(commands.Cog):
     if name is None:
       return await ctx.send("You can't remove None")
 
-    cur = await self.bot.rtfm.cursor()
+    cur = await self.bot.sus_users.cursor()
     await cur.execute("DELETE FROM RTFM_DICTIONARY WHERE name = ?", (name,))
-    await self.bot.rtfm.commit()
+    await self.bot.sus_users.commit()
     await cur.close()
     await ctx.send(f"Removed the rfm value {name}.")
 
