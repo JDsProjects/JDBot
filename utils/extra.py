@@ -73,7 +73,7 @@ async def headpat_converter2(self,url,ctx):
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
   embed.set_image(url=f"attachment://headpat.{image.format}")
   embed.set_footer(text="powered by dagpi")
-  await ctx.send(file=file,embed=embed)
+  await ctx.send(file=file, embed=embed)
 
 async def google_tts(text):
   mp3_fp = io.BytesIO()
