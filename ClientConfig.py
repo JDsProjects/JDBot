@@ -1,4 +1,4 @@
-import discord,  re, os, aiohttp, contextlib, aiosqlite, traceback, datetime
+import discord,  re, os, aiohttp, contextlib, aiosqlite, traceback, datetime, itertools
 from discord.ext import commands
 
 async def get_prefix(client, message):
@@ -21,6 +21,15 @@ class JDBot(commands.Bot):
   async def start(self,*args, **kwargs):
     self.session=aiohttp.ClientSession()
     self.sus_users = await aiosqlite.connect('sus_users.db')
+      #loads up some bot variables    
+
+    
+    conn = await self.sus_users.cursor()
+    grab=await conn.execute("SELECT * FROM testers_list")
+    self.testers = list(itertools.chain(*await grab.fetchall()))
+    await conn.close()
+    
+    #does the DB connection and then assigns it a tester list
     await super().start(*args, **kwargs)
 
   async def close(self):
