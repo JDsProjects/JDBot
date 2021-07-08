@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, aiosqlite, typing
+import discord, random, typing
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
