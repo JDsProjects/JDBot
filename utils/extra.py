@@ -1,5 +1,5 @@
 import aioimgur, discord, random, sr_api, asyncdagpi, aiogtts
-import os, io
+import os, io, typing, datetime
 
 async def triggered_converter(self,url,ctx):
   sr_client=sr_api.Client(session=self.client.session)
@@ -128,3 +128,12 @@ def profile_converter(name):
   }
   
   return names_to_emojis.get(name)
+
+TimestampStyle =  typing.Literal['f', 'F', 'd', 'D', 't', 'T', 'R']
+
+def format_dt(dt: datetime.datetime, /, style: typing.Optional[TimestampStyle] = None) -> str:
+  
+  if style is None:
+    return f'<t:{int(dt.timestamp())}>'
+
+  return f'<t:{int(dt.timestamp())}:{style}>'
