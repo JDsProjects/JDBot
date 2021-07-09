@@ -77,11 +77,11 @@ class Info(commands.Cog):
 
     embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id} \nType: {user_type} \nBadges: {badges} \n**Joined Discord**: {user.created_at.strftime('%m/%d/%Y %H:%M:%S')} \n**Status**: {status} ")
 
-    embed.add_field(name="Mutual Guilds:", value=guild_list)
-
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
+
+    embed.add_field(name="Mutual Guilds:", value = guild_list)
     
-    embed.set_image(url=user.avatar_url)
+    embed.set_image(url = user.avatar_url)
     await ctx.send(embed=embed)
 
   @commands.command(brief="uploads your emojis into a mystbin link")

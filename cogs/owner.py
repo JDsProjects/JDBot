@@ -369,5 +369,41 @@ class Owner(commands.Cog):
       imgur_url = await imgur_client.upload(await x.read())
       await ctx.send(f"{imgur_url['link']}")
 
+  @commands.command(brief="A command to remove testers")
+  async def remove_tester(self, ctx, *, user: utils.BetterUserconverter = None):
+    if user is None:
+      await ctx.send("You can't have a non existent user.")
+
+    if user:
+      cur = await self.bot.sus_users.cursor()
+      await cur.execute("DELETE FROM testers_list WHERE user_id = ?", (user.id,))
+      await self.bot.sus_users.commit()
+      await cur.close()
+      
+      if not user.id in self.bot.testers: 
+        return await ctx.send(f"{user} isn't in the testers list.")
+
+      else:
+        self.bot.testers.remove(user.id)
+        await ctx.send(f"Removed tester known as {user}")
+
+  @commands.command(brief="A command to add testers")
+  async def add_tester(self, ctx, *, user: utils.BetterUserconverter = None):
+    if user is None:
+      await ctx.send("You can't have a non existent user.")
+
+    if user:
+      cur = await self.bot.sus_users.cursor()
+      await cur.execute("INSERT INTO testers_list VALUES (?)", (user.id,))
+      await self.bot.sus_users.commit()
+      await cur.close()
+      
+      if not user.id in self.bot.testers: 
+        self.bot.testers.append(user.id)
+        await ctx.send(f"added tester known as {user}")
+
+      else:
+        return await ctx.send(f"{user} is in the testers list already!")
+
 def setup(client):
   client.add_cog(Owner(client))
