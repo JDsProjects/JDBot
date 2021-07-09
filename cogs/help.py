@@ -11,8 +11,8 @@ class SendHelp(menus.ListPageSource):
   async def format_page(self, menu, item):
     
     item = discord.utils.escape_markdown(item)
-    
-    emby = discord.Embed(description=item, as_needed = True)
+
+    emby = discord.Embed(description= item , as_needed = True)
     return emby
 
 class Help(commands.Cog):
