@@ -41,7 +41,7 @@ class Info(commands.Cog):
         status = "Unknown"
 
         for guild in self.bot.guilds:
-          member=guild.get_member(user.id)
+          member = guild.get_member(user.id)
           if member:
             status=str(member.status).upper()
             break
@@ -73,16 +73,14 @@ class Info(commands.Cog):
 
     if user.bot: badges = f"{badges} {utils.profile_converter('bot')}"
 
-    embed=discord.Embed(title=f"{user}",description=f"Type: {user_type} \nBadges: {badges}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
-    embed.add_field(name="Username: ", value = user.name)
-    embed.add_field(name="Discriminator:",value=user.discriminator)
-    embed.add_field(name="Nickname: ", value = nickname)
-    embed.add_field(name="Joined Discord: ",value = (user.created_at.strftime('%m/%d/%Y %H:%M:%S')))
-    embed.add_field(name="Joined Guild: ",value = joined_guild)
+    embed=discord.Embed(title=f"{user}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+
+    embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id} \nType: {user_type} \nBadges: {badges} \n**Joined Discord**: {user.created_at.strftime('%m/%d/%Y %H:%M:%S')} \n**Status**: {status} ")
+
     embed.add_field(name="Mutual Guilds:", value=guild_list)
-    embed.add_field(name="ID:",value=user.id)
-    embed.add_field(name="Status:",value=status)
-    embed.add_field(name="Highest Role:",value=highest_role)
+
+    embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
+    
     embed.set_image(url=user.avatar_url)
     await ctx.send(embed=embed)
 
