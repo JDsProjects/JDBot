@@ -25,7 +25,6 @@ class Info(commands.Cog):
     user_type = ['User', 'Bot'][user.bot]
     
     if ctx.guild:
-
       member_version = await self.bot.getch_member(ctx.guild, user.id)
   
       if member_version:
@@ -67,7 +66,14 @@ class Info(commands.Cog):
     if guilds_list:
       guild_list= ", ".join(map(str, guilds_list))
 
-    embed=discord.Embed(title=f"{user}",description=f"Type: {user_type}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+
+    flags = user.public_flags.all()
+    
+    badges="\u0020".join(utils.profile_converter(f.name) for f in flags)
+
+    if user.bot: badges = f"{badges} {utils.profile_converter('bot')}"
+
+    embed=discord.Embed(title=f"{user}",description=f"Type: {user_type} \nBadges: {badges}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
     embed.add_field(name="Username: ", value = user.name)
     embed.add_field(name="Discriminator:",value=user.discriminator)
     embed.add_field(name="Nickname: ", value = nickname)

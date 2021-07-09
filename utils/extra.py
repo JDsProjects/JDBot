@@ -106,3 +106,25 @@ def cleanup_permission(ctx):
 
   if isinstance(ctx.channel, discord.DMChannel):
     return True
+
+def profile_converter(name):
+  
+  names_to_emojis = {
+    "staff" : "<:staff:314068430787706880>",
+    "partner" : "<:partnernew:754032603081998336>",
+    "hypesquad" : "<:hypesquad:314068430854684672>",
+    "bug_hunter" : "<:bughunter:585765206769139723>",
+    "hypesquad_bravery" : "<:bravery:585763004218343426>",
+    "hypesquad_brilliance" : "<:brilliance:585763004495298575>",
+    "hypesquad_balance" : "<:balance:585763004574859273>",
+    "early_supporter" : "<:supporter:585763690868113455> ",
+    "system" : "<:system:863129934611349555><:system2:863129934633631774>",
+    "bug_hunter_level_2" : "<:goldbughunter:853274684337946648>",
+    "verified_bot" : "<:verified_bot:863128487610548304>",
+    "verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
+    "early_verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
+    "discord_certified_moderator" : "<:certifiedmod:853274382339670046>",
+    "bot" : "<:bot:863128982136684614>"
+  }
+  
+  return names_to_emojis.get(name)
