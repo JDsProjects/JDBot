@@ -118,17 +118,6 @@ class Test(commands.Cog):
   async def about(self, ctx):
     await ctx.send("WIP for rn.")
 
-  @commands.command(bried = "tells you the server's current time.", name = "time")
-  async def _time(self, ctx):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
-
-  @commands.command(brief  = "a command to create a text channel")
-  async def channel_create(self, ctx, *, args = None):
-    await ctx.send("WIP")
-    
-    #look at the JDJG Bot orginal
-
   @commands.command(brief = "deletes a webhook by url")
   async def webhook_delete(self, ctx, *, args = None):
     await ctx.send("WIP")
@@ -175,17 +164,9 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
 
-  @commands.group(brief = "converts info about colors for you.")
+  @commands.group(brief = "converts info about colors for you.", invoke_without_command=True)
   async def color(self, ctx):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
-
-  
-
-  @commands.command(brief = "takes three values lol")
-  async def arithmetic(self, ctx):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
+    return await ctx.send("use one of the subcommands please")
 
   @commands.command(brief = "sends tweet to JDBot Twitter")
   async def send_tweet(self, ctx, *, args = None):

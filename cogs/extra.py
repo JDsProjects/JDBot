@@ -541,9 +541,32 @@ class Extra(commands.Cog):
       return await ctx.send("you don't have permission to use that.")
 
     if not ctx.me.guild_permissions.manage_channels:
-      return await ctx.send("I can't make a voice channel :(")
+      return await ctx.send("I can't make a voice channel! If you want this to work you need to give manage channel permissions :(")
 
     channel = await ctx.guild.create_voice_channel(args)
+
+    invite = "N/A"
+    if channel.permissions_for(ctx.me).create_instant_invite:
+      invite = await channel.create_invite()
+
+    await ctx.send(f"join the channel at {channel.mention} \n Invite to join: {invite}")
+
+  @commands.command(brief  = "a command to create a text channel")
+  async def channel_create(self, ctx, *, args = None):
+
+    if isinstance(ctx.channel,discord.DMChannel):
+      return await ctx.send("you can't make a text channel in a DM") 
+    
+    if not args:
+      return await ctx.send("You need to give me some text to use.")
+
+    if not utils.create_channel_permission(ctx):
+      return await ctx.send("you don't have permission to use that.")
+
+    if not ctx.me.guild_permissions.manage_channels:
+      return await ctx.send("I can't make a text channel! If you want this to work you need to give manage channel permissions :(")    
+
+    channel = await ctx.guild.create_text_channel(args)
 
     invite = "N/A"
     if channel.permissions_for(ctx.me).create_instant_invite:
@@ -556,6 +579,43 @@ class Extra(commands.Cog):
     user = user or ctx.author
 
     await ctx.send(f"The profile for {user} is https://discord.com/users/{user.id}")
+
+  @commands.command(bried = "tells you the current time with discord's speacil time converter", name = "time")
+  async def _time(self, ctx):
+    
+    embed = discord.Embed(title="Current Time :",description=f"{utils.format_dt(ctx.message.created_at, style = 'f')}",color=random.randint(0, 16777215))
+
+    embed.set_footer(text = f"Requested By {ctx.author}")
+    await ctx.send(embed = embed)
+
+  @commands.command(brief = "takes three values lol")
+  async def arithmetic(self, ctx, *numbers : typing.Union[int, str]):
+    
+    if not numbers:
+      return await ctx.send("sorry boss you didn't give us any numbers to use.")
+
+    numbers = sorted(list(filter(lambda x: isinstance(x, int), numbers)))
+
+    if not numbers:
+      return await ctx.send("Not enough numbers, you need 3 values ")
+
+    elif len(numbers) < 3:
+      return await ctx.send("Not enough numbers, you need 3 values (the orginal number, how many times it per time you run it, and how many times it goes)")
+      
+    elif len(numbers) > 2:
+      
+      orginal = numbers[0]
+      number_each_time = numbers[1]
+      times_ran = numbers[-1]
+
+      embed = discord.Embed(title = f"Result of the function",color = random.randint(0, 16777215))
+
+      embed.add_field(name=f"Formula: {orginal} + {number_each_time} * ( {times_ran} - 1 )",value = f"Result: {orginal+number_each_time*(times_ran-1)}")
+
+      embed.set_footer(text = f"{ctx.author.id}")
+      embed.set_thumbnail(url="https://i.imgur.com/E7GIyu6.png")
+    
+    await ctx.send(embed=embed)
   
 def setup(bot):
   bot.add_cog(Extra(bot))

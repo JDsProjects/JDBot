@@ -75,7 +75,9 @@ class Info(commands.Cog):
 
     embed=discord.Embed(title=f"{user}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
 
-    embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id} \nType: {user_type} \nBadges: {badges} \n**Joined Discord**: {user.created_at.strftime('%m/%d/%Y %H:%M:%S')} \n**Status**: {status} ")
+    embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}")
+
+    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {badges} \n**Joined Discord**: {user.created_at.strftime('%m/%d/%Y %H:%M:%S')} \n**Status**: {status}")
 
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
 
