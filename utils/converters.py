@@ -1,11 +1,11 @@
-import discord, re, collections, random, emoji, contextlib
+import discord, re, collections, random, emoji, contextlib, typing
 from discord.ext import commands
 from discord.http import Route
 
 class BetterMemberConverter(commands.Converter):
   async def convert(self, ctx, argument):
     try:
-      user = await commands.MemberConverter().convert(ctx,argument)
+      user = await commands.MemberConverter().convert(ctx, argument)
     except commands.MemberNotFound:
       user = None
 
@@ -56,7 +56,7 @@ class EmojiBasic:
     self.url = url
 
   @classmethod
-  async def convert(cls,ctx,argument):
+  async def convert(cls, ctx, argument):
     match=re.match(r'(?P<id>[0-9]{15,21})',argument)
     if match:
       emoji_id=(match.group(0))
@@ -171,3 +171,22 @@ async def roleinfo(ctx, role):
   embed.set_footer(text = f"Guild: {role.guild}")
 
   await ctx.send(embed=embed)
+
+
+class ColorConverter(commands.Converter):
+  async def convert(self, ctx, argument):
+
+    try:
+      color = await commands.ColourConverter().convert(ctx, argument)
+
+    except commands.BadColourArgument:
+      color = None
+
+    if isinstance(argument, int):
+      if argument > 16777215: 
+        await ctx.send(f"{argument} is too, so it's going to 16777215 which is can use.")
+        argument = 16777215
+
+      color = discord.Colour(argument)
+      
+    return color 
