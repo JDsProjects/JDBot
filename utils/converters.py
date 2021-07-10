@@ -182,11 +182,24 @@ class ColorConverter(commands.Converter):
     except commands.BadColourArgument:
       color = None
 
+    if not color and not argument.isdigit():
+      
+      argument = tuple(s for s in argument.split(" ") if s)
+        
+    if color and argument.isdigit():
+      argument = int(argument)
+
     if isinstance(argument, int):
       if argument > 16777215: 
         await ctx.send(f"{argument} is too, so it's going to 16777215 which is can use.")
         argument = 16777215
 
       color = discord.Colour(argument)
+
+    if isinstance(argument, tuple):
+
+      argument = sorted(tuple(filter(lambda x: x.isdigit(), argument)))
+    
+      print(argument)
       
-    return color 
+    return color
