@@ -198,7 +198,7 @@ class ColorConverter(commands.Converter):
 
     if isinstance(argument, tuple):
 
-      argument = sorted(tuple(filter(lambda x: x.isdigit(), argument)))
+      argument = tuple(sorted(filter(lambda x: x.isdigit(), argument)))
     
       print(argument)
       
