@@ -405,5 +405,5 @@ class Owner(commands.Cog):
       else:
         return await ctx.send(f"{user} is in the testers list already!")
 
-def setup(client):
-  client.add_cog(Owner(client))
+def setup(bot):
+  bot.add_cog(Owner(bot))

@@ -75,5 +75,8 @@ class Events(commands.Cog):
     
     #print(more_information[0])
 
+  
+  
+
 def setup(bot):
   bot.add_cog(Events(bot))

@@ -633,6 +633,7 @@ class DevTools(commands.Cog):
 
     await ctx.send(content = f"Only here cause JDJG Bot has it and why not have it here now.",embed = embed)
 
+
 def setup(bot):
   bot.add_cog(Info(bot))
   bot.add_cog(DevTools(bot))

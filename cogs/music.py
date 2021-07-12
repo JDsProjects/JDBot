@@ -2,10 +2,10 @@ from discord.ext import commands
 import discord, wavelink, asyncio, os
 
 class Music(commands.Cog):
-  def __init__(self,bot):
+  def __init__(self, bot):
     self.bot = bot
     if not hasattr(bot, 'wavelink'):
-      self.bot.wavelink = wavelink.Client(bot=self.bot)
+      self.bot.wavelink = wavelink.Client(bot = self.bot)
 
     self.bot.loop.create_task(self.start_nodes())
 
@@ -36,7 +36,7 @@ class Music(commands.Cog):
       await ctx.send(f"You forgot to give it permissions to join the channel or some error occured.")
   
   @connect_.error
-  async def connect_error(self,ctx,error):
+  async def connect_error(self, ctx, error):
     await ctx.send(error)
 
   @commands.command()
@@ -64,7 +64,7 @@ class Music(commands.Cog):
     await ctx.send(error)
 
   @commands.command()
-  async def force_disconnect(self,ctx):
+  async def force_disconnect(self, ctx):
     player = self.bot.wavelink.get_player(ctx.guild.id)
     await player.destroy()
 
@@ -82,20 +82,20 @@ class Music(commands.Cog):
       await ctx.send("Can't Disconnect from no channels")
 
   @disconnect_.error
-  async def disconnect_error(self,ctx,error):
+  async def disconnect_error(self, ctx, error):
     await ctx.send(error)
 
   @commands.command()
-  async def stop(self,ctx):
+  async def stop(self, ctx):
     player = self.bot.wavelink.get_player(ctx.guild.id)
     await player.stop()
 
   @stop.error
-  async def stop_error(self,ctx,error):
+  async def stop_error(self, ctx, error):
     await ctx.send(error)
 
   @commands.command()
-  async def pause(self,ctx):
+  async def pause(self, ctx):
     player = self.bot.wavelink.get_player(ctx.guild.id)
     if player.is_paused:
       await player.set_pause(False)
@@ -108,7 +108,7 @@ class Music(commands.Cog):
     await ctx.send(error)
 
   @commands.command()
-  async def resume(self,ctx):
+  async def resume(self, ctx):
     player = self.bot.wavelink.get_player(ctx.guild.id)
     if player.is_paused:
       await player.set_pause(True)
