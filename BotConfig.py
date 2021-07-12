@@ -18,7 +18,7 @@ class JDBot(commands.Bot):
     super().__init__(*args, **kwargs)
     self.special_access = {}
 
-  async def start(self,*args, **kwargs):
+  async def start(self, *args, **kwargs):
     self.session=aiohttp.ClientSession()
     self.sus_users = await aiosqlite.connect('sus_users.db')
       #loads up some bot variables    

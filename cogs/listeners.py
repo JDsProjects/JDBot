@@ -49,7 +49,7 @@ class Events(commands.Cog):
     print(f"Id: {self.bot.user.id}")
 
   @commands.Cog.listener()
-  async def on_message(self,message):
+  async def on_message(self, message):
     test=await self.bot.get_context(message)
     
     if isinstance(message.channel, discord.DMChannel):
@@ -67,7 +67,7 @@ class Events(commands.Cog):
       await self.bot.get_channel(855217084710912050).send(embed=embed_message)
   
   @commands.Cog.listener()
-  async def on_error(event,*args,**kwargs):
+  async def on_error(event, *args, **kwargs):
     import traceback
     more_information=os.sys.exc_info()
     error_wanted=traceback.format_exc()
