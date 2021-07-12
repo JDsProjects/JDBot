@@ -165,7 +165,7 @@ class Owner(commands.Cog):
       return embed
 
   @commands.command(brief="Commands to see what guilds a person is in.")
-  async def mutualguilds(self,ctx,*,user: utils.BetterUserconverter=None):
+  async def mutualguilds(self, ctx, *, user: utils.BetterUserconverter = None):
     user = user or ctx.author
     pag = commands.Paginator()
 
