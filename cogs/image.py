@@ -152,14 +152,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png"):
           url = x.url
-          await utils.triggered_converter(self,url,ctx)
+          await utils.triggered_converter(url, ctx)
           y += 1
         if not x.filename.endswith(".png"):
           pass
 
     if not ctx.message.attachments or y == 0:
       url = Member.avatar_url_as(format="png")
-      await utils.triggered_converter(self,url,ctx)
+      await utils.triggered_converter(url, ctx)
 
   @commands.command(brief="uses our headpat program to pat you",help="a command that uses sra_api to make a headpat of you.")
   async def headpat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
@@ -169,14 +169,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png"):
           url = x.url
-          await utils.headpat_converter(self,url,ctx)
+          await utils.headpat_converter(url, ctx)
           y += 1
         if not x.filename.endswith(".png"):
           pass
 
     if not ctx.message.attachments or y == 0:
       url = Member.avatar_url_as(format="png")
-      await utils.headpat_converter(self, url, ctx)
+      await utils.headpat_converter(url, ctx)
 
   @commands.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
   async def hug2(self, ctx, *, Member: utils.BetterMemberConverter=None):
@@ -377,14 +377,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.url
-          await utils.invert_converter(self, url, ctx)
+          await utils.invert_converter(url, ctx)
           y += 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
     if not ctx.message.attachments or y == 0:
       url = Member.avatar_url_as(format="png")
-      await utils.invert_converter(self, url, ctx)
+      await utils.invert_converter(url, ctx)
 
   @commands.command(help="Headpat generator :D")
   async def headpat(self, ctx, Member: utils.BetterMemberConverter = None):
@@ -394,14 +394,14 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.proxy_url
-          await utils.headpat_converter2(self,url,ctx)
+          await utils.headpat_converter2(url, ctx)
           y += 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
     if not ctx.message.attachments or y == 0:
       url = Member.avatar_url_as(format="png")
-      await utils.headpat_converter2(self, url, ctx)
+      await utils.headpat_converter2(url, ctx)
 
   def convert_svg(self, svg_image):
     converted_bytes = cairosvg.svg2png(bytestring = svg_image)
