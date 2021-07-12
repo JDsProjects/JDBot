@@ -1,13 +1,13 @@
 import discord,  re, os, aiohttp, contextlib, aiosqlite, traceback, datetime, itertools
 from discord.ext import commands
 
-async def get_prefix(client, message):
+async def get_prefix(bot, message):
   extras = ["test*","te*", "t*"]
   comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
   match = comp.match(message.content)
   if match is not None:
     extras.append(match.group(1))
-  return commands.when_mentioned_or(*extras)(client, message)
+  return commands.when_mentioned_or(*extras)(bot, message)
 
 intents = discord.Intents.all()
 intents.members = False
@@ -62,9 +62,7 @@ class JDBot(commands.Bot):
         
     return [cmd for cmd in command_list if await check(cmd, ctx)]
 
-client = JDBot(command_prefix=(get_prefix),intents=intents,chunk_guilds_at_startup=False, strip_after_prefix = True)
-
-bot = client
+bot = JDBot(command_prefix = (get_prefix), intents = intents,chunk_guilds_at_startup = False, strip_after_prefix = True)
 
 bot.launch_time = datetime.datetime.utcnow()
 
@@ -77,12 +75,12 @@ async def check_command_access(ctx):
   
   return True
 
-client.load_extension('jishaku')
+bot.load_extension('jishaku')
 
 for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
     try:
-      client.load_extension(f'cogs.{filename[:-3]}')
+      bot.load_extension(f'cogs.{filename[:-3]}')
     except commands.errors.ExtensionError:
       traceback.print_exc()
 
