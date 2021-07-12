@@ -3,22 +3,22 @@ from discord.ext import commands
 import utils
 
 class Image(commands.Cog):
-  def __init__(self, client): 
-    self.client = client
+  def __init__(self, bot): 
+    self.bot = bot
 
   @commands.command(brief="a command to slap someone",help="this sends a slap gif to the target user")
   async def slap(self, ctx, *, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
-      person = self.client.user
+      person = self.bot.user
       target = ctx.author
     
     if Member.id != ctx.author.id:
       person = ctx.author
       target = Member
     
-    asuna = asuna_api.Client(session=self.client.session)
+    asuna = asuna_api.Client(session=self.bot.session)
     url = await asuna.get_gif("slap")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
@@ -40,7 +40,7 @@ class Image(commands.Cog):
 
   @commands.command(brief="a command to look up foxes",help="this known as wholesome fox to the asuna api")
   async def fox2(self,ctx):
-    asuna = asuna_api.Client(session=self.client.session)
+    asuna = asuna_api.Client(session=self.bot.session)
     url = await asuna.get_gif("wholesome_foxes")
     embed=discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"{ctx.author} requested a wholesome fox picture",icon_url=(ctx.author.avatar_url))
@@ -53,14 +53,14 @@ class Image(commands.Cog):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
-      person = self.client.user
+      person = self.bot.user
       target = ctx.author
     
     if Member.id != ctx.author.id:
       person = ctx.author
       target = Member
     
-    asuna = asuna_api.Client(session=self.client.session)
+    asuna = asuna_api.Client(session=self.bot.session)
     url = await asuna.get_gif("pat")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
@@ -85,14 +85,14 @@ class Image(commands.Cog):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
-      person = self.client.user
+      person = self.bot.user
       target = ctx.author
     
     if Member.id != ctx.author.id:
       person = ctx.author
       target = Member
       
-    sr_client=sr_api.Client(session=self.client.session)
+    sr_client=sr_api.Client(session=self.bot.session)
     image=await sr_client.get_gif("pat")
     embed=discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"{person} patted you",icon_url=(person.avatar_url))
@@ -117,14 +117,14 @@ class Image(commands.Cog):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
-      person = self.client.user
+      person = self.bot.user
       target = ctx.author
     
     if Member.id != ctx.author.id:
       person = ctx.author
       target = Member
 
-    sr_client=sr_api.Client(session=self.client.session)
+    sr_client=sr_api.Client(session=self.bot.session)
     image=await sr_client.get_gif("hug")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
@@ -183,14 +183,14 @@ class Image(commands.Cog):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
-      person = self.client.user
+      person = self.bot.user
       target = ctx.author
     
     if Member.id != ctx.author.id:
       person = ctx.author
       target = Member
     
-    asuna = asuna_api.Client(session=self.client.session)
+    asuna = asuna_api.Client(session=self.bot.session)
     url = await asuna.get_gif("hug")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
@@ -215,14 +215,14 @@ class Image(commands.Cog):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
-      person = self.client.user
+      person = self.bot.user
       target = ctx.author
     
     if Member.id != ctx.author.id:
       person = ctx.author
       target = Member
     
-    asuna = asuna_api.Client(session=self.client.session)
+    asuna = asuna_api.Client(session=self.bot.session)
     url = await asuna.get_gif("kiss")
           
     embed=discord.Embed(color=random.randint(0, 16777215))
@@ -244,7 +244,7 @@ class Image(commands.Cog):
 
   @commands.command(brief="a command to get a neko",help="using the asuna.ga api you will get these images")
   async def neko(self, ctx):
-    asuna = asuna_api.Client(session=self.client.session)
+    asuna = asuna_api.Client(session=self.bot.session)
     url = await asuna.get_gif("neko")
     
     embed=discord.Embed(color=random.randint(0, 16777215))
@@ -258,14 +258,14 @@ class Image(commands.Cog):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
-      person = self.client.user
+      person = self.bot.user
       target = ctx.author
     
     if Member.id != ctx.author.id:
       person = ctx.author
       target = Member
     
-    sr_client=sr_api.Client(session=self.client.session)
+    sr_client=sr_api.Client(session=self.bot.session)
     image=await sr_client.get_gif("wink")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
@@ -287,7 +287,7 @@ class Image(commands.Cog):
 
   @commands.command(brief="Gives you a random waifu image.")
   async def waifu(self, ctx):
-    r=await self.client.session.get('https://api.waifu.pics/sfw/waifu')
+    r=await self.bot.session.get('https://api.waifu.pics/sfw/waifu')
     res = await r.json()
     embed=discord.Embed(color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed.set_author(name=f"{ctx.author} Requested A Waifu")
@@ -297,7 +297,7 @@ class Image(commands.Cog):
 
   @commands.command(brief = "Gives you a random bonk picture")
   async def bonk(self, ctx):
-    r=await self.client.session.get('https://api.waifu.pics/sfw/bonk')
+    r=await self.bot.session.get('https://api.waifu.pics/sfw/bonk')
     res = await r.json()
     embed=discord.Embed(color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed.set_author(name=f"{ctx.author} Requested A Waifu")
@@ -310,14 +310,14 @@ class Image(commands.Cog):
     Member = Member or ctx.author
       
     if Member.id == ctx.author.id:
-      person = self.client.user
+      person = self.bot.user
       target = ctx.author
     
     if Member.id != ctx.author.id:
       person = ctx.author
       target = Member
     
-    sr_client=sr_api.Client(session=self.client.session)
+    sr_client=sr_api.Client(session=self.bot.session)
     image=await sr_client.get_gif("face-palm")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
@@ -339,7 +339,7 @@ class Image(commands.Cog):
 
   @commands.command(help="gives a random objection",aliases=["obj","ob","object"])
   async def objection(self ,ctx):
-    r=await self.client.session.get('https://jdjgapi.nom.mu/api/objection')
+    r=await self.bot.session.get('https://jdjgapi.nom.mu/api/objection')
     res = await r.json()
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"{ctx.author} yelled OBJECTION!",icon_url=(ctx.author.avatar_url))
@@ -349,7 +349,7 @@ class Image(commands.Cog):
 
   @commands.command(help="gives the truth about opinions(may offend)",aliases=["opinion"])
   async def opinional(self, ctx):
-    r=await self.client.session.get('https://jdjgapi.nom.mu/api/opinional')
+    r=await self.bot.session.get('https://jdjgapi.nom.mu/api/opinional')
     res = await r.json()
     embed = discord.Embed(title = "Truth about opinions(may offend some people):",color=random.randint(0, 16777215))
     embed.set_image(url=res["url"])
@@ -415,7 +415,7 @@ class Image(commands.Cog):
       for x in ctx.message.attachments:
         try:
           convert_time=functools.partial(self.convert_svg, await x.read())
-          file = await self.client.loop.run_in_executor(None, convert_time)
+          file = await self.bot.loop.run_in_executor(None, convert_time)
           await ctx.send(file = file)
 
         except Exception as e:
@@ -426,5 +426,5 @@ class Image(commands.Cog):
 
   
 
-def setup(client):
-  client.add_cog(Image(client))
+def setup(bot):
+  bot.add_cog(Image(bot))

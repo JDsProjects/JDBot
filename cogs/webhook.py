@@ -2,8 +2,8 @@ from discord.ext import commands
 import discord, re, random, aiohttp
 
 class Webhook(commands.Cog):
-  def __init__(self, client):
-    self.client = client
+  def __init__(self, bot):
+    self.bot = bot
 
   @commands.command(brief="a way to send stuff to webhooks.",help="this uses webhook urls, and sends stuff to them")
   async def webhook(self, ctx, *, args=None):
@@ -17,7 +17,7 @@ class Webhook(commands.Cog):
         if args == check.group():
           args = "No Content"
 
-          session = self.client.session
+          session = self.bot.session
           response=await session.get(check.group())
           if response.status == 200:
             webhook=discord.Webhook.from_url(check.group(), adapter=discord.AsyncWebhookAdapter(session))
@@ -94,5 +94,5 @@ class Webhook(commands.Cog):
   async def webhook_create_error(self, ctx, error):
     await ctx.send(error)
 
-def setup(client):
-  client.add_cog(Webhook(client))
+def setup(bot):
+  bot.add_cog(Webhook(bot))

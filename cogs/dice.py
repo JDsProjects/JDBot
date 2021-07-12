@@ -3,10 +3,10 @@ import discord, random, typing
 from difflib import SequenceMatcher
 
 class Dice(commands.Cog):
-  def __init__(self,client):
-    self.client = client
+  def __init__(self, bot):
+    self.bot = bot
 
-  async def generate_embed(self,ctx,number):
+  async def generate_embed(self, ctx, number):
     if number < 1:  
       return await ctx.send("NO")
 
@@ -27,7 +27,7 @@ class Dice(commands.Cog):
 
   @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use this wisely.",aliases=["e_spin","emoji_spin"])
   async def emoji_spinner(self,ctx):
-    emoji_choosen = random.choice(self.client.emojis)
+    emoji_choosen = random.choice(self.bot.emojis)
 
     if emoji_choosen.available is False: emoji_choosen = emoji_choosen.url
     
@@ -43,9 +43,9 @@ class Dice(commands.Cog):
   
   @commands.command(brief="gives a random kawaii emoji.",aliases=["ka"])
   async def kawaii_random(self,ctx):
-    kawaii_emotes= self.client.get_guild(773571474761973840)
-    kawaii_emotes2 = self.client.get_guild(806669712410411068)
-    kawaii_emotes3 = self.client.get_guild(692576207404793946)
+    kawaii_emotes= self.bot.get_guild(773571474761973840)
+    kawaii_emotes2 = self.bot.get_guild(806669712410411068)
+    kawaii_emotes3 = self.bot.get_guild(692576207404793946)
     emoji_choosen = random.choice(kawaii_emotes.emojis+kawaii_emotes2.emojis+kawaii_emotes3.emojis)
     await ctx.send(emoji_choosen)
 
@@ -98,8 +98,8 @@ class Dice(commands.Cog):
     if args is None:
       await ctx.send("Please specify an emote")
     if args:
-      emoji=discord.utils.get(self.client.emojis,name=args)
-      emoji = emoji or sorted(self.client.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
+      emoji=discord.utils.get(self.bot.emojis,name=args)
+      emoji = emoji or sorted(self.bot.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
       emoji = emoji or "We haven't found anything"
 
       if not emoji.available: emoji = emoji.url
@@ -117,5 +117,5 @@ class Dice(commands.Cog):
       embed.add_field(name="Highest Number:",value=f"{numbers[-1]}")
       await ctx.send(embed=embed)
     
-def setup(client):
-  client.add_cog(Dice(client))
+def setup(bot):
+  bot.add_cog(Dice(bot))
