@@ -120,15 +120,15 @@ class Bot(commands.Cog):
 
   @commands.command(brief="a way to view open source",help="you can see the open source with the link it provides")
   async def open_source(self, ctx):
-    embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
+    embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot. Please don't just copy the source code, cause this may cause issues with you or the user instead ask if you want to use my code or learn from my code and look to see if that's a valid command a.ka ask me first, then discord.py about the bot! Thanks :D",color=random.randint(0, 16777215))
     embed.set_author(name=f"{self.bot.user}'s source code:",icon_url=(self.bot.user.avatar_url))
     await ctx.send(embed=embed)
 
-  @commands.group(name="open",invoke_without_command=True)
+  @commands.group(name="open", invoke_without_command=True)
   async def open(self, ctx):
-    embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot.",color=random.randint(0, 16777215))
+    embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot. Please don't just copy the source code, cause this may cause issues with you or the user instead ask if you want to use my code or learn from my code and look to see if that's a valid command a.ka ask me first, then discord.py about the bot! Thanks :D",color=random.randint(0, 16777215))
     embed.set_author(name=f"{self.bot.user}'s source code:",icon_url=(self.bot.user.avatar_url))
-    await ctx.send(embed=embed)  
+    await ctx.send(embed=embed)
   
   @open.command(brief="a way to view open source",help="you can see the open source with the link it provides")
   async def source(self, ctx):
