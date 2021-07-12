@@ -228,17 +228,23 @@ class Info(commands.Cog):
   async def fetch_content(self, ctx, *, args = None):
     if args is None:
       await ctx.send("please send actual text")
+
     if args:
-      args=discord.utils.escape_mentions(args)
-      args=discord.utils.escape_markdown(args,as_needed=False,ignore_links=False)
+      args = discord.utils.escape_mentions(args)
+      args=discord.utils.escape_markdown(args, as_needed=False,ignore_links = False)
+
     for x in ctx.message.mentions:
-      args = args.replace(x.mention,f"\{x.mention}")
-    emojis=emoji.emoji_lis(args)
+      args = args.replace(x.mention, f"\{x.mention}")
+
+    emojis = emoji.emoji_lis(args)
     emojis_return = [d["emoji"] for d in emojis]
+
     for x in emojis_return:
-      args = args.replace(x,f"\{x}")
-    for x in re.findall(r':\w*:\d*',args):
-        args=args.replace(x,f"\{x}")
+      args = args.replace(x, f"\{x}")
+
+    for x in re.findall(r':\w*:\d*', args):
+      args=args.replace(x ,f"\{x}")
+
     await ctx.send(f"{args}", allowed_mentions = discord.AllowedMentions.none())
 
   @commands.command(brief = "gives info about a role.", aliases = ["roleinfo"])
