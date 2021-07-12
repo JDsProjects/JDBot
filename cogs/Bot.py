@@ -224,7 +224,7 @@ class Bot(commands.Cog):
     if not reason:
       return await ctx.send("Give us a reason why please.")
 
-    embed = discord.Embed(title = f"{ctx.author} requested to be a tester.", description = f"For the reason of {reason}", color=random.randint(0, 16777215))
+    embed = discord.Embed(title = f"{ctx.author} requested to be a tester.", description = f"For the reason of {reason}", color = random.randint(0, 16777215))
     embed.set_footer(text=f"User ID: {ctx.author.id}")
 
     shadi = await self.bot.getch_user(717822288375971900) 
@@ -237,7 +237,7 @@ class Bot(commands.Cog):
 
   class PrefixesEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
-      embed = discord.Embed(title="Usable Prefixes:",description=item,color=random.randint(0, 16777215))
+      embed = discord.Embed(title="Usable Prefixes:",description=item, color = random.randint(0, 16777215))
       return embed
 
   @commands.command(brief="Lists the current prefixes that could be used.")
