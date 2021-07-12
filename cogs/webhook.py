@@ -24,13 +24,18 @@ class Webhook(commands.Cog):
             
             embed = discord.Embed(title=f"Webhook {webhook.name}'s Message",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
             embed.add_field(name="Content:",value=args)
-            await webhook.execute(embed=embed)
+
+            await ctx.send(f"Message was sent to the desired webhook channel.")
+
 
           if response.status != 200:
             await ctx.send("Not a valid link or an error occured")
 
         if isinstance(ctx.channel, discord.TextChannel):
-          await ctx.message.delete()
+          try:
+            await ctx.message.delete()
+          except:
+            await ctx.send("deleting the webhook failed, delete asap")
 
       if not check:
         await ctx.send("not a proper webhook url.")

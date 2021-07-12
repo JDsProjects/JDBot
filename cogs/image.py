@@ -300,10 +300,10 @@ class Image(commands.Cog):
     r=await self.bot.session.get('https://api.waifu.pics/sfw/bonk')
     res = await r.json()
     embed=discord.Embed(color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-    embed.set_author(name=f"{ctx.author} Requested A Waifu")
+    embed.set_author(name=f"{ctx.author} Requested A Bonk")
     embed.set_image(url=res["url"])
     embed.set_footer(text="Powered by waifu.pics")
-    await ctx.send(embed=embed)
+    await ctx.send(embed = embed)
 
   @commands.command(brief="a command to send facepalm gifs",help="using some random api it sends you a facepalm gif lol")
   async def facepalm(self, ctx, *, Member: utils.BetterMemberConverter=None):
@@ -414,7 +414,7 @@ class Image(commands.Cog):
     if ctx.message.attachments: 
       for x in ctx.message.attachments:
         try:
-          convert_time=functools.partial(self.convert_svg, await x.read())
+          convert_time = functools.partial(self.convert_svg, await x.read())
           file = await self.bot.loop.run_in_executor(None, convert_time)
           await ctx.send(file = file)
 
