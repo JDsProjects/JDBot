@@ -31,13 +31,13 @@ class Test(commands.Cog):
       
     #I need to fix all cog_command_error
   
-  @commands.command(brief="a command to email you(work in progress)",help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
+  @commands.command(brief = "a command to email you(work in progress)", help = "This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
   async def email(self, ctx, *args):
     print(args)
     await ctx.send("WIP")
 
   @commands.cooldown(1, 40, BucketType.user)
-  @commands.command(brief="a command that can scan urls(work in progress), and files",help="please don't upload anything secret or send any secret url thank you :D")
+  @commands.command(brief = "a command that can scan urls(work in progress), and files", help = "please don't upload anything secret or send any secret url thank you :D")
   async def scan(self, ctx, *, args = None):
     await ctx.send("WIP")
     import vt
@@ -54,7 +54,7 @@ class Test(commands.Cog):
       await ctx.send("If this takes a while, it probably means it was never on Virustotal before")
       used = True
     for f in ctx.message.attachments:
-      analysis = await vt_client.scan_file_async(await f.read(),wait_for_completion=True)
+      analysis = await vt_client.scan_file_async(await f.read(),wait_for_completion = True)
       print(analysis)
       object_info = await vt_client.get_object_async("/analyses/{}", analysis.id)
     
@@ -94,7 +94,7 @@ class Test(commands.Cog):
     await ctx.send(error)
 
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
-  async def setprefix(self, ctx, *, arg=None):
+  async def setprefix(self, ctx, *, arg = None):
     await ctx.send("WIP")
 
   @commands.command(brief = "WIP thing for birthday set up lol")
@@ -127,37 +127,6 @@ class Test(commands.Cog):
   async def webhook_avatar(self, ctx, *, args = None):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
-
-  @commands.group(name = "support", invoke_without_command=True)
-  async def support(self, ctx):
-    await ctx.send("please run the subcommands.")
-
-  @support.command(brief = "a command that Dms support help to JDJG", name = "dm")
-  async def support_dm(self, ctx, *, args = None):
-    
-    if not args:
-      return await ctx.send("You need a reason why you want support.")
-    
-    await ctx.send("sending support to JDJG, the message will be deleted when support is done")
-    
-    embed = discord.Embed(title = f"{args}", timestamp = ctx.message.created_at, color = random.randint(0, 16777215))
-
-    embed.set_author(name=f"Help Needed from {ctx.author}:",icon_url=(ctx.author.avatar_url))
-    embed.set_footer(text = f"{ctx.author.id} \nSupport Mode: DM")
-    embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
-
-    await ctx.send(content = "someone needs help!", embed = embed)
-
-    jdjg = await self.bot.getch_user(168422909482762240) 
-
-    await jdjg.send(content = "remeber to delete when done with support")
-
-
-  @support.command(brief = "a command that sends support help to our log channel", name = "channel")
-  async def support_channel(self, ctx, *, args = None):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
-
 
   @commands.command(brief = "sees how compatitable something is(two things)")
   async def works(self, ctx):

@@ -279,5 +279,49 @@ class Bot(commands.Cog):
 
     await ctx.send("Sent suggestion to JDJG! You agree to being Dmed about this suggestion or somehow contacted(it makes some things easier lol)")
 
+  @commands.group(name = "support", invoke_without_command=True)
+  async def support(self, ctx):
+
+    page = "\n".join(f"{c.name}" for c in ctx.command.commands)
+
+    await ctx.send(f"Please run the subcommands with the prefix {ctx.prefix}: \n{page}")
+
+  @support.command(brief = "a command that Dms support help to JDJG", name = "dm")
+  async def support_dm(self, ctx, *, args = None):
+    
+    if not args:
+      return await ctx.send("You need a reason why you want support.")
+    
+    await ctx.send("sending support to JDJG, the message will be deleted when support is done")
+    
+    embed = discord.Embed(title = f"{args}", timestamp = ctx.message.created_at, color = random.randint(0, 16777215))
+
+    embed.set_author(name=f"Help Needed from {ctx.author}:",icon_url=(ctx.author.avatar_url))
+    embed.set_footer(text = f"{ctx.author.id} \nSupport Mode: DM")
+    embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
+
+    jdjg = await self.bot.getch_user(168422909482762240) 
+
+    await jdjg.send(content = "someone needs help! Remeber to delete when done with support.", embed = embed)
+
+    await ctx.send(f"successfully sent to {jdjg}")
+
+  @support.command(brief = "a command that sends support help to our log channel", name = "channel")
+  async def support_channel(self, ctx, *, args = None):
+    
+    if not args:
+      return await ctx.send("You didn't give a reason that you need support")
+
+    embed = discord.Embed(title = f"{args}", timestamp = ctx.message.created_at, color = random.randint(0, 16777215))
+
+    embed.set_author(name=f"Help Needed from {ctx.author}:", icon_url = ctx.author.avatar_url)
+
+    embed.set_footer(text = f"{ctx.author.id} \nSupport Mode: Channel")
+    embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
+
+    await self.bot.get_channel(855217084710912050).send(content = "someone needs help! Remeber to delete when done with support.", embed = embed)
+
+    await ctx.send("successfully sent to the support channel!")
+
 def setup(bot):
   bot.add_cog(Bot(bot))
