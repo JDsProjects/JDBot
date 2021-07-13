@@ -26,7 +26,7 @@ class Order(commands.Cog):
 
     self.google_engine = cse.Search(image_api_key, session = self.bot.session, engine_id = image_engine_key)
 
-  @commands.cooldown(1,30,BucketType.user)
+  @commands.cooldown(1, 30, BucketType.user)
   @commands.group(name="order",invoke_without_command=True)
   async def order(self, ctx, *, args = None):
     if args is None:
@@ -59,8 +59,8 @@ class Order(commands.Cog):
 
       await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-  @commands.cooldown(1,30,BucketType.user)
-  @order.command(brief="a command to shuffle images from google images")
+  @commands.cooldown(1, 30, BucketType.user)
+  @order.command(brief = "a command to shuffle images from google images")
   async def shuffle(self, ctx, *, args=None):
     if args is None:
         await self.order(ctx,args="shuffle")
@@ -134,7 +134,7 @@ class Order(commands.Cog):
     if args is None:
       await ctx.send("You can't search for nothing")
 
-  @tenor.command(help=  "shuffles the results from the tenor results", name = "shuffle")
+  @tenor.command(help = "shuffles the results from the tenor results", name = "shuffle")
   async def tenor_random(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
@@ -145,7 +145,7 @@ class Order(commands.Cog):
       await ctx.send("tenor shuffle")
 
 
-  @commands.command(help="work in progress",aliases=["tenor-shuffle"])
+  @commands.command(help = "work in progress", aliases=["tenor-shuffle"])
   async def tenor_shuffle(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
@@ -166,7 +166,7 @@ class Order(commands.Cog):
       await ctx.send("That doesn't have any value.")
       await ctx.send("giphy")
 
-  @giphy.command(help="work in progress",name="shuffle")
+  @giphy.command(help="work in progress", name="shuffle")
   async def giphy_random(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
@@ -174,7 +174,7 @@ class Order(commands.Cog):
       await ctx.send("That doesn't have any value.")
       await ctx.send("giphy shuffle")
   
-  @commands.command(help="work in progress",aliases=["giphy-shuffle"])
+  @commands.command(help="work in progress", aliases=["giphy-shuffle"])
   async def giphy_shuffle(self, ctx, *, args):
     if args:
       await ctx.send("WIP")
