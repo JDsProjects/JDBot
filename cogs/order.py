@@ -207,7 +207,7 @@ class Order(commands.Cog):
     page = "\n".join(f"[{r.title}]({r.link}) \n{r.snippet}\n" for r in results)
     
     content = textwrap.wrap(page, width = 4096)
-
+    
     menu = menus.MenuPages(self.GoogleEmbed(content, per_page=1),delete_message_after = True)
 
     await menu.start(ctx)
