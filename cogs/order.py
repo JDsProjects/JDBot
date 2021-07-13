@@ -129,6 +129,8 @@ class Order(commands.Cog):
       if not results:
         return await ctx.send("I got no results from tenor.")
 
+      print(results)
+
       await ctx.send("WIP for now.")
 
     if args is None:
