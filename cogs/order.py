@@ -61,9 +61,10 @@ class Order(commands.Cog):
 
   @commands.cooldown(1, 30, BucketType.user)
   @order.command(brief = "a command to shuffle images from google images")
-  async def shuffle(self, ctx, *, args=None):
+  async def shuffle(self, ctx, *, args = None):
     if args is None:
-        await self.order(ctx,args="shuffle")
+      await self.order(ctx, args="shuffle")
+
     if args:
       time_before=time.perf_counter()
       try:
@@ -154,22 +155,47 @@ class Order(commands.Cog):
 
   @tenor.command(help = "shuffles the results from the tenor results", name = "shuffle")
   async def tenor_random(self, ctx, *, args = None):
-    if args:
-      await ctx.send("WIP")
 
-    if args is None:
-
-      await ctx.send("That doesn't have any value.")
-      await ctx.send("tenor shuffle")
+    if not args:
+      return await self.tenor(ctx, args="shuffle")
 
 
-  @commands.command(help = "work in progress", aliases=["tenor-shuffle"])
+    safesearch_type = ContentFilter.high()
+    results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
+
+    if not results:
+      return await ctx.send("I got no results from tenor.")
+
+    results_media = [r for r in results.media if r]
+
+    if not results_media:
+      return await ctx.send("I got no gif results from tenor.")
+
+
+    gifNearest = random.choice(results_media)
+
+    embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+
+    embed.set_author(name = f"order for {ctx.author}:", icon_url= ctx.author.avatar_url)
+    embed.add_field(name = "Powered by:", value="Tenor")
+
+    if gifNearest.gif: embed.set_image(url= gifNearest.gif.url)
+    else: embed.set_image("https://i.imgur.com/sLQzAiW.png")
+
+    embed.set_footer(text = f"{ctx.author.id}")
+
+    await ctx.send(content = "Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+
+    await self.bot.get_channel(855217084710912050).send(embed = embed)
+
+  @commands.command(help = "shuffles the results from the tenor results", aliases = ["tenor-shuffle"])
   async def tenor_shuffle(self, ctx, *, args = None):
-    if args:
-      await ctx.send("WIP")
-    if args is None:
-      await ctx.send("That doesn't have any value.")
-      await ctx.send("tenor shuffle")
+
+    if not args:
+      return await self.tenor(ctx, args = "shuffle")
+
+    await self.tenor_random(ctx, args = args)
+    
   
   @commands.group(name="giphy",invoke_without_command=True)
   async def giphy(self, ctx, *, args = None):
