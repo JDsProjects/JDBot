@@ -119,22 +119,38 @@ class Order(commands.Cog):
       await self.bot.get_channel(855217084710912050).send(embed=embed)
 
   @commands.cooldown(1, 30, BucketType.user)
-  @commands.group(name="tenor", invoke_without_command= True)
+  @commands.group(name = "tenor", invoke_without_command= True)
   async def tenor(self, ctx, *, args = None):
-    if args:
 
-      safesearch_type = ContentFilter.high()
-      results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
+    if not args:
+      return await ctx.send("You can't search for nothing")
 
-      if not results:
-        return await ctx.send("I got no results from tenor.")
+    safesearch_type = ContentFilter.high()
+    results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
 
-      print(results)
+    if not results:
+      return await ctx.send("I got no results from tenor.")
 
-      await ctx.send("WIP for now.")
+    results_media = [r for r in results.media if r]
 
-    if args is None:
-      await ctx.send("You can't search for nothing")
+    if not results_media:
+      return await ctx.send("I got no gif results from tenor.")
+
+    gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.item_url, args).ratio())[-1]
+
+    embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+
+    embed.set_author(name = f"order for {ctx.author}:", icon_url= ctx.author.avatar_url)
+    embed.add_field(name = "Powered by:", value="Tenor")
+
+    if gifNearest.gif: embed.set_image(url= gifNearest.gif.url)
+    else: embed.set_image("https://i.imgur.com/sLQzAiW.png")
+
+    embed.set_footer(text = f"{ctx.author.id}")
+
+    await ctx.send(content = "Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+
+    await self.bot.get_channel(855217084710912050).send(embed = embed)
 
   @tenor.command(help = "shuffles the results from the tenor results", name = "shuffle")
   async def tenor_random(self, ctx, *, args = None):
