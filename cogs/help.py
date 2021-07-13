@@ -13,7 +13,7 @@ class SendHelp(menus.ListPageSource):
     
     item = discord.utils.escape_markdown(item)
 
-    emby = discord.Embed(description= item , as_needed = True)
+    emby = discord.Embed(description = item , as_needed = True)
     return emby
 
 class Help(commands.Cog):

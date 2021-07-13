@@ -211,8 +211,9 @@ class Order(commands.Cog):
       results = await self.google_engine.search(args, max_results = 10, safe_search = True)
     
     except Exception as e:
-      return await ctx.send(f"An error occured, error: {e}. Please give this to the owner.")
+      return await ctx.send(f"An error occured, error: {e}. Please give this to the owner. This was an error with results")
 
+  
     menu = menus.MenuPages(self.GoogleEmbed(results, per_page=1),delete_message_after = True)
 
     await menu.start(ctx)
