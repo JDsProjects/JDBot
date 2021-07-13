@@ -185,6 +185,8 @@ class Order(commands.Cog):
   async def cog_command_error(self, ctx, error):
     if ctx.command and not ctx.command.has_error_handler():
       await ctx.send(error)
+      import traceback
+      traceback.print_exc()
       
     #I need to fix all cog_command_error
 
@@ -196,7 +198,7 @@ class Order(commands.Cog):
       if item.image: embed.set_image(url = item.image)
 
       embed.set_footer(text = f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
-      
+
       return embed
 
   @commands.command(brief = "can search a search result from google with safe search!")
@@ -214,6 +216,14 @@ class Order(commands.Cog):
     menu = menus.MenuPages(self.GoogleEmbed(results, per_page=1),delete_message_after = True)
 
     await menu.start(ctx)
+
+  @google.error
+  async def google_error(self, ctx, error):
+    await ctx.send(error)
+
+    import traceback
+    traceback.print_exc()
+
 
 
 def setup(bot):
