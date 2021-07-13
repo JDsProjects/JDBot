@@ -27,9 +27,9 @@ class Order(commands.Cog):
     self.google_engine = cse.Search(image_api_key, session = self.bot.session, engine_id = image_engine_key)
 
   @commands.cooldown(1, 30, BucketType.user)
-  @commands.group(name="order",invoke_without_command=True)
+  @commands.group(name = "order", invoke_without_command = True, brief = "searches from google images to find the closest google image")
   async def order(self, ctx, *, args = None):
-    if args is None:
+    if not args:
       await ctx.send("You can't order nothing.")
 
     if args:
@@ -62,7 +62,7 @@ class Order(commands.Cog):
   @commands.cooldown(1, 30, BucketType.user)
   @order.command(brief = "a command to shuffle images from google images")
   async def shuffle(self, ctx, *, args = None):
-    if args is None:
+    if not args:
       await self.order(ctx, args="shuffle")
 
     if args:
@@ -92,7 +92,7 @@ class Order(commands.Cog):
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief="a command to shuffle images from google images", aliases=["order-shuffle"])
   async def order_shuffle(self, ctx, *, args = None):
-    if args is None:
+    if not args:
       await ctx.send("You can't order nothing")
 
     if args:
@@ -121,7 +121,7 @@ class Order(commands.Cog):
       await self.bot.get_channel(855217084710912050).send(embed=embed)
 
   @commands.cooldown(1, 30, BucketType.user)
-  @commands.group(name = "tenor", invoke_without_command= True)
+  @commands.group(name = "tenor", invoke_without_command = True, brief = "searches from tenor to find the closest image.")
   async def tenor(self, ctx, *, args = None):
 
     if not args:
@@ -154,6 +154,7 @@ class Order(commands.Cog):
 
     await self.bot.get_channel(855217084710912050).send(embed = embed)
 
+  @commands.cooldown(1, 30, BucketType.user)
   @tenor.command(help = "shuffles the results from the tenor results", name = "shuffle")
   async def tenor_random(self, ctx, *, args = None):
 
@@ -189,6 +190,7 @@ class Order(commands.Cog):
 
     await self.bot.get_channel(855217084710912050).send(embed = embed)
 
+  @commands.cooldown(1, 30, BucketType.user)
   @commands.command(help = "shuffles the results from the tenor results", aliases = ["tenor-shuffle"])
   async def tenor_shuffle(self, ctx, *, args = None):
 
@@ -197,34 +199,82 @@ class Order(commands.Cog):
 
     await self.tenor_random(ctx, args = args)
     
-  
-  @commands.group(name="looks up an item from giphy.",invoke_without_command=True)
+  @commands.cooldown(1, 30, BucketType.user)
+  @commands.group(brief = "looks up an item from giphy.",invoke_without_command = True)
   async def giphy(self, ctx, *, args = None):
     
-    if args is None:
+    if not args:
       return await ctx.send("That doesn't have any value.")
-
 
     safesearch_type = AgeRating.g()
     results = await self.giphy_client.search(args, rating = safesearch_type, limit = 10)
 
-    await ctx.send("WIP")
+    if not results:
+      return await ctx.send("I got no results from tenor.")
 
-  @giphy.command(help = "work in progress", name="shuffle")
+    results_media = [r for r in results.media if r]
+
+    if not results_media:
+      return await ctx.send("I got no gif results from giphy.")
+
+    gifNearest = sorted(results_media, key = lambda x: SequenceMatcher(None, x.url, args).ratio())[-1]
+
+    embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}",  color=random.randint(0, 16777215), timestamp = ctx.message.created_at)
+
+    embed.set_footer(text = f"{ctx.author.id}")
+
+    embed.set_author(name = f"order for {ctx.author}:", icon_url = ctx.author.avatar_url)
+
+    embed.add_field(name = "Powered by:", value="GIPHY")
+    embed.set_image(url = f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
+
+    await ctx.send(content = "Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+
+    await self.bot.get_channel(855217084710912050).send(embed = embed)
+
+  @commands.cooldown(1, 30, BucketType.user)
+  @giphy.command(help = "looks up an item from giphy but shuffled.", name = "shuffle")
   async def giphy_random(self, ctx, *, args = None):
-    if args:
-      await ctx.send("WIP")
-    if args is None:
-      await ctx.send("That doesn't have any value.")
-      await ctx.send("giphy shuffle")
-  
-  @commands.command(help="work in progress", aliases=["giphy-shuffle"])
-  async def giphy_shuffle(self, ctx, *, args):
-    if args:
-      await ctx.send("WIP")
-    if args is None:
-        await ctx.send("That doesn't have any value.")
-        await ctx.send("giphy shuffle")
+
+    if not args:
+      return await self.giphy(ctx, args = "shuffle")
+
+    safesearch_type = AgeRating.g()
+    results = await self.giphy_client.search(args, rating = safesearch_type, limit = 10)
+
+    if not results:
+      return await ctx.send("I got no results from tenor.")
+
+    results_media = [r for r in results.media if r]
+
+    if not results_media:
+      return await ctx.send("I got no gif results from giphy.")
+
+    gifNearest = random.choice(results_media)
+
+    embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}",  color=random.randint(0, 16777215), timestamp = ctx.message.created_at)
+
+    embed.set_footer(text = f"{ctx.author.id}")
+
+    embed.set_author(name = f"order for {ctx.author}:", icon_url = ctx.author.avatar_url)
+
+    embed.add_field(name = "Powered by:", value="GIPHY")
+    embed.set_image(url = f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
+
+    await ctx.send(content = "Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+
+    await self.bot.get_channel(855217084710912050).send(embed = embed)
+    
+  @commands.cooldown(1, 30, BucketType.user)
+  @commands.cooldown(1, 30, BucketType.user)
+  @commands.command(help="looks up an item from giphy but shuffled", aliases=["giphy-shuffle"])
+  async def giphy_shuffle(self, ctx, *, args = None):
+
+    if not args:
+      return await self.giphy(ctx, args = "shuffle")
+
+    await self.giphy_random(ctx, args = args)
+    
 
   async def cog_command_error(self, ctx, error):
     if ctx.command and not ctx.command.has_error_handler():
