@@ -94,6 +94,7 @@ class Order(commands.Cog):
   async def order_shuffle(self, ctx, *, args = None):
     if args is None:
       await ctx.send("You can't order nothing")
+
     if args:
       time_before=time.perf_counter()  
       try:
@@ -110,7 +111,7 @@ class Order(commands.Cog):
       except discord.errors.Forbidden:
         pass
 
-      embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+      embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
       embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
       embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
       embed.add_field(name="Powered by:",value="Google Images Api")
@@ -197,7 +198,7 @@ class Order(commands.Cog):
     await self.tenor_random(ctx, args = args)
     
   
-  @commands.group(name="giphy",invoke_without_command=True)
+  @commands.group(name="looks up an item from giphy.",invoke_without_command=True)
   async def giphy(self, ctx, *, args = None):
     if args:
 
@@ -210,7 +211,7 @@ class Order(commands.Cog):
       await ctx.send("That doesn't have any value.")
       await ctx.send("giphy")
 
-  @giphy.command(help="work in progress", name="shuffle")
+  @giphy.command(help = "work in progress", name="shuffle")
   async def giphy_random(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
