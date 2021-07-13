@@ -479,7 +479,7 @@ class DevTools(commands.Cog):
 
   class RtfmEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
-      embed = discord.Embed(title="Packages:",description=item,color=random.randint(0, 16777215))
+      embed = discord.Embed(title="Packages:", description=item, color = random.randint(0, 16777215))
       return embed
 
   @commands.command(brief = "a command to view the rtfm DB")
@@ -632,6 +632,14 @@ class DevTools(commands.Cog):
     embed.set_footer(text = f"{ctx.message.id}")
 
     await ctx.send(content = f"Only here cause JDJG Bot has it and why not have it here now.",embed = embed)
+
+  @commands.command(brief = "converts info about colors for you.", invoke_without_command=True)
+  async def color(self, ctx, *, color : utils.ColorConverter = None):
+
+    if not color:
+      return await ctx.send("you need to give me a color to use.")
+    
+    await ctx.send(f"Hexadecimal: {color} \nValue : {color.value} \nRGB: {color.to_rgb()}")
 
 
 def setup(bot):

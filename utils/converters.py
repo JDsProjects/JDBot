@@ -184,7 +184,7 @@ class ColorConverter(commands.Converter):
 
     if not color and not argument.isdigit():
       
-      argument = tuple(s for s in argument.split(" ") if s)
+      argument = list(s for s in argument.split(" ") if s)
         
     if color and argument.isdigit():
       argument = int(argument)
@@ -196,10 +196,20 @@ class ColorConverter(commands.Converter):
 
       color = discord.Colour(argument)
 
-    if isinstance(argument, tuple):
+    if isinstance(argument, list):
 
-      argument = tuple(sorted(filter(lambda x: x.isdigit(), argument)))
+      argument = sorted(filter(lambda x: x.isdigit(), argument))
+
+      argument = [int(n) for n in argument][:3]
+
+      try:
+        color = discord.Colour.from_rgb(*argument)
+      
+      except TypeError:
+        color = None
     
-      print(argument)
+    if color:
+      if color.value > 16777215: 
+        color = discord.Colour(16777215)
       
     return color

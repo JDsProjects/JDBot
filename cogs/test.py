@@ -164,14 +164,6 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
 
-  @commands.command(brief = "converts info about colors for you.", invoke_without_command=True)
-  async def color(self, ctx, *, color : utils.ColorConverter = None):
-
-    if not color:
-      return await ctx.send("you need to give me a color to use.")
-    
-    await ctx.send(f"Hexadecimal: {color} \nValue : {color.value} \nRGB: {color.to_rgb()}")
-
   @commands.command(brief = "sends tweet to JDBot Twitter")
   async def send_tweet(self, ctx, *, args = None):
     await ctx.send("WIP")
