@@ -190,10 +190,14 @@ class Order(commands.Cog):
   class GoogleEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
       
-      return discord.Embed(title = "Gooogle Search", description = item, coolor = random.randint(0, 16777215))
+      embed = discord.Embed(title = "Gooogle Search", description = f"[{item.title}]({item.link}) \n{item.snippet}", color = random.randint(0, 16777215))
 
-  @commands.command(brief = "can search from google.")
+      if item.image: embed.set_image(url = item.image)
+      return embed
+
+  @commands.command(brief = "can search a search result from google with safe search!")
   async def google(self, ctx, *, args = None):
+
     if not args:
       return await ctx.send("You can't search for nothing, as well you need a thing to lokup.")
 
@@ -203,12 +207,7 @@ class Order(commands.Cog):
     except Exception as e:
       return await ctx.send(f"An error occured, error: {e}. Please give this to the owner.")
 
-
-    page = "\n".join(f"[{r.title}]({r.link}) \n{r.snippet}\n" for r in results)
-    
-    content = textwrap.wrap(page, width = 4096)
-
-    menu = menus.MenuPages(self.GoogleEmbed(content, per_page=1),delete_message_after = True)
+    menu = menus.MenuPages(self.GoogleEmbed(results, per_page=1),delete_message_after = True)
 
     await menu.start(ctx)
 
