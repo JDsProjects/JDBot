@@ -200,16 +200,15 @@ class Order(commands.Cog):
   
   @commands.group(name="looks up an item from giphy.",invoke_without_command=True)
   async def giphy(self, ctx, *, args = None):
-    if args:
-
-      safesearch_type = AgeRating.g()
-      results = await self.giphy_client.search(args, rating = safesearch_type, limit = 10)
-
-      await ctx.send("WIP")
-
+    
     if args is None:
-      await ctx.send("That doesn't have any value.")
-      await ctx.send("giphy")
+      return await ctx.send("That doesn't have any value.")
+
+
+    safesearch_type = AgeRating.g()
+    results = await self.giphy_client.search(args, rating = safesearch_type, limit = 10)
+
+    await ctx.send("WIP")
 
   @giphy.command(help = "work in progress", name="shuffle")
   async def giphy_random(self, ctx, *, args = None):
