@@ -298,12 +298,13 @@ class Owner(commands.Cog):
   @commands.command(brief="backs up a channel and then sends it into a file or mystbin")
   async def channel_backup(self, ctx):
 
-    messages = await ctx.channel.history(limit=None, oldest_first=True).flatten()
+    messages = await ctx.channel.history(limit = None, oldest_first = True).flatten()
 
     new_line = "\n"
+    
     page = "\n".join(f"{msg.author} ({['User', 'Bot'][msg.author.bot]}) : {msg.content} {new_line}Attachments : {msg.attachments}" if msg.content else f"{msg.author} ({['User', 'Bot'][msg.author.bot]}) : {new_line.join(f'{e.to_dict()}' for e in msg.embeds)} {new_line}Attachments : {msg.attachments}" for msg in messages)
 
-    mystbin_client = mystbin.Client(session=self.bot.session)
+    mystbin_client = mystbin.Client(session = self.bot.session)
     paste = await mystbin_client.post(page)
 
     await ctx.author.send(content=f"Added text file to mystbin: \n{paste.url}")

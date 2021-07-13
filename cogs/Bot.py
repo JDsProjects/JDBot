@@ -8,7 +8,7 @@ class Bot(commands.Cog):
     self.bot = bot
     self.status_task.start()
 
-  @tasks.loop(seconds=40)
+  @tasks.loop(seconds = 40)
   async def status_task(self):
     await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=f"the return of {self.bot.user.name}"))
     await asyncio.sleep(40)
@@ -36,12 +36,12 @@ class Bot(commands.Cog):
     normal_inv = discord.utils.oauth_url(self.bot.user.id, permissions = discord.Permissions(permissions = 8))
     minimial_invite = discord.utils.oauth_url(self.bot.user.id, permissions = discord.Permissions(permissions = 70635073))
 
-    embed = discord.Embed(title="Invite link:",color=random.randint(0, 16777215))
-    embed.add_field(name=f"{self.bot.user.name} invite:",value=f"[{self.bot.user.name} invite url]({normal_inv}) \nNon Markdowned invite : {normal_inv}")
+    embed = discord.Embed(title="Invite link:", color = random.randint(0, 16777215))
+    embed.add_field(name=f"{self.bot.user.name} invite:", value=f"[{self.bot.user.name} invite url]({normal_inv}) \nNon Markdowned invite : {normal_inv}")
     embed.add_field(name = "Minimial permisions", value = f"{ minimial_invite}")
-    embed.set_thumbnail(url=self.bot.user.avatar_url)
+    embed.set_thumbnail(url = self.bot.user.avatar_url)
     embed.set_footer(text = f"not all features may work if you invite with minimal perms, if you invite with 0 make sure these permissions are in a Bots/Bot role.")
-    await ctx.send(embed=embed)
+    await ctx.send(embed = embed)
 
   @commands.command(brief="gives you who the owner is.")
   async def owner(self,ctx):

@@ -471,9 +471,9 @@ class DevTools(commands.Cog):
     
     values = '\n'.join(map(self.charinfo_converter, set(args))) 
 
-    content = textwrap.wrap(values, width=2000)
+    content = textwrap.wrap(values, width = 2000)
 
-    menu = menus.MenuPages(utils.charinfoMenu(content, per_page=1),delete_message_after=True)
+    menu = menus.MenuPages(utils.charinfoMenu(content, per_page=1),delete_message_after = True)
 
     await menu.start(ctx)
 

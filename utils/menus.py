@@ -47,8 +47,8 @@ async def emoji_to_url(char, include_check: bool = True, session: aiohttp.Client
     return char
 
 class EmojiInfoEmbed(menus.ListPageSource):
-  async def format_page(self,menu,item):
-    if isinstance(item,discord.PartialEmoji):
+  async def format_page(self, menu, item):
+    if isinstance(item, discord.PartialEmoji):
       if item.is_unicode_emoji():
         digit = f"{ord(str(item)):x}"
         unicode = f"\\U{digit:>08}"
