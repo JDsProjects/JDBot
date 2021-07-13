@@ -41,24 +41,27 @@ class Owner(commands.Cog):
       await ctx.send("you can't ask to load no cogs.")
   
   @commands.command()
-  async def reload(self,ctx,*,cog=None):
+  async def reload(self, ctx, *, cog = None):
+    
     cog = cog or "all"
-    if cog:
-      if cog == "all":
-        for x in list(self.bot.extensions):
-          try:
-            self.bot.reload_extension(x)
-          except commands.errors.ExtensionError as e:
-            await ctx.send(e)
-        await ctx.send("done reloading all cogs(check for any errors)")
-      if cog != "all":
+
+    if cog == "all":
+      for x in list(self.bot.extensions):
         try:
-          self.bot.reload_extension(cog)
+          self.bot.reload_extension(x)
         except commands.errors.ExtensionError as e:
           await ctx.send(e)
+
+      await ctx.send("done reloading all cogs(check for any errors)")
+
+    else:
+      try:
+        self.bot.reload_extension(cog)
+
+      except commands.errors.ExtensionError as e:
+        await ctx.send(e)
+
       await ctx.send("Cog reloaded :D (check for any errors)")
-    if cog is None:
-      await ctx.send("you can't ask to reload no cogs")
   
   @commands.command()
   async def unload(self,ctx,*,cog=None):

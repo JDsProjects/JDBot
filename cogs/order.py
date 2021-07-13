@@ -214,7 +214,7 @@ class Order(commands.Cog):
       return await ctx.send(f"An error occured, error: {e}. Please give this to the owner. This was an error with results")
 
   
-    menu = menus.MenuPages(self.GoogleEmbed(results, per_page=1),delete_message_after = True)
+    menu = menus.MenuPages(self.GoogleEmbed(results, per_page = 1), delete_message_after = True)
 
     await menu.start(ctx)
 
