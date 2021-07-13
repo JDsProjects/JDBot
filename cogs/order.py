@@ -194,6 +194,9 @@ class Order(commands.Cog):
       embed = discord.Embed(title = "Gooogle Search", description = f"[{item.title}]({item.link}) \n{item.snippet}", color = random.randint(0, 16777215))
 
       if item.image: embed.set_image(url = item.image)
+
+      embed.set_footer(text = f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
+      
       return embed
 
   @commands.command(brief = "can search a search result from google with safe search!")
