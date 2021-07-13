@@ -67,7 +67,7 @@ class Events(commands.Cog):
       await self.bot.get_channel(855217084710912050).send(embed=embed_message)
   
   @commands.Cog.listener()
-  async def on_error(self, event, *args, **kwargs):
+  async def on_error(event, *args, **kwargs):
     import traceback
     more_information=os.sys.exc_info()
     error_wanted=traceback.format_exc()
