@@ -88,8 +88,8 @@ class Order(commands.Cog):
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
       await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-  @commands.cooldown(1,30,BucketType.user)
-  @commands.command(brief="a command to shuffle images from google images",aliases=["order-shuffle"])
+  @commands.cooldown(1, 30, BucketType.user)
+  @commands.command(brief="a command to shuffle images from google images", aliases=["order-shuffle"])
   async def order_shuffle(self, ctx, *, args = None):
     if args is None:
       await ctx.send("You can't order nothing")
@@ -102,7 +102,8 @@ class Order(commands.Cog):
 
       emoji_image = random.choice(results)
 
-      time_after=time.perf_counter() 
+      time_after = time.perf_counter() 
+      
       try:
         await ctx.message.delete()
       except discord.errors.Forbidden:
@@ -133,7 +134,7 @@ class Order(commands.Cog):
     if args is None:
       await ctx.send("You can't search for nothing")
 
-  @tenor.command(help="shuffles the results from the tenor results",name="shuffle")
+  @tenor.command(help=  "shuffles the results from the tenor results", name = "shuffle")
   async def tenor_random(self, ctx, *, args = None):
     if args:
       await ctx.send("WIP")
