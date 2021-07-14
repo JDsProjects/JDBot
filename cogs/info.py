@@ -461,7 +461,7 @@ class DevTools(commands.Cog):
   @rtfm.command(brief = "a command to parse from dislash(for people who this package(yes discord.py people this helps them out so what) So yeah!)")
   async def dislash(self, ctx, *, args = None):
     await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="dislash", args = args)
+    results = await self.rtfm_lookup(program = "dislash", args = args)
     await self.rtfm_send(ctx, results)
 
   def charinfo_converter(self, string):
