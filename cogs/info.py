@@ -9,7 +9,7 @@ class Info(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-  @commands.command(help="gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild","guildinfo",])
+  @commands.command(help = "gives you info about a guild",aliases=["server_info","guild_fetch","guild_info","fetch_guild","guildinfo",])
   async def serverinfo(self, ctx, *, guild: typing.Optional[discord.Guild] = None):
     guild = guild or ctx.guild
 
@@ -458,6 +458,12 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program="asyncpraw", args = args)
     await self.rtfm_send(ctx, results)
 
+  @rtfm.command(brief = "a command to parse from dislash(for people who this package(yes discord.py people this helps them out so what) So yeah!)")
+  async def dislash(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program="dislash", args = args)
+    await self.rtfm_send(ctx, results)
+
   def charinfo_converter(self, string):
     digit = f"{ord(string):x}"
     name = unicodedata.name(string, "The unicode was not found")
@@ -575,6 +581,7 @@ class DevTools(commands.Cog):
   @commands.command(brief = "Gives info on pypi packages")
   async def pypi(self, ctx, *, args = None):
     #https://pypi.org/simple/
+    
     if args:
       pypi_response=await self.bot.session.get(f"https://pypi.org/pypi/{args}/json")
       if pypi_response.ok:

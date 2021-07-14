@@ -160,9 +160,30 @@ class Test(commands.Cog):
 
   @commands.command(brief = "rips the source of commands by linking to the github.", name = "source")
   async def _source(self, ctx):
+    
     await ctx.send("Eh okay, it's WIP btw.")
 
   #look at global_chat stuff for global_chat features, rank for well rank, add an update system too, add cc_ over. nick too, as well as kick and ban, ofc unban and other guild ban moderation stuff. Port over emoji_check but public and make that do it's best to upload less than 256 kB, try to freeze bot with suspend, or somehow, basically make it in unresponsive mode(maybe), and ofc an os emulation mode, as well as update mode, and nick.
+
+
+  @commands.command(brief = "Gives info on pypi packages")
+  async def npm(self, ctx, *, args = None):
+    
+    if args:
+      npm_response=await self.bot.session.get(f"https://registry.npmjs.com/{args}")
+
+      if npm_response.ok:
+
+        npm_response = await npm_response.json()
+
+        await ctx.send("WIP")
+
+      else:
+        await ctx.send(f"Could not find package **{args}** on npm.", allowed_mentions = discord.AllowedMentions.none())
+
+    else:
+      await ctx.send("Please look for a library to get the info of.")
+
 
 
 def setup(bot):

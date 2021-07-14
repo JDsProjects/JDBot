@@ -264,17 +264,18 @@ class Order(commands.Cog):
     await ctx.send(content = "Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
 
     await self.bot.get_channel(855217084710912050).send(embed = embed)
+
+    
     
   @commands.cooldown(1, 30, BucketType.user)
   @commands.cooldown(1, 30, BucketType.user)
-  @commands.command(help="looks up an item from giphy but shuffled", aliases=["giphy-shuffle"])
+  @commands.command(help = "looks up an item from giphy but shuffled", aliases=["giphy-shuffle"])
   async def giphy_shuffle(self, ctx, *, args = None):
 
     if not args:
       return await self.giphy(ctx, args = "shuffle")
 
     await self.giphy_random(ctx, args = args)
-    
 
   async def cog_command_error(self, ctx, error):
     if ctx.command and not ctx.command.has_error_handler():
