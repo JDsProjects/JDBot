@@ -84,7 +84,7 @@ class Test(commands.Cog):
 
     if not ctx.message.attachments or y == 0:
       url = Member.avatar_url_as(format="png")
-      invert_time=functools.partial(utils.invert_func,await url.read() )
+      invert_time = functools.partial(utils.invert_func, await url.read() )
 
       file = await self.bot.loop.run_in_executor(None, invert_time)
       await ctx.send(file=file)
@@ -125,11 +125,6 @@ class Test(commands.Cog):
    
   @commands.command(brief = "tells you a webhook's avatar.")
   async def webhook_avatar(self, ctx, *, args = None):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
-
-  @commands.command(brief = "sends tweet to JDBot Twitter")
-  async def send_tweet(self, ctx, *, args = None):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
 

@@ -1,6 +1,6 @@
 from discord.ext import commands, menus
 import utils
-import random , discord , aiohttp , os , aiosqlite, importlib, mystbin, typing, aioimgur
+import random , discord, os, importlib, mystbin, typing, aioimgur, functools, tweepy
 import traceback, textwrap
 
 class Owner(commands.Cog):
@@ -408,6 +408,37 @@ class Owner(commands.Cog):
 
       else:
         return await ctx.send(f"{user} is in the testers list already!")
+
+  def tweepy_post(self, post_text = None):
+
+    consumer_key = os.getenv('tweet_key')
+    consumer_secret = os.getenv('tweet_secret')
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+
+    access_token = os.getenv('tweet_access')
+    access_secret = os.getenv('tweet_token')
+
+    auth.set_access_token(access_token, access_secret)
+
+    twitter_api = tweepy.API(auth)
+
+    return twitter_api.update_status(status = post_text)
+
+  @commands.command(brief = "sends tweet to JDBot Twitter")
+  async def send_tweet(self, ctx, *, args = None):
+    
+    if not args:
+      return await ctx.send("you can't send nothing to twitter.")
+
+    try:
+      tweet_time = functools.partial(self.tweepy_post, args)
+      post = await self.bot.loop.run_in_executor(None, tweet_time)
+      
+    except Exception as e:
+      return await ctx.send(f"Exception occured at {e}")
+
+    await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.id}")
 
 def setup(bot):
   bot.add_cog(Owner(bot))
