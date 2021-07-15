@@ -128,35 +128,6 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
 
-  @commands.command(brief = "sees how compatitable something is(two things)")
-  async def works(self, ctx, *args):
-
-    if len(args) < 2:
-      return await ctx.send("you didn't give me enough objects to checks the status of two items and make sure to have two objects.")
-
-    item1 = args[0]
-    item2 = args[-1]
-
-    item_relationship = random.randint(1, 100)
-
-    resp = "Place Holder"
-
-    responses = ["They don't work well together at ALL :angry:", "They work quite poorly together...", "They work kinda good together, maybe", "They work REALLY good together, wow. Nice.", "Let them collaborate anytime."]
-
-    import bisect
-
-    breakpoints = [51, 70, 89, 100, 101]
-    i = bisect.bisect(breakpoints, item_relationship)
-    resp = responses[i]
-
-    embed = discord.Embed(title = f"How well does {item1} and {item2} work together?",  description = f"They work at a rate {item_relationship}% \n**{resp}**", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
-
-    embed.set_author(name=f"{ctx.author}", icon_url=(ctx.author.avatar_url))
-
-    embed.set_footer(text = f"{ctx.author.id}")
-
-    await ctx.send(embed = embed)
-
   @commands.command(brief = "sends tweet to JDBot Twitter")
   async def send_tweet(self, ctx, *, args = None):
     await ctx.send("WIP")
