@@ -209,7 +209,7 @@ class Owner(commands.Cog):
 
   class SusUsersEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
-      embed=discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
+      embed=discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
       embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
       return embed
 
@@ -226,6 +226,20 @@ class Owner(commands.Cog):
   @sus_users.error
   async def sus_users_error(self, ctx, error):
     await ctx.send(error)
+
+
+  class TestersEmbed(menus.ListPageSource):
+    async def format_page(self, menu, item):
+      embed = discord.Embed(title = "Testing Users:", color = random.randint(0, 16777215))
+      embed.add_field(name = "User ID:", value = f"{item}", inline = False)
+      
+      return embed
+
+  @commands.command(brief = "a command listed all the commands")
+  async def testers(self, ctx):
+
+    menu = menus.MenuPages(self.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
+    await menu.start(ctx)
 
   @commands.command()
   async def update_sus(self,ctx):
