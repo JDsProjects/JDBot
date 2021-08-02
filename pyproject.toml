@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "jdbot"
+version = "0.1.0"
+description = ""
+authors = ["repl.it user <replituser@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+dnspython = "^2.1.0"
+"discord.py" = {extras = ["voice"], version = "^1.7.3"}
+Flask = "^1.1.2"
+aioimgur = "^0.1.1"
+wavelink = "^0.9.9"
+image = "^1.5.33"
+asuna-api = "^0.2.6"
+vt-py = "^0.6.1"
+async-cse = "^0.3.0"
+aiogTTS = "^1.1.0"
+motor = "^2.4.0"
+ordereddict = "^1.1"
+asyncdagpi = "^3.3.2"
+discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
+sr-api = {git = "https://github.com/iDutchy/sr_api"}
+jishaku = {git = "https://github.com/Gorialis/jishaku"}
+"mystbin.py" = "^2.1.0"
+psutil = "^5.8.0"
+"discordlists.py" = "^1.1.1"
+braceexpand = "^0.1.6"
+humanize = "^3.5.0"
+import-expression = "^1.1.4"
+youtube-dl = "^2021.4.26"
+importlib-metadata = "^4.0.1"
+ipaddr = "^2.2.0"
+lockfile = "^0.12.2"
+mypy-extensions = "^0.4.3"
+lxml = "^4.6.3"
+python-ntlm = "^1.1.0"
+typing-extensions = "^3.10.0"
+emoji = "^1.2.0"
+"alexflipnote.py" = "^2.4.0"
+asyncpraw = "^7.3.1"
+tweepy = {git = "https://github.com/tweepy/tweepy.git"}
+doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
+aiosqlite = "^0.17.0"
+topggpy = "^1.1.0"
+requests-oauthlib = "^1.3.0"
+htmlparser = "^0.0.2"
+autopep8 = "^1.5.7"
+yapf = "^0.31.0"
+CairoSVG = "^2.5.2"
+python-cse = {git = "https://github.com/JDJGInc/python-cse"}
+async-cleverbot = "^0.2.2"
+aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
