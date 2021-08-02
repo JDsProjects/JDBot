@@ -163,7 +163,6 @@ class Test(commands.Cog):
       npm_response=await self.bot.session.get(f"https://registry.npmjs.com/{args}")
 
       if npm_response.ok:
-
         npm_response = await npm_response.json()
 
         await ctx.send("WIP")
