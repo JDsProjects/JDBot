@@ -443,6 +443,17 @@ python-versions = ">= 3.5"
 aiohttp = "*"
 
 [[package]]
+name = "dislash.py"
+version = "1.2.6"
+description = "A python wrapper for message components and slash commands."
+category = "main"
+optional = false
+python-versions = ">=3.6, <4"
+
+[package.dependencies]
+"discord.py" = "*"
+
+[[package]]
 name = "django"
 version = "3.2.6"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
@@ -1106,7 +1117,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "dfcd90c4445a5ff23cb13d7acb9b32fb64e182de5283eb926d9cab6574bf8dd7"
+content-hash = "61e0b245b1470d9a5627ba17ff9cabbaca821eecf0820d9f93baf6a23250180b"
 
 [metadata.files]
 aiofiles = [
@@ -1318,6 +1329,10 @@ discord-ext-menus = []
     {file = "discordlists.py-1.1.1-py3-none-any.whl", hash = "sha256:0211aecde3c3b3881239511aadc0c753f3cece423d8374d01fa815e958ca2537"},
     {file = "discordlists.py-1.1.1-py3.6.egg", hash = "sha256:3ef38ee36fe469dce267a85633067087bb92c0840f8eb60033df05f5866f3bbe"},
     {file = "discordlists.py-1.1.1.tar.gz", hash = "sha256:f6d49c93c3eb1d5ffbaeddf663d3bfa80bb3073a4fc43787b832ea55de49113d"},
+]
+"dislash.py" = [
+    {file = "dislash.py-1.2.6-py3-none-any.whl", hash = "sha256:2ead49a14355c556c9dd804d5be06bc2c3bfbd245f58fc653803303be7e4b352"},
+    {file = "dislash.py-1.2.6.tar.gz", hash = "sha256:7ab3b8a2add601628487ed01e946c996b00c41569e67cf79a228c2addc95594a"},
 ]
 django = [
     {file = "Django-3.2.6-py3-none-any.whl", hash = "sha256:7f92413529aa0e291f3be78ab19be31aefb1e1c9a52cd59e130f505f27a51f13"},
