@@ -142,7 +142,6 @@ class Test(commands.Cog):
   async def emoji_save(self, ctx):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
-    
 
   @commands.command(brief = "runs something in le console")
   async def console(self, ctx):
