@@ -22,7 +22,7 @@ class Info(commands.Cog):
   @commands.command(aliases=["user_info", "user-info", "ui", "whois"], brief="a command that gives information on users", help="this can work with mentions, ids, usernames, and even full names.")
   async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
     user = user or ctx.author
-    user_type = ['User', 'Bot'][user.bot]
+    user_type = ("Bot" if user.bot else "User")
     
     if ctx.guild:
       member_version = await self.bot.getch_member(ctx.guild, user.id)

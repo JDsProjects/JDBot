@@ -78,16 +78,13 @@ class Test(commands.Cog):
           y += 1
           invert_time=functools.partial(utils.invert_func, await x.read())
           file = await self.bot.loop.run_in_executor(None, invert_time)
-          await ctx.send(file=file)
-        if passes is False:
-          pass
 
     if not ctx.message.attachments or y == 0:
       url = Member.avatar_url_as(format="png")
       invert_time = functools.partial(utils.invert_func, await url.read() )
 
       file = await self.bot.loop.run_in_executor(None, invert_time)
-      await ctx.send(file=file)
+      await ctx.send(file = file)
 
   @invert.error
   async def invert_error(self, ctx, error):
@@ -160,7 +157,7 @@ class Test(commands.Cog):
   async def npm(self, ctx, *, args = None):
     
     if args:
-      npm_response=await self.bot.session.get(f"https://registry.npmjs.com/{args}")
+      npm_response = await self.bot.session.get(f"https://registry.npmjs.com/{args}")
 
       if npm_response.ok:
         npm_response = await npm_response.json()
