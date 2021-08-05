@@ -65,22 +65,23 @@ class Test(commands.Cog):
   @commands.command(brief="work in progress")
   async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
-    y = 0
+    passes = False
 
     if ctx.message.attachments:
       for x in ctx.message.attachments:
         try:
           discord.utils._get_mime_type_for_image(await x.read())
           passes = True
-        except commands.errors.CommandInvokeError:
+        except discord.errors.InvalidArgument:
           passes = False
+
         if passes is True:
-          y += 1
           invert_time=functools.partial(utils.invert_func, await x.read())
           file = await self.bot.loop.run_in_executor(None, invert_time)
+          return await ctx.send(file = file)
 
-    if not ctx.message.attachments or y == 0:
-      url = Member.avatar_url_as(format="png")
+    if not ctx.message.attachments or not passes:
+      url = Member.avatar_url_as(format = "png")
       invert_time = functools.partial(utils.invert_func, await url.read() )
 
       file = await self.bot.loop.run_in_executor(None, invert_time)
