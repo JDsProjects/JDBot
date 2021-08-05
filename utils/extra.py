@@ -2,8 +2,8 @@ import aioimgur, discord, random, sr_api, asyncdagpi, aiogtts
 import os, io, typing, datetime
 
 async def triggered_converter(url, ctx):
-  sr_client=sr_api.Client(session = ctx.bot.session)
-  source_image=sr_client.filter(option="triggered",url = str(url))
+  sr_client = sr_api.Client(session = ctx.bot.session)
+  source_image=sr_client.filter(option="triggered", url = str(url))
 
   imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
   imgur_url= await imgur_client.upload_from_url(source_image.url)
@@ -51,13 +51,13 @@ def clear_permission(ctx):
 
 async def invert_converter(url, ctx):
   try:
-    sr_client=sr_api.Client(key=os.environ["sr_key"],session=ctx.bot.session)
-    source_image=sr_client.filter("invert",url=str(url))
+    sr_client = sr_api.Client(key=os.environ["sr_key"],session=ctx.bot.session)
+    source_image = sr_client.filter("invert",url=str(url))
     image = await source_image.read()
   except:
     return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-  imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
   imgur_url = await imgur_client.upload(image)
   embed=discord.Embed(color=random.randint(0, 16777215))
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.avatar_url))
@@ -137,3 +137,4 @@ def format_dt(dt: datetime.datetime, /, style: typing.Optional[TimestampStyle] =
     return f'<t:{int(dt.timestamp())}>'
 
   return f'<t:{int(dt.timestamp())}:{style}>'
+#remove when we update to 2.0 a.k. all format_dt stuff

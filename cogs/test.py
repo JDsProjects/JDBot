@@ -76,7 +76,7 @@ class Test(commands.Cog):
           passes = False
 
         if passes is True:
-          invert_time=functools.partial(utils.invert_func, await x.read())
+          invert_time = functools.partial(utils.invert_func, await x.read())
           file = await self.bot.loop.run_in_executor(None, invert_time)
           return await ctx.send(file = file)
 

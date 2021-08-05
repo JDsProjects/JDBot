@@ -15,9 +15,9 @@ def invert_func(bytes_returned):
     final_transparent_image = Image.merge('RGBA', (r2,g2,b2,a))
 
     buffer = io.BytesIO()
-    final_transparent_image.save(buffer,image.format)
+    final_transparent_image.save(buffer, image.format)
     buffer.seek(0)
-    file = discord.File(buffer,filename=f"inverted.{image.format}")
+    file = discord.File(buffer, filename=f"inverted.{image.format}")
     return file
 
   else:
@@ -25,10 +25,11 @@ def invert_func(bytes_returned):
       inverted_image = ImageOps.invert(image)
     except NotImplementedError:
       buffer = io.BytesIO(bytes_returned)
-      file = discord.File(buffer,filename=f"failed.{image.format}",save_all=True)
+      file = discord.File(buffer, filename = f"failed.{image.format}")
       return file
+
     buffer = io.BytesIO()
-    inverted_image.save(buffer,image.format)
+    inverted_image.save(buffer, image.format, save_all = True)
     buffer.seek(0)
-    file = discord.File(buffer,filename=f"inverted.{image.format}")
+    file = discord.File(buffer ,filename = f"inverted.{image.format}")
     return file
