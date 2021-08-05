@@ -52,11 +52,13 @@ class Info(commands.Cog):
         nickname = "None"
         joined_guild = "N/A"
         status = "Unknown"
+
         for guild in self.bot.guilds:
           member=guild.get_member(user.id)
           if member:
             status=str(member.status).upper()
             break
+            
         highest_role = "None Found"
     
     guilds_list=[guild for guild in self.bot.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
