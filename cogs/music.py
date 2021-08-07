@@ -11,7 +11,7 @@ class Music(commands.Cog):
 
   async def start_nodes(self):
     await self.bot.wait_until_ready()
-    await self.bot.wavelink.initiate_node(host=os.environ["wavelink_host"], port=int(os.environ["wavelink_port"]), rest_uri=os.environ["wavelink_uri"], password=os.environ["wavelink_pass"], identifier="JDBot", region='us_central')
+    await self.bot.wavelink.initiate_node(host=os.environ["wavelink_host"], port=int(os.environ["wavelink_port"]), rest_uri = os.environ["wavelink_uri"], password=os.environ["wavelink_pass"], identifier="JDBot", region='us_central')
 
   async def stop_nodes(self):
     await self.bot.wavelink.destroy_node( identifier="JDBot")
@@ -41,6 +41,9 @@ class Music(commands.Cog):
 
   @commands.command()
   async def play(self, ctx, *, query: str):
+    
+    #Adding support for these options: https://mystb.in/AllahIeeeBroker
+    
     tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
 
     if not tracks:
@@ -76,7 +79,7 @@ class Music(commands.Cog):
   async def disconnect_(self, ctx):
     player = self.bot.wavelink.get_player(ctx.guild.id)
     if player.is_connected:
-      await player.disconnect()
+      return await player.disconnect()
 
     if player.is_connected is False:
       await ctx.send("Can't Disconnect from no channels")
@@ -117,5 +120,19 @@ class Music(commands.Cog):
   async def resume_error(self, ctx, error):
     await ctx.send(error)
 
+  @commands.command(brief = "lists the queue of items in the playlist", aliases = ["q"])
+  async def queue(self, ctx):
+
+    player = self.bot.wavelink.get_player(ctx.guild.id)
+
+    if player.is_connected is False:
+      return await ctx.send("Sorry, the bot isn't connected to player and there is no queue.")
+
+    await ctx.send("There's a problem with finding queue stuff rn. Hold on")
+
+  @queue.error
+  async def queue_error(self, ctx, error):
+    await ctx.send(error)
+  
 def setup(bot):
   bot.add_cog(Music(bot))
