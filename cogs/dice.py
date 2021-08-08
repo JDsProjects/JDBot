@@ -16,9 +16,9 @@ class Dice(commands.Cog):
     embed = discord.Embed(title=f" Rolled a {random.randint(1,number)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
     embed.set_footer(text = f"{ctx.author.id}")
     embed.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-    embed.set_author(name=f"d{number} Rolled by {ctx.author}:",icon_url=(ctx.author.avatar_url))
-    embed.set_image(url=url)
-    await ctx.send(embed=embed)
+    embed.set_author(name = f"d{number} Rolled by {ctx.author}:",icon_url = ctx.author.avatar.url )
+    embed.set_image(url = url)
+    await ctx.send(embed = embed)
 
   @commands.command(brief="A command to roll random dnd dice.",aliases=["roll"])
   async def diceroll(self, ctx, * , number:typing.Optional[int]=None):
@@ -26,7 +26,7 @@ class Dice(commands.Cog):
     else: await ctx.send("None that's bad.")
 
   @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use this wisely.",aliases=["e_spin","emoji_spin"])
-  async def emoji_spinner(self,ctx):
+  async def emoji_spinner(self, ctx):
     emoji_choosen = random.choice(self.bot.emojis)
 
     if emoji_choosen.available is False: emoji_choosen = emoji_choosen.url
@@ -42,7 +42,7 @@ class Dice(commands.Cog):
     if isinstance(ctx.channel,discord.DMChannel): await ctx.send(emoji_choosen)
   
   @commands.command(brief="gives a random kawaii emoji.",aliases=["ka"])
-  async def kawaii_random(self,ctx):
+  async def kawaii_random(self, ctx):
     kawaii_emotes= self.bot.get_guild(773571474761973840)
     kawaii_emotes2 = self.bot.get_guild(806669712410411068)
     kawaii_emotes3 = self.bot.get_guild(692576207404793946)
@@ -58,7 +58,7 @@ class Dice(commands.Cog):
       await ctx.send(f"{random.choice(responses)}")
 
   @commands.command(brief="gordon ramsay insults you(I don't own his likeness)",help="Please only use if you can handle insults :D (with some profanity)")
-  async def insult2(self,ctx,*,args=None):
+  async def insult2(self, ctx, *, args = None):
     ramsay_responses=["You are getting your kn*ckers in a twist! Calm down!", "WHAT ARE YOU? An idiot sandwich", "You fucking Donkey!", "How about a thank you, you miserable wee-bitch", "Hey, panini head, are you listening to me?", "For what we are about to eat, may the Lord make us truly not vomit", "Do you want a fucking medal?", "That fucking gremlin, everything you touch, you screw... there you go", "Your name is Elsa, isn't it? Because this shit is so fucking frozen", "This pork is so raw it's still singing Hakuna Matata", "Fuck off you bloody donut", "This crab is so raw it just offered me a krabby patty","The fucking bass is fucking RAW!","This chicken is so raw it's still asking why it crossed the road!","Hey excuse me madam, fuck me? How about fuck you.","Move It, Grandpa"]
 
     if args is None:
@@ -68,7 +68,7 @@ class Dice(commands.Cog):
       await ctx.send(random.choice(ramsay_responses))
 
   @commands.command(brief="a command meant to flip coins",help="commands to flip coins, etc.")
-  async def coin(self,ctx, *, args = None):
+  async def coin(self, ctx, *, args = None):
     if args:
       value = random.choice([True,False]) 
       if args.lower().startswith("h") and value: win = True
@@ -82,7 +82,8 @@ class Dice(commands.Cog):
       url_dic = {"heads":"https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
 
       embed = discord.Embed(title="coin flip",color=random.randint(0, 16777215))
-      embed.set_author(name=f"{ctx.author}",icon_url=(ctx.author.avatar_url))
+      embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.avatar.url)
+
       embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {args}")
       embed.set_image(url=url_dic[pic_name])
 
@@ -137,7 +138,7 @@ class Dice(commands.Cog):
 
     embed = discord.Embed(title = f"How well does {item1} and {item2} work together?",  description = f"They work at a rate {item_relationship}% \n**{resp}**", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
 
-    embed.set_author(name=f"{ctx.author}", icon_url=(ctx.author.avatar_url))
+    embed.set_author(name=f"{ctx.author}", icon_url = ctx.author.avatar.url)
 
     embed.set_footer(text = f"{ctx.author.id}")
 
