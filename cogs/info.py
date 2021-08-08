@@ -85,7 +85,7 @@ class Info(commands.Cog):
 
     embed.add_field(name="Mutual Guilds:", value = guild_list)
     
-    embed.set_image(url = user.avatar_url)
+    embed.set_image(url = user.avatar.url)
     await ctx.send(embed=embed)
 
   @commands.command(brief="uploads your emojis into a mystbin link")
@@ -156,8 +156,8 @@ class Info(commands.Cog):
   async def avatar(self,ctx,*,user: utils.BetterUserconverter = None): 
     user = user or ctx.author
     embed = discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{user.name}'s avatar:",icon_url=(user.avatar_url))
-    embed.set_image(url=(user.avatar_url))
+    embed.set_author(name=f"{user.name}'s avatar:",icon_url=(user.avatar.url))
+    embed.set_image(url=(user.avatar.url))
     embed.set_footer(text=f"Requested by {ctx.author}")
     await ctx.send(embed=embed)
 

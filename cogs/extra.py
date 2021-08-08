@@ -40,6 +40,12 @@ class Extra(commands.Cog):
   async def mchistory_error(self, ctx, error):
     await ctx.send(error)
 
+  async def cog_command_error(self, ctx, error):
+    if ctx.command or not ctx.command.has_error_handler():
+      await ctx.send(error)
+      import traceback
+      traceback.print_exc()
+
   class RandomHistoryEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):
       embed=discord.Embed(title = "Random History:", description = f"{item}", color = random.randint(0, 16777215))
