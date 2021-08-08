@@ -7,7 +7,6 @@ authors = ["repl.it user <replituser@example.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 dnspython = "^2.1.0"
-"discord.py" = {extras = ["voice"], version = "^1.7.3"}
 Flask = "^1.1.2"
 aioimgur = "^0.1.1"
 wavelink = "^0.9.9"
@@ -52,6 +51,7 @@ python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 async-cleverbot = "^0.2.2"
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
 "dislash.py" = "^1.2.6"
+"discord.py" = {git = "https://github.com/Rapptz/discord.py", extras = ["voice"]}
 
 [tool.poetry.dev-dependencies]
 

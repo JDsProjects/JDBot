@@ -12,7 +12,7 @@ class SendHelp(menus.ListPageSource):
   
     item = discord.utils.escape_markdown(item)
 
-    emby = discord.Embed(description = item , as_needed = True)
+    emby = discord.Embed(description = item)
     return emby
 
 class Help(commands.Cog):
@@ -21,6 +21,11 @@ class Help(commands.Cog):
     self._original_help_command = bot.help_command
     self.bot.help_command = MyHelp()
     self.bot.help_command.cog = self
+
+  async def cog_command_error(self, ctx, error):
+    await ctx.send(error)
+    import traceback
+    traceback.print_exc()
 
 def cog_unload(self):
   self.help_command = self._original_help_command
