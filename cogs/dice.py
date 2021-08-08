@@ -17,7 +17,7 @@ class Dice(commands.Cog):
 
     embed.set_footer(text = f"{ctx.author.id}")
     embed.set_thumbnail(url = "https://i.imgur.com/AivZBWP.png")
-    embed.set_author(name = f"d{number} Rolled by {ctx.author}:",icon_url = ctx.author.avatar.url )
+    embed.set_author(name = f"d{number} Rolled by {ctx.author}:",icon_url = ctx.author.avatar.url)
     embed.set_image(url = url)
     await ctx.send(embed = embed)
 
