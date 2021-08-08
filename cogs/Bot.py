@@ -316,7 +316,7 @@ class Bot(commands.Cog):
 
     embed = discord.Embed(title = f"{args}", timestamp = ctx.message.created_at, color = random.randint(0, 16777215))
 
-    embed.set_author(name=f"Help Needed from {ctx.author}:", icon_url = ctx.author.avatar_url)
+    embed.set_author(name = f"Help Needed from {ctx.author}:", icon_url = ctx.author.avatar.url)
 
     embed.set_footer(text = f"{ctx.author.id} \nSupport Mode: Channel")
     embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")

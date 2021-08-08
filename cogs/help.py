@@ -9,7 +9,7 @@ class MyHelp(commands.MinimalHelpCommand):
 
 class SendHelp(menus.ListPageSource):
   async def format_page(self, menu, item):
-
+    
     emby = discord.Embed(description = item)
     return emby
 

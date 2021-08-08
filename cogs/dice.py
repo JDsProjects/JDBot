@@ -23,7 +23,7 @@ class Dice(commands.Cog):
 
   @commands.command(brief="A command to roll random dnd dice.",aliases=["roll"])
   async def diceroll(self, ctx, * , number:typing.Optional[int]=None):
-    if number : await self.generate_embed(ctx,int(number))
+    if number : await self.generate_embed(ctx, int(number))
     else: await ctx.send("None that's bad.")
 
   @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use this wisely.",aliases=["e_spin","emoji_spin"])
@@ -80,18 +80,19 @@ class Dice(commands.Cog):
       
       pic_name = "heads" if (value) else "Tails"
 
-      url_dic = {"heads":"https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
+      url_dic = {"heads": "https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
 
       embed = discord.Embed(title="coin flip",color=random.randint(0, 16777215))
       embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.avatar.url)
 
       embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {args}")
-      embed.set_image(url=url_dic[pic_name])
+      embed.set_image(url = url_dic[pic_name])
 
-      if win: embed.add_field(name="Result: ",value="You won")
-      else: embed.add_field(name="Result: ",value="You lost")
+      if win: embed.add_field(name="Result: ", value = "You won")
+      else: embed.add_field(name="Result: ", value = "You lost")
       
       await ctx.send(embed=embed)
+      
 
     if args is None: await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
 
