@@ -13,9 +13,10 @@ class Dice(commands.Cog):
     url_dict = {20 : "https://i.imgur.com/9dbBkqj.gif", 6:"https://i.imgur.com/6ul8ZGY.gif"}
     url = url_dict.get(number, "https://i.imgur.com/gaLM6AG.gif")
 
-    embed = discord.Embed(title=f" Rolled a {random.randint(1,number)}", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+    embed = discord.Embed(title = f"Rolled a {random.randint(1,number)}", color = random.randint(0, 16777215), timestamp =(ctx.message.created_at))
+
     embed.set_footer(text = f"{ctx.author.id}")
-    embed.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
+    embed.set_thumbnail(url = "https://i.imgur.com/AivZBWP.png")
     embed.set_author(name = f"d{number} Rolled by {ctx.author}:",icon_url = ctx.author.avatar.url )
     embed.set_image(url = url)
     await ctx.send(embed = embed)
