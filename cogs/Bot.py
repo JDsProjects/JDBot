@@ -74,6 +74,7 @@ class Bot(commands.Cog):
       nickname = "None"
       joined_guild = "N/A"
       status = "Unknown"
+
       for guild in owner.mutual_guilds:
         member=guild.get_member(owner.id)
         if member:
@@ -91,7 +92,7 @@ class Bot(commands.Cog):
     embed.add_field(name="ID:",value=owner.id)
     embed.add_field(name="Status:",value=status)
     embed.add_field(name="Highest Role:",value=highest_role)
-    embed.set_image(url=owner.avatar.url)
+    embed.set_image(url = owner.avatar.url)
     await ctx.send(embed=embed)
 
   @commands.command(help="a command to give information about the team",brief="this command works if you are in team otherwise it will just give the owner.")
@@ -107,7 +108,7 @@ class Bot(commands.Cog):
     embed=discord.Embed(title=information.name,color=random.randint(0, 16777215))
     embed.add_field(name="Owner",value=true_owner)
     embed.set_footer(text=f"ID: {true_owner.id}")
-    embed.set_image(url=(information.icon.url))
+    embed.set_image(url = information.icon.url)
     for x in team_members:
       embed.add_field(name=x,value=x.id)
     await ctx.send(embed=embed)
@@ -125,13 +126,13 @@ class Bot(commands.Cog):
   @commands.command(brief="a way to view open source",help="you can see the open source with the link it provides")
   async def open_source(self, ctx):
     embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot. Please don't just copy the source code, cause this may cause issues with you or the user instead ask if you want to use my code or learn from my code and look to see if that's a valid command a.ka ask me first, then discord.py about the bot! Thanks :D",color=random.randint(0, 16777215))
-    embed.set_author(name=f"{self.bot.user}'s source code:",icon_url=(self.bot.user.avatar.url))
+    embed.set_author(name=f"{self.bot.user}'s source code:",icon_url = self.bot.user.avatar.url)
     await ctx.send(embed=embed)
 
   @commands.group(name="open", invoke_without_command=True)
   async def open(self, ctx):
     embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot. Please don't just copy the source code, cause this may cause issues with you or the user instead ask if you want to use my code or learn from my code and look to see if that's a valid command a.ka ask me first, then discord.py about the bot! Thanks :D",color=random.randint(0, 16777215))
-    embed.set_author(name=f"{self.bot.user}'s source code:",icon_url=(self.bot.user.avatar.url))
+    embed.set_author(name=f"{self.bot.user}'s source code:",icon_url = self.bot.user.avatar.url)
     await ctx.send(embed = embed)
   
   @open.command(brief="a way to view open source",help="you can see the open source with the link it provides")
@@ -297,7 +298,7 @@ class Bot(commands.Cog):
     
     embed = discord.Embed(title = f"{args}", timestamp = ctx.message.created_at, color = random.randint(0, 16777215))
 
-    embed.set_author(name=f"Help Needed from {ctx.author}:",icon_url=(ctx.author.avatar.url))
+    embed.set_author(name=f"Help Needed from {ctx.author}:",icon_url = ctx.author.avatar.url)
     embed.set_footer(text = f"{ctx.author.id} \nSupport Mode: DM")
     embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
 
