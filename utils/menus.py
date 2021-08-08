@@ -110,7 +110,7 @@ class JDJGsummon(menus.Menu):
 
         embed = discord.Embed(title = f"{self.ctx.author} wants your help", description = f"Invite: {invite.url} \nChannel : {self.ctx.channel.mention} \nName : {self.ctx.channel}", color = random.randint(0, 16777215) )
         embed.set_footer(text = f"Guild: {self.ctx.guild} \nGuild ID: {self.ctx.guild.id}")
-
+        
         await jdjg.send(embed=embed)
 
       else:

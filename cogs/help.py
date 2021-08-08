@@ -9,8 +9,7 @@ class MyHelp(commands.MinimalHelpCommand):
 
 class SendHelp(menus.ListPageSource):
   async def format_page(self, menu, item):
-  
-    item = discord.utils.escape_markdown(item)
+
     emby = discord.Embed(description = item)
     return emby
 
