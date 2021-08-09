@@ -101,13 +101,24 @@ async def guildinfo(ctx, guild):
 
     embed.add_field(name="Channel Count:",value = len(guild.channels))
     embed.add_field(name="Role Count:", value = len(guild.roles))
-    embed.set_thumbnail(url = (guild.icon_url))
+
+    if guild.icon:
+      embed.set_thumbnail(url = guild.icon.url)
+
+    else:
+      embed.set_thumbnail(url = "https://i.imgur.com/3ZUrjUP.png")
 
     embed.add_field(name="Emojis Info:", value = f"Limit : {guild.emoji_limit}\nStatic : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}")
 
+    if guild.icon:
+      animated_value = guild.icon.is_animated()
+
+    else:
+      animated_value = False
+
     embed.add_field(name="Max File Size:",value=f"{guild.filesize_limit/1000000} MB")
     embed.add_field(name="Shard ID:",value=guild.shard_id)
-    embed.add_field(name="Animated Icon",value=guild.is_icon_animated())
+    embed.add_field(name="Animated Icon", value = f"{animated_value}")
     
     embed.add_field(name="User Presences Info:", value = f"Online Users: {online_users} \nDND Users: {dnd_users} \nIdle Users : {idle_users} \nOffline Users : {offline_users}")
 

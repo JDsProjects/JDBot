@@ -89,7 +89,7 @@ class Info(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="uploads your emojis into a mystbin link")
-  async def look_at(self,ctx):
+  async def look_at(self, ctx):
     if isinstance(ctx.message.channel, discord.TextChannel):
       message_emojis = ""
       for x in ctx.guild.emojis:
