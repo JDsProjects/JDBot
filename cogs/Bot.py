@@ -4,7 +4,7 @@ import utils
 from discord.ext.commands.cooldowns import BucketType
 
 class Bot(commands.Cog):
-  def __init__(self, bot):a
+  def __init__(self, bot):
     self.bot = bot
     self.status_task.start()
 

@@ -10,7 +10,9 @@ class Events(commands.Cog):
     channels = [channel for channel in guild.channels]
     roles = roles= [role for role in guild.roles]
     embed = discord.Embed(title="Bot just joined: "+str(guild.name), color=random.randint(0,16777215))
-    embed.set_thumbnail(url = guild.icon_url)
+    
+    embed.set_thumbnail(url = guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+
     embed.add_field(name='Server Name:',value=f'{guild.name}')
     embed.add_field(name='Server ID:',value=f'{guild.id}')
     embed.add_field(name='Server region:',value=f'{guild.region}')
@@ -27,7 +29,9 @@ class Events(commands.Cog):
     channels = [channel for channel in guild.channels]
     roles = roles= [role for role in guild.roles]
     embed = discord.Embed(title="Bot just left: "+str(guild.name), color=random.randint(0,16777215))
-    embed.set_thumbnail(url = guild.icon_url)
+    
+    embed.set_thumbnail(url = guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+
     embed.add_field(name='Server Name:',value=f'{guild.name}')
     embed.add_field(name='Server ID:',value=f'{guild.id}')
     embed.add_field(name='Server region:',value=f'{guild.region}')
@@ -61,7 +65,7 @@ class Events(commands.Cog):
       
       time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
       embed_message = discord.Embed(title=f" {test.prefix}{test.invoked_with}", description=time_used,color=random.randint(0, 16777215))
-      embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar_url))
+      embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar.url))
       embed_message.set_footer(text = f"{message.author.id}")
       embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
       await self.bot.get_channel(855217084710912050).send(embed=embed_message)
