@@ -81,7 +81,7 @@ class Test(commands.Cog):
           return await ctx.send(file = file)
 
     if not ctx.message.attachments or not passes:
-      url = Member.avatar_url_as(format = "png")
+      url = (Member.avatar.replace(format = "png")).url
       invert_time = functools.partial(utils.invert_func, await url.read() )
 
       file = await self.bot.loop.run_in_executor(None, invert_time)
