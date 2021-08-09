@@ -50,7 +50,7 @@ class Order(commands.Cog):
         pass
     
       embed = discord.Embed(title = f"Item: {args}", description=f"{ctx.author} ordered a {args}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
-      embed.set_author(name=f"order for {ctx.author}:", icon_url = (ctx.author.avatar_url))
+      embed.set_author(name=f"order for {ctx.author}:", icon_url = (ctx.author.avatar.url))
       embed.add_field(name="Time Spent:", value = f"{int((time_after - time_before)*1000)}MS")
       embed.add_field(name="Powered by:", value="Google Images Api")
       embed.set_image(url = emoji_image.image_url)
@@ -81,7 +81,7 @@ class Order(commands.Cog):
         pass
 
       embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
-      embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
+      embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar.url))
       embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
       embed.add_field(name="Powered by:",value="Google Images Api")
       embed.set_image(url=emoji_image.image_url)
@@ -112,7 +112,7 @@ class Order(commands.Cog):
         pass
 
       embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
-      embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar_url))
+      embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar.url))
       embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
       embed.add_field(name="Powered by:",value="Google Images Api")
       embed.set_image(url=emoji_image.image_url)
@@ -142,7 +142,7 @@ class Order(commands.Cog):
 
     embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
 
-    embed.set_author(name = f"order for {ctx.author}:", icon_url= ctx.author.avatar_url)
+    embed.set_author(name = f"order for {ctx.author}:", icon_url= ctx.author.avatar.url)
     embed.add_field(name = "Powered by:", value="Tenor")
 
     if gifNearest.gif: embed.set_image(url= gifNearest.gif.url)
@@ -178,7 +178,7 @@ class Order(commands.Cog):
 
     embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
 
-    embed.set_author(name = f"order for {ctx.author}:", icon_url= ctx.author.avatar_url)
+    embed.set_author(name = f"order for {ctx.author}:", icon_url= ctx.author.avatar.url)
     embed.add_field(name = "Powered by:", value="Tenor")
 
     if gifNearest.gif: embed.set_image(url= gifNearest.gif.url)
@@ -223,7 +223,7 @@ class Order(commands.Cog):
 
     embed.set_footer(text = f"{ctx.author.id}")
 
-    embed.set_author(name = f"order for {ctx.author}:", icon_url = ctx.author.avatar_url)
+    embed.set_author(name = f"order for {ctx.author}:", icon_url = ctx.author.avatar.url)
 
     embed.add_field(name = "Powered by:", value="GIPHY")
     embed.set_image(url = f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
@@ -256,7 +256,7 @@ class Order(commands.Cog):
 
     embed.set_footer(text = f"{ctx.author.id}")
 
-    embed.set_author(name = f"order for {ctx.author}:", icon_url = ctx.author.avatar_url)
+    embed.set_author(name = f"order for {ctx.author}:", icon_url = ctx.author.avatar.url)
 
     embed.add_field(name = "Powered by:", value="GIPHY")
     embed.set_image(url = f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
