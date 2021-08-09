@@ -143,20 +143,20 @@ class Owner(commands.Cog):
           await ctx.message.delete()
 
           session = self.bot.session
-          webhook=discord.Webhook.from_url(os.environ["webhook1"], adapter=discord.AsyncWebhookAdapter(session))
+          webhook=discord.Webhook.from_url(os.environ["webhook1"], session = session)
           embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
           embed.add_field(name="Update Info:",value=args)
           embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
           embed.set_footer(text="JDJG's Updates")
-          await webhook.execute(embed=embed)
+          await webhook.send(embed=embed)
         
           session = self.bot.session
-          webhook=discord.Webhook.from_url(os.environ["webhook99"], adapter=discord.AsyncWebhookAdapter(session))
+          webhook=discord.Webhook.from_url(os.environ["webhook99"], session = session)
           embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
           embed.add_field(name="Update Info:",value=args)
           embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
           embed.set_footer(text="JDJG's Updates")
-          await webhook.execute(embed=embed)
+          await webhook.send(embed=embed)
       if args is None:
         await ctx.send("You sadly can't use it like that.")
     if await self.bot.is_owner(ctx.author) is False:
