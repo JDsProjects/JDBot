@@ -75,7 +75,7 @@ class Webhook(commands.Cog):
             if pass_test is False:
               await ctx.send("not a valid image")
           
-          await webhook.execute(embed=embed)
+          await webhook.send(embed=embed)
           
           if (ctx.author.dm_channel is None):
             await ctx.author.create_dm()
