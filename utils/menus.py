@@ -6,7 +6,7 @@ class InviteInfoEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
     if isinstance(item,discord.Invite):
       if item.guild:
-        image = item.guild.icon_url
+        image = item.guild.icon.url if item.guild.icon else "https://i.imgur.com/3ZUrjUP.png"
         guild = item.guild
         guild_id = item.guild.id
       if item.guild is None:
