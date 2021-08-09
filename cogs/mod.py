@@ -127,7 +127,7 @@ class Moderation(commands.Cog):
       if (jdjg.dm_channel is None):
         await jdjg.create_dm()
       embed = discord.Embed(color=random.randint(0, 16777215))
-      embed.set_author(name=f"Report by {ctx.author}",icon_url=(ctx.author.avatar_url))
+      embed.set_author(name=f"Report by {ctx.author}",icon_url=(ctx.author.avatar.url))
       embed.add_field(name="Details:",value=args)
       embed.set_footer(text=f"Reporter's ID is {ctx.author.id}")
       await jdjg.send(embed=embed)
