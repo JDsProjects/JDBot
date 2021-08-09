@@ -20,10 +20,12 @@ class Webhook(commands.Cog):
           session = self.bot.session
           response=await session.get(check.group())
           if response.status == 200:
-            webhook=discord.Webhook.from_url(check.group(), adapter=discord.AsyncWebhookAdapter(session))
+            webhook=discord.Webhook.from_url(check.group(), session=session)
             
-            embed = discord.Embed(title=f"Webhook {webhook.name}'s Message",color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-            embed.add_field(name="Content:",value=args)
+            embed = discord.Embed(title=f"Webhook {webhook.name}'s Message", color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
+            embed.add_field(name="Content:",value=args
+            )
+            await webhook.send(embed=embed)
 
             await ctx.send(f"Message was sent to the desired webhook channel.")
 
