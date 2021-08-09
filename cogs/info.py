@@ -98,7 +98,7 @@ class Info(commands.Cog):
       paste = await mystbin_client.post(message_emojis)
       await ctx.send(paste.url)
       
-    if isinstance(ctx.channel,discord.DMChannel):
+    if isinstance(ctx.channel, discord.DMChannel):
       await ctx.send("We can't use that in DMS as it takes emoji regex and puts it into a paste.")
 
   @commands.command(help="gives the id of the current guild or DM if you are in one.")
@@ -556,13 +556,12 @@ class DevTools(commands.Cog):
   @commands.command(brief = "grabs your pfp's image")
   async def pfp_grab(self, ctx):
     
-    if_animated = ctx.author.is_avatar_animated()
+    if_animated = ctx.author.avatar.is_animated()
 
-    author_url =  ctx.author.avatar_url_as(format = "gif") if if_animated else ctx.author.avatar_url_as(format = "png", static_format = "png")
 
     save_type = ".gif" if if_animated else ".png"
 
-    icon_file = await author_url.read()
+    icon_file = await ctx.author.avatar.read()
     buffer = io.BytesIO(icon_file)
     buffer.seek(0)
     #print(len(buffer.getvalue()))
@@ -624,6 +623,7 @@ class DevTools(commands.Cog):
     if not guild:
       return await ctx.send("no guild to get the icon of.")
 
+    
     await ctx.send(f"{guild.icon_url}")
 
   @commands.command(brief = "some old fooz command..")
