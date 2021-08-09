@@ -624,7 +624,7 @@ class DevTools(commands.Cog):
       return await ctx.send("no guild to get the icon of.")
 
     
-    await ctx.send(f"{guild.icon_url}")
+    await ctx.send(f"{guild.icon.url if guild.icon else 'No Url for This Guild, I am sorry dude :('}")
 
   @commands.command(brief = "some old fooz command..")
   async def fooz(self, ctx, *, args = None):

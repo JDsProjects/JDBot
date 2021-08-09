@@ -108,7 +108,10 @@ class Bot(commands.Cog):
     embed=discord.Embed(title=information.name,color=random.randint(0, 16777215))
     embed.add_field(name="Owner",value=true_owner)
     embed.set_footer(text=f"ID: {true_owner.id}")
-    embed.set_image(url = information.icon.url)
+
+    embed.set_image(url = information.icon.url if information.icon else self.bot.avatar.url)
+    #I don't gunatree this works, but I hope it does.
+
     for x in team_members:
       embed.add_field(name=x,value=x.id)
     await ctx.send(embed=embed)
