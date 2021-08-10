@@ -84,19 +84,6 @@ class charinfoMenu(menus.ListPageSource):
   async def format_page(self, menu, item):
     return discord.Embed(description = item, color = random.randint(0, 16777215))
 
-
-class SupportInvite(menus.Menu):
-  async def send_initial_message(self, ctx, channel):
-    return await channel.send("You must agree with **\N{WHITE HEAVY CHECK MARK}** to have an invite link to our support server sent here before we can invite you")  
-
-  @menus.button('\N{WHITE HEAVY CHECK MARK}')
-  async def on_checkmark(self, payload):
-    await self.ctx.send(content=f"https://discord.gg/sHUQCch")
-
-  @menus.button('\N{CROSS MARK}')
-  async def on_crossmark(self, payload):
-    await self.ctx.send(content=f"looks like you didn't agree to be invited. So We will not invite you!")
-
 class QuickMenu(menus.ListPageSource):
   async def format_page(self, menu, item):
     return item
