@@ -88,6 +88,12 @@ class Info(commands.Cog):
     embed.set_image(url = user.avatar.url)
     await ctx.send(embed=embed)
 
+  async def cog_command_error(self, ctx, error):
+    if ctx.command or not ctx.command.has_error_handler():
+      await ctx.send(error)
+      import traceback
+      traceback.print_exc()
+
   @commands.command(brief="uploads your emojis into a mystbin link")
   async def look_at(self, ctx):
     if isinstance(ctx.message.channel, discord.TextChannel):
@@ -178,16 +184,22 @@ class Info(commands.Cog):
         await ctx.send("You can't use it in a DM.")
 
   @commands.command(brief="a command to get the closest user.")
-  async def closest_user(self,ctx,*,args=None):
+  async def closest_user(self, ctx, *, args = None):
     if args is None:
       await ctx.send("please specify a user")
+
+    if args and not self.bot.users:
+      return await ctx.send("There are no users cached :(")
+
     if args:
-      userNearest = discord.utils.get(self.bot.users,name=args)
-      user_nick = discord.utils.get(self.bot.users,display_name=args)
+      userNearest = discord.utils.get(self.bot.users, name = args)
+      user_nick = discord.utils.get(self.bot.users, display_name = args)
+
       if userNearest is None:
         userNearest = sorted(self.bot.users, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
+
       if user_nick is None:
-        user_nick = sorted(self.bot.users, key=lambda x: SequenceMatcher(None, x.display_name,args).ratio())[-1]
+        user_nick = sorted(self.bot.users, key = lambda x: SequenceMatcher(None, x.display_name,args).ratio())[-1]
       await ctx.send(f"Username: {userNearest}")
       await ctx.send(f"Display name: {user_nick}")
     

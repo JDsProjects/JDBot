@@ -156,7 +156,8 @@ class Moderation(commands.Cog):
       amount = 101
 
     try:
-      await ctx.channel.purge(limit = amount)
+      messages = await ctx.channel.purge(limit = amount)
+      await ctx.send(f"I deleted {len(messages)} messages, plus the {amount} messages you wanted me to delete.")
     except Exception as e:
       await ctx.send(f"An Error occured with {e}")
   
