@@ -314,7 +314,7 @@ class Order(commands.Cog):
 
     await menu.start(ctx)
 
-    #this appears to work but I don't know if it's officially supported.
+    #this appears to work but I don't know if it's officially supported by the custom button menus team.
 
   @google.error
   async def google_error(self, ctx, error):
