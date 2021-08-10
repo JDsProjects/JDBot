@@ -589,7 +589,7 @@ class Extra(commands.Cog):
   @commands.command(bried = "tells you the current time with discord's speacil time converter", name = "time")
   async def _time(self, ctx):
     
-    embed = discord.Embed(title="Current Time :",description=f"{utils.format_dt(ctx.message.created_at, style = 'f')}",color=random.randint(0, 16777215))
+    embed = discord.Embed(title="Current Time :",description=f"{discord.utils.format_dt(ctx.message.created_at, style = 'f')}",color=random.randint(0, 16777215))
 
     embed.set_footer(text = f"Requested By {ctx.author}")
     await ctx.send(embed = embed)
