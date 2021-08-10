@@ -7,7 +7,7 @@ class Moderation(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-  @commands.cooldown(1,90,BucketType.user)
+  @commands.cooldown(1, 90, BucketType.user)
   @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
   async def warn(self, ctx, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
