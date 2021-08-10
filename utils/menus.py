@@ -85,46 +85,6 @@ class charinfoMenu(menus.ListPageSource):
     return discord.Embed(description = item, color = random.randint(0, 16777215))
 
 
-class JDJGsummon(menus.Menu):
-  async def send_initial_message(self, ctx, channel):
-    return await channel.send("react with \N{WHITE HEAVY CHECK MARK} if you want me to be summoned if not use \N{CROSS MARK}")
-
-  @menus.button('\N{WHITE HEAVY CHECK MARK}')
-  async def on_checkmark(self, payload):
-    msg = await self.ctx.send(content=f'Summon JDJG now a.k.a the owner to the guild make sure invite permissions are open!')
-    await self.message.delete()
-
-    if isinstance(self.ctx.channel, discord.TextChannel):
-      await asyncio.sleep(1)
-      await msg.edit(content = "This is attempting to make an invite")
-
-      invite = None
-      with contextlib.suppress(discord.NotFound, discord.HTTPException):
-        invite = await self.ctx.channel.create_invite(max_uses = 0)
-
-      if invite:
-        await asyncio.sleep(1)
-        await msg.edit(content = "Contacting JDJG...")
-
-        jdjg = await self.bot.getch_user(168422909482762240)
-
-        embed = discord.Embed(title = f"{self.ctx.author} wants your help", description = f"Invite: {invite.url} \nChannel : {self.ctx.channel.mention} \nName : {self.ctx.channel}", color = random.randint(0, 16777215) )
-        embed.set_footer(text = f"Guild: {self.ctx.guild} \nGuild ID: {self.ctx.guild.id}")
-        
-        await jdjg.send(embed=embed)
-
-      else:
-        await asyncio.sleep(1)
-        return await msg.edit(content = "Failed making an invite. You likely didn't give it proper permissions(a.k.a create invite permissions) or it errored for not being found.")
-
-    if isinstance(self.ctx.channel,discord.DMChannel):
-      await asyncio.sleep(1)
-      return await msg.edit(content = "This is meant for guilds not Dm channel if you want support in DM channel contact the owner, By DMS at JDJG Inc. Official#3493.")
-
-  @menus.button('\N{CROSS MARK}')
-  async def on_crossmark(self, payload):
-    await self.ctx.send(content=f"You didn't agree to summoning me. So I will not be invited.")
-    await self.message.delete()
 
 
 class SupportInvite(menus.Menu):
