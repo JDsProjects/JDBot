@@ -1,4 +1,4 @@
-import discord, re, collections, random, contextlib, asyncio, emoji, aiohttp
+import discord, re, collections, random, emoji, aiohttp
 from discord.ext import commands, menus
 
 
@@ -83,8 +83,6 @@ class ErrorEmbed(menus.ListPageSource):
 class charinfoMenu(menus.ListPageSource):
   async def format_page(self, menu, item):
     return discord.Embed(description = item, color = random.randint(0, 16777215))
-
-
 
 
 class SupportInvite(menus.Menu):

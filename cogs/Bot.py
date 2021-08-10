@@ -1,5 +1,6 @@
 from discord.ext import commands, tasks, menus
-import discord, random , time, asyncio, difflib, typing, datetime
+import discord, random, time, asyncio, difflib, datetime, contextlib
+
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
@@ -207,11 +208,53 @@ class Bot(commands.Cog):
         await ctx.send("got nothing sorry.")
 
  
-  @commands.cooldown(1,30,BucketType.user)
+  @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "a command to automatically summon by creating an invite and having jdjg look at something if it's there something wrong")
   async def jdjgsummon(self, ctx):
-    m = utils.JDJGsummon()
-    await m.start(ctx)
+
+    view = utils.JDJGsummon(ctx.author)
+    msg = await ctx.send("react with \N{WHITE HEAVY CHECK MARK} if you want me to be summoned if not use \N{CROSS MARK}", view = view)
+
+    await view.wait()
+
+    if view.value is None:
+      return await ctx.reply("You let me time out :(")
+
+    if view.value is True:
+      message = await ctx.send(content=f'Summoning JDJG now a.k.a the Bot Owner to the guild make sure invite permissions are open!')
+      await msg.delete()
+
+      if isinstance(self.ctx.channel, discord.TextChannel):
+        await asyncio.sleep(1)
+        await message.edit(content = "This is attempting to make an invite")
+
+        invite = None
+        with contextlib.suppress(discord.NotFound, discord.HTTPException):
+          invite = await ctx.channel.create_invite(max_uses = 0)
+        
+        if not invite:
+          await asyncio.sleep(1)
+          return await message.edit(content = "Failed making an invite. You likely didn't give it proper permissions(a.k.a create invite permissions) or it errored for not being found.")
+
+        else:
+          await asyncio.sleep(1)
+          await message.edit(content = "Contacting JDJG...")
+
+          jdjg = await self.bot.getch_user(168422909482762240)
+
+          embed = discord.Embed(title = f"{ctx.author} wants your help", description = f"Invite: {invite.url} \nChannel : {ctx.channel.mention} \nName : {ctx.channel}", color = random.randint(0, 16777215))
+
+          embed.set_footer(text = f"Guild: {ctx.guild} \nGuild ID: {ctx.guild.id}")
+        
+          await jdjg.send(embed = embed)
+
+      if isinstance(self.ctx.channel,discord.DMChannel):
+        await asyncio.sleep(1)
+        return await message.edit(content = "This is meant for guilds not Dm channel if you want support in DM channel contact the owner, By DMS at JDJG Inc. Official#3493.")
+
+    if view.value is False:
+      await ctx.send(content = f" You didn't agree to summoning me. So I will not be invited.")
+      await msg.delete()
 
   async def cog_command_error(self, ctx, error):
     if ctx.command or not ctx.command.has_error_handler():

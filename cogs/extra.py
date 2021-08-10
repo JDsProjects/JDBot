@@ -537,7 +537,7 @@ class Extra(commands.Cog):
   @commands.command(brief = "a command to create a voice channel")
   async def voice_create(self, ctx, *, args = None):
    
-    if isinstance(ctx.channel,discord.DMChannel):
+    if isinstance(ctx.channel, discord.DMChannel):
       return await ctx.send("you can't make a voice channel in a DM")
 
     if not args:
