@@ -2,6 +2,7 @@ from discord.ext import commands, menus
 import utils
 import random , discord, os, importlib, mystbin, typing, aioimgur, functools, tweepy
 import traceback, textwrap
+from discord.ext.menus.views import ViewMenuPages
 
 class Owner(commands.Cog):
   def __init__(self, bot):
@@ -129,8 +130,8 @@ class Owner(commands.Cog):
        pag.add_line(f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}")
 
       pages = [page.strip("`") for page in pag.pages]
-      menu = menus.MenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
-      await menu.start(ctx,channel=ctx.author.dm_channel)
+      menu = ViewMenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
+      await menu.start(ctx, channel = ctx.author.dm_channel)
       
     if await self.bot.is_owner(ctx.author) is False:
       await ctx.send("You can't use that it's owner only")
@@ -177,7 +178,7 @@ class Owner(commands.Cog):
     pages = [page.strip("`") for page in pag.pages]
     pages = pages or ["No shared servers"]
 
-    menu = menus.MenuPages(self.mutualGuildsEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(self.mutualGuildsEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx,channel=ctx.author.dm_channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
@@ -219,7 +220,7 @@ class Owner(commands.Cog):
     sus_users = tuple(await cursor.fetchall())
     await cur.close()
     await self.bot.sus_users.commit()  
-    menu = menus.MenuPages(self.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(self.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @sus_users.error
@@ -237,7 +238,7 @@ class Owner(commands.Cog):
   @commands.command(brief = "a command listed all the commands")
   async def testers(self, ctx):
 
-    menu = menus.MenuPages(self.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
+    menu = ViewMenuPages(self.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
     await menu.start(ctx)
 
   @commands.command()
@@ -334,7 +335,7 @@ class Owner(commands.Cog):
  
     pages = textwrap.wrap(values, width = 1992)
 
-    menu = menus.MenuPages(utils.ErrorEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.ErrorEmbed(pages, per_page = 1),delete_message_after = True)
 
     await menu.start(ctx,channel=ctx.author.dm_channel)
 

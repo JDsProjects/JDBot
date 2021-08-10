@@ -2,6 +2,7 @@ from discord.ext import commands, menus
 from discord.ext.commands.cooldowns import BucketType
 import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib, async_cleverbot
 import utils
+from discord.ext.menus.views import ViewMenuPages
 
 class Extra(commands.Cog):
   def __init__(self, bot):
@@ -65,7 +66,7 @@ class Extra(commands.Cog):
     
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = menus.MenuPages(self.RandomHistoryEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(self.RandomHistoryEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @random_history.error
@@ -438,7 +439,7 @@ class Extra(commands.Cog):
   async def closest_embed(self, ctx):
     embed_history = await ctx.channel.history(limit = 50).flatten()
     embeds = [embed for e in embed_history for embed in e.embeds][:10]
-    menu = menus.MenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after=True)
+    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after=True)
 
     if not embeds:
       return await ctx.send("No embeds found :D")

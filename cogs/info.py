@@ -4,6 +4,7 @@ import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 from doc_search import AsyncScraper
+from discord.ext.menus.views import ViewMenuPages
 
 class Info(commands.Cog):
   def __init__(self, bot):
@@ -129,7 +130,8 @@ class Info(commands.Cog):
   @commands.command(help="fetch invite details")
   async def fetch_invite(self, ctx, *invites:typing.Union[discord.Invite, str]):
     if invites:
-      menu = menus.MenuPages(utils.InviteInfoEmbed(invites, per_page=1),delete_message_after=True)
+      
+      menu = ViewMenuPages(utils.InviteInfoEmbed(invites, per_page=1),delete_message_after=True)
       await menu.start(ctx)
     if not invites:
       await ctx.send("Please get actual invites to attempt grab")
@@ -215,7 +217,8 @@ class Info(commands.Cog):
   @commands.command(help="gives info on default emoji and custom emojis",name="emoji")
   async def emoji_info(self,ctx,*emojis: typing.Union[utils.EmojiConverter ,str]):
     if emojis:
-      menu = menus.MenuPages(utils.EmojiInfoEmbed(emojis, per_page=1),delete_message_after=True)
+
+      menu = ViewMenuPages(utils.EmojiInfoEmbed(emojis, per_page=1),delete_message_after=True)
       await menu.start(ctx)
     if not emojis:
       await ctx.send("Looks like there was no emojis.")
@@ -493,7 +496,7 @@ class DevTools(commands.Cog):
 
     content = textwrap.wrap(values, width = 2000)
 
-    menu = menus.MenuPages(utils.charinfoMenu(content, per_page=1),delete_message_after = True)
+    menu = ViewMenuPages(utils.charinfoMenu(content, per_page=1),delete_message_after = True)
 
     await menu.start(ctx)
 
@@ -514,7 +517,7 @@ class DevTools(commands.Cog):
       pag.add_line(f"{g} : {rtfm_dictionary.get(g)}")
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = menus.MenuPages(self.RtfmEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(self.RtfmEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @commands.command(brief = "a command to autoformat your python code to pep8")

@@ -3,6 +3,7 @@ import discord, random, time, asyncio, difflib, datetime, contextlib
 
 import utils
 from discord.ext.commands.cooldowns import BucketType
+from discord.ext.menus.views import ViewMenuPages
 
 class Bot(commands.Cog):
   def __init__(self, bot):
@@ -311,7 +312,7 @@ class Bot(commands.Cog):
 
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = menus.MenuPages(self.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(self.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
     
   @commands.command(brief="Lists the current used prefix",aliases=["prefix"])

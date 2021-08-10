@@ -1,9 +1,10 @@
 from discord.ext import commands, menus
 import discord
+from discord.ext.menus.views import ViewMenuPages
 
 class MyHelp(commands.MinimalHelpCommand):
   async def send_pages(self):
-    menu = menus.MenuPages(SendHelp(self.paginator.pages, per_page = 1), delete_message_after = True)
+    menu = ViewMenuPages(SendHelp(self.paginator.pages, per_page = 1), delete_message_after = True)
 
     await menu.start(self.context)
 
