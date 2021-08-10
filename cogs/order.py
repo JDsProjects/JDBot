@@ -1,7 +1,8 @@
-import os, discord, time, async_cse, random, cse, textwrap
+import os, discord, time, async_cse, random, cse
 from discord.ext import commands, menus
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
+from discord.ext.menus.views import ViewMenuPages
 
 from aiogifs.tenor import TenorClient, ContentFilter
 from aiogifs.giphy import GiphyClient, AgeRating
@@ -309,9 +310,11 @@ class Order(commands.Cog):
       return await ctx.send(f"An error occured, error: {e}. Please give this to the owner. This was an error with results")
 
   
-    menu = menus.MenuPages(self.GoogleEmbed(results, per_page = 1), delete_message_after = True)
+    menu =  ViewMenuPages(self.GoogleEmbed(results, per_page = 1), delete_message_after = True)
 
     await menu.start(ctx)
+
+    #this appears to work but I don't know if it's officially supported.
 
   @google.error
   async def google_error(self, ctx, error):
