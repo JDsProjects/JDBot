@@ -224,7 +224,7 @@ class Bot(commands.Cog):
       message = await ctx.send(content=f'Summoning JDJG now a.k.a the Bot Owner to the guild make sure invite permissions are open!')
       await msg.delete()
 
-      if isinstance(self.ctx.channel, discord.TextChannel):
+      if isinstance(ctx.channel, discord.TextChannel):
         await asyncio.sleep(1)
         await message.edit(content = "This is attempting to make an invite")
 
@@ -248,7 +248,7 @@ class Bot(commands.Cog):
         
           await jdjg.send(embed = embed)
 
-      if isinstance(self.ctx.channel,discord.DMChannel):
+      if isinstance(ctx.channel,discord.DMChannel):
         await asyncio.sleep(1)
         return await message.edit(content = "This is meant for guilds not Dm channel if you want support in DM channel contact the owner, By DMS at JDJG Inc. Official#3493.")
 
