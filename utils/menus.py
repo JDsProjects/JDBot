@@ -21,7 +21,7 @@ class InviteInfoEmbed(menus.ListPageSource):
       embed.add_field(name="Invite Channel",value=f"{item.channel}")
       embed.set_footer(text=f"ID: {guild_id}\nInvite Code: {item.code}\nInvite Url: {item.url}")
   
-    if isinstance(item,str):
+    if isinstance(item, str):
       embed=discord.Embed(title="Failed grabbing the invite code:",description=f"Discord couldnt fetch the invite with the code {item}.",color=random.randint(0, 16777215))
       embed.set_footer(text="If this is a consistent problem please contact JDJG Inc. Official#3493")
 

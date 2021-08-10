@@ -25,7 +25,7 @@ class BetterMemberConverter(commands.Converter):
 class BetterUserconverter(commands.Converter):
   async def convert(self, ctx, argument):
     try:
-     user=await commands.UserConverter().convert(ctx,argument)
+     user = await commands.UserConverter().convert(ctx,argument)
     except commands.UserNotFound:
       user = None
     if not user and ctx.guild:
@@ -45,7 +45,7 @@ class BetterUserconverter(commands.Converter):
     if user == None:
       tag = re.match(r"#?(\d{4})",argument)
       if tag:
-        test=discord.utils.get(ctx.bot.users, discriminator = tag.group(1))
+        test = discord.utils.get(ctx.bot.users, discriminator = tag.group(1))
         user = test or ctx.author
     return user
 
@@ -120,8 +120,6 @@ async def guildinfo(ctx, guild):
 
     await ctx.send(embed=embed)
 
-
-
 class EmojiConverter(commands.Converter):
   async def convert(self, ctx: commands.Context, arg: str): 
     emojis = emoji.unicode_codes.EMOJI_UNICODE["en"].values()
@@ -142,10 +140,6 @@ def Membercheck(ctx):
   def inner(m):
     return m.author == ctx.guild.me
   return inner
-
-def reaction_check(ctx, reactions : list):
-  def inner(reaction, user):
-    return str(reaction.emoji) in reactions and user == ctx.author
 
 async def roleinfo(ctx, role):
   role_members=collections.Counter([u.bot for u in role.members])
