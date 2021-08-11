@@ -435,7 +435,7 @@ resolved_reference = "1ac5b6eaeb55032376afc51c195640aa85a74f3c"
 
 [[package]]
 name = "discord.py"
-version = "2.0.0a3462+g1c40d43f"
+version = "2.0.0a3465+gf631ed22"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -455,7 +455,7 @@ voice = ["PyNaCl (>=1.3.0,<1.5)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "1c40d43fd1289238a2184e7f106b908b2a1b4381"
+resolved_reference = "f631ed22b6d66045a0d4413698d99b36776e2211"
 
 [[package]]
 name = "discordlists.py"
