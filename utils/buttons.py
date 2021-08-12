@@ -56,7 +56,7 @@ class dm_or_ephemeral(discord.ui.View):
     await interaction.response.edit_message(view = self)
 
     #view = 
-    #await interaction.response.send_message(f"Here are mutual guilds for you to see {self.authorized_user.mention}", view = view, ephemeral=True)
+    #await interaction.response.send_message(f"Here are mutual guilds for you to see {self.authorized_user.mention}", view = view, ephemeral = True)
     #tbh i don't know yet.
 
   @discord.ui.button(label = "Secret Message", style = discord.ButtonStyle.success, emoji = "📥")
