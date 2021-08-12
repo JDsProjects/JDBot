@@ -11,22 +11,24 @@ class Moderation(commands.Cog):
   @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
   async def warn(self, ctx, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
-    if utils.warn_permission(ctx, Member):
+    
+    warn_useable = utils.warn_permission(ctx, Member)
 
-      if Member:
-        embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"You have been warned by {ctx.author}",icon_url=("https://i.imgur.com/vkleJ9a.png"))
-        embed.set_image(url="https://i.imgur.com/jDLcaYc.gif")
-        embed.set_footer(text = f"ID: {ctx.author.id}")
+    if warn_useable:
 
-        if Member.dm_channel is None:
-          await Member.create_dm()
-        
-        try:
-          await Member.send(embed=embed)
+      embed = discord.Embed(color=random.randint(0, 16777215))
+      embed.set_author(name=f"You have been warned by {ctx.author}",icon_url=("https://i.imgur.com/vkleJ9a.png"))
+      embed.set_image(url="https://i.imgur.com/jDLcaYc.gif")
+      embed.set_footer(text = f"ID: {ctx.author.id}")
 
-        except discord.Forbidden:
-          await ctx.send("they don't seem like a valid user or they weren't DMable.")
+      if Member.dm_channel is None:
+        await Member.create_dm()
+      
+      try:
+        await Member.send(embed=embed)
+
+      except discord.Forbidden:
+        await ctx.send("they don't seem like a valid user or they weren't DMable.")
       
       embed.set_footer(text = f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}")
       await self.bot.get_channel(855217084710912050).send(embed=embed) 
@@ -36,11 +38,12 @@ class Moderation(commands.Cog):
 
       try:
         await ctx.author.send(content=f"Why did you warn {Member}?")
+
       except discord.Forbidden:
         await ctx.send("we can't DM them :(")
 
-    if utils.warn_permission(ctx, Member) is False:
-      await ctx.send("You don't have permission to use that. You need to have manage_messages, have a higher hieracy in a guild, and have higher permissions than the target to use that.")
+    elif warn_useable is False:
+      await ctx.send(f"{ctx.author.mention}, you don't have permission to use that. You need to have manage_messages, have a higher hieracy in a guild, and have higher permissions than the target to use that.", allowed_mentions = discord.AllowedMentions.none())
 
   @warn.error
   async def warn_errror(self, ctx, error):
