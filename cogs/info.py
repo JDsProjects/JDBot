@@ -104,14 +104,14 @@ class Info(commands.Cog):
 
       await ctx.send("Opening another buttons response.", view = view)
       
-      await ctx.send(f"Currently WIP")
+      await ctx.send(f"Currently WIP, so dms it is.")
 
-      #menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page = 1), delete_message_after = True)
+      menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page = 1), delete_message_after = True)
 
-      #if (ctx.author.dm_channel is None):
-        #await ctx.author.create_dm()
+      if (ctx.author.dm_channel is None):
+        await ctx.author.create_dm()
 
-      #await menu.start(ctx, channel = ctx.author.dm_channel)
+      await menu.start(ctx, channel = ctx.author.dm_channel)
 
   async def cog_command_error(self, ctx, error):
     if ctx.command or not ctx.command.has_error_handler():
