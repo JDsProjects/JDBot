@@ -103,6 +103,8 @@ class Info(commands.Cog):
       view = utils.dm_or_ephemeral(ctx.author, pages)
 
       await ctx.send("Opening another buttons response.", view = view)
+      
+      await ctx.send(f"Currently WIP")
 
       #menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page = 1), delete_message_after = True)
 

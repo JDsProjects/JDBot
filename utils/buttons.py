@@ -33,7 +33,6 @@ class BasicButtons(discord.ui.View):
     self.value = False
     self.stop()
 
-
 class dm_or_ephemeral(discord.ui.View):
   def __init__(self, authorized_user: typing.Union[discord.User, discord.Member] = None, paginator_objects : list = None , **kwargs):
     super().__init__(**kwargs)
@@ -56,8 +55,9 @@ class dm_or_ephemeral(discord.ui.View):
     self.clear_items()
     await interaction.response.edit_message(view = self)
 
-    #view = BasicButtons()
+    #view = 
     #await interaction.response.send_message(f"Here are mutual guilds for you to see {self.authorized_user.mention}", view = view, ephemeral=True)
+    #tbh i don't know yet.
 
   @discord.ui.button(label = "Secret Message", style = discord.ButtonStyle.success, emoji = "📥")
   async def dmMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
