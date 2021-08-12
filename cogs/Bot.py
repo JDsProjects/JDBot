@@ -55,7 +55,7 @@ class Bot(commands.Cog):
 
     if not support_guild.get_member(owner_id):
       await ctx.send("attempting to cache with query_members in discord.py the owner id in the support guild, if they don't exist this will not work")
-      
+
       try:
         await support_guild.query_members(cache = True, limit = 5, user_ids = [owner_id]) 
 
@@ -168,8 +168,8 @@ class Bot(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="Privacy Policy",aliases=["privacy"])
-  async def promises(self,ctx):
-    embed=discord.Embed(title="Privacy Policies",color=random.randint(0, 16777215))
+  async def promises(self, ctx):
+    embed = discord.Embed(title="Privacy Policies",color=random.randint(0, 16777215))
     embed.add_field(name="1:",value="We have a channel that logs when the bot joins or leaves a guild")
     embed.add_field(name="2:",value="We will store any errors(which may go back to you, but this is console only.) This is in memory anyway, thus it doesn't store in any of our DBs.")
     embed.add_field(name="3:",value="we will only store user ids(in the future for balance commands and economy commands(opt in only)")
@@ -177,7 +177,7 @@ class Bot(commands.Cog):
     embed.add_field(name="5:",value="we Finally store invalid commands")
     embed.add_field(name="6:",value="We may temporarily look at your mutual guilds with our bot or the list of servers our bot is in, with some information, just to test some things(like if a command is going hayware) or prevent abuse. If you want to look at the embeds with this, just ask, We will show you.")
     embed.add_field(name="6.1:",value="This is a temp command, which is stored no where else, and we also delete the embed when done :D. If you have a problem with this contact me.")
-    embed.add_field(name="Final:",value="There should be no more except the sus list(list of ids I put together by hand of people who probaly shouldn't hang out with)")
+    embed.add_field(name="Final:",value="There should be no more except the sus list(list of ids I put together by hand of people who probaly shouldn't hang out with). We also now use the built in discord.py guild.members list with cache_member to only use memory to store you, we only use this to limit api calls(it's only opt in anyway)")
     embed.add_field(name="Who Gets this info:",value="Only us, and our DB provider MongoDB(but they are unlikely to use our data. Sus users do show up if they exist in the same guild though and the reason why.")
     embed.add_field(name="More Info:",value="Contact me at JDJG Inc. Official#3493")
     await ctx.send(embed=embed)
