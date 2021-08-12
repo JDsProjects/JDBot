@@ -122,7 +122,7 @@ class Owner(commands.Cog):
       return embed
   
   @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
-  async def servers(self,ctx):
+  async def servers(self, ctx):
     if await self.bot.is_owner(ctx.author):
 
       pag = commands.Paginator()
@@ -131,6 +131,10 @@ class Owner(commands.Cog):
 
       pages = [page.strip("`") for page in pag.pages]
       menu = ViewMenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
+
+      if (ctx.author.dm_channel is None):
+        await ctx.author.create_dm()
+
       await menu.start(ctx, channel = ctx.author.dm_channel)
       
     if await self.bot.is_owner(ctx.author) is False:
@@ -173,8 +177,12 @@ class Owner(commands.Cog):
     pages = [page.strip("`") for page in pag.pages]
     pages = pages or ["No shared servers"]
 
-    menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page=1),delete_message_after=True)
-    await menu.start(ctx, channel=ctx.author.dm_channel)
+    menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page=1),delete_message_after = True)
+
+    if (ctx.author.dm_channel is None):
+        await ctx.author.create_dm()
+
+    await menu.start(ctx, channel = ctx.author.dm_channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
   async def addsus(self, ctx, *, user: utils.BetterUserconverter = None):
@@ -332,7 +340,10 @@ class Owner(commands.Cog):
 
     menu = ViewMenuPages(utils.ErrorEmbed(pages, per_page = 1),delete_message_after = True)
 
-    await menu.start(ctx,channel=ctx.author.dm_channel)
+    if (ctx.author.dm_channel is None):
+      await ctx.author.create_dm()
+
+    await menu.start(ctx, channel = ctx.author.dm_channel)
 
     mystbin_client = mystbin.Client(session=self.bot.session)
     paste = await mystbin_client.post(values)

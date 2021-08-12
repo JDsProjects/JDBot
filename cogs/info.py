@@ -107,6 +107,9 @@ class Info(commands.Cog):
 
       menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page = 1),delete_message_after=True)
 
+      if (ctx.author.dm_channel is None):
+        await ctx.author.create_dm()
+        
       await menu.start(ctx, channel = ctx.author.dm_channel)
 
   async def cog_command_error(self, ctx, error):
