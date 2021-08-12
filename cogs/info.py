@@ -61,14 +61,6 @@ class Info(commands.Cog):
             break
             
         highest_role = "None Found"
-    
-    guilds_list=[guild for guild in self.bot.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
-    if not guilds_list:
-      guild_list = "None"
-
-    if guilds_list:
-      guild_list= ", ".join(map(str, guilds_list))
-
 
     flags = user.public_flags.all()
     
@@ -83,11 +75,13 @@ class Info(commands.Cog):
     embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {badges} \n**Joined Discord**: {user.created_at.strftime('%m/%d/%Y %H:%M:%S')} \n**Status**: {status}")
 
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
-
-    embed.add_field(name="Mutual Guilds:", value = guild_list)
     
     embed.set_image(url = user.avatar.url)
-    await ctx.send(embed=embed)
+
+    guilds_list=[guild for guild in self.bot.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
+    
+    view = 
+    await ctx.send(embed = embed, view = view)
 
   async def cog_command_error(self, ctx, error):
     if ctx.command or not ctx.command.has_error_handler():
