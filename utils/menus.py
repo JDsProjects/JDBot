@@ -88,3 +88,9 @@ class QuickMenu(menus.ListPageSource):
   async def format_page(self, menu, item):
     return item
     #returns the embed here lol.
+
+class mutualGuildsEmbed(menus.ListPageSource):
+    async def format_page(self, menu, item):
+      embed = discord.Embed(title="Mutual Servers:", description=item,color = random.randint(0, 16777215))
+      return embed
+

@@ -77,11 +77,37 @@ class Info(commands.Cog):
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
     
     embed.set_image(url = user.avatar.url)
-
-    guilds_list=[guild for guild in self.bot.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
     
-    view = 
-    await ctx.send(embed = embed, view = view)
+    view = utils.BasicButtons(ctx.author)
+    msg = await ctx.send("do you want the mutual guilds to be dmed to you?", embed = embed, view = view)
+
+    await view.wait()
+
+    if view.value is None:
+      await msg.delete()
+      return await ctx.send("you didn't respond quickly enough")
+
+    if not view.value:
+      await msg.delete()
+      await ctx.send("Not dming the mutual guilds list to you.")
+
+    if view.value:
+      await msg.delete()
+      await ctx.send("Dming you the mutual guilds list")
+
+      pag = commands.Paginator()
+
+      guilds_list = [guild for guild in self.bot.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
+
+      for g in guilds_list:
+        pag.add_line(f"{g}")
+
+      pages = [page.strip("`") for page in pag.pages]
+      pages = pages or ["None"]
+
+      menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page = 1),delete_message_after=True)
+
+      await menu.start(ctx, channel = ctx.author.dm_channel)
 
   async def cog_command_error(self, ctx, error):
     if ctx.command or not ctx.command.has_error_handler():

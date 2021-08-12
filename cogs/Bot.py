@@ -185,7 +185,7 @@ class Bot(commands.Cog):
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self, ctx):
     
-    view = utils.SupportInvite(ctx.author)
+    view = utils.BasicButtons(ctx.author)
     msg = await ctx.send("You must agree with **\N{WHITE HEAVY CHECK MARK}** to have an invite link to our support server sent here before we can invite you", view = view)  
 
     await view.wait()
@@ -237,7 +237,7 @@ class Bot(commands.Cog):
   @commands.command(brief = "a command to automatically summon by creating an invite and having jdjg look at something if it's there something wrong")
   async def jdjgsummon(self, ctx):
 
-    view = utils.JDJGsummon(ctx.author)
+    view = utils.BasicButtons(ctx.author)
     msg = await ctx.send("react with \N{WHITE HEAVY CHECK MARK} if you want me to be summoned if not use \N{CROSS MARK}", view = view)
 
     await view.wait()

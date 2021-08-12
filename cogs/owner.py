@@ -162,11 +162,6 @@ class Owner(commands.Cog):
     if await self.bot.is_owner(ctx.author) is False:
       await ctx.send("You can't use that")
 
-  class mutualGuildsEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
-      return embed
-
   @commands.command(brief="Commands to see what guilds a person is in.")
   async def mutualguilds(self, ctx, *, user: utils.BetterUserconverter = None):
     user = user or ctx.author
@@ -178,8 +173,8 @@ class Owner(commands.Cog):
     pages = [page.strip("`") for page in pag.pages]
     pages = pages or ["No shared servers"]
 
-    menu = ViewMenuPages(self.mutualGuildsEmbed(pages, per_page=1),delete_message_after=True)
-    await menu.start(ctx,channel=ctx.author.dm_channel)
+    menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page=1),delete_message_after=True)
+    await menu.start(ctx, channel=ctx.author.dm_channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
   async def addsus(self, ctx, *, user: utils.BetterUserconverter = None):

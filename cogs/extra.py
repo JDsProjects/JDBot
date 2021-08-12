@@ -629,7 +629,7 @@ class Extra(commands.Cog):
     if isinstance(ctx.channel, discord.DMChannel):
       return await ctx.send("querying members doesn't work in dms.")
 
-    view = utils.CacheAgree(ctx.author)
+    view = utils.BasicButtons(ctx.author)
    
     msg = await ctx.send("Do you agree to cache yourself in the temp guild members list(this is something in discord.py where it caches members, but it's gone after bot startup, it will also not be stored anywhere else as that would be bad if it did, it will only be used to bring api calls down)?", view = view)
 
