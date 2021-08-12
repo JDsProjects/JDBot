@@ -422,8 +422,9 @@ class Extra(commands.Cog):
       
     if not messages:
       return await ctx.send("it likely errored with not having the proper manage message permissions(shouldn't happen), or any http exception happened.")
+     
 
-    page = "\n".join(f"{msg.author} ({['User', 'Bot'][msg.author.bot]}) : {msg.content}" for msg in messages)
+    page = "\n".join(f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {msg.content}" for msg in messages)
 
     mystbin_client = mystbin.Client(session=self.bot.session)
     try:
