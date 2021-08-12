@@ -44,7 +44,7 @@ class BetterUserconverter(commands.Converter):
 
     if user == None:
       tag = re.match(r"#?(\d{4})",argument)
-      if tag:
+      if tag and not ctx.bot.users:
         test = discord.utils.get(ctx.bot.users, discriminator = tag.group(1))
         user = test or ctx.author
     return user

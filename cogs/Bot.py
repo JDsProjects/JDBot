@@ -55,7 +55,7 @@ class Bot(commands.Cog):
 
     owner= await self.bot.getch_member(support_guild, owner_id) or await self.bot.getch_user(owner_id)
 
-    user_type = user_type = ['User', 'Bot'][owner.bot]
+    user_type = ("Bot" if user.bot else "User")
 
     guilds_list=[guild for guild in self.bot.guilds if guild.get_member(owner.id) and guild.get_member(ctx.author.id)]
 
