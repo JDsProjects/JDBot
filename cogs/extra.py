@@ -183,7 +183,7 @@ class Extra(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(help="a command to talk to Google TTS",brief="using the power of the GTTS module you can now do tts")
-  async def tts(self,ctx,*,args=None):
+  async def tts(self, ctx, * ,args = None):
     if args:
       await ctx.send("if you have a lot of text it may take a bit")
       tts_file = await utils.google_tts(args)
@@ -254,7 +254,7 @@ class Extra(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="repeats what you say",help="a command that repeats what you say the orginal message is deleted")
-  async def say(self,ctx,*,args=None):
+  async def say(self, ctx, *, args = None):
     if args is None:
       args = "You didn't give us any text to use."
 
@@ -296,7 +296,7 @@ class Extra(commands.Cog):
     await ctx.send("this command is meant to apply")
 
   @apply.command(brief="a command to apply for our Bloopers.",help="a command to apply for our bloopers.")
-  async def bloopers(self,ctx,*,args=None):
+  async def bloopers(self, ctx, *, args=None):
     if args is None:
       await ctx.send("You didn't give us any info.")
     if args:
@@ -346,11 +346,11 @@ class Extra(commands.Cog):
     await ctx.send(embed=embed)
 
   @jokeapi.error
-  async def jokeapi_error(self,ctx,error):
+  async def jokeapi_error(self, ctx, error):
     await ctx.send(error)
 
   @commands.command()
-  async def cookieclicker_save(self,ctx):
+  async def cookieclicker_save(self, ctx):
     import io
 
     mystbin_client = mystbin.Client(session=self.bot.session)
@@ -561,7 +561,7 @@ class Extra(commands.Cog):
   @commands.command(brief  = "a command to create a text channel")
   async def channel_create(self, ctx, *, args = None):
 
-    if isinstance(ctx.channel,discord.DMChannel):
+    if isinstance(ctx.channel, discord.DMChannel):
       return await ctx.send("you can't make a text channel in a DM") 
     
     if not args:
@@ -623,6 +623,49 @@ class Extra(commands.Cog):
       embed.set_thumbnail(url="https://i.imgur.com/E7GIyu6.png")
     
     await ctx.send(embed=embed)
-  
+
+  @commands.command(brief = "a command that uses discord.py's query_members to cache users(only use this if you want to cache yourself)")
+  async def cache_member(self, ctx):
+    if isinstance(ctx.channel, discord.DMChannel):
+      return await ctx.send("querying members doesn't work in dms.")
+
+    view = utils.CacheAgree(ctx.author)
+   
+    msg = await ctx.send("Do you agree to cache yourself in the guild members list(this will be uncached after boot startup, it will also not be stored anywhere else)?", view = view)
+
+    await view.wait()
+
+    if view.value is None:
+      await ctx.reply("You let me time out :(")
+      return await msg.delete()
+    
+    if view.value:
+      if not ctx.guild.get_member(ctx.author.id):
+        await msg.delete()
+
+        msg = await ctx.send("attempting to cache you with query_members in discord.py(this way you don't need to make api calls if you wish.)")
+        
+        try:
+          await ctx.guild.query_members(cache = True, limit = 5, user_ids = [ctx.author.id]) 
+
+        except Exception as e:
+          await asyncio.sleep(1)
+          return await msg.edit(f"failed caching members with query_members in discord.py with error {e}")
+
+        await asyncio.sleep(1)
+        await msg.edit("successfully cached you")
+
+      else:
+        await msg.delete()
+        return await ctx.send("You are already cached :D, you don't need to cache again")
+
+    if not view.value:
+      await msg.delete()
+      await ctx.reply("You didn't agree to being cached.")
+
+  @cache_member.error
+  async def cache_member_error(self, ctx, error):
+    await ctx.send(error)
+
 def setup(bot):
   bot.add_cog(Extra(bot))

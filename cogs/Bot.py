@@ -46,12 +46,21 @@ class Bot(commands.Cog):
     await ctx.send(embed = embed)
 
   @commands.command(brief="gives you who the owner is.")
-  async def owner(self,ctx):
+  async def owner(self, ctx):
+
     info = await self.bot.application_info()
     owner_id = info.team.owner_id if info.team else info.owner.id
 
-    support_guild=self.bot.get_guild(736422329399246990
-    )
+    support_guild =  self.bot.get_guild(736422329399246990)
+
+    if not support_guild.get_member(owner_id):
+      await ctx.send("attempting to cache with query_members in discord.py the owner id in the support guild, if they don't exist this will not work")
+      
+      try:
+        await support_guild.query_members(cache = True, limit = 5, user_ids = [owner_id]) 
+
+      except:
+        await ctx.send("failed caching members with query_members in discord.py")
 
     owner = await self.bot.getch_member(support_guild, owner_id) or await self.bot.getch_user(owner_id)
 
