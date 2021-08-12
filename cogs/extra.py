@@ -624,7 +624,7 @@ class Extra(commands.Cog):
     
     await ctx.send(embed=embed)
 
-  @commands.command(brief = "a command that uses discord.py's query_members to cache users(only use this if you want to cache yourself)")
+  @commands.command(brief = "a command that uses discord.py's query_members to cache users(only use this if you want to cache yourself, you can't cache others to with this)")
   async def cache_member(self, ctx):
     if isinstance(ctx.channel, discord.DMChannel):
       return await ctx.send("querying members doesn't work in dms.")
@@ -643,7 +643,7 @@ class Extra(commands.Cog):
       if not ctx.guild.get_member(ctx.author.id):
         await msg.delete()
 
-        msg = await ctx.send("attempting to cache you with query_members in discord.py(this way you don't need to make api calls if you wish.)")
+        msg = await ctx.send("attempting to cache you with query_members in discord.py(this way you don't need to make api calls if you wish.) If you don't trust us you can always use the support command to get info about this or jdjgsummon, and I'll gladly so you this what I say.")
         
         try:
           await ctx.guild.query_members(cache = True, limit = 5, user_ids = [ctx.author.id]) 
