@@ -49,7 +49,7 @@ class Moderation(commands.Cog):
     import traceback
     traceback.print_exc()
 
-  @commands.cooldown(1,90,BucketType.user)
+  @commands.cooldown(1, 90, BucketType.user)
   @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(WIP)")
   async def scan_guild(self, ctx):
     if isinstance(ctx.channel, discord.TextChannel):
@@ -59,22 +59,23 @@ class Moderation(commands.Cog):
       await cur.close()
       count = 0
 
+      #some code here to do a list compreshion to see if they are cached using get_user, those who return as None will be passed to query_members
       #await ctx.guild.query_members(limit = 100, cache = True, user_ids = sus_users.keys())
 
       for x in sus_users:
         user = ctx.guild.get_member(x)
         if user:
           count += 1
-          await ctx.send(f"Found {x}. \nUsername:{user.name} \nReason: {sus_users[x]}")
+          await ctx.send(f"Found {x}. \nUsername: {user.name} \nReason: {sus_users[x]}")
           
       if count < 1:
         await ctx.send("No Bad users found.")
 
-    if isinstance(ctx.channel,discord.DMChannel):
+    if isinstance(ctx.channel, discord.DMChannel):
       await ctx.send("please use the global version")
 
   @commands.cooldown(1, 90, BucketType.user)
-  @commands.command(brief= "scan globally per guild")
+  @commands.command(brief = "scan globally per guild")
   async def scan_global(self, ctx):
     cur = await self.bot.sus_users.cursor()
     cursor = await cur.execute("SELECT * FROM SUS_USERS;")
