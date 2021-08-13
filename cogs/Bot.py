@@ -77,7 +77,7 @@ class Bot(commands.Cog):
     
     if owner:
       nickname = str(owner.nick)
-      joined_guild = owner.joined_at.strftime('%m/%d/%Y %H:%M:%S')
+      joined_guild = f"{discord.utils.format_dt(owner.joined_at, style = 'd')}\n{discord.utils.format_dt(owner.joined_at, style = 'T')}"
       status = str(owner.status).upper()
       highest_role = owner.roles[-1]
     
@@ -96,15 +96,16 @@ class Bot(commands.Cog):
     embed=discord.Embed(title=f"Bot Owner: {owner}",description=f"Type: {user_type}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
     embed.add_field(name="Username:", value = owner.name)
     embed.add_field(name="Discriminator:",value=owner.discriminator)
-    embed.add_field(name="Nickname: ", value = nickname)
-    embed.add_field(name="Joined Discord: ",value = (owner.created_at.strftime('%m/%d/%Y %H:%M:%S')))
-    embed.add_field(name="Joined Guild: ",value = joined_guild)
+    embed.add_field(name = "Nickname: ", value = nickname)
+    embed.add_field(name="Joined Discord: ", value = (f"{discord.utils.format_dt(owner.created_at, style = 'd')}\n{discord.utils.format_dt(owner.created_at, style = 'T')}"))
+    embed.add_field(name = "Joined Guild: ", value = joined_guild)
     embed.add_field(name="Mutual Guilds:", value=guild_list)
-    embed.add_field(name="ID:",value=owner.id)
-    embed.add_field(name="Status:",value=status)
-    embed.add_field(name="Highest Role:",value=highest_role)
+    embed.add_field(name="ID:", value = owner.id)
+    embed.add_field(name="Status:", value=status)
+    embed.add_field(name="Highest Role:", value=highest_role)
     embed.set_image(url = owner.avatar.url)
-    await ctx.send(embed=embed)
+    embed.set_footer(text = f"Support Guild : {support_guild}")
+    await ctx.send(embed = embed)
 
   @commands.command(help="a command to give information about the team",brief="this command works if you are in team otherwise it will just give the owner.")
   async def team(self,ctx):

@@ -598,7 +598,6 @@ class DevTools(commands.Cog):
     
     if_animated = ctx.author.avatar.is_animated()
 
-
     save_type = ".gif" if if_animated else ".png"
 
     icon_file = await ctx.author.avatar.read()
