@@ -63,9 +63,9 @@ class Events(commands.Cog):
 
     if (test.valid) == False and test.prefix != None and test.command is None:
       
-      time_used=(message.created_at).strftime('%m/%d/%Y %H:%M:%S')
-      embed_message = discord.Embed(title=f" {test.prefix}{test.invoked_with}", description=time_used,color=random.randint(0, 16777215))
-      embed_message.set_author(name=f"{message.author} tried to excute invalid command:",icon_url=(message.author.avatar.url))
+      embed_message = discord.Embed(title = f" {test.prefix}{test.invoked_with}", description = f"{discord.utils.format_dt(message.created_at, style = 'd')}{discord.utils.format_dt(message.created_at, style = 'T')}",color = random.randint(0, 16777215))
+
+      embed_message.set_author(name=f"{message.author} tried to excute invalid command:", icon_url = (message.author.avatar.url))
       embed_message.set_footer(text = f"{message.author.id}")
       embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
       await self.bot.get_channel(855217084710912050).send(embed=embed_message)

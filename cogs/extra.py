@@ -30,8 +30,7 @@ class Extra(commands.Cog):
       for y, x in enumerate(minecraft_info.from_dict):
 
         if y > 0:
-          embed.add_field(name = f"Username:\n{x.name}",value=f"Date and Time Changed:\n{discord.utils.format_dt(x.changed_at, style = 'f')}")
-
+          embed.add_field(name = f"Username:\n{x.name}",value=f"Date and Time Changed:\n{discord.utils.format_dt(x.changed_at, style = 'd')} \n{discord.utils.format_dt(x.changed_at, style = 'T')}")
         
       embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar.url))
       await ctx.send(embed=embed)
@@ -590,7 +589,7 @@ class Extra(commands.Cog):
   @commands.command(bried = "tells you the current time with discord's speacil time converter", name = "time")
   async def _time(self, ctx):
     
-    embed = discord.Embed(title="Current Time :",description=f"{discord.utils.format_dt(ctx.message.created_at, style = 'f')}",color=random.randint(0, 16777215))
+    embed = discord.Embed(title="Current Time :",description=f"{discord.utils.format_dt(ctx.message.created_at, style = 'd')}{discord.utils.format_dt(ctx.message.created_at, style = 'T')}",color=random.randint(0, 16777215))
 
     embed.set_footer(text = f"Requested By {ctx.author}")
     await ctx.send(embed = embed)
