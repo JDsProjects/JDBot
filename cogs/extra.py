@@ -27,10 +27,10 @@ class Extra(commands.Cog):
       embed.set_footer(text = f"Minecraft UUID: {minecraft_info.uuid}")
       embed.add_field(name="Orginal Name:", value = minecraft_info.name)
 
-      for y, x in enumerate(minecraft_info.history):
-        
+      for y, x in enumerate(minecraft_info.from_dict):
+
         if y > 0:
-          embed.add_field(name = f"Username:\n{x['name']}",value=f"Date Changed:\n{x['changedToAt']}\n \nTime Changed: \n {x['timeChangedAt']}")
+          embed.add_field(name = f"Username:\n{x.name}",value=f"Date and Time Changed:\n{discord.utils.format_dt(x.changed_at, style = 'f')}")
 
         
       embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar.url))

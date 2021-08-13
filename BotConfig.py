@@ -1,4 +1,4 @@
-import discord,  re, os, aiohttp, contextlib, aiosqlite, traceback, datetime, itertools
+import discord, re, os, aiohttp, contextlib, aiosqlite, traceback, itertools
 from discord.ext import commands
 
 async def get_prefix(bot, message):
@@ -64,7 +64,7 @@ class JDBot(commands.Bot):
 
 bot = JDBot(command_prefix = (get_prefix), intents = intents, chunk_guilds_at_startup = False, strip_after_prefix = True)
 
-bot.launch_time = datetime.datetime.utcnow()
+bot.launch_time = discord.utils.utcnow()
 
 @bot.check
 async def check_command_access(ctx):
