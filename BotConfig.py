@@ -62,7 +62,7 @@ class JDBot(commands.Bot):
         
     return [cmd for cmd in command_list if await check(cmd, ctx)]
 
-bot = JDBot(command_prefix = (get_prefix), intents = intents, chunk_guilds_at_startup = False, strip_after_prefix = True)
+bot = JDBot(command_prefix = (get_prefix), intents = intents, chunk_guilds_at_startup = False, strip_after_prefix = True, allowed_mentions = discord.AllowedMentions(everyone = False, roles = False))
 
 bot.launch_time = discord.utils.utcnow()
 

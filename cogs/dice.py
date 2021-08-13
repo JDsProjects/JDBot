@@ -32,7 +32,7 @@ class Dice(commands.Cog):
 
     if emoji_choosen.available is False: emoji_choosen = emoji_choosen.url
 
-    if isinstance(ctx.channel, discord.threads.Thread):
+    if isinstance(ctx.channel, discord.Thread):
       if ctx.guild.emojis:
         emoji_choice = random.choice(ctx.guild.emojis)
         if emoji_choice.available is False: emoji_choice = emoji_choice.url

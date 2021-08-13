@@ -171,6 +171,22 @@ class Test(commands.Cog):
     else:
       await ctx.send("Please look for a library to get the info of.")
 
+  @commands.command(brief = "does say but more powerful with the optional option of a channel to say in")
+  async def say2(self, ctx, channel : typing.Optional[typing.Union[discord.TextChannel, discord.Thread]] = None, *, args = None):
+    
+    channel = channel or ctx.channel
+
+    args = args or "You didn't give us any text to use."
+    
+    bot_member = channel.me if isinstance(channel, discord.DMChannel) else channel.guild.me
+      
+    if channel.permissions_for(bot_member).send_messages or not channel.id == ctx.channel.id:
+
+      await channel.send(f"{args} \n Sent By {ctx.author}", allowed_mentions = discord.AllowedMentions.none())
+
+    else:
+      await ctx.send("doesn't have permissions to send in that channel.")
+      
 
 def setup(bot):
   bot.add_cog(Test(bot))

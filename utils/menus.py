@@ -4,7 +4,8 @@ from discord.ext import commands, menus
 
 class InviteInfoEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
-    if isinstance(item,discord.Invite):
+    if isinstance(item, discord.Invite):
+      
       if item.guild:
         image = item.guild.icon.url if item.guild.icon else "https://i.imgur.com/3ZUrjUP.png"
         guild = item.guild
@@ -14,16 +15,18 @@ class InviteInfoEmbed(menus.ListPageSource):
         image = "https://i.imgur.com/pQS3jkI.png"
         guild_id = "Unknown"
       embed=discord.Embed(title=f"Invite for {guild}:",color=random.randint(0, 16777215))
-      embed.set_author(name="Discord Invite Details:",icon_url=(image))
-      embed.add_field(name="Inviter:",value=f"{item.inviter}")
+      embed.set_author(name="Discord Invite Details:", icon_url=(image))
+      embed.add_field(name="Inviter:", value=f"{item.inviter}")
       embed.add_field(name="User Count:",value=f"{item.approximate_member_count}")
-      embed.add_field(name="Active User Count:",value=f"{item.approximate_presence_count}")
-      embed.add_field(name="Invite Channel",value=f"{item.channel}")
+      embed.add_field(name="Active User Count:", value=f"{item.approximate_presence_count}")
+
+      embed.add_field(name="Invite Channel", value=f"{item.channel}\nChannel Mention : {'None' if isinstance(item.channel, discord.Object) else item.channel.mention}")
+
       embed.set_footer(text=f"ID: {guild_id}\nInvite Code: {item.code}\nInvite Url: {item.url}")
   
     if isinstance(item, str):
       embed=discord.Embed(title="Failed grabbing the invite code:",description=f"Discord couldnt fetch the invite with the code {item}.",color=random.randint(0, 16777215))
-      embed.set_footer(text="If this is a consistent problem please contact JDJG Inc. Official#3493")
+      embed.set_footer(text = "If this is a consistent problem please contact JDJG Inc. Official#3493")
 
     return embed
 
