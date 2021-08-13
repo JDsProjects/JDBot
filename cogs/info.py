@@ -30,7 +30,7 @@ class Info(commands.Cog):
   
       if member_version:
         nickname = str(member_version.nick)
-        joined_guild = f"{discord.utils.format_dt(member_version.joined_at, style = 'd')}{discord.utils.format_dt(member_version.joined_at, style = 'T')}"
+        joined_guild = f"{discord.utils.format_dt(member_version.joined_at, style = 'd')}\n{discord.utils.format_dt(member_version.joined_at, style = 'T')}"
 
         status = str(member_version.status).upper()
         highest_role = member_version.top_role
