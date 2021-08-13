@@ -90,10 +90,10 @@ async def guildinfo(ctx, guild):
     offline_users = base_status[discord.Status.offline]
   
     embed = discord.Embed(title="Guild Info:", color = random.randint(0, 16777215))
-    embed.add_field(name="Server Name:",value=guild.name)
-    embed.add_field(name="Server ID:",value=guild.id)
-    embed.add_field(name="Server Region:" ,value=guild.region)
-    embed.add_field(name="Server Creation:",value=f"{guild.created_at} UTC")
+    embed.add_field(name="Server Name:", value=guild.name)
+    embed.add_field(name="Server ID:", value=guild.id)
+    embed.add_field(name="Server Region:", value=guild.region)
+    embed.add_field(name = "Server Creation:", value = f"{discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}")
 
     embed.add_field(name="Server Owner Info:", value = f"Owner : {guild.owner} \nOwner ID : {guild.owner_id}")
 

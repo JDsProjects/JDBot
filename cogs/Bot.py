@@ -95,14 +95,14 @@ class Bot(commands.Cog):
     
     embed=discord.Embed(title=f"Bot Owner: {owner}",description=f"Type: {user_type}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
     embed.add_field(name="Username:", value = owner.name)
-    embed.add_field(name="Discriminator:",value=owner.discriminator)
+    embed.add_field(name = "Discriminator:",value=owner.discriminator)
     embed.add_field(name = "Nickname: ", value = nickname)
-    embed.add_field(name="Joined Discord: ", value = (f"{discord.utils.format_dt(owner.created_at, style = 'd')}\n{discord.utils.format_dt(owner.created_at, style = 'T')}"))
+    embed.add_field(name = "Joined Discord: ", value = (f"{discord.utils.format_dt(owner.created_at, style = 'd')}\n{discord.utils.format_dt(owner.created_at, style = 'T')}"))
     embed.add_field(name = "Joined Guild: ", value = joined_guild)
-    embed.add_field(name="Mutual Guilds:", value=guild_list)
-    embed.add_field(name="ID:", value = owner.id)
-    embed.add_field(name="Status:", value=status)
-    embed.add_field(name="Highest Role:", value=highest_role)
+    embed.add_field(name = "Mutual Guilds:", value=guild_list)
+    embed.add_field(name = "ID:", value = owner.id)
+    embed.add_field(name = "Status:", value=status)
+    embed.add_field(name = "Highest Role:", value=highest_role)
     embed.set_image(url = owner.avatar.url)
     embed.set_footer(text = f"Support Guild : {support_guild}")
     await ctx.send(embed = embed)
@@ -250,6 +250,12 @@ class Bot(commands.Cog):
       message = await ctx.send(content=f'Summoning JDJG now a.k.a the Bot Owner to the guild make sure invite permissions are open!')
       await msg.delete()
 
+      if isinstance(ctx.channel, discord.threads.Thread):
+        
+        channel = self.bot.get_channel(ctx.channel.parent_id)
+        
+        ctx.channel = channel if channel else ctx.channel
+
       if isinstance(ctx.channel, discord.TextChannel):
         await asyncio.sleep(1)
         await message.edit(content = "This is attempting to make an invite")
@@ -274,7 +280,7 @@ class Bot(commands.Cog):
         
           await jdjg.send(embed = embed)
 
-      if isinstance(ctx.channel,discord.DMChannel):
+      if isinstance(ctx.channel, discord.DMChannel):
         await asyncio.sleep(1)
         return await message.edit(content = "This is meant for guilds not Dm channel if you want support in DM channel contact the owner, By DMS at JDJG Inc. Official#3493.")
 
@@ -336,7 +342,12 @@ class Bot(commands.Cog):
     hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
     minutes, seconds = divmod(remainder, 60)
     days, hours = divmod(hours, 24)
-    await ctx.send(f"Days: {days}d, \nHours: {hours}h, \nMinutes: {minutes}m, \nSeconds: {seconds}s")
+
+    embed = discord.Embed(title = f"Up Since:\n{discord.utils.format_dt(self.bot.launch_time, style = 'd')}\n{discord.utils.format_dt(self.bot.launch_time, style = 'T')}" ,description = f"Days: {days}d, \nHours: {hours}h, \nMinutes: {minutes}m, \nSeconds: {seconds}s",  color = random.randint(0, 16777215))
+    
+    embed.set_author(name = f"{self.bot.user}'s Uptime:", icon_url = self.bot.user.avatar.url)
+
+    await ctx.send(embed = embed)
 
   @commands.command(brief = "make a suggestion to the bot owner of a command to add", aliases = ["suggestion"])
   async def suggest(self, ctx, *, args = None):

@@ -31,10 +31,18 @@ class Dice(commands.Cog):
     emoji_choosen = random.choice(self.bot.emojis)
 
     if emoji_choosen.available is False: emoji_choosen = emoji_choosen.url
+
+    if isinstance(ctx.channel, discord.threads.Thread):
+      if ctx.guild.emojis:
+        emoji_choice = random.choice(ctx.guild.emojis)
+        if emoji_choice.available is False: emoji_choice = emoji_choice.url
+        await ctx.send(emoji_choice)
+
+      await ctx.send(emoji_choosen)
     
     if isinstance(ctx.channel, discord.TextChannel):
       if ctx.guild.emojis:
-        emoji_choice=random.choice(ctx.guild.emojis)
+        emoji_choice = random.choice(ctx.guild.emojis)
         if emoji_choice.available is False: emoji_choice = emoji_choice.url
         await ctx.send(emoji_choice)
 
