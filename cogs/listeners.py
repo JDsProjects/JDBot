@@ -54,7 +54,7 @@ class Events(commands.Cog):
 
   @commands.Cog.listener()
   async def on_message(self, message):
-    test=await self.bot.get_context(message)
+    test = await self.bot.get_context(message)
     
     if isinstance(message.channel, discord.DMChannel):
       if test.prefix is None or self.bot.user.mentioned_in(message):
