@@ -1,5 +1,5 @@
 import aioimgur, discord, random, sr_api, asyncdagpi, aiogtts
-import os, io, typing, datetime
+import os, io
 
 async def triggered_converter(url, ctx):
   sr_client = sr_api.Client(session = ctx.bot.session)

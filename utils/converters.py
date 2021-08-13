@@ -152,7 +152,8 @@ async def roleinfo(ctx, role):
   if not role.tags:
     role_bot_id = None
 
-  role_time = role.created_at.strftime('%m/%d/%Y %H:%M:%S')
+  role_time = f"{discord.utils.format_dt(role.created_at, style = 'd')}{discord.utils.format_dt(role.created_at, style = 'T')}"
+
   embed = discord.Embed(title = f"{role} Info:" ,color = random.randint(0, 16777215) )
   embed.add_field(name = "Mention:", value = f"{role.mention}")
   embed.add_field(name = "ID:", value = f"{role.id}")

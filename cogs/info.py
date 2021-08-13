@@ -30,7 +30,8 @@ class Info(commands.Cog):
   
       if member_version:
         nickname = str(member_version.nick)
-        joined_guild = member_version.joined_at.strftime('%m/%d/%Y %H:%M:%S')
+        joined_guild = f"{discord.utils.format_dt(member_version.joined_at, style = 'd')}{discord.utils.format_dt(member_version.joined_at, style = 'T')}"
+
         status = str(member_version.status).upper()
         highest_role = member_version.top_role
         
@@ -72,7 +73,7 @@ class Info(commands.Cog):
 
     embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}")
 
-    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {badges} \n**Joined Discord**: {user.created_at.strftime('%m/%d/%Y %H:%M:%S')} \n**Status**: {status}")
+    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n**Status**: {status}")
 
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
     
