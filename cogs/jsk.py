@@ -14,4 +14,4 @@ class Jishaku(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
     #I need to fix all cog_command_error
 
 def setup(bot: commands.Bot):
-  bot.add_cog(Jishaku(bot=bot))
+  bot.add_cog(Jishaku(bot = bot))

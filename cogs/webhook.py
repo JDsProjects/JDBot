@@ -5,7 +5,7 @@ class Webhook(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-  @commands.command(brief="a way to send stuff to webhooks.",help="this uses webhook urls, and sends stuff to them")
+  @commands.command(brief="a way to send stuff to webhooks.",help = "this uses webhook urls, and sends stuff to them")
   async def webhook(self, ctx, *, args=None):
     if args is None:
       await ctx.send("You didn't send anything")
@@ -99,6 +99,90 @@ class Webhook(commands.Cog):
 
   @webhook_create.error
   async def webhook_create_error(self, ctx, error):
+    await ctx.send(error)
+
+  @commands.command(brief = "tells you a webhook's avatar.")
+  async def webhook_avatar(self, ctx, *, args = None):
+    if not args:
+      return await ctx.send("You didn't give me an arguments to go over.")
+
+    check = re.match(r"https://discord(?:app)?.com/api/webhooks/(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})",args)
+    if check:
+      args = args.replace(f"{check.group()} ","")
+      if args == check.group():
+
+        session = self.bot.session
+        response=await session.get(check.group())
+        if not response.status != 200:
+          webhook=discord.Webhook.from_url(check.group(), session=session)
+
+          embed = discord.Embed(title = f"{webhook.name}"'s avatar:', color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+          embed.set_image(url = webhook.avatar.url)
+
+          await ctx.send(content = "Got the Webhook's avatar url",embed = embed)
+
+        if response.status != 200:
+          await ctx.send("Not a valid link or an error occured")
+
+      if isinstance(ctx.channel, discord.TextChannel):
+          try:
+            await ctx.message.delete()
+          except:
+            await ctx.send("deleting the webhook failed, delete asap")
+
+  @webhook_avatar.error
+  async def webhook_avatar_error(self, ctx, error):
+    await ctx.send(error)
+
+  @commands.command(brief = "deletes a webhook by url")
+  async def webhook_delete(self, ctx, *, args = None):
+    if not args:
+      return await ctx.send("You didn't give me an arguments to go over.")
+
+    check = re.match(r"https://discord(?:app)?.com/api/webhooks/(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})",args)
+    if check:
+      args = args.replace(f"{check.group()} ","")
+      if args == check.group():
+
+        session = self.bot.session
+        response=await session.get(check.group())
+        if not response.status != 200:
+          webhook = discord.Webhook.from_url(check.group(), session=session)
+
+          if not webhook.guild_id or not webhook.channel_id:
+            return await ctx.send(f"can't grab permissions from a {None} Guild or {None} Channel \nGuild ID: {webhook.guild_id}\nChannel ID: {webhook.channel_id}")
+          
+
+          channel = self.bot.get_channel_or_thread(webhook.channel_id)
+          guild = self.bot.get_guild(webhook.guild_id)
+
+          if not guild or not channel:
+            return await ctx.send("I can't check permissions of a guild that is none.")
+
+          member = await self.bot.getch_member(guild, ctx.author.id)
+
+          if member is None:
+            return await ctx.send("You don't exist in the guild that you used the webhook of.")
+
+          if channel.permissions_for(member).manage_webhooks:
+            
+            try:
+              await webhook.delete()
+
+            except Exception as e:
+              await ctx.send(f"An error occured with reason:\n{e}")
+
+        if response.status != 200:
+          await ctx.send("Not a valid link or an error occured")
+
+      if isinstance(ctx.channel, discord.TextChannel):
+          try:
+            await ctx.message.delete()
+          except:
+            await ctx.send("deleting the webhook failed, delete asap")
+    
+  @webhook_delete.error
+  async def webhook_delete_error(self, ctx, error):
     await ctx.send(error)
 
 def setup(bot):

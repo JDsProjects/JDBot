@@ -116,16 +116,6 @@ class Test(commands.Cog):
   async def about(self, ctx):
     await ctx.send("WIP for rn.")
 
-  @commands.command(brief = "deletes a webhook by url")
-  async def webhook_delete(self, ctx, *, args = None):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
-   
-  @commands.command(brief = "tells you a webhook's avatar.")
-  async def webhook_avatar(self, ctx, *, args = None):
-    await ctx.send("WIP")
-    #look at the JDJG Bot orginal
-
   @commands.command(brief = "gets tweets from a username")
   async def tweet(self, ctx, *, args = None):
     await ctx.send("WIP")
