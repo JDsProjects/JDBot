@@ -257,7 +257,7 @@ class Extra(commands.Cog):
     if args is None:
       args = "You didn't give us any text to use."
 
-    args=discord.utils.escape_markdown(args,as_needed=False,ignore_links=False)
+    args = discord.utils.escape_markdown(args, as_needed = False,ignore_links = False)
     try:
       await ctx.message.delete()
 
@@ -265,6 +265,29 @@ class Extra(commands.Cog):
       pass
 
     await ctx.send(args,allowed_mentions=discord.AllowedMentions.none())
+
+  @commands.command(brief = "does say but more powerful with the optional option of a channel to say in")
+  async def say2(self, ctx, channel : typing.Optional[typing.Union[discord.TextChannel, discord.Thread]] = None, *, args = None):
+   
+    channel = channel or ctx.channel
+
+    args = args or "You didn't give us any text to use."
+    args = discord.utils.escape_markdown(args, as_needed = False,ignore_links = False)
+    
+    bot_member = channel.me if isinstance(channel, discord.DMChannel) else channel.guild.me
+      
+    if channel.permissions_for(bot_member).send_messages or not channel.id == ctx.channel.id:
+
+      if isinstance(bot_member, discord.Member):
+
+        author_member = await self.bot.getch_member(bot_member.guild, ctx.author.id)
+
+        channel = channel if author_member else ctx.channel
+
+      await channel.send(f"{args}\nMessage From {ctx.author}", allowed_mentions = discord.AllowedMentions.none())
+
+    else:
+      await ctx.send("doesn't have permissions to send in that channel.")
 
   @commands.command(brief="a command to backup text",help="please don't upload any private files that aren't meant to be seen")
   async def text_backup(self, ctx, *, args = None):

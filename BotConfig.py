@@ -75,8 +75,6 @@ async def check_command_access(ctx):
   
   return True
 
-bot.load_extension('jishaku')
-
 for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
     try:

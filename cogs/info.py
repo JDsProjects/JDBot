@@ -80,15 +80,15 @@ class Info(commands.Cog):
     embed.set_image(url = user.avatar.url)
     
     view = utils.BasicButtons(ctx.author)
-    await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
+    msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
 
     await view.wait()
 
     if view.value is None:
-      return await ctx.send("you didn't respond quickly enough")
+      return await msg.edit("you didn't respond quickly enough")
 
     if not view.value:
-      await ctx.send("Not sending the mutual guilds list to you.")
+      await msg.edit("Not sending the mutual guilds list to you.")
 
     if view.value:
       pag = commands.Paginator()
