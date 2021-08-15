@@ -29,7 +29,7 @@ class Info(commands.Cog):
       member_version = await self.bot.getch_member(ctx.guild, user.id)
   
       if member_version:
-        nickname = str(member_version.nick)
+        nickname = f"{member_version.nick}"
         joined_guild = f"{discord.utils.format_dt(member_version.joined_at, style = 'd')}\n{discord.utils.format_dt(member_version.joined_at, style = 'T')}"
 
         status = str(member_version.status).upper()
@@ -688,6 +688,15 @@ class DevTools(commands.Cog):
       return await ctx.send("you need to give me a color to use.")
     
     await ctx.send(f"Hexadecimal: {color} \nValue : {color.value} \nRGB: {color.to_rgb()}")
+
+
+  @commands.command(brief = "a command that tells a user creation time.")
+  async def created_at(self, ctx, *, user: utils.BetterUserconverter = None):
+    user = user or ctx.author
+
+    creation_info = f"{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}"
+
+    await ctx.send(f"{user.mention} was created:\n{creation_info}\nRaw Version: ```{creation_info}```", allowed_mentions = discord.AllowedMentions.none())
 
 
 def setup(bot):
