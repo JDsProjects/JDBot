@@ -147,14 +147,16 @@ class Webhook(commands.Cog):
         session = self.bot.session
         response=await session.get(check.group())
         if not response.status != 200:
-          webhook = discord.Webhook.from_url(check.group(), session=session)
+          webhook = discord.Webhook.from_url(check.group(), session = session)
 
-          if not webhook.guild_id or not webhook.channel_id:
+          info = await response.json()
+
+          if not info.get("guild_id") or not info.get("channel_id"):
             return await ctx.send(f"can't grab permissions from a {None} Guild or {None} Channel \nGuild ID: {webhook.guild_id}\nChannel ID: {webhook.channel_id}")
           
 
-          channel = self.bot.get_channel_or_thread(webhook.channel_id)
-          guild = self.bot.get_guild(webhook.guild_id)
+          channel = self.bot.get_channel(int(info.get("channel_id")))
+          guild = self.bot.get_guild(int(info.get("guild_id")))
 
           if not guild or not channel:
             return await ctx.send("I can't check permissions of a guild that is none.")
@@ -168,6 +170,7 @@ class Webhook(commands.Cog):
             
             try:
               await webhook.delete()
+              await ctx.send(f"succeeded in deleting webhook in {guild} in {channel.mention}!")
 
             except Exception as e:
               await ctx.send(f"An error occured with reason:\n{e}")
@@ -179,7 +182,7 @@ class Webhook(commands.Cog):
           try:
             await ctx.message.delete()
           except:
-            await ctx.send("deleting the webhook failed, delete asap")
+            await ctx.send("deleting the webhook failed, delete asap unless it told you the link was deleted")
     
   @webhook_delete.error
   async def webhook_delete_error(self, ctx, error):
