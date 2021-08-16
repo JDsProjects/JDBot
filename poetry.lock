@@ -425,17 +425,17 @@ python-versions = "^3.8"
 develop = false
 
 [package.dependencies]
-"discord.py" = "branch master"
+"discord.py" = {git = "https://github.com/Rapptz/discord.py.git", branch = "master"}
 
 [package.source]
 type = "git"
 url = "https://github.com/oliver-ni/discord-ext-menus-views"
 reference = "master"
-resolved_reference = "1ac5b6eaeb55032376afc51c195640aa85a74f3c"
+resolved_reference = "cd1d6f89e69299d49e886e1e148256640bd6bfcf"
 
 [[package]]
 name = "discord.py"
-version = "2.0.0a3469+g1e17b7fc"
+version = "2.0.0a3470+gfeae059c"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -444,7 +444,6 @@ develop = false
 
 [package.dependencies]
 aiohttp = ">=3.6.0,<3.8.0"
-PyNaCl = {version = ">=1.3.0,<1.5", optional = true, markers = "extra == \"voice\""}
 
 [package.extras]
 docs = ["sphinx (==4.0.2)", "sphinxcontrib-trio (==1.1.2)", "sphinxcontrib-websupport"]
@@ -455,7 +454,7 @@ voice = ["PyNaCl (>=1.3.0,<1.5)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "1e17b7fceaf7173b1666465e639d1bebaa126683"
+resolved_reference = "feae059c6858e419552ec4096f1ad2692bb4c484"
 
 [[package]]
 name = "discordlists.py"
@@ -605,7 +604,7 @@ test = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "importlib-metadata"
-version = "4.6.3"
+version = "4.6.4"
 description = "Read metadata from Python packages"
 category = "main"
 optional = false
@@ -1060,15 +1059,15 @@ aiohttp = "*"
 
 [[package]]
 name = "wavelink"
-version = "0.9.10"
-description = "A versatile LavaLink wrapper for Discord.py"
+version = "1.0.0b30"
+description = "A robust and powerful Lavalink wrapper for discord.py."
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = "*"
 
 [package.dependencies]
 aiohttp = ">=3.6.0,<3.8.0"
-"discord.py" = ">=1.2.5"
+"discord.py" = ">=1.6.0"
 
 [[package]]
 name = "webencodings"
@@ -1132,7 +1131,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "44a838e70571e776a91618dc93bdd71fc09da1c66036c3292ca6dd898cb2303c"
+content-hash = "7b3ef679e1a1b66e5663936731cde28e7936f8c0ba4a6a05d4b817b5cbfe8dec"
 
 [metadata.files]
 aiofiles = [
@@ -1378,8 +1377,8 @@ import-expression = [
     {file = "import_expression-1.1.4.tar.gz", hash = "sha256:06086a6ab3bfa528b1c478e633d6adf2b3a990e31440f6401b0f3ea12b0659a9"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-4.6.3-py3-none-any.whl", hash = "sha256:51c6635429c77cf1ae634c997ff9e53ca3438b495f10a55ba28594dd69764a8b"},
-    {file = "importlib_metadata-4.6.3.tar.gz", hash = "sha256:0645585859e9a6689c523927a5032f2ba5919f1f7d0e84bd4533312320de1ff9"},
+    {file = "importlib_metadata-4.6.4-py3-none-any.whl", hash = "sha256:ed5157fef23a4bc4594615a0dd8eba94b2bb36bf2a343fa3d8bb2fa0a62a99d5"},
+    {file = "importlib_metadata-4.6.4.tar.gz", hash = "sha256:7b30a78db2922d78a6f47fb30683156a14f3c6aa5cc23f77cc8967e9ab2d002f"},
 ]
 ipaddr = [
     {file = "ipaddr-2.2.0.tar.gz", hash = "sha256:4092dfe667588d16aa12b59acb7c8a4024e5dcb23a681cd0b0b602373eca88d6"},
@@ -1821,8 +1820,8 @@ vt-py = [
     {file = "vt-py-0.6.3.tar.gz", hash = "sha256:172916d07b54927271e62dd3ead03142189d7431e9ec0fdbb75fe09f68efa888"},
 ]
 wavelink = [
-    {file = "wavelink-0.9.10-py3-none-any.whl", hash = "sha256:6403b79762c200e6e82753fe65ca2f1663408c570b6a0815d8a9504e370b0866"},
-    {file = "wavelink-0.9.10.tar.gz", hash = "sha256:a5a0ebcc52dda02f43b42ede435ca091c88881c2f4d0929c41a60d409adb001a"},
+    {file = "wavelink-1.0.0b30-py3-none-any.whl", hash = "sha256:9c34b344ff7fc36d6d64e54ffb08d3823bd8098748b8f337e05c6502f46b229d"},
+    {file = "wavelink-1.0.0b30.tar.gz", hash = "sha256:eebde33bb03d7bd4c336acfaaaf8e0f789b409e95517e08231161bb5078d7c06"},
 ]
 webencodings = [
     {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},

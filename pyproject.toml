@@ -9,7 +9,6 @@ python = "^3.8"
 dnspython = "^2.1.0"
 Flask = "^1.1.2"
 aioimgur = "^0.1.1"
-wavelink = "^0.9.9"
 image = "^1.5.33"
 asuna-api = "^0.2.8"
 vt-py = "^0.6.1"
@@ -50,8 +49,10 @@ CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 async-cleverbot = "^0.2.2"
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
-"discord.py" = {git = "https://github.com/Rapptz/discord.py.git", extras = ["voice"]}
+"discord.py" = { git = "https://github.com/Rapptz/discord.py.git", branch = "master"}
 discord-ext-menus-views = {git = "https://github.com/oliver-ni/discord-ext-menus-views"}
+wavelink = {version = "^1.0.0b30", allow-prereleases = true}
+PyNaCl = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
 

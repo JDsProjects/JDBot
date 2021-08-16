@@ -696,7 +696,7 @@ class DevTools(commands.Cog):
 
     creation_info = f"{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}"
 
-    await ctx.send(f"{user.mention} was created:\n{creation_info}\nRaw Version: ```{creation_info}```", allowed_mentions = discord.AllowedMentions.none())
+    await ctx.send(f"\nName : {user}\nMention : {user.mention} was created:\n{creation_info}\nRaw Version: ```{creation_info}```", allowed_mentions = discord.AllowedMentions.none())
 
 
 def setup(bot):

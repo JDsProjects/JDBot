@@ -4,17 +4,20 @@ import discord, wavelink, asyncio, os
 class Music(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
-    if not hasattr(bot, 'wavelink'):
-      self.bot.wavelink = wavelink.Client(bot = self.bot)
 
     self.bot.loop.create_task(self.start_nodes())
 
   async def start_nodes(self):
     await self.bot.wait_until_ready()
-    await self.bot.wavelink.initiate_node(host=os.environ["wavelink_host"], port=int(os.environ["wavelink_port"]), rest_uri = os.environ["wavelink_uri"], password=os.environ["wavelink_pass"], identifier="JDBot", region='us_central')
+    
+    self.bot.wavelink = await wavelink.NodePool.create_node(bot = self.bot, host = os.environ["wavelink_host"], port = int(os.environ["wavelink_port"]), password = os.environ["wavelink_pass"], identifier = "JDBot", region = 'us_central')
+
+    @commands.Cog.listener()
+    async def on_wavelink_node_ready(self, node: wavelink.Node):
+      print(f'Node: <{node.identifier}> is ready!')
 
   async def stop_nodes(self):
-    await self.bot.wavelink.destroy_node( identifier="JDBot")
+    await self.bot.wavelink.disconnect()
 
   def cog_unload(self):
     self.bot.loop.create_task(self.stop_nodes())
@@ -27,8 +30,9 @@ class Music(commands.Cog):
       except AttributeError:
           raise discord.DiscordException('No channel to join. Please either specify a valid channel or join one.')
 
-    player = self.bot.wavelink.get_player(ctx.guild.id)
+    player = self.bot.wavelink.get_player(ctx.guild)
     await ctx.send(f'Connecting to **`{channel.name}`**', allowed_mentions = discord.AllowedMentions.none())
+    
     await player.connect(channel.id)
 
     bot_permissions = channel.permissions_for(ctx.guild.me)
@@ -122,13 +126,19 @@ class Music(commands.Cog):
 
   @commands.command(brief = "lists the queue of items in the playlist", aliases = ["q"])
   async def queue(self, ctx):
+    
+    if ctx.guild:
+      player = self.bot.wavelink.get_player(ctx.guild.id)
 
-    player = self.bot.wavelink.get_player(ctx.guild.id)
+      if player.is_connected is False:
+        return await ctx.send("Sorry, the bot isn't connected to player and there is no queue.")
 
-    if player.is_connected is False:
-      return await ctx.send("Sorry, the bot isn't connected to player and there is no queue.")
+      print(player.queue)
 
-    await ctx.send("There's a problem with finding queue stuff rn. Hold on")
+      await ctx.send("There's a problem with finding queue stuff rn. Hold on")
+
+    if not ctx.guild:
+      await ctx.send("There is no guild right now, either it's a DM or a guild is unavaible")
 
   @queue.error
   async def queue_error(self, ctx, error):
