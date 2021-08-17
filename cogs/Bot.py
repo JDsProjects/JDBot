@@ -239,7 +239,7 @@ class Bot(commands.Cog):
   async def jdjgsummon(self, ctx):
 
     view = utils.BasicButtons(ctx.author)
-    msg = await ctx.send("react with \N{WHITE HEAVY CHECK MARK} if you want me to be summoned if not use \N{CROSS MARK}", view = view)
+    msg = await ctx.send("React with \N{WHITE HEAVY CHECK MARK} if you want me to be summoned if not use \N{CROSS MARK}. \nPlease don't use jdjgsummon to suggest something use suggest to suggest something, alright? If you want to contact me directly, you can find my tag using owner(please don't use jdjgsummon for suggest stuff thanks)", view = view)
 
     await view.wait()
 
