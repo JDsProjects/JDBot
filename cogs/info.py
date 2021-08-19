@@ -213,7 +213,7 @@ class Info(commands.Cog):
   @commands.command(brief="a command to get the closest user.")
   async def closest_user(self, ctx, *, args = None):
     if args is None:
-      await ctx.send("please specify a user")
+      return await ctx.send("please specify a user")
 
     if args and not self.bot.users:
       return await ctx.send("There are no users cached :(")
@@ -227,17 +227,18 @@ class Info(commands.Cog):
 
       if user_nick is None:
         user_nick = sorted(self.bot.users, key = lambda x: SequenceMatcher(None, x.display_name,args).ratio())[-1]
-      await ctx.send(f"Username: {userNearest}")
-      await ctx.send(f"Display name: {user_nick}")
     
     if isinstance(ctx.channel, discord.TextChannel):
       member_list = [x for x in ctx.guild.members if x.nick]
       
-      nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick,args).ratio())[-1] 
-      await ctx.send(f"Nickname: {nearest_server_nick}")
+      nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick, args).ratio())[-1] 
 
-    if isinstance(ctx.channel,discord.DMChannel):
-      await ctx.send("You unforantely don't get the last value.")
+    if isinstance(ctx.channel ,discord.DMChannel):
+
+      nearest_server_nick = "You unfortunately don't get the last value(a nickname) as it's a DM."
+
+    await ctx.send(f"Username : {userNearest} \nDisplay name : {user_nick} \nNickname: {nearest_server_nick}")
+
   
   @commands.command(help="gives info on default emoji and custom emojis",name="emoji")
   async def emoji_info(self,ctx,*emojis: typing.Union[utils.EmojiConverter ,str]):
@@ -245,6 +246,7 @@ class Info(commands.Cog):
 
       menu = ViewMenuPages(utils.EmojiInfoEmbed(emojis, per_page=1),delete_message_after=True)
       await menu.start(ctx)
+      
     if not emojis:
       await ctx.send("Looks like there was no emojis.")
 
