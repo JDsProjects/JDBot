@@ -26,7 +26,7 @@ class Dice(commands.Cog):
     if number : await self.generate_embed(ctx, int(number))
     else: await ctx.send("None that's bad.")
 
-  @commands.command(brief="Gives random emojis(from guild and bot)",help="Please use this wisely.",aliases=["e_spin","emoji_spin"])
+  @commands.command(brief = "Gives random emojis(from guild and bot)", help = "Please use this wisely.", aliases = ["e_spin","emoji_spin"])
   async def emoji_spinner(self, ctx):
     
     emoji_choosen = random.choice(self.bot.emojis)
@@ -150,6 +150,12 @@ class Dice(commands.Cog):
     embed.set_footer(text = f"{ctx.author.id}")
 
     await ctx.send(embed = embed)
+
+  async def cog_command_error(self, ctx, error):
+    if ctx.command or not ctx.command.has_error_handler():
+      await ctx.send(error)
+      import traceback
+      traceback.print_exc()
     
 def setup(bot):
   bot.add_cog(Dice(bot))

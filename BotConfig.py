@@ -18,14 +18,22 @@ class JDBot(commands.Bot):
     self.special_access = {}
 
   async def start(self, *args, **kwargs):
-    self.session=aiohttp.ClientSession()
+    self.session = aiohttp.ClientSession()
     self.sus_users = await aiosqlite.connect('sus_users.db')
-      #loads up some bot variables    
-
+    #loads up some bot variables
     
     conn = await self.sus_users.cursor()
-    grab=await conn.execute("SELECT * FROM testers_list")
+    grab = await conn.execute("SELECT * FROM testers_list;")
     self.testers = list(itertools.chain(*await grab.fetchall()))
+
+    blacklist = await conn.execute("SELECT * FROM BLACKLISTED_USERS;")
+
+    self.blacklisted_users = dict(await blacklist.fetchall())
+
+    cursor = await conn.execute("SELECT * FROM SUS_USERS;")
+    
+    self.blacklisted_users.update(dict(await cursor.fetchall()))
+
     await conn.close()
     
     #does the DB connection and then assigns it a tester list
@@ -73,6 +81,10 @@ async def check_command_access(ctx):
     del bot.special_access[ctx.author.id]
   
   return True
+
+@bot.check
+async def check_blacklist(ctx):
+  return ctx.author.id not in bot.blacklisted_users
 
 for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
