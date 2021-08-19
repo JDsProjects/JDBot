@@ -10,7 +10,6 @@ async def get_prefix(bot, message):
   return commands.when_mentioned_or(*extras)(bot, message)
 
 intents = discord.Intents.all()
-intents.members = False
 intents.presences = False
 
 class JDBot(commands.Bot):
