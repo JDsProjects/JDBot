@@ -1,6 +1,5 @@
-import discord, os, logging, asyncio
-from discord.ext import commands, tasks
-import B, BotConfig,  DatabaseConfig , DatabaseControl
+import os, logging
+import B, BotConfig
 
 logging.basicConfig(level = logging.INFO)
 
