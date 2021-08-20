@@ -63,7 +63,10 @@ class Moderation(commands.Cog):
       count = 0
 
       #some code here to do a list compreshion to see if they are cached using get_user, those who return as None will be passed to query_members
-      #await ctx.guild.query_members(limit = 100, cache = True, user_ids = sus_users.keys())
+
+      ids = [u for u in list(sus_users.keys()) if not ctx.guild.get_member(u)]
+
+      await ctx.guild.query_members(limit = 100, cache = True, user_ids = ids)
 
       for x in sus_users:
         user = ctx.guild.get_member(x)
@@ -86,13 +89,18 @@ class Moderation(commands.Cog):
     await cur.close()
 
     
-    ss_users = [u for u in sus_users if await self.bot.getch_user(u)]
+    ss_users = [await self.bot.getch_user(u) for u in sus_users if not None]
 
     if not(ss_users):
       await ctx.send("no sus users found")
 
     else:
-      await ctx.send("There are in fact sus_users in the program but it's currently handling how to send to you.")
+      mutual_guild_users = [u for u in ss_users if u.mutual_guilds]
+
+    
+    [u for u in mutual_guild_users]
+
+    await ctx.send("WIP")
 
 
   async def cog_command_error(self, ctx, error):
