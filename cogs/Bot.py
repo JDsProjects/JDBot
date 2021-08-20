@@ -282,19 +282,6 @@ class Bot(commands.Cog):
 
       if isinstance(ctx.channel, discord.DMChannel):
         await asyncio.sleep(1)
-        return await message.edit(content = "This is meant for guilds not Dm channel if you want support in DM channel contact the owner, By DMS at JDJG Inc. Official#3493.")
-
-    if view.value is False:
-      await ctx.send(content = f" You didn't agree to summoning me. So I will not be invited.")
-      await msg.delete()
-
-  async def cog_command_error(self, ctx, error):
-    if ctx.command or not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
-
-  @commands.command(brief = "this command tells you to how to report ex issues to owner")
   async def report_issue(self, ctx):
     await ctx.send("if you have an issue please join the support server, create a ticket,  or Dm the owner at JDJG Inc. Official#3493. Thanks :D!")
 
