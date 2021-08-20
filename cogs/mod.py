@@ -97,8 +97,12 @@ class Moderation(commands.Cog):
     else:
       mutual_guild_users = [u for u in ss_users if u.mutual_guilds]
 
-    
-    [u for u in mutual_guild_users]
+      mutual_guilds = set(ctx.author.mutual_guilds)
+
+      #users = set(u.mutual_guilds)
+      #make this work with some list compreshion
+
+      #shared_guilds = mutual_guilds.intersection(mutual_guilds2)
 
     await ctx.send("WIP")
 

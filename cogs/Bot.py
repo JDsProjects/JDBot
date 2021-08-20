@@ -66,7 +66,7 @@ class Bot(commands.Cog):
 
     user_type = ("Bot" if owner.bot else "User")
 
-    guilds_list=[guild for guild in self.bot.guilds if guild.get_member(owner.id) and guild.get_member(ctx.author.id)]
+    guilds_list = [guild for guild in self.bot.guilds if guild.get_member(owner.id) and guild.get_member(ctx.author.id)]
 
     if not guilds_list:
       guild_list = "None"
