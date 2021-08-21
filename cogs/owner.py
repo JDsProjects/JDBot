@@ -463,13 +463,14 @@ class Owner(commands.Cog):
   @commands.command(brief = "chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)")
   async def chunk_guild(self, ctx):
     if ctx.guild is None:
-      return await ctx.send("You can't chunk a None guild.")
+      return await ctx.send("You can't chunk a guild that doesn't exist or a channel that is a DM.")
 
     if ctx.guild.chunked:
       return await ctx.send("No need to chunk this guild, it appears to be chunked")
 
     await ctx.guild.chunk(cache = True)
 
+    await ctx.send("Finished chunking..")
 
   @chunk_guild.error
   async def chunk_guild_error(self, ctx, error):
