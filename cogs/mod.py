@@ -127,7 +127,7 @@ class Moderation(commands.Cog):
     sus_users = dict(await cursor.fetchall())
     await cur.close()
 
-    truth=sus_users.get(user.id)
+    truth = sus_users.get(user.id)
 
     if not truth:
       await ctx.send(f"{user} is not in the sus list.")
