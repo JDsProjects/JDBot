@@ -460,7 +460,22 @@ class Owner(commands.Cog):
 
     await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.id}")
 
-  
+  @commands.command(brief = "chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)")
+  async def chunk_guild(self, ctx):
+    if ctx.guild is None:
+      return await ctx.send("You can't chunk a None guild.")
+
+    if ctx.guild.chunked:
+      return await ctx.send("No need to chunk this guild, it appears to be chunked")
+
+    await ctx.guild.chunk(cache = True)
+
+
+  @chunk_guild.error
+  async def chunk_guild_error(self, ctx, error):
+    await ctx.send(error)
+    traceback.print_exc()
+
 
 def setup(bot):
   bot.add_cog(Owner(bot))
