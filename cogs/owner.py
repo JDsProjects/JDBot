@@ -9,7 +9,7 @@ class Owner(commands.Cog):
     self.bot = bot
 
   @commands.command(brief="a command to send mail")
-  async def mail(self,ctx,*,user: utils.BetterUserconverter=None):
+  async def mail(self, ctx, *, user: utils.BetterUserconverter = None):
     if user is None:
       await ctx.reply("User not found, returning Letter")
       user = ctx.author
@@ -31,7 +31,7 @@ class Owner(commands.Cog):
       await self.bot.get_channel(855217084710912050).send(embed=embed_message)
 
   @commands.command()
-  async def load(self,ctx,*,cog=None):
+  async def load(self, ctx, *, cog = None):
     if cog:
       try:
         self.bot.load_extension(cog)
@@ -65,7 +65,7 @@ class Owner(commands.Cog):
       await ctx.send("Cog reloaded :D (check for any errors)")
   
   @commands.command()
-  async def unload(self,ctx,*,cog=None):
+  async def unload(self, ctx, *, cog = None):
     if cog:
       try:
         self.bot.unload_extension(cog)
@@ -76,7 +76,7 @@ class Owner(commands.Cog):
       await ctx.send("you can't ask to reload no cogs")
 
   @commands.command()
-  async def shutdown(self,ctx):
+  async def shutdown(self, ctx):
     await ctx.send("shutdown/logout time happening.")
     await self.bot.close()
 
@@ -141,7 +141,7 @@ class Owner(commands.Cog):
       await ctx.send("You can't use that it's owner only")
 
   @commands.command(brief="only works with JDJG, but this command is meant to send updates to my webhook")
-  async def webhook_update(self,ctx,*,args=None):
+  async def webhook_update(self, ctx, *, args = None):
     if await self.bot.is_owner(ctx.author):
       if args:
         if isinstance(ctx.channel, discord.TextChannel):
@@ -245,7 +245,7 @@ class Owner(commands.Cog):
     await menu.start(ctx)
 
   @commands.command()
-  async def update_sus(self,ctx):
+  async def update_sus(self, ctx):
     await self.bot.sus_users.commit()
     await ctx.send("Updated SQL boss.")
 
@@ -254,7 +254,7 @@ class Owner(commands.Cog):
     await ctx.send(error)
 
   @commands.command(aliases=["bypass_command"])
-  async def command_bypass(self,ctx,user: utils.BetterUserconverter=None,*,command=None):
+  async def command_bypass(self, ctx ,user: utils.BetterUserconverter = None, *, command = None):
     #make sure to swap to autoconverter if it gets added.
     user = user or ctx.author
     if command:
@@ -459,6 +459,8 @@ class Owner(commands.Cog):
       return await ctx.send(f"Exception occured at {e}")
 
     await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.id}")
+
+  
 
 def setup(bot):
   bot.add_cog(Owner(bot))
