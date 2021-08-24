@@ -9,9 +9,6 @@ async def get_prefix(bot, message):
     extras.append(match.group(1))
   return commands.when_mentioned_or(*extras)(bot, message)
 
-intents = discord.Intents.all()
-intents.presences = False
-
 class JDBot(commands.Bot):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
@@ -68,6 +65,10 @@ class JDBot(commands.Bot):
         return False
         
     return [cmd for cmd in command_list if await check(cmd, ctx)]
+
+
+
+intents = discord.Intents.all()
 
 bot = JDBot(command_prefix = (get_prefix), intents = intents, chunk_guilds_at_startup = False, strip_after_prefix = True, allowed_mentions = discord.AllowedMentions(everyone = False, roles = False))
 
