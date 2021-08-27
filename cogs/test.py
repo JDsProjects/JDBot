@@ -35,33 +35,7 @@ class Test(commands.Cog):
   async def email(self, ctx, *args):
     print(args)
     await ctx.send("WIP")
-
-  @commands.cooldown(1, 40, BucketType.user)
-  @commands.command(brief = "a command that can scan urls(work in progress), and files", help = "please don't upload anything secret or send any secret url thank you :D")
-  async def scan(self, ctx, *, args = None):
-    await ctx.send("WIP")
-    import vt
-    vt_client = vt.Client(os.environ["virustotal_key"])
-    used = None
-    if args:
-      used = True
-      urls=re.findall(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",args)
-      for u in urls:
-        response = await vt_client.scan_url_async(u, wait_for_completion = True)
-        print(response)
-
-    if ctx.message.attachments:
-      await ctx.send("If this takes a while, it probably means it was never on Virustotal before")
-      used = True
-    for f in ctx.message.attachments:
-      analysis = await vt_client.scan_file_async(await f.read(),wait_for_completion = True)
-      print(analysis)
-      object_info = await vt_client.get_object_async("/analyses/{}", analysis.id)
-    
-    if used:
-      await ctx.send(content="Scan completed")
-    await vt_client.close_async()
-    
+  
   @commands.command(brief="work in progress")
   async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
