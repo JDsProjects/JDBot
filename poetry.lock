@@ -425,7 +425,7 @@ python-versions = "^3.8"
 develop = false
 
 [package.dependencies]
-"discord.py" = {git = "https://github.com/Rapptz/discord.py.git", branch = "master"}
+"discord.py" = "branch master"
 
 [package.source]
 type = "git"
@@ -435,7 +435,7 @@ resolved_reference = "cd1d6f89e69299d49e886e1e148256640bd6bfcf"
 
 [[package]]
 name = "discord.py"
-version = "2.0.0a3470+gfeae059c"
+version = "2.0.0a3566+g516675dd"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -454,7 +454,7 @@ voice = ["PyNaCl (>=1.3.0,<1.5)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "feae059c6858e419552ec4096f1ad2692bb4c484"
+resolved_reference = "516675dd2e7d42f7fe8e0a8c0dd88d48e8e25586"
 
 [[package]]
 name = "discordlists.py"
@@ -604,7 +604,7 @@ test = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "importlib-metadata"
-version = "4.6.4"
+version = "4.7.1"
 description = "Read metadata from Python packages"
 category = "main"
 optional = false
@@ -708,7 +708,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "motor"
-version = "2.5.0"
+version = "2.5.1"
 description = "Non-blocking MongoDB driver for Tornado or asyncio"
 category = "main"
 optional = false
@@ -1007,7 +1007,7 @@ test = ["mock (>=1.0.1)", "nose (>=1.3.3)", "vcrpy (>=1.10.3)"]
 type = "git"
 url = "https://github.com/tweepy/tweepy.git"
 reference = "master"
-resolved_reference = "145d7cfb902ed7bd10143e201ea89af41ba7d628"
+resolved_reference = "16a208cbdd9a01704ed182086b812fb2d6abb7bd"
 
 [[package]]
 name = "typing-extensions"
@@ -1045,17 +1045,6 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
 brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
-
-[[package]]
-name = "vt-py"
-version = "0.6.3"
-description = "The official Python client library for VirusTotal"
-category = "main"
-optional = false
-python-versions = ">=3.6.0"
-
-[package.dependencies]
-aiohttp = "*"
 
 [[package]]
 name = "wavelink"
@@ -1131,7 +1120,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "7b3ef679e1a1b66e5663936731cde28e7936f8c0ba4a6a05d4b817b5cbfe8dec"
+content-hash = "dbe86052e1d4b93ea2e48f06c476ee26af0d51d64d36f52b9e28722011e610ce"
 
 [metadata.files]
 aiofiles = [
@@ -1377,8 +1366,8 @@ import-expression = [
     {file = "import_expression-1.1.4.tar.gz", hash = "sha256:06086a6ab3bfa528b1c478e633d6adf2b3a990e31440f6401b0f3ea12b0659a9"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-4.6.4-py3-none-any.whl", hash = "sha256:ed5157fef23a4bc4594615a0dd8eba94b2bb36bf2a343fa3d8bb2fa0a62a99d5"},
-    {file = "importlib_metadata-4.6.4.tar.gz", hash = "sha256:7b30a78db2922d78a6f47fb30683156a14f3c6aa5cc23f77cc8967e9ab2d002f"},
+    {file = "importlib_metadata-4.7.1-py3-none-any.whl", hash = "sha256:9e04bf59076a15a9b6dd9c27806e8fcdf15280ba529c6a8cc3f4d5b4875bdd61"},
+    {file = "importlib_metadata-4.7.1.tar.gz", hash = "sha256:c4eb3dec5f697682e383a39701a7de11cd5c02daf8dd93534b69e3e6473f6b1b"},
 ]
 ipaddr = [
     {file = "ipaddr-2.2.0.tar.gz", hash = "sha256:4092dfe667588d16aa12b59acb7c8a4024e5dcb23a681cd0b0b602373eca88d6"},
@@ -1503,8 +1492,8 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1.tar.gz", hash = "sha256:594c67807fb16238b30c44bdf74f36c02cdf22d1c8cda91ef8a0ed8dabf5620a"},
 ]
 motor = [
-    {file = "motor-2.5.0-py3-none-any.whl", hash = "sha256:2701f71129fac70d40291a2226bd3ce8682f529711ce2e463d5035d8e937cf9c"},
-    {file = "motor-2.5.0.tar.gz", hash = "sha256:eafa05a7233f3373ee110b1d7ad0469f7aa942dcd60cb65f7474ae41628a0e0d"},
+    {file = "motor-2.5.1-py3-none-any.whl", hash = "sha256:961fdceacaae2c7236c939166f66415be81be8bbb762da528386738de3a0f509"},
+    {file = "motor-2.5.1.tar.gz", hash = "sha256:663473f4498f955d35db7b6f25651cb165514c247136f368b84419cb7635f6b8"},
 ]
 multidict = [
     {file = "multidict-5.1.0-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:b7993704f1a4b204e71debe6095150d43b2ee6150fa4f44d6d966ec356a8d61f"},
@@ -1815,9 +1804,6 @@ update-checker = [
 urllib3 = [
     {file = "urllib3-1.26.6-py2.py3-none-any.whl", hash = "sha256:39fb8672126159acb139a7718dd10806104dec1e2f0f6c88aab05d17df10c8d4"},
     {file = "urllib3-1.26.6.tar.gz", hash = "sha256:f57b4c16c62fa2760b7e3d97c35b255512fb6b59a259730f36ba32ce9f8e342f"},
-]
-vt-py = [
-    {file = "vt-py-0.6.3.tar.gz", hash = "sha256:172916d07b54927271e62dd3ead03142189d7431e9ec0fdbb75fe09f68efa888"},
 ]
 wavelink = [
     {file = "wavelink-1.0.0b30-py3-none-any.whl", hash = "sha256:9c34b344ff7fc36d6d64e54ffb08d3823bd8098748b8f337e05c6502f46b229d"},
