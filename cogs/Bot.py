@@ -204,9 +204,9 @@ class Bot(commands.Cog):
       return await msg.delete()
 
 
-  @commands.command(brief="This command gives you an alt bot to use",aliases=["alt_invite"])
+  @commands.command(brief="This command gives you an alt bot to use",aliases=["alt_invite", "alt_bot"])
   async def verify_issue(self, ctx):
-    await ctx.send("You can invite the bot 831162894447804426(this will be an alt bot with almost the same code though some report functionalies will have their guild swapped :D")
+    await ctx.send("You can invite the bot 831162894447804426(this will be an alt bot with almost the same code but with javascript though some report functionalies will have their guild swapped :D")
 
   @commands.command()
   async def whyprefixtest(self,ctx):
