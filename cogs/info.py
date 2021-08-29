@@ -77,7 +77,7 @@ class Info(commands.Cog):
 
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
     
-    embed.set_image(url = user.avatar.url)
+    embed.set_image(url = user.avatar.url if user.avatar else user.default_avatar.url)
     
     view = utils.BasicButtons(ctx.author)
     msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
@@ -188,9 +188,11 @@ class Info(commands.Cog):
   @commands.command(brief="a command to get the avatar of a user",help="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp","av"])
   async def avatar(self,ctx,*,user: utils.BetterUserconverter = None): 
     user = user or ctx.author
+
     embed = discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{user.name}'s avatar:",icon_url=(user.avatar.url))
-    embed.set_image(url=(user.avatar.url))
+    embed.set_author(name=f"{user.name}'s avatar:", icon_url = user.avatar.url if user.avatar else user.default_avatar.url)
+
+    embed.set_image(url = user.avatar.url if user.avatar else user.default_avatar.url)
     embed.set_footer(text=f"Requested by {ctx.author}")
     await ctx.send(embed=embed)
 
