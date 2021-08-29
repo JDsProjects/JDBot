@@ -186,7 +186,7 @@ class Info(commands.Cog):
       await ctx.send(embed=embed,content="\nThat's good")
 
   @commands.command(brief="a command to get the avatar of a user",help="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp","av"])
-  async def avatar(self,ctx,*,user: utils.BetterUserconverter = None): 
+  async def avatar(self, ctx, *, user: utils.BetterUserconverter = None): 
     user = user or ctx.author
 
     embed = discord.Embed(color=random.randint(0, 16777215))
