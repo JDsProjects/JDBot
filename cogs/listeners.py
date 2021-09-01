@@ -32,9 +32,15 @@ class Events(commands.Cog):
     
     embed.set_thumbnail(url = guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 
-    embed.add_field(name = 'Server Name:',value=f'{guild.name}')
-    embed.add_field(name = 'Server ID:',value=f'{guild.id}')
-    embed.add_field(name = 'Server region:', value=f'{guild.region}')
+    embed.add_field(name = 'Server Name:', value = f'{guild.name}')
+    embed.add_field(name = 'Server ID:', value = f'{guild.id}')
+
+    try:
+      embed.add_field(name = 'Server region:', value=f'{guild.region}')
+
+    except:
+      pass
+
     embed.add_field(name='Server Creation Date:', value=f"{discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}")
     embed.add_field(name='Server Owner:',value=f'{guild.owner}')
     embed.add_field(name='Server Owner ID:',value=f'{guild.owner_id}')
