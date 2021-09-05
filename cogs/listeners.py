@@ -86,9 +86,22 @@ class Events(commands.Cog):
     #print(more_information[0])
 
   
-  #@commands.Cog.listener()
-  #async def on_member_join(self, member):
-    #print(member)
+  @commands.Cog.listener()
+  async def on_member_join(self, member):
+    print(member)
+    #currently wip btw
+
+  @commands.Cog.listener()
+  async def on_guild_available(self, guild):
+
+    await self.bot.get_channel(855217084710912050).send(f"{guild} is now avaiable")
+    print(guild)
+
+  @commands.Cog.listener()
+  async def on_guild_unavailable(self, guild):
+    await self.bot.get_channel(855217084710912050).send(f"{guild} is now unavaiable")
+
+    print(guild)
 
 def setup(bot):
   bot.add_cog(Events(bot))
