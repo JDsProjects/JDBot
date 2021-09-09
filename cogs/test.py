@@ -134,13 +134,6 @@ class Test(commands.Cog):
 
     else:
       await ctx.send("Please look for a library to get the info of.")
-
-
-  @commands.command(brief = "a command that makes a fake user id based on the current time.")
-  async def fake_user_id(self, ctx):
-    snowflake = discord.utils.utcnow()
-    await ctx.send(f"User id: {int(snowflake.timestamp())}")
-    await ctx.send("heavily wip not possible yet, also not accurate.")
       
 
 def setup(bot):

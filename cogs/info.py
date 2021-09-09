@@ -703,6 +703,13 @@ class DevTools(commands.Cog):
     await ctx.send(f"\nName : {user}\nMention : {user.mention} was created:\n{creation_info}\nRaw Version: ```{creation_info}```", allowed_mentions = discord.AllowedMentions.none())
 
 
+  @commands.command(brief = "a command that makes a fake user id based on the current time.")
+  async def fake_user_id(self, ctx):
+    snowflake = discord.utils.utcnow()
+    
+    await ctx.send(f"User id: {int(snowflake.timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff} This appears to be accurate, if it's not please let me now.")
+
+
 def setup(bot):
   bot.add_cog(Info(bot))
   bot.add_cog(DevTools(bot))
