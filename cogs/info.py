@@ -705,9 +705,10 @@ class DevTools(commands.Cog):
 
   @commands.command(brief = "a command that makes a fake user id based on the current time.")
   async def fake_user_id(self, ctx):
+    
     snowflake = discord.utils.utcnow()
     
-    await ctx.send(f"User id: {int(snowflake.timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff} This appears to be accurate, if it's not please let me now.")
+    await ctx.send(f"User id: {int(snowflake.timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff} \nThis appears to be accurate, if it's not please let me now.")
 
 
 def setup(bot):

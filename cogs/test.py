@@ -136,5 +136,29 @@ class Test(commands.Cog):
       await ctx.send("Please look for a library to get the info of.")
       
 
+  @commands.command(brief = "gives information on snowflakes")
+  async def snowflake_info(self, ctx, *, snowflake : typing.Optional[discord.Object] = None):
+    
+    if not snowflake:
+      await ctx.send("you either returned nothing or an invalid snowflake now going to the current time for information.")
+
+    generated_time = await commands.ObjectConverter().convert(ctx, argument = f"{int((discord.utils.utcnow()).timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff}")
+
+    snowflake = snowflake or generated_time
+
+    embed = discord.Embed(title = "❄️ SnowFlake Info:", color = 5793266)
+    
+    embed.add_field(name = "Created At:", value = f"{discord.utils.format_dt(snowflake.created_at, style = 'd')}\n{discord.utils.format_dt(snowflake.created_at, style = 'T')}")
+
+    embed.add_field(name = "Worker ID:", value = f"{(snowflake.id & 0x3E0000) >>17 }")
+
+    embed.add_field(name = "Process ID:", value = f"{(snowflake.id & 0x1F000) >> 12}")
+
+    embed.add_field(name = "Increment:", value = f"{snowflake.id & 0xFFF}")
+
+    embed.set_footer(text = f"Snowflake ID: {snowflake.id}")
+
+    await ctx.send(embed = embed)
+
 def setup(bot):
   bot.add_cog(Test(bot))
