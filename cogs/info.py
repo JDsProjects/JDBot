@@ -705,10 +705,6 @@ class DevTools(commands.Cog):
 
   @commands.command(brief = "a command that makes a fake user id based on the current time.")
   async def fake_user_id(self, ctx):
-    
-    await ctx.send(f"User id: {int((discord.utils.utcnow()).timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff} \nThis appears to be accurate, if it's not please let me now.")
-
-  @commands.command(brief = "gives information on snowflakes")
   async def snowflake_info(self, ctx, *, snowflake : typing.Optional[discord.Object] = None):
     
     if not snowflake:
