@@ -408,5 +408,9 @@ class Bot(commands.Cog):
 
     await ctx.send("successfully sent to the support channel!")
 
+  @commands.command(brief = "information about donating")
+  async def donate(self, ctx):
+    await ctx.send("JDBot is completly free, but if you would love to donate you should run owner to see the owner of the bot to contact them about suggesting an idea, or I guess donating stuff. Though this is my lobby of mine. Just please don't steal my hard work.")
+
 def setup(bot):
   bot.add_cog(Bot(bot))
