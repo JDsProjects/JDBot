@@ -98,9 +98,6 @@ class Test(commands.Cog):
 
     embed.add_field(name="Bot Version", value='```1.0.0```', inline = True)
 
-
-    embed.add_field(name="Bot Version", value='```1.0.0```', inline = True)
-
     embed.add_field(name="Python Version:", value=f"```{platform.python_version()}```", inline = True)
 
     embed.add_field(name="Library", value = "```discord.py```",  inline = True)
