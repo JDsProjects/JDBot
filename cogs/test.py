@@ -89,38 +89,33 @@ class Test(commands.Cog):
   @commands.command(brief = "like other Bot info commands but more info?")
   async def about(self, ctx):
     """Shows a short description of the bot."""
-      
-      path = "utils/version.txt"
-      with open(path, "r") as file:
-          ver = file.readline()
-      ramUsage = self.process.memory_full_info().rss / 1024**2
-      pythonVersion = platform.python_version()
-      dpyVersion = discord.__version__
-      servercount = len(self.bot.guilds)
+          
       embed = discord.Embed(
           title="About Bot",
           description="Here you can view bot and author information",
-          color=0xFF6900,
+          color= 0xeb6d15,
       )
       embed.add_field(
           name="Author Information",
-          value="Insert text here",
+          value="This Bot is made by JDJG Inc. Official#3493(you can find out who the current owner is from the owner command(someone may have forked it).",
           inline=True,
       )
       embed.add_field(name="Bot Version",
-                        value=f"```{ver}```",
+                        value=f"```{1.0.0}```",
                         inline=True)
+      
       embed.add_field(name="Python Version:",
-                        value=f"```{pythonVersion}```",
+                        value=f"```{pythonVersion = platform.python_version()}```",
                         inline=True)
+      
       embed.add_field(name="Library", value="```discord.py```", inline=True)
-      embed.add_field(name="Discord.Py Version", value=f"```{dpyVersion}```")
+      embed.add_field(name="Discord.Py Version", value=f"```{discord.__version__}```")
       embed.add_field(name="RAM Usage",
-                        value=f"```{ramUsage:.2f} MB```",
+                        value=f"```{(self.process.memory_full_info().rss / 1024**2):.2f} MB```",
                         inline=True)
       embed.add_field(
           name="Servers",
-          value=f"```{servercount}```",
+          value=f"```{len(self.bot.guilds)}```",
           inline=True,
       )
       
@@ -128,7 +123,6 @@ class Test(commands.Cog):
       embed.set_author(name = f"{self.bot.user}", icon_url = self.bot.user.display_avatar.url)
       
       
-        # embed.add_field(name=STRINGS['general']['aboutthanks'], value=STRINGS['general']['aboutthankstext'],inline=False)
       await ctx.send(embed=embed)
 
   @commands.command(brief = "gets tweets from a username")
