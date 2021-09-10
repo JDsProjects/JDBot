@@ -90,9 +90,7 @@ class Test(commands.Cog):
   async def about(self, ctx):
     """Shows a short description of the bot."""
       
-      path = "utils/version.txt"
-      with open(path, "r") as file:
-          ver = file.readline()
+      
       ramUsage = self.process.memory_full_info().rss / 1024**2
       pythonVersion = platform.python_version()
       dpyVersion = discord.__version__
@@ -102,13 +100,15 @@ class Test(commands.Cog):
           description="Here you can view bot and author information",
           color=0xFF6900,
       )
+      embed.set_author(name=self.bot.user.name,
+                         icon_url=self.bot.user.avatar_url)
       embed.add_field(
           name="Author Information",
           value="Insert text here",
           inline=True,
       )
       embed.add_field(name="Bot Version",
-                        value=f"```{ver}```",
+                        value=f"```Placeholder```", # I dunno any other way to implement a version tracking other than a txt file so placeholder for now
                         inline=True)
       embed.add_field(name="Python Version:",
                         value=f"```{pythonVersion}```",
@@ -124,10 +124,7 @@ class Test(commands.Cog):
           inline=True,
       )
       
-
-        # embed.add_field(name=STRINGS['general']['aboutthanks'], value=STRINGS['general']['aboutthankstext'],inline=False)
-      embed.set_footer(text=self.bot.user.name,
-                         icon_url=self.bot.user.avatar_url)
+      embed.set_footer("Insert text here")
       await ctx.send(embed=embed)
 
   @commands.command(brief = "gets tweets from a username")
