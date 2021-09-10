@@ -86,11 +86,48 @@ class Test(commands.Cog):
     if not args:
       return await ctx.send("please give args so it can do a url.")
 
-  @commands.command(brief = "like other Bot info commands but more info")
+  @commands.command(brief = "like other Bot info commands but more info?")
   async def about(self, ctx):
-    embed = discord.Embed(color = 15428885)
-    
-    await ctx.send("WIP for rn.", embed = embed)
+    """Shows a short description of the bot."""
+      
+      path = "utils/version.txt"
+      with open(path, "r") as file:
+          ver = file.readline()
+      ramUsage = self.process.memory_full_info().rss / 1024**2
+      pythonVersion = platform.python_version()
+      dpyVersion = discord.__version__
+      servercount = len(self.bot.guilds)
+      embed = discord.Embed(
+          title="About Bot",
+          description="Here you can view bot and author information",
+          color=0xFF6900,
+      )
+      embed.add_field(name="Bot Version",
+                        value=f"```{ver}```",
+                        inline=True)
+      embed.add_field(name="Python Version:",
+                        value=f"```{pythonVersion}```",
+                        inline=True)
+      embed.add_field(name="Library", value="```discord.py```", inline=True)
+      embed.add_field(name="Discord.Py Version", value=f"```{dpyVersion}```")
+      embed.add_field(name="RAM Usage",
+                        value=f"```{ramUsage:.2f} MB```",
+                        inline=True)
+      embed.add_field(
+          name="Servers",
+          value=f"```{servercount}```",
+          inline=True,
+      )
+      embed.add_field(
+          name="Author Information",
+          value="Insert text here",
+          inline=True,
+      )
+
+        # embed.add_field(name=STRINGS['general']['aboutthanks'], value=STRINGS['general']['aboutthankstext'],inline=False)
+      embed.set_footer(text=self.bot.user.name,
+                         icon_url=self.bot.user.avatar_url)
+      await ctx.send(embed=embed)
 
   @commands.command(brief = "gets tweets from a username")
   async def tweet(self, ctx, *, args = None):
@@ -136,6 +173,8 @@ class Test(commands.Cog):
 
     else:
       await ctx.send("Please look for a library to get the info of.")
+  
+      
       
 
 def setup(bot):
