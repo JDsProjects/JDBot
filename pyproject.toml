@@ -50,8 +50,6 @@ async-cleverbot = "^0.2.2"
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
 "discord.py" = { git = "https://github.com/Rapptz/discord.py.git", branch = "master"}
 discord-ext-menus-views = {git = "https://github.com/oliver-ni/discord-ext-menus-views"}
-wavelink = {version = "^1.0.0b30", allow-prereleases = true}
-PyNaCl = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
 
