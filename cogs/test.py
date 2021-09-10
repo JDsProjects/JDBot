@@ -90,7 +90,7 @@ class Test(commands.Cog):
 
   @commands.command(brief = "Gives Information about JDBot")
   async def about(self, ctx):
-    embed = discord.Embed(title="About Bot", description="Here you can view bot and author information", color= 0xeb6d15)
+    embed = discord.Embed(title="About Bot", description="Here you can view bot and author information", color= 0xeb6d15, timestamp = ctx.message.created_at)
 
     embed.add_field(name="Author Information", value="This Bot is made by JDJG Inc. Official#3493(you can find out who the current owner is from the owner command(someone may have forked it).", inline=True)
 
@@ -102,7 +102,7 @@ class Test(commands.Cog):
 
     embed.add_field(name="Discord.Py Version", value=f"```{discord.__version__}```")
     
-    embed.add_field(name="RAM Usage", value=f"```{(psutil.Process(os.getpid()).memory_full_info().rss / 1024**2):.2f} MB```",  inline = True)
+    embed.add_field(name = "RAM Usage", value=f"```{(psutil.Process(os.getpid()).memory_full_info().rss / 1024**2):.2f} MB```",  inline = True)
 
     embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```", inline=True)
     
