@@ -86,9 +86,11 @@ class Test(commands.Cog):
     if not args:
       return await ctx.send("please give args so it can do a url.")
 
-  @commands.command(brief = "like other Bot info commands but more info?")
+  @commands.command(brief = "like other Bot info commands but more info")
   async def about(self, ctx):
-    await ctx.send("WIP for rn.")
+    embed = discord.Embed(color = 15428885)
+    
+    await ctx.send("WIP for rn.", embed = embed)
 
   @commands.command(brief = "gets tweets from a username")
   async def tweet(self, ctx, *, args = None):
