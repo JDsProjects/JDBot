@@ -22,8 +22,8 @@ class Image(commands.Cog):
     url = await asuna.get_gif("slap")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{person} slapped you! Ow...",icon_url=(person.avatar.url))
-    embed.set_image(url=url.url)
+    embed.set_author(name=f"{person} slapped you! Ow...", icon_url=(person.display_avatar.url))
+    embed.set_image(url = url.url)
     embed.set_footer(text="powered using the asuna.ga api")
 
     if isinstance(ctx.channel, discord.TextChannel):
@@ -43,7 +43,7 @@ class Image(commands.Cog):
     asuna = asuna_api.Client(session=self.bot.session)
     url = await asuna.get_gif("wholesome_foxes")
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{ctx.author} requested a wholesome fox picture",icon_url=(ctx.author.avatar.url))
+    embed.set_author(name=f"{ctx.author} requested a wholesome fox picture",icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url.url)
     embed.set_footer(text="powered using the asuna.ga api")
     await ctx.send(embed=embed)
@@ -64,7 +64,7 @@ class Image(commands.Cog):
     url = await asuna.get_gif("pat")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{person} patted you! *pat pat pat*",icon_url=(person.avatar.url))
+    embed.set_author(name=f"{person} patted you! *pat pat pat*",icon_url=(person.display_avatar.url))
     embed.set_image(url=url.url)
     embed.set_footer(text="powered using the asuna.ga api")
     
@@ -95,7 +95,7 @@ class Image(commands.Cog):
     sr_client=sr_api.Client(session=self.bot.session)
     image=await sr_client.get_gif("pat")
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{person} patted you",icon_url=(person.avatar.url))
+    embed.set_author(name=f"{person} patted you",icon_url=(person.display_avatar.url))
     embed.set_image(url=image.url)
     embed.set_footer(text="powered by some random api")
       
@@ -128,7 +128,7 @@ class Image(commands.Cog):
     image=await sr_client.get_gif("hug")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{person} hugged you! Awwww...",icon_url=(person.avatar.url))
+    embed.set_author(name=f"{person} hugged you! Awwww...",icon_url=(person.display_avatar.url))
     embed.set_image(url=image.url)
     embed.set_footer(text="powered by some random api")
     
@@ -158,7 +158,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.avatar.replace(format = "png")).url
+      url = (Member.display_avatar.replace(format = "png")).url
       await utils.triggered_converter(url, ctx)
 
   @commands.command(brief="uses our headpat program to pat you",help="a command that uses sra_api to make a headpat of you.")
@@ -175,7 +175,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.avatar.replace(format = "png")).url
+      url = (Member.display_avatar.replace(format = "png")).url
       await utils.headpat_converter(url, ctx)
 
   @commands.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
@@ -194,7 +194,7 @@ class Image(commands.Cog):
     url = await asuna.get_gif("hug")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{person} super hugged you!",icon_url=(person.avatar.url))
+    embed.set_author(name=f"{person} super hugged you!",icon_url=(person.display_avatar.url))
     embed.set_image(url=url.url)
     embed.set_footer(text="powered using the asuna.ga api")
     
@@ -226,7 +226,7 @@ class Image(commands.Cog):
     url = await asuna.get_gif("kiss")
           
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{person} kissed you",icon_url=(person.avatar.url))
+    embed.set_author(name=f"{person} kissed you",icon_url=(person.display_avatar.url))
     embed.set_image(url=url.url)
     embed.set_footer(text="Why did I make this command? powered using the asuna.ga api")
     
@@ -248,7 +248,7 @@ class Image(commands.Cog):
     url = await asuna.get_gif("neko")
     
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{ctx.author} requested a neko picture",icon_url=(ctx.author.avatar.url))
+    embed.set_author(name=f"{ctx.author} requested a neko picture",icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url.url)
     embed.set_footer(text="powered using the asuna.ga api")
     await ctx.send(embed=embed)
@@ -269,7 +269,7 @@ class Image(commands.Cog):
     image=await sr_client.get_gif("wink")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{person} winked at you",icon_url=(person.avatar.url))
+    embed.set_author(name=f"{person} winked at you",icon_url=(person.display_avatar.url))
     embed.set_image(url=image.url)
     embed.set_footer(text="powered by some random api")
 
@@ -321,7 +321,7 @@ class Image(commands.Cog):
     image=await sr_client.get_gif("face-palm")
 
     embed=discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{target} you made {person} facepalm",icon_url=person.avatar.url)
+    embed.set_author(name=f"{target} you made {person} facepalm",icon_url=person.display_avatar.url)
     embed.set_image(url=image.url)
     embed.set_footer(text="powered by some random api")
     
@@ -342,7 +342,7 @@ class Image(commands.Cog):
     r=await self.bot.session.get('https://jdjgapi.nom.mu/api/objection')
     res = await r.json()
     embed = discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{ctx.author} yelled OBJECTION!",icon_url=(ctx.author.avatar.url))
+    embed.set_author(name=f"{ctx.author} yelled OBJECTION!",icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=res["url"])
     embed.set_footer(text="Powered By JDJG Api!")
     await ctx.send(embed=embed)
@@ -383,7 +383,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.avatar.replace(format="png")).url
+      url = (Member.display_avatar.replace(format="png")).url
       await utils.invert_converter(url, ctx)
 
   @commands.command(help="Headpat generator :D")
@@ -400,7 +400,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.avatar.replace(format="png")).url
+      url = (Member.display_avatar.replace(format="png")).url
       await utils.headpat_converter2(url, ctx)
 
   def convert_svg(self, svg_image):
