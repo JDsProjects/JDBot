@@ -77,7 +77,7 @@ class Info(commands.Cog):
 
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
     
-    embed.set_image(url = user.avatar.url if user.avatar else user.default_avatar.url)
+    embed.set_image(url = user.display_avatar.url)
     
     view = utils.BasicButtons(ctx.author)
     msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
@@ -183,16 +183,16 @@ class Info(commands.Cog):
       for x in ctx.message.attachments:
         embed.add_field(name=f"ID: {x.id}",value=f"[{x.filename}]({x.url})")
         embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
-      await ctx.send(embed=embed,content="\nThat's good")
+      await ctx.send(embed=embed, content="\nThat's good")
 
   @commands.command(brief="a command to get the avatar of a user",help="using the userinfo technology it now powers avatar grabbing.",aliases=["pfp","av"])
   async def avatar(self, ctx, *, user: utils.BetterUserconverter = None): 
     user = user or ctx.author
 
     embed = discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"{user.name}'s avatar:", icon_url = user.avatar.url if user.avatar else user.default_avatar.url)
+    embed.set_author(name=f"{user.name}'s avatar:", icon_url = user.display_avatar.url)
 
-    embed.set_image(url = user.avatar.url if user.avatar else user.default_avatar.url)
+    embed.set_image(url = user.display_avatar.url)
     embed.set_footer(text=f"Requested by {ctx.author}")
     await ctx.send(embed=embed)
 
@@ -600,11 +600,11 @@ class DevTools(commands.Cog):
   @commands.command(brief = "grabs your pfp's image")
   async def pfp_grab(self, ctx):
     
-    if_animated = ctx.author.avatar.is_animated()
+    if_animated = ctx.author.display_avatar.is_animated()
 
     save_type = ".gif" if if_animated else ".png"
 
-    icon_file = await ctx.author.avatar.read()
+    icon_file = await ctx.author.display_avatar.read()
     buffer = io.BytesIO(icon_file)
     buffer.seek(0)
     #print(len(buffer.getvalue()))
