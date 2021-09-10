@@ -124,10 +124,11 @@ class Test(commands.Cog):
           inline=True,
       )
       
-
+      
+      embed.set_author(name = f"{self.bot.user}", icon_url = self.bot.user.display_avatar.url)
+      
+      
         # embed.add_field(name=STRINGS['general']['aboutthanks'], value=STRINGS['general']['aboutthankstext'],inline=False)
-      embed.set_footer(text=self.bot.user.name,
-                         icon_url=self.bot.user.avatar_url)
       await ctx.send(embed=embed)
 
   @commands.command(brief = "gets tweets from a username")
