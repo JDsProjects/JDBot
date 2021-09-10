@@ -90,31 +90,39 @@ class Test(commands.Cog):
 
   @commands.command(brief = "Gives Information about JDBot")
   async def about(self, ctx):
+
     embed = discord.Embed(title="About Bot", description="Here you can view bot and author information", color= 0xeb6d15, timestamp = ctx.message.created_at)
 
-    embed.add_field(name="Author Information", value="This Bot is made by JDJG Inc. Official#3493(you can find out who the current owner is from the owner command(someone may have forked it).", inline=True)
 
-    embed.add_field(name="Bot Version", value=f"```1.0.0```" , inline = True)
-      
+    embed.add_field(name="Author Information", value="```This Bot is made by JDJG Inc. Official#3493(you can find out more about owners from the owner command).```", inline=False)
+
+    embed.add_field(name="Bot Version", value='```1.0.0```', inline = True)
+
     embed.add_field(name="Python Version:", value=f"```{platform.python_version()}```", inline = True)
-      
+
     embed.add_field(name="Library", value = "```discord.py```",  inline = True)
 
     embed.add_field(name="Discord.Py Version", value=f"```{discord.__version__}```")
-    
+
+
     embed.add_field(name = "RAM Usage", value=f"```{(psutil.Process(os.getpid()).memory_full_info().rss / 1024**2):.2f} MB```",  inline = True)
 
     embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```", inline=True)
-    
-    embed.add_field(name = "Contributers", value = f"Shadi#9492 \nMiddlle#0101")
 
-    embed.add_field(name = "Sponsors", value = f"No current sponsors :(")
-      
+    embed.add_field(name = "Contributers", value='```Shadi#9492 \nMiddlle#0101```', inline=True)
+
+    embed.add_field(name = "Sponsors", value='```No current sponsors :(```', inline=True)
+
+
     embed.set_author(name = f"{self.bot.user}", icon_url = self.bot.user.display_avatar.url)
-    
-    embed.set_footer(text = f"Find out more bot info from stats and other commands, want to become a sponsor dm me. I hope I am not missing an contributors or sponsors.")
-      
+
+    embed.set_footer(
+        text=
+        'Find out more from stats and other commands, and if you want to be a sponsor dm. I hope I am not missing any contributors or sponsors.'
+    )
+
     await ctx.send(embed = embed)
+
 
   @commands.command(brief = "gets tweets from a username")
   async def tweet(self, ctx, *, args = None):
