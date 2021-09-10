@@ -118,7 +118,7 @@ class Test(commands.Cog):
 
     embed.set_footer(
         text=
-        'Find out more bot info from stats and other commands, want to become a sponsor dm me. I hope I am not missing an contributors or sponsors.'
+        'Find out more from stats and other commands, and if you want to be a sponsor dm. I hope I am not missing any contributors or sponsors.'
     )
 
     await ctx.send(embed = embed)
