@@ -93,7 +93,7 @@ class Test(commands.Cog):
 
     embed = discord.Embed(title="About Bot", description="Here you can view bot and author information", color= 0xeb6d15)
 
-    embed.add_field(name="Author Information", value="This Bot is made by JDJG Inc. Official#3493(you can find out who the current owner is from the owner command(someone may have forked it).", inline=True)
+    embed.add_field(name="Author Information", value="This Bot is made by JDJG Inc. Official#3493(you can find out who the current owner is from the owner command(someone may have forked it).", inline=False)
 
     embed.add_field(name="Bot Version", value='```1.0.0```', inline = True)
 
@@ -107,9 +107,9 @@ class Test(commands.Cog):
 
     embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```", inline=True)
 
-    embed.add_field(name = "Contributers", value='Shadi#9492 \nMiddlle#0101')
+    embed.add_field(name = "Contributers", value='Shadi#9492 \nMiddlle#0101', inline=True)
 
-    embed.add_field(name = "Sponsors", value='No current sponsors :(')
+    embed.add_field(name = "Sponsors", value='No current sponsors :(', inline=True)
 
     embed.set_author(name = f"{self.bot.user}", icon_url = self.bot.user.display_avatar.url)
 
