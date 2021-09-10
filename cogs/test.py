@@ -51,7 +51,7 @@ class Test(commands.Cog):
         except discord.errors.InvalidArgument:
           passes = False
 
-        if passes is True:
+        if passes:
           invert_time = functools.partial(utils.invert_func, await x.read())
           file = await self.bot.loop.run_in_executor(None, invert_time)
           return await ctx.send(file = file)
