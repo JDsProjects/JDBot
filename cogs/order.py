@@ -54,11 +54,14 @@ class Order(commands.Cog):
       embed.set_author(name=f"order for {ctx.author}:", icon_url = (ctx.author.avatar.url))
       embed.add_field(name="Time Spent:", value = f"{int((time_after - time_before)*1000)}MS")
       embed.add_field(name="Powered by:", value="Google Images Api")
+
+      embed.add_field(name = "Image link:", value = f"[Image Link]({emoji_image.image_url})")
+
       embed.set_image(url = emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
 
-      await self.bot.get_channel(855217084710912050).send(embed=embed)
+      await self.bot.get_channel(855217084710912050).send(embed = embed)
 
   @commands.cooldown(1, 30, BucketType.user)
   @order.command(brief = "a command to shuffle images from google images")
@@ -85,6 +88,9 @@ class Order(commands.Cog):
       embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar.url))
       embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
       embed.add_field(name="Powered by:",value="Google Images Api")
+
+      embed.add_field(name = "Image link:", value = f"[Image Link]({emoji_image.image_url})")
+
       embed.set_image(url=emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
@@ -116,6 +122,9 @@ class Order(commands.Cog):
       embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.avatar.url))
       embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
       embed.add_field(name="Powered by:",value="Google Images Api")
+
+      embed.add_field(name = "Image link:", value = f"[Image Link]({emoji_image.image_url})")
+
       embed.set_image(url=emoji_image.image_url)
       embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
       await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
