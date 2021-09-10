@@ -91,12 +91,12 @@ class Test(commands.Cog):
   @commands.command(brief = "Gives Information about JDBot")
   async def about(self, ctx):
 
-    embed = discord.Embed(title="About Bot", description="Here you can view bot and author information", color= 0xeb6d15, timestamp = ctx.message.created_at)
+    embed = discord.Embed(title = "About Bot", description = "Here you can view bot and author information", timestamp = ctx.message.created_at, color= 0xeb6d15)
 
 
     embed.add_field(name="Author Information", value="```This Bot is made by JDJG Inc. Official#3493(you can find out more about owners from the owner command).```", inline=False)
 
-    embed.add_field(name="Bot Version", value='```1.0.0```', inline = True)
+    embed.add_field(name="Bot Version", value="```1.0.0```", inline = True)
 
     embed.add_field(name="Python Version:", value=f"```{platform.python_version()}```", inline = True)
 
@@ -109,17 +109,14 @@ class Test(commands.Cog):
 
     embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```", inline=True)
 
-    embed.add_field(name = "Contributers", value='```Shadi#9492 \nMiddlle#0101```', inline=True)
+    embed.add_field(name = "Contributers", value="```Shadi#9492 \nMiddlle#0101```", inline=True)
 
-    embed.add_field(name = "Sponsors", value='```No current sponsors :(```', inline=True)
+    embed.add_field(name = "Sponsors", value="```No current sponsors :(```", inline=True)
 
 
     embed.set_author(name = f"{self.bot.user}", icon_url = self.bot.user.display_avatar.url)
 
-    embed.set_footer(
-        text=
-        'Find out more from stats and other commands, and if you want to be a sponsor dm. I hope I am not missing any contributors or sponsors.'
-    )
+    embed.set_footer(text = "Learn More from: \nStats \nOr Any Other Bot Commands \nYou can Even Sponsor the Bot \nIf you want to sponsor the bot DM me. \nI hope I am not missing any contibutors or sponsors")
 
     await ctx.send(embed = embed)
 

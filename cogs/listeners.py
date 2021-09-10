@@ -93,16 +93,13 @@ class Events(commands.Cog):
 
   @commands.Cog.listener()
   async def on_guild_available(self, guild):
-    if self.bot.is_ready():
-      await self.bot.get_channel(855217084710912050).send(f"{guild} is now avaiable")
-      print(guild)
+    if self.bot.is_ready:
+      print(f"{guild} is avaible")
 
   @commands.Cog.listener()
   async def on_guild_unavailable(self, guild):
-    if self.bot.is_ready():
-      await self.bot.get_channel(855217084710912050).send(f"{guild} is now unavaiable")
-
-    print(guild)
+    if self.bot.is_ready:
+      print(f"{guild} is unavaible")
 
 def setup(bot):
   bot.add_cog(Events(bot))
