@@ -102,6 +102,11 @@ class Test(commands.Cog):
           description="Here you can view bot and author information",
           color=0xFF6900,
       )
+      embed.add_field(
+          name="Author Information",
+          value="Insert text here",
+          inline=True,
+      )
       embed.add_field(name="Bot Version",
                         value=f"```{ver}```",
                         inline=True)
@@ -118,11 +123,7 @@ class Test(commands.Cog):
           value=f"```{servercount}```",
           inline=True,
       )
-      embed.add_field(
-          name="Author Information",
-          value="Insert text here",
-          inline=True,
-      )
+      
 
         # embed.add_field(name=STRINGS['general']['aboutthanks'], value=STRINGS['general']['aboutthankstext'],inline=False)
       embed.set_footer(text=self.bot.user.name,
