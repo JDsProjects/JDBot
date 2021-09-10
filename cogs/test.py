@@ -90,6 +90,7 @@ class Test(commands.Cog):
 
   @commands.command(brief = "Gives Information about JDBot")
   async def about(self, ctx):
+
     embed = discord.Embed(title="About Bot", description="Here you can view bot and author information", color= 0xeb6d15)
 
     embed.add_field(name="Author Information", value="This Bot is made by JDJG Inc. Official#3493(you can find out who the current owner is from the owner command(someone may have forked it).", inline=True)
@@ -118,6 +119,7 @@ class Test(commands.Cog):
     )
 
     await ctx.send(embed = embed)
+
 
   @commands.command(brief = "gets tweets from a username")
   async def tweet(self, ctx, *, args = None):
