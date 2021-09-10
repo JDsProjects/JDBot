@@ -85,12 +85,6 @@ class Events(commands.Cog):
     
     #print(more_information[0])
 
-  
-  @commands.Cog.listener()
-  async def on_member_join(self, member):
-    print(member)
-    #currently wip btw
-
   @commands.Cog.listener()
   async def on_guild_available(self, guild):
     if self.bot.is_ready:
