@@ -65,15 +65,6 @@ class Bot(commands.Cog):
     owner = await self.bot.getch_member(support_guild, owner_id) or await self.bot.getch_user(owner_id)
 
     user_type = ("Bot" if owner.bot else "User")
-
-    guilds_list = [guild for guild in self.bot.guilds if guild.get_member(owner.id) and guild.get_member(ctx.author.id)]
-
-    if not guilds_list:
-      guild_list = "None"
-
-
-    if guilds_list:
-      guild_list= ", ".join(map(str, guilds_list))
     
     if owner:
       nickname = str(owner.nick)
@@ -92,20 +83,60 @@ class Bot(commands.Cog):
           status=str(member.status).upper()
           break
       highest_role = "None Found"
+
+
+    flags = owner.public_flags.all()
     
-    embed=discord.Embed(title=f"Bot Owner: {owner}",description=f"Type: {user_type}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
-    embed.add_field(name="Username:", value = owner.name)
-    embed.add_field(name = "Discriminator:",value=owner.discriminator)
-    embed.add_field(name = "Nickname: ", value = nickname)
-    embed.add_field(name = "Joined Discord: ", value = (f"{discord.utils.format_dt(owner.created_at, style = 'd')}\n{discord.utils.format_dt(owner.created_at, style = 'T')}"))
-    embed.add_field(name = "Joined Guild: ", value = joined_guild)
-    embed.add_field(name = "Mutual Guilds:", value=guild_list)
-    embed.add_field(name = "ID:", value = owner.id)
-    embed.add_field(name = "Status:", value=status)
-    embed.add_field(name = "Highest Role:", value=highest_role)
+    badges="\u0020".join(utils.profile_converter(f.name) for f in flags)
+
+    if owner.bot: badges = f"{badges} {utils.profile_converter('bot')}"
+    
+    embed=discord.Embed(title=f"Bot Owner: {owner}",color = random.randint(0, 16777215),timestamp=ctx.message.created_at)
+    
+    embed.add_field(name = "User Info: ", value = f"**Username**: {owner.name} \n**Discriminator**: {owner.discriminator} \n**ID**: {owner.id}")
+
+    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {badges} \n**Joined Discord**: {discord.utils.format_dt(owner.created_at, style = 'd')}\n{discord.utils.format_dt(owner.created_at, style = 'T')}\n**Status**: {status}")
+    
+    embed.add_field(name = "Guild Info:", value = f"**Nickname**: {nickname} \n**Joined Guild**: {joined_guild} \n**Highest Role**: {highest_role}")
+
+    embed.set_footer(text = f"Support Guild's Name: \n{support_guild}")    
+
     embed.set_image(url = owner.display_avatar.url)
-    embed.set_footer(text = f"Support Guild : {support_guild}")
-    await ctx.send(embed = embed)
+    
+    view = utils.BasicButtons(ctx.author)
+    msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
+
+    await view.wait()
+
+    if view.value is None:
+      return await msg.edit("you didn't respond quickly enough")
+
+    if not view.value:
+      await msg.edit("Not sending the mutual guilds list to you.")
+
+    if view.value:
+      pag = commands.Paginator()
+
+      guilds_list = utils.grab_mutualguilds(ctx, owner)
+
+      for g in guilds_list:
+        pag.add_line(f"{g}")
+
+      pages = [page.strip("`") for page in pag.pages]
+      pages = pages or ["None"]
+
+      view = utils.dm_or_ephemeral(ctx.author, pages)
+
+      await ctx.send("Opening another buttons response.", view = view)
+      
+      await ctx.send(f"Currently WIP, so dms it is.")
+
+      menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page = 1), delete_message_after = True)
+
+      if (ctx.author.dm_channel is None):
+        await ctx.author.create_dm()
+
+      await menu.start(ctx, channel = ctx.author.dm_channel)
 
   @commands.command(help="a command to give information about the team",brief="this command works if you are in team otherwise it will just give the owner.")
   async def team(self,ctx):
