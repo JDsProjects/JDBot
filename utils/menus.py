@@ -1,7 +1,6 @@
 import discord, re, collections, random, emoji, aiohttp
 from discord.ext import commands, menus
 
-
 class InviteInfoEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
     if isinstance(item, discord.Invite):
@@ -93,7 +92,36 @@ class QuickMenu(menus.ListPageSource):
     #returns the embed here lol.
 
 class mutualGuildsEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title="Mutual Servers:", description=item,color = random.randint(0, 16777215))
-      return embed
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title="Mutual Servers:", description = item,color = random.randint(0, 16777215))
+    
+    return embed
+
+
+def guild_join(guilds):
+  return "\n".join(map(str, guilds))
+
+async def get_sus_reason(ctx, user):
+  cur = await ctx.bot.sus_users.cursor()
+  cursor = await cur.execute("SELECT * FROM SUS_USERS;")
+  sus_users = dict(await cursor.fetchall())
+  await cur.close()
+  
+  return sus_users.get(user.id)
+
+def grab_mutualguilds(ctx, user):
+  mutual_guilds = set(ctx.author.mutual_guilds)
+  mutual_guilds2 = set(user.mutual_guilds)
+
+  return list(mutual_guilds.intersection(mutual_guilds2))
+
+class ScanGlobalEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(color = random.randint(0, 16777215))
+
+    embed.set_author(name = f"{item}", icon_url = item.display_avatar.url)
+
+    embed.add_field(name = "Shared Guilds:", value = f"{guild_join(grab_mutualguilds(menu.ctx, item))}")
+    embed.set_footer(text = f"Sus Reason : {await get_sus_reason(menu.ctx, item)}")
+    return embed
 

@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord, random, typing
 import utils
 from discord.ext.commands.cooldowns import BucketType
+from discord.ext.menus.views import ViewMenuPages
 
 class Moderation(commands.Cog):
   def __init__(self, bot):
@@ -87,7 +88,6 @@ class Moderation(commands.Cog):
     cursor = await cur.execute("SELECT * FROM SUS_USERS;")
     sus_users = dict(await cursor.fetchall())
     await cur.close()
-
     
     ss_users = [await self.bot.getch_user(u) for u in sus_users if not None]
 
@@ -97,10 +97,11 @@ class Moderation(commands.Cog):
     else:
       mutual_guild_users = [u for u in ss_users if u.mutual_guilds]
 
-      #work on some way to find mutual guilds and keep the user's object or user's id for pagination.
+      valid_users = [u for u in mutual_guild_users if utils.mutual_guild_check(ctx, u)]
 
-    await ctx.send("WIP")
-
+      menu = ViewMenuPages(utils.ScanGlobalEmbed(valid_users, per_page = 1), delete_message_after = True)
+      
+      await menu.start(ctx)
 
   async def cog_command_error(self, ctx, error):
     if not ctx.command or not ctx.command.has_error_handler():

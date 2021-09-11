@@ -131,3 +131,9 @@ def profile_converter(name):
   }
   
   return names_to_emojis.get(name)
+
+def mutual_guild_check(ctx, user):
+  mutual_guilds = set(ctx.author.mutual_guilds)
+  mutual_guilds2 = set(user.mutual_guilds)
+
+  return bool(mutual_guilds.intersection(mutual_guilds2))
