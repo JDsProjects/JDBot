@@ -17,7 +17,7 @@ class Owner(commands.Cog):
       await ctx.reply("Please give me a message to use.")
       message = await self.bot.wait_for("message",check = utils.check(ctx))
       embed_message = discord.Embed(title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215))
-      embed_message.set_author(name=f"Mail from: {ctx.author}",icon_url=(ctx.author.avatar.url))
+      embed_message.set_author(name=f"Mail from: {ctx.author}",icon_url=(ctx.author.display_avatar.url))
       embed_message.set_footer(text = f"{ctx.author.id}")
       embed_message.set_thumbnail(url = "https://i.imgur.com/1XvDnqC.png")
       if (user.dm_channel is None):

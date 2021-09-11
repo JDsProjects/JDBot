@@ -32,7 +32,7 @@ class Extra(commands.Cog):
         if y > 0:
           embed.add_field(name = f"Username:\n{x.name}",value=f"Date and Time Changed:\n{discord.utils.format_dt(x.changed_at, style = 'd')} \n{discord.utils.format_dt(x.changed_at, style = 'T')}")
         
-      embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.avatar.url))
+      embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
       await ctx.send(embed=embed)
 
   @mchistory.error
@@ -91,7 +91,7 @@ class Extra(commands.Cog):
     response=await self.bot.session.get("https://icanhazdadjoke.com/",headers={"Accept": "application/json"})
     joke=await response.json()
     embed = discord.Embed(title="Random Dad Joke:",color=random.randint(0, 16777215))
-    embed.set_author(name=f"Dad Joke Requested by {ctx.author}",icon_url=(ctx.author.avatar.url))
+    embed.set_author(name=f"Dad Joke Requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
     embed.add_field(name="Dad Joke:",value=joke["joke"])
     embed.set_footer(text=f"View here:\n https://icanhazdadjoke.com/j/{joke['id']}")
     await ctx.send(embed=embed)
@@ -128,7 +128,7 @@ class Extra(commands.Cog):
       image = f"https://http.cat/{code}.jpg"
 
     embed=discord.Embed(title=f"Status Code: {code}",color=random.randint(0, 16777215))
-    embed.set_author(name=f"Requested by {ctx.author}",icon_url=ctx.author.avatar.url)
+    embed.set_author(name=f"Requested by {ctx.author}",icon_url=ctx.author.display_avatar.url)
     embed.set_image(url=image)
     embed.set_footer(text="Powered by http.cat")
     await ctx.send(embed=embed)
@@ -332,7 +332,7 @@ class Extra(commands.Cog):
         await apply_user.create_dm()
       
       embed_message = discord.Embed(title=args,color=random.randint(0, 16777215),timestamp=(ctx.message.created_at))
-      embed_message.set_author(name=f"Application from {ctx.author}",icon_url=ctx.author.avatar.url)
+      embed_message.set_author(name=f"Application from {ctx.author}",icon_url=ctx.author.display_avatar.url)
       embed_message.set_footer(text = f"{ctx.author.id}")
       embed_message.set_thumbnail(url="https://i.imgur.com/PfWlEd5.png")
       await apply_user.send(embed=embed_message)

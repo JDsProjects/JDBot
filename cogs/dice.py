@@ -17,7 +17,7 @@ class Dice(commands.Cog):
 
     embed.set_footer(text = f"{ctx.author.id}")
     embed.set_thumbnail(url = "https://i.imgur.com/AivZBWP.png")
-    embed.set_author(name = f"d{number} Rolled by {ctx.author}:",icon_url = ctx.author.avatar.url)
+    embed.set_author(name = f"d{number} Rolled by {ctx.author}:",icon_url = ctx.author.display_avatar.url)
     embed.set_image(url = url)
     await ctx.send(embed = embed)
 
@@ -88,7 +88,7 @@ class Dice(commands.Cog):
       url_dic = {"heads": "https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
 
       embed = discord.Embed(title="coin flip",color=random.randint(0, 16777215))
-      embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.avatar.url)
+      embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
 
       embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {args}")
       embed.set_image(url = url_dic[pic_name])
@@ -145,7 +145,7 @@ class Dice(commands.Cog):
 
     embed = discord.Embed(title = f"How well does {item1} and {item2} work together?",  description = f"They work at a rate {item_relationship}% \n**{resp}**", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
 
-    embed.set_author(name=f"{ctx.author}", icon_url = ctx.author.avatar.url)
+    embed.set_author(name=f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
 
     embed.set_footer(text = f"{ctx.author.id}")
 

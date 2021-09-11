@@ -93,7 +93,7 @@ class Info(commands.Cog):
     if view.value:
       pag = commands.Paginator()
 
-      guilds_list = [guild for guild in self.bot.guilds if guild.get_member(user.id) and guild.get_member(ctx.author.id)]
+      guilds_list = utils.grab_mutualguilds(ctx, user)
 
       for g in guilds_list:
         pag.add_line(f"{g}")
