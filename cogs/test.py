@@ -102,31 +102,7 @@ class Test(commands.Cog):
   @commands.command(brief = "add emoji to your guild lol")
   async def emoji_add(self, ctx):
     await ctx.send("WIP")
-    #look at the JDJG Bot orginal
-
-  @commands.command(brief = "sends a emoji to me to review(a.k.a reviewed in the review channel)")
-  async def emoji_save(self, ctx, *, emoji : typing.Optional[discord.PartialEmoji] = None):
-    
-    if not emoji:
-      await ctx.send("That's not a valid emoji or isn't a custom emoji")
-
-    else:
-      
-      if emoji.id in [e.id for e in self.bot.emojis]:
-        return await ctx.send("That emoji was already added to the bot's emojis")
-
-      
-      embed = discord.Embed(title = "Emoji Submission", color = 5565960)
-
-      embed.add_field(name = "Emoji", value = f"Regex: {emoji}\nName:{emoji.name} \nAnimated: {emoji.animated}")
-
-      emoji.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
-
-      embed.set_image(url = f"{emoji.url}")
-      embed.set_footer(text = f"ID: {emoji.id}")
-
-      await self.bot.get_channel(855217084710912050).send(embed = embed)
-        
+    #look at the JDJG Bot orginal  
 
   @commands.command(brief = "runs something in le console")
   async def console(self, ctx):

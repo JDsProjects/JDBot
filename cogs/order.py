@@ -32,6 +32,7 @@ class Order(commands.Cog):
   async def order(self, ctx, *, args = None):
     if not args:
       await ctx.send("You can't order nothing.")
+      ctx.command.reset_cooldown(ctx) 
 
     if args:
       time_before = time.perf_counter()  
@@ -101,6 +102,7 @@ class Order(commands.Cog):
   async def order_shuffle(self, ctx, *, args = None):
     if not args:
       await ctx.send("You can't order nothing")
+      ctx.command.reset_cooldown(ctx)
 
     if args:
       time_before=time.perf_counter()  
@@ -136,6 +138,7 @@ class Order(commands.Cog):
 
     if not args:
       return await ctx.send("You can't search for nothing")
+      ctx.command.reset_cooldown(ctx)
 
     safesearch_type = ContentFilter.high()
     results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
@@ -215,6 +218,7 @@ class Order(commands.Cog):
     
     if not args:
       return await ctx.send("That doesn't have any value.")
+      ctx.command.reset_cooldown(ctx) 
 
     safesearch_type = AgeRating.g()
     results = await self.giphy_client.search(args, rating = safesearch_type, limit = 10)
@@ -277,7 +281,6 @@ class Order(commands.Cog):
 
     
     
-  @commands.cooldown(1, 30, BucketType.user)
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(help = "looks up an item from giphy but shuffled", aliases=["giphy-shuffle"])
   async def giphy_shuffle(self, ctx, *, args = None):

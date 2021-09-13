@@ -1,5 +1,5 @@
 from discord.ext import commands, tasks, menus
-import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os
+import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os, typing
 
 import utils
 from discord.ext.commands.cooldowns import BucketType
@@ -475,6 +475,34 @@ class Bot(commands.Cog):
     embed.set_footer(text = "Learn More from: \nStats \nOr Any Other Bot Commands \nYou can Even Sponsor the Bot \nIf you want to sponsor the bot DM me. \nI hope I am not missing any contibutors or sponsors")
 
     await ctx.send(embed = embed)
+
+  @commands.cooldown(1, 90, BucketType.user)
+  @commands.command(brief = "sends a emoji to me to review(a.k.a reviewed in the review channel, you will be Dmed if you failed or not)")
+  async def emoji_save(self, ctx, *, emoji : typing.Optional[discord.PartialEmoji] = None):
+    
+    if not emoji:
+      await ctx.send("That's not a valid emoji or isn't a custom emoji")
+      ctx.command.reset_cooldown(ctx)
+
+    else:
+      already_exists = False
+      if emoji.id in [e.id for e in self.bot.emojis]:
+        await ctx.send("That emoji was already added to the bot's emojis(sent it anyway)")
+        already_exists = True
+
+      if not emoji.id in [e.id for e in self.bot.emojis]:
+        await ctx.send("The emoji is now in the bot's emoji review channel")
+      
+      embed = discord.Embed(title = "Emoji Submission", color = 5565960)
+
+      embed.add_field(name = "Emoji", value = f"Regex: {emoji}\nName:{emoji.name} \nAnimated: {emoji.animated} \nEmoji Exists in bot's emoji: {already_exists}")
+
+      embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
+
+      embed.set_image(url = f"{emoji.url}")
+      embed.set_footer(text = f"ID: {emoji.id}")
+
+      await self.bot.get_channel(855217084710912050).send(embed = embed)
 
 def setup(bot):
   bot.add_cog(Bot(bot))

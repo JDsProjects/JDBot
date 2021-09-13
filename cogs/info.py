@@ -151,7 +151,7 @@ class Info(commands.Cog):
 
     await ctx.send(f"Discord Mention: {user.mention} \nRaw Mention:  {discord.utils.escape_mentions(user.mention)}", allowed_mentions = discord.AllowedMentions.none())
 
-  @commands.cooldown(1,30,BucketType.user)
+  @commands.cooldown(1, 30, BucketType.user)
   @commands.command(help="fetch invite details")
   async def fetch_invite(self, ctx, *invites:typing.Union[discord.Invite, str]):
     if invites:
@@ -160,6 +160,7 @@ class Info(commands.Cog):
       await menu.start(ctx)
     if not invites:
       await ctx.send("Please get actual invites to attempt grab")
+      ctx.command.reset_cooldown(ctx)
 
     if len(invites) > 50:
       await ctx.send("Reporting using more than 50 invites in this command. This is to prevent ratelimits with the api.")
