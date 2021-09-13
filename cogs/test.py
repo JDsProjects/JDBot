@@ -1,9 +1,9 @@
 from discord.ext import commands, menus
-import discord, functools
+import discord, functools, typing, yarl
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
-#import itertools, re, typing, random, collections, io
+#random, collections, io, itertools, re
 
 class Test(commands.Cog):
   def __init__(self, bot):
@@ -84,7 +84,7 @@ class Test(commands.Cog):
     await ctx.send("WIP")
 
   @commands.command(brief = "a command that takes a url and sees if it's an image.")
-  async def image_check(self, ctx, *, args = None):
+  async def image_check(self, ctx, *, args : typing.Optional [typing.Union[yarl.URL, str]] = None):
     if not args:
       return await ctx.send("please give args so it can do a url.")
 

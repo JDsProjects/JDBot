@@ -23,8 +23,10 @@ class Dice(commands.Cog):
 
   @commands.command(brief="A command to roll random dnd dice.",aliases=["roll"])
   async def diceroll(self, ctx, * , number:typing.Optional[int]=None):
-    if number : await self.generate_embed(ctx, int(number))
-    else: await ctx.send("None that's bad.")
+
+    number = number or 6
+    
+    await self.generate_embed(ctx, int(number))
 
   @commands.command(brief = "Gives random emojis(from guild and bot)", help = "Please use this wisely.", aliases = ["e_spin","emoji_spin"])
   async def emoji_spinner(self, ctx):
