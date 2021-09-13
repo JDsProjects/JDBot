@@ -92,13 +92,11 @@ class Events(commands.Cog):
 
   @commands.Cog.listener()
   async def on_guild_available(self, guild):
-    if self.bot.is_ready:
-      print(f"{guild} is avaible")
+    print(f"{guild} is avaible")
 
   @commands.Cog.listener()
   async def on_guild_unavailable(self, guild):
-    if self.bot.is_ready:
-      print(f"{guild} is unavaible")
+    print(f"{guild} is unavaible")
 
 
 def setup(bot):
