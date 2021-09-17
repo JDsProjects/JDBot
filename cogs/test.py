@@ -1,9 +1,10 @@
 from discord.ext import commands, menus
-import discord, functools, typing, yarl
+import discord, functools, typing, yarl, random
 import utils
 from discord.ext.commands.cooldowns import BucketType
+from better_profanity import profanity
 
-#random, collections, io, itertools, re
+#collections, io, itertools, re
 
 class Test(commands.Cog):
   def __init__(self, bot):
@@ -133,8 +134,18 @@ class Test(commands.Cog):
 
     else:
       await ctx.send("Please look for a library to get the info of.")
-  
-      
+
+
+  @commands.command(brief = "makes a global chat example message from your message", aliases = ["test_global_chat"])
+  async def test_globalchat(self, ctx, *, args = None):
+    
+    args = args or "Test Content"
+
+    for men in ctx.message.mentions:
+      args = args.replace(f"<@!{men.id}>)", f"{men}")
+
+    args = await commands.clean_content().convert(ctx, args)
+    await ctx.send(args)
       
 
 def setup(bot):

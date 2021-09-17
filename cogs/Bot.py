@@ -380,10 +380,12 @@ class Bot(commands.Cog):
 
     await ctx.send(embed = embed)
 
+  @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "make a suggestion to the bot owner of a command to add", aliases = ["suggestion"])
   async def suggest(self, ctx, *, args = None):
     if not args:
       return await ctx.send("You didn't give me a command to add to the suggestion.")
+      ctx.command.reset_cooldown(ctx)
 
     embed = discord.Embed(title = f"New Suggestion requested by {ctx.author}", description = f"Suggestion: {args}", timestamp = ctx.message.created_at, color = random.randint(0, 16777215))
 

@@ -666,7 +666,6 @@ class DevTools(commands.Cog):
 
     if not guild:
       return await ctx.send("no guild to get the icon of.")
-
     
     await ctx.send(f"{guild.icon.url if guild.icon else 'No Url for This Guild, I am sorry dude :('}")
 
