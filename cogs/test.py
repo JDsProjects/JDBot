@@ -1,10 +1,10 @@
-from discord.ext import commands, menus
-import discord, functools, typing, yarl, random
+from discord.ext import commands
+import discord, functools, typing, yarl, re
 import utils
 from discord.ext.commands.cooldowns import BucketType
 from better_profanity import profanity
 
-#collections, io, itertools, re
+#collections, io, itertools, random
 
 class Test(commands.Cog):
   def __init__(self, bot):
@@ -141,8 +141,9 @@ class Test(commands.Cog):
     
     args = args or "Test Content"
 
-    for men in ctx.message.mentions:
-      args = args.replace(f"<@!{men.id}>)", f"{men}")
+    for x in re.findall(r':\w*:\d*', args):
+      args=args.replace(x ,f"\{x}")
+      #https://github.com/Rapptz/discord.py/blob/45d498c1b76deaf3b394d17ccf56112fa691d160/discord/ext/commands/converter.py#L224
 
     args = await commands.clean_content().convert(ctx, args)
     await ctx.send(args)
