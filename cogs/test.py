@@ -148,11 +148,5 @@ class Test(commands.Cog):
     args = profanity.censor(args, censor_char = "#")
     await ctx.send(args)
 
-  
-  @commands.command(brief = "generates a random sm64 color code", aliases = ["generate_cc", "generate_colorcode", "g_cc", "cc_generator"])
-  async def generate_color_code(self, ctx):
-    await ctx.send(f"```{utils.cc_generate()}```")
-      
-
 def setup(bot):
   bot.add_cog(Test(bot))

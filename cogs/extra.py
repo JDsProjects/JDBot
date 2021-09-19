@@ -696,5 +696,18 @@ class Extra(commands.Cog):
     embed.set_author(name = f"Pingu has been summoned by {ctx.author}:", icon_url = ctx.author.display_avatar.url)
     await ctx.send("nook nook", embed = embed)
 
+
+  @commands.cooldown(1, 30, BucketType.user)
+  @commands.command(brief = "generates a random sm64 color code", aliases = ["generate_cc", "generate_colorcode", "g_cc", "cc_generator"])
+  async def generate_color_code(self, ctx):
+
+    embed = discord.Embed(description = f"```{utils.cc_generate()}```", color = random.randint(0, 16777215))
+
+    embed.set_author(name = f"{ctx.author} Generated A Random CC:", icon_url = ctx.author.display_avatar.url)
+
+    embed.set_footer(text = "Generated a random sm64 color code.")
+    await ctx.send(embed = embed)
+      
+
 def setup(bot):
   bot.add_cog(Extra(bot))
