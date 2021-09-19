@@ -137,3 +137,34 @@ def mutual_guild_check(ctx, user):
   mutual_guilds2 = set(user.mutual_guilds)
 
   return bool(mutual_guilds.intersection(mutual_guilds2))
+
+
+def bit_generator():
+  return hex(random.randint(0, 255))[2:]
+
+def cc_generate():
+ return f"""
+  8107EC20 {bit_generator()}{bit_generator()}
+  8107EC22 {bit_generator()}00
+  8107EC28 {bit_generator()}{bit_generator()}
+  8107EC2A {bit_generator()}00
+  8107EC38 {bit_generator()}{bit_generator()}
+  8107EC3A {bit_generator()}00
+  8107EC40 {bit_generator()}{bit_generator()}
+  8107EC42 {bit_generator()}00
+  8107EC50 {bit_generator()}{bit_generator()}
+  8107EC52 {bit_generator()}00
+  8107EC58 {bit_generator()}{bit_generator()}
+  8107EC5A {bit_generator()}00
+  8107EC68 {bit_generator()}{bit_generator()}
+  8107EC6A {bit_generator()}00
+  8107EC70 {bit_generator()}{bit_generator()}
+  8107EC72 {bit_generator()}00
+  8107EC80 {bit_generator()}{bit_generator()}
+  8107EC82 {bit_generator()}00
+  8107EC88 {bit_generator()}{bit_generator()}
+  8107EC8A {bit_generator()}00
+  8107EC98 {bit_generator()}{bit_generator()}
+  8107EC9A {bit_generator()}00
+  8107ECA0 {bit_generator()}{bit_generator()}
+  8107ECA2 {bit_generator()}00"""
