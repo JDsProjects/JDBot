@@ -167,4 +167,4 @@ def cc_generate():
   8107EC98 {bit_generator()}{bit_generator()}
   8107EC9A {bit_generator()}00
   8107ECA0 {bit_generator()}{bit_generator()}
-  8107ECA2 {bit_generator()}00"""
+  8107ECA2 {bit_generator()}00""".upper()
