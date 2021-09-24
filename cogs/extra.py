@@ -707,6 +707,11 @@ class Extra(commands.Cog):
 
     embed.set_footer(text = "Generated a random sm64 color code.")
     await ctx.send(embed = embed)
+
+  
+  @commands.command(brief = "brings up two sites of logical fallicies")
+  async def fallacies_list(self, ctx):
+    await ctx.send(f"https://www.futurelearn.com/info/courses/logical-and-critical-thinking/0/steps/9131 \nhttps://yourlogicalfallacyis.com/")
       
 
 def setup(bot):
