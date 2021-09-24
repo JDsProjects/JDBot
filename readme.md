@@ -33,3 +33,6 @@ DM `JDJG Inc. Official#3993`!
 This bot's source code is public so that the people can see how this bot works. 
 If you were to fork the bot, DO give credit to @JDJGInc and use this responsibly.
 Also, if you want to copy the bot's code and run your own instance of JDBot, *do* DM `JDJG Inc. Official#3493` on Discord.
+If you plan to copy anything please let me know on discord or in an issue(this helps keep track of those who use my code, and so I can help you if you need help, please make your own code though.)
+Thank You,
+JDJG
