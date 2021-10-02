@@ -477,6 +477,17 @@ class Owner(commands.Cog):
     await ctx.send(error)
     traceback.print_exc()
 
+  
+  @commands.command(brief = "displays the guild status and user status immediately")
+  async def stats_status(self, ctx):
+    await ctx.send("changing status, check now....")
+    
+    await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(self.bot.guilds)} servers | {len(self.bot.users)} users"))
+
+
+  @stats_status.error
+  async def stats_status_error(self, ctx, error):
+    await ctx.send(error) 
 
 def setup(bot):
   bot.add_cog(Owner(bot))
