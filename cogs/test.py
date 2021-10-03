@@ -153,10 +153,9 @@ class Slash(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-  @commands.command(brief = "addes a slash command to a guild", slash_command = False)
+  @commands.command(brief = "addes a slash command to a guild", slash_command = True)
   async def wip(self, ctx):
     await ctx.send("Slash commands are in work in progress")
-
 
 
 def setup(bot):

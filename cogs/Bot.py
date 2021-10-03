@@ -43,7 +43,10 @@ class Bot(commands.Cog):
     embed.add_field(name = "Minimial permisions", value = f"{ minimial_invite}")
     embed.set_thumbnail(url = self.bot.user.display_avatar.url)
     embed.set_footer(text = f"not all features may work if you invite with minimal perms, if you invite with 0 make sure these permissions are in a Bots/Bot role.")
-    await ctx.send(embed = embed)
+
+    view = 
+
+    await ctx.send(embed = embed, view = view)
 
   @commands.command(brief="gives you who the owner is.")
   async def owner(self, ctx):

@@ -67,7 +67,3 @@ class dm_or_ephemeral(discord.ui.View):
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
-
-
-    
-
