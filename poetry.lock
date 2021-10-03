@@ -433,17 +433,17 @@ python-versions = "^3.8"
 develop = false
 
 [package.dependencies]
-"discord.py" = "branch master"
+"discord.py" = "branch 2.0"
 
 [package.source]
 type = "git"
-url = "https://github.com/oliver-ni/discord-ext-menus-views"
+url = "https://github.com/JDJGInc/discord-ext-menus-views"
 reference = "master"
-resolved_reference = "56b30c553199169b73578e38f9cdbf80dc15312b"
+resolved_reference = "452e594a1cb0e9eb2a2daf13cef803c3f831725f"
 
 [[package]]
 name = "discord.py"
-version = "2.0.0a3575+g45d498c1"
+version = "2.0.0a3642+g3260ec66"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -460,9 +460,9 @@ voice = ["PyNaCl (>=1.3.0,<1.5)"]
 
 [package.source]
 type = "git"
-url = "https://github.com/Rapptz/discord.py.git"
-reference = "master"
-resolved_reference = "45d498c1b76deaf3b394d17ccf56112fa691d160"
+url = "https://github.com/iDevision/enhanced-discord.py"
+reference = "2.0"
+resolved_reference = "3260ec6643c10289bf9a5d585f9e4c5ba6c710b2"
 
 [[package]]
 name = "discordlists.py"
@@ -859,7 +859,7 @@ python-versions = "*"
 
 [[package]]
 name = "pytz"
-version = "2021.1"
+version = "2021.3"
 description = "World timezone definitions, modern and historical"
 category = "main"
 optional = false
@@ -977,7 +977,7 @@ python-versions = ">= 3.6"
 
 [[package]]
 name = "tweepy"
-version = "4.0.0a0"
+version = "4.0.1"
 description = "Twitter library for Python"
 category = "main"
 optional = false
@@ -992,13 +992,13 @@ requests-oauthlib = ">=1.0.0,<2"
 async = ["aiohttp (>=3.7.3,<4)", "oauthlib (>=3.1.0,<4)"]
 dev = ["coveralls (>=2.1.0)", "tox (>=2.4.0)"]
 socks = ["requests[socks] (>=2.11.1,<3)"]
-test = ["mock (>=1.0.1)", "nose (>=1.3.3)", "vcrpy (>=1.10.3)"]
+test = ["vcrpy (>=1.10.3)"]
 
 [package.source]
 type = "git"
 url = "https://github.com/tweepy/tweepy.git"
 reference = "master"
-resolved_reference = "e4a588eb3fc5733fca81f67b01eb64e288cb887b"
+resolved_reference = "07fce5fe995e61ec76256e588af4c878ef0e544b"
 
 [[package]]
 name = "typing-extensions"
@@ -1086,7 +1086,7 @@ python-versions = "*"
 
 [[package]]
 name = "zipp"
-version = "3.5.0"
+version = "3.6.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 category = "main"
 optional = false
@@ -1099,7 +1099,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f12215011850766b91af28cb7e8227566e3c1cc84e032701f4724cef9fe19a28"
+content-hash = "fa34bd49854e3385958e91f9b7345e7151d7c189ee21bed7cafb361b3c9a7a29"
 
 [metadata.files]
 aiofiles = [
@@ -1730,8 +1730,8 @@ python-ntlm = [
     {file = "python_ntlm-1.1.0-py2-none-any.whl", hash = "sha256:646eb770c52e3a4ddff5aa7ee37226c53835d02e38f5155c3b8bc0e4d196c615"},
 ]
 pytz = [
-    {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},
-    {file = "pytz-2021.1.tar.gz", hash = "sha256:83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"},
+    {file = "pytz-2021.3-py2.py3-none-any.whl", hash = "sha256:3672058bc3453457b622aab7a1c3bfd5ab0bdae451512f6cf25f64ed37f5b87c"},
+    {file = "pytz-2021.3.tar.gz", hash = "sha256:acad2d8b20a1af07d4e4c9d2e9285c5ed9104354062f275f3fcd88dcef4f1326"},
 ]
 requests = [
     {file = "requests-2.26.0-py2.py3-none-any.whl", hash = "sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24"},
@@ -1837,6 +1837,6 @@ youtube-dl = [
     {file = "youtube_dl-2021.6.6.tar.gz", hash = "sha256:cb2d3ee002158ede783e97a82c95f3817594df54367ea6a77ce5ceea4772f0ab"},
 ]
 zipp = [
-    {file = "zipp-3.5.0-py3-none-any.whl", hash = "sha256:957cfda87797e389580cb8b9e3870841ca991e2125350677b2ca83a0e99390a3"},
-    {file = "zipp-3.5.0.tar.gz", hash = "sha256:f5812b1e007e48cff63449a5e9f4e7ebea716b4111f9c4f9a645f91d579bf0c4"},
+    {file = "zipp-3.6.0-py3-none-any.whl", hash = "sha256:9fe5ea21568a0a70e50f273397638d39b03353731e6cbbb3fd8502a33fec40bc"},
+    {file = "zipp-3.6.0.tar.gz", hash = "sha256:71c644c5369f4a6e07636f0aa966270449561fcea2e3d6747b8d23efaa9d7832"},
 ]
