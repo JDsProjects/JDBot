@@ -148,5 +148,8 @@ class Test(commands.Cog):
     args = profanity.censor(args, censor_char = "#")
     await ctx.send(args)
 
+
+  
+
 def setup(bot):
   bot.add_cog(Test(bot))
