@@ -148,7 +148,16 @@ class Test(commands.Cog):
     args = profanity.censor(args, censor_char = "#")
     await ctx.send(args)
 
-  
+
+class Slash(commands.Cog):
+  def __init__(self, bot):
+    self.bot = bot
+
+  @commands.command(brief = "addes a slash command to a guild", slash_command = False)
+  async def wip(self, ctx):
+    await ctx.send("Slash commands are in work in progress")
+
 
 def setup(bot):
   bot.add_cog(Test(bot))
+  bot.add_cog(Slash(bot))
