@@ -158,6 +158,7 @@ class Slash(commands.Cog):
     await ctx.send("Slash commands are in work in progress")
 
 
+
 def setup(bot):
   bot.add_cog(Test(bot))
   bot.add_cog(Slash(bot))
