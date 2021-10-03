@@ -511,6 +511,12 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program = "dislash", args = args)
     await self.rtfm_send(ctx, results)
 
+  @rtfm.command(brief = "a command to parse from edpy")
+  async def edpy(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program = "edpy", args = args)
+    await self.rtfm_send(ctx, results)
+
   def charinfo_converter(self, string):
     digit = f"{ord(string):x}"
     name = unicodedata.name(string, "The unicode was not found")
