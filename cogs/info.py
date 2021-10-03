@@ -511,10 +511,16 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program = "dislash", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command to parse from edpy")
+  @rtfm.command(brief = "a command to parse from enchanced discord.py")
   async def edpy(self, ctx, *, args = None):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program = "edpy", args = args)
+    await self.rtfm_send(ctx, results)
+
+  @rtfm.command(brief = "a command to parse from orion.py")
+  async def orion(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program = "orion", args = args)
     await self.rtfm_send(ctx, results)
 
   def charinfo_converter(self, string):
