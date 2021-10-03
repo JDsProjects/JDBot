@@ -45,8 +45,8 @@ class Bot(commands.Cog):
     embed.set_footer(text = f"not all features may work if you invite with minimal perms, if you invite with 0 make sure these permissions are in a Bots/Bot role.")
 
     view = view = discord.ui.View()
-    view.add_item(discord.ui.Button(label = f"{self.bot.user.name}'s normal invite", url = normal_inv, style = discord.ButtonStyle.link))
-    view.add_item(discord.ui.Button(label = f"{self.bot.user.name}'s Minimial permisions invite", url = minimial_invite, style = discord.ButtonStyle.link))
+    view.add_item(discord.ui.Button(label = f"{self.bot.user.name}'s Normal invite", url = normal_inv, style = discord.ButtonStyle.link))
+    view.add_item(discord.ui.Button(label = f"{self.bot.user.name}'s Minimial Permisions Invite", url = minimial_invite, style = discord.ButtonStyle.link))
 
     await ctx.send(embed = embed, view = view)
 
