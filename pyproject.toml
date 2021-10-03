@@ -50,7 +50,7 @@ async-cleverbot = "^0.2.2"
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
 discord-ext-menus-views = {git = "https://github.com/oliver-ni/discord-ext-menus-views"}
 better-profanity = "^0.7.0"
-"discord.py" = {git = "https://github.com/iDevision/enhanced-discord.py", branch = "2.0.0"}
+"discord.py" = {git = "https://github.com/iDevision/enhanced-discord.py", branch = "2.0"}
 
 [tool.poetry.dev-dependencies]
 
