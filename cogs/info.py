@@ -517,10 +517,10 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program = "edpy", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command to parse from orion.py")
-  async def orion(self, ctx, *, args = None):
+  @rtfm.command(brief = "a command to parse from fusion.py", aliases = ["orion"])
+  async def fusion(self, ctx, *, args = None):
     await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program = "orion", args = args)
+    results = await self.rtfm_lookup(program = "fusion", args = args)
     await self.rtfm_send(ctx, results)
 
   def charinfo_converter(self, string):

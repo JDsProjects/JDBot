@@ -65,7 +65,7 @@ class EmojiBasic:
       for x in extentions:
         response=await ctx.bot.session.get(f"https://cdn.discordapp.com/emojis/{emoji_id}.{x}")
         if response.ok:
-          return cls(emoji_id,response.real_url)
+          return cls(emoji_id, response.real_url)
 
     else:
       return None
