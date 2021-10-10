@@ -9,7 +9,7 @@ This bot is meant to be having all of the features, an "all in one" bot.
 > Entertainment commands!
 > 
 > > Hug, pat, kiss, all the interactive commands.
-> > These are powered by the asuna and some random api. 
+> > These are powered by the asuna and some random api. (yes it's actual name)
 > 
 > Utility commands!
 > 
