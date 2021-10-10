@@ -517,19 +517,13 @@ class Bot(commands.Cog):
   @commands.command(brief = "gives you info if someone is a tester of the bot or not")
   async def is_tester(self, ctx, *, user : typing.Optional[discord.User] = None):
     user = user or ctx.author
-
-    cur = await self.bot.sus_users.cursor()
-    cursor = await cur.execute("SELECT * FROM testers_list;")
-    test_users = dict(await cursor.fetchall())
-    await cur.close()
-
-    truth = test_users.get(user.id)
+    truth = user.id in self.bot.testers
 
     if not truth:
       await ctx.send(f"{user} is not in a tester.")
 
     else:
-      await ctx.send(f"{user}")
+      await ctx.send(f"{user} is a tester")
 
 def setup(bot):
   bot.add_cog(Bot(bot))
