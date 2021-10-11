@@ -138,15 +138,26 @@ class Test(commands.Cog):
 
   @commands.command(brief = "makes a global chat example message from your message", aliases = ["test_global_chat", "test_gc"])
   async def test_globalchat(self, ctx, *, args = None):
-    
+
     args = args or "Test Content"
 
-    for x in re.findall(r'<@!?([0-9]{15,20})>$', args) or re.findall(r'([0-9]{15,20})$', args):
-      await ctx.send(f"{x}")
+    for x in re.findall(r'<@!?([0-9]{15,20})>', args):
+      user = await self.bot.getch_user(int(x))
+      args = args.replace(f"{re.match(rf'<@!?({x})>', args).group()}", f"@{user}")
 
     args = await commands.clean_content().convert(ctx, args)
     args = profanity.censor(args, censor_char = "#")
-    await ctx.send(args)
+    
+    embed = discord.Embed(title=f"{ctx.guild}",
+    description = f"{args}", color = 15428885, timestamp = ctx.message.created_at)
+
+    embed.set_author(name=f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
+
+    if ctx.guild: embed.set_thumbnail(url = ctx.guild.icon.url if ctx.guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+
+    if not ctx.guild: embed.set_thumbnail(url = "https://i.imgur.com/3ZUrjUP.png")
+    
+    await ctx.send(f"Here's what it would look like in Global Chat!", embed = embed)
 
   @commands.command(brief = "sends a gif of someone dancing to disco (animated)")
   async def disco(self, ctx):
