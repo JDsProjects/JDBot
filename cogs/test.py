@@ -136,17 +136,25 @@ class Test(commands.Cog):
       await ctx.send("Please look for a library to get the info of.")
 
 
-  @commands.command(brief = "makes a global chat example message from your message", aliases = ["test_global_chat"])
+  @commands.command(brief = "makes a global chat example message from your message", aliases = ["test_global_chat", "test_gc"])
   async def test_globalchat(self, ctx, *, args = None):
     
     args = args or "Test Content"
 
-    for x in re.findall(r'<@!?([0-9]{15,20})>$', args):
-      print(x)
+    for x in re.findall(r'<@!?([0-9]{15,20})>$', args) or re.findall(r'([0-9]{15,20})$', args):
+      await ctx.send(f"{x}")
 
     args = await commands.clean_content().convert(ctx, args)
     args = profanity.censor(args, censor_char = "#")
     await ctx.send(args)
+
+  @commands.command(brief = "sends a gif of someone dancing to disco (animated)")
+  async def disco(self, ctx):
+    await ctx.send("WIP alright?")
+
+  @commands.command(brief = "sends a gif of someone dancing to all but disco(animated)")
+  async def dance(self, ctx):
+    await ctx.send("WIP alright?")
 
 
 class Slash(commands.Cog):

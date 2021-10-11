@@ -519,6 +519,8 @@ class Bot(commands.Cog):
     user = user or ctx.author
     truth = user.id in self.bot.testers
 
+    if user.bot: return await ctx.send(f"A bot can't be a tester. So {user} is not a tester")
+
     if not truth:
       await ctx.send(f"{user} is not in a tester.")
 
