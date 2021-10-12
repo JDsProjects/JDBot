@@ -142,16 +142,6 @@ class Test(commands.Cog):
   async def dance(self, ctx):
     await ctx.send("WIP alright?")
 
-  @commands.command(brief = "based on pog bot's nitro command")
-  async def nitro(self, ctx):
-
-    embed = discord.Embed(title = "You've been gifted a subscription!", description = "You've been gifted Nitro for **1 month!**\nExpires in **24 hours**", color = 3092790)
-    embed.set_thumbnail(url = "https://i.imgur.com/w9aiD6F.png")
-    
-    view = utils.nitroButtons(timeout = 180.0)
-    await ctx.send(embed = embed, view = view)
-
-
 class Slash(commands.Cog):
   def __init__(self, bot):
     self.bot = bot

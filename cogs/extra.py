@@ -712,6 +712,15 @@ class Extra(commands.Cog):
   @commands.command(brief = "brings up two sites of logical fallicies")
   async def fallacies_list(self, ctx):
     await ctx.send(f"https://www.futurelearn.com/info/courses/logical-and-critical-thinking/0/steps/9131 \nhttps://yourlogicalfallacyis.com/")
+
+  @commands.command(brief = "based on pog bot's nitro command")
+  async def nitro(self, ctx):
+
+    embed = discord.Embed(title = "You've been gifted a subscription!", description = "You've been gifted Nitro for **1 month!**\nExpires in **24 hours**", color = 3092790)
+    embed.set_thumbnail(url = "https://i.imgur.com/w9aiD6F.png")
+    
+    view = utils.nitroButtons(timeout = 180.0)
+    await ctx.send(embed = embed, view = view)
       
 
 def setup(bot):
