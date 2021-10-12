@@ -78,7 +78,7 @@ class nitroButtons(discord.ui.View):
   async def nitroButton(self, button: discord.ui.Button, interaction: discord.Interaction):
     
     await interaction.response.send_message(content = "Oh no it was a fake", ephemeral = True)
-    await asyncio.sleep(5)
+    await asyncio.sleep(3)
     await interaction.edit_original_message(content = "https://i.imgur.com/NQinKJB.gif")
 
     button.disabled = True
