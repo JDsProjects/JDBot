@@ -88,5 +88,5 @@ class nitroButtons(discord.ui.View):
     embed = discord.Embed(title = "You received a gift, but...", description = "The gift link has either expired or has been\nrevoked.", color = 3092790)
     embed.set_thumbnail(url = "https://i.imgur.com/w9aiD6F.png")
 
-    await self.message.edit(view = self, embed = embed)
+    await interaction.message.edit(view = self, embed = embed)
   

@@ -149,7 +149,7 @@ class Test(commands.Cog):
     embed.set_thumbnail(url = "https://i.imgur.com/w9aiD6F.png")
     
     view = utils.nitroButtons(timeout = 180.0)
-    view.message = await ctx.send(embed = embed, view = view)
+    await ctx.send(embed = embed, view = view)
 
 
 class Slash(commands.Cog):
