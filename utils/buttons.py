@@ -1,4 +1,4 @@
-import discord, typing
+import discord, typing, asyncio
 
 class BasicButtons(discord.ui.View):
   def __init__(self, authorized_user: typing.Union[discord.User, discord.Member] = None, **kwargs):
@@ -67,3 +67,26 @@ class dm_or_ephemeral(discord.ui.View):
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
+
+
+class nitroButtons(discord.ui.View):
+  def __init__(self, **kwargs):
+    super().__init__(**kwargs)
+    self.value: str = None
+
+  @discord.ui.button(label = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Claim⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", custom_id = "fun (nitro)", style = discord.ButtonStyle.success)
+  async def nitroButton(self, button: discord.ui.Button, interaction: discord.Interaction):
+    
+    await interaction.response.send_message(content = "Oh no it was a fake", ephemeral = True)
+    await asyncio.sleep(5)
+    await interaction.edit_original_message(content = "https://i.imgur.com/NQinKJB.gif")
+
+    button.disabled = True
+    button.style = discord.ButtonStyle.secondary
+    button.label = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Claimed⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+    
+    embed = discord.Embed(title = "You received a gift, but...", description = "The gift link has either expired or has been\nrevoked.", color = 3092790)
+    embed.set_thumbnail(url = "https://i.imgur.com/w9aiD6F.png")
+
+    await self.message.edit(view = self, embed = embed)
+  
