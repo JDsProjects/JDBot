@@ -672,6 +672,16 @@ class DevTools(commands.Cog):
     invite = discord.utils.oauth_url(client_id = user.id)
     await ctx.send(f"Invite url for that bot is {invite} !")
 
+  @commands.command(brief = "make a quick bot invite with 0 perms and with slash")
+  async def invite_bot_slash(self, ctx, *, user : typing.Optional[discord.User] = None):
+    user = user or ctx.author
+
+    if not user.bot:
+      return await ctx.send("That's not a legit bot")
+
+    invite = discord.utils.oauth_url(client_id = user.id, scopes = ("bot", "applications.commands"))
+    await ctx.send(f"Invite url for that bot is {invite} !")
+
   @commands.command(brief = "gets you a guild's icon", aliases = ["guild_icon"])
   async def server_icon(self, ctx, *, guild : typing.Optional[discord.Guild] = None):
     guild = guild or ctx.guild
