@@ -3,9 +3,6 @@ import discord, functools, typing, yarl, random
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
-from jishaku.codeblocks import codeblock_converter
-#my console command uses this.
-
 #collections, io, itertools
 
 class Test(commands.Cog):
@@ -107,10 +104,10 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal  
 
-  @commands.command(brief = "runs something in le console(on a seperate server)", aliases = ["eval"])
-  async def console(self, ctx, *, argument: codeblock_converter):
-    await ctx.send(f"WIP {argument}")
-    #thanks to jishaku it should work well.
+  @commands.command(brief = "runs something in le console", aliases = ["eval"])
+  async def console(self, ctx):
+    await ctx.send("WIP")
+    #look at the JDJG Bot orginal and other evals also well look at run commands too
 
   @commands.command(brief = "rips the source of commands by linking to the github.", name = "source")
   async def _source(self, ctx):
