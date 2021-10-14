@@ -1,11 +1,6 @@
 from discord.ext import commands
 from jishaku.features.baseclass import Feature
-from jishaku.flags import Flags
 from jishaku.cog import STANDARD_FEATURES, OPTIONAL_FEATURES
-
-Flags.NO_UNDERSCORE = True
-#yes I did it like this.(looking into doing both, yes I want both.)
-#i doubt this will help: https://github.com/Gorialis/jishaku/issues/131
 
 #look into making more jishaku commands: https://jishaku.readthedocs.io/en/latest/cog.html
 
