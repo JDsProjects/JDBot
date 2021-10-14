@@ -500,7 +500,6 @@ class Bot(commands.Cog):
 
     embed.add_field(name = "Sponsors", value="```No current sponsors :(```", inline=True)
 
-
     embed.set_author(name = f"{self.bot.user}", icon_url = self.bot.user.display_avatar.url)
 
     embed.set_footer(text = "Learn More from: \nStats \nOr Any Other Bot Commands \nYou can Even Sponsor the Bot \nIf you want to sponsor the bot DM me. \nI hope I am not missing any contibutors or sponsors")

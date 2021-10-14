@@ -42,8 +42,6 @@ class Jishaku(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
     finally:
       scope.clear_intersection(arg_dict)
 
-  #thanks proguy914629#5419 for having get this working. I would have done something not working.
-
 
 def setup(bot: commands.Bot):
   bot.add_cog(Jishaku(bot = bot))
