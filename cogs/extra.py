@@ -720,7 +720,7 @@ class Extra(commands.Cog):
     embed.set_thumbnail(url = "https://i.imgur.com/w9aiD6F.png")
     
     view = utils.nitroButtons(timeout = 180.0)
-    await ctx.send(embed = embed, view = view)
+    view.message = await ctx.send(embed = embed, view = view)
       
 
 def setup(bot):
