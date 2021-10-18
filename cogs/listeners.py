@@ -67,7 +67,7 @@ class Events(commands.Cog):
         if message.author.id != self.bot.user.id and test.valid is False:
           await message.channel.send("Ticket Support is coming soon. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493")
 
-    if (test.valid) == False and test.prefix != None and test.command is None:
+    if (test.valid) == False and test.prefix != None and test.command is None and test.prefix != "":
       
       embed_message = discord.Embed(title = f" {test.prefix}{test.invoked_with}", description = f"{discord.utils.format_dt(message.created_at, style = 'd')}{discord.utils.format_dt(message.created_at, style = 'T')}",color = random.randint(0, 16777215))
 
