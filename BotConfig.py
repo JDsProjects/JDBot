@@ -4,13 +4,13 @@ from discord.ext import commands
 async def get_prefix(bot, message):
   extras = ["test*","te*", "t*"]
 
-  if await bot.is_owner(message.author): 
-    extras.append("")
-
   comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
   match = comp.match(message.content)
   if match is not None:
     extras.append(match.group(1))
+
+  if await bot.is_owner(message.author): 
+    extras.append("")
     
   return commands.when_mentioned_or(*extras)(bot, message)
 
