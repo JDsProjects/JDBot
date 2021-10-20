@@ -142,6 +142,10 @@ class Test(commands.Cog):
   async def dance(self, ctx):
     await ctx.send("WIP alright?")
 
+  @commands.command(brief = "a nice rock scissors paper game")
+  async def rps(self, ctx):
+    await ctx.send("okay... work in progress rps")
+
 class Slash(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
