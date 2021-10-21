@@ -76,7 +76,7 @@ class Dice(commands.Cog):
     if args:
       await ctx.send(random.choice(ramsay_responses))
 
-  @commands.command(brief="a command meant to flip coins",help="commands to flip coins, etc.", aliases = ["coinflip"])
+  @commands.command(brief="a command meant to flip coins",help="commands to flip coins, etc.", aliases = ["coinflip", "cf"])
   async def coin(self, ctx):
     value = random.choice([True, False]) 
     
