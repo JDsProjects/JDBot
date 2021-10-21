@@ -170,10 +170,10 @@ class Dice(commands.Cog):
     await view.wait()
 
     if view.value is None:
-      await message.edit("You didn't respond fast enough, you lost.")
+      return await message.edit("You didn't respond fast enough, you lost.(Buttons no longer work)")
     
     deciding = random.randint(1, 3)
-    number_to_text = {1 : "rock", 2 : "paper", 3 : "scissors"}
+    number_to_text = {1 : "Rock", 2 : "Paper", 3 : "Scissors"}
 
     embed = discord.Embed(title = f"RPS Game",color = random.randint(0, 16777215), timestamp =(ctx.message.created_at))
 
