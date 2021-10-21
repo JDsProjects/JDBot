@@ -142,9 +142,68 @@ class Test(commands.Cog):
   async def dance(self, ctx):
     await ctx.send("WIP alright?")
 
+  class RpsGame(discord.ui.View):
+    def __init__(self, authorized_user: typing.Union[discord.User, discord.Member] = None, **kwargs):
+      super().__init__(**kwargs)
+      self.authorized_user = authorized_user
+      self.value: str = None
+  
+    def __authorized__(self, button: discord.ui.Button, interaction: discord.Interaction) -> bool:
+      if self.authorized_user and self.authorized_user.id != interaction.user.id:
+        return False
+
+      return True
+
+    @discord.ui.button(label = "Rock", style = discord.ButtonStyle.success, emoji = "🪨")
+    async def rock(self, button: discord.ui.Button, interaction: discord.Interaction):
+      if not self.__authorized__(button, interaction):
+
+        return await interaction.response.send_message(content = f"You Can't play this game, {self.authorized_user.mention} is the user playing this game.", ephemeral = True)
+
+      self.clear_items()
+      await interaction.response.edit_message(view = self)
+      self.value = 1
+      self.stop()
+
+    @discord.ui.button(label="Paper", style = discord.ButtonStyle.success , emoji = "📰")
+    async def paper(self, button: discord.ui.Button, interaction: discord.Interaction):
+      if not self.__authorized__(button, interaction):
+        return await interaction.response.send_message(content = f"You Can't play this game, {self.authorized_user.mention} is the user playing this game.", ephemeral = True)
+
+      self.clear_items()
+      await interaction.response.edit_message(view = self)
+      self.value = 2
+      self.stop()
+
+    @discord.ui.button(label="scissors", style = discord.ButtonStyle.success , emoji = "✂️")
+    async def scissors(self, button: discord.ui.Button, interaction: discord.Interaction):
+      if not self.__authorized__(button, interaction):
+        return await interaction.response.send_message(content = f"You Can't play this game, {self.authorized_user.mention} is the user playing this game.", ephemeral = True)
+
+      self.clear_items()
+      await interaction.response.edit_message(view = self)
+      self.value = 3
+      self.stop()
+
+
   @commands.command(brief = "a nice rock scissors paper game")
   async def rps(self, ctx):
-    await ctx.send("okay... work in progress rps")
+    view = self.RpsGame(ctx.author, timeout = 5.00)
+    message = await ctx.send(" Rock paper Scissors Shoot.", view = view)
+
+    await view.wait()
+
+    if view.value is None:
+      await message.edit("You didn't respond fast enough, you lost.")
+    
+    deciding = random.randint(1, 3)
+    number_to_text = {1 : "rock", 2 : "paper", 3 : "scissors"}
+
+    if view.value == deciding:
+      await message.edit(f"a Tie occured. with you picking {number_to_text[view.value]} And the bot with {number_to_text[deciding]}")
+
+    
+
 
 class Slash(commands.Cog):
   def __init__(self, bot):
