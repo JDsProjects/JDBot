@@ -76,33 +76,41 @@ class Dice(commands.Cog):
     if args:
       await ctx.send(random.choice(ramsay_responses))
 
-  @commands.command(brief="a command meant to flip coins",help="commands to flip coins, etc.")
-  async def coin(self, ctx, *, args = None):
-    if args:
-      value = random.choice([True,False]) 
-      if args.lower().startswith("h") and value: win = True
-      elif args.lower().startswith("t") and not value:  win = True
-      elif args.lower().startswith("h") and not value: win = False
-      elif args.lower().startswith("t") and value: win = False    
-      else: return await ctx.send("Please use heads or Tails as a value.")
-      
-      pic_name = "heads" if (value) else "Tails"
+  @commands.command(brief="a command meant to flip coins",help="commands to flip coins, etc.", aliases = ["coinflip"])
+  async def coin(self, ctx):
+    value = random.choice([True, False]) 
+    
+    view = utils.CoinFlip(ctx.author)
 
-      url_dic = {"heads": "https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
+    embed2 = discord.Embed(color = random.randint(0, 16777215))
+    embed2.set_image(url = "https://i.imgur.com/O7FscBW.gif")
 
-      embed = discord.Embed(title="coin flip",color=random.randint(0, 16777215))
-      embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
+    view.message = await ctx.send(content = "Time to see if you can guess correctly!", embed = embed2, view = view)
 
-      embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {args}")
-      embed.set_image(url = url_dic[pic_name])
+    await view.wait()
 
-      if win: embed.add_field(name="Result: ", value = "You won")
-      else: embed.add_field(name="Result: ", value = "You lost")
-      
-      await ctx.send(embed=embed)
-      
+    if view.value is None:
+      return await view.message.edit("Looks it like it timed out.(may want to make an new game)")
 
-    if args is None: await ctx.send("example: \n```test*coin heads``` \nnot ```test*coin```")
+    if view.value == "heads" and value: win = True
+    elif view.value == "tails" and not value:  win = True
+    elif view.value == "heads" and not value: win = False
+    elif view.value == "tails" and value: win = False
+    
+    pic_name = "Heads" if (value) else "Tails"
+
+    url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png","Tails":"https://i.imgur.com/qTf1owU.png"}
+
+    embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
+    embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
+
+    embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {view.value}")
+    embed.set_image(url = url_dic[pic_name])
+
+    if win: embed.add_field(name="Result: ", value = "You won")
+    else: embed.add_field(name="Result: ", value = "You lost")
+    
+    await ctx.send(embed = embed)
 
   @commands.command(brief="a command to find the nearest emoji")
   async def emote(self, ctx, *, args=None):
@@ -163,14 +171,16 @@ class Dice(commands.Cog):
   @commands.command(brief = "a nice rock scissors paper game with the bot")
   async def rps(self, ctx):
     view = utils.RpsGame(ctx.author)
-    embed_video = discord.Embed(color = random.randint(0, 16777215))
-    embed_video.set_image(url = "https://i.imgur.com/bFYroWk.gif")
-    message = await ctx.send("Rock Paper Scissors Shoot!", embed = embed_video, view = view)
+
+    embed2 = discord.Embed(color = random.randint(0, 16777215))
+    embed2.set_image(url = "https://i.imgur.com/bFYroWk.gif")
+
+    view.message = await ctx.send("Rock Paper Scissors Shoot!", embed = embed2, view = view)
 
     await view.wait()
 
     if view.value is None:
-      return await message.edit("You didn't respond fast enough, you lost.(Play again by running game again)")
+      return await view.message.edit("You didn't respond fast enough, you lost.(Play again by running game again)")
     
     deciding = random.randint(1, 3)
     number_to_text = {1 : "Rock", 2 : "Paper", 3 : "Scissors"}
@@ -193,7 +203,7 @@ class Dice(commands.Cog):
 
     embed.set_image(url = "https://i.imgur.com/bFYroWk.gif")
 
-    await message.edit(embed = embed)
+    await view.message.edit(embed = embed)
     
 def setup(bot):
   bot.add_cog(Dice(bot))
