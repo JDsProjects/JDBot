@@ -162,7 +162,7 @@ class Dice(commands.Cog):
 
   @commands.command(brief = "a nice rock scissors paper game with the bot")
   async def rps(self, ctx):
-    view = utils.RpsGame(ctx.author, timeout = 5.00)
+    view = utils.RpsGame(ctx.author)
     embed_video = discord.Embed(color = random.randint(0, 16777215))
     embed_video.set_image(url = "https://i.imgur.com/bFYroWk.gif")
     message = await ctx.send("Rock Paper Scissors Shoot!", embed = embed_video, view = view)
@@ -170,7 +170,7 @@ class Dice(commands.Cog):
     await view.wait()
 
     if view.value is None:
-      return await message.edit("You didn't respond fast enough, you lost.(Buttons no longer work)")
+      return await message.edit("You didn't respond fast enough, you lost.(Play again by running game again)")
     
     deciding = random.randint(1, 3)
     number_to_text = {1 : "Rock", 2 : "Paper", 3 : "Scissors"}
