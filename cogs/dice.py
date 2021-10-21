@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord, random, typing, bisect
 from difflib import SequenceMatcher
+import utils
 
 class Dice(commands.Cog):
   def __init__(self, bot):
@@ -158,6 +159,41 @@ class Dice(commands.Cog):
       await ctx.send(error)
       import traceback
       traceback.print_exc()
+
+  @commands.command(brief = "a nice rock scissors paper game with the bot")
+  async def rps(self, ctx):
+    view = utils.RpsGame(ctx.author, timeout = 5.00)
+    embed_video = discord.Embed(color = random.randint(0, 16777215))
+    embed_video.set_image(url = "https://i.imgur.com/bFYroWk.gif")
+    message = await ctx.send("Rock Paper Scissors Shoot!", embed = embed_video, view = view)
+
+    await view.wait()
+
+    if view.value is None:
+      await message.edit("You didn't respond fast enough, you lost.")
+    
+    deciding = random.randint(1, 3)
+    number_to_text = {1 : "rock", 2 : "paper", 3 : "scissors"}
+
+    embed = discord.Embed(title = f"RPS Game",color = random.randint(0, 16777215), timestamp =(ctx.message.created_at))
+
+    if view.value == deciding:
+      embed.set_author(name = f"Tie!",icon_url = ctx.author.display_avatar.url)
+
+    if view.value == 1 and deciding == 3 or view.value == 2 and deciding == 1 or view.value == 3 and deciding == 2:
+      embed.set_author(name = f"You Won!",icon_url = ctx.author.display_avatar.url)
+
+    if view.value == 3 and deciding == 1 or view.value == 1 and deciding == 2 or view.value == 2 and deciding == 3:
+      embed.set_author(name = f"You lost!",icon_url = ctx.author.display_avatar.url)
+
+    embed.set_footer(text = f"{ctx.author.id}")
+
+    embed.add_field(name = "You Picked:", value = f"{number_to_text[view.value]}")
+    embed.add_field(name = "Bot Picked:", value = f"{number_to_text[deciding]}")
+
+    embed.set_image(url = "https://i.imgur.com/bFYroWk.gif")
+
+    await message.edit(embed = embed)
     
 def setup(bot):
   bot.add_cog(Dice(bot))
