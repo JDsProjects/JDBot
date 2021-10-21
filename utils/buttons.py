@@ -174,7 +174,7 @@ class CoinFlip(discord.ui.View):
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
-    self.value = "heads"
+    self.value = "Heads"
     self.stop()
 
   @discord.ui.button(label = "Tails", style = discord.ButtonStyle.success , emoji = "🪙")
@@ -184,7 +184,7 @@ class CoinFlip(discord.ui.View):
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
-    self.value = "tails"
+    self.value = "Tails"
     self.stop()
 
   async def on_timeout(self):

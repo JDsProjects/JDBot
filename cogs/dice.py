@@ -92,10 +92,10 @@ class Dice(commands.Cog):
     if view.value is None:
       return await view.message.edit("Looks it like it timed out.(may want to make an new game)")
 
-    if view.value == "heads" and value: win = True
-    elif view.value == "tails" and not value:  win = True
-    elif view.value == "heads" and not value: win = False
-    elif view.value == "tails" and value: win = False
+    if view.value == "Heads" and value: win = True
+    elif view.value == "Tails" and not value:  win = True
+    elif view.value == "Heads" and not value: win = False
+    elif view.value == "Tails" and value: win = False
     
     pic_name = "Heads" if (value) else "Tails"
 
@@ -104,7 +104,8 @@ class Dice(commands.Cog):
     embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
     embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
 
-    embed.add_field(name="The Coin Flipped: "+("heads" if value else "tails"),value=f"You guessed: {view.value}")
+    embed.add_field(name = f"The Coin Flipped:", value = f"{pic_name}")
+    embed.add_field(name = "You guessed:", value = f"{view.value}")
     embed.set_image(url = url_dic[pic_name])
 
     if win: embed.add_field(name="Result: ", value = "You won")
