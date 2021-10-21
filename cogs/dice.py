@@ -111,7 +111,7 @@ class Dice(commands.Cog):
     if win: embed.add_field(name="Result: ", value = "You won")
     else: embed.add_field(name="Result: ", value = "You lost")
     
-    await ctx.send(embed = embed)
+    await view.message.edit(content = "Here's the results:", embed = embed)
 
   @commands.command(brief="a command to find the nearest emoji")
   async def emote(self, ctx, *, args=None):
