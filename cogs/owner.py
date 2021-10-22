@@ -52,6 +52,7 @@ class Owner(commands.Cog):
           self.bot.reload_extension(x)
         except commands.errors.ExtensionError as e:
           await ctx.send(e)
+          traceback.print_exc()
 
       await ctx.send("done reloading all cogs(check for any errors)")
 
