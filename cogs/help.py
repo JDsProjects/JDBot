@@ -17,8 +17,9 @@ class SendHelp(menus.ListPageSource):
 class Help(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
+
     self._original_help_command = bot.help_command
-    self.bot.help_command = MyHelp()
+    self.bot.help_command = MyHelp
     self.bot.help_command.cog = self
 
   async def cog_command_error(self, ctx, error):

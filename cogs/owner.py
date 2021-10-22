@@ -61,6 +61,7 @@ class Owner(commands.Cog):
 
       except commands.errors.ExtensionError as e:
         await ctx.send(e)
+        traceback.print_exc()
 
       await ctx.send("Cog reloaded :D (check for any errors)")
   
