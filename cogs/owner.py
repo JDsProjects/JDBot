@@ -37,7 +37,10 @@ class Owner(commands.Cog):
         self.bot.load_extension(cog)
       except Exception as e:
         await ctx.send(e)
+        traceback.print_exc()
+
       await ctx.send("Loaded cog(see if there's any errors)")
+
     if cog is None:
       await ctx.send("you can't ask to load no cogs.")
   
@@ -73,6 +76,7 @@ class Owner(commands.Cog):
         self.bot.unload_extension(cog)
       except commands.errors.ExtensionError as e:
         await ctx.send(e)
+        traceback.print_exc()
       await ctx.send("Cog should be unloaded just fine :D.(check any errors)")
     if cog is None:
       await ctx.send("you can't ask to reload no cogs")
@@ -295,6 +299,7 @@ class Owner(commands.Cog):
     
     except Exception as e:
       await ctx.send(f"Somehow an error occured: {e}")
+      traceback.print_exc()
   
   @commands.command()
   async def aioinput_test(self, ctx, *, args = None):
@@ -309,10 +314,14 @@ class Owner(commands.Cog):
 
     if args:
       try: module = importlib.import_module(name=args)
-      except Exception as e: return await ctx.send(e)
+      except Exception as e:
+        traceback.print_exc()
+        return await ctx.send(e)
 
       try: value=importlib.reload(module)
-      except Exception as e: return await ctx.send(e)
+      except Exception as e: 
+        traceback.print_exc()
+        return await ctx.send(e)
 
       await ctx.send(f"Sucessfully reloaded {value.__name__} \nMain Package: {value.__package__}")
 
@@ -387,6 +396,7 @@ class Owner(commands.Cog):
         discord.utils._get_mime_type_for_image(await x.read())
 
       except Exception as e:
+        traceback.print_exc()
         return await ctx.send(e)
 
       
@@ -458,6 +468,7 @@ class Owner(commands.Cog):
       post = await self.bot.loop.run_in_executor(None, tweet_time)
       
     except Exception as e:
+      traceback.print_exc()
       return await ctx.send(f"Exception occured at {e}")
 
     await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.id}")
