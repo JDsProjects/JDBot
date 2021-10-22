@@ -37,5 +37,6 @@ If you plan to copy anything please let me know on discord or in an issue(this h
 If you do copy any code make sure to make a good faith effort to change the code to your own style, that way it's not weird for word. I don't want you to copy every feature I have one for one, if you do want to do this, you can just host your own instance
 
 (make sure to ask me how you can do that, or I can do that for you if you want.)
+
 Thank You,
 JDJG
