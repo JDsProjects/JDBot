@@ -22,7 +22,7 @@ This bot is meant to be having all of the features, an "all in one" bot.
 > > Warning someone will cause the bot to DM the person warned.
 >
 
-### JDBot is always being updated, with many new and useful features coming *in the works*
+### JDBot is always being updated, with many new and useful features coming *in the future*
 
 ### Any Questions about JDBot?
 
@@ -34,5 +34,8 @@ This bot's source code is public so that the people can see how this bot works.
 If you were to fork the bot, DO give credit to @JDJGInc and use this responsibly.
 Also, if you want to copy the bot's code and run your own instance of JDBot, *do* DM `JDJG Inc. Official#3493` on Discord.
 If you plan to copy anything please let me know on discord or in an issue(this helps keep track of those who use my code, and so I can help you if you need help, please make your own code though.)
+If you do copy any code make sure to make a good faith effort to change the code to your own style, that way it's not weird for word. I don't want you to copy every feature I have one for one, if you do want to do this, you can just host your own instance
+
+(make sure to ask me how you can do that, or I can do that for you if you want.)
 Thank You,
 JDJG
