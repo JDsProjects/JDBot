@@ -87,7 +87,7 @@ class Owner(commands.Cog):
   async def cog_command_error(self, ctx, error):
     if ctx.command or not ctx.command.has_error_handler():
       await ctx.send(error)
-      import traceback
+      
       traceback.print_exc()
 
     #I need to fix all cog_command_error
