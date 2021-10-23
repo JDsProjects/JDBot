@@ -38,5 +38,7 @@ If you do copy any code make sure to make a good faith effort to change the code
 
 (make sure to ask me how you can do that, or I can do that for you if you want.)
 
+My Bot also uses a subclassed Bot(if you don't program in discord.py or anyone of the forks, it's not important it just means one session bot wise to be able to do powerful functions)
+
 Thank You,
 JDJG
