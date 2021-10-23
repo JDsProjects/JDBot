@@ -27,11 +27,18 @@ class Bot(commands.Cog):
     self.status_task.stop()
 
   @commands.command(brief="sends pong and the time it took to do so.")
-  async def ping(self,ctx):
+  async def ping(self, ctx):
     start = time.perf_counter()
-    message=await ctx.send("Pong")
+    message = await ctx.send("Ping")
     end = time.perf_counter()
-    await message.edit(content=f"Pong\nBot Latency: {((end - start)*1000)} MS\nWebsocket Response time: {self.bot.latency*1000} MS")
+
+    embed = discord.Embed(title = "Bot Ping Data", color = 15428885, timestamp = ctx.message.created_at)
+
+    embed.add_field(name = "Bot Latency:", value = f"{round((end - start)*1000)} MS", inline = False)
+
+    embed.add_field(name = "Websocket Response time:", value = f"{round(self.bot.latency*1000)} MS", inline = False)
+
+    await message.edit(content = f"Pong", embed = embed)
   
   @commands.command(brief="gives you an invite to invite the bot.", aliases = ["inv"])
   async def invite(self, ctx):
@@ -118,7 +125,7 @@ class Bot(commands.Cog):
 
     if owner.bot: badges = f"{badges} {utils.profile_converter('bot')}"
     
-    embed=discord.Embed(title=f"Bot Owner: {owner}",color = random.randint(0, 16777215),timestamp=ctx.message.created_at)
+    embed=discord.Embed(title=f"Bot Owner: {owner}",color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
     
     embed.add_field(name = "User Info: ", value = f"**Username**: {owner.name} \n**Discriminator**: {owner.discriminator} \n**ID**: {owner.id}")
 
