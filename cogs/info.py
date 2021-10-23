@@ -754,6 +754,7 @@ class DevTools(commands.Cog):
 
     await ctx.send(embed = embed)
 
+  @commands.cooldown(1, 60, BucketType.user)
   @commands.command(brief = "makes a request to add a bot to the test guild")
   async def addbot(self, ctx, user : typing.Optional[discord.User] = None, *, args = None):
     
@@ -761,6 +762,11 @@ class DevTools(commands.Cog):
 
     if not user.bot:
       return await ctx.send("You can't invite a user to a guild like this.")
+
+    if args is None:
+      await ctx.send("Provide a reason why you want your bot added to your guild")
+
+    
 
     
 
