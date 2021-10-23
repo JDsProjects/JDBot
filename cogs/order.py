@@ -14,15 +14,12 @@ class Order(commands.Cog):
   
   async def __ainit__(self):
     await self.bot.wait_until_ready()
+    
     tenor_key = os.environ["tenor_key"]
-    #you get a key from the tenor api from https://tenor.com/developer/keyregistration
     giphy_key = os.environ["giphy_token"] 
-    #make a key on https://developers.giphy.com/dashboard/
 
     image_api_key = os.environ["image_api_key"]  
-    #https://developers.google.com/custom-search/v1/overview
     image_engine_key = os.environ["google_image_key"] 
-    #make a key on https://cse.google.com/cse/all
 
     self.image_client = async_cse.Search(image_api_key, engine_id = image_engine_key, session = self.bot.session)
 

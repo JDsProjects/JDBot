@@ -157,6 +157,8 @@ class Slash(commands.Cog):
   @commands.command(brief = "says hi to you", slash_command = False)
   async def hi(self, ctx):
     await ctx.send(f"hi {ctx.author}")
+  
+
 
 
 def setup(bot):
