@@ -23,7 +23,7 @@ async def headpat_converter(url, ctx):
     print(e)
     return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-  imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
   imgur_url = await imgur_client.upload(image)
   embed=discord.Embed(color=random.randint(0, 16777215))
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
