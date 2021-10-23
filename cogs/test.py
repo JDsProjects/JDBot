@@ -142,6 +142,13 @@ class Test(commands.Cog):
   async def dance(self, ctx):
     await ctx.send("WIP alright?")
 
+  @commands.command(brief = "scans statuses to see if there is any bad ones.")
+  async def scan_status(self, ctx):
+    await ctx.send("will scan statuses in a guild to see if there is a bad one.")
+
+  @commands.command(brief = "sets logs for a guild", name = "logging")
+  async def _logging(self, ctx):
+    await ctx.send("logging wip.")
 
 class Slash(commands.Cog):
   def __init__(self, bot):

@@ -189,7 +189,7 @@ class ColorConverter(commands.Converter):
 
     if isinstance(argument, int):
       if argument > 16777215: 
-        await ctx.send(f"{argument} is too, so it's going to 16777215 which is can use.")
+        await ctx.send(f"{argument} is not valid color, 16777215 will be used instead.")
         argument = 16777215
 
       color = discord.Colour(argument)

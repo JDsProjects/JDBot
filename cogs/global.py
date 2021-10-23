@@ -33,5 +33,7 @@ class Global(commands.Cog):
     
     await ctx.send(f"Here's what it would look like in Global Chat!", embed = embed)
 
+  
+
 def setup(bot):
   bot.add_cog(Global(bot))
