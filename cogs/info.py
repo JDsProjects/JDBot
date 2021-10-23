@@ -761,13 +761,24 @@ class DevTools(commands.Cog):
     user = user or ctx.author
 
     if not user.bot:
-      return await ctx.send("You can't invite a user to a guild like this.")
+      ctx.command.reset_cooldown(ctx) 
+      return await ctx.send("Please use a *bot* ID, not a *user* ID.")
 
     if args is None:
-      await ctx.send("Provide a reason why you want your bot added to your guild")
+      ctx.command.reset_cooldown(ctx)
+      return await ctx.send("Provide a reason why you want your bot added to your guild")
 
-    
+    embed = discord.Embed(title = "Bot Request", colour = discord.Colour.blurple(), description = f"{args}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id)})", timestamp = ctx.message.created_at)
 
+    embed.add_field(name = "Author", value=f"{ctx.author} (ID: {ctx.author.id})", inline = False)
+    embed.add_field(name = "Bot", value=f"{user} (ID: {user.id})", inline = False)
+
+    embed.set_footer(text = ctx.author.id)
+    embed.set_author(name = user.id, icon_url = user.display_user.replace(format = "png"))
+
+    jdjg = self.bot.get_user(168422909482762240)
+
+    await self.bot.get_channel(816807453215424573).send(content = jdjg.mention, embed = embed)
     
 
 def setup(bot):
