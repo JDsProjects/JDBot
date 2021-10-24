@@ -110,9 +110,14 @@ class Test(commands.Cog):
     #look at the JDJG Bot orginal and other evals also well look at run commands too
 
   @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
-  async def _source(self, ctx):
-    
-    await ctx.send("Eh okay, it's WIP btw.")
+  async def _source(self, ctx, *,args = None):
+    github_url = "https://github.com/JDJGInc/JDBot"
+    if args is None:
+
+      embed = discord.Embed(title = "Github link", description = f"{github_url}", color = 15428885, timestamp = ctx.message.created_at)
+      await ctx.send("Here's the github link:", embed = embed)
+
+    await ctx.send(f"finding out where specific source of commands isn't aviable yet")
 
 
   @commands.command(brief = "Gives info on pypi packages")
