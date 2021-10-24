@@ -762,23 +762,33 @@ class DevTools(commands.Cog):
 
     if not user.bot:
       ctx.command.reset_cooldown(ctx) 
-      return await ctx.send("Please use a *bot* ID, not a *user* ID.")
+      return await ctx.send("Please Use A **Bot** ID, not a **User** ID.")
 
     if args is None:
       ctx.command.reset_cooldown(ctx)
       return await ctx.send("Provide a reason why you want your bot added to your guild")
+    
+    guild = self.bot.get_guild(438848185008390158)
+    member = await guild.try_member(ctx.author.id)
+    if member is None:
 
-    embed = discord.Embed(title = "Bot Request", colour = discord.Colour.blurple(), description = f"{args}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id)})", timestamp = ctx.message.created_at)
+      view = discord.ui.View()
+      view.add_item(discord.ui.Button(label = f"Test Guild Invite", url = "https://discord.gg/hKn8qgCDzK", style = discord.ButtonStyle.link, row = 1)) 
+      return await ctx.send("Make sure to join the guild linked soon... then rerun the command. If you are in the guild contact the owner(the owner is listed in the owner command)", view = view)
+
+    embed = discord.Embed(title = "Bot Request", colour = discord.Colour.blurple(), description = f"reason: \n{args}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id)})", timestamp = ctx.message.created_at)
 
     embed.add_field(name = "Author", value=f"{ctx.author} (ID: {ctx.author.id})", inline = False)
     embed.add_field(name = "Bot", value=f"{user} (ID: {user.id})", inline = False)
 
     embed.set_footer(text = ctx.author.id)
-    embed.set_author(name = user.id, icon_url = user.display_user.replace(format = "png"))
+    embed.set_author(name = user.id, icon_url = user.display_avatar.replace(format = "png"))
 
     jdjg = self.bot.get_user(168422909482762240)
 
     await self.bot.get_channel(816807453215424573).send(content = jdjg.mention, embed = embed)
+
+    await ctx.reply(f"It appears adding your bot worked. \nIf you leave your bot will be kicked, unless you have an alt there, a friend, etc. \n(It will be kicked to prevent raiding and taking up guild space if you leave). \nYour bot will be checked out. {jdjg} will then determine if your bot is good to add to the guild. Make sure to open your Dms to JDJG, so he can dm you about the bot being added. \nIf you don't add him, your bot will be denied.")
     
 
 def setup(bot):
