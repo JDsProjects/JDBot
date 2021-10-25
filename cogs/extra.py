@@ -725,18 +725,19 @@ class Extra(commands.Cog):
   @commands.cooldown(1, 60, BucketType.user)
   @commands.cooldown(1, 60, BucketType.channel)
   @commands.command(brief = "gets the first message in a channel", aliases = ["first_message"])
-  async def firstmsg(self, ctx, channel = typing.Optional [typing.Union[discord.TextChannel, discord.Thread, discord.DMChannel, discord.GroupChannel, discord.User, discord.Member]]):
+  async def firstmsg(self, ctx, channel : typing.Optional [typing.Union[discord.TextChannel, discord.Thread, discord.DMChannel, discord.GroupChannel, discord.User, discord.Member]] = None) :
 
     channel = channel or ctx.channel
+    print(type(channel))
 
     messages = await channel.history(limit = 1, oldest_first = True).flatten()
 
     if not messages:
       return await ctx.send("Couldn't find the first message or any message :shrug: Not sure why")
 
-    embed = discord.Embed(color = random.randint(0, 16777215), timestamp = ctx.message.created_at, descriptions = f"Url: \n [message link]({messages[0].jump_url})")
-    embed.add_field(name = f"Channel:", value = f"{channel}")
-    embed.set_author(name = f"Message Author: {messages[0].author}")
+    embed = discord.Embed(color = random.randint(0, 16777215), timestamp = ctx.message.created_at, description = f"Click on [message link]({messages[0].jump_url}) to see the channel listed below's first message")
+    embed.add_field(name = f"Channel:", value = f"{channel.mention}")
+    embed.set_author(name = f"Message Author: {messages[0].author}", icon_url = f"{messages[0].author.display_avatar.url}")
 
     await ctx.send(content = "here's the first message in that channel", embed = embed)
       
