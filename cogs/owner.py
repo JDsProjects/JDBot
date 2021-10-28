@@ -502,5 +502,27 @@ class Owner(commands.Cog):
   async def stats_status_error(self, ctx, error):
     await ctx.send(error) 
 
+  @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only) but with join dates updated.")
+  async def servers2(self, ctx):
+    if await self.bot.is_owner(ctx.author):
+
+      sorted_guilds = sorted(self.bot.guilds, key=lambda guild: guild.me.joined_at)
+
+      pag = commands.Paginator()
+      for g in sorted_guilds:
+       pag.add_line(f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n")
+
+      pages = [page.strip("`") for page in pag.pages]
+      menu = ViewMenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
+
+      if (ctx.author.dm_channel is None):
+        await ctx.author.create_dm()
+
+      await menu.start(ctx, channel = ctx.author.dm_channel)
+      
+    if await self.bot.is_owner(ctx.author) is False:
+      await ctx.send("You can't use that it's owner only")
+  
+
 def setup(bot):
   bot.add_cog(Owner(bot))
