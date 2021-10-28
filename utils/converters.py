@@ -211,3 +211,24 @@ class ColorConverter(commands.Converter):
         color = discord.Colour(16777215)
       
     return color
+
+import datetime
+
+def generate_snowflake(dt: typing.Optional[datetime.datetime] = None) -> int:
+    """Returns a numeric snowflake pretending to be created at the given date but more accurate and random than time_snowflake.
+    If No dt is not passed, it makes one from the current time using utcnow.
+
+    Parameters
+    -----------
+    dt: :class:`datetime.datetime`
+        A datetime object to convert to a snowflake.
+        If naive, the timezone is assumed to be local time.
+
+    Returns
+    --------
+    :class:`int`
+        The snowflake representing the time given.
+    """
+
+    dt = dt or discord.utils.utcnow()
+    return int(dt.timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff
