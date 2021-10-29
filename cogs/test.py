@@ -167,8 +167,29 @@ class Test(commands.Cog):
         thread = await channel.edit(archived = False)
         await ctx.send(f"Succesfully made {thread} unarchived again")
 
-      if not ctx.guild.me.guild_permissions.manage_threads:
+      if not ctx.me.guild_permissions.manage_threads:
         await ctx.send("can't unarchive channel because the  bot doesn't have permissions to do so.")
+
+      if not ctx.author.guild_permissions.manage_threads:
+        await ctx.send("you don't have permission edit to the thread channel.")
+
+    else:
+      await ctx.send("You can only do that in thread channels")
+
+  @commands.command(brief = "Unarchives thread channel")
+  async def archive_thread(self, ctx, channel : typing.Optional[discord.Thread] = None):
+
+    channel = channel or ctx.channel
+  
+    if isinstance(channel, discord.Thread):
+      if ctx.guild.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
+        await ctx.send("Now archiving thread")
+
+        thread = await channel.edit(archived = False)
+        await ctx.send(f"Succesfully made {thread} archived again")
+
+      if not ctx.me.guild_permissions.manage_threads:
+        await ctx.send("can't archive channel because the  bot doesn't have permissions to do so.")
 
       if not ctx.author.guild_permissions.manage_threads:
         await ctx.send("you don't have permission edit to the thread channel.")
