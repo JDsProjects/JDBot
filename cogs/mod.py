@@ -190,13 +190,13 @@ class Moderation(commands.Cog):
         await ctx.send(f"Succesfully made {thread} unarchived again")
 
       if not ctx.me.guild_permissions.manage_threads:
-        await ctx.send("can't unarchive channel because the  bot doesn't have permissions to do so.")
+        await ctx.send("can't unarchive channel because the bot doesn't have permissions to do so.")
 
       if not ctx.author.guild_permissions.manage_threads:
-        await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
+        await ctx.send("you don't have permission to edit to the thread channel.")
 
     else:
-      await ctx.send("You can only do that in thread channels")
+      await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
 
   @commands.command(brief = "Unarchives thread channel")
   async def archive_thread(self, ctx, channel : typing.Optional[discord.Thread] = None):
@@ -214,7 +214,49 @@ class Moderation(commands.Cog):
         await ctx.send("can't archive channel because the  bot doesn't have permissions to do so.")
 
       if not ctx.author.guild_permissions.manage_threads:
-        await ctx.send("you don't have permission edit to the thread channel.")
+        await ctx.send("you don't have permission to edit to the thread channel.")
+
+    else:
+      await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
+
+  @commands.command(brief = "locks the thread channel")
+  async def lock_thread(self, ctx, channel : typing.Optional[discord.Thread] = None):
+
+    channel = channel or ctx.channel
+  
+    if isinstance(channel, discord.Thread):
+      if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
+        await ctx.send("Now locking thread")
+
+        thread = await channel.edit(locked = True)
+        await ctx.send(f"Succesfully made {thread} locked.")
+
+      if not ctx.me.guild_permissions.manage_threads:
+        await ctx.send("can't lock channel because the bot doesn't have permissions to do so.")
+
+      if not ctx.author.guild_permissions.manage_threads:
+        await ctx.send("you don't have permission to edit to the thread channel.")
+
+    else:
+      await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
+
+  @commands.command(brief = "unlocks the thread channel")
+  async def unlock_thread(self, ctx, channel : typing.Optional[discord.Thread] = None):
+
+    channel = channel or ctx.channel
+  
+    if isinstance(channel, discord.Thread):
+      if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
+        await ctx.send("Now unlocking thread")
+
+        thread = await channel.edit(locked = False)
+        await ctx.send(f"Succesfully made {thread} unlocked.")
+
+      if not ctx.me.guild_permissions.manage_threads:
+        await ctx.send("can't unlock channel because the bot doesn't have permissions to do so.")
+
+      if not ctx.author.guild_permissions.manage_threads:
+        await ctx.send("you don't have permission to edit to the thread channel.")
 
     else:
       await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")

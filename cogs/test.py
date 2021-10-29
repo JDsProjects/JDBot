@@ -159,12 +159,9 @@ class Test(commands.Cog):
   async def urban(self, ctx, *, args = None):
     await ctx.send("WIP")
 
-    
-
   #Unrelated to Urban:
   #https://discordpy.readthedocs.io/en/master/api.html?highlight=interaction#discord.InteractionResponse.send_message
   #https://discordpy.readthedocs.io/en/latest/api.html#discord.Guild.query_members
-  #https://discordpy.readthedocs.io/en/master/api.html#discord.Thread.edit
 
 class Slash(commands.Cog):
   def __init__(self, bot):
