@@ -161,7 +161,7 @@ class Test(commands.Cog):
     channel = channel or ctx.channel
   
     if isinstance(channel, discord.Thread):
-      if ctx.guild.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
+      if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
         await ctx.send("Now unarchiving thread")
 
         thread = await channel.edit(archived = False)
@@ -182,7 +182,7 @@ class Test(commands.Cog):
     channel = channel or ctx.channel
   
     if isinstance(channel, discord.Thread):
-      if ctx.guild.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
+      if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
         await ctx.send("Now archiving thread")
 
         thread = await channel.edit(archived = False)
