@@ -155,50 +155,7 @@ class Test(commands.Cog):
 
   #look at global_chat stuff for global_chat features, rank for well rank, add an update system too, add cc_ over. nick too, as well as kick and ban, ofc unban and other guild ban moderation stuff. Port over emoji_check but public and make that do it's best to upload less than 256 kB, try to freeze bot with suspend, or somehow, basically make it in unresponsive mode(maybe), and ofc an os emulation mode, as well as update mode, and nick.
 
-  @commands.command(brief = "Unarchives thread channel")
-  async def unarchive_thread(self, ctx, channel : typing.Optional[discord.Thread] = None):
-
-    channel = channel or ctx.channel
-  
-    if isinstance(channel, discord.Thread):
-      if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
-        await ctx.send("Now unarchiving thread")
-
-        thread = await channel.edit(archived = False)
-        await ctx.send(f"Succesfully made {thread} unarchived again")
-
-      if not ctx.me.guild_permissions.manage_threads:
-        await ctx.send("can't unarchive channel because the  bot doesn't have permissions to do so.")
-
-      if not ctx.author.guild_permissions.manage_threads:
-        await ctx.send("you don't have permission edit to the thread channel.")
-
-    else:
-      await ctx.send("You can only do that in thread channels")
-
-  @commands.command(brief = "Unarchives thread channel")
-  async def archive_thread(self, ctx, channel : typing.Optional[discord.Thread] = None):
-
-    channel = channel or ctx.channel
-  
-    if isinstance(channel, discord.Thread):
-      if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
-        await ctx.send("Now archiving thread")
-
-        thread = await channel.edit(archived = False)
-        await ctx.send(f"Succesfully made {thread} archived again")
-
-      if not ctx.me.guild_permissions.manage_threads:
-        await ctx.send("can't archive channel because the  bot doesn't have permissions to do so.")
-
-      if not ctx.author.guild_permissions.manage_threads:
-        await ctx.send("you don't have permission edit to the thread channel.")
-
-    else:
-      await ctx.send("You can only do that in thread channels")
-
-
-  @commands.command(brief = "looks up stuff from urban")
+  @commands.command(brief = "looks up stuff from urban dictionary")
   async def urban(self, ctx, *, args = None):
     await ctx.send("WIP")
 
