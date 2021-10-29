@@ -193,7 +193,7 @@ class Moderation(commands.Cog):
         await ctx.send("can't unarchive channel because the  bot doesn't have permissions to do so.")
 
       if not ctx.author.guild_permissions.manage_threads:
-        await ctx.send("you don't have permission edit to the thread channel.")
+        await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
 
     else:
       await ctx.send("You can only do that in thread channels")
@@ -217,7 +217,7 @@ class Moderation(commands.Cog):
         await ctx.send("you don't have permission edit to the thread channel.")
 
     else:
-      await ctx.send("You can only do that in thread channels")
+      await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
   
 
 def setup(bot):
