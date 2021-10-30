@@ -19,3 +19,17 @@ def warn_permission(ctx, Member):
 
   if isinstance(ctx.channel, discord.DMChannel):
     return True
+
+
+def cleanup_permission(ctx):
+  if isinstance(ctx.channel, discord.TextChannel):
+    return ctx.author.guild_permissions.manage_messages
+
+  if isinstance(ctx.channel, discord.DMChannel):
+    return True
+
+def mutual_guild_check(ctx, user):
+  mutual_guilds = set(ctx.author.mutual_guilds)
+  mutual_guilds2 = set(user.mutual_guilds)
+
+  return bool(mutual_guilds.intersection(mutual_guilds2))

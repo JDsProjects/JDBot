@@ -1,4 +1,5 @@
-import collections, random, discord
+import collections, random, discord, aioimgur, sr_api, asyncdagpi
+import os
 
 async def guildinfo(ctx, guild):
   base_user = collections.Counter([u.bot for u in guild.members])
@@ -78,3 +79,71 @@ async def roleinfo(ctx, role):
   embed.set_footer(text = f"Guild: {role.guild}")
 
   await ctx.send(embed = embed)
+
+
+async def triggered_converter(url, ctx):
+  sr_client = sr_api.Client(session = ctx.bot.session)
+  source_image=sr_client.filter(option="triggered", url = str(url))
+
+  imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_url= await imgur_client.upload_from_url(source_image.url)
+
+  embed = discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
+  embed.set_image(url = imgur_url["link"])
+  embed.set_footer(text="powered by some random api")
+  await ctx.send(embed=embed)
+
+async def headpat_converter(url, ctx):
+  try:
+    sr_client = sr_api.Client(key=os.environ["sr_key"],session=ctx.bot.session)
+    source_image=sr_client.petpet(avatar=str(url))
+    image = await source_image.read()
+  except Exception as e:
+    print(e)
+    return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+
+  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_url = await imgur_client.upload(image)
+  embed=discord.Embed(color=random.randint(0, 16777215))
+  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
+  embed.set_image(url=imgur_url["link"])
+  embed.set_footer(text="powered by some random api")
+  await ctx.send(embed=embed)
+
+def create_channel_permission(ctx):
+  return ctx.author.guild_permissions.manage_channels
+
+def clear_permission(ctx):
+  if isinstance(ctx.channel, discord.TextChannel):
+    return ctx.author.guild_permissions.manage_messages
+
+  if isinstance(ctx.channel,discord.DMChannel):
+    return False
+
+
+async def invert_converter(url, ctx):
+  try:
+    sr_client = sr_api.Client(key=os.environ["sr_key"],session=ctx.bot.session)
+    source_image = sr_client.filter("invert",url=str(url))
+    image = await source_image.read()
+  except:
+    return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+
+  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_url = await imgur_client.upload(image)
+  embed=discord.Embed(color = random.randint(0, 16777215))
+  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
+  embed.set_image(url=imgur_url["link"])
+  embed.set_footer(text="powered by some random api")
+  await ctx.send(embed=embed)
+
+async def headpat_converter2(url, ctx):
+  dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session = ctx.bot.session)
+  image=await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(),str(url))
+  file = discord.File(fp=image.image,filename=f"headpat.{image.format}")
+  embed=discord.Embed(color = random.randint(0, 16777215))
+  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
+  embed.set_image(url=f"attachment://headpat.{image.format}")
+  embed.set_footer(text="powered by dagpi")
+  await ctx.send(file=file, embed=embed)
