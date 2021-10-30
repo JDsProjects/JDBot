@@ -67,10 +67,11 @@ class Economy(commands.Cog):
     self.bot = bot
 
   @commands.command(brief="Currently work in progress(WIP)")
-  async def work(self, ctx,*, args=None):
+  async def work(self, ctx, *, args = None):
     Member = ctx.author.id
     if args is None:
-      await add_money(Member,10,0)
+      await add_money(Member, 10, 0)
+      
     if args:
       return await ctx.send("doing a specific job isn't out yet.")
       
