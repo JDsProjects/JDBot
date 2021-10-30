@@ -31,16 +31,6 @@ async def headpat_converter(url, ctx):
   embed.set_footer(text="powered by some random api")
   await ctx.send(embed=embed)
 
-def warn_permission(ctx, Member):
-  if isinstance(ctx.channel, discord.TextChannel):
-    
-    return ctx.author.guild_permissions.manage_messages and ctx.author.top_role > Member.top_role and ctx.author.guild_permissions >= Member.guild_permissions
-    #bug with user with same permissions maybe and other stuff(seems fixed for right now, leaving note just in case.)
-    
-
-  if isinstance(ctx.channel, discord.DMChannel):
-    return True
-
 def create_channel_permission(ctx):
   return ctx.author.guild_permissions.manage_channels
 
