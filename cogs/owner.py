@@ -151,7 +151,11 @@ class Owner(commands.Cog):
     if await self.bot.is_owner(ctx.author):
       if args:
         if isinstance(ctx.channel, discord.TextChannel):
-          await ctx.message.delete()
+          try:
+            await ctx.message.delete()
+          
+          except:
+            await ctx.send("It couldn't delete the message in this guils so, I kept it here.")
 
         webhook = discord.Webhook.from_url(os.environ["webhook1"], session = self.bot.session)
         embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
