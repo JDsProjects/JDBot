@@ -1,4 +1,4 @@
-import discord, re, emoji, contextlib, typing
+import discord, re, emoji, contextlib, typing, datetime
 from discord.ext import commands
 from discord.http import Route
 
@@ -122,8 +122,6 @@ class ColorConverter(commands.Converter):
         color = discord.Colour(16777215)
       
     return color
-
-import datetime
 
 def generate_snowflake(dt: typing.Optional[datetime.datetime] = None) -> int:
     """Returns a numeric snowflake pretending to be created at the given date but more accurate and random than time_snowflake.
