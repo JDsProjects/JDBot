@@ -2,7 +2,7 @@ import discord, re, os, aiohttp, contextlib, aiosqlite, traceback, itertools
 from discord.ext import commands
 
 async def get_prefix(bot, message):
-  extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te.", "t."]
+  extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te.", "t.", "j."]
 
   comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
   match = comp.match(message.content)
