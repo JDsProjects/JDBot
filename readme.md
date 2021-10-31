@@ -40,5 +40,9 @@ If you do copy any code make sure to make a good faith effort to change the code
 
 My Bot also uses a subclassed Bot(if you don't program in discord.py or anyone of the forks, it's not important it just means one session bot wise to be able to do powerful functions)
 
+Explanations for developers about env values:
+
+https://gist.github.com/JDJGInc/5607b3f63f651d2232a25b305aea4d33
+
 Thank You,
 JDJG

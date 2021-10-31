@@ -6,7 +6,7 @@ bank = DatabaseConfig.db.money_system
 job_db = DatabaseConfig.db.job_listing
 
 async def check_user_exists(userid):
-  default_document = {"user_id":userid,"balance":{"bank":0,"wallet":0}}
+  default_document = {"user_id": userid, "balance": {"bank":0,"wallet":0}}
   try:
     await bank.insert_one(default_document)
   except:
