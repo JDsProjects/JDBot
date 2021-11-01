@@ -165,6 +165,12 @@ class Test(commands.Cog):
   #https://discordpy.readthedocs.io/en/master/api.html?highlight=interaction#discord.InteractionResponse.send_message
   #https://discordpy.readthedocs.io/en/latest/api.html#discord.Guild.query_members
 
+
+  #guild_prefixes table in my sql database
+  #spyco data table in my sql database
+  #Job_data in database
+
+
 class Slash(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
