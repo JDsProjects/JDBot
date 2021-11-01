@@ -168,7 +168,8 @@ class Test(commands.Cog):
 
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
-  #Job_data in database
+  #Job_data in sql database
+  #yes format will come later.
 
 
 class Slash(commands.Cog):
