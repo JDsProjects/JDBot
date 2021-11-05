@@ -159,7 +159,7 @@ class Bot(commands.Cog):
       pages = [page.strip("`") for page in pag.pages]
       pages = pages or ["None"]
 
-      view = utils.dm_or_ephemeral(ctx.author, pages)
+      view = utils.dm_or_ephemeral(ctx, pages)
 
       await ctx.send("Opening another buttons response.", view = view)
       
@@ -172,7 +172,7 @@ class Bot(commands.Cog):
 
       await menu.start(ctx, channel = ctx.author.dm_channel)
 
-  @commands.command(help="a command to give information about the team",brief="this command works if you are in team otherwise it will just give the owner.")
+  @commands.command(help = "a command to give information about the team", brief = "this command works if you are in team otherwise it will just give the owner.")
   async def team(self,ctx):
     information=await self.bot.application_info()
     if information.team == None:

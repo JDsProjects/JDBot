@@ -101,7 +101,7 @@ class Info(commands.Cog):
       pages = [page.strip("`") for page in pag.pages]
       pages = pages or ["None"]
 
-      view = utils.dm_or_ephemeral(ctx.author, pages)
+      view = utils.dm_or_ephemeral(ctx, pages)
 
       await ctx.send("Opening another buttons response.", view = view)
       
