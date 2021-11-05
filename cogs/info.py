@@ -79,7 +79,7 @@ class Info(commands.Cog):
     
     embed.set_image(url = user.display_avatar.url)
     
-    view = utils.BasicButtons(ctx.author)
+    view = utils.BasicButtons(ctx)
     msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
 
     await view.wait()

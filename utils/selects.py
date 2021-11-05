@@ -1,4 +1,4 @@
-import discord, typing
+import discord
 
 class SpaceInfo(discord.ui.Select):
   def __init__(self):
@@ -14,8 +14,7 @@ class SpaceInfo(discord.ui.Select):
 
   async def callback(self, interaction: discord.Interaction):
 
-      await interaction.response.send_message(f'Your favourite colour is {self.values[0]}')
-      print(self.values)
+    await interaction.response.send_message(f'Your favourite colour is {self.values[0]}')
 
 
 class gameChoice(discord.ui.View):

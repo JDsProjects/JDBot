@@ -137,7 +137,7 @@ class Bot(commands.Cog):
 
     embed.set_image(url = owner.display_avatar.url)
     
-    view = utils.BasicButtons(ctx.author)
+    view = utils.BasicButtons(ctx)
     msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
 
     await view.wait()
@@ -253,7 +253,7 @@ class Bot(commands.Cog):
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self, ctx):
     
-    view = utils.BasicButtons(ctx.author)
+    view = utils.BasicButtons(ctx)
     msg = await ctx.send("You must agree with **\N{WHITE HEAVY CHECK MARK}** to have an invite link to our support server sent here before we can invite you", view = view)  
 
     await view.wait()
@@ -305,7 +305,7 @@ class Bot(commands.Cog):
   @commands.command(brief = "a command to automatically summon by creating an invite and having jdjg look at something if it's there something wrong")
   async def jdjgsummon(self, ctx):
 
-    view = utils.BasicButtons(ctx.author)
+    view = utils.BasicButtons(ctx)
     msg = await ctx.send("React with \N{WHITE HEAVY CHECK MARK} if you want me to be summoned if not use \N{CROSS MARK}. \nPlease don't use jdjgsummon to suggest something use suggest to suggest something, alright? If you want to contact me directly, you can find my tag using owner(please don't use jdjgsummon for suggest stuff thanks)", view = view)
 
     await view.wait()
