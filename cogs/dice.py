@@ -171,7 +171,7 @@ class Dice(commands.Cog):
 
   @commands.command(brief = "a nice rock scissors paper game with the bot")
   async def rps(self, ctx):
-    view = utils.RpsGame(ctx.author)
+    view = utils.RpsGame(ctx)
 
     embed2 = discord.Embed(color = random.randint(0, 16777215))
     embed2.set_image(url = "https://i.imgur.com/bFYroWk.gif")

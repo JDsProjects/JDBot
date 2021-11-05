@@ -101,22 +101,13 @@ class nitroButtons(discord.ui.View):
     await self.message.edit(view = self, embed = embed)
   
 class RpsGame(discord.ui.View):
-  def __init__(self, authorized_user: typing.Union[discord.User, discord.Member] = None, **kwargs):
+  def __init__(self, ctx, **kwargs):
     super().__init__(**kwargs)
-    self.authorized_user = authorized_user
+    self.ctx = ctx
     self.value: str = None
-
-  def __authorized__(self, button: discord.ui.Button, interaction: discord.Interaction) -> bool:
-    if self.authorized_user and self.authorized_user.id != interaction.user.id:
-      return False
-
-    return True
 
   @discord.ui.button(label = "Rock", style = discord.ButtonStyle.success, emoji = "🪨")
   async def rock(self, button: discord.ui.Button, interaction: discord.Interaction):
-    if not self.__authorized__(button, interaction):
-
-      return await interaction.response.send_message(content = f"You Can't play this game, {self.authorized_user.mention} is the user playing this game.", ephemeral = True)
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
@@ -125,8 +116,6 @@ class RpsGame(discord.ui.View):
 
   @discord.ui.button(label="Paper", style = discord.ButtonStyle.success , emoji = "📰")
   async def paper(self, button: discord.ui.Button, interaction: discord.Interaction):
-    if not self.__authorized__(button, interaction):
-      return await interaction.response.send_message(content = f"You Can't play this game, {self.authorized_user.mention} is the user playing this game.", ephemeral = True)
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
@@ -135,8 +124,6 @@ class RpsGame(discord.ui.View):
 
   @discord.ui.button(label="Scissors", style = discord.ButtonStyle.success , emoji = "✂️")
   async def scissors(self, button: discord.ui.Button, interaction: discord.Interaction):
-    if not self.__authorized__(button, interaction):
-      return await interaction.response.send_message(content = f"You Can't play this game, {self.authorized_user.mention} is the user playing this game.", ephemeral = True)
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
@@ -148,6 +135,11 @@ class RpsGame(discord.ui.View):
       item.disabled = True
 
     await self.message.edit(view = self)
+
+  async def interaction_check(self, interaction: discord.Interaction):
+    
+    if self.ctx.author.id != interaction.user.id:
+      return await interaction.response.send_message(content = f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.", ephemeral = True)   
 
 
 class CoinFlip(discord.ui.View):
