@@ -25,7 +25,7 @@ class BasicButtons(discord.ui.View):
   async def interaction_check(self, interaction: discord.Interaction):
     
     if self.ctx.author.id != interaction.user.id:
-      return await interaction.response.send_message(content = f"You Can't Use that button, {self.authorized_user.mention} is the author of this message.", ephemeral = True)
+      return await interaction.response.send_message(content = f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.", ephemeral = True)
 
     return True
 
