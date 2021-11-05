@@ -173,7 +173,7 @@ class Test(commands.Cog):
 
   @commands.command(brief = "trivia test")
   async def test_select(self, ctx):
-    view = utils.gameChoice(ctx.author)
+    view = utils.gameChoice(ctx)
     await ctx.send("test...", view = view)
 
 class Slash(commands.Cog):

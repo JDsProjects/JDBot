@@ -15,26 +15,21 @@ class SpaceInfo(discord.ui.Select):
   async def callback(self, interaction: discord.Interaction):
 
       await interaction.response.send_message(f'Your favourite colour is {self.values[0]}')
-      print(self.values[0])
+      print(self.values)
+
 
 class gameChoice(discord.ui.View):
-  def __init__(self, authorized_user: typing.Union[discord.User, discord.Member] = None, **kwargs):
+  def __init__(self, ctx, **kwargs):
     super().__init__(**kwargs)
 
-    self.authorized_user = authorized_user
+    self.ctx = ctx
         
     self.add_item(SpaceInfo())
 
-  def __authorized__(self, interaction: discord.Interaction) -> bool:
-    if self.authorized_user and self.authorized_user.id != interaction.user.id:
-      return False
-
-    return True
-
   async def interaction_check(self, interaction: discord.Interaction):
     
-    if not self.__authorized__(interaction):
-      return await interaction.response.send_message(content = f"You Can't Use that Select, {self.authorized_user.mention} is the author of this message.", ephemeral = True)
+    if not self.ctx.author and self.ctx.author.id != interaction.user.id:
+      return await interaction.response.send_message(content = f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.", ephemeral = True)
 
     return True
 
