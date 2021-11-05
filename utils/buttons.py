@@ -139,8 +139,9 @@ class RpsGame(discord.ui.View):
   async def interaction_check(self, interaction: discord.Interaction):
     
     if self.ctx.author.id != interaction.user.id:
-      return await interaction.response.send_message(content = f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.", ephemeral = True)   
+      return await interaction.response.send_message(content = f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.", ephemeral = True)
 
+    return True
 
 class CoinFlip(discord.ui.View):
   def __init__(self, authorized_user: typing.Union[discord.User, discord.Member] = None, **kwargs):
