@@ -144,22 +144,13 @@ class RpsGame(discord.ui.View):
     return True
 
 class CoinFlip(discord.ui.View):
-  def __init__(self, authorized_user: typing.Union[discord.User, discord.Member] = None, **kwargs):
+  def __init__(self, ctx, **kwargs):
     super().__init__(**kwargs)
-    self.authorized_user = authorized_user
+    self.ctx = ctx
     self.value: str = None
-
-  def __authorized__(self, button: discord.ui.Button, interaction: discord.Interaction) -> bool:
-    if self.authorized_user and self.authorized_user.id != interaction.user.id:
-      return False
-
-    return True
 
   @discord.ui.button(label = "Heads", style = discord.ButtonStyle.success, emoji = "<:coin:693942559999000628>")
   async def Heads(self, button: discord.ui.Button, interaction: discord.Interaction):
-    if not self.__authorized__(button, interaction):
-
-      return await interaction.response.send_message(content = f"You Can't play this game, {self.authorized_user.mention} is the user playing this game.", ephemeral = True)
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
@@ -168,8 +159,6 @@ class CoinFlip(discord.ui.View):
 
   @discord.ui.button(label = "Tails", style = discord.ButtonStyle.success , emoji = "🪙")
   async def tails(self, button: discord.ui.Button, interaction: discord.Interaction):
-    if not self.__authorized__(button, interaction):
-      return await interaction.response.send_message(content = f"You Can't play this game, {self.authorized_user.mention} is the user playing this game.", ephemeral = True)
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
@@ -181,3 +170,10 @@ class CoinFlip(discord.ui.View):
       item.disabled = True
 
     await self.message.edit(view = self)
+
+  async def interaction_check(self, interaction: discord.Interaction):
+    
+    if self.ctx.author.id != interaction.user.id:
+      return await interaction.response.send_message(content = f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.", ephemeral = True)
+
+    return True

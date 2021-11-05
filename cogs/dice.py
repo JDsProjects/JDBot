@@ -80,7 +80,7 @@ class Dice(commands.Cog):
   async def coin(self, ctx):
     value = random.choice([True, False]) 
     
-    view = utils.CoinFlip(ctx.author)
+    view = utils.CoinFlip(ctx)
 
     embed2 = discord.Embed(color = random.randint(0, 16777215))
     embed2.set_image(url = "https://i.imgur.com/O7FscBW.gif")
