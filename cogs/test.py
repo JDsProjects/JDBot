@@ -171,6 +171,10 @@ class Test(commands.Cog):
   #Job_data in sql database
   #yes format will come later.
 
+  @commands.command(brief = "trivia test")
+  async def test_select(self, ctx):
+    view = utils.gameChoice(ctx.author)
+    await ctx.send("test...", view = view)
 
 class Slash(commands.Cog):
   def __init__(self, bot):
