@@ -235,9 +235,9 @@ class Bot(commands.Cog):
     embed.add_field(name="Rule 9:",value="If our bot doesn't do the giveaway requirements we're actually safe, as we don't require it, however please report this to us, so we can contact them to get them to stop, Thanks. if they don't listen we'll tell you, then you can report them.")
     await ctx.send(embed=embed)
 
-  @commands.command(brief="Privacy Policy",aliases=["privacy"])
+  @commands.command(brief="Privacy Policy", aliases = ["privacy"])
   async def promises(self, ctx):
-    embed = discord.Embed(title="Privacy Policies",color=random.randint(0, 16777215))
+    embed = discord.Embed(title = "Privacy Policies",color=random.randint(0, 16777215))
     embed.add_field(name="1:",value="We have a channel that logs when the bot joins or leaves a guild")
     embed.add_field(name="2:",value="We will store any errors(which may go back to you, but this is console only.) This is in memory anyway, thus it doesn't store in any of our DBs.")
     embed.add_field(name="3:",value="we will only store user ids(in the future for balance commands and economy commands(opt in only)")
@@ -249,7 +249,7 @@ class Bot(commands.Cog):
     embed.add_field(name="Final:",value="There should be no more except the sus list(list of ids I put together by hand of people who probaly shouldn't hang out with). We also now use the built in discord.py guild.members list with cache_member to only use memory to store you, we only use this to limit api calls(it's only opt in anyway)")
     embed.add_field(name="Who Gets this info:", value="Only us, and our DB provider MongoDB(but they are unlikely to use our data. Sus users do show up if they exist in the same guild though and the reason why.")
     embed.add_field(name="More Info:", value="Contact me at JDJG Inc. Official#3493")
-    await ctx.send(embed=embed)
+    await ctx.send(embed = embed)
 
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self, ctx):
