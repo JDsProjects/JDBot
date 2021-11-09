@@ -241,7 +241,7 @@ class Bot(commands.Cog):
     embed.add_field(name = "1:", value = "We have a logging channel that notifies us when the bot joins or leaves a guild", inline = True)
     embed.add_field(name = "2:", value = "We log errors that occur in the bot. This is only visible temporarily in console, and is not stored in any of our DBs.")
     embed.add_field(name = "3:", value = "We will store user ids(in the future for balance commands and economy commands(opt in only)", inline = True)
-    embed.add_field(name = "4:", value = "We store user id, and support channel id, as well as last active channel, for allowing ticket based support. (Opt In)", inline = True)
+    embed.add_field(name = "4:", value = "We store user id , and support channel id, as well as last time it was used(for archive reasons), for allowing ticket based support. (Opt In)", inline = True)
     embed.add_field(name = "5:", value = "We store inputted invalid commands", inline = True)
     embed.add_field(name = "6:", value = "We may temporarily look at your mutual guilds with our bot or the list of servers our bot is in, with some information, just to check if any problems occure(like if a command is going hayware) or to prevent abuse. If you want to look at what is sent in embeds, just ask, We will show you.", inline = True)
     embed.add_field(name = "6.1:", value = "This is a temp command, which is stored no where else, and we also delete the embed when done :D. If you have a problem with this contact me.", inline = True)
