@@ -44,5 +44,8 @@ Explanations for developers about env values:
 
 https://gist.github.com/JDJGInc/5607b3f63f651d2232a25b305aea4d33
 
+Want A webhook github of this?
+You can just DM me on Discord, and I will hook up your webhook to my github, so you will get updates too :D
+
 Thank You,
 JDJG
