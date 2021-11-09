@@ -176,12 +176,6 @@ class Test(commands.Cog):
     view = utils.gameChoice(ctx)
     await ctx.send("test...", view = view)
 
-  @commands.command(brief = "buttons test in empherall")
-  async def test_buttons(self, ctx):
-    view = self.buttonTest()
-
-    await ctx.send("Try me :D", view = view)
-
 class Slash(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
