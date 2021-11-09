@@ -239,7 +239,7 @@ class Bot(commands.Cog):
   async def promises(self, ctx):
     embed = discord.Embed(title = "Privacy Policy", color = random.randint(0, 16777215))
     embed.add_field(name = "1:", value = "We have a logging channel that notifies us when the bot joins or leaves a guild", inline = True)
-    embed.add_field(name = "2:", value = "We log errors that occur in the bot(albeit it might contain private information). This is only visible temporarily in console, and is not stored in any of our DBs.")
+    embed.add_field(name = "2:", value = "We log errors that occured in the bot(albeit it might contain private information). This is only visible temporarily in console, and is not stored in any of our DBs.")
     embed.add_field(name = "3:", value = "We will store user ids(in the future for balance commands and economy commands(opt in only)", inline = True)
     embed.add_field(name = "4:", value = "We store user id , and support channel id, as well as last time it was used(for archive reasons), for allowing ticket based support. (Opt In)", inline = True)
     embed.add_field(name = "5:", value = "We store inputted invalid commands", inline = True)
