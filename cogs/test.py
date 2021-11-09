@@ -176,16 +176,6 @@ class Test(commands.Cog):
     view = utils.gameChoice(ctx)
     await ctx.send("test...", view = view)
 
-  class buttonTest(discord.ui.View):
-    def __init__(self, **kwargs):
-      super().__init__(**kwargs)
-
-    @discord.ui.button(label = "Hit Me", style = discord.ButtonStyle.success)
-    async def HitMe(self, button: discord.ui.Button, interaction: discord.Interaction):
-      
-      await interaction.response.send_message(content = "Hit the New Button", ephemeral = True, view = self)
-
-
   @commands.command(brief = "buttons test in empherall")
   async def test_buttons(self, ctx):
     view = self.buttonTest()
