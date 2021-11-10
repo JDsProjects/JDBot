@@ -785,8 +785,9 @@ class DevTools(commands.Cog):
     embed.set_author(name = user.id, icon_url = user.display_avatar.replace(format = "png"))
 
     jdjg = self.bot.get_user(168422909482762240)
+    benitz = self.bot.get_user(529499034495483926)
 
-    await self.bot.get_channel(816807453215424573).send(content = jdjg.mention, embed = embed)
+    await self.bot.get_channel(816807453215424573).send(content = f"{jdjg.mention} {benitz.mention}", embed = embed)
 
     await ctx.reply(f"It appears adding your bot worked. \nIf you leave your bot will be kicked, unless you have an alt there, a friend, etc. \n(It will be kicked to prevent raiding and taking up guild space if you leave). \nYour bot will be checked out. {jdjg} will then determine if your bot is good to add to the guild. Make sure to open your Dms to JDJG, so he can dm you about the bot being added. \nIf you don't add him, your bot will be denied.")
     
