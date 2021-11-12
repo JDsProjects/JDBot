@@ -1,10 +1,10 @@
-#### Welcome to JDBot
+# Welcome to JDBot
 
 The simple easy to use bot that provides a wide range of entertainment and utility for your server.
 Originally meant to be a test bot, this soon grew, and now it's at 90+ servers and verified!
 This bot is meant to be having all of the features, an "all in one" bot.
 
-### What does JDBot give you?
+## What does JDBot give you?
 
 > Entertainment commands!
 >
@@ -24,11 +24,11 @@ This bot is meant to be having all of the features, an "all in one" bot.
 
 ### JDBot is always being updated, with many new and useful features coming *in the future*
 
-### Any Questions about JDBot?
+#### Any Questions about JDBot?
 
 DM `JDJG Inc. Official#3993`!
 
-## Copyright concerns, including the use of this code
+##### Copyright concerns, including the use of this code
 
 This bot's source code is public so that the people can see how this bot works.
 If you were to fork the bot, DO give credit to @JDJGInc and use this responsibly.
@@ -42,7 +42,7 @@ My Bot also uses a subclassed Bot(if you don't program in discord.py or anyone o
 
 Explanations for developers about env values:
 
-<https://gist.github.com/JDJGInc/5607b3f63f651d2232a25b305aea4d33>
+[Some JDBot Explanations](https://gist.github.com/JDJGInc/5607b3f63f651d2232a25b305aea4d33)
 
 Want A webhook github of this?
 You can just DM me on Discord, and I will hook up your webhook to my github, so you will get updates too :D
