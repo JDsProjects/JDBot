@@ -3,7 +3,8 @@ import discord, functools, typing, yarl, random
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
-#collections, io, itertools
+import collections, io, itertools
+from jishaku.codeblocks import codeblock_converter
 
 class Test(commands.Cog):
   def __init__(self, bot):
@@ -104,10 +105,26 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal  
 
-  @commands.command(brief = "runs something in le console", aliases = ["eval"])
-  async def console(self, ctx):
-    await ctx.send("WIP")
+ 
+  @commands.command(brief = "runs some code in a sandbox(based on Soos's Run command)", aliases = ["eval", "run",])
+  async def console(self, ctx, *, code: typing.Optional[codeblock_converter] = None):
+
+    if not code:
+      return await ctx.send("You need to give me some code to use, otherwise I can not determine what it is.")
+
     #look at the JDJG Bot orginal and other evals also well look at run commands too
+
+    if not code.language:
+      return await ctx.send("You Must provide a language to use")
+
+    if not code.content:
+      return await ctx.send("No code provided")
+
+    await ctx.send(f"{code}")
+
+  #okay hold on: https://github.com/soosBot-com/soosBot/blob/bb544e4c702d8bc444a21eb6a6802c685a463001/extensions/programming.py#L10
+
+  
 
   @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
   async def _source(self, ctx, *, command = None):
