@@ -6,6 +6,8 @@ from discord.ext.commands.cooldowns import BucketType
 import collections, io, itertools
 from jishaku.codeblocks import codeblock_converter
 
+import async_tio
+
 class Test(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
@@ -120,10 +122,13 @@ class Test(commands.Cog):
     if not code.content:
       return await ctx.send("No code provided")
 
-    await ctx.send(f"{code}")
+    tio = await async_tio.Tio(session = self.bot.session)
+
+    output = await tio.execute(f"{code.content}", language = f"{code.language}")
+
+    print(output)
 
   #okay hold on: https://github.com/soosBot-com/soosBot/blob/bb544e4c702d8bc444a21eb6a6802c685a463001/extensions/programming.py#L10
-
   
 
   @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
