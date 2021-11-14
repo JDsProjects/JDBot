@@ -21,7 +21,6 @@ jishaku = {git = "https://github.com/Gorialis/jishaku"}
 "mystbin.py" = "^2.1.0"
 psutil = "^5.8.0"
 "discordlists.py" = "^1.1.1"
-importlib-metadata = "^4.0.1"
 emoji = "^1.2.0"
 "alexflipnote.py" = "^2.4.0"
 asyncpraw = "^7.3.1"
