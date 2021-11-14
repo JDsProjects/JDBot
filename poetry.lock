@@ -167,6 +167,17 @@ optional = false
 python-versions = ">=3.5.3"
 
 [[package]]
+name = "async-tio"
+version = "1.1.0"
+description = "An unoffical API wrapper for tio.run"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+aiohttp = "*"
+
+[[package]]
 name = "asyncdagpi"
 version = "3.3.4"
 description = "An Asynchronos API wrapper for https://dagpi.xyz"
@@ -990,7 +1001,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "6f79cbc3692dc39336d4086ad3abec64ce939b7c9c1531366eac5f04759ddff3"
+content-hash = "55cb1faf131b74496cf32fc0be8670559d19ad54a3be146a0ed68dc503acb40c"
 
 [metadata.files]
 aiofiles = [
@@ -1077,6 +1088,9 @@ async-generator = [
 async-timeout = [
     {file = "async-timeout-3.0.1.tar.gz", hash = "sha256:0c3c816a028d47f659d6ff5c745cb2acf1f966da1fe5c19c77a70282b25f4c5f"},
     {file = "async_timeout-3.0.1-py3-none-any.whl", hash = "sha256:4291ca197d287d274d0b6cb5d6f8f8f82d434ed288f962539ff18cc9012f9ea3"},
+]
+async-tio = [
+    {file = "async_tio-1.1.0-py3-none-any.whl", hash = "sha256:d15630ef3ded62a2ce462bdb5379319c3837b91802e0584b1ae5f82652a04e71"},
 ]
 asyncdagpi = [
     {file = "asyncdagpi-3.3.4-py3-none-any.whl", hash = "sha256:bcd50d4c5f9074bff7dd276d59ae1f8ca45b5d41c29c9d28b13ebcdc04bfcb90"},
