@@ -3,5 +3,4 @@
 *.db
 *.replit
 *.breakpoints
-*.db-journal
 #for replit users, for those who don't like replit well they can ask if they wish to host this with replit

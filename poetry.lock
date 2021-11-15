@@ -444,7 +444,7 @@ python-versions = "^3.8"
 develop = false
 
 [package.dependencies]
-"discord.py" = "branch 2.0"
+"discord.py" = {git = "https://github.com/iDevision/enhanced-discord.py", branch = "2.0"}
 
 [package.source]
 type = "git"
