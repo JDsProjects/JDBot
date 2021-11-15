@@ -540,6 +540,8 @@ class Owner(commands.Cog):
     await self.bot.sus_users.commit()
 
     await cur.close()
+
+    await ctx.send(f"{user} succesfully now has ${number} in wallet.")
     
 
 def setup(bot):
