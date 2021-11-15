@@ -65,7 +65,7 @@ class Economy(commands.Cog):
         economy = await cursor.fetchone()
         await cur.close()
     
-    
+
     data = tuple(economy)
     wallet = data[-1]
     bank = data[1]
@@ -75,6 +75,7 @@ class Economy(commands.Cog):
     embed.add_field(name = "Bank:", value = f"${bank}", inline = True)
     embed.add_field(name = "Total:", value = f"currently wip", inline = True)
     embed.add_field(name = "Currency:", value = "<:JDJGBucks:779516001782988810>", inline = True)
+    embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
     await ctx.send(embed = embed)
   
 
