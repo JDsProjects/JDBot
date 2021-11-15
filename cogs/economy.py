@@ -7,12 +7,19 @@ class Economy(commands.Cog):
     self.bot = bot
 
   @commands.command(brief = "Currently work in progress(WIP)")
-  async def work(self, ctx, *, args = None):
+  async def work(self, ctx):
+
     member = ctx.author
+    add_money = 10
+    cur = await self.bot.sus_users.cursor()
 
-    await ctx.send("Being Upgraded from mongodb to sql, please wait")
+    await cur.execute("UPDATE economy SET wallet = wallet + (?) WHERE user_id = (?)", (add_money, member.id,))
 
-  @commands.command(brief = "a command to send how much money you have(work in progress)", help = "using the JDBot database you can see how much money you have", aliases = ["bal"])
+    await self.bot.sus_users.commit()
+
+    await cur.close()
+
+  @commands.command(brief = "a command to send how much money you have", help = "using the JDBot database you can see how much money you have", aliases = ["bal"])
   async def balance(self, ctx, *, member: utils.BetterMemberConverter = None):
 
     member = member or ctx.author
@@ -49,8 +56,8 @@ class Economy(commands.Cog):
             
 
     data = tuple(economy)
-    wallet = data[1]
-    bank = data[-1]
+    wallet = data[-1]
+    bank = data[1]
 
     embed = discord.Embed(title=f"{member}'s Balance:", description = f"Wallet : {wallet} \nBank : {bank}", color = random.randint(0, 16777215))
     await ctx.send(embed = embed)
