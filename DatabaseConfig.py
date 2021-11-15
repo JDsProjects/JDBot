@@ -1,4 +1,4 @@
-import os, pymongo, dns, motor, motor.motor_asyncio
+import os, pymongo, motor, motor.motor_asyncio
 
 DB_logindetails = str(os.environ['DB_data'])
 DB_client = motor.motor_asyncio.AsyncIOMotorClient(DB_logindetails)
