@@ -535,7 +535,7 @@ class Owner(commands.Cog):
     
     cur = await self.bot.sus_users.cursor()
 
-    await cur.execute("UPDATE economy SET wallet = (?) WHERE user_id = (?)", (number, member.id,))
+    await cur.execute("UPDATE economy SET wallet = (?) WHERE user_id = (?)", (number, user.id,))
 
     await self.bot.sus_users.commit()
 
