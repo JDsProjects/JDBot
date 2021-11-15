@@ -73,7 +73,7 @@ class Economy(commands.Cog):
     embed = discord.Embed(title = f"{member}'s Balance:", color = random.randint(0, 16777215))
     embed.add_field(name = "Wallet:", value = f"${wallet}", inline = True)
     embed.add_field(name = "Bank:", value = f"${bank}", inline = True)
-    embed.add_field(name = "Total:", value = f"currently wip", inline = True)
+    embed.add_field(name = "Total:", value = f"${wallet+bank}", inline = True)
     embed.add_field(name = "Currency:", value = "<:JDJGBucks:779516001782988810>", inline = True)
     embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
     await ctx.send(embed = embed)
