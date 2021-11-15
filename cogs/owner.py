@@ -526,7 +526,21 @@ class Owner(commands.Cog):
       
     if await self.bot.is_owner(ctx.author) is False:
       await ctx.send("You can't use that it's owner only")
-  
+
+  @commands.command(brief = "changes money of people(for moderation of economy)")
+  async def money(self, ctx, user : typing.Optional[discord.User] = None, *, number : typing.Optional[int] = None):
+
+    user = user or ctx.author  
+    number = number or 100
+    
+    
+
+    await cur.execute("UPDATE economy SET wallet = (?) WHERE user_id = (?)", (number, member.id,))
+
+    await self.bot.sus_users.commit()
+
+    await cur.close()
+    
 
 def setup(bot):
   bot.add_cog(Owner(bot))

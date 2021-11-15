@@ -8,7 +8,7 @@ class Economy(commands.Cog):
     self.bot = bot
 
   @commands.cooldown(1, 20, BucketType.user)
-  @commands.command(brief = "Currently work in progress(WIP)")
+  @commands.command(brief = "you can pick a job and then work it in this work command")
   async def work(self, ctx):
 
     member = ctx.author
@@ -20,6 +20,8 @@ class Economy(commands.Cog):
     await self.bot.sus_users.commit()
 
     await cur.close()
+
+    await ctx.send("You worked the basic job.(more jobs coming soon)")
 
   @commands.cooldown(1, 15, BucketType.user)
   @commands.command(brief = "a command to send how much money you have", help = "using the JDBot database you can see how much money you have", aliases = ["bal"])
