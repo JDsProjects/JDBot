@@ -109,7 +109,7 @@ class Test(commands.Cog):
 
  
   @commands.command(brief = "runs some code in a sandbox(based on Soos's Run command)", aliases = ["eval", "run",])
-  async def console(self, ctx, *, code: typing.Optional[codeblock_converter] = None):
+  async def console(self, ctx, *, code: codeblock_converter = None):
 
     if not code:
       return await ctx.send("You need to give me some code to use, otherwise I can not determine what it is.")
