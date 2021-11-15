@@ -6,14 +6,12 @@ authors = ["repl.it user <replituser@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-dnspython = "^2.1.0"
 Flask = "^1.1.2"
 aioimgur = "^0.1.1"
 image = "^1.5.33"
 asuna-api = "^0.2.8"
 async-cse = "^0.3.0"
 aiogTTS = "^1.1.0"
-motor = "^2.4.0"
 asyncdagpi = "^3.3.2"
 discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
 sr-api = {git = "https://github.com/iDutchy/sr_api"}
