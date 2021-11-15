@@ -70,9 +70,9 @@ class Economy(commands.Cog):
     wallet = data[-1]
     bank = data[1]
 
-    embed = discord.Embed(title = f"{member}'s Balance:", description = "Bank : {bank}", color = random.randint(0, 16777215))
+    embed = discord.Embed(title = f"{member}'s Balance:", color = random.randint(0, 16777215))
     embed.add_field(name = "Wallet:", value = f"${wallet}", inline = True)
-    embed.add_field(name = "Bank:", value = f"{bank}", inline = True)
+    embed.add_field(name = "Bank:", value = f"${bank}", inline = True)
     embed.add_field(name = "Total:", value = f"currently wip", inline = True)
     embed.add_field(name = "Currency:", value = "<:JDJGBucks:779516001782988810>", inline = True)
     await ctx.send(embed = embed)
