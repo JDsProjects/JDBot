@@ -533,7 +533,7 @@ class Owner(commands.Cog):
     user = user or ctx.author  
     number = number or 100
     
-    
+    cur = await self.bot.sus_users.cursor()
 
     await cur.execute("UPDATE economy SET wallet = (?) WHERE user_id = (?)", (number, member.id,))
 
