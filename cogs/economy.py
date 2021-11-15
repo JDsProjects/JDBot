@@ -7,6 +7,12 @@ class Economy(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
+  async def cog_command_error(self, ctx, error):
+    if ctx.command or not ctx.command.has_error_handler():
+      await ctx.send(error)
+      import traceback
+      traceback.print_exc()
+
   @commands.cooldown(1, 20, BucketType.user)
   @commands.command(brief = "you can pick a job and then work it in this work command")
   async def work(self, ctx):
