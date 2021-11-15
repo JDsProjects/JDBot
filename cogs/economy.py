@@ -64,8 +64,8 @@ class Economy(commands.Cog):
 
         economy = await cursor.fetchone()
         await cur.close()
-            
-
+    
+    
     data = tuple(economy)
     wallet = data[-1]
     bank = data[1]
