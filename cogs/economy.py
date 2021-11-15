@@ -38,7 +38,7 @@ class Economy(commands.Cog):
         await ctx.send("adding you to the database for economy...")
 
         cur = await self.bot.sus_users.cursor()
-        await cur.execute("INSERT INTO  VALUES (?,)", (member.id,))
+        await cur.execute("INSERT INTO economy VALUES (?)", (member.id,))
         await self.bot.sus_users.commit()
 
         cur = await self.bot.sus_users.cursor()
