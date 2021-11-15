@@ -1,11 +1,13 @@
 import discord, random
 import utils
 from discord.ext import commands
+from discord.ext.commands.cooldowns import BucketType
 
 class Economy(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
+  @commands.cooldown(1, 20, BucketType.user)
   @commands.command(brief = "Currently work in progress(WIP)")
   async def work(self, ctx):
 
@@ -19,6 +21,7 @@ class Economy(commands.Cog):
 
     await cur.close()
 
+  @commands.cooldown(1, 15, BucketType.user)
   @commands.command(brief = "a command to send how much money you have", help = "using the JDBot database you can see how much money you have", aliases = ["bal"])
   async def balance(self, ctx, *, member: utils.BetterMemberConverter = None):
 
