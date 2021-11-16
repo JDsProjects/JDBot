@@ -454,7 +454,7 @@ resolved_reference = "452e594a1cb0e9eb2a2daf13cef803c3f831725f"
 
 [[package]]
 name = "discord.py"
-version = "2.0.0a3665+gbbdb0384"
+version = "2.0.0a3666+gb0b3a400"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -473,7 +473,7 @@ voice = ["PyNaCl (>=1.3.0,<1.5)"]
 type = "git"
 url = "https://github.com/iDevision/enhanced-discord.py"
 reference = "2.0"
-resolved_reference = "bbdb038478f5605f67fc4a9499e0fb7f266a7744"
+resolved_reference = "b0b3a4002c10a1ebca4cd1262f8b361cfafc0351"
 
 [[package]]
 name = "discordlists.py"
