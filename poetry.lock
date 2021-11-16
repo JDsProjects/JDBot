@@ -444,7 +444,7 @@ python-versions = "^3.8"
 develop = false
 
 [package.dependencies]
-"discord.py" = {git = "https://github.com/iDevision/enhanced-discord.py", branch = "2.0"}
+"discord.py" = "branch 2.0"
 
 [package.source]
 type = "git"
@@ -454,7 +454,7 @@ resolved_reference = "452e594a1cb0e9eb2a2daf13cef803c3f831725f"
 
 [[package]]
 name = "discord.py"
-version = "2.0.0a3664+g2126a241"
+version = "2.0.0a3665+gbbdb0384"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -473,7 +473,7 @@ voice = ["PyNaCl (>=1.3.0,<1.5)"]
 type = "git"
 url = "https://github.com/iDevision/enhanced-discord.py"
 reference = "2.0"
-resolved_reference = "2126a2413a9dc93580ac345acceb9fe2cabc87fb"
+resolved_reference = "bbdb038478f5605f67fc4a9499e0fb7f266a7744"
 
 [[package]]
 name = "discordlists.py"
@@ -1484,6 +1484,7 @@ topggpy = [
 tweepy = []
 typing-extensions = [
     {file = "typing_extensions-4.0.0-py3-none-any.whl", hash = "sha256:829704698b22e13ec9eaf959122315eabb370b0884400e9818334d8b677023d9"},
+    {file = "typing_extensions-4.0.0.tar.gz", hash = "sha256:2cdf80e4e04866a9b3689a51869016d36db0814d84b8d8a568d22781d45d27ed"},
 ]
 update-checker = [
     {file = "update_checker-0.18.0-py3-none-any.whl", hash = "sha256:cbba64760a36fe2640d80d85306e8fe82b6816659190993b7bdabadee4d4bbfd"},
