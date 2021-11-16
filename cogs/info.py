@@ -736,7 +736,7 @@ class DevTools(commands.Cog):
     if not snowflake:
       await ctx.send("you either returned nothing or an invalid snowflake now going to the current time for information.")
 
-    #change objectplus convert back to the before, same thing with utls.ObjectPlus, if edpy adds my pull request into the master.
+    #change objectplus convert back to the before(discord.Object), same thing with utls.ObjectPlus, if edpy adds my pull request into the master.
 
     generated_time = await utils.ObjectPlusConverter().convert(ctx, argument = f"{int(utils.generate_snowflake())}")
 
