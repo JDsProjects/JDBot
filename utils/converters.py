@@ -141,3 +141,35 @@ def generate_snowflake(dt: typing.Optional[datetime.datetime] = None) -> int:
 
     dt = dt or discord.utils.utcnow()
     return int(dt.timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff
+
+
+class ObjectPlus(discord.Object):    
+  
+  @property
+  def worker_id(self) -> int:
+    """:class:`int`: Returns the worker id that made the snowflake."""
+    return (self.id & 0x3E0000) >> 17
+
+  @property
+  def process_id(self) -> int:
+        """:class:`int`: Returns the process id that made the snowflake."""
+        return (self.id & 0x1F000) >> 12
+
+  @property
+  def increment_id(self) -> int:
+    """:class:`int`: Returns the increment id that made the snowflake."""
+    return (self.id & 0xFFF)
+
+
+class ObjectPlusConverter(commands.converter.IDConverter[commands.Converter]):
+  async def convert(self, ctx: commands.Context, argument: str) -> ObjectPlus:
+        match = self._get_id_match(argument) or re.match(r'<(?:@(?:!|&)?|#)([0-9]{15,20})>$', argument)
+
+        if match is None:
+            raise discord.errors.ObjectNotFound(argument)
+
+        result = int(match.group(1))
+
+        return ObjectPlus(id=result)
+
+#remove if edpy adds my pull request into the master.

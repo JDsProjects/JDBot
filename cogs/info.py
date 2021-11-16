@@ -731,12 +731,12 @@ class DevTools(commands.Cog):
     await ctx.send(f"User id: {utils.generate_snowflake()}")
 
   @commands.command(brief = "gives information on snowflakes")
-  async def snowflake_info(self, ctx, *, snowflake : typing.Optional[discord.Object] = None):
+  async def snowflake_info(self, ctx, *, snowflake : typing.Optional[utils.ObjectPlus] = None):
     
     if not snowflake:
       await ctx.send("you either returned nothing or an invalid snowflake now going to the current time for information.")
 
-    generated_time = await commands.ObjectConverter().convert(ctx, argument = f"{int((discord.utils.utcnow()).timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff}")
+    generated_time = await utils.ObjectPlusConverter().convert(ctx, argument = f"{int(utils.generate_snowflake())}")
 
     snowflake = snowflake or generated_time
 
@@ -744,11 +744,11 @@ class DevTools(commands.Cog):
     
     embed.add_field(name = "Created At:", value = f"{discord.utils.format_dt(snowflake.created_at, style = 'd')}\n{discord.utils.format_dt(snowflake.created_at, style = 'T')}")
 
-    embed.add_field(name = "Worker ID:", value = f"{(snowflake.id & 0x3E0000) >>17 }")
+    embed.add_field(name = "Worker ID:", value = f"{snowflake.worker_id}")
 
-    embed.add_field(name = "Process ID:", value = f"{(snowflake.id & 0x1F000) >> 12}")
+    embed.add_field(name = "Process ID:", value = f"{snowflake.process_id}")
 
-    embed.add_field(name = "Increment:", value = f"{snowflake.id & 0xFFF}")
+    embed.add_field(name = "Increment:", value = f"{snowflake.increment_id}")
 
     embed.set_footer(text = f"Snowflake ID: {snowflake.id}")
 
