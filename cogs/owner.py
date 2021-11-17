@@ -1,4 +1,4 @@
-from discord.ext import commands, menus
+from discord.ext import commands
 import utils
 import random , discord, os, importlib, mystbin, typing, aioimgur, functools, tweepy
 import traceback, textwrap
@@ -121,11 +121,6 @@ class Owner(commands.Cog):
       
     if await self.bot.is_owner(ctx.author) is False:
       await ctx.send("You can't use that command")
-
-  class ServersEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
-      return embed
   
   @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
   async def servers(self, ctx):
@@ -136,7 +131,7 @@ class Owner(commands.Cog):
        pag.add_line(f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}")
 
       pages = [page.strip("`") for page in pag.pages]
-      menu = ViewMenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
+      menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
 
       if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
@@ -220,12 +215,6 @@ class Owner(commands.Cog):
       await cur.close()
       await ctx.send("Removed sus users.")
 
-  class SusUsersEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed=discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
-      embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
-      return embed
-
   @commands.command(brief="a command to grab all in the sus_users list")
   async def sus_users(self, ctx):
     cur = await self.bot.sus_users.cursor()
@@ -233,25 +222,17 @@ class Owner(commands.Cog):
     sus_users = tuple(await cursor.fetchall())
     await cur.close()
     await self.bot.sus_users.commit()  
-    menu = ViewMenuPages(self.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @sus_users.error
   async def sus_users_error(self, ctx, error):
     await ctx.send(error)
 
-
-  class TestersEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title = "Testing Users:", color = random.randint(0, 16777215))
-      embed.add_field(name = "User ID:", value = f"{item}", inline = False)
-      
-      return embed
-
   @commands.command(brief = "a command listed all the commands")
   async def testers(self, ctx):
 
-    menu = ViewMenuPages(self.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
+    menu = ViewMenuPages(utils.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
     await menu.start(ctx)
 
   @commands.command()

@@ -135,3 +135,21 @@ class GoogleEmbed(menus.ListPageSource):
     embed.set_footer(text = f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
 
     return embed
+
+class ServersEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
+    return embed
+
+class SusUsersEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
+    embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
+    return embed
+
+class TestersEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title = "Testing Users:", color = random.randint(0, 16777215))
+    embed.add_field(name = "User ID:", value = f"{item}", inline = False)
+    
+    return embed
