@@ -153,3 +153,8 @@ class TestersEmbed(menus.ListPageSource):
     embed.add_field(name = "User ID:", value = f"{item}", inline = False)
     
     return embed
+
+class PrefixesEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title = "Usable Prefixes:", description = item, color = random.randint(0, 16777215))
+    return embed

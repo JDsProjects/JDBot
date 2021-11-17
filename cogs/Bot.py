@@ -1,4 +1,4 @@
-from discord.ext import commands, tasks, menus
+from discord.ext import commands, tasks
 import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os, typing
 
 import utils
@@ -383,11 +383,6 @@ class Bot(commands.Cog):
 
     await ctx.send("the application went through to JDJG, please make your DMs open to JDJG so we can talk to you. Don't send it again.")
 
-  class PrefixesEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title="Usable Prefixes:",description=item, color = random.randint(0, 16777215))
-      return embed
-
   @commands.command(brief="Lists the current prefixes that could be used.")
   async def prefixes(self, ctx):
     prefixes=await self.bot.get_prefix(ctx.message)
@@ -397,7 +392,7 @@ class Bot(commands.Cog):
 
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(self.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
     
   @commands.command(brief="Lists the current used prefix",aliases=["prefix"])

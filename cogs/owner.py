@@ -498,7 +498,7 @@ class Owner(commands.Cog):
        pag.add_line(f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n")
 
       pages = [page.strip("`") for page in pag.pages]
-      menu = ViewMenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
+      menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
 
       if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
