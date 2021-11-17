@@ -26,7 +26,7 @@ class Info(commands.Cog):
     user_type = ("Bot" if user.bot else "User")
     
     if ctx.guild:
-      member_version = await self.bot.getch_member(ctx.guild, user.id)
+      member_version = await ctx.guild.try_user(user.id)
   
       if member_version:
         nickname = f"{member_version.nick}"
@@ -165,7 +165,7 @@ class Info(commands.Cog):
     if len(invites) > 50:
       await ctx.send("Reporting using more than 50 invites in this command. This is to prevent ratelimits with the api.")
 
-      jdjg = await self.bot.getch_user(168422909482762240) 
+      jdjg = await self.bot.try_user(168422909482762240)
       await self.bot.get_channel(855217084710912050).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
 
   @fetch_invite.error

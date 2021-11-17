@@ -280,7 +280,7 @@ class Extra(commands.Cog):
 
       if isinstance(bot_member, discord.Member):
 
-        author_member = await self.bot.getch_member(bot_member.guild, ctx.author.id)
+        author_member = await bot_member.guild.try_member(ctx.author.id)
 
         channel = channel if author_member else ctx.channel
 
@@ -326,7 +326,7 @@ class Extra(commands.Cog):
         await ctx.message.delete()
 
       for x in [708167737381486614,168422909482762240]:
-        apply_user = await self.bot.getch_user(x)
+        apply_user = await self.bot.try_user(x)
       
       if (apply_user.dm_channel is None):
         await apply_user.create_dm()

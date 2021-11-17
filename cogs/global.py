@@ -16,7 +16,7 @@ class Global(commands.Cog):
     args = args or "Test Content"
 
     for x in re.findall(r'<@!?([0-9]{15,20})>', args):
-      user = await self.bot.getch_user(int(x))
+      user = await self.bot.try_user(int(x))
       args = args.replace(f"{re.match(rf'<@!?({x})>', args).group()}", f"@{user}")
 
     args = await commands.clean_content().convert(ctx, args)
