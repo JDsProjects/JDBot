@@ -1,4 +1,4 @@
-from discord.ext import commands, menus
+from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib, async_cleverbot
 import utils
@@ -45,12 +45,6 @@ class Extra(commands.Cog):
       import traceback
       traceback.print_exc()
 
-  class RandomHistoryEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed=discord.Embed(title = "Random History:", description = f"{item}", color = random.randint(0, 16777215))
-      embed.set_footer(text = "powered by Sp46's api: \nhistory.geist.ga")
-      return embed
-
   @commands.command(help="This gives random history using Sp46's api.",brief="a command that uses SP46's api's random history command to give you random history responses")
   async def random_history(self,ctx,*,args=None):
     if args is None:
@@ -64,7 +58,7 @@ class Extra(commands.Cog):
     
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(self.RandomHistoryEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.RandomHistoryEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @random_history.error

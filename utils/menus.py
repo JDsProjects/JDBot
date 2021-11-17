@@ -158,3 +158,9 @@ class PrefixesEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
     embed = discord.Embed(title = "Usable Prefixes:", description = item, color = random.randint(0, 16777215))
     return embed
+
+class RandomHistoryEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed=discord.Embed(title = "Random History:", description = f"{item}", color = random.randint(0, 16777215))
+    embed.set_footer(text = "powered by Sp46's api: \nhistory.geist.ga")
+    return embed

@@ -1,4 +1,4 @@
-from discord.ext import commands, menus
+from discord.ext import commands
 import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib, io
 import utils
 from difflib import SequenceMatcher
@@ -542,11 +542,6 @@ class DevTools(commands.Cog):
 
     await menu.start(ctx)
 
-  class RtfmEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title="Packages:", description=item, color = random.randint(0, 16777215))
-      return embed
-
   @commands.command(brief = "a command to view the rtfm DB")
   async def rtfm_view(self, ctx):
     cur = await self.bot.sus_users.cursor()
@@ -559,7 +554,7 @@ class DevTools(commands.Cog):
       pag.add_line(f"{g} : {rtfm_dictionary.get(g)}")
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(self.RtfmEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.RtfmEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @commands.command(brief = "a command to autoformat your python code to pep8")
