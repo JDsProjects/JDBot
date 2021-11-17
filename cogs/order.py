@@ -1,8 +1,9 @@
 import os, discord, time, async_cse, random, cse
-from discord.ext import commands, menus
+from discord.ext import commands
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 from discord.ext.menus.views import ViewMenuPages
+import utils
 
 from aiogifs.tenor import TenorClient, ContentFilter
 from aiogifs.giphy import GiphyClient, AgeRating
@@ -299,17 +300,6 @@ class Order(commands.Cog):
       
     #I need to fix all cog_command_error
 
-  class GoogleEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      
-      embed = discord.Embed(title = "Gooogle Search", description = f"[{item.title}]({item.link}) \n{item.snippet}", color = random.randint(0, 16777215))
-
-      if item.image: embed.set_image(url = item.image)
-
-      embed.set_footer(text = f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
-
-      return embed
-
   @commands.command(brief = "can search a search result from google with safe search!")
   async def google(self, ctx, *, args = None):
 
@@ -323,7 +313,7 @@ class Order(commands.Cog):
       return await ctx.send(f"An error occured, error: {e}. Please give this to the owner. This was an error with results")
 
   
-    menu = ViewMenuPages(self.GoogleEmbed(results, per_page = 1), delete_message_after = True)
+    menu = ViewMenuPages(utils.GoogleEmbed(results, per_page = 1), delete_message_after = True)
 
     await menu.start(ctx)
 

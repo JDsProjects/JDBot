@@ -125,3 +125,13 @@ class ScanGlobalEmbed(menus.ListPageSource):
     embed.set_footer(text = f"Sus Reason : {await get_sus_reason(menu.ctx, item)}")
     return embed
 
+class GoogleEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+      
+    embed = discord.Embed(title = "Gooogle Search", description = f"[{item.title}]({item.link}) \n{item.snippet}", color = random.randint(0, 16777215))
+
+    if item.image: embed.set_image(url = item.image)
+
+    embed.set_footer(text = f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
+
+    return embed
