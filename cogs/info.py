@@ -26,7 +26,7 @@ class Info(commands.Cog):
     user_type = ("Bot" if user.bot else "User")
     
     if ctx.guild:
-      member_version = await ctx.guild.try_user(user.id)
+      member_version = await ctx.guild.try_member(user.id)
   
       if member_version:
         nickname = f"{member_version.nick}"
