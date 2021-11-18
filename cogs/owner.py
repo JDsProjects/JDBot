@@ -1,6 +1,6 @@
 from discord.ext import commands
 import utils
-import random , discord, os, importlib, mystbin, typing, aioimgur, functools, tweepy
+import random , discord, os, importlib, typing, aioimgur, functools, tweepy
 import traceback, textwrap
 from discord.ext.menus.views import ViewMenuPages
 
@@ -311,7 +311,7 @@ class Owner(commands.Cog):
       await ctx.send(f"Sucessfully reloaded {value.__name__} \nMain Package: {value.__package__}")
 
 
-  @commands.command(brief="backs up a channel and then sends it into a file or mystbin")
+  @commands.command(brief="backs up a channel and then sends it into a file or CharlesBin")
   async def channel_backup(self, ctx):
 
     messages = await ctx.channel.history(limit = None, oldest_first = True).flatten()
@@ -320,10 +320,9 @@ class Owner(commands.Cog):
     
     page = "\n".join(f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {msg.content} {new_line}Attachments : {msg.attachments}" if msg.content else f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {new_line.join(f'{e.to_dict()}' for e in msg.embeds)} {new_line}Attachments : {msg.attachments}" for msg in messages)
 
-    mystbin_client = mystbin.Client(session = self.bot.session)
-    paste = await mystbin_client.post(page)
+    paste = await utils.post(self.bot, code = page)
 
-    await ctx.author.send(content=f"Added text file to mystbin: \n{paste.url}")
+    await ctx.author.send(content=f"Added text file to CharlesBin: \n{paste}")
 
   @channel_backup.error
   async def channel_backup_error(self, ctx, error):
@@ -341,10 +340,9 @@ class Owner(commands.Cog):
 
     await menu.start(ctx, channel = ctx.author.dm_channel)
 
-    mystbin_client = mystbin.Client(session=self.bot.session)
-    paste = await mystbin_client.post(values)
+    paste = await utils.post(self.bot, values)
 
-    await ctx.send(f"Traceback: {paste.url}")
+    await ctx.send(f"Traceback: {paste}")
 
   @commands.command(brief = "adds packages and urls to rtfm DB", aliases=["add_rtfm"])
   async def addrtfm(self, ctx, name = None, *, url = None):

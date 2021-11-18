@@ -77,3 +77,12 @@ def cc_generate():
  8107EC9A {bit_generator()}00
  8107ECA0 {bit_generator()}{bit_generator()}
  8107ECA2 {bit_generator()}00""".upper()
+
+async def post(bot, code):
+  async with bot.session.post("https://bin.charles-bot.com/documents", data = code) as resp:
+      data = await resp.json()
+      print(data)
+      url = f"https://bin.charles-bot.com/{data['key']}"
+      return url
+
+#thanks Dutchy for this :D
