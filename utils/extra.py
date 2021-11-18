@@ -81,7 +81,6 @@ def cc_generate():
 async def post(bot, code):
   async with bot.session.post("https://bin.charles-bot.com/documents", data = code) as resp:
       data = await resp.json()
-      print(data)
       url = f"https://bin.charles-bot.com/{data['key']}"
       return url
 
