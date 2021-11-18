@@ -186,7 +186,9 @@ class Test(commands.Cog):
   #Unrelated to Urban:
   #https://discordpy.readthedocs.io/en/master/api.html?highlight=interaction#discord.InteractionResponse.send_message
   #https://discordpy.readthedocs.io/en/latest/api.html#discord.Guild.query_members
-
+  #Learn how to use urban api.
+  #learn how to use this but unique: https://github.com/Rapptz/RoboDanny/blob/1fb95d76d1b7685e2e2ff950e11cddfc96efbfec/cogs/buttons.py#L429-L444
+  #it will be unique however.
 
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
