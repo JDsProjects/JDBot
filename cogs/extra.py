@@ -292,9 +292,8 @@ class Extra(commands.Cog):
           encoding=chardet.detect(file)["encoding"]
           if encoding:
             text = file.decode(encoding)
-            mystbin_client = mystbin.Client(session=self.bot.session)
-            paste = await mystbin_client.post(text)
-            await ctx.send(content=f"Added text file to mystbin: \n{paste.url}")
+            paste = await utils.post(self.bot, code = text)
+            await ctx.send(content=f"Added text file to CharlesBin: \n{paste}")
           if encoding is None:
             await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
         if not file:

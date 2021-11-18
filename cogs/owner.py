@@ -340,7 +340,7 @@ class Owner(commands.Cog):
 
     await menu.start(ctx, channel = ctx.author.dm_channel)
 
-    paste = await utils.post(self.bot, values)
+    paste = await utils.post(self.bot, code = values)
 
     await ctx.send(f"Traceback: {paste}")
 
