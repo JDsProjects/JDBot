@@ -54,7 +54,7 @@ class Moderation(commands.Cog):
     traceback.print_exc()
 
   @commands.cooldown(1, 90, BucketType.user)
-  @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(WIP)")
+  @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake")
   async def scan_guild(self, ctx):
     if isinstance(ctx.channel, discord.TextChannel):
       cur = await self.bot.sus_users.cursor()
