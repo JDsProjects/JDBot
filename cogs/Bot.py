@@ -217,7 +217,7 @@ class Bot(commands.Cog):
     embed.set_author(name=f"{self.bot.user}'s source code:", icon_url = self.bot.user.display_avatar.url)
     await ctx.send(embed = embed)
   
-  @open.command(brief="a way to view open source",help="you can see the open source with the link it provides")
+  @open.command(brief = "a way to view open source", help = "you can see the open source with the link it provides")
   async def source(self, ctx):
     await self.open(ctx)
   
