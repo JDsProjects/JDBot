@@ -179,9 +179,36 @@ class Test(commands.Cog):
   
   #make the bot be able to lock commands to owners only, for testing purposes or not respond to commands.
 
-  @commands.command(brief = "looks up stuff from urban dictionary")
-  async def urban(self, ctx, *, args = None):
-    await ctx.send("WIP")
+  @commands.command(brief = "AHH")
+  async def urban(self, ctx):
+
+    if not ctx.channel.is_nsfw():
+      return await ctx.send(f"This command can only be used in a NSFW channel.")
+
+    if search is None:
+      return await ctx.send(f"Specify what you need to be searched in the urban dictionary.")
+
+    try:
+			url = await self.bot.session.get(f'https://api.urbandictionary.com/v0/define?term = {search}', res_method = "json")
+
+		except Exception:
+			return await ctx.send(f"Urban API returned invalid data.")
+		if not url:
+			return await ctx.send(":fire: an Error has occured.")
+
+    if not len(url['list']):
+			return await ctx.send(f"Couldn't find your search in the dictionary.")
+
+		result = sorted(url['list'], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
+		definition = result['definition']
+		if len(definition) >= 1000:
+			definition = definition[:1000]
+			definition = definition.rsplit(' ', 1)[0]
+			definition += '...'
+
+		embed = discord.Embed(timestamp = ctx.message.created_at, title = "Urban Dictionary", description=f"**Search:** {search}\n\n**Result:** {result['word']}\n```fix\n{definition}```", color = 242424)
+		embed.set_footer(text = "JDBot", icon_url = self.bot.display_avatar.url)
+		await ctx.send(embed = embed)
 
   #Unrelated to Urban:
   #https://discordpy.readthedocs.io/en/master/api.html?highlight=interaction#discord.InteractionResponse.send_message
