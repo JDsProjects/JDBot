@@ -734,6 +734,39 @@ class Extra(commands.Cog):
     embed.set_author(name = f"Message Author: {messages[0].author}", icon_url = f"{messages[0].author.display_avatar.url}")
 
     await ctx.send(content = "here's the first message in that channel", embed = embed)
+
+  @commands.is_nsfw()
+  @commands.command(brief="Shows the meaning of word using the urban dictionary.", aliases = ["dict", "dictionary", "meaning"])
+  async def urban(self, ctx, *, search: commands.clean_content = None):
+    
+    if search is None:
+      return await ctx.send(f"Specify what you need to be searched in the urban dictionary.")
+
+    try: 
+      response = await self.bot.session.get(f"https://api.urbandictionary.com/v0/define?term={search}", headers = {"Accept": "application/json"})
+
+    except Exception:
+      return await ctx.send(f"Urban API returned invalid data.")
+
+    url = await response.json()
+
+    if not url:
+      return await ctx.send(":fire: an Error has occured.")
+    
+    if not len(url['list']):
+      return await ctx.send(f"Couldn't find your search in the dictionary.")
+
+    result = sorted(url['list'], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
+    definition = result['definition']
+    
+    if len(definition) >= 1000:
+      definition = definition[:1000]
+      definition = definition.rsplit(' ', 1)[0]
+      definition += '...'
+    
+    embed = discord.Embed(timestamp = ctx.message.created_at, title = "Urban Dictionary", description=f"**Search:** {search}\n\n**Result:** {result['word']}\n```fix\n{definition}```", color = 242424)
+    embed.set_footer(text = "JDBot", icon_url = self.bot.user.display_avatar.url)
+    await ctx.send(embed = embed)
       
 
 def setup(bot):
