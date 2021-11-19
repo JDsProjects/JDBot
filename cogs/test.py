@@ -177,7 +177,7 @@ class Test(commands.Cog):
 
   @commands.is_nsfw()
   @commands.command(brief = "looks up stuff from urban dictionary")
-  async def urban(self, ctx, *, args: commands.clean_content = None):
+  async def urban(self, ctx, *, search : commands.clean_content = None):
     await ctx.send("WIP")
 
   #look at global_chat stuff for global_chat features, rank for well rank, add an update system too, add cc_ over. nick too, as well as kick and ban, ofc unban and other guild ban moderation stuff. Port over emoji_check but public and make that do it's best to upload less than 256 kB, try to and ofc an os emulation mode, as well as update mode, and nick.
