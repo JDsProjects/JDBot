@@ -186,7 +186,7 @@ class Test(commands.Cog):
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
   #Job_data in sql database
-  #yes format will come later.
+  #jobs for you to do will come later.
 
   @commands.command(brief = "trivia test")
   async def test_select(self, ctx):
