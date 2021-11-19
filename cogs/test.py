@@ -128,8 +128,8 @@ class Test(commands.Cog):
 
     print(output)
 
-  #okay hold on: https://github.com/soosBot-com/soosBot/blob/bb544e4c702d8bc444a21eb6a6802c685a463001/extensions/programming.py#L10
-  
+  #Refer to this: https://github.com/soosBot-com/soosBot/blob/bb544e4c702d8bc444a21eb6a6802c685a463001/extensions/programming.py#L17
+  #https://github.com/Tom-the-Bomb/async-tio
 
   @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
   async def _source(self, ctx, *, command = None):
