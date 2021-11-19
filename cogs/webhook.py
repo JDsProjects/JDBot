@@ -12,6 +12,7 @@ class Webhook(commands.Cog):
 
     if args:
       check=re.match(r"https://discord(?:app)?.com/api/webhooks/(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})",args)
+      
       if check:
         args = args.replace(f"{check.group()} ","")
         if args == check.group():
@@ -161,7 +162,7 @@ class Webhook(commands.Cog):
           if not guild or not channel:
             return await ctx.send("I can't check permissions of a guild that is none.")
 
-          member = await self.bot.getch_member(guild, ctx.author.id)
+          member = await guild.try_member(ctx.author.id)
 
           if member is None:
             return await ctx.send("You don't exist in the guild that you used the webhook of.")

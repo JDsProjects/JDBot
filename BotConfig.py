@@ -46,20 +46,6 @@ class JDBot(commands.Bot):
     await self.sus_users.close()
     await super().close()
 
-  async def getch_member(self, guild, member_id):
-    member = None
-    with contextlib.suppress(discord.Forbidden, discord.HTTPException):
-      member = guild.get_member(member_id) or await guild.fetch_member(member_id)
-    return member
-
-  async def getch_user(self, user_id):
-    user = None
-
-    with contextlib.suppress(discord.NotFound, discord.HTTPException):
-      user = self.get_user(user_id) or await self.fetch_user(user_id)
-    return user
-
-
   async def filter_commands(self, ctx, command_list):
 
     async def check(cmd, ctx):
@@ -70,7 +56,6 @@ class JDBot(commands.Bot):
         return False
         
     return [cmd for cmd in command_list if await check(cmd, ctx)]
-
 
 
 intents = discord.Intents.all()

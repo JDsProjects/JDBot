@@ -7,6 +7,12 @@ class Economy(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
+  async def cog_command_error(self, ctx, error):
+    if ctx.command or not ctx.command.has_error_handler():
+      await ctx.send(error)
+      import traceback
+      traceback.print_exc()
+
   @commands.cooldown(1, 20, BucketType.user)
   @commands.command(brief = "you can pick a job and then work it in this work command")
   async def work(self, ctx):
@@ -58,15 +64,28 @@ class Economy(commands.Cog):
 
         economy = await cursor.fetchone()
         await cur.close()
-            
+    
 
     data = tuple(economy)
     wallet = data[-1]
     bank = data[1]
 
-    embed = discord.Embed(title=f"{member}'s Balance:", description = f"Wallet : {wallet} \nBank : {bank}", color = random.randint(0, 16777215))
+    embed = discord.Embed(title = f"{member}'s Balance:", color = random.randint(0, 16777215))
+    embed.add_field(name = "Wallet:", value = f"${wallet}", inline = True)
+    embed.add_field(name = "Bank:", value = f"${bank}", inline = True)
+    embed.add_field(name = "Total:", value = f"${wallet+bank}", inline = True)
+    embed.add_field(name = "Currency:", value = "<:JDJGBucks:779516001782988810>", inline = True)
+    embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
     await ctx.send(embed = embed)
-  
+
+  @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
+  async def leaderboard(self, ctx):
+    cur = await self.bot.sus_users.cursor()
+    cursor = await cur.execute("SELECT * FROM economy ORDER BY wallet + BANK DESC")
+    data = tuple(await cursor.fetchall())
+    await cur.close()
+    
+    await ctx.send(f"Wip till I get the leaderboard working, it can fetch from the database, I just don't know how to format it yet. For example: \n{data[0]}")
 
 def setup(bot):
   bot.add_cog(Economy(bot))

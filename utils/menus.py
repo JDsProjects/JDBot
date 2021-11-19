@@ -125,3 +125,52 @@ class ScanGlobalEmbed(menus.ListPageSource):
     embed.set_footer(text = f"Sus Reason : {await get_sus_reason(menu.ctx, item)}")
     return embed
 
+class GoogleEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+      
+    embed = discord.Embed(title = "Gooogle Search", description = f"[{item.title}]({item.link}) \n{item.snippet}", color = random.randint(0, 16777215))
+
+    if item.image: embed.set_image(url = item.image)
+
+    embed.set_footer(text = f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
+
+    return embed
+
+class ServersEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
+    return embed
+
+class SusUsersEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
+    embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
+    return embed
+
+class TestersEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title = "Testing Users:", color = random.randint(0, 16777215))
+    embed.add_field(name = "User ID:", value = f"{item}", inline = False)
+    
+    return embed
+
+class PrefixesEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title = "Usable Prefixes:", description = item, color = random.randint(0, 16777215))
+    return embed
+
+class RandomHistoryEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed=discord.Embed(title = "Random History:", description = f"{item}", color = random.randint(0, 16777215))
+    embed.set_footer(text = "powered by Sp46's api: \nhistory.geist.ga")
+    return embed
+
+class RtfmEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title="Packages:", description=item, color = random.randint(0, 16777215))
+    return embed
+
+class SendHelp(menus.ListPageSource):
+  async def format_page(self, menu, item): 
+    emby = discord.Embed(description = item, color = 15428885)
+    return emby

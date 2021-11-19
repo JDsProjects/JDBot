@@ -54,7 +54,7 @@ class Moderation(commands.Cog):
     traceback.print_exc()
 
   @commands.cooldown(1, 90, BucketType.user)
-  @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake(WIP)")
+  @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake")
   async def scan_guild(self, ctx):
     if isinstance(ctx.channel, discord.TextChannel):
       cur = await self.bot.sus_users.cursor()
@@ -89,7 +89,7 @@ class Moderation(commands.Cog):
     sus_users = dict(await cursor.fetchall())
     await cur.close()
     
-    ss_users = [await self.bot.getch_user(u) for u in sus_users if not None]
+    ss_users = [await self.bot.try_user(u) for u in sus_users if not None]
 
     if not(ss_users):
       await ctx.send("no sus users found")
@@ -139,7 +139,7 @@ class Moderation(commands.Cog):
   @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)")
   async def report(self, ctx, *, args = None):
     if args:
-      jdjg = await self.bot.getch_user(168422909482762240) 
+      jdjg = await self.bot.try_user(168422909482762240) 
       if (jdjg.dm_channel is None):
         await jdjg.create_dm()
       embed = discord.Embed(color=random.randint(0, 16777215))

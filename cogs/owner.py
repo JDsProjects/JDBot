@@ -1,6 +1,6 @@
-from discord.ext import commands, menus
+from discord.ext import commands
 import utils
-import random , discord, os, importlib, mystbin, typing, aioimgur, functools, tweepy
+import random , discord, os, importlib, typing, aioimgur, functools, tweepy
 import traceback, textwrap
 from discord.ext.menus.views import ViewMenuPages
 
@@ -121,11 +121,6 @@ class Owner(commands.Cog):
       
     if await self.bot.is_owner(ctx.author) is False:
       await ctx.send("You can't use that command")
-
-  class ServersEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
-      return embed
   
   @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
   async def servers(self, ctx):
@@ -136,7 +131,7 @@ class Owner(commands.Cog):
        pag.add_line(f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}")
 
       pages = [page.strip("`") for page in pag.pages]
-      menu = ViewMenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
+      menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
 
       if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
@@ -220,12 +215,6 @@ class Owner(commands.Cog):
       await cur.close()
       await ctx.send("Removed sus users.")
 
-  class SusUsersEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed=discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
-      embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
-      return embed
-
   @commands.command(brief="a command to grab all in the sus_users list")
   async def sus_users(self, ctx):
     cur = await self.bot.sus_users.cursor()
@@ -233,25 +222,17 @@ class Owner(commands.Cog):
     sus_users = tuple(await cursor.fetchall())
     await cur.close()
     await self.bot.sus_users.commit()  
-    menu = ViewMenuPages(self.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @sus_users.error
   async def sus_users_error(self, ctx, error):
     await ctx.send(error)
 
-
-  class TestersEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title = "Testing Users:", color = random.randint(0, 16777215))
-      embed.add_field(name = "User ID:", value = f"{item}", inline = False)
-      
-      return embed
-
   @commands.command(brief = "a command listed all the commands")
   async def testers(self, ctx):
 
-    menu = ViewMenuPages(self.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
+    menu = ViewMenuPages(utils.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
     await menu.start(ctx)
 
   @commands.command()
@@ -330,7 +311,7 @@ class Owner(commands.Cog):
       await ctx.send(f"Sucessfully reloaded {value.__name__} \nMain Package: {value.__package__}")
 
 
-  @commands.command(brief="backs up a channel and then sends it into a file or mystbin")
+  @commands.command(brief="backs up a channel and then sends it into a file or CharlesBin")
   async def channel_backup(self, ctx):
 
     messages = await ctx.channel.history(limit = None, oldest_first = True).flatten()
@@ -338,11 +319,11 @@ class Owner(commands.Cog):
     new_line = "\n"
     
     page = "\n".join(f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {msg.content} {new_line}Attachments : {msg.attachments}" if msg.content else f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {new_line.join(f'{e.to_dict()}' for e in msg.embeds)} {new_line}Attachments : {msg.attachments}" for msg in messages)
+    
+    paste = await utils.post(self.bot, code = page)
+    #max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
 
-    mystbin_client = mystbin.Client(session = self.bot.session)
-    paste = await mystbin_client.post(page)
-
-    await ctx.author.send(content=f"Added text file to mystbin: \n{paste.url}")
+    await ctx.author.send(content=f"Added text file to CharlesBin: \n{paste}")
 
   @channel_backup.error
   async def channel_backup_error(self, ctx, error):
@@ -360,10 +341,10 @@ class Owner(commands.Cog):
 
     await menu.start(ctx, channel = ctx.author.dm_channel)
 
-    mystbin_client = mystbin.Client(session=self.bot.session)
-    paste = await mystbin_client.post(values)
+    paste = await utils.post(self.bot, code = values)
+    #max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
 
-    await ctx.send(f"Traceback: {paste.url}")
+    await ctx.send(f"Traceback: {paste}")
 
   @commands.command(brief = "adds packages and urls to rtfm DB", aliases=["add_rtfm"])
   async def addrtfm(self, ctx, name = None, *, url = None):
@@ -517,7 +498,7 @@ class Owner(commands.Cog):
        pag.add_line(f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n")
 
       pages = [page.strip("`") for page in pag.pages]
-      menu = ViewMenuPages(self.ServersEmbed(pages, per_page=1),delete_message_after=True)
+      menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
 
       if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
@@ -540,6 +521,8 @@ class Owner(commands.Cog):
     await self.bot.sus_users.commit()
 
     await cur.close()
+
+    await ctx.send(f"{user} succesfully now has ${number} in wallet.")
     
 
 def setup(bot):

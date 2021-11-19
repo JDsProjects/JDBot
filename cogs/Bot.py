@@ -1,4 +1,4 @@
-from discord.ext import commands, tasks, menus
+from discord.ext import commands, tasks
 import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os, typing
 
 import utils
@@ -96,7 +96,7 @@ class Bot(commands.Cog):
       except:
         await ctx.send("failed caching members with query_members in discord.py")
 
-    owner = await self.bot.getch_member(support_guild, owner_id) or await self.bot.getch_user(owner_id)
+    owner = await support_guild.try_member(owner_id) or await self.bot.try_user(owner_id)
 
     user_type = ("Bot" if owner.bot else "User")
     
@@ -217,7 +217,7 @@ class Bot(commands.Cog):
     embed.set_author(name=f"{self.bot.user}'s source code:", icon_url = self.bot.user.display_avatar.url)
     await ctx.send(embed = embed)
   
-  @open.command(brief="a way to view open source",help="you can see the open source with the link it provides")
+  @open.command(brief = "a way to view open source", help = "you can see the open source with the link it provides")
   async def source(self, ctx):
     await self.open(ctx)
   
@@ -341,7 +341,7 @@ class Bot(commands.Cog):
           await asyncio.sleep(1)
           await message.edit(content = "Contacting JDJG...")
 
-          jdjg = await self.bot.getch_user(168422909482762240)
+          jdjg = await self.bot.try_user(168422909482762240)
 
           embed = discord.Embed(title = f"{ctx.author} wants your help", description = f"Invite: {invite.url} \nChannel : {ctx.channel.mention} \nName : {ctx.channel}", color = random.randint(0, 16777215))
 
@@ -375,18 +375,13 @@ class Bot(commands.Cog):
     embed = discord.Embed(title = f"{ctx.author} requested to be a tester.", description = f"For the reason of {reason}", color = random.randint(0, 16777215))
     embed.set_footer(text=f"User ID: {ctx.author.id}")
 
-    shadi = await self.bot.getch_user(717822288375971900) 
-    jdjg = await self.bot.getch_user(168422909482762240) 
+    shadi = await self.bot.try_user(717822288375971900) 
+    jdjg = await self.bot.try_user(168422909482762240) 
     
     await jdjg.send(embed = embed)
     await shadi.send(embed = embed)
 
     await ctx.send("the application went through to JDJG, please make your DMs open to JDJG so we can talk to you. Don't send it again.")
-
-  class PrefixesEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title="Usable Prefixes:",description=item, color = random.randint(0, 16777215))
-      return embed
 
   @commands.command(brief="Lists the current prefixes that could be used.")
   async def prefixes(self, ctx):
@@ -397,7 +392,7 @@ class Bot(commands.Cog):
 
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(self.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
     
   @commands.command(brief="Lists the current used prefix",aliases=["prefix"])
@@ -430,7 +425,7 @@ class Bot(commands.Cog):
     embed.set_footer(text = f"User ID: {ctx.author.id}")
     embed.set_image(url = ctx.author.display_avatar.url)
 
-    jdjg = await self.bot.getch_user(168422909482762240)
+    jdjg = await self.bot.try_user(168422909482762240)
     await jdjg.send(f"New suggestion from {ctx.author}", embed = embed)
 
     await ctx.send("Sent suggestion to JDJG! You agree to being Dmed about this suggestion or somehow contacted(it makes some things easier lol)")
@@ -456,7 +451,7 @@ class Bot(commands.Cog):
     embed.set_footer(text = f"{ctx.author.id} \nSupport Mode: DM")
     embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
 
-    jdjg = await self.bot.getch_user(168422909482762240) 
+    jdjg = await self.bot.try_user(168422909482762240) 
 
     await jdjg.send(content = "someone needs help! Remeber to delete when done with support.", embed = embed)
 

@@ -1,18 +1,12 @@
-from discord.ext import commands, menus
-import discord
+from discord.ext import commands
 from discord.ext.menus.views import ViewMenuPages
+import utils
 
 class MyHelp(commands.MinimalHelpCommand):
   async def send_pages(self):
-    menu = ViewMenuPages(SendHelp(self.paginator.pages, per_page = 1), delete_message_after = True)
+    menu = ViewMenuPages(utils.SendHelp(self.paginator.pages, per_page = 1), delete_message_after = True)
 
     await menu.start(self.context)
-
-class SendHelp(menus.ListPageSource):
-  async def format_page(self, menu, item):
-    
-    emby = discord.Embed(description = item, color = 15428885)
-    return emby
 
 class Help(commands.Cog):
   def __init__(self, bot):

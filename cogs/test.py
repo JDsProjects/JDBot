@@ -187,7 +187,6 @@ class Test(commands.Cog):
   #https://discordpy.readthedocs.io/en/master/api.html?highlight=interaction#discord.InteractionResponse.send_message
   #https://discordpy.readthedocs.io/en/latest/api.html#discord.Guild.query_members
 
-
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
   #Job_data in sql database
@@ -196,7 +195,7 @@ class Test(commands.Cog):
   @commands.command(brief = "trivia test")
   async def test_select(self, ctx):
     view = utils.gameChoice(ctx)
-    await ctx.send("test...", view = view)
+    await ctx.send("test time...", view = view)
 
 class Slash(commands.Cog):
   def __init__(self, bot):

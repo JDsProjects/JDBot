@@ -1,4 +1,4 @@
-from discord.ext import commands, menus
+from discord.ext import commands
 import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib, io
 import utils
 from difflib import SequenceMatcher
@@ -26,7 +26,7 @@ class Info(commands.Cog):
     user_type = ("Bot" if user.bot else "User")
     
     if ctx.guild:
-      member_version = await self.bot.getch_member(ctx.guild, user.id)
+      member_version = await ctx.guild.try_member(user.id)
   
       if member_version:
         nickname = f"{member_version.nick}"
@@ -165,7 +165,7 @@ class Info(commands.Cog):
     if len(invites) > 50:
       await ctx.send("Reporting using more than 50 invites in this command. This is to prevent ratelimits with the api.")
 
-      jdjg = await self.bot.getch_user(168422909482762240) 
+      jdjg = await self.bot.try_user(168422909482762240)
       await self.bot.get_channel(855217084710912050).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
 
   @fetch_invite.error
@@ -523,6 +523,12 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program = "fusion", args = args)
     await self.rtfm_send(ctx, results)
 
+  @rtfm.command(brief = "a command to parse from lark")
+  async def lark(self, ctx, *, args = None):
+    await ctx.trigger_typing()
+    results = await self.rtfm_lookup(program = "lark", args = args)
+    await self.rtfm_send(ctx, results)
+
   def charinfo_converter(self, string):
     digit = f"{ord(string):x}"
     name = unicodedata.name(string, "The unicode was not found")
@@ -542,11 +548,6 @@ class DevTools(commands.Cog):
 
     await menu.start(ctx)
 
-  class RtfmEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed = discord.Embed(title="Packages:", description=item, color = random.randint(0, 16777215))
-      return embed
-
   @commands.command(brief = "a command to view the rtfm DB")
   async def rtfm_view(self, ctx):
     cur = await self.bot.sus_users.cursor()
@@ -559,7 +560,7 @@ class DevTools(commands.Cog):
       pag.add_line(f"{g} : {rtfm_dictionary.get(g)}")
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(self.RtfmEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.RtfmEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @commands.command(brief = "a command to autoformat your python code to pep8")
@@ -731,12 +732,14 @@ class DevTools(commands.Cog):
     await ctx.send(f"User id: {utils.generate_snowflake()}")
 
   @commands.command(brief = "gives information on snowflakes")
-  async def snowflake_info(self, ctx, *, snowflake : typing.Optional[discord.Object] = None):
+  async def snowflake_info(self, ctx, *, snowflake : typing.Optional[utils.ObjectPlus] = None):
     
     if not snowflake:
       await ctx.send("you either returned nothing or an invalid snowflake now going to the current time for information.")
 
-    generated_time = await commands.ObjectConverter().convert(ctx, argument = f"{int((discord.utils.utcnow()).timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff}")
+    #change objectplus convert back to the before(discord.Object), same thing with utls.ObjectPlus, if edpy adds my pull request into the master.
+
+    generated_time = await utils.ObjectPlusConverter().convert(ctx, argument = f"{int(utils.generate_snowflake())}")
 
     snowflake = snowflake or generated_time
 
@@ -744,11 +747,11 @@ class DevTools(commands.Cog):
     
     embed.add_field(name = "Created At:", value = f"{discord.utils.format_dt(snowflake.created_at, style = 'd')}\n{discord.utils.format_dt(snowflake.created_at, style = 'T')}")
 
-    embed.add_field(name = "Worker ID:", value = f"{(snowflake.id & 0x3E0000) >>17 }")
+    embed.add_field(name = "Worker ID:", value = f"{snowflake.worker_id}")
 
-    embed.add_field(name = "Process ID:", value = f"{(snowflake.id & 0x1F000) >> 12}")
+    embed.add_field(name = "Process ID:", value = f"{snowflake.process_id}")
 
-    embed.add_field(name = "Increment:", value = f"{snowflake.id & 0xFFF}")
+    embed.add_field(name = "Increment:", value = f"{snowflake.increment_id}")
 
     embed.set_footer(text = f"Snowflake ID: {snowflake.id}")
 

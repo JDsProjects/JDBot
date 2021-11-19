@@ -1,4 +1,4 @@
-from discord.ext import commands, menus
+from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib, async_cleverbot
 import utils
@@ -45,12 +45,6 @@ class Extra(commands.Cog):
       import traceback
       traceback.print_exc()
 
-  class RandomHistoryEmbed(menus.ListPageSource):
-    async def format_page(self, menu, item):
-      embed=discord.Embed(title = "Random History:", description = f"{item}", color = random.randint(0, 16777215))
-      embed.set_footer(text = "powered by Sp46's api: \nhistory.geist.ga")
-      return embed
-
   @commands.command(help="This gives random history using Sp46's api.",brief="a command that uses SP46's api's random history command to give you random history responses")
   async def random_history(self,ctx,*,args=None):
     if args is None:
@@ -64,7 +58,7 @@ class Extra(commands.Cog):
     
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(self.RandomHistoryEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.RandomHistoryEmbed(pages, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
   @random_history.error
@@ -280,7 +274,7 @@ class Extra(commands.Cog):
 
       if isinstance(bot_member, discord.Member):
 
-        author_member = await self.bot.getch_member(bot_member.guild, ctx.author.id)
+        author_member = await bot_member.guild.try_member(ctx.author.id)
 
         channel = channel if author_member else ctx.channel
 
@@ -298,9 +292,9 @@ class Extra(commands.Cog):
           encoding=chardet.detect(file)["encoding"]
           if encoding:
             text = file.decode(encoding)
-            mystbin_client = mystbin.Client(session=self.bot.session)
-            paste = await mystbin_client.post(text)
-            await ctx.send(content=f"Added text file to mystbin: \n{paste.url}")
+            paste = await utils.post(self.bot, code = text)
+            #max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
+            await ctx.send(content=f"Added text file to CharlesBin: \n{paste}")
           if encoding is None:
             await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
         if not file:
@@ -326,7 +320,7 @@ class Extra(commands.Cog):
         await ctx.message.delete()
 
       for x in [708167737381486614,168422909482762240]:
-        apply_user = await self.bot.getch_user(x)
+        apply_user = await self.bot.try_user(x)
       
       if (apply_user.dm_channel is None):
         await apply_user.create_dm()
