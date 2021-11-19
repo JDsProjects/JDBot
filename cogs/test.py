@@ -179,7 +179,7 @@ class Test(commands.Cog):
   
   #make the bot be able to lock commands to owners only, for testing purposes or not respond to commands.
 
-  @commands.command(brief = "AHH")
+  @commands.command(brief="Shows the meaning of word using the urban dictionary.", aliases = ["dict", "dictionary", "meaning"])
   async def urban(self, ctx):
 
     if not ctx.channel.is_nsfw():
@@ -188,11 +188,12 @@ class Test(commands.Cog):
     if search is None:
       return await ctx.send(f"Specify what you need to be searched in the urban dictionary.")
 
-    try:
-			url = await self.bot.session.get(f'https://api.urbandictionary.com/v0/define?term = {search}', res_method = "json")
+    try: 
+      url = await self.bot.session.get(f"https://api.urbandictionary.com/v0/define?term = {search}", res_method = "json")
 
 		except Exception:
 			return await ctx.send(f"Urban API returned invalid data.")
+      
 		if not url:
 			return await ctx.send(":fire: an Error has occured.")
 
