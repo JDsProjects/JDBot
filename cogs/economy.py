@@ -77,7 +77,15 @@ class Economy(commands.Cog):
     embed.add_field(name = "Currency:", value = "<:JDJGBucks:779516001782988810>", inline = True)
     embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
     await ctx.send(embed = embed)
-  
+
+  @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
+  async def leaderboard(self, ctx):
+    cur = await self.bot.sus_users.cursor()
+    cursor = await cur.execute("SELECT * FROM economy ORDER BY wallet + BANK DESC")
+    data = tuple(await cursor.fetchall())
+    await cur.close()
+    
+    await ctx.send(f"Wip till I get the leaderboard working, it can fetch from the database, I just don't know how to format it yet. For example: \n{data[0]}")
 
 def setup(bot):
   bot.add_cog(Economy(bot))
