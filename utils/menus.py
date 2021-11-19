@@ -169,3 +169,8 @@ class RtfmEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
     embed = discord.Embed(title="Packages:", description=item, color = random.randint(0, 16777215))
     return embed
+
+class SendHelp(menus.ListPageSource):
+  async def format_page(self, menu, item): 
+    emby = discord.Embed(description = item, color = 15428885)
+    return emby
