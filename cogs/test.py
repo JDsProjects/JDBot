@@ -175,7 +175,7 @@ class Test(commands.Cog):
   async def _logging(self, ctx):
     await ctx.send("logging wip.")
 
-
+  @commands.is_nsfw()
   @commands.command(brief = "looks up stuff from urban dictionary")
   async def urban(self, ctx, *, args: commands.clean_content = None):
     await ctx.send("WIP")
