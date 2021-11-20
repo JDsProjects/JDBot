@@ -78,6 +78,7 @@ class Info(commands.Cog):
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
     
     embed.set_image(url = user.display_avatar.url)
+    #I need some way to make this look better and be more constient.
     
     view = utils.BasicButtons(ctx)
     msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
