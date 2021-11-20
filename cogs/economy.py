@@ -42,7 +42,11 @@ class Economy(commands.Cog):
 
     if not economy:
       view = utils.BasicButtons(ctx)
-      msg = await ctx.send(f"{member} needs to join the database. You can do it now", view = view)
+
+      if ctx.author.id != member.id:
+        return await ctx.send(f"You aren't {member}. \nOnly they can join the database. You must ask them to join if you want them to be in there")
+
+      msg = await ctx.send(f"{member}, needs to join the database to run this. You can do it now", view = view)
 
       await view.wait()
       
