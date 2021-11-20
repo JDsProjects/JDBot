@@ -18,6 +18,7 @@ class Global(commands.Cog):
     for x in re.findall(r'<@!?([0-9]{15,20})>', args):
       user = await self.bot.try_user(int(x))
       args = args.replace(f"{re.match(rf'<@!?({x})>', args).group()}", f"@{user}")
+      #fix this issue
 
     args = await commands.clean_content().convert(ctx, args)
     args = profanity.censor(args, censor_char = "#")
