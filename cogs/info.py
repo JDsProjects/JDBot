@@ -347,7 +347,7 @@ class DevTools(commands.Cog):
       embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
 
       reference = utils.reference(ctx.message)
-      await ctx.send(embed=embed, reference = reference)
+      await ctx.send(embed = embed, reference = reference)
 
 
   @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief="most of this is based on R.danny including the reference(but this is my own code). But it's my own implentation of it")
@@ -550,7 +550,7 @@ class DevTools(commands.Cog):
 
   @commands.command(brief = "a command to view the rtfm DB")
   async def rtfm_view(self, ctx):
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     cursor=await cur.execute("SELECT * FROM RTFM_DICTIONARY")
     rtfm_dictionary = dict(await cursor.fetchall())
     await cur.close()
