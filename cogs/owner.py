@@ -197,9 +197,9 @@ class Owner(commands.Cog):
     if user:
       await ctx.reply("Please give me a reason why:")
       reason = await self.bot.wait_for("message",check= utils.check(ctx))
-      cur = await self.bot.sus_users.cursor()
+      cur = await self.bot.db.cursor()
       await cur.execute("INSERT INTO sus_users VALUES (?, ?)", (user.id, reason.content))
-      await self.bot.sus_users.commit()
+      await self.bot.db.commit()
       await cur.close()
       await ctx.send("added sus users, succesfully")
 
@@ -209,19 +209,19 @@ class Owner(commands.Cog):
       await ctx.send("You can't have a none user.")
 
     if user:
-      cur = await self.bot.sus_users.cursor()
+      cur = await self.bot.db.cursor()
       await cur.execute("DELETE FROM sus_users WHERE user_id = ?", (user.id,))
-      await self.bot.sus_users.commit()
+      await self.bot.db.commit()
       await cur.close()
       await ctx.send("Removed sus users.")
 
   @commands.command(brief="a command to grab all in the sus_users list")
   async def sus_users(self, ctx):
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     cursor = await cur.execute("SELECT * FROM SUS_USERS;")
     sus_users = tuple(await cursor.fetchall())
     await cur.close()
-    await self.bot.sus_users.commit()  
+    await self.bot.db.commit()  
     menu = ViewMenuPages(utils.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
@@ -237,7 +237,7 @@ class Owner(commands.Cog):
 
   @commands.command()
   async def update_sus(self, ctx):
-    await self.bot.sus_users.commit()
+    await self.bot.db.commit()
     await ctx.send("Updated SQL boss.")
 
   @update_sus.error
@@ -351,9 +351,9 @@ class Owner(commands.Cog):
     if not name or not url or not name and not url:
       return await ctx.send("You need a name and also url.")
 
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     await cur.execute("INSERT INTO RTFM_DICTIONARY VALUES (?, ?)", (name, url))
-    await self.bot.sus_users.commit()
+    await self.bot.db.commit()
     await cur.close()
 
     await ctx.send(f"added {name} and {url} to the rtfm DB")
@@ -363,9 +363,9 @@ class Owner(commands.Cog):
     if name is None:
       return await ctx.send("You can't remove None")
 
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     await cur.execute("DELETE FROM RTFM_DICTIONARY WHERE name = ?", (name,))
-    await self.bot.sus_users.commit()
+    await self.bot.db.commit()
     await cur.close()
     await ctx.send(f"Removed the rfm value {name}.")
 
@@ -396,9 +396,9 @@ class Owner(commands.Cog):
       await ctx.send("You can't have a non existent user.")
 
     if user:
-      cur = await self.bot.sus_users.cursor()
+      cur = await self.bot.db.cursor()
       await cur.execute("DELETE FROM testers_list WHERE user_id = ?", (user.id,))
-      await self.bot.sus_users.commit()
+      await self.bot.db.commit()
       await cur.close()
       
       if not user.id in self.bot.testers: 
@@ -414,9 +414,9 @@ class Owner(commands.Cog):
       await ctx.send("You can't have a non existent user.")
 
     if user:
-      cur = await self.bot.sus_users.cursor()
+      cur = await self.bot.db.cursor()
       await cur.execute("INSERT INTO testers_list VALUES (?)", (user.id,))
-      await self.bot.sus_users.commit()
+      await self.bot.db.commit()
       await cur.close()
       
       if not user.id in self.bot.testers: 
@@ -514,11 +514,11 @@ class Owner(commands.Cog):
     user = user or ctx.author  
     number = number or 100
     
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
 
     await cur.execute("UPDATE economy SET wallet = (?) WHERE user_id = (?)", (number, user.id,))
 
-    await self.bot.sus_users.commit()
+    await self.bot.db.commit()
 
     await cur.close()
 

@@ -54,10 +54,10 @@ class Moderation(commands.Cog):
     traceback.print_exc()
 
   @commands.cooldown(1, 90, BucketType.user)
-  @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake")
+  @commands.command(help = "a command to scan for malicious bots, specificially ones that only give you random invites and are fake")
   async def scan_guild(self, ctx):
     if isinstance(ctx.channel, discord.TextChannel):
-      cur = await self.bot.sus_users.cursor()
+      cur = await self.bot.db.cursor()
       cursor = await cur.execute("SELECT * FROM SUS_USERS;")
       sus_users = dict(await cursor.fetchall())
       await cur.close()
@@ -84,7 +84,7 @@ class Moderation(commands.Cog):
   @commands.cooldown(1, 90, BucketType.user)
   @commands.command(brief = "scan globally per guild")
   async def scan_global(self, ctx):
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     cursor = await cur.execute("SELECT * FROM SUS_USERS;")
     sus_users = dict(await cursor.fetchall())
     await cur.close()
@@ -111,7 +111,7 @@ class Moderation(commands.Cog):
 
   @commands.command(brief = "gives stats about the sus users", aliases = ["sususers_stats"])
   async def sus_users_stats(self, ctx):
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     cursor = await cur.execute("SELECT * FROM SUS_USERS;")
     sus_users = dict(await cursor.fetchall())
     await cur.close()
@@ -123,7 +123,7 @@ class Moderation(commands.Cog):
   async def is_sus(self, ctx, *, user : typing.Optional[discord.User] = None):
     user = user or ctx.author
 
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     cursor = await cur.execute("SELECT * FROM SUS_USERS;")
     sus_users = dict(await cursor.fetchall())
     await cur.close()
