@@ -124,19 +124,18 @@ class Moderation(commands.Cog):
     user = user or ctx.author
 
     cur = await self.bot.db.cursor()
-    cursor = await cur.execute("SELECT * FROM SUS_USERS;")
-    sus_users = dict(await cursor.fetchall())
+    cursor = await cur.execute("SELECT * FROM SUS_USERS WHERE user_id = (?);", (user.id,))
+    result = await cursor.fetchone()
     await cur.close()
 
-    truth = sus_users.get(user.id)
-
-    if not truth:
+    if not result:
       await ctx.send(f"{user} is not in the sus list.")
 
     else:
-      await ctx.send(f"{user} for {truth}")
+      reason = tuple(result)[1]
+      await ctx.send(f"{user} for {reason}")
 
-  @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)")
+  @commands.command(help ="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)")
   async def report(self, ctx, *, args = None):
     if args:
       jdjg = await self.bot.try_user(168422909482762240) 
