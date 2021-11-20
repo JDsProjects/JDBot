@@ -22,7 +22,6 @@ class JDBot(commands.Bot):
   async def start(self, *args, **kwargs):
     self.session = aiohttp.ClientSession()
     self.db = await aiosqlite.connect('sus_users.db')
-    self.sus_users = self.db
     #loads up some bot variables
     
     conn = await self.db.cursor()
@@ -44,7 +43,7 @@ class JDBot(commands.Bot):
 
   async def close(self):
     await self.session.close()
-    await self.sus_users.close()
+    await self.db.close()
     await super().close()
 
   async def filter_commands(self, ctx, command_list):
