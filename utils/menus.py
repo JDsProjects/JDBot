@@ -102,7 +102,7 @@ def guild_join(guilds):
   return "\n".join(map(str, guilds))
 
 async def get_sus_reason(ctx, user):
-  cur = await ctx.bot.sus_users.cursor()
+  cur = await ctx.bot.db.cursor()
   cursor = await cur.execute("SELECT * FROM SUS_USERS;")
   sus_users = dict(await cursor.fetchall())
   await cur.close()
