@@ -19,11 +19,11 @@ class Economy(commands.Cog):
 
     member = ctx.author
     add_money = 10
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
 
     await cur.execute("UPDATE economy SET wallet = wallet + (?) WHERE user_id = (?)", (add_money, member.id,))
 
-    await self.bot.sus_users.commit()
+    await self.bot.db.commit()
 
     await cur.close()
 
@@ -35,7 +35,7 @@ class Economy(commands.Cog):
 
     member = member or ctx.author
 
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     cursor = await cur.execute("SELECT * FROM economy WHERE user_id = (?)", (member.id,))
     economy = await cursor.fetchone()
     await cur.close()
@@ -55,11 +55,11 @@ class Economy(commands.Cog):
       if view.value:
         await ctx.send("adding you to the database for economy...")
 
-        cur = await self.bot.sus_users.cursor()
+        cur = await self.bot.db.cursor()
         await cur.execute("INSERT INTO economy(user_id) VALUES (?)", (member.id,))
-        await self.bot.sus_users.commit()
+        await self.bot.db.commit()
 
-        cur = await self.bot.sus_users.cursor()
+        cur = await self.bot.db.cursor()
         cursor = await cur.execute("SELECT * FROM economy WHERE user_id = (?)", (member.id,))
 
         economy = await cursor.fetchone()
@@ -80,7 +80,7 @@ class Economy(commands.Cog):
 
   @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
   async def leaderboard(self, ctx):
-    cur = await self.bot.sus_users.cursor()
+    cur = await self.bot.db.cursor()
     cursor = await cur.execute("SELECT * FROM economy ORDER BY wallet + BANK DESC")
     data = tuple(await cursor.fetchall())
     await cur.close()

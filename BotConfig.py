@@ -21,10 +21,11 @@ class JDBot(commands.Bot):
 
   async def start(self, *args, **kwargs):
     self.session = aiohttp.ClientSession()
-    self.sus_users = await aiosqlite.connect('sus_users.db')
+    self.db = await aiosqlite.connect('sus_users.db')
+    self.sus_users = self.db
     #loads up some bot variables
     
-    conn = await self.sus_users.cursor()
+    conn = await self.db.cursor()
     grab = await conn.execute("SELECT * FROM testers_list;")
     self.testers = list(itertools.chain(*await grab.fetchall()))
 
