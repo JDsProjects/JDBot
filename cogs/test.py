@@ -188,6 +188,12 @@ class Test(commands.Cog):
   #Job_data in sql database
   #jobs for you to do will come later.
 
+  class Pagination(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+      super().__init__(**kwargs)
+      self.ctx = ctx
+      #going to use https://github.com/oliver-ni/discord-ext-menus-views/blob/master/discord/ext/menus/views/__init__.py as a small check on how the interaction checks work for menus and the buttons, but otherwise the rest will be handled by me.
+
   @commands.command(brief = "trivia test")
   async def test_select(self, ctx):
     view = utils.gameChoice(ctx)
