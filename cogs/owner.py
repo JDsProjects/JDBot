@@ -523,6 +523,29 @@ class Owner(commands.Cog):
     await cur.close()
 
     await ctx.send(f"{user} succesfully now has ${number} in wallet.")
+
+  @commands.command(brief = "does say but more powerful with the optional option of a channel to say in but doesn't say who used the command(which is why it's owner only)")
+  async def say3(self, ctx, channel : typing.Optional[typing.Union[discord.TextChannel, discord.Thread]] = None, *, args = None):
+   
+    channel = channel or ctx.channel
+
+    args = args or "You didn't give us any text to use."
+    args = discord.utils.escape_markdown(args, as_needed = False,ignore_links = False)
+    
+    bot_member = channel.me if isinstance(channel, discord.DMChannel) else channel.guild.me
+      
+    if channel.permissions_for(bot_member).send_messages or not channel.id == ctx.channel.id:
+
+      if isinstance(bot_member, discord.Member):
+
+        author_member = await bot_member.guild.try_member(ctx.author.id)
+
+        channel = channel if author_member else ctx.channel
+
+      await channel.send(f"{args}", allowed_mentions = discord.AllowedMentions.none())
+
+    else:
+      await ctx.send("doesn't have permissions to send in that channel.")
     
 
 def setup(bot):
