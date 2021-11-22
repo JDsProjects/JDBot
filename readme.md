@@ -38,14 +38,18 @@ If you do copy any code make sure to make a good faith effort to change the code
 
 (make sure to ask me how you can do that, or I can do that for you if you want.)
 
-My Bot also uses a subclassed Bot(if you don't program in discord.py or anyone of the forks, it's not important it just means one session bot wise to be able to do powerful functions)
+Though, I would rather you use my bot or make a pull request if you have changes or make an issue, you can just ask, if I deny your request, please understand I have my own reason for denying the change. If you would like to protest please do so in a civil manner.
 
-Explanations for developers about env values:
+My Bot also uses a subclassed Bot(if you don't program in discord.py or anyone of the forks, it's not important it just means one session bot wise to be able to do powerful functions without requiring many aiohttp sessions.)
+
+Explanations for developers about the env values:
 
 [Some JDBot Explanations](https://gist.github.com/JDJGInc/5607b3f63f651d2232a25b305aea4d33)
 
 Want A webhook github of this?
 You can just DM me on Discord, and I will hook up your webhook to my github, so you will get updates too :D
+
+
 
 Thank You,
 JDJG
