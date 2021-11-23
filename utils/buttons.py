@@ -103,24 +103,18 @@ class RpsGame(discord.ui.View):
   @discord.ui.button(label = "Rock", style = discord.ButtonStyle.success, emoji = "🪨")
   async def rock(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-    self.clear_items()
-    await interaction.response.edit_message(view = self)
     self.value = 1
     self.stop()
 
   @discord.ui.button(label="Paper", style = discord.ButtonStyle.success , emoji = "📰")
   async def paper(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-    self.clear_items()
-    await interaction.response.edit_message(view = self)
     self.value = 2
     self.stop()
 
   @discord.ui.button(label="Scissors", style = discord.ButtonStyle.success , emoji = "✂️")
   async def scissors(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-    self.clear_items()
-    await interaction.response.edit_message(view = self)
     self.value = 3
     self.stop()
   
