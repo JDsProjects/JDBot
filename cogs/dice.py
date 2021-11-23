@@ -204,7 +204,7 @@ class Dice(commands.Cog):
 
     embed.set_image(url = "https://i.imgur.com/bFYroWk.gif")
 
-    await view.message.edit(embed = embed)
+    await view.message.edit(embed = embed, view = None)
     
 def setup(bot):
   bot.add_cog(Dice(bot))
