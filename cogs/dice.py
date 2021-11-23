@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord, random, typing, bisect
 from difflib import SequenceMatcher
 import utils
+from discord.ext.commands.cooldowns import BucketType
 
 class Dice(commands.Cog):
   def __init__(self, bot):
@@ -169,6 +170,7 @@ class Dice(commands.Cog):
       import traceback
       traceback.print_exc()
 
+  @commands.cooldown(1, 15, BucketType.user)
   @commands.command(brief = "a nice rock scissors paper game with the bot")
   async def rps(self, ctx):
     view = utils.RpsGame(ctx)
