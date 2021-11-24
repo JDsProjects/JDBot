@@ -207,6 +207,8 @@ class Dice(commands.Cog):
     embed.set_image(url = "https://i.imgur.com/bFYroWk.gif")
 
     await view.message.edit(embed = embed, view = None)
+
+    #gnome made a good idea on a run again button, I Just need to make one :D
     
 def setup(bot):
   bot.add_cog(Dice(bot))
