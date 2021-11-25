@@ -151,9 +151,9 @@ async def headpat_converter2(url, ctx):
 async def jail_converter(url, ctx):
   dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session = ctx.bot.session)
   image=await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(),str(url))
-  file = discord.File(fp=image.image,filename=f"headpat.{image.format}")
+  file = discord.File(fp=image.image,filename=f"jail.{image.format}")
   embed=discord.Embed(color = random.randint(0, 16777215))
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
-  embed.set_image(url=f"attachment://headpat.{image.format}")
+  embed.set_image(url=f"attachment://jail.{image.format}")
   embed.set_footer(text="powered by dagpi")
   await ctx.send(file=file, embed = embed)
