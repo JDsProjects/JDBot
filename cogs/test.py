@@ -193,7 +193,7 @@ class Test(commands.Cog):
       super().__init__(**kwargs)
       self.ctx = ctx
       #going to use https://github.com/oliver-ni/discord-ext-menus-views/blob/master/discord/ext/menus/views/__init__.py as a small check on how the interaction checks work for menus and the buttons, but otherwise the rest will be handled by me.
-
+    
   @commands.command(brief = "trivia test")
   async def test_select(self, ctx):
     view = utils.gameChoice(ctx)
@@ -206,7 +206,6 @@ class Slash(commands.Cog):
   @commands.command(brief = "says hi to you", slash_command = False)
   async def hi(self, ctx):
     await ctx.send(f"hi {ctx.author}")
-
 
 def setup(bot):
   bot.add_cog(Test(bot))

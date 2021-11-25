@@ -424,6 +424,23 @@ class Image(commands.Cog):
     else:
       await ctx.send("you need svg attachments")
 
+  @commands.command(brief = "uses dagpi to make an image of you in jail")
+  async def jail(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    Member = Member or ctx.author
+    y = 0
+    if ctx.message.attachments:
+      for x in ctx.message.attachments:
+        if x.filename.endswith(".png"):
+          url = x.url
+          
+          await utils.jail_converter(url, ctx)
+          y += 1
+        if not x.filename.endswith(".png"):
+          pass
+
+    if not ctx.message.attachments or y == 0:
+      url = (Member.display_avatar.replace(format = "png")).url
+      await utils.jail_converter(url, ctx)
   
 
 def setup(bot):
