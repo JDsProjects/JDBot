@@ -193,6 +193,7 @@ class Test(commands.Cog):
       super().__init__(**kwargs)
       self.ctx = ctx
       #going to use https://github.com/oliver-ni/discord-ext-menus-views/blob/master/discord/ext/menus/views/__init__.py as a small check on how the interaction checks work for menus and the buttons, but otherwise the rest will be handled by me.
+      #This is a reference.
     
   @commands.command(brief = "trivia test")
   async def test_select(self, ctx):
