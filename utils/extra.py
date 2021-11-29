@@ -84,4 +84,4 @@ async def post(bot, code):
       url = f"https://bin.charles-bot.com/{data['key']}"
       return url
 
-#thanks Dutchy for this :D
+#thanks Dutchy for this :D, though this has some issues that need to be fixed.
