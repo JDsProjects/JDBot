@@ -45,12 +45,19 @@ class Extra(commands.Cog):
       import traceback
       traceback.print_exc()
 
-  @commands.command(help="This gives random history using Sp46's api.",brief="a command that uses SP46's api's random history command to give you random history responses")
-  async def random_history(self,ctx,*,args=None):
-    if args is None:
-      args = 1
-    asuna = asuna_api.Client(self.bot.session)
-    response = await asuna.random_history(args)
+  @commands.command(help = "This gives random history using Sp46's api.", brief = "a command that uses SP46's api's random history command to give you random history responses")
+  async def random_history(self, ctx, *, number : typing.Optional[int] = None):
+    number = number or 1
+
+    if number < 1 or number > 50:
+      await ctx.send("You can not request more than 50 results, you also can not request less than 1 result. We will give you one as this is the default.")
+      number = 1
+    
+    #asuna = asuna_api.Client(self.bot.session)
+    #response = await asuna.random_history(args)
+    #new function here.
+
+    response = utils.random_history(number)
 
     pag = commands.Paginator()
     for x in response:
@@ -58,7 +65,7 @@ class Extra(commands.Cog):
     
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(utils.RandomHistoryEmbed(pages, per_page=1),delete_message_after=True)
+    menu = ViewMenuPages(utils.RandomHistoryEmbed(pages, per_page = 1), delete_message_after = True)
     await menu.start(ctx)
 
   @random_history.error
