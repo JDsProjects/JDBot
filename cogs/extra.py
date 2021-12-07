@@ -52,10 +52,6 @@ class Extra(commands.Cog):
     if number < 1 or number > 50:
       await ctx.send("You can not request more than 50 results, you also can not request less than 1 result. We will give you one as this is the default.")
       number = 1
-    
-    #asuna = asuna_api.Client(self.bot.session)
-    #response = await asuna.random_history(args)
-    #new function here.
 
     response = utils.random_history(number)
 
