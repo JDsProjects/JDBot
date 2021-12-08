@@ -496,6 +496,8 @@ class Image(commands.Cog):
       file = await self.bot.loop.run_in_executor(None, invert_time)
       await ctx.send(file = file)
 
+    #make this invert use an api at some point
+
   @invert.error
   async def invert_error(self, ctx, error):
     await ctx.send(error)
