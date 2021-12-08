@@ -89,8 +89,7 @@ class Test(commands.Cog):
   @commands.command(brief = "a command that takes a url and sees if it's an image.")
   async def image_check(self, ctx):
     
-    #image = discord.utils.get(type = "image", ctx.message.embeds)
-    image = filter(lambda e: if e.type == "image", ctx.message.embeds)
+    image = filter(lambda e: e.type == "image", ctx.message.embeds)
 
     for e in image:
       if e.type == "image":
