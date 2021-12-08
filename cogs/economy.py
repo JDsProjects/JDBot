@@ -3,7 +3,23 @@ import utils
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord.ext.menus.views import ViewMenuPages
+from discord.ext import menus
 
+def groupby(iterable : list, number : int):
+  resp = []
+  while True:
+    resp.append(iterable[:number])
+    iterable = iterable[number:]
+    if not iterable: break
+  return resp
+
+class EmbedPG(menus.ListPageSource):
+  async def format_page(self, menu, item):
+      e = discord.Embed(title = "Leaderboard")
+      for i, b, w in item:
+        e.add_field(name = f"**{i}:**", value = f"```yaml\nBank: {b}\nWallet: {w}\nTotal: {b + w}```")
+      return e
+    
 class Economy(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
@@ -86,24 +102,19 @@ class Economy(commands.Cog):
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
   async def leaderboard(self, ctx):
-    cur = await self.bot.db.cursor()
-    cursor = await cur.execute("SELECT * FROM economy ORDER BY wallet + BANK DESC")
-    data = tuple(await cursor.fetchall())
-    await cur.close()
-
-    pag = commands.Paginator()
-
-    for m in data:
-      wallet = m[-1]
-      bank = m[1]
-      
-      pag.add_line(f"{await self.bot.try_user(m[0])} Total: {wallet+bank} <:JDJGBucks:779516001782988810>")
-
-    pages = [page.strip("`") for page in pag.pages]
-
-    menu = ViewMenuPages(utils.LeaderboardEmbed(pages, per_page = 1), delete_message_after = True)
-      
+    data = await self.bot.db.execute_fetchall("SELECT * FROM economy")
+    ndata = []
+    for n in data:
+      usr = self.bot.get_user(n[0])
+      if not usr:
+        usr = await self.bot.fetch_user(n[0])
+      if usr:
+        ndata.append([usr.name, n[1], n[2]])
+    ndata = groupby(ndata, 5)
+    menu = EmbedPG(ndata, per_page=1)
+    menu = menus.MenuPages(menu)
     await menu.start(ctx)
-   
+
+
 def setup(bot):
   bot.add_cog(Economy(bot))
