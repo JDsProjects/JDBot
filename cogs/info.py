@@ -1,5 +1,5 @@
 from discord.ext import commands
-import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib, io
+import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
@@ -794,6 +794,19 @@ class DevTools(commands.Cog):
     await self.bot.get_channel(816807453215424573).send(content = f"{jdjg.mention} {benitz.mention}", embed = embed)
 
     await ctx.reply(f"It appears adding your bot worked. \nIf you leave your bot will be kicked, unless you have an alt there, a friend, etc. \n(It will be kicked to prevent raiding and taking up guild space if you leave). \nYour bot will be checked out. {jdjg} will then determine if your bot is good to add to the guild. Make sure to open your Dms to JDJG, so he can dm you about the bot being added. \nIf you don't add him, your bot will be denied.")
+
+  @commands.command(brief = "a command that takes a url and sees if it's an image.")
+  async def image_check(self, ctx):
+
+    await ctx.send("Please wait for discord to edit your message, if it does error about not a valid image, please send a screenshot of your usage and the bot's message.")
+    await asyncio.sleep(5)
+
+    images = list(filter(lambda e: e.type == "image", ctx.message.embeds))
+        
+    if not images or not ctx.message.embeds:
+      return await ctx.send("you need to pass a url with an image, if you did, then please run again. This is a discord issue, and I do not want to wait for discord to change its message.")
+
+    await ctx.send(f"You have {len(images)} / {len(ctx.message.embeds)} that are valid images.")
     
 
 def setup(bot):

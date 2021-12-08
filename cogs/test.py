@@ -86,15 +86,6 @@ class Test(commands.Cog):
   async def set_wakeuptime(self, ctx):
     await ctx.send("WIP")
 
-  @commands.command(brief = "a command that takes a url and sees if it's an image.")
-  async def image_check(self, ctx):
-    
-    image = filter(lambda e: e.type == "image", ctx.message.embeds)
-
-    for e in image:
-      if e.type == "image":
-        await ctx.send(f"{e.url}")
-
   @commands.command(brief = "gets tweets from a username")
   async def tweet(self, ctx, *, args = None):
     await ctx.send("WIP")
