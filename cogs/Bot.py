@@ -238,18 +238,19 @@ class Bot(commands.Cog):
   @commands.command(brief="Privacy Policy", aliases = ["privacy"])
   async def promises(self, ctx):
     embed = discord.Embed(title = "Privacy Policy", color = random.randint(0, 16777215))
-    embed.add_field(name = "1:", value = "We have a logging channel that notifies us when the bot joins or leaves a guild", inline = True)
+    embed.add_field(name = "1:", value = "We have a logging channel that notifies us when the bot joins or leaves a guild")
+
     embed.add_field(name = "2:", value = "We log errors that occured in the bot(although it might contain private information). This is only visible temporarily in console, and is not stored in any of our DBs.")
-    embed.add_field(name = "3:", value = "We store user ids for economy commands (Opt In)", inline = True)
-    embed.add_field(name = "4:", value = "We store user id , and support channel id, as well as last time it was used(for archive reasons), for allowing ticket based support. (Opt In)", inline = True)
-    embed.add_field(name = "5:", value = "We store inputted invalid commands", inline = True)
-    embed.add_field(name = "6:", value = "We may temporarily look at your mutual guilds with our bot or the list of servers our bot is in, with some information, just to check if any problems occured(like if a command is going hayware) or to prevent abuse. If you want to look at what is sent in embeds, just ask, We will show you.", inline = True)
-    embed.add_field(name = "6.1:", value = "This is a temp command, which is stored no where else, and we also delete the embed when done :D. If you have a problem with this contact me.", inline = True)
-    embed.add_field(name = "7:", value = "Any message content in global chat is logged to a private channel on discord with included channel ids, and guild ids, but otherwise, message content is not stored, except in moderation channels, and user ids are used to blacklist users per guild or globaly, or tell who is mod or staff or just a normal user.", inline = True)
-    embed.add_field(name = "8:", value = "In the future we will store the guild id and channel id for member joining/leaving messages, and member changes", inline = True)
+    embed.add_field(name = "3:", value = "We store user ids for economy commands (Opt In)")
+    embed.add_field(name = "4:", value = "We store user id , and support channel id, as well as last time it was used(for archive reasons), for allowing ticket based support. (Opt In)")
+    embed.add_field(name = "5:", value = "We store inputted invalid commands")
+    embed.add_field(name = "6:", value = "We may temporarily look at your mutual guilds with our bot or the list of servers our bot is in, with some information, just to check if any problems occured(like if a command is going hayware) or to prevent abuse. If you want to look at what is sent in embeds, just ask, We will show you.")
+    embed.add_field(name = "6.1:", value = "This is a temp command, which is stored no where else, and we also delete the embed when done :D. If you have a problem with this contact me.")
+    embed.add_field(name = "7:", value = "Any message content in global chat is logged to a private channel on discord with included channel ids, and guild ids, but otherwise, message content is not stored, except in moderation channels, and user ids are used to blacklist users per guild or globaly, or tell who is mod or staff or just a normal user.")
+    embed.add_field(name = "8:", value = "In the future we will store the guild id and channel id for member joining/leaving messages, and member changes")
     embed.add_field(name = "Final:", value = "There should be no more except the sus list(list of ids I put together by hand of people who probaly shouldn't hang out with). We also now use the built in discord.py guild.members list with cache_member to only use memory to store you, we only use this to limit api calls(it's only opt in anyway)")
-    embed.add_field(name = "Who Gets this info:", value = "Only us, and our DB provider MongoDB(but they are unlikely to use our data. Sus users do show up if they exist in the same guild though and the reason why.", inline = True)
-    embed.add_field(name = "More Info:", value="Contact me at JDJG Inc. Official#3493", inline = True)
+    embed.add_field(name = "Who Gets this info:", value = "Only us, and our DB provider MongoDB(but they are unlikely to use our data. Sus users do show up if they exist in the same guild though and the reason why.")
+    embed.add_field(name = "More Info:", value="Contact me at JDJG Inc. Official#3493")
     await ctx.send(embed = embed)
 
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
@@ -487,22 +488,22 @@ class Bot(commands.Cog):
 
     embed.add_field(name="Author Information", value="```This Bot is made by JDJG Inc. Official#3493(you can find out more about owners from the owner command).```", inline=False)
 
-    embed.add_field(name="Bot Version", value="```1.0.0```", inline = True)
+    embed.add_field(name="Bot Version", value="```1.0.0```")
 
-    embed.add_field(name="Python Version:", value=f"```{platform.python_version()}```", inline = True)
+    embed.add_field(name="Python Version:", value=f"```{platform.python_version()}```")
 
-    embed.add_field(name="Library", value = "```discord.py```",  inline = True)
+    embed.add_field(name="Library", value = "```discord.py```")
 
     embed.add_field(name="Discord.Py Version", value=f"```{discord.__version__}```")
 
 
-    embed.add_field(name = "RAM Usage", value=f"```{(psutil.Process(os.getpid()).memory_full_info().rss / 1024**2):.2f} MB```",  inline = True)
+    embed.add_field(name = "RAM Usage", value=f"```{(psutil.Process(os.getpid()).memory_full_info().rss / 1024**2):.2f} MB```")
 
-    embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```", inline=True)
+    embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```")
 
-    embed.add_field(name = "Contributers", value="```Shadi#9492 \nMiddlle#0101```", inline=True)
+    embed.add_field(name = "Contributers", value="```Shadi#9492 \nMiddlle#0101```")
 
-    embed.add_field(name = "Sponsors", value="```No current sponsors :(```", inline=True)
+    embed.add_field(name = "Sponsors", value="```No current sponsors :(```")
 
     embed.set_author(name = f"{self.bot.user}", icon_url = self.bot.user.display_avatar.url)
 
