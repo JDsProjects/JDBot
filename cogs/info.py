@@ -795,7 +795,7 @@ class DevTools(commands.Cog):
 
     await ctx.reply(f"It appears adding your bot worked. \nIf you leave your bot will be kicked, unless you have an alt there, a friend, etc. \n(It will be kicked to prevent raiding and taking up guild space if you leave). \nYour bot will be checked out. {jdjg} will then determine if your bot is good to add to the guild. Make sure to open your Dms to JDJG, so he can dm you about the bot being added. \nIf you don't add him, your bot will be denied.")
 
-  @commands.command(brief = "a command that takes a url and sees if it's an image.")
+  @commands.command(brief = "a command that takes a url and sees if it's an image (requires embed permissions at the moment).")
   async def image_check(self, ctx):
 
     await ctx.send("Please wait for discord to edit your message, if it does error about not a valid image, please send a screenshot of your usage and the bot's message.")
