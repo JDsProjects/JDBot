@@ -111,7 +111,6 @@ class Image(commands.Cog):
         await target.send(content=target.mention,embed=embed)
       except discord.Forbidden:
         await ctx.author.send("Failed Dming them...")
-  
 
   @commands.command(brief="a hug command to hug people",help="this the first command to hug.")
   async def hug(self,ctx,*, Member: utils.BetterMemberConverter=None):
@@ -185,6 +184,8 @@ class Image(commands.Cog):
     if not ctx.message.attachments or y == 0:
       url = (Member.display_avatar.replace(format = "png")).url
       await utils.headpat_converter(url, ctx)
+
+    #make this use a different api.
 
   @commands.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
   async def hug2(self, ctx, *, Member: utils.BetterMemberConverter=None):
