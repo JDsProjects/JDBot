@@ -28,6 +28,8 @@ class JDBot(commands.Bot):
     grab = await conn.execute("SELECT * FROM testers_list;")
     self.testers = list(itertools.chain(*await grab.fetchall()))
 
+    #does the DB connection and then assigns it a tester list
+
     blacklist = await conn.execute("SELECT * FROM BLACKLISTED_USERS;")
 
     self.blacklisted_users = dict(await blacklist.fetchall())
@@ -36,9 +38,11 @@ class JDBot(commands.Bot):
     
     self.blacklisted_users.update(dict(await cursor.fetchall()))
 
+    grab = await conn.execute("SELECT * FROM RANDOM_history;")
+    self.history = list(itertools.chain(*await grab.fetchall()))
+
     await conn.close()
     
-    #does the DB connection and then assigns it a tester list
     await super().start(*args, **kwargs)
 
   async def close(self):
