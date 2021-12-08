@@ -174,3 +174,10 @@ class SendHelp(menus.ListPageSource):
   async def format_page(self, menu, item): 
     emby = discord.Embed(description = item, color = 15428885)
     return emby
+
+class LeaderboardEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item): 
+    emby = discord.Embed(title = "Leaderboard", description = item, color = 15428885)
+    emby.set_author(name = f"Leaderboard Requested by {menu.ctx.author}", icon_url = (menu.ctx.author.display_avatar.url))
+    return emby
+

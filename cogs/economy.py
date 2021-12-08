@@ -2,6 +2,7 @@ import discord, random
 import utils
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
+from discord.ext.menus.views import ViewMenuPages
 
 class Economy(commands.Cog):
   def __init__(self, bot):
@@ -96,12 +97,13 @@ class Economy(commands.Cog):
       wallet = m[-1]
       bank = m[1]
       
-      pag.add_line(f"{await self.bot.try_user(m[0])}'s Total Money: {wallet+bank} \nWallet : {wallet} \n Bank: {bank}")
-    
+      pag.add_line(f"{await self.bot.try_user(m[0])} Total: {wallet+bank} <:JDJGBucks:779516001782988810>")
+
     pages = [page.strip("`") for page in pag.pages]
 
-    for p in pages:
-      await ctx.send(f"{p}")
+    menu = ViewMenuPages(utils.LeaderboardEmbed(pages, per_page = 1), delete_message_after = True)
+      
+    await menu.start(ctx)
    
 def setup(bot):
   bot.add_cog(Economy(bot))
