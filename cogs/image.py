@@ -1,6 +1,7 @@
 import discord, sr_api, asuna_api, random, io, cairosvg, functools
 from discord.ext import commands
 import utils
+from discord.ext.menus.views import ViewMenuPages
 
 class Image(commands.Cog):
   def __init__(self, bot): 
@@ -428,19 +429,25 @@ class Image(commands.Cog):
   async def jail(self, ctx, *, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
     y = 0
+    embeds = []
+
     if ctx.message.attachments:
       for x in ctx.message.attachments:
         if x.filename.endswith(".png"):
           url = x.url
           
-          await utils.jail_converter(url, ctx)
+          embeds.append(await utils.jail_converter(url, ctx))
           y += 1
         if not x.filename.endswith(".png"):
           pass
 
     if not ctx.message.attachments or y == 0:
       url = (Member.display_avatar.replace(format = "png")).url
-      await utils.jail_converter(url, ctx)
+      embeds.append(await utils.jail_converter(url, ctx))
+
+    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
+
+    await menu.start(ctx)
   
   @commands.command(brief="work in progress")
   async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
@@ -462,7 +469,7 @@ class Image(commands.Cog):
 
     if not ctx.message.attachments or not passes:
       url = (Member.display_avatar.replace(format = "png"))
-      invert_time = functools.partial(utils.invert_func, await url.read() )
+      invert_time = functools.partial(utils.invert_func, await url.read())
 
       file = await self.bot.loop.run_in_executor(None, invert_time)
       await ctx.send(file = file)
