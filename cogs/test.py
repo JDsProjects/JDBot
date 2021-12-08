@@ -1,9 +1,9 @@
 from discord.ext import commands
-import discord, functools, typing, yarl, random
+import discord, typing, random
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
-import collections, io, itertools
+import collections, itertools
 from jishaku.codeblocks import codeblock_converter
 
 import async_tio
@@ -40,35 +40,6 @@ class Test(commands.Cog):
   async def email(self, ctx, *args):
     print(args)
     await ctx.send("WIP")
-  
-  @commands.command(brief="work in progress")
-  async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
-    Member = Member or ctx.author
-    passes = False
-
-    if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        try:
-          discord.utils._get_mime_type_for_image(await x.read())
-          passes = True
-        except discord.errors.InvalidArgument:
-          passes = False
-
-        if passes:
-          invert_time = functools.partial(utils.invert_func, await x.read())
-          file = await self.bot.loop.run_in_executor(None, invert_time)
-          return await ctx.send(file = file)
-
-    if not ctx.message.attachments or not passes:
-      url = (Member.display_avatar.replace(format = "png"))
-      invert_time = functools.partial(utils.invert_func, await url.read() )
-
-      file = await self.bot.loop.run_in_executor(None, invert_time)
-      await ctx.send(file = file)
-
-  @invert.error
-  async def invert_error(self, ctx, error):
-    await ctx.send(error)
 
   @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
   async def setprefix(self, ctx, *, arg = None):
