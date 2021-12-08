@@ -92,7 +92,7 @@ async def triggered_converter(url, ctx):
   embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
   embed.set_image(url = imgur_url["link"])
   embed.set_footer(text="powered by some random api")
-  await ctx.send(embed=embed)
+  return embed
 
 async def headpat_converter(url, ctx):
   try:
@@ -127,7 +127,7 @@ def clear_permission(ctx):
 async def invert_converter(url, ctx):
   try:
     sr_client = sr_api.Client(session = ctx.bot.session)
-    source_image = sr_client.filter("invert", url=str(url))
+    source_image = sr_client.filter("invert", url = str(url))
     image = await source_image.read()
   except:
     return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
@@ -138,7 +138,8 @@ async def invert_converter(url, ctx):
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
   embed.set_image(url=imgur_url["link"])
   embed.set_footer(text="powered by some random api")
-  await ctx.send(embed=embed)
+  
+  return embed
 
 async def headpat_converter2(url, ctx):
   dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session = ctx.bot.session)

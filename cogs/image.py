@@ -149,18 +149,25 @@ class Image(commands.Cog):
   async def triggered(self, ctx, *, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
     y = 0
+    embeds = []
+
     if ctx.message.attachments:
       for x in ctx.message.attachments:
         if x.filename.endswith(".png"):
           url = x.url
-          await utils.triggered_converter(url, ctx)
+          embeds.append(await utils.triggered_converter(url, ctx))
+
           y += 1
         if not x.filename.endswith(".png"):
           pass
 
     if not ctx.message.attachments or y == 0:
       url = (Member.display_avatar.replace(format = "png")).url
-      await utils.triggered_converter(url, ctx)
+      embeds.append(await utils.triggered_converter(url, ctx))
+
+    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
+
+    await menu.start(ctx)
 
   @commands.command(brief="uses our headpat program to pat you",help="a command that uses sra_api to make a headpat of you.")
   async def headpat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
@@ -374,18 +381,24 @@ class Image(commands.Cog):
   async def invert2(self, ctx, *, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
     y = 0
+    embeds = []
+
     if ctx.message.attachments:
       for x in ctx.message.attachments:
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.url
-          await utils.invert_converter(url, ctx)
+          embeds.append(await utils.invert_converter(url, ctx))
           y += 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
     if not ctx.message.attachments or y == 0:
       url = (Member.display_avatar.replace(format="png")).url
-      await utils.invert_converter(url, ctx)
+      embeds.append(await utils.invert_converter(url, ctx))
+
+    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
+
+    await menu.start(ctx)
 
   @commands.command(help="Headpat generator :D")
   async def headpat(self, ctx, Member: utils.BetterMemberConverter = None):
