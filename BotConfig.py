@@ -24,7 +24,7 @@ class JDBot(commands.Bot):
     self.db = await aiosqlite.connect('sus_users.db')
     #loads up some bot variables
 
-    self.testers = list(itertools.chain(*await self.db.execute_fetchall("SELECT * FROM testers_list;")))
+    self.testers = list(itertools.chain(* await self.db.execute_fetchall("SELECT * FROM testers_list;")))
 
     #does the DB connection and then assigns it a tester list(may be a lot bit shorter but it should work better.)
 
@@ -32,7 +32,7 @@ class JDBot(commands.Bot):
     
     self.blacklisted_users.update(dict(await self.db.execute_fetchall("SELECT * FROM SUS_USERS;")))
 
-    self.history = list(itertools.chain(*await self.db.execute_fetchall("SELECT * FROM RANDOM_history;")))
+    self.history = list(itertools.chain(* await self.db.execute_fetchall("SELECT * FROM RANDOM_history;")))
     
     await super().start(*args, **kwargs)
 
