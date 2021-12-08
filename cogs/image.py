@@ -391,18 +391,26 @@ class Image(commands.Cog):
   async def headpat(self, ctx, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
     y = 0
+    embeds = []
+
     if ctx.message.attachments:
       for x in ctx.message.attachments:
         if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
           url = x.proxy_url
-          await utils.headpat_converter2(url, ctx)
+
+          embeds.append(await utils.headpat_converter2(url, ctx))
           y += 1
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.display_avatar.replace(format="png")).url
-      await utils.headpat_converter2(url, ctx)
+      url = (Member.display_avatar.replace(format = "png")).url
+
+      embeds.append(await utils.headpat_converter2(url, ctx))
+
+    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
+
+    await menu.start(ctx)
 
   def convert_svg(self, svg_image):
     converted_bytes = cairosvg.svg2png(bytestring = svg_image)

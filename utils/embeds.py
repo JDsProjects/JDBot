@@ -151,7 +151,7 @@ async def headpat_converter2(url, ctx):
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
   embed.set_image(url = imgur_url["link"])
   embed.set_footer(text = "powered by dagpi")
-  await ctx.send(embed = embed)
+  return embed
 
 async def jail_converter(url, ctx):
   dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session = ctx.bot.session)
