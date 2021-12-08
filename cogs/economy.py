@@ -95,7 +95,7 @@ class Economy(commands.Cog):
       wallet = m[-1]
       bank = m[1]
       
-      pag.add_line(f"{await self.bot.try_user(m[0])}'s Total Money: {wallet+bank}")
+      pag.add_line(f"{await self.bot.try_user(m[0])}'s Total Money: {wallet+bank} \nWallet : {wallet} \n Bank: {bank}")
     
     pages = [page.strip("`") for page in pag.pages]
 
