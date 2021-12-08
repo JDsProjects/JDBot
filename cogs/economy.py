@@ -86,12 +86,15 @@ class Economy(commands.Cog):
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
   async def leaderboard(self, ctx):
-    data = await self.bot.db.execute_fetchall("SELECT * FROM economy ORDER BY wallet + BANK DESC")
     
+    data = await self.bot.db.execute_fetchall("SELECT * FROM economy ORDER BY wallet + BANK DESC")
+
     ndata = []
     for n in data:
+      place = [n[0] for n in data].index(n[0])
       user = await self.bot.try_user(n[0])
-      ndata.append([f"{user}", n[1], n[2]])
+
+      ndata.append([f"{place + 1}. {user}", n[1], n[2]])
     
     ndata = utils.groupby(ndata, 6)
 
