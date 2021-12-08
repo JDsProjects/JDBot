@@ -3,14 +3,6 @@ import utils
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord.ext.menus.views import ViewMenuPages
-
-def groupby(iterable : list, number : int):
-  resp = []
-  while True:
-    resp.append(iterable[:number])
-    iterable = iterable[number:]
-    if not iterable: break
-  return resp
     
 class Economy(commands.Cog):
   def __init__(self, bot):
@@ -95,18 +87,17 @@ class Economy(commands.Cog):
   @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
   async def leaderboard(self, ctx):
     data = await self.bot.db.execute_fetchall("SELECT * FROM economy")
+    
     ndata = []
     for n in data:
-      usr = self.bot.get_user(n[0])
-      if not usr:
-        usr = await self.bot.fetch_user(n[0])
-      if usr:
-        ndata.append([usr.name, n[1], n[2]])
-    ndata = groupby(ndata, 5)
+      user = await self.bot.try_user(n[0])
+      ndata.append([f"{user}", n[1], n[2]])
+    
+    ndata = utils.groupby(ndata, 5)
 
-   # menu = EmbedPG(ndata, per_page=1)
-   # menu = menus.MenuPages(menu)
-    #await menu.start(ctx)
+    menu = ViewMenuPages(utils.LeaderboardEmbed(ndata, per_page = 1), delete_message_after = True)
+  
+    await menu.start(ctx)
 
 
 def setup(bot):

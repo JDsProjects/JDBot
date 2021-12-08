@@ -86,7 +86,13 @@ async def post(bot, code):
 
 #thanks Dutchy for this :D, though this has some issues that need to be fixed.
 
-
-
 def random_history(data, number):
   return random.sample(data, number)
+
+def groupby(iterable : list, number : int):
+  resp = []
+  while True:
+    resp.append(iterable[:number])
+    iterable = iterable[number:]
+    if not iterable: break
+  return resp
