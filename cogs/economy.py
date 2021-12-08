@@ -81,7 +81,8 @@ class Economy(commands.Cog):
     embed.add_field(name = "Currency:", value = "<:JDJGBucks:779516001782988810>", inline = True)
     embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
     await ctx.send(embed = embed)
-
+  
+  @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
   async def leaderboard(self, ctx):
     cur = await self.bot.db.cursor()
