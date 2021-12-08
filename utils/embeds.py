@@ -111,6 +111,8 @@ async def headpat_converter(url, ctx):
   embed.set_footer(text="powered by some random api")
   await ctx.send(embed=embed)
 
+#make this not use sr_api for this headpat
+
 def create_channel_permission(ctx):
   return ctx.author.guild_permissions.manage_channels
 
@@ -124,8 +126,8 @@ def clear_permission(ctx):
 
 async def invert_converter(url, ctx):
   try:
-    sr_client = sr_api.Client(key=os.environ["sr_key"],session=ctx.bot.session)
-    source_image = sr_client.filter("invert",url=str(url))
+    sr_client = sr_api.Client(session = ctx.bot.session)
+    source_image = sr_client.filter("invert", url=str(url))
     image = await source_image.read()
   except:
     return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
@@ -141,12 +143,15 @@ async def invert_converter(url, ctx):
 async def headpat_converter2(url, ctx):
   dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session = ctx.bot.session)
   image=await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(),str(url))
-  file = discord.File(fp=image.image,filename=f"headpat.{image.format}")
+
+  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
+  imgur_url = await imgur_client.upload(image.image)
+
   embed=discord.Embed(color = random.randint(0, 16777215))
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
-  embed.set_image(url=f"attachment://headpat.{image.format}")
-  embed.set_footer(text="powered by dagpi")
-  await ctx.send(file=file, embed=embed)
+  embed.set_image(url = imgur_url["link"])
+  embed.set_footer(text = "powered by dagpi")
+  await ctx.send(embed = embed)
 
 async def jail_converter(url, ctx):
   dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session = ctx.bot.session)
