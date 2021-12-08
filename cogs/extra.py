@@ -53,7 +53,11 @@ class Extra(commands.Cog):
       await ctx.send("You can not request more than 50 results, you also can not request less than 1 result. We will give you one as this is the default.")
       number = 1
 
-    response = utils.random_history(number)
+    import json
+    with open("all.json", "r") as f:
+      data = list(set(json.load(f)))
+
+    response = utils.random_history(data, number)
 
     pag = commands.Paginator()
     for x in response:

@@ -88,5 +88,5 @@ async def post(bot, code):
 
 
 
-def random_history(number):
-  return random.sample(random_data, number)
+def random_history(data, number):
+  return random.sample(data, number)
