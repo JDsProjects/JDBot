@@ -87,15 +87,14 @@ class Test(commands.Cog):
     await ctx.send("WIP")
 
   @commands.command(brief = "a command that takes a url and sees if it's an image.")
-  async def image_check(self, ctx, *, args : typing.Union[yarl.URL, str] = None):
-    if not args:
-      return await ctx.send("please give args so it can do a url.")
+  async def image_check(self, ctx):
+    
+    #image = discord.utils.get(type = "image", ctx.message.embeds)
+    image = filter(lambda e: if e.type == "image", ctx.message.embeds)
 
-    if isinstance(args , yarl.URL):
-      await ctx.send("Got a url :D")
-
-    if isinstance(args , str):
-      await ctx.send("got a string can't do much with it though.")
+    for e in image:
+      if e.type == "image":
+        await ctx.send(f"{e.url}")
 
   @commands.command(brief = "gets tweets from a username")
   async def tweet(self, ctx, *, args = None):
