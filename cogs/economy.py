@@ -28,7 +28,7 @@ class Economy(commands.Cog):
 
     await cur.close()
 
-    await ctx.send("You worked the basic job.(more jobs coming soon)")
+    await ctx.send(f"You worked the basic job and got ${add_money}. (more jobs coming soon)")
 
   @commands.cooldown(1, 15, BucketType.user)
   @commands.command(brief = "a command to send how much money you have", help = "using the JDBot database you can see how much money you have", aliases = ["bal"])
