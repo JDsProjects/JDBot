@@ -806,7 +806,7 @@ class DevTools(commands.Cog):
     if not images or not ctx.message.embeds:
       return await ctx.send("you need to pass a url with an image, if you did, then please run again. This is a discord issue, and I do not want to wait for discord to change its message.")
 
-    await ctx.send(f"You have {len(images)} / {len(ctx.message.embeds)} that are valid images.")
+    await ctx.send(f"You have {len(images)} / {len(ctx.message.embeds)} links that are valid images.")
     
 
 def setup(bot):
