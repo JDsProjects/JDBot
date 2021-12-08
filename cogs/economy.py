@@ -4,6 +4,15 @@ from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord.ext.menus.views import ViewMenuPages
 
+def groupby(iterable : list, number : int):
+  resp = []
+  while True:
+    resp.append(iterable[:number])
+    iterable = iterable[number:]
+    if not iterable:
+      break
+  return resp
+
 class Economy(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
@@ -86,24 +95,22 @@ class Economy(commands.Cog):
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
   async def leaderboard(self, ctx):
-    cur = await self.bot.db.cursor()
-    cursor = await cur.execute("SELECT * FROM economy ORDER BY wallet + BANK DESC")
-    data = tuple(await cursor.fetchall())
-    await cur.close()
+    data = await self.bot.db.execute_fetchall("SELECT * FROM economy ORDER BY WALLET + BANK DESC")
+    ndata = []
+    
+    for user_id, bank, wallet in data:
+      ndata.append([await self.bot.try_user(user_id), bank, wallet])
+    
+    ndata = groupby(ndata, 5) # 5 is what i think is best
+    # for now i'll take first item at index and i will embed it, so you can see what i mean
+    
+    e = discord.Embed("Leaderboard")
+    
+    for i in ndata:
+      e.add_field(name = f"**{i[0]}:**", value = f"```yaml\nBANK: {i[1]}\nWALLET: {i[2]}```")
+      break # i will only take first as you have lots of datas, other items are upto u to handle
+    
+    await ctx.send(embed=e)
 
-    pag = commands.Paginator()
-
-    for m in data:
-      wallet = m[-1]
-      bank = m[1]
-      
-      pag.add_line(f"{await self.bot.try_user(m[0])} Total: {wallet+bank} <:JDJGBucks:779516001782988810>")
-
-    pages = [page.strip("`") for page in pag.pages]
-
-    menu = ViewMenuPages(utils.LeaderboardEmbed(pages, per_page = 1), delete_message_after = True)
-      
-    await menu.start(ctx)
-   
 def setup(bot):
   bot.add_cog(Economy(bot))
