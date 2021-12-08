@@ -23,25 +23,16 @@ class JDBot(commands.Bot):
     self.session = aiohttp.ClientSession()
     self.db = await aiosqlite.connect('sus_users.db')
     #loads up some bot variables
+
+    self.testers = list(itertools.chain(*await self.db.execute_fetchall("SELECT * FROM testers_list;")))
+
+    #does the DB connection and then assigns it a tester list(may be a lot bit shorter but it should work better.)
+
+    self.blacklisted_users = dict(await self.db.execute_fetchall("SELECT * FROM BLACKLISTED_USERS;"))
     
-    conn = await self.db.cursor()
-    grab = await conn.execute("SELECT * FROM testers_list;")
-    self.testers = list(itertools.chain(*await grab.fetchall()))
+    self.blacklisted_users.update(dict(await self.db.execute_fetchall("SELECT * FROM SUS_USERS;")))
 
-    #does the DB connection and then assigns it a tester list
-
-    blacklist = await conn.execute("SELECT * FROM BLACKLISTED_USERS;")
-
-    self.blacklisted_users = dict(await blacklist.fetchall())
-
-    cursor = await conn.execute("SELECT * FROM SUS_USERS;")
-    
-    self.blacklisted_users.update(dict(await cursor.fetchall()))
-
-    grab = await conn.execute("SELECT * FROM RANDOM_history;")
-    self.history = list(itertools.chain(*await grab.fetchall()))
-
-    await conn.close()
+    self.history = list(itertools.chain(*await self.db.execute_fetchall("SELECT * FROM RANDOM_history;")))
     
     await super().start(*args, **kwargs)
 
