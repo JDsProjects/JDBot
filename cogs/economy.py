@@ -88,8 +88,19 @@ class Economy(commands.Cog):
     cursor = await cur.execute("SELECT * FROM economy ORDER BY wallet + BANK DESC")
     data = tuple(await cursor.fetchall())
     await cur.close()
-    
-    await ctx.send(f"Wip till I get the leaderboard working, it can fetch from the database, I just don't know how to format it yet. For example: \n{data[0]}")
 
+    pag = commands.Paginator()
+
+    for m in data:
+      wallet = m[-1]
+      bank = m[1]
+      
+      pag.add_line(f"{await self.bot.try_user(m[0])}'s Total Money: {wallet+bank}")
+    
+    pages = [page.strip("`") for page in pag.pages]
+
+    for p in pages:
+      await ctx.send(f"{p}")
+   
 def setup(bot):
   bot.add_cog(Economy(bot))
