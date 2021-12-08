@@ -93,7 +93,7 @@ class Economy(commands.Cog):
       user = await self.bot.try_user(n[0])
       ndata.append([f"{user}", n[1], n[2]])
     
-    ndata = utils.groupby(ndata, 5)
+    ndata = utils.groupby(ndata, 6)
 
     menu = ViewMenuPages(utils.LeaderboardEmbed(ndata, per_page = 1), delete_message_after = True)
   

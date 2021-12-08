@@ -182,6 +182,6 @@ class LeaderboardEmbed(menus.ListPageSource):
     emby.set_author(name = f"Leaderboard Requested by {menu.ctx.author}", icon_url = (menu.ctx.author.display_avatar.url))
 
     for i, b, w in item:
-      emby.add_field(name = f"**{i}:**", value = f"```yaml\nBank: {b}\nWallet: {w}\nTotal: {b + w}```")
+      emby.add_field(name = f"**{i}:**", value = f"```yaml\nBank: {b}\nWallet: {w}\nTotal: {b + w}```", inline = True)
 
     return emby
