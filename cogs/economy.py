@@ -3,7 +3,6 @@ import utils
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord.ext.menus.views import ViewMenuPages
-from discord.ext import menus
 
 def groupby(iterable : list, number : int):
   resp = []
@@ -12,13 +11,6 @@ def groupby(iterable : list, number : int):
     iterable = iterable[number:]
     if not iterable: break
   return resp
-
-class EmbedPG(menus.ListPageSource):
-  async def format_page(self, menu, item):
-      e = discord.Embed(title = "Leaderboard")
-      for i, b, w in item:
-        e.add_field(name = f"**{i}:**", value = f"```yaml\nBank: {b}\nWallet: {w}\nTotal: {b + w}```")
-      return e
     
 class Economy(commands.Cog):
   def __init__(self, bot):
@@ -111,9 +103,10 @@ class Economy(commands.Cog):
       if usr:
         ndata.append([usr.name, n[1], n[2]])
     ndata = groupby(ndata, 5)
-    menu = EmbedPG(ndata, per_page=1)
-    menu = menus.MenuPages(menu)
-    await menu.start(ctx)
+
+   # menu = EmbedPG(ndata, per_page=1)
+   # menu = menus.MenuPages(menu)
+    #await menu.start(ctx)
 
 
 def setup(bot):
