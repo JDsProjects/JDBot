@@ -186,8 +186,8 @@ class Extra(commands.Cog):
       await ctx.send(file=tts_file)
     
     if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        file=await x.read()
+      for a in ctx.message.attachments:
+        file=await a.read()
         if file:
 
           encoding=chardet.detect(file)["encoding"]
@@ -289,8 +289,8 @@ class Extra(commands.Cog):
   @commands.command(brief="a command to backup text",help="please don't upload any private files that aren't meant to be seen")
   async def text_backup(self, ctx, *, args = None):
     if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        file=await x.read()
+      for a in ctx.message.attachments:
+        file = await a.read()
         if file:
           encoding=chardet.detect(file)["encoding"]
           if encoding:

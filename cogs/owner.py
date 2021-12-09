@@ -376,9 +376,9 @@ class Owner(commands.Cog):
 
     await ctx.send("JDJG doesn't take any responbility for what you upload here :eyes: don't upload anything bad okay?")
 
-    for x in ctx.message.attachments:
+    for a in ctx.message.attachments:
       try:
-        discord.utils._get_mime_type_for_image(await x.read())
+        discord.utils._get_mime_type_for_image(await a.read())
 
       except Exception as e:
         traceback.print_exc()
@@ -387,7 +387,7 @@ class Owner(commands.Cog):
       
       imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
 
-      imgur_url = await imgur_client.upload(await x.read())
+      imgur_url = await imgur_client.upload(await a.read())
       await ctx.send(f"{imgur_url['link']}")
 
   @commands.command(brief="A command to remove testers")

@@ -173,12 +173,12 @@ class Image(commands.Cog):
     Member = Member or ctx.author
     y = 0
     if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        if x.filename.endswith(".png"):
-          url = x.url
+      for a in ctx.message.attachments:
+        if a.filename.endswith(".png"):
+          url = a.url
           await utils.headpat_converter(url, ctx)
           y += 1
-        if not x.filename.endswith(".png"):
+        if not a.filename.endswith(".png"):
           pass
 
     if not ctx.message.attachments or y == 0:
@@ -385,12 +385,13 @@ class Image(commands.Cog):
     embeds = []
 
     if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
-          url = x.url
+      for a in ctx.message.attachments:
+        if a.filename.endswith(".png") or a.filename.endswith(".jpg"):
+          url = a.url
           embeds.append(await utils.invert_converter(url, ctx))
           y += 1
-        if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
+
+        if not a.filename.endswith(".png") or not a.filename.endswith(".jpg"):
           pass
 
     if not ctx.message.attachments or y == 0:
@@ -408,13 +409,13 @@ class Image(commands.Cog):
     embeds = []
 
     if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
-          url = x.proxy_url
+      for a in ctx.message.attachments:
+        if a.filename.endswith(".png") or a.filename.endswith(".jpg"):
+          url = a.proxy_url
 
           embeds.append(await utils.headpat_converter2(url, ctx))
           y += 1
-        if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
+        if not a.filename.endswith(".png") or not a.filename.endswith(".jpg"):
           pass
 
     if not ctx.message.attachments or y == 0:
@@ -435,9 +436,9 @@ class Image(commands.Cog):
   @commands.command()
   async def svgconvert(self, ctx):
     if ctx.message.attachments: 
-      for x in ctx.message.attachments:
+      for a in ctx.message.attachments:
         try:
-          convert_time = functools.partial(self.convert_svg, await x.read())
+          convert_time = functools.partial(self.convert_svg, await a.read())
           file = await self.bot.loop.run_in_executor(None, convert_time)
           await ctx.send(file = file)
 
@@ -454,13 +455,13 @@ class Image(commands.Cog):
     embeds = []
 
     if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        if x.filename.endswith(".png"):
-          url = x.url
+      for a in ctx.message.attachments:
+        if a.filename.endswith(".png"):
+          url = a.url
           
           embeds.append(await utils.jail_converter(url, ctx))
           y += 1
-        if not x.filename.endswith(".png"):
+        if not a.filename.endswith(".png"):
           pass
 
     if not ctx.message.attachments or y == 0:
@@ -479,13 +480,13 @@ class Image(commands.Cog):
     embeds = []
 
     if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
-          url = x.url
+      for a in ctx.message.attachments:
+        if a.filename.endswith(".png") or a.filename.endswith(".jpg"):
+          url = a.url
           embeds.append(await utils.invert_converter2(url, ctx))
           y += 1
         
-        if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
+        if not a.filename.endswith(".png") or not a.filename.endswith(".jpg"):
           pass
 
     if not ctx.message.attachments or y == 0:
