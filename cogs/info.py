@@ -786,7 +786,7 @@ class DevTools(commands.Cog):
     embed.add_field(name = "Bot", value=f"{user} (ID: {user.id})", inline = False)
 
     embed.set_footer(text = ctx.author.id)
-    embed.set_author(name = user.id, icon_url = user.display_avatar.replace(format = "png"))
+    embed.set_author(name = user.id, icon_url = user.display_avatar.with_format(format = "png"))
 
     jdjg = self.bot.get_user(168422909482762240)
     benitz = self.bot.get_user(529499034495483926)
