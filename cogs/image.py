@@ -168,7 +168,7 @@ class Image(commands.Cog):
 
     await menu.start(ctx)
 
-  @commands.command(brief="uses our headpat program to pat you",help="a command that uses sra_api to make a headpat of you.")
+  @commands.command(brief = "uses our headpat program to pat you",help="a command that uses jeyyapi to make a headpat of you.")
   async def headpat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
     y = 0

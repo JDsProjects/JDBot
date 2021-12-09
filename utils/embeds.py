@@ -108,7 +108,7 @@ async def headpat_converter(url, ctx):
   embed=discord.Embed(color=random.randint(0, 16777215))
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
   embed.set_image(url=imgur_url["link"])
-  embed.set_footer(text="powered by some random api")
+  embed.set_footer(text = "powered by some jeyyapi")
   
   return embed
 
