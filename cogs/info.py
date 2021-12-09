@@ -182,7 +182,7 @@ class Info(commands.Cog):
 
     if ctx.message.attachments:
       embed = discord.Embed(title="Attachment info",color=random.randint(0, 16777215))
-      for a in ctx.message.attachments:
+      for a in ctx.message.attachments
         embed.add_field(name=f"ID: {a.id}",value = f"[{a.filename}]({a.url})")
         embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
       await ctx.send(embed=embed, content="\nThat's good")
