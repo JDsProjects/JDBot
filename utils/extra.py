@@ -108,15 +108,15 @@ def get_required_npm(data):
   _dependencies = version_data["dependencies"]
   dependencies = {}
   for lib, ver in _dependencies.items():
-      dependencies[lib] = ver.strip("^")
+    dependencies[lib] = ver.strip("^")
   return {
-      "latest_version" : latest,
-      "next_version" : next,
-      "name" : name,
-      "description" : description,
-      "authors" : authors,
-      "license" : license,
-      "dependencies" : dependencies
+    "latest_version" : latest,
+    "next_version" : next,
+    "name" : name,
+    "description" : description,
+    "authors" : authors,
+    "license" : license,
+    "dependencies" : dependencies
   }
 
 def npm_create_embed(data : dict):

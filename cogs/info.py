@@ -808,6 +808,23 @@ class DevTools(commands.Cog):
 
     await ctx.send(f"You have {len(images)} / {len(ctx.message.embeds)} links that are valid images.")
     
+  @commands.command(brief = "Gives info on npm packages")
+  async def npm(self, ctx, *, args = None):
+    
+    if args:
+      npm_response = await self.bot.session.get(f"https://registry.npmjs.com/{args}")
+
+      if npm_response.ok:
+        npm_response = await npm_response.json()
+
+        data = utils.get_required_npm(npm_response)
+        await ctx.send(embed = utils.npm_create_embed(data))
+
+      else:
+        await ctx.send(f"Could not find package **{args}** on npm.", allowed_mentions = discord.AllowedMentions.none())
+
+    else:
+      await ctx.send("Please look for a library to get the info of.")
 
 def setup(bot):
   bot.add_cog(Info(bot))

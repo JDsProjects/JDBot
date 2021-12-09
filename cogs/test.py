@@ -102,24 +102,6 @@ class Test(commands.Cog):
 
     await ctx.send(f"finding out where the command is located is not around yet.")
 
-  @commands.command(brief = "Gives info on npm packages")
-  async def npm(self, ctx, *, args = None):
-    
-    if args:
-      npm_response = await self.bot.session.get(f"https://registry.npmjs.com/{args}")
-
-      if npm_response.ok:
-        npm_response = await npm_response.json()
-
-        data = utils.get_required_npm(npm_response)
-        await ctx.send(embed = utils.npm_create_embed(data))
-
-      else:
-        await ctx.send(f"Could not find package **{args}** on npm.", allowed_mentions = discord.AllowedMentions.none())
-
-    else:
-      await ctx.send("Please look for a library to get the info of.")
-
   @commands.command(brief = "scans statuses to see if there is any bad ones.")
   async def scan_status(self, ctx):
     await ctx.send("will scan statuses in a guild to see if there is a bad one.")
