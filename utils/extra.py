@@ -104,10 +104,10 @@ def npm_create_embed(data : dict):
   formatted_author = ""
   if isinstance(data.get("authors"), list):
     for author_data in data["authors"]:
-      formatted_author += f"Email: {author_data.get('email', 'Not Provided')}\nName: {author_data['name']}\n\n"
-    else:
-      print(data['authors'])
-      formatted_author += f"Email: {data['authors']['email']}\n{data['authors']['name']}"
+      formatted_author += f"Email: {author_data['email']}\nName: {author_data['name']}\n\n"
+
+  else:
+    formatted_author += f"Email: {data['authors']['email']}\n{data['authors']['name']}"
     e.add_field(name = "**Author:**", value = f"```yaml\n{formatted_author}```", inline = False)
     e.add_field(name = "**License:**", value = f"```\n{data.get('license')}```", inline = False)
     dependencies = []
@@ -118,6 +118,7 @@ def npm_create_embed(data : dict):
     if data.get("next_version"):
       e.add_field(name = "**Upcoming Version:**", value = f"```py\n{data.get('next_version')}```")
     return e
+  
 
 def get_required_npm(data):
   latest = data["dist-tags"]["latest"]
