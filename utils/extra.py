@@ -99,27 +99,27 @@ def groupby(iterable : list, number : int):
 
 def npm_create_embed(data : dict):
   e = discord.Embed(title = f"Package information for **{data.get('name')}**")
-  e.add_field(name = "**Latest Version:**", value = f"```py\n{data.get('latest_version')}```", inline = False)
-  e.add_field(name = "**Description:**", value = f"```py\n{data.get('description')}```", inline = False)
+  e.add_field(name = "**Latest Version:**", value = f"```py\n{data.get('latest_version', 'None Provided')}```", inline = False)
+  e.add_field(name = "**Description:**", value = f"```py\n{data.get('description', 'None Provided')}```", inline = False)
   formatted_author = ""
 
   if isinstance(data.get("authors"), list):
     for author_data in data["authors"]:
-      formatted_author += f"Email: {author_data.get('email')}\nName: {author_data['name']}\n\n"
+      formatted_author += f"Email: {author_data.get('email', 'None Provided')}\nName: {author_data['name']}\n\n"
 
   else:
-    formatted_author += f"Email: {data['authors']['email']}\n{data['authors']['name']}"
+    formatted_author += f"Email: {data['authors'].get('email', 'None Provided')}\n{data['authors']['name']}"
 
   e.add_field(name = "**Author:**", value = f"```yaml\n{formatted_author}```", inline = False)
-  e.add_field(name = "**License:**", value = f"```\n{data.get('license')}```", inline = False)
+  e.add_field(name = "**License:**", value = f"```\n{data.get('license', 'None Provided')}```", inline = False)
   dependencies = []
-  for lib, min_version in data.get('dependencies', {}).items():
+  for lib, min_version in data.get('dependencies', {'None Provided'}).items():
     dependencies.append([lib, min_version])
   
   e.add_field(name = "Dependencies:", value = f"```py\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}```", inline = False)
-  if data.get("next_version"):
-    e.add_field(name = "**Upcoming Version:**", value = f"```py\n{data.get('next_version')}```")
-    
+  if data.get("next_version", 'None Provided'):
+    e.add_field(name = "**Upcoming Version:**", value = f"```py\n{data.get('next_version', 'None Provided')}```")
+
   return e
 
 def get_required_npm(data):
