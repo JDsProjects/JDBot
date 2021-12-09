@@ -31,7 +31,7 @@ CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 async-cleverbot = "^0.2.2"
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
-discord-ext-menus-views = {git = "https://github.com/JDJGInc/discord-ext-menus-views"}
+discord-ext-menus-views = {git = "https://github.com/oliver-ni/discord-ext-menus-views"}
 better-profanity = "^0.7.0"
 "discord.py" = {git = "https://github.com/iDevision/enhanced-discord.py", branch = "2.0"}
 async-tio = "^1.1.0"
