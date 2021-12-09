@@ -172,20 +172,24 @@ class Image(commands.Cog):
   async def headpat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
     y = 0
+    embeds = []
+
     if ctx.message.attachments:
       for a in ctx.message.attachments:
         if a.filename.endswith(".png"):
           url = a.url
-          await utils.headpat_converter(url, ctx)
+          embeds.append(await utils.headpat_converter(url, ctx))
           y += 1
         if not a.filename.endswith(".png"):
           pass
 
     if not ctx.message.attachments or y == 0:
       url = (Member.display_avatar.with_format("png")).url
-      await utils.headpat_converter(url, ctx)
+      embeds.append(await utils.headpat_converter(url, ctx))
 
-    #make this use a different api.
+    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
+
+    await menu.start(ctx)
 
   @commands.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
   async def hug2(self, ctx, *, Member: utils.BetterMemberConverter=None):

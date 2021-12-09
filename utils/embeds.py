@@ -109,9 +109,8 @@ async def headpat_converter(url, ctx):
   embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
   embed.set_image(url=imgur_url["link"])
   embed.set_footer(text="powered by some random api")
-  await ctx.send(embed=embed)
-
-#make this not use sr_api for this headpat, I will use https://benisland.neocities.org/petpet/ for this soon.
+  
+  return embed
 
 def create_channel_permission(ctx):
   return ctx.author.guild_permissions.manage_channels
