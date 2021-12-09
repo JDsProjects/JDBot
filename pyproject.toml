@@ -36,6 +36,7 @@ better-profanity = "^0.7.0"
 "discord.py" = {git = "https://github.com/iDevision/enhanced-discord.py", branch = "2.0"}
 async-tio = "^1.1.0"
 jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi", branch = "main"}
+tabulate = "^0.8.9"
 
 [tool.poetry.dev-dependencies]
 

@@ -1,4 +1,4 @@
-import discord, random, aiogtts
+import discord, random, aiogtts, tabulate
 import io
 
 async def google_tts(text):
@@ -127,19 +127,15 @@ def npm_create_embed(data : dict):
   if isinstance(data.get("authors"), list):
     for author_data in data["authors"]:
       formatted_author += f"Email: {author_data['email']}\nName: {author_data['name']}\n\n"
-  else:
-    formatted_author += f"Email: {data['authors']['email']}\n{data['authors']['name']}"
-  e.add_field(name = "**Author:**", value = f"```yaml\n{formatted_author}```", inline = False)
-  e.add_field(name = "**License:**", value = f"```\n{data.get('license')}```", inline = False)
-  dependencies = []
-  for lib, min_version in data.get('dependencies', {}).items():
-    dependencies.append([lib, min_version])
-  
-  string = ""
-  for i in dependencies:
-    string += f"{i[0]}       {i[1]}"    
-
-    e.add_field(name = "Dependencies:", value = f"```py\n{string}```", inline = False)
-  if data.get("next_version"):
-    e.add_field(name = "**Upcoming Version:**", value = f"```py\n{data.get('next_version')}```")
-  return e
+    else:
+      formatted_author += f"Email: {data['authors']['email']}\n{data['authors']['name']}"
+    e.add_field(name = "**Author:**", value = f"```yaml\n{formatted_author}```", inline = False)
+    e.add_field(name = "**License:**", value = f"```\n{data.get('license')}```", inline = False)
+    dependencies = []
+    for lib, min_version in data.get('dependencies', {}).items():
+      dependencies.append([lib, min_version])
+    
+    e.add_field(name = "Dependencies:", value = f"```py\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}```", inline = False)
+    if data.get("next_version"):
+      e.add_field(name = "**Upcoming Version:**", value = f"```py\n{data.get('next_version')}```")
+    return e
