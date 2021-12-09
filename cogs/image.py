@@ -505,5 +505,13 @@ class Image(commands.Cog):
   async def invert_error(self, ctx, error):
     await ctx.send(error)
 
+  @commands.command(brief = "sends a gif of someone dancing to disco (animated)")
+  async def disco(self, ctx):
+    await ctx.send("WIP alright?")
+
+  @commands.command(brief = "sends a gif of someone dancing to all but disco(animated)")
+  async def dance(self, ctx):
+    await ctx.send("WIP alright?")
+
 def setup(bot):
   bot.add_cog(Image(bot))

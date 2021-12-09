@@ -119,14 +119,6 @@ class Test(commands.Cog):
     else:
       await ctx.send("Please look for a library to get the info of.")
 
-  @commands.command(brief = "sends a gif of someone dancing to disco (animated)")
-  async def disco(self, ctx):
-    await ctx.send("WIP alright?")
-
-  @commands.command(brief = "sends a gif of someone dancing to all but disco(animated)")
-  async def dance(self, ctx):
-    await ctx.send("WIP alright?")
-
   @commands.command(brief = "scans statuses to see if there is any bad ones.")
   async def scan_status(self, ctx):
     await ctx.send("will scan statuses in a guild to see if there is a bad one.")
