@@ -106,7 +106,7 @@ def npm_create_embed(data : dict):
     for author_data in data["authors"]:
       formatted_author += f"Email: {author_data.get('email', 'Not Provided')}\nName: {author_data['name']}\n\n"
     else:
-      formatted_author += f"Email: {data['authors'].get('email', 'None Provided')}\n{data['authors']['name']}"
+      formatted_author += f"Email: {data['authors']['email']}\n{data['authors']['name']}"
     e.add_field(name = "**Author:**", value = f"```yaml\n{formatted_author}```", inline = False)
     e.add_field(name = "**License:**", value = f"```\n{data.get('license')}```", inline = False)
     dependencies = []
