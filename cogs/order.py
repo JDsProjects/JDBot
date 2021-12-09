@@ -356,7 +356,7 @@ class Order(commands.Cog):
     if gifNearest.gif: embed.set_image(url= gifNearest.gif.url)
     else: embed.set_image("https://i.imgur.com/sLQzAiW.png")
 
-    await ctx.send(content = "Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+    await ctx.send(content = "Disco has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
   
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "sends a gif of someone dancing to all but disco(animated)")
@@ -387,7 +387,7 @@ class Order(commands.Cog):
     if gifNearest.gif: embed.set_image(url = gifNearest.gif.url)
     else: embed.set_image("https://i.imgur.com/sLQzAiW.png")
 
-    await ctx.send(content = "Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+    await ctx.send(content = "Dance has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
 
 def setup(bot):
   bot.add_cog(Order(bot))
