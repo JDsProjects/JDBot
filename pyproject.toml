@@ -35,7 +35,7 @@ discord-ext-menus-views = {git = "https://github.com/JDJGInc/discord-ext-menus-v
 better-profanity = "^0.7.0"
 "discord.py" = {git = "https://github.com/iDevision/enhanced-discord.py", branch = "2.0"}
 async-tio = "^1.1.0"
-jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi"}
+jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi", branch = "main"}
 
 [tool.poetry.dev-dependencies]
 
