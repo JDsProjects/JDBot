@@ -113,7 +113,7 @@ def npm_create_embed(data : dict):
   e.add_field(name = "**Author:**", value = f"```yaml\n{formatted_author}```", inline = False)
   e.add_field(name = "**License:**", value = f"```\n{data.get('license', 'None Provided')}```", inline = False)
   dependencies = []
-  for lib, min_version in data.get('dependencies', {'None Provided'}).items():
+  for lib, min_version in data.get('dependencies', {}).items():
     dependencies.append([lib, min_version])
   
   e.add_field(name = "Dependencies:", value = f"```py\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}```", inline = False)
