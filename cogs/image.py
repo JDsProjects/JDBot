@@ -471,11 +471,29 @@ class Image(commands.Cog):
 
     await menu.start(ctx)
   
-  @commands.command(brief="work in progress")
+  @commands.command(brief = "inverts any valid image with jeyyapi")
   async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
-    
-    
+
+    y = 0
+    embeds = []
+
+    if ctx.message.attachments:
+      for x in ctx.message.attachments:
+        if x.filename.endswith(".png") or x.filename.endswith(".jpg"):
+          url = x.url
+          embeds.append(await utils.invert_converter2(url, ctx))
+          y += 1
+        if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
+          pass
+
+    if not ctx.message.attachments or y == 0:
+      url = (Member.display_avatar.replace(format="png")).url
+      embeds.append(await utils.invert_converter2(url, ctx))
+
+    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
+
+    await menu.start(ctx)
 
   @invert.error
   async def invert_error(self, ctx, error):
