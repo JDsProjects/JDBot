@@ -102,7 +102,7 @@ class Test(commands.Cog):
 
     await ctx.send(f"finding out where the command is located is not around yet.")
 
-  @commands.command(brief = "Gives info on pypi packages")
+  @commands.command(brief = "Gives info on npm packages")
   async def npm(self, ctx, *, args = None):
     
     if args:
