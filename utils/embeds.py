@@ -96,7 +96,6 @@ async def triggered_converter(url, ctx):
 
 async def headpat_converter(url, ctx):
   try:
-   
     client = jeyyapi.JeyyAPIClient(session = ctx.bot.session)
     image = await client.patpat(url)
 
