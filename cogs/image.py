@@ -151,13 +151,13 @@ class Image(commands.Cog):
     embeds = []
 
     if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        if x.filename.endswith(".png"):
-          url = x.url
+      for a in ctx.message.attachments:
+        if a.filename.endswith(".png"):
+          url = a.url
           embeds.append(await utils.triggered_converter(url, ctx))
 
           y += 1
-        if not x.filename.endswith(".png"):
+        if not a.filename.endswith(".png"):
           pass
 
     if not ctx.message.attachments or y == 0:
@@ -484,6 +484,7 @@ class Image(commands.Cog):
           url = x.url
           embeds.append(await utils.invert_converter2(url, ctx))
           y += 1
+        
         if not x.filename.endswith(".png") or not x.filename.endswith(".jpg"):
           pass
 
