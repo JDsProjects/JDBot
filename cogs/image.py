@@ -437,7 +437,7 @@ class Image(commands.Cog):
     buffer.seek(0)
     return discord.File(buffer, filename=f"converted.png")
 
-  @commands.command()
+  @commands.command(brief = "Converts svg images to png images")
   async def svgconvert(self, ctx):
     if ctx.message.attachments: 
       for a in ctx.message.attachments:
