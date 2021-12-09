@@ -96,8 +96,8 @@ async def triggered_converter(url, ctx):
 
 async def headpat_converter(url, ctx):
   try:
-    sr_client = sr_api.Client(key=os.environ["sr_key"],session=ctx.bot.session)
-    source_image=sr_client.petpet(avatar=str(url))
+    sr_client = sr_api.Client(key=os.environ["sr_key"] ,session = ctx.bot.session)
+    source_image = sr_client.petpet(avatar=str(url))
     image = await source_image.read()
   except Exception as e:
     print(e)
@@ -111,7 +111,7 @@ async def headpat_converter(url, ctx):
   embed.set_footer(text="powered by some random api")
   await ctx.send(embed=embed)
 
-#make this not use sr_api for this headpat
+#make this not use sr_api for this headpat, I will use https://benisland.neocities.org/petpet/ for this soon.
 
 def create_channel_permission(ctx):
   return ctx.author.guild_permissions.manage_channels
