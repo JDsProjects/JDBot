@@ -182,7 +182,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.display_avatar.replace(format = "png")).url
+      url = (Member.display_avatar.with_format("png")).url
       await utils.headpat_converter(url, ctx)
 
     #make this use a different api.
@@ -395,7 +395,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.display_avatar.replace(format="png")).url
+      url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.invert_converter(url, ctx))
 
     menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
@@ -419,7 +419,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.display_avatar.replace(format = "png")).url
+      url = (Member.display_avatar.with_format("png")).url
 
       embeds.append(await utils.headpat_converter2(url, ctx))
 
@@ -465,7 +465,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.display_avatar.replace(format = "png")).url
+      url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.jail_converter(url, ctx))
 
     menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
@@ -490,7 +490,7 @@ class Image(commands.Cog):
           pass
 
     if not ctx.message.attachments or y == 0:
-      url = (Member.display_avatar.replace(format="png")).url
+      url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.invert_converter2(url, ctx))
 
     menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
