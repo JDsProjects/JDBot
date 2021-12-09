@@ -432,10 +432,10 @@ class Image(commands.Cog):
     await menu.start(ctx)
 
   def convert_svg(self, svg_image):
-    converted_bytes = cairosvg.svg2png(bytestring = svg_image)
+    converted_bytes = cairosvg.svg2png(bytestring = svg_image, scale = 6.0)
     buffer = io.BytesIO(converted_bytes)
     buffer.seek(0)
-    return discord.File(buffer ,filename=f"converted.png")
+    return discord.File(buffer, filename=f"converted.png")
 
   @commands.command()
   async def svgconvert(self, ctx):
