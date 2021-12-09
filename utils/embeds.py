@@ -96,9 +96,10 @@ async def triggered_converter(url, ctx):
 
 async def headpat_converter(url, ctx):
   try:
-    sr_client = sr_api.Client(key=os.environ["sr_key"] ,session = ctx.bot.session)
-    source_image = sr_client.petpet(avatar=str(url))
-    image = await source_image.read()
+   
+    client = jeyyapi.JeyyAPIClient(session = ctx.bot.session)
+    image = await client.patpat(url)
+
   except Exception as e:
     print(e)
     return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
