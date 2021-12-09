@@ -474,29 +474,8 @@ class Image(commands.Cog):
   @commands.command(brief="work in progress")
   async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
     Member = Member or ctx.author
-    passes = False
-
-    if ctx.message.attachments:
-      for x in ctx.message.attachments:
-        try:
-          discord.utils._get_mime_type_for_image(await x.read())
-          passes = True
-        except discord.errors.InvalidArgument:
-          passes = False
-
-        if passes:
-          invert_time = functools.partial(utils.invert_func, await x.read())
-          file = await self.bot.loop.run_in_executor(None, invert_time)
-          return await ctx.send(file = file)
-
-    if not ctx.message.attachments or not passes:
-      url = (Member.display_avatar.replace(format = "png"))
-      invert_time = functools.partial(utils.invert_func, await url.read())
-
-      file = await self.bot.loop.run_in_executor(None, invert_time)
-      await ctx.send(file = file)
-
-    #make this invert use an api at some point
+    
+    
 
   @invert.error
   async def invert_error(self, ctx, error):
