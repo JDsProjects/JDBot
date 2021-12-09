@@ -112,7 +112,7 @@ class Test(commands.Cog):
         npm_response = await npm_response.json()
 
         data = utils.get_required_npm(npm_response)
-        
+        await ctx.send(embed = utils.npm_create_embed(data))
 
       else:
         await ctx.send(f"Could not find package **{args}** on npm.", allowed_mentions = discord.AllowedMentions.none())

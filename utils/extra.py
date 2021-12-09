@@ -97,7 +97,7 @@ def groupby(iterable : list, number : int):
     if not iterable: break
   return resp
 
-def get_required(data):
+def get_required_npm(data):
   latest = data["dist-tags"]["latest"]
   next = data["dist-tags"].get("next")
   version_data = data["versions"][latest]
@@ -119,7 +119,7 @@ def get_required(data):
       "dependencies" : dependencies
   }
 
-def create_embed(data : dict):
+def npm_create_embed(data : dict):
   e = discord.Embed(title = f"Package information for **{data.get('name')}**")
   e.add_field(name = "**Latest Version:**", value = f"```py\n{data.get('latest_version')}```", inline = False)
   e.add_field(name = "**Description:**", value = f"```py\n{data.get('description')}```", inline = False)
@@ -135,7 +135,11 @@ def create_embed(data : dict):
   for lib, min_version in data.get('dependencies', {}).items():
     dependencies.append([lib, min_version])
   
-  e.add_field(name = "Dependencies:", value = f"```py\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}```", inline = False)
+  string = ""
+  for i in dependencies:
+    string += f"{i[0]}       {i[1]}"    
+
+    e.add_field(name = "Dependencies:", value = f"```py\n{string}```", inline = False)
   if data.get("next_version"):
     e.add_field(name = "**Upcoming Version:**", value = f"```py\n{data.get('next_version')}```")
   return e
