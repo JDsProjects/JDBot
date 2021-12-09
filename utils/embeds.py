@@ -135,7 +135,7 @@ async def invert_converter(url, ctx):
   imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
   imgur_url = await imgur_client.upload(image)
   embed=discord.Embed(color = random.randint(0, 16777215))
-  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
+  embed.set_author(name=f"Inverted Image requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
   embed.set_image(url=imgur_url["link"])
   embed.set_footer(text="powered by some random api")
   
