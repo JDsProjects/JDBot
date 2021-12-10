@@ -22,8 +22,7 @@ class JDBot(commands.Bot):
 
   async def start(self, *args, **kwargs):
     self.session = aiohttp.ClientSession()
-    self.db = await aiosqlite.connect('sus_users.db')
-    self.db2 = await asyncpg.create_pool(os.getenv("DB_key"))
+    self.db = await asyncpg.create_pool(os.getenv("DB_key"))
 
     #loads up some bot variables
 
@@ -31,11 +30,11 @@ class JDBot(commands.Bot):
 
     #does the DB connection and then assigns it a tester list(may be a lot bit shorter but it should work better.)
 
-    self.blacklisted_users = dict(await self.db2.fetch("SELECT * FROM BLACKLISTED_USERS;"))
+    self.blacklisted_users = dict(await self.db.fetch("SELECT * FROM BLACKLISTED_USERS;"))
     
-    self.blacklisted_users.update(dict(await self.db2.fetch("SELECT * FROM SUS_USERS;")))
+    self.blacklisted_users.update(dict(await self.db.fetch("SELECT * FROM SUS_USERS;")))
 
-    self.history = [h.get("response") for h in await self.db2.fetch("SELECT * FROM RANDOM_HISTORY")]
+    self.history = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
     
     await super().start(*args, **kwargs)
 

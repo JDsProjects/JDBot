@@ -58,7 +58,7 @@ class Moderation(commands.Cog):
   async def scan_guild(self, ctx):
     if isinstance(ctx.channel, discord.TextChannel):
 
-      sus_users = dict(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
+      sus_users = dict(await self.bot.db.fetch("SELECT * FROM SUS_USERS;"))
       count = 0
 
       #some code here to do a list compreshion to see if they are cached using get_user, those who return as None will be passed to query_members
@@ -83,7 +83,7 @@ class Moderation(commands.Cog):
   @commands.command(brief = "scan globally per guild")
   async def scan_global(self, ctx):
     
-    sus_users = dict(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
+    sus_users = dict(await self.bot.db.fetch("SELECT * FROM SUS_USERS;"))
     
     ss_users = [await self.bot.try_user(u) for u in sus_users if not None]
 
@@ -108,7 +108,7 @@ class Moderation(commands.Cog):
   @commands.command(brief = "gives stats about the sus users", aliases = ["sususers_stats"])
   async def sus_users_stats(self, ctx):
     
-    sus_users = dict(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
+    sus_users = dict(await self.bot.db.fetch("SELECT * FROM SUS_USERS;"))
     await ctx.send(content = f"Total sus user count: {len(sus_users)}")
 
 
@@ -116,7 +116,7 @@ class Moderation(commands.Cog):
   async def is_sus(self, ctx, *, user : typing.Optional[discord.User] = None):
     user = user or ctx.author
 
-    result = await self.bot.db2.fetchrow("SELECT * FROM SUS_USERS WHERE user_id = ($1);", user.id)
+    result = await self.bot.db.fetchrow("SELECT * FROM SUS_USERS WHERE user_id = ($1);", user.id)
 
     if not result:
       await ctx.send(f"{user} is not in the sus list.")

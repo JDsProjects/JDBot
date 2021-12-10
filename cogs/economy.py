@@ -21,7 +21,7 @@ class Economy(commands.Cog):
     member = ctx.author
     add_money = 10
 
-    await self.bot.db2.execute("UPDATE economy SET wallet = wallet + ($1) WHERE user_id = ($2)", add_money, member.id)
+    await self.bot.db.execute("UPDATE economy SET wallet = wallet + ($1) WHERE user_id = ($2)", add_money, member.id)
 
     await ctx.send(f"You worked the basic job and got ${add_money}. (more jobs coming soon)")
 
@@ -31,7 +31,7 @@ class Economy(commands.Cog):
 
     member = member or ctx.author
 
-    economy = await self.bot.db2.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", member.id)
+    economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", member.id)
 
     if not economy:
       view = utils.BasicButtons(ctx)
@@ -52,9 +52,9 @@ class Economy(commands.Cog):
       if view.value:
         await ctx.send("adding you to the database for economy...")
 
-        await self.bot.db2.execute("INSERT INTO economy(user_id) VALUES ($1)", member.id)
+        await self.bot.db.execute("INSERT INTO economy(user_id) VALUES ($1)", member.id)
 
-        economy = await self.bot.db2.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", (member.id,))
+        economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", (member.id,))
 
     wallet = economy.get("wallet")
     bank = economy.get("bank")
@@ -71,7 +71,7 @@ class Economy(commands.Cog):
   @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
   async def leaderboard(self, ctx):
     
-    data = await self.bot.db2.fetch("SELECT * FROM economy ORDER BY wallet + BANK DESC")
+    data = await self.bot.db.fetch("SELECT * FROM economy ORDER BY wallet + BANK DESC")
 
     ndata = []
     for n in data:

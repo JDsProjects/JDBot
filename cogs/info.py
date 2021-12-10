@@ -317,7 +317,7 @@ class DevTools(commands.Cog):
 
   async def rtfm_lookup(self, program = None, *, args = None):
     
-    rtfm_dictionary = dict(await self.bot.db2.fetch("SELECT * FROM RTFM_DICTIONARY"))
+    rtfm_dictionary = dict(await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY"))
 
     if not args:
       return rtfm_dictionary.get(program)
@@ -551,7 +551,7 @@ class DevTools(commands.Cog):
   @commands.command(brief = "a command to view the rtfm DB")
   async def rtfm_view(self, ctx):
     
-    rtfm_dictionary = dict(await self.bot.db2.fetch("SELECT * FROM RTFM_DICTIONARY"))
+    rtfm_dictionary = dict(await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY"))
 
     pag = commands.Paginator()
     for g in rtfm_dictionary:

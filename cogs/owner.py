@@ -198,7 +198,7 @@ class Owner(commands.Cog):
       await ctx.reply("Please give me a reason why:")
       reason = await self.bot.wait_for("message", check= utils.check(ctx))
 
-      await self.bot.db2.execute("INSERT INTO sus_users VALUES ($1, $2)", user.id, reason.content)
+      await self.bot.db.execute("INSERT INTO sus_users VALUES ($1, $2)", user.id, reason.content)
       
       await ctx.send("added sus users, succesfully")
 
@@ -209,13 +209,13 @@ class Owner(commands.Cog):
 
     if user:
 
-      await self.bot.db2.execute("DELETE FROM sus_users WHERE user_id = $1", user.id)
+      await self.bot.db.execute("DELETE FROM sus_users WHERE user_id = $1", user.id)
 
       await ctx.send("Removed sus users.")
 
   @commands.command(brief="a command to grab all in the sus_users list")
   async def sus_users(self, ctx):
-    sus_users = await self.bot.db2.fetch("SELECT * FROM SUS_USERS;")
+    sus_users = await self.bot.db.fetch("SELECT * FROM SUS_USERS;")
    
     menu = ViewMenuPages(utils.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
@@ -337,7 +337,7 @@ class Owner(commands.Cog):
     if not name or not url or not name and not url:
       return await ctx.send("You need a name and also url.")
 
-    await self.bot.db2.execute("INSERT INTO RTFM_DICTIONARY VALUES ($1, $2)", name, url)
+    await self.bot.db.execute("INSERT INTO RTFM_DICTIONARY VALUES ($1, $2)", name, url)
 
     await ctx.send(f"added {name} and {url} to the rtfm DB")
 
@@ -346,7 +346,7 @@ class Owner(commands.Cog):
     if name is None:
       return await ctx.send("You can't remove None")
 
-    await self.bot.db2.execute("DELETE FROM RTFM_DICTIONARY WHERE name = $1", name)
+    await self.bot.db.execute("DELETE FROM RTFM_DICTIONARY WHERE name = $1", name)
     await ctx.send(f"Removed the rfm value {name}.")
 
   @commands.command(brief = "a command to save images to imgur(for owner only lol)")
@@ -377,7 +377,7 @@ class Owner(commands.Cog):
 
     if user:
       
-      await self.bot.db2.execute("DELETE FROM testers_list WHERE user_id = ($1)", user.id)
+      await self.bot.db.execute("DELETE FROM testers_list WHERE user_id = ($1)", user.id)
       
       if not user.id in self.bot.testers: 
         return await ctx.send(f"{user} isn't in the testers list.")
@@ -392,7 +392,7 @@ class Owner(commands.Cog):
       await ctx.send("You can't have a non existent user.")
 
     if user:
-      await self.bot.db2.execute("INSERT INTO testers_list VALUES ($1)", user.id)
+      await self.bot.db.execute("INSERT INTO testers_list VALUES ($1)", user.id)
       
       if not user.id in self.bot.testers: 
         self.bot.testers.append(user.id)
@@ -489,7 +489,7 @@ class Owner(commands.Cog):
     user = user or ctx.author  
     number = number or 100
 
-    await self.bot.db2.execute("UPDATE economy SET wallet = ($1) WHERE user_id = ($2)", number, user.id)
+    await self.bot.db.execute("UPDATE economy SET wallet = ($1) WHERE user_id = ($2)", number, user.id)
 
     await ctx.send(f"{user} succesfully now has ${number} in wallet.")
 
