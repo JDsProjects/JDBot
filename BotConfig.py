@@ -1,4 +1,4 @@
-import discord, re, os, aiohttp, aiosqlite, traceback, asyncpg
+import discord, re, os, aiohttp, traceback, asyncpg
 
 from discord.ext import commands
 

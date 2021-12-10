@@ -23,7 +23,6 @@ emoji = "^1.2.0"
 asyncpraw = "^7.3.1"
 tweepy = {git = "https://github.com/tweepy/tweepy.git"}
 doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
-aiosqlite = "^0.17.0"
 topggpy = "^1.1.0"
 autopep8 = "^1.5.7"
 yapf = "^0.31.0"
