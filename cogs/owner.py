@@ -197,10 +197,8 @@ class Owner(commands.Cog):
     if user:
       await ctx.reply("Please give me a reason why:")
       reason = await self.bot.wait_for("message", check= utils.check(ctx))
-      cur = await self.bot.db.cursor()
-      await cur.execute("INSERT INTO sus_users VALUES (?, ?)", (user.id, reason.content))
-      await self.bot.db.commit()
-      await cur.close()
+
+      await self.bot.db2.execute("INSERT INTO sus_users VALUES ($1, $2)", user.id, reason.content)
       
       await ctx.send("added sus users, succesfully")
 
@@ -210,19 +208,15 @@ class Owner(commands.Cog):
       await ctx.send("You can't have a none user.")
 
     if user:
-      cur = await self.bot.db.cursor()
-      await cur.execute("DELETE FROM sus_users WHERE user_id = ?", (user.id,))
-      await self.bot.db.commit()
-      await cur.close()
+
+      await self.bot.db2.execute("DELETE FROM sus_users WHERE user_id = $1", user.id)
+
       await ctx.send("Removed sus users.")
 
   @commands.command(brief="a command to grab all in the sus_users list")
   async def sus_users(self, ctx):
-    cur = await self.bot.db.cursor()
-    cursor = await cur.execute("SELECT * FROM SUS_USERS;")
-    sus_users = tuple(await cursor.fetchall())
-    await cur.close()
-    await self.bot.db.commit()  
+    sus_users = tuple(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
+   
     menu = ViewMenuPages(utils.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
@@ -494,14 +488,8 @@ class Owner(commands.Cog):
 
     user = user or ctx.author  
     number = number or 100
-    
-    cur = await self.bot.db.cursor()
 
-    await cur.execute("UPDATE economy SET wallet = (?) WHERE user_id = (?)", (number, user.id,))
-
-    await self.bot.db.commit()
-
-    await cur.close()
+    await self.bot.db2.execute("UPDATE economy SET wallet = ($1) WHERE user_id = ($2)", number, user.id)
 
     await ctx.send(f"{user} succesfully now has ${number} in wallet.")
 

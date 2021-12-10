@@ -144,7 +144,7 @@ class ServersEmbed(menus.ListPageSource):
 class SusUsersEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
     embed = discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
-    embed.add_field(name = f"User ID : {item[0]}", value = f"**Reason :** {item[1]}", inline = False)
+    embed.add_field(name = f"User ID : {item.get('user_id')}", value = f"**Reason :** {item.get('reason')}", inline = False)
     return embed
 
 class TestersEmbed(menus.ListPageSource):
