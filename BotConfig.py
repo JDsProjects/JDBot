@@ -24,6 +24,7 @@ class JDBot(commands.Bot):
     self.session = aiohttp.ClientSession()
     self.db = await aiosqlite.connect('sus_users.db')
     self.db2 = await asyncpg.create_pool(os.getenv("DB_key"))
+
     #loads up some bot variables
 
     self.testers = list(itertools.chain(* await self.db.execute_fetchall("SELECT * FROM testers_list;")))
