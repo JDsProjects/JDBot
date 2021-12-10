@@ -8,6 +8,54 @@ from jishaku.codeblocks import codeblock_converter
 
 import async_tio
 
+
+def npm_get_required(data):
+    latest = data["dist-tags"]["latest"]
+    next = data["dist-tags"].get("next")
+    version_data = data["versions"][latest]
+    name = version_data["name"]
+    description = version_data["description"]
+    authors = data.get("author", data.get("maintainers"))
+    license = version_data["license"]
+    _dependencies = version_data["dependencies"]
+    dependencies = {}
+    for lib, ver in _dependencies.items():
+        dependencies[lib] = ver.strip("^")
+    return {
+        "latest_version" : latest,
+        "next_version" : next,
+        "name" : name,
+        "description" : description,
+        "authors" : authors,
+        "license" : license,
+        "dependencies" : dependencies
+    }
+
+def npm_create_embed(data : dict):
+    e = discord.Embed(title = f"Package information for **{data.get('name')}**")
+    e.add_field(name = "**Latest Version:**", value = f"```py\n{data.get('latest_version')}```", inline = False)
+    e.add_field(name = "**Description:**", value = f"```py\n{data.get('description')}```", inline = False)
+    formatted_author = ""
+    if isinstance(data.get("authors"), list):
+        for author_data in data["authors"]:
+            formatted_author += f"Email: {author_data['email']}\nName: {author_data['name']}\n\n"
+    else:
+        formatted_author += f"Email: {data['authors']['email']}\n{data['authors']['name']}"
+    e.add_field(name = "**Author:**", value = f"```yaml\n{formatted_author}```", inline = False)
+    e.add_field(name = "**License:**", value = f"```\n{data.get('license')}```", inline = False)
+    dependencies = []
+    for lib, min_version in data.get('dependencies', {}).items():
+        dependencies.append([lib, min_version])
+    
+    string = ""
+    for i in dependencies:
+      string += f"{i[0]}   |   {i[1]}\n"
+
+    e.add_field(name = "Dependencies:", value = f"```py\n{string}```", inline = False)
+    if data.get("next_version"):
+        e.add_field(name = "**Upcoming Version:**", value = f"```py\n{data.get('next_version')}```")
+    return e
+
 class Test(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
@@ -25,8 +73,8 @@ class Test(commands.Cog):
   async def verify(self, ctx):
     await ctx.send("WIP will make this soon..")
 
-  async def cog_check(self, ctx):
-    return ctx.author.id in self.bot.testers
+  #async def cog_check(self, ctx):
+  #  return ctx.author.id in self.bot.testers
 
   async def cog_command_error(self, ctx, error):
     if ctx.command and not ctx.command.has_error_handler():
@@ -139,11 +187,11 @@ class Test(commands.Cog):
 
       if npm_response.ok:
         npm_response = await npm_response.json()
-
-        await ctx.send("WIP")
-
+        datas = npm_get_required(npm_response)
+        embed = npm_create_embed(datas)
+        await ctx.send(embed=embed)
       else:
-        await ctx.send(f"Could not find package **{args}** on npm.", allowed_mentions = discord.AllowedMentions.none())
+        await ctx.send(f"Package {args} does not exist.")
 
     else:
       await ctx.send("Please look for a library to get the info of.")
@@ -199,4 +247,4 @@ class Slash(commands.Cog):
 
 def setup(bot):
   bot.add_cog(Test(bot))
-  bot.add_cog(Slash(bot))
+  #bot.add_cog(Slash(bot))

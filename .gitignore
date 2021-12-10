@@ -4,3 +4,17 @@
 *.replit
 *.breakpoints
 #for replit users, for those who don't like replit well they can ask if they wish to host this with replit, if they do they can ask me what this is meant to do.
+
+
+
+#############################################################
+/Include
+/Lib
+/Scripts
+pyvenv.cfg
+/wordlist
+/unicode_characters
+/src
+*.env
+##############################################################
+# VENV
