@@ -317,10 +317,7 @@ class DevTools(commands.Cog):
 
   async def rtfm_lookup(self, program = None, *, args = None):
     
-    cur = await self.bot.db.cursor()
-    cursor=await cur.execute("SELECT * FROM RTFM_DICTIONARY")
-    rtfm_dictionary = dict(await cursor.fetchall())
-    await cur.close()
+    rtfm_dictionary = dict(await self.bot.db2.fetch("SELECT * FROM RTFM_DICTIONARY"))
 
     if not args:
       return rtfm_dictionary.get(program)
