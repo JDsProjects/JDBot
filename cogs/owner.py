@@ -408,10 +408,7 @@ class Owner(commands.Cog):
       await ctx.send("You can't have a non existent user.")
 
     if user:
-      cur = await self.bot.db.cursor()
-      await cur.execute("INSERT INTO testers_list VALUES (?)", (user.id,))
-      await self.bot.db.commit()
-      await cur.close()
+      await self.bot.db2.execute("INSERT INTO testers_list VALUES ($1)", user.id)
       
       if not user.id in self.bot.testers: 
         self.bot.testers.append(user.id)
