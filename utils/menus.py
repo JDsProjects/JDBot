@@ -102,11 +102,7 @@ def guild_join(guilds):
   return "\n".join(map(str, guilds))
 
 async def get_sus_reason(ctx, user):
-  cur = await ctx.bot.db.cursor()
-  cursor = await cur.execute("SELECT * FROM SUS_USERS;")
-  sus_users = dict(await cursor.fetchall())
-  await cur.close()
-  
+  sus_users = dict(await ctx.bot.db.fetch("SELECT * FROM SUS_USERS;"))
   return sus_users.get(user.id)
 
 def grab_mutualguilds(ctx, user):
