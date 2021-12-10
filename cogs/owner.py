@@ -196,11 +196,12 @@ class Owner(commands.Cog):
 
     if user:
       await ctx.reply("Please give me a reason why:")
-      reason = await self.bot.wait_for("message",check= utils.check(ctx))
+      reason = await self.bot.wait_for("message", check= utils.check(ctx))
       cur = await self.bot.db.cursor()
       await cur.execute("INSERT INTO sus_users VALUES (?, ?)", (user.id, reason.content))
       await self.bot.db.commit()
       await cur.close()
+      
       await ctx.send("added sus users, succesfully")
 
   @commands.command(brief="a command to remove sus users.")
