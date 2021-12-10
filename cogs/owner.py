@@ -215,7 +215,7 @@ class Owner(commands.Cog):
 
   @commands.command(brief="a command to grab all in the sus_users list")
   async def sus_users(self, ctx):
-    sus_users = tuple(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
+    sus_users = await self.bot.db2.fetch("SELECT * FROM SUS_USERS;")
    
     menu = ViewMenuPages(utils.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
