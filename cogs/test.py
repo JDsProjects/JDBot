@@ -8,9 +8,64 @@ from jishaku.codeblocks import codeblock_converter
 
 import async_tio
 
+def npm_create_embed(data : dict):
+    e = discord.Embed(title = f"Package information for **{data.get('name')}**")
+    e.add_field(name = "**Latest Version:**", value = f"```py\n{data.get('latest_version')}```", inline = False)
+    e.add_field(name = "**Description:**", value = f"```py\n{data.get('description')}```", inline = False)
+    formatted_author = ""
+    if isinstance(data.get("authors"), list):
+        for author_data in data["authors"]:
+            formatted_author += f"Email: {author_data['email']}\nName: {author_data['name']}\n\n"
+    else:
+        formatted_author += f"Email: {data['authors']['email']}\n{data['authors']['name']}"
+    e.add_field(name = "**Author:**", value = f"```yaml\n{formatted_author}```", inline = False)
+    e.add_field(name = "**License:**", value = f"```\n{data.get('license')}```", inline = False)
+    dependencies = []
+    for lib, min_version in data.get('dependencies', {}).items():
+        dependencies.append([lib, min_version])
+    
+    string = ""
+    for i in dependencies:
+      string += f"{i[0]}    |    {i[1]}\n"
+
+    e.add_field(name = "Dependencies:", value = f"```py\n{string}```", inline = False)
+    if data.get("next_version"):
+        e.add_field(name = "**Upcoming Version:**", value = f"```py\n{data.get('next_version')}```")
+    return e
+
+def npm_get_required(data):
+    latest = data["dist-tags"]["latest"]
+    next = data["dist-tags"].get("next")
+    version_data = data["versions"][latest]
+    name = version_data["name"]
+    description = version_data["description"]
+    authors = data.get("author", data.get("maintainers"))
+    license = version_data["license"]
+    _dependencies = version_data["dependencies"]
+    dependencies = {}
+    for lib, ver in _dependencies.items():
+        dependencies[lib] = ver.strip("^")
+    return {
+        "latest_version" : latest,
+        "next_version" : next,
+        "name" : name,
+        "description" : description,
+        "authors" : authors,
+        "license" : license,
+        "dependencies" : dependencies
+    }
+
 class Test(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
+
+  @commands.command()
+  async def npm(self, context : commands.Context, *, package_name : str):
+    session = self.bot.session
+    URI = f"https://registry.npmjs.com/{package_name}"
+    data = await (await session.get(URI)).json()
+    data = npm_get_required(data)
+    await context.send(embed = npm_create_embed(data))
 
   @commands.command()
   async def ticket_make(self, ctx):
