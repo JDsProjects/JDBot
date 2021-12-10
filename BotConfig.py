@@ -1,4 +1,4 @@
-import discord, re, os, aiohttp, aiosqlite, traceback, itertools, asyncpg
+import discord, re, os, aiohttp, aiosqlite, traceback, asyncpg
 
 from discord.ext import commands
 
@@ -31,9 +31,9 @@ class JDBot(commands.Bot):
 
     #does the DB connection and then assigns it a tester list(may be a lot bit shorter but it should work better.)
 
-    self.blacklisted_users = dict(await self.db.execute_fetchall("SELECT * FROM BLACKLISTED_USERS;"))
+    self.blacklisted_users = dict(await self.db2.fetch("SELECT * FROM BLACKLISTED_USERS;"))
     
-    self.blacklisted_users.update(dict(await self.db.execute_fetchall("SELECT * FROM SUS_USERS;")))
+    self.blacklisted_users.update(dict(await self.db2.fetch("SELECT * FROM SUS_USERS;")))
 
     self.history = [h.get("response") for h in await self.db2.fetch("SELECT * FROM RANDOM_HISTORY")]
     

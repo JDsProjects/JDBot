@@ -57,10 +57,8 @@ class Moderation(commands.Cog):
   @commands.command(help = "a command to scan for malicious bots, specificially ones that only give you random invites and are fake")
   async def scan_guild(self, ctx):
     if isinstance(ctx.channel, discord.TextChannel):
-      cur = await self.bot.db.cursor()
-      cursor = await cur.execute("SELECT * FROM SUS_USERS;")
-      sus_users = dict(await cursor.fetchall())
-      await cur.close()
+
+      sus_users = dict(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
       count = 0
 
       #some code here to do a list compreshion to see if they are cached using get_user, those who return as None will be passed to query_members
