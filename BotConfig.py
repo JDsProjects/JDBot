@@ -1,4 +1,5 @@
-import discord, re, os, aiohttp, contextlib, aiosqlite, traceback, itertools
+import discord, re, os, aiohttp, aiosqlite, traceback, itertools, asyncpg
+
 from discord.ext import commands
 
 async def get_prefix(bot, message):
@@ -22,6 +23,7 @@ class JDBot(commands.Bot):
   async def start(self, *args, **kwargs):
     self.session = aiohttp.ClientSession()
     self.db = await aiosqlite.connect('sus_users.db')
+
     #loads up some bot variables
 
     self.testers = list(itertools.chain(* await self.db.execute_fetchall("SELECT * FROM testers_list;")))
