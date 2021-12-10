@@ -236,15 +236,6 @@ class Owner(commands.Cog):
     menu = ViewMenuPages(utils.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
     await menu.start(ctx)
 
-  @commands.command()
-  async def update_sus(self, ctx):
-    await self.bot.db.commit()
-    await ctx.send("Updated SQL boss.")
-
-  @update_sus.error
-  async def update_sus_error(self, ctx, error):
-    await ctx.send(error)
-
   @commands.command(aliases=["bypass_command"])
   async def command_bypass(self, ctx ,user: utils.BetterUserconverter = None, *, command = None):
     #make sure to swap to autoconverter if it gets added.
