@@ -20,13 +20,8 @@ class Economy(commands.Cog):
 
     member = ctx.author
     add_money = 10
-    cur = await self.bot.db.cursor()
 
-    await cur.execute("UPDATE economy SET wallet = wallet + (?) WHERE user_id = (?)", (add_money, member.id,))
-
-    await self.bot.db.commit()
-
-    await cur.close()
+    await self.bot.db2.execute("UPDATE economy SET wallet = wallet + ($1) WHERE user_id = ($2)", add_money, member.id)
 
     await ctx.send(f"You worked the basic job and got ${add_money}. (more jobs coming soon)")
 
@@ -36,10 +31,7 @@ class Economy(commands.Cog):
 
     member = member or ctx.author
 
-    cur = await self.bot.db.cursor()
-    cursor = await cur.execute("SELECT * FROM economy WHERE user_id = (?)", (member.id,))
-    economy = await cursor.fetchone()
-    await cur.close()
+    economy = await self.bot.db2.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", member.id)
 
     if not economy:
       view = utils.BasicButtons(ctx)
@@ -60,20 +52,12 @@ class Economy(commands.Cog):
       if view.value:
         await ctx.send("adding you to the database for economy...")
 
-        cur = await self.bot.db.cursor()
-        await cur.execute("INSERT INTO economy(user_id) VALUES (?)", (member.id,))
-        await self.bot.db.commit()
+        await self.bot.db2.execute("INSERT INTO economy(user_id) VALUES ($1)", member.id)
 
-        cur = await self.bot.db.cursor()
-        cursor = await cur.execute("SELECT * FROM economy WHERE user_id = (?)", (member.id,))
+        economy = await self.bot.db2.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", (member.id,))
 
-        economy = await cursor.fetchone()
-        await cur.close()
-    
-
-    data = tuple(economy)
-    wallet = data[-1]
-    bank = data[1]
+    wallet = economy.get("wallet")
+    bank = economy.get("bank")
 
     embed = discord.Embed(title = f"{member}'s Balance:", color = random.randint(0, 16777215))
     embed.add_field(name = "Wallet:", value = f"${wallet}")
@@ -87,7 +71,7 @@ class Economy(commands.Cog):
   @commands.command(brief = "a leaderboard command goes from highest to lowest", aliases = ["lb"])
   async def leaderboard(self, ctx):
     
-    data = await self.bot.db.execute_fetchall("SELECT * FROM economy ORDER BY wallet + BANK DESC")
+    data = await self.bot.db2.fetch("SELECT * FROM economy ORDER BY wallet + BANK DESC")
 
     ndata = []
     for n in data:
