@@ -109,7 +109,6 @@ class Moderation(commands.Cog):
   async def sus_users_stats(self, ctx):
     
     sus_users = dict(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
-
     await ctx.send(content = f"Total sus user count: {len(sus_users)}")
 
 
@@ -117,10 +116,7 @@ class Moderation(commands.Cog):
   async def is_sus(self, ctx, *, user : typing.Optional[discord.User] = None):
     user = user or ctx.author
 
-    cur = await self.bot.db.cursor()
-    cursor = await cur.execute("SELECT * FROM SUS_USERS WHERE user_id = (?);", (user.id,))
-    result = await cursor.fetchone()
-    await cur.close()
+    result = await self.bot.db2.fetchrow("SELECT * FROM SUS_USERS WHERE user_id = ($1);", user.id)
 
     if not result:
       await ctx.send(f"{user} is not in the sus list.")
