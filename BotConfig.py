@@ -26,7 +26,7 @@ class JDBot(commands.Bot):
 
     #loads up some bot variables
 
-    self.testers = [u.get("user_id") for u in await self.db2.fetch("SELECT * FROM testers_list;")]
+    self.testers = [u.get("user_id") for u in await self.db.fetch("SELECT * FROM testers_list;")]
 
     #does the DB connection and then assigns it a tester list(may be a lot bit shorter but it should work better.)
 
