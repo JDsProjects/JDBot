@@ -390,10 +390,8 @@ class Owner(commands.Cog):
       await ctx.send("You can't have a non existent user.")
 
     if user:
-      cur = await self.bot.db.cursor()
-      await cur.execute("DELETE FROM testers_list WHERE user_id = ?", (user.id,))
-      await self.bot.db.commit()
-      await cur.close()
+      
+      await self.bot.db2.execute("DELETE FROM testers_list WHERE user_id = ($1)", user.id)
       
       if not user.id in self.bot.testers: 
         return await ctx.send(f"{user} isn't in the testers list.")
