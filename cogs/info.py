@@ -322,6 +322,8 @@ class DevTools(commands.Cog):
     if not args:
       return rtfm_dictionary.get(program)
 
+    #make this args check and dictionary thing work off of postgresql
+
     else:
       url = rtfm_dictionary.get(program)
 
@@ -548,10 +550,8 @@ class DevTools(commands.Cog):
 
   @commands.command(brief = "a command to view the rtfm DB")
   async def rtfm_view(self, ctx):
-    cur = await self.bot.db.cursor()
-    cursor=await cur.execute("SELECT * FROM RTFM_DICTIONARY")
-    rtfm_dictionary = dict(await cursor.fetchall())
-    await cur.close()
+    
+    rtfm_dictionary = dict(await self.bot.db2.fetch("SELECT * FROM RTFM_DICTIONARY"))
 
     pag = commands.Paginator()
     for g in rtfm_dictionary:

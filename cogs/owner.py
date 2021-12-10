@@ -351,10 +351,7 @@ class Owner(commands.Cog):
     if not name or not url or not name and not url:
       return await ctx.send("You need a name and also url.")
 
-    cur = await self.bot.db.cursor()
-    await cur.execute("INSERT INTO RTFM_DICTIONARY VALUES (?, ?)", (name, url))
-    await self.bot.db.commit()
-    await cur.close()
+    await self.bot.db2.execute("INSERT INTO RTFM_DICTIONARY VALUES ($1, $2)", name, url)
 
     await ctx.send(f"added {name} and {url} to the rtfm DB")
 
@@ -363,10 +360,7 @@ class Owner(commands.Cog):
     if name is None:
       return await ctx.send("You can't remove None")
 
-    cur = await self.bot.db.cursor()
-    await cur.execute("DELETE FROM RTFM_DICTIONARY WHERE name = ?", (name,))
-    await self.bot.db.commit()
-    await cur.close()
+    await self.bot.db2.execute("DELETE FROM RTFM_DICTIONARY WHERE name = $1", name)
     await ctx.send(f"Removed the rfm value {name}.")
 
   @commands.command(brief = "a command to save images to imgur(for owner only lol)")
