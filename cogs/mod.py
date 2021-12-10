@@ -82,10 +82,8 @@ class Moderation(commands.Cog):
   @commands.cooldown(1, 90, BucketType.user)
   @commands.command(brief = "scan globally per guild")
   async def scan_global(self, ctx):
-    cur = await self.bot.db.cursor()
-    cursor = await cur.execute("SELECT * FROM SUS_USERS;")
-    sus_users = dict(await cursor.fetchall())
-    await cur.close()
+    
+    sus_users = dict(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
     
     ss_users = [await self.bot.try_user(u) for u in sus_users if not None]
 
@@ -109,10 +107,8 @@ class Moderation(commands.Cog):
 
   @commands.command(brief = "gives stats about the sus users", aliases = ["sususers_stats"])
   async def sus_users_stats(self, ctx):
-    cur = await self.bot.db.cursor()
-    cursor = await cur.execute("SELECT * FROM SUS_USERS;")
-    sus_users = dict(await cursor.fetchall())
-    await cur.close()
+    
+    sus_users = dict(await self.bot.db2.fetch("SELECT * FROM SUS_USERS;"))
 
     await ctx.send(content = f"Total sus user count: {len(sus_users)}")
 
