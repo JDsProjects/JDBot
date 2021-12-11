@@ -28,7 +28,7 @@ class JDBot(commands.Bot):
 
     self.testers = [u.get("user_id") for u in await self.db.fetch("SELECT * FROM testers_list;")]
 
-    #does the DB connection and then assigns it a tester list(may be a lot bit shorter but it should work better.)
+    #does the DB connection and then assigns it a tester list
 
     self.blacklisted_users = dict(await self.db.fetch("SELECT * FROM BLACKLISTED_USERS;"))
     

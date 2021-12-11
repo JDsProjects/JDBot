@@ -347,7 +347,7 @@ class Owner(commands.Cog):
       return await ctx.send("You can't remove None")
 
     await self.bot.db.execute("DELETE FROM RTFM_DICTIONARY WHERE name = $1", name)
-    await ctx.send(f"Removed the rfm value {name}.")
+    await ctx.send(f"Removed the rtfm value {name}.")
 
   @commands.command(brief = "a command to save images to imgur(for owner only lol)")
   async def save_image(self, ctx):

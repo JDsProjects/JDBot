@@ -35,7 +35,7 @@ class gameChoice(discord.ui.View):
 class RtfmSelects(discord.ui.Select):
   def __init__(self):
     
-    super().__init__(placeholder = "Chose What Rtfm library to lookup from", min_values = 1, max_values = 28)
+    super().__init__(placeholder = "Chose What Rtfm library to lookup from", min_values = 1, max_values = 1)
 
   async def callback(self, interaction: discord.Interaction):
     pass
@@ -45,8 +45,6 @@ class RtfmChoice(discord.ui.View):
     super().__init__(**kwargs)
 
     self.ctx = ctx
-
-    
 
     self.add_item(RtfmSelects())
 
