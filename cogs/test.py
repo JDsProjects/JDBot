@@ -137,6 +137,7 @@ class Test(commands.Cog):
     await ctx.send("test time...", view = view)
 
 class Slash(commands.Cog):
+  """A Testing Category for Slash Commands"""
   def __init__(self, bot):
     self.bot = bot
 
