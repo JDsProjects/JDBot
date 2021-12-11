@@ -344,12 +344,12 @@ class DevTools(commands.Cog):
       reference = utils.reference(ctx.message)
       await ctx.send(embed = embed, reference = reference)
 
-  @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief = "a rtfm command that allows you to lookup at any library we support looking up(using selects)")
+  @commands.command(aliases=["rtd", "rtfs"], invoke_without_command = True, brief = "a rtfm command that allows you to lookup at any library we support looking up(using selects)")
   async def rtfm(self, ctx, *, args = None):
 
     rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
 
-    view = utils.RtfmChoice(ctx, rtfm_dictionary)
+    view = utils.RtfmChoice(ctx, rtfm_dictionary, timeout = 30.0)
 
     await ctx.send(content = "Please Pick a library you want to parse", view = view)
 

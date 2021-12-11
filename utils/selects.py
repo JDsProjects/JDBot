@@ -39,16 +39,17 @@ class RtfmSelects(discord.ui.Select):
   async def callback(self, interaction: discord.Interaction):
     self.view.value = self.values[0]
     self.view.clear_items()
-    await interaction.message.edit(content = f"You are now parsing...", view = self.view)
+    await interaction.message.delete()
     self.view.stop()
 
 class RtfmChoice(discord.ui.View):
   def __init__(self, ctx, libraries, **kwargs):
     super().__init__(**kwargs)
-
+    
+    self.value = libraries.values()
     self.ctx = ctx
     
-    self.add_item(RtfmSelects([discord.SelectOption(label = o['name'], value = o["link"]) for o in libraries]))
+    self.add_item(RtfmSelects([discord.SelectOption(label = o['name'], value = o["link"], emoji = "🔍") for o in libraries]))
 
   async def interaction_check(self, interaction: discord.Interaction):
     
