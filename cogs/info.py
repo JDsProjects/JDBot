@@ -317,17 +317,15 @@ class DevTools(commands.Cog):
 
   async def rtfm_lookup(self, program = None, *, args = None):
     
-    rtfm_dictionary = dict(await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY"))
+    rtfm_dictionary = dict(await self.bot.db.fetchrow("SELECT * FROM RTFM_DICTIONARY WHERE name = ($1)", program))
 
     if not args:
-      return rtfm_dictionary.get(program)
-
-    #make this args check and dictionary thing work off of postgresql
+      return rtfm_dictionary.get("link")
 
     else:
-      url = rtfm_dictionary.get(program)
+      url = rtfm_dictionary.get("link")
 
-      results = await self.scraper.search(args, page=url)
+      results = await self.scraper.search(args, page = url)
 
       if not results:
         return f"Could not find anything with {args}."
