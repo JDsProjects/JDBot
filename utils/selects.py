@@ -57,3 +57,9 @@ class RtfmChoice(discord.ui.View):
       return await interaction.response.send_message(content = f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.", ephemeral = True)
 
     return True
+
+  async def on_timeout(self):
+    for item in self.children:
+      item.disabled = True
+
+    await self.message.edit(content = "Here's the default...", view = self)

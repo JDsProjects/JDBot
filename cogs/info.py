@@ -351,7 +351,7 @@ class DevTools(commands.Cog):
 
     view = utils.RtfmChoice(ctx, rtfm_dictionary, timeout = 15.0)
 
-    await ctx.send(content = "Please Pick a library you want to parse", view = view)
+    view.message = await ctx.send(content = "Please Pick a library you want to parse", view = view)
 
     await view.wait()
 
