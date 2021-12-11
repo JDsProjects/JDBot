@@ -31,23 +31,24 @@ class gameChoice(discord.ui.View):
 
     return True
 
-
 class RtfmSelects(discord.ui.Select):
   def __init__(self, options):
     
-    super().__init__(placeholder = "Chose What Rtfm library to lookup from", min_values = 1, max_values = 1, options = options)
+    super().__init__(placeholder = "Chose a library to lookup from.", min_values = 1, max_values = 1, options = options)
 
   async def callback(self, interaction: discord.Interaction):
-    pass
+    self.view.value = self.values[0]
+    self.view.clear_items()
+    await interaction.message.edit(content = f"You are now parsing...", view = self.view)
+    self.view.stop()
 
 class RtfmChoice(discord.ui.View):
   def __init__(self, ctx, libraries, **kwargs):
     super().__init__(**kwargs)
 
     self.ctx = ctx
-
     
-    self.add_item(RtfmSelects([discord.SelectOption(label = o['name']) for o in libraries]))
+    self.add_item(RtfmSelects([discord.SelectOption(label = o['name'], value = o["link"]) for o in libraries]))
 
   async def interaction_check(self, interaction: discord.Interaction):
     

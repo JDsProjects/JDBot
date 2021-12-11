@@ -315,15 +315,12 @@ class DevTools(commands.Cog):
 
     self.scraper = AsyncScraper(session = self.bot.session)
 
-  async def rtfm_lookup(self, program = None, *, args = None):
+  async def rtfm_lookup(self, url = None, *, args = None):
     
-    rtfm_dictionary = dict(await self.bot.db.fetchrow("SELECT * FROM RTFM_DICTIONARY WHERE name = ($1)", program))
-
     if not args:
-      return rtfm_dictionary.get("link")
+      return url
 
     else:
-      url = rtfm_dictionary.get("link")
 
       results = await self.scraper.search(args, page = url)
 
@@ -347,7 +344,7 @@ class DevTools(commands.Cog):
       reference = utils.reference(ctx.message)
       await ctx.send(embed = embed, reference = reference)
 
-  @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief = "a rtfm command that allows you to lookup at any library we support looking up")
+  @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief = "a rtfm command that allows you to lookup at any library we support looking up(using selects)")
   async def rtfm(self, ctx, *, args = None):
 
     rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
@@ -356,150 +353,12 @@ class DevTools(commands.Cog):
 
     await ctx.send(content = "Please Pick a library you want to parse", view = view)
 
-    await ctx.trigger_typing()
-
-    #results = await self.rtfm_lookup(program = "latest", args = args)
-
-    #await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command idea", aliases=["py"])
-  async def python(self, ctx, *, args = None):
+    await view.wait()
 
     await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="python", args = args)
-    await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command to lookup stuff from newer discord.py a.k.a newer version.")
-  async def master(self, ctx, *, args = None):
-    
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="master", args = args)
-    await self.rtfm_send(ctx, results)
+    results = await self.rtfm_lookup(url =  view.value, args = args)
 
-  @rtfm.command(brief="a command to look up stuff from jishaku", aliases=["jsk"])
-  async def jishaku(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="jishaku", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse stuff from asyncpg")
-  async def asyncpg(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="asyncpg", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief= "a command to parse from tweepy")
-  async def tweepy(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="tweepy", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from aiogifs")
-  async def aiogifs(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="aiogifs", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from python-cse",name="python-cse")
-  async def python_cse(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="python-cse", args = args)
-    await self.rtfm_send(ctx, results)
-  
-  @rtfm.command(brief = "a command to parse from wavelink")
-  async def wavelink(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="wavelink", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(invoke_without_command = True, brief = "look up parser for motor")
-  async def motor(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="motor", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from dagpi")
-  async def dagpi(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="dagpi", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.group(brief = "a command to parse from pymongo", invoke_without_command = True)
-  async def pymongo(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="pymongo", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.group(brief = "a command to parse from aiohttp", invoke_without_command = True)
-  async def aiohttp(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="aiohttp", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from wand")
-  async def wand(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="wand", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from pillow")
-  async def pillow(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="pillow", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from aiosqlite")
-  async def aiosqlite(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="aiosqlite", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from pytube")
-  async def pytube(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="pytube", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from vt-py", aliases = ["vt-py"])
-  async def vt(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="vt-py", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from black")
-  async def black(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="black", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from asyncpraw")
-  async def asyncpraw(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="asyncpraw", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from dislash(for people who this package(yes discord.py people this helps them out so what) So yeah!)")
-  async def dislash(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program = "dislash", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from enchanced discord.py")
-  async def edpy(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program = "edpy", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from fusion.py", aliases = ["orion"])
-  async def fusion(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program = "fusion", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to parse from lark")
-  async def lark(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program = "lark", args = args)
     await self.rtfm_send(ctx, results)
 
   def charinfo_converter(self, string):
