@@ -9,6 +9,7 @@ from jishaku.codeblocks import codeblock_converter
 import async_tio
 
 class Test(commands.Cog):
+  """A cog to have people test new commands, or wip ones"""
   def __init__(self, bot):
     self.bot = bot
 

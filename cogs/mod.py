@@ -131,6 +131,7 @@ class Moderation(commands.Cog):
       jdjg = await self.bot.try_user(168422909482762240) 
       if (jdjg.dm_channel is None):
         await jdjg.create_dm()
+        
       embed = discord.Embed(color=random.randint(0, 16777215))
       embed.set_author(name=f"Report by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
       embed.add_field(name="Details:",value=args)
