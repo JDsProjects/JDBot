@@ -46,7 +46,7 @@ class RtfmChoice(discord.ui.View):
   def __init__(self, ctx, libraries, **kwargs):
     super().__init__(**kwargs)
     
-    self.value = [o.get("name") for o in libraries][0]
+    self.value = [o.get("link") for o in libraries][0]
     self.ctx = ctx
     
     self.add_item(RtfmSelects([discord.SelectOption(label = o['name'], value = o["link"], emoji = "🔍") for o in libraries]))
