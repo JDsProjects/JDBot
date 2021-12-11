@@ -350,10 +350,17 @@ class DevTools(commands.Cog):
   @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief = "a rtfm command that allows you to lookup at any library we support looking up")
   async def rtfm(self, ctx, *, args = None):
 
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program = "latest", args = args)
+    rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
 
-    await self.rtfm_send(ctx, results)
+    view = utils.RtfmChoice(ctx, rtfm_dictionary)
+
+    await ctx.send(content = "Please Pick a library you want to parse", view = view)
+
+    await ctx.trigger_typing()
+
+    #results = await self.rtfm_lookup(program = "latest", args = args)
+
+    #await self.rtfm_send(ctx, results)
 
   @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command idea", aliases=["py"])
   async def python(self, ctx, *, args = None):
