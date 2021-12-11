@@ -355,25 +355,11 @@ class DevTools(commands.Cog):
 
     await self.rtfm_send(ctx, results)
 
-  @rtfm.command(brief = "a command using japanese discord.py (based on R.danny's command my own code")
-  async def jp(self, ctx, *, args = None):
-
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="latest-jp", args = args)
-    await self.rtfm_send(ctx, results)
-
   @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command idea", aliases=["py"])
   async def python(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="python", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @rtfm.command(brief = "a command to lookup stuff from python3 docs based on R.danny's command idea(japanese)", aliases=["py-ja"], name="py-jp")
-  async def python_jp(self, ctx, *, args = None):
-
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="python-jp", args = args)
     await self.rtfm_send(ctx, results)
 
   @rtfm.command(brief = "a command to lookup stuff from newer discord.py a.k.a newer version.")
@@ -419,16 +405,10 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program="wavelink", args = args)
     await self.rtfm_send(ctx, results)
 
-  @rtfm.group(invoke_without_command = True, brief = "look up parser for motor")
+  @rtfm.command(invoke_without_command = True, brief = "look up parser for motor")
   async def motor(self, ctx, *, args = None):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="motor", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @motor.command(brief = "a command to parse from motor latest")
-  async def latest(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="motor-latest", args = args)
     await self.rtfm_send(ctx, results)
 
   @rtfm.command(brief = "a command to parse from dagpi")
@@ -443,22 +423,10 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program="pymongo", args = args)
     await self.rtfm_send(ctx, results)
 
-  @pymongo.command(brief = "a command to parse from pymongo latest", name="latest")
-  async def pymongo_latest(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="pymongo-latest", args = args)
-    await self.rtfm_send(ctx, results)
-
   @rtfm.group(brief = "a command to parse from aiohttp", invoke_without_command = True)
   async def aiohttp(self, ctx, *, args = None):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="aiohttp", args = args)
-    await self.rtfm_send(ctx, results)
-
-  @aiohttp.command(brief = "a command to parse from aiohttp latest", name="latest")
-  async def aiohttp_latest(self, ctx, *, args = None):
-    await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="aiohttp-latest", args = args)
     await self.rtfm_send(ctx, results)
 
   @rtfm.command(brief = "a command to parse from wand")
