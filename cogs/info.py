@@ -347,12 +347,12 @@ class DevTools(commands.Cog):
       reference = utils.reference(ctx.message)
       await ctx.send(embed = embed, reference = reference)
 
-
-  @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief="most of this is based on R.danny including the reference(but this is my own code). But it's my own implentation of it")
+  @commands.group(aliases=["rtd", "rtfs"], invoke_without_command = True, brief = "a rtfm command that allows you to lookup at any library we support looking up")
   async def rtfm(self, ctx, *, args = None):
 
     await ctx.trigger_typing()
-    results = await self.rtfm_lookup(program="latest", args = args)
+    results = await self.rtfm_lookup(program = "latest", args = args)
+
     await self.rtfm_send(ctx, results)
 
   @rtfm.command(brief = "a command using japanese discord.py (based on R.danny's command my own code")
