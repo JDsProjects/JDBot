@@ -349,7 +349,7 @@ class DevTools(commands.Cog):
 
     rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
 
-    view = utils.RtfmChoice(ctx, rtfm_dictionary, timeout = 30.0)
+    view = utils.RtfmChoice(ctx, rtfm_dictionary, timeout = 15.0)
 
     await ctx.send(content = "Please Pick a library you want to parse", view = view)
 
