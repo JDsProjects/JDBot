@@ -63,7 +63,7 @@ class Economy(commands.Cog):
     embed.add_field(name = "Wallet:", value = f"${wallet}")
     embed.add_field(name = "Bank:", value = f"${bank}")
     embed.add_field(name = "Total:", value = f"${wallet+bank}")
-    embed.add_field(name = "Currency:", value = "<:JDJGBucks:779516001782988810>")
+    embed.add_field(name = "Currency:", value = "<:jmoney:919431869928464404>")
     embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
     await ctx.send(embed = embed)
   
