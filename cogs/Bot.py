@@ -501,7 +501,7 @@ class Bot(commands.Cog):
 
     embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```")
 
-    embed.add_field(name = "Contributers", value="```Shadi#9492 \nMiddlle#0101```")
+    embed.add_field(name = "Contributers", value = "```Shadi#9492 \nMiddlle#0101 \nDutchy#6127```")
 
     embed.add_field(name = "Sponsors", value="```No current sponsors :(```")
 
