@@ -2,7 +2,7 @@ from discord.ext import commands
 from discord.ext.menus.views import ViewMenuPages
 import utils
 
-class MyHelp(commands.MinimalHelpCommand):
+class JDBotHelp(commands.MinimalHelpCommand):
   async def send_pages(self):
     menu = ViewMenuPages(utils.SendHelp(self.paginator.pages, per_page = 1), delete_message_after = True)
 
@@ -12,7 +12,7 @@ class Help(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
     self._original_help_command = bot.help_command
-    self.bot.help_command = MyHelp()
+    self.bot.help_command = JDBotHelp()
     self.bot.help_command.cog = self
 
   async def cog_command_error(self, ctx, error):
