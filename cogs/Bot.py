@@ -258,7 +258,7 @@ class Bot(commands.Cog):
     
     view = discord.ui.View()
     view.add_item(discord.ui.Button(label = f"Support Guild Invite", url = "https://discord.gg/sHUQCch", style = discord.ButtonStyle.link, row = 1))
-    await ctx.send("If you press the button you will be invited to our guild :D, you can also manually use sHUQCch", view = view)
+    await ctx.send("If you press the button you will be invited to our guild :D, you can also manually use discord.gg/sHUQCch", view = view)
 
   @commands.command(brief="This command gives you an alt bot to use",aliases=["alt_invite", "alt_bot"])
   async def verify_issue(self, ctx):
