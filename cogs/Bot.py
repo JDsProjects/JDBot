@@ -256,23 +256,9 @@ class Bot(commands.Cog):
   @commands.command(brief="Sends you an invite to the official Bot support guild",aliases=["guild_invite"])
   async def support_invite(self, ctx):
     
-    view = utils.BasicButtons(ctx)
-    msg = await ctx.send("You must agree with **\N{WHITE HEAVY CHECK MARK}** to have an invite link to our support server sent here before we can invite you", view = view)  
-
-    await view.wait()
-
-    if view.value is None:
-      await ctx.reply("You let me time out :(")
-      return await msg.delete()
-
-    if view.value:
-      await ctx.send(content = f"The Invite to the support guild is https://discord.gg/sHUQCch?")
-      return await msg.delete()
-
-    if not view.value:
-      await ctx.send(content=f" looks like you didn't agree to be invited. So We will not invite you! ")
-      return await msg.delete()
-
+    view = discord.ui.View()
+    view.add_item(discord.ui.Button(label = f"Support Guild Invite", url = "https://discord.gg/sHUQCch", style = discord.ButtonStyle.link, row = 1))
+    await ctx.send("If you press the button you will be invited to our guild :D, you can also manually use sHUQCch", view = view)
 
   @commands.command(brief="This command gives you an alt bot to use",aliases=["alt_invite", "alt_bot"])
   async def verify_issue(self, ctx):
