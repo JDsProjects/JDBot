@@ -178,7 +178,7 @@ class Extra(commands.Cog):
     embed.set_footer(text="Powered by JDJG Api!")
     await ctx.send(embed=embed)
 
-  @commands.command(help="a command to talk to Google TTS",brief="using the power of the GTTS module you can now do tts")
+  @commands.command(help="a command to talk to Google TTS",brief="using the power of the asyncgtts module you can now do tts")
   async def tts(self, ctx, * ,args = None):
     if args:
       await ctx.send("if you have a lot of text it may take a bit")
