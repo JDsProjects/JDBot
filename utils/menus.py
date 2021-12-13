@@ -1,5 +1,5 @@
-import discord, re, collections, random, emoji, aiohttp
-from discord.ext import commands, menus
+import discord, random, aiohttp
+from discord.ext import menus
 
 class InviteInfoEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
