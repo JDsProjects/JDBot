@@ -130,11 +130,19 @@ class Test(commands.Cog):
       self.ctx = ctx
       #going to use https://github.com/oliver-ni/discord-ext-menus-views/blob/master/discord/ext/menus/views/__init__.py as a small check on how the interaction checks work for menus and the buttons, but otherwise the rest will be handled by me.
       #This is a reference.
+
+    async def interaction_check(self, interaction: discord.Interaction):
+      return interaction.user.id in {self.ctx.bot.owner_id, self.ctx.author.id, *self.ctx.bot.owner_ids}
     
   @commands.command(brief = "trivia test")
   async def test_select(self, ctx):
     view = utils.gameChoice(ctx)
     await ctx.send("test time...", view = view)
+
+  @commands.command(brief = "test pagination")
+  async def pagination_test(self, ctx):
+    view = self.Pagination(ctx)
+    await ctx.send("Test...", view = view)
 
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
