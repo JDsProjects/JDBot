@@ -133,16 +133,16 @@ class Test(commands.Cog):
 
     async def interaction_check(self, interaction: discord.Interaction):
       return interaction.user.id in {self.ctx.bot.owner_id, self.ctx.author.id, *self.ctx.bot.owner_ids}
+
+  @commands.command(brief = "test pagination")
+  async def pagination_test(self, ctx):
+    view = self.Pagination(ctx)
+    await ctx.send("Test...", view = view)    
     
   @commands.command(brief = "trivia test")
   async def test_select(self, ctx):
     view = utils.gameChoice(ctx)
     await ctx.send("test time...", view = view)
-
-  @commands.command(brief = "test pagination")
-  async def pagination_test(self, ctx):
-    view = self.Pagination(ctx)
-    await ctx.send("Test...", view = view)
 
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
