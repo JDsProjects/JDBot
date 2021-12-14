@@ -138,13 +138,6 @@ class Owner(commands.Cog):
           
           except:
             await ctx.send("It couldn't delete the message in this guils so, I kept it here.")
-
-      webhook = discord.Webhook.from_url(os.environ["webhook1"], session = self.bot.session)
-      embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
-      embed.add_field(name="Update Info:",value=args)
-      embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
-      embed.set_footer(text="JDJG's Updates")
-      await webhook.send(embed=embed)
     
       webhook=discord.Webhook.from_url(os.environ["webhook99"], session = self.bot.session)
       embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
@@ -152,6 +145,8 @@ class Owner(commands.Cog):
       embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
       embed.set_footer(text="JDJG's Updates")
       await webhook.send(embed=embed)
+
+      await ctx.send("Sent Succesfully :D")
 
       if args is None:
         await ctx.send("You sadly can't use it like that.")
