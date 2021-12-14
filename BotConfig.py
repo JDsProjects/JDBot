@@ -73,7 +73,7 @@ async def check_command_access(ctx):
 
 @bot.check
 async def check_blacklist(ctx):
-  return ctx.author.id not in bot.blacklisted_users
+  return not ctx.author.id in bot.blacklisted_users
 
 @bot.check
 async def check_suspended(ctx):
