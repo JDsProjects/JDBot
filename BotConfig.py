@@ -75,13 +75,13 @@ async def check_command_access(ctx):
 async def check_blacklist(ctx):
   return ctx.author.id not in bot.blacklisted_users
 
+@bot.check
+async def check_suspended(ctx):
+  return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author) and ctx.bot.suspended
+
 for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
     try:
       bot.load_extension(f'cogs.{filename[:-3]}')
     except commands.errors.ExtensionError:
       traceback.print_exc()
-
-@bot.check
-async def check_suspended(ctx):
-  return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author) and ctx.bot.suspended
