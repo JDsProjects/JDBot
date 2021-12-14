@@ -66,7 +66,9 @@ bot.launch_time = discord.utils.utcnow()
 async def check_command_access(ctx):
   if ctx.command.name == bot.special_access.get(ctx.author.id):
     await ctx.command.reinvoke(ctx)
-  del bot.special_access[ctx.author.id]
+
+  if ctx.author.id in bot.special_access:
+    del bot.special_access[ctx.author.id]
   
   return True
 
