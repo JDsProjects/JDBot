@@ -101,6 +101,8 @@ class Owner(commands.Cog):
   async def status(self , ctx, *, args = None):
 
     await self.bot.change_presence(status=discord.Status.do_not_disturb, activity= discord.Activity(type=discord.ActivityType.watching,name=args))
+
+    await ctx.send("Changed succesfully...")
   
   @commands.command(brief="Only owner command to change bot's nickname")
   async def change_nick(self, ctx, *, name = None):
