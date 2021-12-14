@@ -36,7 +36,7 @@ class JDBot(commands.Bot):
 
     self.history = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
 
-    self.owner_only = False
+    self.suspended = False
     
     await super().start(*args, **kwargs)
 
@@ -83,3 +83,6 @@ for filename in os.listdir('./cogs'):
     except commands.errors.ExtensionError:
       traceback.print_exc()
 
+@bot.check
+async def check_suspended(ctx):
+  return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author) and ctx.bot.suspended
