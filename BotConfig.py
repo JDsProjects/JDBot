@@ -35,6 +35,8 @@ class JDBot(commands.Bot):
     self.blacklisted_users.update(dict(await self.db.fetch("SELECT * FROM SUS_USERS;")))
 
     self.history = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
+
+    self.owner_only = False
     
     await super().start(*args, **kwargs)
 

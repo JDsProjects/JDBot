@@ -530,11 +530,14 @@ class Owner(commands.Cog):
 
   @commands.command(brief = "suspends the bot so the bot is only usable by the owner")
   async def suspend(self, ctx):
+
+    self.bot.owner_only = True
     await ctx.send("Locked all commands to only owners of the bot.")
 
   @commands.command(brief = "unsuspends the bot, so the bot is running normally")
   async def unsuspend(self, ctx):
     
+    self.bot.owner_only = False
     await ctx.send("Unlock commands, so operation is running like normal.")
 
 def setup(bot):
