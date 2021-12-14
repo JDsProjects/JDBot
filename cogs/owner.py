@@ -527,7 +527,15 @@ class Owner(commands.Cog):
 
     else:
       await ctx.send("doesn't have permissions to send in that channel.")
+
+  @commands.command(brief = "suspends the bot so the bot is only usable by the owner")
+  async def suspend(self, ctx):
+    await ctx.send("Locked all commands to only owners of the bot.")
+
+  @commands.command(brief = "unsuspends the bot, so the bot is running normally")
+  async def unsuspend(self, ctx):
     
+    await ctx.send("Unlock commands, so operation is running like normal.")
 
 def setup(bot):
   bot.add_cog(Owner(bot))
