@@ -98,52 +98,43 @@ class Owner(commands.Cog):
     #I need to fix all cog_command_error
 
   @commands.command(brief="Changes Bot Status(Owner Only)")
-  async def status(self , ctx , * , args=None):
-    if await self.bot.is_owner(ctx.author):
-      if args:
-        await self.bot.change_presence(status=discord.Status.do_not_disturb, activity= discord.Activity(type=discord.ActivityType.watching,name=args))
-      if args is None:
-        await self.bot.change_presence(status=discord.Status.do_not_disturb)
-    if await self.bot.is_owner(ctx.author) is False:
-      await ctx.send("That's an owner only command")
+  async def status(self , ctx, *, args = None):
+
+    if args:
+      await self.bot.change_presence(status=discord.Status.do_not_disturb, activity= discord.Activity(type=discord.ActivityType.watching,name=args))
+
+    if args is None:
+      await self.bot.change_presence(status=discord.Status.do_not_disturb)
   
   @commands.command(brief="Only owner command to change bot's nickname")
-  async def change_nick(self, ctx ,*, name=None):
-    if await self.bot.is_owner(ctx.author):
+  async def change_nick(self, ctx, *, name = None):
       if isinstance(ctx.channel, discord.TextChannel):
         await ctx.send("Changing Nickname")
         try:
           await ctx.guild.me.edit(nick=name)
         except discord.Forbidden:
           await ctx.send("Appears not to have valid perms")
+
       if isinstance(ctx.channel,discord.DMChannel):
         await ctx.send("You can't use that in Dms.")
-      
-    if await self.bot.is_owner(ctx.author) is False:
-      await ctx.send("You can't use that command")
   
   @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only)")
   async def servers(self, ctx):
-    if await self.bot.is_owner(ctx.author):
 
-      pag = commands.Paginator()
-      for g in self.bot.guilds:
-       pag.add_line(f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}")
+    pag = commands.Paginator()
+    for g in self.bot.guilds:
+      pag.add_line(f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}")
 
-      pages = [page.strip("`") for page in pag.pages]
-      menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
+    pages = [page.strip("`") for page in pag.pages]
+    menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
 
-      if (ctx.author.dm_channel is None):
-        await ctx.author.create_dm()
+    if (ctx.author.dm_channel is None):
+      await ctx.author.create_dm()
 
-      await menu.start(ctx, channel = ctx.author.dm_channel)
-      
-    if await self.bot.is_owner(ctx.author) is False:
-      await ctx.send("You can't use that it's owner only")
+    await menu.start(ctx, channel = ctx.author.dm_channel)
 
   @commands.command(brief="only works with JDJG, but this command is meant to send updates to my webhook")
   async def webhook_update(self, ctx, *, args = None):
-    if await self.bot.is_owner(ctx.author):
       if args:
         if isinstance(ctx.channel, discord.TextChannel):
           try:
@@ -152,24 +143,22 @@ class Owner(commands.Cog):
           except:
             await ctx.send("It couldn't delete the message in this guils so, I kept it here.")
 
-        webhook = discord.Webhook.from_url(os.environ["webhook1"], session = self.bot.session)
-        embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
-        embed.add_field(name="Update Info:",value=args)
-        embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
-        embed.set_footer(text="JDJG's Updates")
-        await webhook.send(embed=embed)
-      
-        webhook=discord.Webhook.from_url(os.environ["webhook99"], session = self.bot.session)
-        embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
-        embed.add_field(name="Update Info:",value=args)
-        embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
-        embed.set_footer(text="JDJG's Updates")
-        await webhook.send(embed=embed)
+      webhook = discord.Webhook.from_url(os.environ["webhook1"], session = self.bot.session)
+      embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
+      embed.add_field(name="Update Info:",value=args)
+      embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
+      embed.set_footer(text="JDJG's Updates")
+      await webhook.send(embed=embed)
+    
+      webhook=discord.Webhook.from_url(os.environ["webhook99"], session = self.bot.session)
+      embed=discord.Embed(title="Update",color=(35056),timestamp=(ctx.message.created_at))
+      embed.add_field(name="Update Info:",value=args)
+      embed.set_author(name="JDJG's Update",icon_url='https://i.imgur.com/pdQkCBv.png')
+      embed.set_footer(text="JDJG's Updates")
+      await webhook.send(embed=embed)
 
       if args is None:
         await ctx.send("You sadly can't use it like that.")
-    if await self.bot.is_owner(ctx.author) is False:
-      await ctx.send("You can't use that")
 
   @commands.command(brief="Commands to see what guilds a person is in.")
   async def mutualguilds(self, ctx, *, user: utils.BetterUserconverter = None):
@@ -464,24 +453,20 @@ class Owner(commands.Cog):
 
   @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only) but with join dates updated.")
   async def servers2(self, ctx):
-    if await self.bot.is_owner(ctx.author):
 
-      sorted_guilds = sorted(self.bot.guilds, key=lambda guild: guild.me.joined_at)
+    sorted_guilds = sorted(self.bot.guilds, key=lambda guild: guild.me.joined_at)
 
-      pag = commands.Paginator()
-      for g in sorted_guilds:
-       pag.add_line(f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n")
+    pag = commands.Paginator()
+    for g in sorted_guilds:
+      pag.add_line(f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n")
 
-      pages = [page.strip("`") for page in pag.pages]
-      menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
+    pages = [page.strip("`") for page in pag.pages]
+    menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
 
-      if (ctx.author.dm_channel is None):
-        await ctx.author.create_dm()
+    if (ctx.author.dm_channel is None):
+      await ctx.author.create_dm()
 
-      await menu.start(ctx, channel = ctx.author.dm_channel)
-      
-    if await self.bot.is_owner(ctx.author) is False:
-      await ctx.send("You can't use that it's owner only")
+    await menu.start(ctx, channel = ctx.author.dm_channel)
 
   @commands.command(brief = "changes money of people(for moderation of economy)")
   async def money(self, ctx, user : typing.Optional[discord.User] = None, *, number : typing.Optional[int] = None):
