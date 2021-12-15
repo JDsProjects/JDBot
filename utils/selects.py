@@ -3,7 +3,7 @@ import discord
 class JobSelects(discord.ui.Select):
   def __init__(self, options):
     
-    super().__init__(placeholder = "Chose a library to lookup from.", min_values = 1, max_values = 1, options = options)
+    super().__init__(placeholder = "Chose a Job to do.", min_values = 1, max_values = 1, options = options)
 
   async def callback(self, interaction: discord.Interaction):
     self.view.value = self.values[0]
@@ -12,13 +12,13 @@ class JobSelects(discord.ui.Select):
     self.view.stop()
 
 class JobChoice(discord.ui.View):
-  def __init__(self, ctx, libraries, **kwargs):
+  def __init__(self, ctx, jobs, **kwargs):
     super().__init__(**kwargs)
     
-    self.value = [o.get("amount_paid") for o in libraries][0]
+    self.value = [o.get("amount_paid") for o in jobs][0]
     self.ctx = ctx
     
-    self.add_item(JobSelects([discord.SelectOption(label = o['job_name'], value = o["amount_paid"], emoji = "🔍") for o in libraries]))
+    self.add_item(JobSelects([discord.SelectOption(label = o['job_name'], value = o["amount_paid"], emoji = "🧑‍💼") for o in jobs]))
 
   async def interaction_check(self, interaction: discord.Interaction):
     
