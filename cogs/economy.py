@@ -17,13 +17,21 @@ class Economy(commands.Cog):
   @commands.cooldown(1, 20, BucketType.user)
   @commands.command(brief = "you can pick a job and then work it in this work command")
   async def work(self, ctx):
+    
+    jobs = await self.bot.db.fetch("SELECT * FROM jobs")
 
-    member = ctx.author
-    add_money = 10
+    view = utils.JobChoice(ctx, jobs, timeout = 15.0)
+    
+    await ctx.send("Please pick a job to do", view = view)
+    await view.wait()
 
-    await self.bot.db.execute("UPDATE economy SET wallet = wallet + ($1) WHERE user_id = ($2)", add_money, member.id)
+    job =  await self.bot.db.fetchrow("SELECT * FROM jobs WHERE job_name = $1", view.value)
 
-    await ctx.send(f"You worked the basic job and got ${add_money}. (more jobs coming soon)")
+    add_money = job.get("amount_paid")
+
+    await self.bot.db.execute("UPDATE economy SET wallet = wallet + ($1) WHERE user_id = ($2)", add_money, ctx.author.id)
+
+    await ctx.send(f"You worked as a {job.get('job_name')} and got ${add_money} for working.")
 
   @commands.cooldown(1, 15, BucketType.user)
   @commands.command(brief = "a command to send how much money you have", help = "using the JDBot database you can see how much money you have", aliases = ["bal"])

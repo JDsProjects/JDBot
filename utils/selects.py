@@ -15,10 +15,10 @@ class JobChoice(discord.ui.View):
   def __init__(self, ctx, jobs, **kwargs):
     super().__init__(**kwargs)
     
-    self.value = [o.get("amount_paid") for o in jobs][0]
+    self.value = [o.get("job_name") for o in jobs][0]
     self.ctx = ctx
     
-    self.add_item(JobSelects([discord.SelectOption(label = o['job_name'], value = o["amount_paid"], emoji = "🧑‍💼") for o in jobs]))
+    self.add_item(JobSelects([discord.SelectOption(label = o['job_name'], emoji = "🧑‍💼") for o in jobs]))
 
   async def interaction_check(self, interaction: discord.Interaction):
     
