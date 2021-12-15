@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, os
+import discord, random, os, traceback
 
 class Events(commands.Cog):
   def __init__(self, bot):
@@ -78,12 +78,20 @@ class Events(commands.Cog):
   
   @commands.Cog.listener()
   async def on_error(event, *args, **kwargs):
-    import traceback
     more_information=os.sys.exc_info()
     error_wanted=traceback.format_exc()
     traceback.print_exc()
     
     #print(more_information[0])
+
+  #@commands.Cog.listener()
+  #async def on_command_error(self, ctx, exception):
+
+    #print(ctx)
+    #print(exception)
+    #traceback.print_exc()
+
+    #wip and stuff, needs to check if something has a mini command handler, and such.
 
   @commands.Cog.listener()
   async def on_member_join(self, member):
