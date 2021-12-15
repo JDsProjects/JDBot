@@ -1,5 +1,7 @@
 from discord.ext import commands
-import discord, random, os, traceback
+import discord, random, os, traceback, re
+import utils
+from discord.ext.menus.views import ViewMenuPages
 
 class Events(commands.Cog):
   def __init__(self, bot):
@@ -75,6 +77,18 @@ class Events(commands.Cog):
       embed_message.set_footer(text = f"{message.author.id}")
       embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
       await self.bot.get_channel(855217084710912050).send(embed=embed_message)
+
+    if re.fullmatch(rf"<@!?{self.bot.user.id}>", message.content):
+
+      prefixes=await self.bot.get_prefix(test)
+      pag = commands.Paginator()
+      for p in prefixes:
+        pag.add_line(f"{p}")
+
+      pages = [page.strip("`") for page in pag.pages]
+
+      menu = ViewMenuPages(utils.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
+      await menu.start(test)
   
   @commands.Cog.listener()
   async def on_error(event, *args, **kwargs):
