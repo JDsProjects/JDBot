@@ -75,6 +75,8 @@ class Events(commands.Cog):
       embed_message.set_footer(text = f"{message.author.id}")
       embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
       await self.bot.get_channel(855217084710912050).send(embed=embed_message)
+
+    #error occured here, sorry
   
   @commands.Cog.listener()
   async def on_error(event, *args, **kwargs):
