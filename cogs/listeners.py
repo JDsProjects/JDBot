@@ -75,10 +75,6 @@ class Events(commands.Cog):
       embed_message.set_footer(text = f"{message.author.id}")
       embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
       await self.bot.get_channel(855217084710912050).send(embed=embed_message)
-
-    if test.prefix is None and self.bot.user.mentioned_in(message) and test.valid is False and message.author.id != self.bot.user.id and test.prefix != "":
-      await test.send("Test")
-      #failed lol
   
   @commands.Cog.listener()
   async def on_error(event, *args, **kwargs):
