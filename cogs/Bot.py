@@ -200,7 +200,7 @@ class Bot(commands.Cog):
     embed.add_field(name="User Count:",value=len(self.bot.users))
     embed.add_field(name="True Command Count:",value=f"{len(list(self.bot.walk_commands()))}")
     embed.add_field(name="Command Count:",value=f"{len(self.bot.commands)}")
-    embed.add_field(name = "Usable Command Count:", value=f"{len(await self.bot.filter_commands(ctx, self.bot.commands))}")
+    embed.add_field(name = "Usable Command Count:", value=f"{len(await utils.filter_commands(ctx, self.bot.commands))}")
     embed.add_field(name = "Approximate Member Count:", value = f"{sum(g.member_count for g in self.bot.guilds)}")
     embed.set_footer(text = f"if you at all don't get what this means, you can ask our support team, if you do understand you can ask for clarification")
     await ctx.send(embed = embed)
@@ -277,7 +277,7 @@ class Bot(commands.Cog):
 
       all_commands = list(self.bot.walk_commands())
     
-      command_names = [f"{x}" for x in await self.bot.filter_commands(ctx, all_commands)]
+      command_names = [f"{x}" for x in await utils.filter_commands(ctx, all_commands)]
 
       #only reason why it's like this is uh, it's a bit in variable.
 

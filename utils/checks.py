@@ -33,3 +33,13 @@ def mutual_guild_check(ctx, user):
   mutual_guilds2 = set(user.mutual_guilds)
 
   return bool(mutual_guilds.intersection(mutual_guilds2))
+
+async def filter_commands(ctx, command_list):
+  async def check(cmd, ctx):
+    try:
+      return await cmd.can_run(ctx)
+
+    except:
+      return False
+      
+  return [cmd for cmd in command_list if await check(cmd, ctx)]

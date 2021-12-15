@@ -44,17 +44,6 @@ class JDBot(commands.Bot):
     await self.db.close()
     await super().close()
 
-  async def filter_commands(self, ctx, command_list):
-
-    async def check(cmd, ctx):
-      try:
-        return await cmd.can_run(ctx)
-
-      except:
-        return False
-        
-    return [cmd for cmd in command_list if await check(cmd, ctx)]
-
 
 intents = discord.Intents.all()
 
