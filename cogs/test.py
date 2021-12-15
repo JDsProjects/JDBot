@@ -121,8 +121,6 @@ class Test(commands.Cog):
 
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
-  #Job_data in sql database
-  #jobs for you to do will come later.
 
   class Pagination(discord.ui.View):
     def __init__(self, ctx, **kwargs):
