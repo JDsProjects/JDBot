@@ -137,12 +137,7 @@ class Test(commands.Cog):
   @commands.command(brief = "test pagination")
   async def pagination_test(self, ctx):
     view = self.Pagination(ctx)
-    await ctx.send("Test...", view = view)    
-    
-  @commands.command(brief = "trivia test")
-  async def test_select(self, ctx):
-    view = utils.gameChoice(ctx)
-    await ctx.send("test time...", view = view)
+    await ctx.send("Test...", view = view)
 
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
