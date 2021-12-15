@@ -1,7 +1,5 @@
 import discord
 
-import discord
-
 class JobSelects(discord.ui.Select):
   def __init__(self, options):
     
