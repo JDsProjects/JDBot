@@ -22,7 +22,7 @@ class Economy(commands.Cog):
 
     view = utils.JobChoice(ctx, jobs, timeout = 15.0)
     
-    view.message = await ctx.send("Please pick a job to do", view = view)
+    view.message = await ctx.send("Please Pick a job to do:", view = view)
     await view.wait()
 
     job =  await self.bot.db.fetchrow("SELECT * FROM jobs WHERE job_name = $1", view.value)
