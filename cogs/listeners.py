@@ -80,7 +80,7 @@ class Events(commands.Cog):
 
     if re.fullmatch(rf"<@!?{self.bot.user.id}>", message.content):
 
-      prefixes=await self.bot.get_prefix(test)
+      prefixes=await self.bot.get_prefix(message)
       pag = commands.Paginator()
       for p in prefixes:
         pag.add_line(f"{p}")

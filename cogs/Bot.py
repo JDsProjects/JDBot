@@ -541,7 +541,7 @@ class Bot(commands.Cog):
 
   @commands.command(brief = "bug about massive Test")
   async def test_bug(self, ctx):
-    await ctx.send(f"If you are a moderator please contact JDJG Inc. Official#3493, I made a mistake when doing the checks for just doing {self.bot.user.mention}")
+    await ctx.send(f"If you are a moderator please contact JDJG Inc. Official#3493, I made a mistake when doing the checks for just doing {self.bot.user.mention}, if you get a massive error or something wrong please contact me, thanks :D")
 
 def setup(bot):
   bot.add_cog(Bot(bot))
