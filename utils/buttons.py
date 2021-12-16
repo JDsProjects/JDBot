@@ -30,11 +30,11 @@ class BasicButtons(discord.ui.View):
     return True
 
 class dm_or_ephemeral(discord.ui.View):
-  def __init__(self, ctx, paginator_objects : list = None, channel : discord.DMChannel = None, **kwargs):
+  def __init__(self, ctx, items : list = None, channel : discord.DMChannel = None, **kwargs):
     super().__init__(**kwargs)
     self.ctx = ctx
     self.channel = channel
-    self.paginator_objects = paginator_objects
+    self.items = items
 
   @discord.ui.button(label = "Secret Message(Ephemeral)", style = discord.ButtonStyle.success, emoji = "🕵️")
   async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
