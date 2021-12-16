@@ -93,7 +93,7 @@ class Info(commands.Cog):
     
     view = utils.dm_or_ephemeral(ctx, pages)
     
-    view.msg = await ctx.send("Pick A way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds", embed = embed, view = view)
+    view.message = await ctx.send("Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds", embed = embed, view = view)
 
   async def cog_command_error(self, ctx, error):
     if ctx.command or not ctx.command.has_error_handler():
