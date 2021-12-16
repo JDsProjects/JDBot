@@ -1,5 +1,5 @@
 from discord.ext import commands, tasks
-import os, logging, discordlists, discord, topgg
+import os, logging, discordlists, topgg
 
 class DSLCount(commands.Cog):
   def __init__(self, bot):
