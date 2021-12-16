@@ -40,7 +40,7 @@ class dm_or_ephemeral(discord.ui.View):
   async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
 
     self.clear_items()
-    await self.message(content = "Will be sending you the mutual guilds empherally", view = self)
+    await self.message.edit(content = "Will be sending you the mutual guilds empherally", view = self)
     
     await interaction.response.send_message("WIP, coming soon :tm:")
     
