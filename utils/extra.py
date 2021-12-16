@@ -1,4 +1,4 @@
-import discord, random, aiogtts, tabulate
+import discord, random, aiogtts, tabulate, mystbin
 import io
 
 async def google_tts(text):
@@ -79,10 +79,9 @@ def cc_generate():
  8107ECA2 {bit_generator()}00""".upper()
 
 async def post(bot, code):
-  async with bot.session.post("https://bin.charles-bot.com/documents", data = code, headers = {"Accept": "application/json"}) as resp:
-      data = await resp.json()
-      url = f"https://bin.charles-bot.com/{data['key']}"
-      return url
+  mystbin_client = mystbin.Client(session = bot.session)
+  paste = await mystbin_client.post(code)
+  return paste.url
 
 #thanks Dutchy for this :D, though this has some issues that need to be fixed.
 
