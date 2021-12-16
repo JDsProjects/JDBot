@@ -128,9 +128,9 @@ class Info(commands.Cog):
       message_emojis = ""
       for x in ctx.guild.emojis:
         message_emojis = message_emojis+" "+str(x)+"\n"
-      mystbin_client = mystbin.Client(session=self.bot.session)
-      paste = await mystbin_client.post(message_emojis)
-      await ctx.send(paste.url)
+        
+      paste = await utils.post(self.bot, message_emojis)
+      await ctx.send(paste)
       
     if isinstance(ctx.channel, discord.DMChannel):
       await ctx.send("We can't use that in DMS as it takes emoji regex and puts it into a paste.")

@@ -372,12 +372,13 @@ class Extra(commands.Cog):
   async def cookieclicker_save(self, ctx):
     import io
 
-    mystbin_client = mystbin.Client(session=self.bot.session)
-    paste=await mystbin_client.get("https://mystb.in/ClubsFloppyElections.perl")
+    mystbin_client = mystbin.Client(session = self.bot.session)
+    paste = await mystbin_client.get("https://mystb.in/ClubsFloppyElections.perl")
     s = io.StringIO()
     s.write(paste.paste_content)
     s.seek(0)
-    await ctx.reply("The save editor used: https://coderpatsy.bitbucket.io/cookies/v10466/editor.html \n Warning may be a bit cursed. (because of the grandmas having madness at this level.) \n To be Used with https://orteil.dashnet.org/cookieclicker/",file=discord.File(s, filename="cookie_save.txt"))
+    
+    await ctx.reply("The save editor used: https://coderpatsy.bitbucket.io/cookies/v10466/editor.html \n Warning may be a bit cursed. (because of the grandmas having madness at this level.) \n To be Used with https://orteil.dashnet.org/cookieclicker/",file = discord.File(s, filename="cookie_save.txt"))
 
   @commands.command()
   async def call_text(self, ctx, *, args = None):
@@ -445,13 +446,12 @@ class Extra(commands.Cog):
 
     page = "\n".join(f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {msg.content}" for msg in messages)
 
-    mystbin_client = mystbin.Client(session=self.bot.session)
     try:
-      paste = await mystbin_client.post(page)
+      paste = await utils.post(self.bot, page)
     except:
       return await ctx.send("failed posting back of messages")
 
-    await ctx.author.send(content=f"Added text file to mystbin: \n{paste.url}")
+    await ctx.author.send(content=f"Added text file to mystbin: \n{paste}")
 
   @commands.cooldown(1, 40, BucketType.user)
   @commands.command(brief = "allows you to review recent embeds", aliases = ["embedhistory", "embed_history"])
