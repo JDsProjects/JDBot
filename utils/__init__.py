@@ -5,3 +5,4 @@ from .buttons import *
 from .embeds import *
 from .checks import *
 from .selects import *
+from .paginators import *
