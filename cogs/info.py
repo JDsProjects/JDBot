@@ -679,7 +679,7 @@ class DevTools(commands.Cog):
                           
     embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
 
-    embed.set_footer(text = "Powered Tio.run")
+    embed.set_footer(text = "Powered by Tio.run")
 
     await ctx.send(content = "I executed your code in a sandbox", embed = embed)
 
