@@ -7,8 +7,8 @@ class Events(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
   
-  @commands.Cog.listener()
-  async def on_guild_join(self, guild):
+  @commands.Cog.listener('on_guild_join')
+  async def guild_join_log(self, guild):
     channels = [channel for channel in guild.channels]
     roles = roles= [role for role in guild.roles]
     embed = discord.Embed(title = f"Bot just joined : {guild.name}", color=random.randint(0,16777215))
@@ -26,8 +26,8 @@ class Events(commands.Cog):
     embed.add_field(name='Amount of Roles:',value=f"{len(roles)}")
     await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-  @commands.Cog.listener()
-  async def on_guild_remove(self, guild):
+  @commands.Cog.listener('on_guild_remove')
+  async def guild_remove_log(self, guild):
     channels = [channel for channel in guild.channels]
     roles = roles= [role for role in guild.roles]
     embed = discord.Embed(title = f"Bot just left : {guild.name}", color = random.randint(0,16777215))
@@ -54,15 +54,18 @@ class Events(commands.Cog):
     embed.add_field(name='Amount of Roles:',value=f"{len(roles)}")
     await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-  @commands.Cog.listener()
-  async def on_ready(self):
+  @commands.Cog.listener('on_ready')
+  async def bot_startup(self):
     print("Bot is Ready")
     print(f"Logged in as {self.bot.user}")
     print(f"Id: {self.bot.user.id}")
 
-  @commands.Cog.listener()
-  async def on_message(self, message):
+  @commands.Cog.listener('on_message')
+  async def message_checks(self, message):
     test = await self.bot.get_context(message)
+
+    if message == "<@!347265035971854337>":
+      await message.channel.send("My prefixes are `test*`, `te*`, `t*`, `jdbot.`, `jd.`, `test.`, and `te.`, you can use any of those prefixes for commands.")
     
     if isinstance(message.channel, discord.DMChannel):
       if test.prefix is None or self.bot.user.mentioned_in(message):
@@ -90,14 +93,21 @@ class Events(commands.Cog):
       menu = ViewMenuPages(utils.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
       await menu.start(test)
   
+<<<<<<< Updated upstream
   @commands.Cog.listener()
   async def on_error(event, *args, **kwargs):
+=======
+  @commands.Cog.listener('on_error')
+  async def error_handler(event, *args, **kwargs):
+    import traceback
+>>>>>>> Stashed changes
     more_information=os.sys.exc_info()
     error_wanted=traceback.format_exc()
     traceback.print_exc()
     
     #print(more_information[0])
 
+<<<<<<< Updated upstream
   #@commands.Cog.listener()
   #async def on_command_error(self, ctx, exception):
 
@@ -109,17 +119,20 @@ class Events(commands.Cog):
 
   @commands.Cog.listener()
   async def on_member_join(self, member):
+=======
+  @commands.Cog.listener('on_member_join')
+  async def member_join_log(self, member):
+>>>>>>> Stashed changes
     print(member)
     #currently wip btw
 
-  @commands.Cog.listener()
-  async def on_guild_available(self, guild):
-    print(f"{guild} is avaible")
+  @commands.Cog.listener('on_guild_available')
+  async def guild_available_event(self, guild):
+    print(f"{guild.name}({guild.id}) is avaible")
 
-  @commands.Cog.listener()
-  async def on_guild_unavailable(self, guild):
-    print(f"{guild} is unavaible")
-
+  @commands.Cog.listener('on_guild_unavailable')
+  async def guild_unavailable_event(self, guild):
+    print(f"{guild.name}({guild.id}) is unavaible")
 
 def setup(bot):
   bot.add_cog(Events(bot))
