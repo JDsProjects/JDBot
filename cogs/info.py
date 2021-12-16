@@ -1,10 +1,11 @@
 from discord.ext import commands
-import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio
+import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio, async_tio
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 from doc_search import AsyncScraper
 from discord.ext.menus.views import ViewMenuPages
+from jishaku.codeblocks import codeblock_converter
 
 class Info(commands.Cog):
   def __init__(self, bot):
@@ -654,6 +655,35 @@ class DevTools(commands.Cog):
 
     else:
       await ctx.send("Please look for a library to get the info of.")
+
+  @commands.cooldown(1, 30, BucketType.user)
+  @commands.command(brief = "runs some code in a sandbox(based on Soos's Run command)", aliases = ["eval", "run", "sandbox"])
+  async def console(self, ctx, *, code: codeblock_converter = None):
+
+    if not code:
+      return await ctx.send("You need to give me some code to use, otherwise I can not determine what it is.")
+
+    if not code.language:
+      return await ctx.send("You Must provide a language to use")
+
+    if not code.content:
+      return await ctx.send("No code provided")
+
+    tio = await async_tio.Tio(session = self.bot.session)
+
+    output = await tio.execute(f"{code.content}", language = f"{code.language}")
+
+    paste = await utils.post(self.bot, code = f"{output}")
+
+    text_returned = (f"```{code.language}\n{output}```" if len(f"{output}") < 1025 else paste)
+
+    embed = discord.Embed(title = f"Your code exited with code {output.exit_status}", description = f"{text_returned}", color = 242424)
+                          
+    embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
+
+    embed.set_footer(text = "Powered Tio.run")
+
+    await ctx.send(content = "I executed your code in a sandbox", embed = embed)
 
 def setup(bot):
   bot.add_cog(Info(bot))

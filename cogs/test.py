@@ -4,9 +4,6 @@ import utils
 from discord.ext.commands.cooldowns import BucketType
 
 import collections, itertools
-from jishaku.codeblocks import codeblock_converter
-
-import async_tio
 
 class Test(commands.Cog):
   """A cog to have people test new commands, or wip ones"""
@@ -66,34 +63,7 @@ class Test(commands.Cog):
   @commands.command(brief = "add emoji to your guild lol")
   async def emoji_add(self, ctx):
     await ctx.send("WIP")
-    #look at the JDJG Bot orginal  
-
- 
-  @commands.command(brief = "runs some code in a sandbox(based on Soos's Run command)", aliases = ["eval", "run", "sandbox"])
-  async def console(self, ctx, *, code: codeblock_converter = None):
-
-    if not code:
-      return await ctx.send("You need to give me some code to use, otherwise I can not determine what it is.")
-
-    if not code.language:
-      return await ctx.send("You Must provide a language to use")
-
-    if not code.content:
-      return await ctx.send("No code provided")
-
-    tio = await async_tio.Tio(session = self.bot.session)
-
-    output = await tio.execute(f"{code.content}", language = f"{code.language}")
-
-    paste = await utils.post(self.bot, code = f"{output}")
-
-    text_returned = (f"```{code.language}\n{output}```" if len(output) < 1025 else paste)
-
-    embed = discord.Embed(title = f"Your code exited with code {output.exit_status}", description = f"{text_returned}", color = 242424)
-                          
-    embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
-
-    await ctx.send(embed = embed)
+    #look at the JDJG Bot orginal
 
   @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
   async def _source(self, ctx, *, command = None):
