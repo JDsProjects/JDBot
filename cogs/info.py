@@ -673,9 +673,7 @@ class DevTools(commands.Cog):
 
     output = await tio.execute(f"{code.content}", language = f"{code.language}")
 
-    paste = await utils.post(self.bot, code = f"{output}")
-
-    text_returned = (f"```{code.language}\n{output}```" if len(f"{output}") < 200 else paste)
+    text_returned = (f"```{code.language}\n{output}```" if len(f"{output}") < 200 else await utils.post(self.bot, code = f"{output}"))
 
     embed = discord.Embed(title = f"Your code exited with code {output.exit_status}", description = f"{text_returned}", color = 242424)
                           
