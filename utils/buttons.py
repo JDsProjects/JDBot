@@ -30,9 +30,10 @@ class BasicButtons(discord.ui.View):
     return True
 
 class dm_or_ephemeral(discord.ui.View):
-  def __init__(self, ctx, paginator_objects : list = None , **kwargs):
+  def __init__(self, ctx, paginator_objects : list = None, channel : None, **kwargs):
     super().__init__(**kwargs)
     self.ctx = ctx
+    self.channel = channel
     self.paginator_objects = paginator_objects
     self.value: str = None
 
@@ -40,7 +41,7 @@ class dm_or_ephemeral(discord.ui.View):
   async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
 
     self.clear_items()
-    await self.message(content = "Will be sending you the mutual guilds empherally", view = self)
+    await self.message.edit(content = "Will be sending you the mutual guilds empherally", view = self)
     
     await interaction.response.send_message("WIP, coming soon :tm:")
     
@@ -53,6 +54,8 @@ class dm_or_ephemeral(discord.ui.View):
     self.clear_items()
     await self.message.edit(content = "Well be Dming you the Mutual Guilds", view = self)
     await interaction.response.send_message("WIP, coming soon :tm:")
+
+    #do something by sending the menu paginator to the channel provided
 
   @discord.ui.button(label="Deny", style = discord.ButtonStyle.danger , emoji = "❌")
   async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
