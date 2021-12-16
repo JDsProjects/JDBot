@@ -95,19 +95,6 @@ class Test(commands.Cog):
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
 
-  class Pagination(discord.ui.View):
-    def __init__(self, ctx, **kwargs):
-      super().__init__(**kwargs)
-      self.ctx = ctx
-
-    async def interaction_check(self, interaction: discord.Interaction):
-      
-      if not interaction.user.id in {self.ctx.bot.owner_id, self.ctx.author.id, *self.ctx.bot.owner_ids}:
-
-        return await interaction.response.send_message(content = f"You Can't use this paginator, {self.ctx.author.mention} is the paginator master.", ephemeral = True)
-
-      return True
-
   @commands.command(brief = "test pagination")
   async def pagination_test(self, ctx):
     view = self.Pagination(ctx)
