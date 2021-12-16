@@ -92,8 +92,8 @@ class Events(commands.Cog):
   
   @commands.Cog.listener()
   async def on_error(event, *args, **kwargs):
-    more_information=os.sys.exc_info()
-    error_wanted=traceback.format_exc()
+    more_information = os.sys.exc_info()
+    error_wanted = traceback.format_exc()
     traceback.print_exc()
     
     #print(more_information[0])
@@ -105,7 +105,7 @@ class Events(commands.Cog):
     #print(exception)
     #traceback.print_exc()
 
-    #wip and stuff, needs to check if something has a mini command handler, and such.
+    #wip and stuff, needs to check if something has a mini command handler, and such. 
 
   @commands.Cog.listener()
   async def on_member_join(self, member):
