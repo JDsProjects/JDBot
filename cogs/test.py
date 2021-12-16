@@ -118,10 +118,6 @@ class Slash(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-  @commands.command(brief = "says hi to you", slash_command = False)
-  async def hi(self, ctx):
-    await ctx.send(f"hi {ctx.author}")
-
 def setup(bot):
   bot.add_cog(Test(bot))
   bot.add_cog(Slash(bot))

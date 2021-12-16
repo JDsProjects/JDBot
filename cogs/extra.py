@@ -770,7 +770,10 @@ class Extra(commands.Cog):
     embed = discord.Embed(timestamp = ctx.message.created_at, title = "Urban Dictionary", description=f"**Search:** {search}\n\n**Result:** {result['word']}\n```fix\n{definition}```", color = 242424)
     embed.set_author(name = f"Requested by {ctx.author}", icon_url = ctx.author.display_avatar.url)
     await ctx.send(embed = embed)
-      
+
+  @commands.command(brief = "says hi to you")
+  async def hi(self, ctx):
+    await ctx.send(f"hi {ctx.author}")
 
 def setup(bot):
   bot.add_cog(Extra(bot))
