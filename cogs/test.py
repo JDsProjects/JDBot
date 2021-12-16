@@ -69,13 +69,11 @@ class Test(commands.Cog):
     #look at the JDJG Bot orginal  
 
  
-  @commands.command(brief = "runs some code in a sandbox(based on Soos's Run command)", aliases = ["eval", "run",])
+  @commands.command(brief = "runs some code in a sandbox(based on Soos's Run command)", aliases = ["eval", "run", "sandbox"])
   async def console(self, ctx, *, code: codeblock_converter = None):
 
     if not code:
       return await ctx.send("You need to give me some code to use, otherwise I can not determine what it is.")
-
-    #look at the JDJG Bot orginal and other evals also well look at run commands too
 
     if not code.language:
       return await ctx.send("You Must provide a language to use")
@@ -87,10 +85,15 @@ class Test(commands.Cog):
 
     output = await tio.execute(f"{code.content}", language = f"{code.language}")
 
-    print(output)
+    paste = await utils.post(self.bot, code = f"{output}")
 
-  #Refer to this: https://github.com/soosBot-com/soosBot/blob/bb544e4c702d8bc444a21eb6a6802c685a463001/extensions/programming.py#L17
-  #https://github.com/Tom-the-Bomb/async-tio
+    text_returned = (f"```{code.language}\n{output}```" if len(output) < 1025 else paste)
+
+    embed = discord.Embed(title = f"Your code exited with code {output.exit_status}", description = f"{text_returned}", color = 242424)
+                          
+    embed.set_author(name = f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
+
+    await ctx.send(embed = embed)
 
   @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
   async def _source(self, ctx, *, command = None):
