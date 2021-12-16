@@ -675,7 +675,7 @@ class DevTools(commands.Cog):
 
     paste = await utils.post(self.bot, code = f"{output}")
 
-    text_returned = (f"```{code.language}\n{output}```" if len(f"{output}") < 1025 else paste)
+    text_returned = (f"```{code.language}\n{output}```" if len(f"{output}") < 200 else paste)
 
     embed = discord.Embed(title = f"Your code exited with code {output.exit_status}", description = f"{text_returned}", color = 242424)
                           
