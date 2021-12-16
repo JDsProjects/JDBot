@@ -36,18 +36,25 @@ class dm_or_ephemeral(discord.ui.View):
     self.paginator_objects = paginator_objects
     self.value: str = None
 
-  @discord.ui.button(label = "Secret Message", style = discord.ButtonStyle.success, emoji = "🕵️")
+  @discord.ui.button(label = "Secret Message(Empherall)", style = discord.ButtonStyle.success, emoji = "🕵️")
   async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+    self.clear_items()
+    #await interaction.response.edit_message(view = self)
+    
+    await interaction.response.send_message("WIP, coming soon :tm:")
+    
+    #view = await interaction.response.send_message(f"Here are mutual guilds for you to see {self.ctx.author.mention}", view = view, ephemeral = True)
+    #tbh i don't know yet.
+
+  @discord.ui.button(label = "Secret Message(DM)", style = discord.ButtonStyle.success, emoji = "📥")
+  async def dmMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
 
     self.clear_items()
     await interaction.response.edit_message(view = self)
 
-    #view = 
-    #await interaction.response.send_message(f"Here are mutual guilds for you to see {self.ctx.author.mention}", view = view, ephemeral = True)
-    #tbh i don't know yet.
-
-  @discord.ui.button(label = "Secret Message", style = discord.ButtonStyle.success, emoji = "📥")
-  async def dmMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
+  @discord.ui.button(label="Deny", style = discord.ButtonStyle.danger , emoji = "❌")
+  async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
 
     self.clear_items()
     await interaction.response.edit_message(view = self)

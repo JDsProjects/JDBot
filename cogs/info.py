@@ -81,40 +81,19 @@ class Info(commands.Cog):
     embed.set_image(url = user.display_avatar.url)
     #I need some way to make this look better and be more constient.
     
-    view = utils.BasicButtons(ctx)
-    msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
+    guilds_list = utils.grab_mutualguilds(ctx, user)
 
-    await view.wait()
+    pag = commands.Paginator()
 
-    if view.value is None:
-      return await msg.edit("you didn't respond quickly enough")
+    for g in guilds_list:
+      pag.add_line(f"{g}")
 
-    if not view.value:
-      await msg.edit("Not sending the mutual guilds list to you.")
-
-    if view.value:
-      pag = commands.Paginator()
-
-      guilds_list = utils.grab_mutualguilds(ctx, user)
-
-      for g in guilds_list:
-        pag.add_line(f"{g}")
-
-      pages = [page.strip("`") for page in pag.pages]
-      pages = pages or ["None"]
-
-      view = utils.dm_or_ephemeral(ctx, pages)
-
-      await ctx.send("Opening another buttons response.", view = view)
-      
-      await ctx.send(f"Currently WIP, so dms it is.")
-
-      menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page = 1), delete_message_after = True)
-
-      if (ctx.author.dm_channel is None):
-        await ctx.author.create_dm()
-
-      await menu.start(ctx, channel = ctx.author.dm_channel)
+    pages = [page.strip("`") for page in pag.pages]
+    pages = pages or ["None"]
+    
+    view = utils.dm_or_ephemeral(ctx, pages)
+    
+    view.msg = await ctx.send("Pick A way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds", embed = embed, view = view)
 
   async def cog_command_error(self, ctx, error):
     if ctx.command or not ctx.command.has_error_handler():

@@ -137,7 +137,7 @@ class Bot(commands.Cog):
 
     embed.set_image(url = owner.display_avatar.url)
     
-    view = utils.BasicButtons(ctx)
+    view = utils.dm_or_ephemeral(ctx)
     msg = await ctx.send("do you want the mutual guilds to be dmed or secretly sent to you?(both will require more buttons to be hit)", embed = embed, view = view)
 
     await view.wait()
