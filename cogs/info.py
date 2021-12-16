@@ -8,6 +8,7 @@ from discord.ext.menus.views import ViewMenuPages
 from jishaku.codeblocks import codeblock_converter
 
 class Info(commands.Cog):
+  "Gives you Information about data you are allowed to access"
   def __init__(self, bot):
     self.bot = bot
 
@@ -289,6 +290,7 @@ class Info(commands.Cog):
 
 
 class DevTools(commands.Cog):
+  "Helpful commands for developers in general"
   def __init__(self, bot):
     self.bot = bot
     bot.loop.create_task(self.__ainit__())

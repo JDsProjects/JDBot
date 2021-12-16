@@ -6,6 +6,7 @@ from discord.ext.commands.cooldowns import BucketType
 from discord.ext.menus.views import ViewMenuPages
 
 class Bot(commands.Cog):
+  "Basic info about the bot and quick commands to get you access to support"
   def __init__(self, bot):
     self.bot = bot
     self.status_task.start()

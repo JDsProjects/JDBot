@@ -4,6 +4,7 @@ import utils
 from discord.ext.menus.views import ViewMenuPages
 
 class Image(commands.Cog):
+  "A bunch of Image Manipulation and other related Image commands"
   def __init__(self, bot): 
     self.bot = bot
 

@@ -5,6 +5,7 @@ import utils
 from discord.ext.commands.cooldowns import BucketType
 
 class Dice(commands.Cog):
+  "Commands that rely a ton on random chance"
   def __init__(self, bot):
     self.bot = bot
 

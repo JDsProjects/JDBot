@@ -9,6 +9,7 @@ from aiogifs.tenor import TenorClient, ContentFilter
 from aiogifs.giphy import GiphyClient, AgeRating
 
 class Order(commands.Cog):
+  "Commands to get (images or gifs) or search results from very specific apis like tenor, giphy, and google custom search"
   def __init__(self, bot):
     self.bot = bot
     bot.loop.create_task(self.__ainit__())

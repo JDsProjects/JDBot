@@ -5,6 +5,7 @@ from discord.ext.commands.cooldowns import BucketType
 from discord.ext.menus.views import ViewMenuPages
 
 class Moderation(commands.Cog):
+  "Commands For Moderators to use"
   def __init__(self, bot):
     self.bot = bot
 

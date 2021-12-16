@@ -5,6 +5,7 @@ from discord.ext.commands.cooldowns import BucketType
 from discord.ext.menus.views import ViewMenuPages
     
 class Economy(commands.Cog):
+  "Commands dealing with the Bot's Economy"
   def __init__(self, bot):
     self.bot = bot
 

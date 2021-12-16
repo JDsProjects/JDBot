@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord, re, random, aiohttp
 
 class Webhook(commands.Cog):
+  "Commands dealing with webhooks"
   def __init__(self, bot):
     self.bot = bot
 

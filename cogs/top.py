@@ -2,6 +2,7 @@ from discord.ext import commands, tasks
 import os, logging, discordlists, topgg
 
 class DSLCount(commands.Cog):
+  "Speacil Manager for publishing guild count and user count."
   def __init__(self, bot):
     self.bot = bot
     self.token = os.environ["topgg_key"]

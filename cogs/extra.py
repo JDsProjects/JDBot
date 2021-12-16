@@ -5,6 +5,7 @@ import utils
 from discord.ext.menus.views import ViewMenuPages
 
 class Extra(commands.Cog):
+  "Uncategorized Commands, these are more random commands"
   def __init__(self, bot):
     self.bot = bot
     bot.loop.create_task(self.__ainit__())
@@ -14,7 +15,7 @@ class Extra(commands.Cog):
 
     self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session = self.bot.session)
 
-  @commands.command(brief="a way to look up minecraft usernames",help="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
+  @commands.command(brief="a way to look up minecraft usernames",help = "using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)")
   async def mchistory(self, ctx, *, args = None):
     
     if args is None:

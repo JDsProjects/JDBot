@@ -3,6 +3,7 @@ import discord, re
 from better_profanity import profanity
 
 class Global(commands.Cog):
+  "Global Chat Commands"
   def __init__(self, bot):
     self.bot = bot
 
@@ -33,8 +34,6 @@ class Global(commands.Cog):
     if not ctx.guild: embed.set_thumbnail(url = "https://i.imgur.com/3ZUrjUP.png")
     
     await ctx.send(f"Here's what it would look like in Global Chat!", embed = embed)
-
-  
 
 def setup(bot):
   bot.add_cog(Global(bot))

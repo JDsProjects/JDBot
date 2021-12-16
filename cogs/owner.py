@@ -5,6 +5,7 @@ import traceback, textwrap
 from discord.ext.menus.views import ViewMenuPages
 
 class Owner(commands.Cog):
+  "Owner Only Commands"
   def __init__(self, bot):
     self.bot = bot
 

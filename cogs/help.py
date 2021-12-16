@@ -9,6 +9,7 @@ class JDBotHelp(commands.MinimalHelpCommand):
     await menu.start(self.context)
 
 class Help(commands.Cog):
+  "The Help Menu Cog"
   def __init__(self, bot):
     self.bot = bot
     self._original_help_command = bot.help_command

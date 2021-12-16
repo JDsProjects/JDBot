@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord, asyncpraw , os, random, tweepy, functools
 
 class Reddit(commands.Cog):
+  "Commands to get random memes from Reddit"
   def __init__(self, bot):
     self.bot = bot
     bot.loop.create_task(self.__ainit__())
@@ -53,6 +54,7 @@ class Reddit(commands.Cog):
     #I need to fix all cog_command_error
 
 class Twitter(commands.Cog):
+  "Commands related to Twitter"
   def __init__(self, bot):
     self.bot = bot
   
