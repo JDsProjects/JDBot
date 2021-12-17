@@ -521,5 +521,29 @@ class Owner(commands.Cog):
     self.bot.suspended = False
     await ctx.send("Unlock commands, so operation is running like normal.")
 
+  @commands.command(brief="A command to add sus_users with a reason")
+  async def blacklist(self, ctx, *, user: utils.BetterUserconverter = None):
+    if user is None:
+      await ctx.send("can't have a user be none.")
+
+    if user:
+      await ctx.reply("Please give me a reason why:")
+      reason = await self.bot.wait_for("message", check= utils.check(ctx))
+
+      await self.bot.db.execute("INSERT INTO BLACKLISTED_USERS VALUES ($1, $2)", user.id, reason.content)
+      
+      await ctx.send(f"blacklisted {user}, succesfully")
+
+  @commands.command(brief="a command to remove sus users.")
+  async def unblacklist(self, ctx, *, user: utils.BetterUserconverter = None):
+    if user is None:
+      await ctx.send("You can't have a none user.")
+
+    if user:
+
+      await self.bot.db.execute("DELETE FROM BLACKLISTED_USERS WHERE user_id = $1", user.id)
+
+      await ctx.send(f"unblacklisted {user}, succesfully")
+
 def setup(bot):
   bot.add_cog(Owner(bot))
