@@ -521,7 +521,7 @@ class Owner(commands.Cog):
     self.bot.suspended = False
     await ctx.send("Unlock commands, so operation is running like normal.")
 
-  @commands.command(brief="A command to add sus_users with a reason")
+  @commands.command(brief = "A command to blacklist users with a reason")
   async def blacklist(self, ctx, *, user: utils.BetterUserconverter = None):
     if user is None:
       await ctx.send("can't have a user be none.")
@@ -534,7 +534,7 @@ class Owner(commands.Cog):
       
       await ctx.send(f"blacklisted {user}, succesfully")
 
-  @commands.command(brief="a command to remove sus users.")
+  @commands.command(brief = "a command to blacklist users with a reason")
   async def unblacklist(self, ctx, *, user: utils.BetterUserconverter = None):
     if user is None:
       await ctx.send("You can't have a none user.")
@@ -544,6 +544,13 @@ class Owner(commands.Cog):
       await self.bot.db.execute("DELETE FROM BLACKLISTED_USERS WHERE user_id = $1", user.id)
 
       await ctx.send(f"unblacklisted {user}, succesfully")
+
+  @commands.command(brief="a command to grab all in the blacklisted_users list")
+  async def blacklisted(self, ctx):
+    blacklisted_users = await self.bot.db.fetch("SELECT * FROM BLACKLISTED_USERS;")
+   
+    menu = ViewMenuPages(utils.BlacklistedUsersEmbed( blacklisted_users, per_page = 1), delete_message_after = True)
+    await menu.start(ctx)
 
 def setup(bot):
   bot.add_cog(Owner(bot))

@@ -137,6 +137,12 @@ class SusUsersEmbed(menus.ListPageSource):
     embed.add_field(name = f"User ID : {item.get('user_id')}", value = f"**Reason :** {item.get('reason')}", inline = False)
     return embed
 
+class BlacklistedUsersEmbed(menus.ListPageSource):
+  async def format_page(self, menu, item):
+    embed = discord.Embed(title = "Users Blacklisted by JDJG Inc. Official", color = random.randint(0, 16777215))
+    embed.add_field(name = f"User ID : {item.get('user_id')}", value = f"**Reason :** {item.get('reason')}", inline = False)
+    return embed
+
 class TestersEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
     embed = discord.Embed(title = "Testing Users:", color = random.randint(0, 16777215))
