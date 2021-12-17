@@ -36,7 +36,7 @@ async-tio = "^1.1.0"
 jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi", branch = "main"}
 tabulate = "^0.8.9"
 asyncpg = "^0.25.0"
-bs4 = "^0.0.1"
+beautifulsoup4 = "^4.10.0"
 
 [tool.poetry.dev-dependencies]
 
