@@ -69,9 +69,9 @@ class Economy(commands.Cog):
     bank = economy.get("bank")
 
     embed = discord.Embed(title = f"{member}'s Balance:", color = random.randint(0, 16777215))
-    embed.add_field(name = "Wallet:", value = f"${wallet}")
-    embed.add_field(name = "Bank:", value = f"${bank}")
-    embed.add_field(name = "Total:", value = f"${wallet+bank}")
+    embed.add_field(name = "Wallet:", value = f"${wallet:,}")
+    embed.add_field(name = "Bank:", value = f"${bank:,}")
+    embed.add_field(name = "Total:", value = f"${wallet+bank:,}")
     embed.add_field(name = "Currency:", value = "<:jmoney:919431869928464404>")
     embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
     await ctx.send(embed = embed)
@@ -121,9 +121,9 @@ class Economy(commands.Cog):
       bank = economy.get("bank")
 
       embed = discord.Embed(title = f"{ctx.author}'s Balance:", color = random.randint(0, 16777215))
-      embed.add_field(name = "Wallet:", value = f"${wallet}")
-      embed.add_field(name = "Bank:", value = f"${bank}")
-      embed.add_field(name = "Total:", value = f"${wallet+bank}")
+      embed.add_field(name = "Wallet:", value = f"${wallet:,}")
+      embed.add_field(name = "Bank:", value = f"${bank:,}")
+      embed.add_field(name = "Total:", value = f"${wallet+bank:,}")
       embed.add_field(name = "Currency:", value = "<:jmoney:919431869928464404>")
       embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
 
