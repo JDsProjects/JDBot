@@ -183,7 +183,7 @@ class Extra(commands.Cog):
   async def tts(self, ctx, * ,args = None):
     if args:
       await ctx.send("if you have a lot of text it may take a bit")
-      tts_file = await utils.google_tts(args)
+      tts_file = await utils.google_tts(self.bot, args)
       await ctx.send(file=tts_file)
     
     if ctx.message.attachments:
@@ -196,7 +196,7 @@ class Extra(commands.Cog):
             text = file.decode(encoding)
             
             await ctx.send("if you have a lot of text it may take a bit")
-            tts_file = await utils.google_tts(text)
+            tts_file = await utils.google_tts(self.bot, text)
             await ctx.send(file=tts_file)
 
           if encoding is None:
@@ -213,7 +213,7 @@ class Extra(commands.Cog):
     args = args or "Test"
 
     time_before=time.perf_counter() 
-    file1=await utils.google_tts(args)
+    file1=await utils.google_tts(self.bot, args)
     time_after=time.perf_counter()
 
     await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS",file=file1)
@@ -227,7 +227,7 @@ class Extra(commands.Cog):
     else:
       
       time_before=time.perf_counter() 
-      file=await utils.latin_google_tts(args)
+      file=await utils.latin_google_tts(self.bot, args)
       time_after=time.perf_counter()
 
       await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS",file=file)

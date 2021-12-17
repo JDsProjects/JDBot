@@ -1,20 +1,16 @@
-import discord, random, aiogtts, tabulate, mystbin
+import discord, random, tabulate, mystbin
 import io
 
-async def google_tts(text):
-  mp3_fp = io.BytesIO()
-  tts=aiogtts.aiogTTS()
-  await tts.write_to_fp(text,mp3_fp,lang='en')
+async def google_tts(bot, text):
+  mp3_fp = io.BytesIO(await bot.session.get("https://repi.openrobot.xyz/tts", params={"text":text, "lang": "en"}))
   mp3_fp.seek(0)
   file = discord.File(mp3_fp,"tts.mp3")
   return file
 
-async def latin_google_tts(text):
-  mp3_fp = io.BytesIO()
-  tts=aiogtts.aiogTTS()
-  await tts.write_to_fp(text,mp3_fp,lang='la')
+async def latin_google_tts(bot, text):
+  mp3_fp = io.BytesIO(await bot.session.get("https://repi.openrobot.xyz/tts", params={"text":text, "lang": "la"}))
   mp3_fp.seek(0)
-  file = discord.File(mp3_fp,"latin_tts.mp3")
+  file = discord.File(mp3_fp,"tts.mp3")
   return file
 
 def reference(message):
