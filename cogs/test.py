@@ -95,6 +95,15 @@ class Test(commands.Cog):
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
 
+  @commands.command(brief = "Generates a fake token from the current time")
+  async def fake_user_token(self, ctx):
+    
+    object = discord.Object(utils.generate_snowflake())
+
+    await ctx.send("WIP")
+    #wip
+    #after done, move underneath fake_user_id
+
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
   def __init__(self, bot):
