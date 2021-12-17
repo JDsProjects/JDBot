@@ -84,10 +84,10 @@ class Economy(commands.Cog):
 
     ndata = []
     for n in data:
-      place = [n[0] for n in data].index(n[0])
-      user = await self.bot.try_user(n[0])
+      place = [n.get("user_id") for n in data].index(n.get("user_id"))
+      user = await self.bot.try_user(n.get("user_id"))
 
-      ndata.append([f"{place + 1}. {user}", n[1], n[2]])
+      ndata.append([f"{place + 1}. {user}", n.get("bank"), n.get("wallet")])
     
     ndata = utils.groupby(ndata, 6)
 
