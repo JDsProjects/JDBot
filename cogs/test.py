@@ -97,9 +97,14 @@ class Test(commands.Cog):
 
   @commands.command(brief = "Generates a fake token from the current time")
   async def fake_user_token(self, ctx):
+    import base64
     
+    #move import to top of the info file when done
     object = discord.Object(utils.generate_snowflake())
-
+    
+    first_encoded = base64.b64encode(f"{object.id}".encode())
+    first_bit = first_encoded.decode()
+    
     await ctx.send("WIP")
     #wip
     #after done, move underneath fake_user_id
