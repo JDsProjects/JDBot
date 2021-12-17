@@ -163,7 +163,7 @@ class RandomHistoryEmbed(menus.ListPageSource):
 
 class RtfmEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
-    embed = discord.Embed(title="Packages:", description=item, color = random.randint(0, 16777215))
+    embed = discord.Embed(title = "Packages:", description=item, color = random.randint(0, 16777215))
     return embed
 
 class SendHelp(menus.ListPageSource):
