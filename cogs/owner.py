@@ -536,6 +536,7 @@ class Owner(commands.Cog):
 
   @commands.command(brief = "a command to blacklist users with a reason")
   async def unblacklist(self, ctx, *, user: utils.BetterUserconverter = None):
+    
     if user is None:
       await ctx.send("You can't have a none user.")
 
