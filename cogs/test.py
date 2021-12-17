@@ -117,9 +117,6 @@ class Test(commands.Cog):
 
     #needs to be a bit better, and to embed it.
 
-  
-    
-
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
   def __init__(self, bot):
