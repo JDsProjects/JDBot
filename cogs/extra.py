@@ -204,9 +204,8 @@ class Extra(commands.Cog):
 
     if not files:
       return await ctx.send("You didn't specify any text.")
-
-    await ctx.send("if you have a lot of text it may take a bit")
-    await ctx.send(files = files)
+      
+    await ctx.send(content = "Big Text will cut off!", files = files)
 
   @commands.command()
   async def tts_test(self, ctx, *, args = None):
