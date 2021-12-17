@@ -165,12 +165,14 @@ class Owner(commands.Cog):
     pages = [page.strip("`") for page in pag.pages]
     pages = pages or ["No shared servers"]
 
-    menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page=1),delete_message_after = True)
+    #menu = ViewMenuPages(utils.mutualGuildsEmbed(pages, per_page=1),delete_message_after = True)
 
-    if (ctx.author.dm_channel is None):
-        await ctx.author.create_dm()
+  #make it use the new view paginator.
 
-    await menu.start(ctx, channel = ctx.author.dm_channel)
+    #if (ctx.author.dm_channel is None):
+        #await ctx.author.create_dm()
+
+    #await menu.start(ctx, channel = ctx.author.dm_channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
   async def addsus(self, ctx, *, user: utils.BetterUserconverter = None):
