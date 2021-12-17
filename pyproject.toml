@@ -21,7 +21,6 @@ emoji = "^1.2.0"
 "alexflipnote.py" = "^2.4.0"
 asyncpraw = "^7.3.1"
 tweepy = {git = "https://github.com/tweepy/tweepy.git"}
-doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
 topggpy = "^1.1.0"
 autopep8 = "^1.5.7"
 yapf = "^0.31.0"
@@ -36,7 +35,6 @@ async-tio = "^1.1.0"
 jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi", branch = "main"}
 tabulate = "^0.8.9"
 asyncpg = "^0.25.0"
-beautifulsoup4 = "^4.10.0"
 
 [tool.poetry.dev-dependencies]
 

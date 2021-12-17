@@ -1,9 +1,8 @@
 from discord.ext import commands
-import re, discord , random , mystbin , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio, async_tio
+import re, discord , random , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio, async_tio, itertools
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
-from doc_search import AsyncScraper
 from discord.ext.menus.views import ViewMenuPages
 from jishaku.codeblocks import codeblock_converter
 
@@ -293,12 +292,6 @@ class DevTools(commands.Cog):
   "Helpful commands for developers in general"
   def __init__(self, bot):
     self.bot = bot
-    bot.loop.create_task(self.__ainit__())
-  
-  async def __ainit__(self):
-    await self.bot.wait_until_ready()
-
-    self.scraper = AsyncScraper(session = self.bot.session)
 
   async def rtfm_lookup(self, url = None, *, args = None):
     
@@ -306,8 +299,12 @@ class DevTools(commands.Cog):
       return url
 
     else:
+      
+      res = await self.bot.session.get("https://repi.openrobot.xyz/search_docs", params={"query": args, "documentation": url})
 
-      results = await self.scraper.search(args, page = url)
+      results = await res.json()
+      if results == {'error': 'Nothing matched your search'}: results = {}
+        #place holder, until FrostiiWeb fixes this
 
       if not results:
         return f"Could not find anything with {args}."
@@ -323,8 +320,8 @@ class DevTools(commands.Cog):
     else: 
       embed = discord.Embed(color = random.randint(0, 16777215))
 
-      results = results[:10]
-      embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
+      results = dict(itertools.islice(results.items(), 10))
+      embed.description = "\n".join(f"[`{result}`]({results.get(result)})" for result in results)
 
       reference = utils.reference(ctx.message)
       await ctx.send(embed = embed, reference = reference)
