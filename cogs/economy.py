@@ -61,9 +61,9 @@ class Economy(commands.Cog):
       if view.value:
         await ctx.send("adding you to the database for economy...")
 
-        await self.bot.db.execute("INSERT INTO economy(user_id) VALUES ($1)", member.id)
+        await self.bot.db.execute("INSERT INTO economy VALUES($1)", member.id)
 
-        economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", (member.id,))
+        economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = $1", member.id)
 
     wallet = economy.get("wallet")
     bank = economy.get("bank")
@@ -95,6 +95,43 @@ class Economy(commands.Cog):
   
     await menu.start(ctx)
 
+  @commands.command(brief = "Removes You From Economy")
+  async def leave_economy(self, ctx):
+
+    economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", ctx.author.id)
+
+    if not economy:
+      return await ctx.send("You can't just leave economy if you never joined .....")
+
+    view = utils.BasicButtons(ctx)
+
+    msg = await ctx.send(f"Are you sure you want to leave the database?", view = view)
+
+    await view.wait()
+      
+    if view.value is None:
+      return await msg.edit("you didn't respond quickly enough")
+
+    if not view.value:
+      return await msg.edit("Not removing you from the database")
+
+    if view.value:
+
+      wallet = economy.get("wallet")
+      bank = economy.get("bank")
+
+      embed = discord.Embed(title = f"{ctx.author}'s Balance:", color = random.randint(0, 16777215))
+      embed.add_field(name = "Wallet:", value = f"${wallet}")
+      embed.add_field(name = "Bank:", value = f"${bank}")
+      embed.add_field(name = "Total:", value = f"${wallet+bank}")
+      embed.add_field(name = "Currency:", value = "<:jmoney:919431869928464404>")
+      embed.set_footer(text = "Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
+
+      await msg.edit("removing you from the database for economy and archiving the economy data to our channel(so we can have you join back if you want, if you want it to fully removed, you can ask JDJG Inc. Official#3493, but once it's gone from the channel, it's gone for good) and in the guild right there...", embed = embed)
+
+    await self.bot.get_channel(855217084710912050).send(content = f"Backup of {ctx.author}'s Economy Data!",embed = embed)
+
+    await self.bot.db.execute("DELETE FROM economy WHERE user_id = $1", ctx.author.id)
 
 def setup(bot):
   bot.add_cog(Economy(bot))
