@@ -10,7 +10,7 @@ async def google_tts(bot, text):
 async def latin_google_tts(bot, text):
   mp3_fp = io.BytesIO(await bot.session.get("https://repi.openrobot.xyz/tts", params={"text":text, "lang": "la"}))
   mp3_fp.seek(0)
-  file = discord.File(mp3_fp,"tts.mp3")
+  file = discord.File(mp3_fp,"latin_tts.mp3")
   return file
 
 def reference(message):
