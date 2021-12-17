@@ -181,10 +181,10 @@ class Extra(commands.Cog):
 
   @commands.command(help="a command to talk to Google TTS",brief="using the power of the asyncgtts module you can now do tts")
   async def tts(self, ctx, * ,args = None):
+
+    files = []
     if args:
-      await ctx.send("if you have a lot of text it may take a bit")
-      tts_file = await utils.google_tts(self.bot, args)
-      await ctx.send(file=tts_file)
+      files.append(await utils.google_tts(self.bot, args))
     
     if ctx.message.attachments:
       for a in ctx.message.attachments:
@@ -195,18 +195,18 @@ class Extra(commands.Cog):
           if encoding:
             text = file.decode(encoding)
             
-            await ctx.send("if you have a lot of text it may take a bit")
-            tts_file = await utils.google_tts(self.bot, text)
-            await ctx.send(file=tts_file)
+            files.append(await utils.google_tts(self.bot, text))
 
           if encoding is None:
             await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439")
         if not file:
           await ctx.send("this doesn't contain any bytes.")
-          
 
-    if args is None and not ctx.message.attachments:
-      await ctx.send("You didn't specify any text.")
+    if not files:
+      return await ctx.send("You didn't specify any text.")
+
+    await ctx.send("if you have a lot of text it may take a bit")
+    await ctx.send(files = files)
 
   @commands.command()
   async def tts_test(self, ctx, *, args = None):

@@ -10,7 +10,6 @@ Flask = "^1.1.2"
 aioimgur = "^0.1.1"
 asuna-api = "^0.2.8"
 async-cse = "^0.3.0"
-aiogTTS = "^1.1.0"
 asyncdagpi = "^3.3.2"
 discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
 sr-api = {git = "https://github.com/iDutchy/sr_api"}
