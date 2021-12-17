@@ -108,7 +108,6 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #wip
     #after done, move underneath fake_user_id
-    #learn about https://github.com/InterStella0/stella_bot/blob/master/cogs/useful.py#L75-L114
 
   @commands.group(brief = "list of commands of plans of stuff to do in the future", invoke_without_command = True)
   async def todo(self, ctx):
