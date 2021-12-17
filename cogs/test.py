@@ -110,6 +110,17 @@ class Test(commands.Cog):
     #after done, move underneath fake_user_id
     #learn about https://github.com/InterStella0/stella_bot/blob/master/cogs/useful.py#L75-L114
 
+  @commands.group(brief = "list of commands of plans of stuff to do in the future", invoke_without_command = True)
+  async def todo(self, ctx):
+    page = "\n".join(f"{c.name}" for c in ctx.command.commands)
+
+    await ctx.send(f"Please run the subcommands with the prefix {ctx.prefix}: \n{page}")
+
+    #needs to be a bit better, and to embed it.
+
+  
+    
+
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
   def __init__(self, bot):

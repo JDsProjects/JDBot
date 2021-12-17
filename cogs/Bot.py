@@ -400,7 +400,7 @@ class Bot(commands.Cog):
 
     await ctx.send("Sent suggestion to JDJG! You agree to being Dmed about this suggestion or somehow contacted(it makes some things easier lol)")
 
-  @commands.group(name = "support", invoke_without_command=True)
+  @commands.group(name = "support", invoke_without_command = True)
   async def support(self, ctx):
 
     page = "\n".join(f"{c.name}" for c in ctx.command.commands)
