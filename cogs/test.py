@@ -95,11 +95,6 @@ class Test(commands.Cog):
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
 
-  @commands.command(brief = "test pagination")
-  async def pagination_test(self, ctx):
-    view = self.Pagination(ctx)
-    await ctx.send("Test...", view = view)
-
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
   def __init__(self, bot):

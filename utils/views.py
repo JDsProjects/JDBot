@@ -21,6 +21,7 @@ class dm_or_ephemeral(discord.ui.View):
     await self.message.edit(content = "Will be sending you the mutual guilds empherally", view = self)
 
     #view = MutualGuildsEmbed(self.ctx)
+    #I am going to need to find out what I need in here.
     #view = await interaction.response.send_message(f"Here are mutual guilds for you to see {self.ctx.author.mention}", view = view, ephemeral = True)
     #tbh i don't know yet.
 
