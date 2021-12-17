@@ -108,6 +108,7 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #wip
     #after done, move underneath fake_user_id
+    #learn about https://github.com/InterStella0/stella_bot/blob/master/cogs/useful.py#L75-L114
 
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
