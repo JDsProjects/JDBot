@@ -117,7 +117,9 @@ class Test(commands.Cog):
 
     #needs to be a bit better, and to embed it.
 
-  #add support for https://discordpy.readthedocs.io/en/master/api.html#discord.Member.mobile_status #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.desktop_status #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.web_status
+  #add support for https://discordpy.readthedocs.io/en/master/api.html#discord.Member.mobile_status 
+ #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.desktop_status 
+   #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.web_status
   #do something with this: https://discordpy.readthedocs.io/en/master/api.html#discord.Member.status
 
 
