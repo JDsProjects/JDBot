@@ -89,18 +89,6 @@ class Events(commands.Cog):
 
       menu = ViewMenuPages(utils.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
       await menu.start(test)
-  
-  @commands.Cog.listener()
-  async def on_error(self, event, *args, **kwargs):
-    more_information = os.sys.exc_info()
-    error_wanted = traceback.format_exc()
-    traceback.print_exc()
-
-    #print(event)
-    #print(more_information[0])
-    #print(args)
-    #print(kwargs)
-    #check about on_error with other repos of mine as well, this may or not work.
 
   #@commands.Cog.listener()
   #async def on_command_error(self, ctx, exception):

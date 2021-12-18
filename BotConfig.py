@@ -51,6 +51,18 @@ bot = JDBot(command_prefix = (get_prefix), intents = intents, chunk_guilds_at_st
 
 bot.launch_time = discord.utils.utcnow()
 
+@bot.event
+async def on_error(event, *args, **kwargs):
+  more_information = os.sys.exc_info()
+  error_wanted = traceback.format_exc()
+  traceback.print_exc()
+
+  #print(event)
+  #print(more_information[0])
+  #print(args)
+  #print(kwargs)
+  #check about on_error with other repos of mine as well to update this.
+
 @bot.check
 async def check_command_access(ctx):
   if ctx.command.name == bot.special_access.get(ctx.author.id):
