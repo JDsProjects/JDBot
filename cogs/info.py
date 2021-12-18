@@ -47,6 +47,7 @@ class Info(commands.Cog):
           member = guild.get_member(user.id)
           if member:
             status=str(member.status).upper()
+            
             break
             
         highest_role = "None Found"
