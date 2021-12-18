@@ -165,12 +165,6 @@ class Dice(commands.Cog):
 
     await ctx.send(embed = embed)
 
-  async def cog_command_error(self, ctx, error):
-    if ctx.command or not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
-
   @commands.cooldown(1, 15, BucketType.user)
   @commands.command(brief = "a nice rock scissors paper game with the bot")
   async def rps(self, ctx):
