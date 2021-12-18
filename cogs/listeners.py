@@ -97,12 +97,6 @@ class Events(commands.Cog):
       print("command has error handler lol")
       return
 
-    cog = ctx.cog
-    if cog:
-      if cog._get_overridden_method(cog.cog_command_error) is not None:
-        print("cog has error handler lol")
-        return
-
     ignored = (commands.CommandNotFound, )
     error = getattr(error, 'original', error)
 
