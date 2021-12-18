@@ -96,10 +96,10 @@ class Events(commands.Cog):
     error_wanted = traceback.format_exc()
     traceback.print_exc()
 
-    print(event)
-    print(more_information[0])
-    print(args)
-    print(kwargs)
+    #print(event)
+    #print(more_information[0])
+    #print(args)
+    #print(kwargs)
     #check about on_error with other repos of mine as well, this may or not work.
 
   #@commands.Cog.listener()
