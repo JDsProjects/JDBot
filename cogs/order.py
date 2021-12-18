@@ -293,14 +293,6 @@ class Order(commands.Cog):
 
     await self.giphy_random(ctx, args = args)
 
-  async def cog_command_error(self, ctx, error):
-    if ctx.command and not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
-      
-    #I need to fix all cog_command_error
-
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "can search a search result from google with safe search!")
   async def google(self, ctx, *, args = None):
@@ -320,13 +312,6 @@ class Order(commands.Cog):
     await menu.start(ctx)
 
     #this appears to work but I don't know if it's officially supported by the custom button menus team.
-
-  @google.error
-  async def google_error(self, ctx, error):
-    await ctx.send(error)
-
-    import traceback
-    traceback.print_exc()
   
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "sends a gif of someone dancing to disco (animated)")

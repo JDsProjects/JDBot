@@ -16,11 +16,6 @@ class Help(commands.Cog):
     self.bot.help_command = JDBotHelp()
     self.bot.help_command.cog = self
 
-  async def cog_command_error(self, ctx, error):
-    await ctx.send(error)
-    import traceback
-    traceback.print_exc()
-
 def cog_unload(self):
   self.help_command = self._original_help_command
 

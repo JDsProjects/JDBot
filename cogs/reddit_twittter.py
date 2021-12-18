@@ -45,14 +45,6 @@ class Reddit(commands.Cog):
     embed.set_footer(text=f"Upvote ratio : {data['upvote_ratio']}")
     await ctx.send(embed=embed)
 
-  async def cog_command_error(self, ctx, error):
-    if ctx.command and not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
-      
-    #I need to fix all cog_command_error
-
 class Twitter(commands.Cog):
   "Commands related to Twitter"
   def __init__(self, bot):
