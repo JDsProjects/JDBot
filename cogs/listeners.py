@@ -90,14 +90,30 @@ class Events(commands.Cog):
       menu = ViewMenuPages(utils.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
       await menu.start(test)
 
-  #@commands.Cog.listener()
-  #async def on_command_error(self, ctx, exception):
+  @commands.Cog.listener()
+  async def on_command_error(self, ctx, error):
 
-    #print(ctx)
-    #print(exception)
-    #traceback.print_exc()
+    if hasattr(ctx.command, 'on_error'):
+      print("command has error handler lol")
+      return
 
-    #wip and stuff, needs to check if something has a mini command handler, and such. 
+    cog = ctx.cog
+    if cog:
+      if cog._get_overridden_method(cog.cog_command_error) is not None:
+        print("cog has error handler lol")
+        return
+
+    ignored = (commands.CommandNotFound, )
+    error = getattr(error, 'original', error)
+
+    if isinstance(error, ignored):
+      return
+
+    
+    await ctx.send(error)
+    traceback.print_exc() 
+
+    #look more at this https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612
 
   @commands.Cog.listener()
   async def on_member_join(self, member):

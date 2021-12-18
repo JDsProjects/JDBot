@@ -25,14 +25,6 @@ class Test(commands.Cog):
 
   async def cog_check(self, ctx):
     return ctx.author.id in self.bot.testers
-
-  async def cog_command_error(self, ctx, error):
-    if ctx.command and not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
-      
-    #I need to fix all cog_command_error
   
   @commands.command(brief = "a command to email you(work in progress)", help = "This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
   async def email(self, ctx, *args):
