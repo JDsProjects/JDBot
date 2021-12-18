@@ -10,14 +10,7 @@ from jishaku.functools import AsyncSender
 #look into making more jishaku commands: https://jishaku.readthedocs.io/en/latest/cog.html
 
 class Jishaku(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
-  async def cog_command_error(self, ctx, error):
-    if ctx.command and not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
-      
-    #I need to fix all cog_command_error
-
+  
   @Feature.Command(parent="jsk", name="py", aliases=["python"])
   async def jsk_python(self, ctx: commands.Context, *, argument: codeblock_converter):
 
