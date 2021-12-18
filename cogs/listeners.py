@@ -91,12 +91,15 @@ class Events(commands.Cog):
       await menu.start(test)
   
   @commands.Cog.listener()
-  async def on_error(event, *args, **kwargs):
+  async def on_error(self, event, *args, **kwargs):
     more_information = os.sys.exc_info()
     error_wanted = traceback.format_exc()
     traceback.print_exc()
-    
-    #print(more_information[0])
+
+    print(event)
+    print(more_information[0])
+    print(args)
+    print(kwargs)
 
   #@commands.Cog.listener()
   #async def on_command_error(self, ctx, exception):
