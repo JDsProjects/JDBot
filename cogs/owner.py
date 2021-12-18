@@ -90,14 +90,6 @@ class Owner(commands.Cog):
   async def cog_check(self, ctx):
     return await self.bot.is_owner(ctx.author)
 
-  async def cog_command_error(self, ctx, error):
-    if ctx.command or not ctx.command.has_error_handler():
-      await ctx.send(error)
-      
-      traceback.print_exc()
-
-    #I need to fix all cog_command_error
-
   @commands.command(brief="Changes Bot Status(Owner Only)")
   async def status(self , ctx, *, args = None):
 
