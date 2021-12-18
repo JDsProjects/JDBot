@@ -100,6 +100,7 @@ class Events(commands.Cog):
     print(more_information[0])
     print(args)
     print(kwargs)
+    #check about on_error with other repos of mine as well, this may or not work.
 
   #@commands.Cog.listener()
   #async def on_command_error(self, ctx, exception):
