@@ -99,12 +99,6 @@ class Info(commands.Cog):
     
     view.message = await ctx.send("Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds", embed = embed, view = view)
 
-  async def cog_command_error(self, ctx, error):
-    if ctx.command or not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
-
   @commands.command(brief="uploads your emojis into a mystbin link")
   async def look_at(self, ctx):
     if isinstance(ctx.message.channel, discord.TextChannel):
@@ -442,12 +436,6 @@ class DevTools(commands.Cog):
     
     except:
       await ctx.send("it looks like it couldn't send the pfp due to the file size.")
-
-  async def cog_command_error(self, ctx, error):
-    if ctx.command or not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
   
   @commands.command(brief = "Gives info on pypi packages")
   async def pypi(self, ctx, *, args = None):
