@@ -94,12 +94,14 @@ class Events(commands.Cog):
   async def on_command_error(self, ctx, error):
 
     if hasattr(ctx.command, 'on_error'):
-      return print("command has error handler lol")
+      print("command has error handler lol")
+      return
 
     cog = ctx.cog
     if cog:
       if cog._get_overridden_method(cog.cog_command_error) is not None:
-        return print("cog has error handler lol")
+        print("cog has error handler lol")
+        return
 
     ignored = (commands.CommandNotFound, )
     error = getattr(error, 'original', error)
