@@ -197,10 +197,6 @@ class Owner(commands.Cog):
     menu = ViewMenuPages(utils.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
     await menu.start(ctx)
 
-  @sus_users.error
-  async def sus_users_error(self, ctx, error):
-    await ctx.send(error)
-
   @commands.command(brief = "a command listed all the commands")
   async def testers(self, ctx):
 
@@ -422,22 +418,12 @@ class Owner(commands.Cog):
 
     await ctx.send("Finished chunking..")
 
-  @chunk_guild.error
-  async def chunk_guild_error(self, ctx, error):
-    await ctx.send(error)
-    traceback.print_exc()
-
   
   @commands.command(brief = "displays the guild status and user status immediately")
   async def stats_status(self, ctx):
     await ctx.send("changing status, check now....")
     
     await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(self.bot.guilds)} servers | {len(self.bot.users)} users"))
-
-
-  @stats_status.error
-  async def stats_status_error(self, ctx, error):
-    await ctx.send(error) 
 
   @commands.command(brief="a command to give a list of servers(owner only)",help="Gives a list of guilds(Bot Owners only) but with join dates updated.")
   async def servers2(self, ctx):

@@ -99,10 +99,6 @@ class Webhook(commands.Cog):
     if isinstance(ctx.channel, discord.DMChannel):
       await ctx.send("You can't use that silly")
 
-  @webhook_create.error
-  async def webhook_create_error(self, ctx, error):
-    await ctx.send(error)
-
   @commands.command(brief = "tells you a webhook's avatar.")
   async def webhook_avatar(self, ctx, *, args = None):
     if not args:
@@ -131,10 +127,6 @@ class Webhook(commands.Cog):
             await ctx.message.delete()
           except:
             await ctx.send("deleting the webhook failed, delete asap")
-
-  @webhook_avatar.error
-  async def webhook_avatar_error(self, ctx, error):
-    await ctx.send(error)
 
   @commands.command(brief = "deletes a webhook by url")
   async def webhook_delete(self, ctx, *, args = None):
@@ -185,10 +177,6 @@ class Webhook(commands.Cog):
             await ctx.message.delete()
           except:
             await ctx.send("deleting the webhook failed, delete asap unless it told you the link was deleted")
-    
-  @webhook_delete.error
-  async def webhook_delete_error(self, ctx, error):
-    await ctx.send(error)
 
 def setup(bot):
   bot.add_cog(Webhook(bot))

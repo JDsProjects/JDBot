@@ -147,10 +147,6 @@ class Info(commands.Cog):
       jdjg = await self.bot.try_user(168422909482762240)
       await self.bot.get_channel(855217084710912050).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
 
-  @fetch_invite.error
-  async def fetch_invite_error(self, ctx, error):
-    await ctx.send(error)
-
   @commands.command(brief="gives info about a file")
   async def file(self, ctx):
 

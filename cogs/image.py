@@ -502,9 +502,5 @@ class Image(commands.Cog):
 
     await menu.start(ctx)
 
-  @invert.error
-  async def invert_error(self, ctx, error):
-    await ctx.send(error)
-
 def setup(bot):
   bot.add_cog(Image(bot))

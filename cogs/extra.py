@@ -350,10 +350,6 @@ class Extra(commands.Cog):
     embed.set_footer(text=f"Joke Requested By {ctx.author} \nPowered by jokeapi.dev")
     await ctx.send(embed=embed)
 
-  @jokeapi.error
-  async def jokeapi_error(self, ctx, error):
-    await ctx.send(error)
-
   @commands.command()
   async def cookieclicker_save(self, ctx):
     import io
@@ -534,12 +530,6 @@ class Extra(commands.Cog):
 
     return
 
-  @cleverbot.error
-  async def cleverbot_error(self, ctx, error):
-    await ctx.send(error)
-    import traceback
-    traceback.print_exc()
-
   @commands.command(brief = "a command to create a voice channel")
   async def voice_create(self, ctx, *, args = None):
    
@@ -667,10 +657,6 @@ class Extra(commands.Cog):
     if not view.value:
       await msg.delete()
       await ctx.reply("You didn't agree to being cached.")
-
-  @cache_member.error
-  async def cache_member_error(self, ctx, error):
-    await ctx.send(error)
 
   @commands.command(brief = "says nook nook and shows an image")
   async def pingu(self, ctx):
