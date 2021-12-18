@@ -47,13 +47,6 @@ class Moderation(commands.Cog):
     elif warn_useable is False:
       await ctx.send(f"{ctx.author.mention}, you don't have permission to use that. You need to have manage_messages, have a higher hieracy in a guild, and have higher permissions than the target to use that.", allowed_mentions = discord.AllowedMentions.none())
 
-  @warn.error
-  async def warn_errror(self, ctx, error):
-    await ctx.send(error)
-
-    import traceback
-    traceback.print_exc()
-
   @commands.cooldown(1, 90, BucketType.user)
   @commands.command(help = "a command to scan for malicious bots, specificially ones that only give you random invites and are fake")
   async def scan_guild(self, ctx):
@@ -99,12 +92,6 @@ class Moderation(commands.Cog):
       menu = ViewMenuPages(utils.ScanGlobalEmbed(valid_users, per_page = 1), delete_message_after = True)
       
       await menu.start(ctx)
-
-  async def cog_command_error(self, ctx, error):
-    if not ctx.command or not ctx.command.has_error_handler():
-      await ctx.send(error)
-    #I need to fix all cog_command_error
-
 
   @commands.command(brief = "gives stats about the sus users", aliases = ["sususers_stats"])
   async def sus_users_stats(self, ctx):
