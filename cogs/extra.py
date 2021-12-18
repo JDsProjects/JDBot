@@ -36,16 +36,6 @@ class Extra(commands.Cog):
       embed.set_author(name=f"Requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
       await ctx.send(embed=embed)
 
-  @mchistory.error
-  async def mchistory_error(self, ctx, error):
-    await ctx.send(error)
-
-  async def cog_command_error(self, ctx, error):
-    if ctx.command or not ctx.command.has_error_handler():
-      await ctx.send(error)
-      import traceback
-      traceback.print_exc()
-
   @commands.command(help = "This gives random history using Sp46's api.", brief = "a command that uses SP46's api's random history command to give you random history responses")
   async def random_history(self, ctx, *, number : typing.Optional[int] = None):
     number = number or 1
