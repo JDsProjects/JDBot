@@ -1,5 +1,5 @@
 from discord.ext import commands
-import re, discord , random , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio, async_tio, itertools
+import re, discord , random , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio, async_tio, itertools, os
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
@@ -291,7 +291,7 @@ class DevTools(commands.Cog):
 
     else:
       
-      res = await self.bot.session.get("https://repi.openrobot.xyz/search_docs", params={"query": args, "documentation": url})
+      res = await self.bot.session.get("https://repi.openrobot.xyz/search_docs", params={"query": args, "documentation": url}, headers={"Authorization": os.environ["frostiweeb_api"]})
 
       results = await res.json()
       if results == {'error': 'Nothing matched your search'}: results = {}
