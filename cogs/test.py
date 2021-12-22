@@ -126,8 +126,12 @@ class Test(commands.Cog):
     #Idk from here
 
   @todo.command(brief = "adds items to todo")
-  async def add(self, ctx, args = None):
-    await ctx.send("WIP")
+  async def add(self, ctx, *, text : commands.clean_content = None):
+
+    if not text:
+      return await ctx.send("I can't do anything with no text")
+    
+    await ctx.send(f"{text}")
 
   @todo.command(brief = "edits items in todo")
   async def edit(self, ctx):
