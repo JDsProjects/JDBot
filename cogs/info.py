@@ -294,8 +294,6 @@ class DevTools(commands.Cog):
       res = await self.bot.session.get("https://repi.openrobot.xyz/search_docs", params={"query": args, "documentation": url}, headers={"Authorization": os.environ["frostiweeb_api"]})
 
       results = await res.json()
-      if results == {'error': 'Nothing matched your search'}: results = {}
-        #place holder, until FrostiiWeb fixes this
 
       if not results:
         return f"Could not find anything with {args}."
