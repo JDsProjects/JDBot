@@ -136,7 +136,9 @@ class Test(commands.Cog):
     if value:
       return await ctx.send("What?")
       
-      #proper check completed.
+    await self.bot.db.execute("INSERT INTO todo (user_id, text, jump_url, added_time) VALUES ($1, $2, $3, $4)", ctx.author.id, text[0:4000], ctx.message.jump_url, ctx.message.created_at)
+
+    await ctx.send("ADDED")
 
   @todo.command(brief = "edits items in todo")
   async def edit(self, ctx):
