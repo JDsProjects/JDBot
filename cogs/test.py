@@ -118,10 +118,12 @@ class Test(commands.Cog):
       
       embed = discord.Embed(description = "No items in your Todo List", color = 1246983, timestamp = ctx.message.created_at)
       embed.set_footer(text = f"Requested by {ctx.author}", icon_url = ctx.author.display_avatar.url)
+      
       return await ctx.send(embed = embed)
       
-    await ctx.send("Test")
-  
+    pag = commands.Paginator()
+      
+    #Idk from here
 
   #add support for https://discordpy.readthedocs.io/en/master/api.html#discord.Member.mobile_status 
  #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.desktop_status 
