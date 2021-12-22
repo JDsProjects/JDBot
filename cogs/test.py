@@ -125,6 +125,22 @@ class Test(commands.Cog):
       
     #Idk from here
 
+  @todo.command(brief = "adds items to todo")
+  async def add(self, ctx, args = None):
+    await ctx.send("WIP")
+
+  @todo.command(brief = "edits items in todo")
+  async def edit(self, ctx):
+    await ctx.send("WIP")
+
+  @todo.command(brief = "removes items in todo")
+  async def remove(self, ctx):
+    await ctx.send("WIP")
+
+  @todo.command(brief = "removes all your items in todo")
+  async def clear(self, ctx):
+    await ctx.send("WIP")
+
   #add support for https://discordpy.readthedocs.io/en/master/api.html#discord.Member.mobile_status 
  #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.desktop_status 
    #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.web_status
