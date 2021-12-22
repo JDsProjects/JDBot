@@ -131,7 +131,12 @@ class Test(commands.Cog):
     if not text:
       return await ctx.send("Please tell me what to add")
     
-    await ctx.send(f"{text}")
+    value = await self.bot.db.fetchrow("SELECT * FROM todo WHERE user_id = $1 AND TEXT = $2", ctx.author.id, text)
+
+    if value:
+      return await ctx.send("What?")
+      
+      #proper check completed.
 
   @todo.command(brief = "edits items in todo")
   async def edit(self, ctx):
