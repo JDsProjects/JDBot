@@ -129,7 +129,7 @@ class Test(commands.Cog):
   async def add(self, ctx, *, text : commands.clean_content = None):
 
     if not text:
-      return await ctx.send("I can't do anything with no text")
+      return await ctx.send("Please tell me what to add")
     
     await ctx.send(f"{text}")
 
