@@ -75,9 +75,9 @@ def cc_generate():
  8107ECA2 {bit_generator()}00""".upper()
 
 async def post(bot, code):
-  mystbin_client = mystbin.Client(session = bot.session)
-  paste = await mystbin_client.post(code)
-  return paste.url
+  response = await bot.session.post("https://api.senarc.org/paste", json = {"content": code})
+  response = (await response.json())
+  return response.get("web_url")
 
 #thanks Dutchy for this :D, though this has some issues that need to be fixed.
 

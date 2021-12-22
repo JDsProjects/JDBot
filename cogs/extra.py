@@ -355,7 +355,7 @@ class Extra(commands.Cog):
     import io
 
     mystbin_client = mystbin.Client(session = self.bot.session)
-    paste = await mystbin_client.get("https://mystb.in/ClubsFloppyElections.perl")
+    paste = await mystbin_client.get("ClubsFloppyElections")
     s = io.StringIO()
     s.write(paste.paste_content)
     s.seek(0)
