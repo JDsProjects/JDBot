@@ -109,6 +109,20 @@ class Test(commands.Cog):
 
     #needs to be a bit better, and to embed it.
 
+  @todo.command(brief = "lists stuff in todo")
+  async def list(self, ctx):
+    
+    values = await self.bot.db.fetch("SELECT * FROM todo WHERE user_id = $1 ORDER BY added_time ASC", ctx.author.id)
+
+    if not values:
+      
+      embed = discord.Embed(description = "No items in your Todo List", color = 1246983, timestamp = ctx.message.created_at)
+      embed.set_footer(text = f"Requested by {ctx.author}", icon_url = ctx.author.display_avatar.url)
+      return await ctx.send(embed = embed)
+      
+    await ctx.send("Test")
+  
+
   #add support for https://discordpy.readthedocs.io/en/master/api.html#discord.Member.mobile_status 
  #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.desktop_status 
    #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.web_status
