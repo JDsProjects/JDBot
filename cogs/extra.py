@@ -353,12 +353,10 @@ class Extra(commands.Cog):
   @commands.command()
   async def cookieclicker_save(self, ctx):
     import io
-    
-    import mystbin
-    mystbin_client = mystbin.Client(session = self.bot.session)
-    paste = await mystbin_client.get("ClubsFloppyElections")
+  
+    paste = await utils.get_paste(self.bot)
     s = io.StringIO()
-    s.write(paste.paste_content)
+    s.write(paste)
     s.seek(0)
     
     await ctx.reply("The save editor used: https://coderpatsy.bitbucket.io/cookies/v10466/editor.html \n Warning may be a bit cursed. (because of the grandmas having madness at this level.) \n To be Used with https://orteil.dashnet.org/cookieclicker/",file = discord.File(s, filename="cookie_save.txt"))

@@ -82,9 +82,8 @@ async def post(bot, code):
 async def get_paste(bot, paste_id):
   response = await bot.session.get(f"https://api.senarc.org/bin-headless/{paste_id}")
   response = await response.json()
-  
+  return response.get("content")
 
-#thanks Dutchy for this :D, though this has some issues that need to be fixed.
 
 def random_history(data, number):
   return random.sample(data, number)
