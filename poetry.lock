@@ -801,7 +801,7 @@ test = ["vcrpy (>=1.10.3)"]
 type = "git"
 url = "https://github.com/tweepy/tweepy.git"
 reference = "master"
-resolved_reference = "2538956b62c6282e35d6482d151b2dd3cc071544"
+resolved_reference = "e3bfad54e2914d38fdf8b8e10c2bedd7539f9363"
 
 [[package]]
 name = "typing-extensions"
