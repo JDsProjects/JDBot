@@ -1,6 +1,6 @@
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-import discord, random, asuna_api, math, chardet, mystbin, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib, async_cleverbot
+import discord, random, asuna_api, math, chardet, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib, async_cleverbot
 import utils
 from discord.ext.menus.views import ViewMenuPages
 
@@ -353,7 +353,8 @@ class Extra(commands.Cog):
   @commands.command()
   async def cookieclicker_save(self, ctx):
     import io
-
+    
+    import mystbin
     mystbin_client = mystbin.Client(session = self.bot.session)
     paste = await mystbin_client.get("ClubsFloppyElections")
     s = io.StringIO()
