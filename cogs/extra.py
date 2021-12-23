@@ -354,7 +354,7 @@ class Extra(commands.Cog):
   async def cookieclicker_save(self, ctx):
     import io
   
-    paste = await utils.get_paste(self.bot)
+    paste = await utils.get_paste(self.bot, "pun8d5")
     s = io.StringIO()
     s.write(paste)
     s.seek(0)

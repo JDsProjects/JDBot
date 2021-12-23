@@ -14,7 +14,6 @@ asyncdagpi = "^3.3.2"
 discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
 sr-api = {git = "https://github.com/iDutchy/sr_api"}
 jishaku = {git = "https://github.com/Gorialis/jishaku"}
-"mystbin.py" = "^2.1.0"
 psutil = "^5.8.0"
 "discordlists.py" = "^1.1.1"
 emoji = "^1.2.0"
