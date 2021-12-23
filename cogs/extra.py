@@ -433,7 +433,7 @@ class Extra(commands.Cog):
     except:
       return await ctx.send("failed posting back of messages")
 
-    await ctx.author.send(content=f"Added text file to mystbin: \n{paste}")
+    await ctx.author.send(content=f"Added text file to Senarc Bin: \n{paste}")
 
   @commands.cooldown(1, 40, BucketType.user)
   @commands.command(brief = "allows you to review recent embeds", aliases = ["embedhistory", "embed_history"])

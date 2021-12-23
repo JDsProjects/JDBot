@@ -99,7 +99,7 @@ class Info(commands.Cog):
     
     view.message = await ctx.send("Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds", embed = embed, view = view)
 
-  @commands.command(brief="uploads your emojis into a mystbin link")
+  @commands.command(brief="uploads your emojis into a Senarc Bin link")
   async def look_at(self, ctx):
     if isinstance(ctx.message.channel, discord.TextChannel):
       message_emojis = ""
