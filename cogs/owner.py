@@ -270,7 +270,7 @@ class Owner(commands.Cog):
       await ctx.send(f"Sucessfully reloaded {value.__name__} \nMain Package: {value.__package__}")
 
 
-  @commands.command(brief="backs up a channel and then sends it into a file or CharlesBin")
+  @commands.command(brief="backs up a channel and then sends it into a file or Senarc Bin")
   async def channel_backup(self, ctx):
 
     messages = await ctx.channel.history(limit = None, oldest_first = True).flatten()
@@ -282,7 +282,7 @@ class Owner(commands.Cog):
     paste = await utils.post(self.bot, code = page)
     #max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
 
-    await ctx.author.send(content=f"Added text file to CharlesBin: \n{paste}")
+    await ctx.author.send(content=f"Added text file to Senarc Bin: \n{paste}")
 
   @channel_backup.error
   async def channel_backup_error(self, ctx, error):

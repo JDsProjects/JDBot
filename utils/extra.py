@@ -76,8 +76,13 @@ def cc_generate():
 
 async def post(bot, code):
   response = await bot.session.post("https://api.senarc.org/paste", json = {"content": code})
-  response = (await response.json())
+  response = await response.json()
   return response.get("web_url")
+
+async def get_paste(bot, paste_id):
+  response = await bot.session.get(f"https://api.senarc.org/bin-headless/{paste_id}")
+  response = await response.json()
+  
 
 #thanks Dutchy for this :D, though this has some issues that need to be fixed.
 

@@ -283,7 +283,7 @@ class Extra(commands.Cog):
             text = file.decode(encoding)
             paste = await utils.post(self.bot, code = text)
             #max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
-            await ctx.send(content=f"Added text file to CharlesBin: \n{paste}")
+            await ctx.send(content=f"Added text file to Senarc Bin: \n{paste}")
           if encoding is None:
             await ctx.send("it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file.")
         if not file:
