@@ -326,6 +326,11 @@ class MutualGuildsEmbed(Paginator):
     
     return embed
 
+class ServersEmbed(Paginator):
+  def format_page(self, item):
+    embed = discord.Embed(title = "Servers:", description = item, color = random.randint(0, 16777215))
+    return embed
+
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):
   def __init__(self, ctx, pages : list = None, channel : discord.DMChannel = None, **kwargs):

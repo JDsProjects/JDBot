@@ -117,12 +117,12 @@ class Owner(commands.Cog):
       pag.add_line(f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}")
 
     pages = [page.strip("`") for page in pag.pages]
-    menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
 
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
 
-    await menu.start(ctx, channel = ctx.author.dm_channel)
+    menu = utils.ServersEmbed(pages, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.author.dm_channel)
 
   @commands.command(brief="only works with JDJG, but this command is meant to send updates to my webhook")
   async def webhook_update(self, ctx, *, args = None):
@@ -161,7 +161,7 @@ class Owner(commands.Cog):
       await ctx.author.create_dm()
 
     menu = utils.MutualGuildsEmbed(pages, ctx = ctx, delete_message_after = True)
-    await menu.send(ctx.channel)
+    await menu.send(ctx.author.dm_channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
   async def addsus(self, ctx, *, user: utils.BetterUserconverter = None):
@@ -432,12 +432,12 @@ class Owner(commands.Cog):
       pag.add_line(f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n")
 
     pages = [page.strip("`") for page in pag.pages]
-    menu = ViewMenuPages(utils.ServersEmbed(pages, per_page=1),delete_message_after=True)
 
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
 
-    await menu.start(ctx, channel = ctx.author.dm_channel)
+    menu = utils.ServersEmbed(pages, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.author.dm_channel)
 
   @commands.command(brief = "changes money of people(for moderation of economy)")
   async def money(self, ctx, user : typing.Optional[discord.User] = None, *, number : typing.Optional[int] = None):
