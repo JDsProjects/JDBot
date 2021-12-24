@@ -221,8 +221,11 @@ class Paginator(discord.ui.View):
 
        
         elif isinstance(formatted_page, discord.Embed):
-           
-            formatted_page.set_footer(text=self.page_string)
+            if formatted_page.footer.text is not discord.Embed.Empty:
+              formatted_page.set_footer(text=f"{formatted_page.footer.text} - {self.page_string}")
+              
+            else:
+              formatted_page.set_footer(text=self.page_string)
             return {"content": None, "embed": formatted_page, "view": self}, send_kwargs or {}
 
         
