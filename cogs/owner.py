@@ -2,7 +2,6 @@ from discord.ext import commands
 import utils
 import random , discord, os, importlib, typing, aioimgur, functools, tweepy
 import traceback, textwrap
-from discord.ext.menus.views import ViewMenuPages
 
 class Owner(commands.Cog):
   "Owner Only Commands"
@@ -191,14 +190,14 @@ class Owner(commands.Cog):
   async def sus_users(self, ctx):
     sus_users = await self.bot.db.fetch("SELECT * FROM SUS_USERS;")
    
-    menu = ViewMenuPages(utils.SusUsersEmbed(sus_users, per_page=1),delete_message_after=True)
-    await menu.start(ctx)
+    menu = utils.SusUsersEmbed(sus_users, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(brief = "a command listed all the commands")
   async def testers(self, ctx):
 
-    menu = ViewMenuPages(utils.TestersEmbed(self.bot.testers, per_page = 1), delete_message_after = True)
-    await menu.start(ctx)
+    menu = utils.TestersEmbed(self.bot.testers, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(aliases=["bypass_command"])
   async def command_bypass(self, ctx ,user: utils.BetterUserconverter = None, *, command = None):
@@ -290,12 +289,12 @@ class Owner(commands.Cog):
  
     pages = textwrap.wrap(values, width = 1992)
 
-    menu = ViewMenuPages(utils.ErrorEmbed(pages, per_page = 1),delete_message_after = True)
+    menu = utils.ErrorEmbed(pages, ctx = ctx, delete_message_after = True)
 
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
 
-    await menu.start(ctx, channel = ctx.author.dm_channel)
+    await menu.send(ctx.author.dm_channel)
 
     paste = await utils.post(self.bot, code = values)
     #max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
@@ -524,9 +523,12 @@ class Owner(commands.Cog):
   @commands.command(brief="a command to grab all in the blacklisted_users list")
   async def blacklisted(self, ctx):
     blacklisted_users = await self.bot.db.fetch("SELECT * FROM BLACKLISTED_USERS;")
+
+    if not blacklisted_users:
+      return await ctx.send("None is blacklisted :D")
    
-    menu = ViewMenuPages(utils.BlacklistedUsersEmbed( blacklisted_users, per_page = 1), delete_message_after = True)
-    await menu.start(ctx)
+    menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
 def setup(bot):
   bot.add_cog(Owner(bot))

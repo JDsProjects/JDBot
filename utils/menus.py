@@ -75,13 +75,6 @@ class EmojiInfoEmbed(menus.ListPageSource):
       embed=discord.Embed(title="Failed grabbing emoji:",description=f"Discord couldn't fetch the emoji with regex: {item}",color=random.randint(0, 16777215))
       return embed
 
-class ErrorEmbed(menus.ListPageSource):
-  async def format_page(self, menu, item):
-
-    item = discord.utils.escape_markdown(item, as_needed=False, ignore_links=True)
-    
-    return discord.Embed(title="Error", description=item, color=random.randint(0, 16777215))
-
 class charinfoMenu(menus.ListPageSource):
   async def format_page(self, menu, item):
     return discord.Embed(description = item, color = random.randint(0, 16777215))
@@ -118,25 +111,6 @@ class GoogleEmbed(menus.ListPageSource):
 
     embed.set_footer(text = f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
 
-    return embed
-
-class SusUsersEmbed(menus.ListPageSource):
-  async def format_page(self, menu, item):
-    embed = discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
-    embed.add_field(name = f"User ID : {item.get('user_id')}", value = f"**Reason :** {item.get('reason')}", inline = False)
-    return embed
-
-class BlacklistedUsersEmbed(menus.ListPageSource):
-  async def format_page(self, menu, item):
-    embed = discord.Embed(title = "Users Blacklisted by JDJG Inc. Official", color = random.randint(0, 16777215))
-    embed.add_field(name = f"User ID : {item.get('user_id')}", value = f"**Reason :** {item.get('reason')}", inline = False)
-    return embed
-
-class TestersEmbed(menus.ListPageSource):
-  async def format_page(self, menu, item):
-    embed = discord.Embed(title = "Testing Users:", color = random.randint(0, 16777215))
-    embed.add_field(name = "User ID:", value = f"{item}", inline = False)
-    
     return embed
 
 class RtfmEmbed(menus.ListPageSource):

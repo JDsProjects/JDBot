@@ -357,6 +357,31 @@ class RandomHistoryEmbed(Paginator):
     embed.set_footer(text = "Powered by Random quotes From: \nhttps://www.youtube.com/watch?v=xuCn8ux2gbs")
     return embed
 
+class TestersEmbed(Paginator):
+  async def format_page(self, item):
+    embed = discord.Embed(title = "Testing Users:", color = random.randint(0, 16777215))
+    embed.add_field(name = "User ID:", value = f"{item}", inline = False)
+    
+    return embed
+
+class SusUsersEmbed(Paginator):
+  async def format_page(self, item):
+    embed = discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
+    embed.add_field(name = f"User ID : {item.get('user_id')}", value = f"**Reason :** {item.get('reason')}", inline = False)
+    return embed
+
+class BlacklistedUsersEmbed(Paginator):
+  async def format_page(self, item):
+    embed = discord.Embed(title = "Users Blacklisted by JDJG Inc. Official", color = random.randint(0, 16777215))
+    embed.add_field(name = f"User ID : {item.get('user_id')}", value = f"**Reason :** {item.get('reason')}", inline = False)
+    return embed
+
+class ErrorEmbed(Paginator):
+  async def format_page(self, item):
+
+    item = discord.utils.escape_markdown(item, as_needed = False, ignore_links = True)
+    return discord.Embed(title = "Error", description = item, color = random.randint(0, 16777215))
+
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):
   def __init__(self, ctx, pages : list = None, channel : discord.DMChannel = None, **kwargs):

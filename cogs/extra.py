@@ -51,10 +51,8 @@ class Extra(commands.Cog):
     
     pages = [page.strip("`") for page in pag.pages]
 
-    #menu = ViewMenuPages(utils.RandomHistoryEmbed(pages, per_page = 1), delete_message_after = True)
-    #await menu.start(ctx)
-
-    
+    menu = utils.RandomHistoryEmbed(pages, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(brief="gives you the digits of pi that Python knows")
   async def pi(self, ctx):
