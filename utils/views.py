@@ -105,6 +105,7 @@ class Paginator(discord.ui.View):
             "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=4),
             "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary, position=2),
             "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary, position=3),
+            "page" : None,
         }   
 
         self.ctx: Optional[commands.Context] = ctx
