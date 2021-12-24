@@ -401,9 +401,8 @@ class Image(commands.Cog):
       url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.invert_converter(url, ctx))
 
-    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
-
-    await menu.start(ctx)
+    menu = utils.Paginator(embeds, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(help="Headpat generator :D")
   async def headpat(self, ctx, Member: utils.BetterMemberConverter = None):
