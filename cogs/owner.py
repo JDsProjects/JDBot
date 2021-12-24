@@ -159,7 +159,9 @@ class Owner(commands.Cog):
 
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
-    
+
+    menu = utils.MutualGuildsEmbed(pages, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(brief="A command to add sus_users with a reason")
   async def addsus(self, ctx, *, user: utils.BetterUserconverter = None):

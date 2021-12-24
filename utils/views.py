@@ -3,7 +3,6 @@ from discord.ext import commands
 
 from typing import Literal, Optional, Dict, Any, List, Union, Tuple
 
-
 class PaginatorButton(discord.ui.Button["Paginator"]):
   def __init__(self, *, emoji: Optional[Union[discord.PartialEmoji, str]] = None, label: Optional[str] = None, style: discord.ButtonStyle = discord.ButtonStyle.blurple, position: Optional[int] = None,) -> None:
         
@@ -319,6 +318,7 @@ class Paginator(discord.ui.View):
 
         
         return self.message
+
 
 class MutualGuildsEmbed(Paginator):
   def format_page(self, item):
