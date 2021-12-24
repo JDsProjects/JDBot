@@ -92,13 +92,14 @@ class Paginator(discord.ui.View):
 
        
         DEFAULT_BUTTONS: Dict[str, Union[PaginatorButton, None]] = {
-            "first": PaginatorButton(label="First", style=discord.ButtonStyle.primary, position=0),
-            "left": PaginatorButton(label="Left", style=discord.ButtonStyle.primary, position=1),
+            "first": PaginatorButton(emoji = "⏮️", style=discord.ButtonStyle.secondary, position=0),
+            "left": PaginatorButton(emoji="◀️", style=discord.ButtonStyle.secondary, position=1),
            
-            "page": PaginatorButton(label="page", style=discord.ButtonStyle.primary, position=2),
-            "stop": PaginatorButton(label="Stop", style=discord.ButtonStyle.danger, position=3),
-            "right": PaginatorButton(label="Right", style=discord.ButtonStyle.primary, position=4),
-            "last": PaginatorButton(label="Last", style=discord.ButtonStyle.primary, position=5),
+            "page": PaginatorButton(label="page", 
+                                    emoji="📄", style=discord.ButtonStyle.secondary, position=2),
+            "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=3),
+            "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary, position=4),
+            "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary, position=5),
         }
 
         
@@ -319,7 +320,6 @@ class Paginator(discord.ui.View):
         
         return self.message
 
-
 class MutualGuildsEmbed(Paginator):
   def format_page(self, item):
     embed = discord.Embed(title = "Mutual Servers:", description = item , color = random.randint(0, 16777215))
@@ -328,11 +328,11 @@ class MutualGuildsEmbed(Paginator):
 
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):
-  def __init__(self, ctx, items : list = None, channel : discord.DMChannel = None, **kwargs):
+  def __init__(self, ctx, pages : list = None, channel : discord.DMChannel = None, **kwargs):
     super().__init__(**kwargs)
     self.ctx = ctx
     self.channel = channel
-    self.items = items
+    self.pages = pages
 
   @discord.ui.button(label = "Secret Message(Ephemeral)", style = discord.ButtonStyle.success, emoji = "🕵️")
   async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
@@ -340,19 +340,19 @@ class dm_or_ephemeral(discord.ui.View):
     self.clear_items()
     await self.message.edit(content = "Will be sending you the mutual guilds empherally", view = self)
 
-    #view = MutualGuildsEmbed(self.ctx)
-    #I am going to need to find out what I need in here.
-    #view = await interaction.response.send_message(f"Here are mutual guilds for you to see {self.ctx.author.mention}", view = view, ephemeral = True)
-    #tbh i don't know yet.
+    menu = MutualGuildsEmbed(self.pages, ctx = self.ctx, disable_after = True)
+
+    await menu.send_as_interaction(interaction, ephemeral = True)
 
   @discord.ui.button(label = "Secret Message(DM)", style = discord.ButtonStyle.success, emoji = "📥")
   async def dmMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
 
     self.clear_items()
     await self.message.edit(content = "Well be Dming you the Mutual Guilds", view = self)
-    await interaction.response.send_message("WIP, coming soon :tm:")
 
-    #do something by sending the menu paginator to the channel provided
+    menu = MutualGuildsEmbed(self.pages, ctx = self.ctx, delete_message_after = True)
+
+    await menu.send(self.channel)
 
   @discord.ui.button(label="Deny", style = discord.ButtonStyle.danger , emoji = "❌")
   async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):

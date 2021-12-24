@@ -126,11 +126,6 @@ class GoogleEmbed(menus.ListPageSource):
 
     return embed
 
-class ServersEmbed(menus.ListPageSource):
-  async def format_page(self, menu, item):
-    embed = discord.Embed(title="Servers:",description=item,color=random.randint(0, 16777215))
-    return embed
-
 class SusUsersEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
     embed = discord.Embed(title = "Users Deemed Suspicious by JDJG Inc. Official", color = random.randint(0, 16777215))
