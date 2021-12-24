@@ -5,7 +5,7 @@ from typing import Literal, Optional, Dict, Any, List, Union, Tuple
 
 class PaginatorButton(discord.ui.Button["Paginator"]):
   def __init__(self, *, emoji: Optional[Union[discord.PartialEmoji, str]] = None, label: Optional[str] = None, style: discord.ButtonStyle = discord.ButtonStyle.blurple, position: Optional[int] = None,) -> None:
-        
+       
         super().__init__(emoji=emoji, label=label, style=style)
 
         
@@ -15,9 +15,9 @@ class PaginatorButton(discord.ui.Button["Paginator"]):
         
         self.position: Optional[int] = position
 
-   
+    
   async def callback(self, interaction: discord.Interaction):
-      
+        
         assert self.view is not None
 
         
@@ -35,36 +35,44 @@ class PaginatorButton(discord.ui.Button["Paginator"]):
         elif self.custom_id == "last_button":
             self.view.current_page = self.view.max_pages - 1
 
+       
+        self.view.page_string: str = f"Page {self.view.current_page + 1}/{self.view.max_pages}"
         
-        self.view.page_string: str = f"Page {self.view.current_page + 1}/{self.view.max_pages}"  
-        
-        self.view.PAGE_BUTTON.label = self.view.page_string
+        if self.view.PAGE_BUTTON is not None:
+            self.view.PAGE_BUTTON.label = self.view.page_string
 
         
         if self.view.current_page == 0:
-            self.view.FIRST_BUTTON.disabled = True
-            self.view.LEFT_BUTTON.disabled = True
+            if self.view.FIRST_BUTTON is not None:
+                self.view.FIRST_BUTTON.disabled = True
+            if self.view.LEFT_BUTTON is not None:
+                self.view.LEFT_BUTTON.disabled = True
         else:
-            self.view.FIRST_BUTTON.disabled = False
-            self.view.LEFT_BUTTON.disabled = False
+            if self.view.FIRST_BUTTON is not None:
+                self.view.FIRST_BUTTON.disabled = False
+            if self.view.LEFT_BUTTON is not None:
+                self.view.LEFT_BUTTON.disabled = False
 
         if self.view.current_page >= self.view.max_pages - 1:
-            self.view.LAST_BUTTON.disabled = True
-            self.view.RIGHT_BUTTON.disabled = True
+            if self.view.LAST_BUTTON is not None:
+                self.view.LAST_BUTTON.disabled = True
+            if self.view.RIGHT_BUTTON is not None:
+                self.view.RIGHT_BUTTON.disabled = True
         else:
-            self.view.LAST_BUTTON.disabled = False
-            self.view.RIGHT_BUTTON.disabled = False
+            if self.view.LAST_BUTTON is not None:
+                self.view.LAST_BUTTON.disabled = False
+            if self.view.RIGHT_BUTTON is not None:
+                self.view.RIGHT_BUTTON.disabled = False
 
-       
+        
         page_kwargs, _ = await self.view.get_page_kwargs(self.view.current_page)
         assert interaction.message is not None and self.view.message is not None
 
-       
+        
         try:
             await interaction.message.edit(**page_kwargs)
         except (discord.HTTPException, discord.Forbidden, discord.NotFound):
             await self.view.message.edit(**page_kwargs)
-
 
 class Paginator(discord.ui.View):
    
@@ -97,9 +105,7 @@ class Paginator(discord.ui.View):
             "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=4),
             "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary, position=2),
             "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary, position=3),
-        }
-
-        
+        }   
 
         self.ctx: Optional[commands.Context] = ctx
         self.author_id: Optional[int] = author_id
@@ -133,26 +139,26 @@ class Paginator(discord.ui.View):
         if all(isinstance(b, PaginatorButton) or b is None for b in self.buttons.values()) is False:
             raise ValueError("Buttons values must be PaginatorButton instances or None.")
 
-       
+        
         button: Union[PaginatorButton, None]
 
-        
+       
         for name, button in default_buttons.items():
             
             for custom_name, custom_button in self.buttons.items():
-              
+               
                 if name == custom_name:
                     button = custom_button
 
            
+            setattr(self, f"{name}_button".upper(), button)
+
+            
             if button is None:
                 continue
 
             
             button.custom_id = f"{name}_button"
-
-          
-            setattr(self, button.custom_id.upper(), button)
 
            
             if button.custom_id == "page_button":
@@ -167,14 +173,14 @@ class Paginator(discord.ui.View):
             if button.custom_id in ("first_button", "left_button") and self.current_page <= 0:
                 button.disabled = True
 
-            
+           
             if button.custom_id in ("last_button", "right_button") and self.current_page >= self.max_pages - 1:
                 button.disabled = True
 
-            
+           
             self.add_item(button)
 
-       
+        
         self._set_button_positions()
 
     
