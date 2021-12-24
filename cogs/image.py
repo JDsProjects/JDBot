@@ -1,7 +1,6 @@
 import discord, sr_api, asuna_api, random, io, cairosvg, functools
 from discord.ext import commands
 import utils
-from discord.ext.menus.views import ViewMenuPages
 
 class Image(commands.Cog):
   "A bunch of Image Manipulation and other related Image commands"
@@ -425,9 +424,8 @@ class Image(commands.Cog):
 
       embeds.append(await utils.headpat_converter2(url, ctx))
 
-    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
-
-    await menu.start(ctx)
+    menu = utils.Paginator(embeds, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   def convert_svg(self, svg_image):
     converted_bytes = cairosvg.svg2png(bytestring = svg_image, scale = 6.0)
@@ -470,9 +468,8 @@ class Image(commands.Cog):
       url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.jail_converter(url, ctx))
 
-    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
-
-    await menu.start(ctx)
+    menu = utils.Paginator(embeds, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
   
   @commands.command(brief = "inverts any valid image with jeyyapi")
   async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
@@ -495,9 +492,8 @@ class Image(commands.Cog):
       url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.invert_converter2(url, ctx))
 
-    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
-
-    await menu.start(ctx)
+    menu = utils.Paginator(embeds, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
 def setup(bot):
   bot.add_cog(Image(bot))
