@@ -24,7 +24,7 @@ class Owner(commands.Cog):
       if (user.dm_channel is None):
         await user.create_dm()
       try:
-        await user.send(embed=embed_message)
+        await user.send(embed = embed_message)
       except:
         user = ctx.author
         await user.send(content="Message failed. sending",embed=embed_message)

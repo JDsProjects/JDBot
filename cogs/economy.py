@@ -2,7 +2,6 @@ import discord, random
 import utils
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-from discord.ext.menus.views import ViewMenuPages
     
 class Economy(commands.Cog):
   "Commands dealing with the Bot's Economy"
@@ -85,9 +84,11 @@ class Economy(commands.Cog):
     
     ndata = utils.groupby(ndata, 6)
 
-    menu = ViewMenuPages(utils.LeaderboardEmbed(ndata, per_page = 1), delete_message_after = True)
+    #menu = ViewMenuPages(utils.LeaderboardEmbed(ndata, per_page = 1), delete_message_after = True)
   
-    await menu.start(ctx)
+    #await menu.start(ctx)
+
+    menu = utils.LeaderboardEmbed(ndata)
 
   @commands.command(brief = "Removes You From Economy")
   async def leave_economy(self, ctx):

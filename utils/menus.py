@@ -139,11 +139,6 @@ class TestersEmbed(menus.ListPageSource):
     
     return embed
 
-class PrefixesEmbed(menus.ListPageSource):
-  async def format_page(self, menu, item):
-    embed = discord.Embed(title = "Usable Prefixes:", description = item, color = random.randint(0, 16777215))
-    return embed
-
 class RandomHistoryEmbed(menus.ListPageSource):
   async def format_page(self, menu, item):
     embed = discord.Embed(title = "Random History:", description = f"{item}", color = random.randint(0, 16777215))
@@ -158,15 +153,4 @@ class RtfmEmbed(menus.ListPageSource):
 class SendHelp(menus.ListPageSource):
   async def format_page(self, menu, item): 
     emby = discord.Embed(description = item, color = 15428885)
-    return emby
-
-class LeaderboardEmbed(menus.ListPageSource):
-  async def format_page(self, menu, item):
-    
-    emby = discord.Embed(title = "Leaderboard", color = 15428885)
-    emby.set_author(name = f"Leaderboard Requested by {menu.ctx.author}", icon_url = (menu.ctx.author.display_avatar.url))
-
-    for i, b, w in item:
-      emby.add_field(name = f"**${i}:**", value = f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```", inline = False)
-
     return emby

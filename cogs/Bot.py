@@ -3,7 +3,6 @@ import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os
 
 import utils
 from discord.ext.commands.cooldowns import BucketType
-from discord.ext.menus.views import ViewMenuPages
 
 class Bot(commands.Cog):
   "Basic info about the bot and quick commands to get you access to support"
@@ -356,8 +355,9 @@ class Bot(commands.Cog):
 
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(utils.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
-    await menu.start(ctx)
+    menu = utils.PrefixesEmbed(pages, ctx = ctx, delete_message_after = True)
+
+    await menu.send(ctx.channel)
     
   @commands.command(brief="Lists the current used prefix",aliases=["prefix"])
   async def currentprefix(self, ctx):

@@ -102,7 +102,7 @@ class Paginator(discord.ui.View):
         DEFAULT_BUTTONS: Dict[str, Union[PaginatorButton, None]] = {
             "first": PaginatorButton(emoji = "⏮️", style=discord.ButtonStyle.secondary, position=0),
             "left": PaginatorButton(emoji="◀️", style=discord.ButtonStyle.secondary, position=1),
-            "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=4),
+            "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=-1),
             "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary, position=2),
             "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary, position=3),
             "page": None
@@ -334,6 +334,22 @@ class ServersEmbed(Paginator):
   def format_page(self, item):
     embed = discord.Embed(title = "Servers:", description = item, color = random.randint(0, 16777215))
     return embed
+
+class PrefixesEmbed(Paginator):
+  async def format_page(self, item):
+    embed = discord.Embed(title = "Usable Prefixes:", description = item, color = random.randint(0, 16777215))
+    return embed
+
+class LeaderboardEmbed(Paginator):
+  async def format_page(self, item):
+    
+    emby = discord.Embed(title = "Leaderboard", color = 15428885)
+    emby.set_author(name = f"Leaderboard Requested by {self.ctx.author}", icon_url = (self.ctx.author.display_avatar.url))
+
+    for i, b, w in item:
+      emby.add_field(name = f"**${i}:**", value = f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```", inline = False)
+
+    return emby
 
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):

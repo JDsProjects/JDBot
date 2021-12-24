@@ -1,7 +1,6 @@
 from discord.ext import commands
 import discord, random, os, traceback, re
 import utils
-from discord.ext.menus.views import ViewMenuPages
 
 class Events(commands.Cog):
   def __init__(self, bot):
@@ -87,8 +86,8 @@ class Events(commands.Cog):
 
       pages = [page.strip("`") for page in pag.pages]
 
-      menu = ViewMenuPages(utils.PrefixesEmbed(pages, per_page=1),delete_message_after=True)
-      await menu.start(test)
+      menu = utils.PrefixesEmbed(pages, ctx = test, delete_message_after = True)
+      await menu.send(test.channel)
 
   @commands.Cog.listener()
   async def on_command_error(self, ctx, error):
