@@ -86,12 +86,6 @@ class charinfoMenu(menus.ListPageSource):
   async def format_page(self, menu, item):
     return discord.Embed(description = item, color = random.randint(0, 16777215))
 
-class QuickMenu(menus.ListPageSource):
-  async def format_page(self, menu, item):
-    return item
-    #returns the embed here lol.
-
-
 def guild_join(guilds):
   return "\n".join(map(str, guilds))
 

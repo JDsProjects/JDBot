@@ -94,9 +94,6 @@ class Paginator(discord.ui.View):
         DEFAULT_BUTTONS: Dict[str, Union[PaginatorButton, None]] = {
             "first": PaginatorButton(emoji = "⏮️", style=discord.ButtonStyle.secondary, position=0),
             "left": PaginatorButton(emoji="◀️", style=discord.ButtonStyle.secondary, position=1),
-           
-            "page": PaginatorButton(label="page", 
-                                    emoji="📄", style=discord.ButtonStyle.secondary, position=2),
             "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=3),
             "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary, position=4),
             "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary, position=5),

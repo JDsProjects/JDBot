@@ -165,9 +165,7 @@ class Image(commands.Cog):
       url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.triggered_converter(url, ctx))
 
-    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
-
-    await menu.start(ctx)
+    #menu = utils.Paginator()
 
   @commands.command(brief = "uses our headpat program to pat you",help="a command that uses jeyyapi to make a headpat of you.")
   async def headpat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
