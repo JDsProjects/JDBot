@@ -165,7 +165,8 @@ class Image(commands.Cog):
       url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.triggered_converter(url, ctx))
 
-    #menu = utils.Paginator()
+    menu = utils.Paginator(embeds, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(brief = "uses our headpat program to pat you",help="a command that uses jeyyapi to make a headpat of you.")
   async def headpat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
@@ -186,9 +187,8 @@ class Image(commands.Cog):
       url = (Member.display_avatar.with_format("png")).url
       embeds.append(await utils.headpat_converter(url, ctx))
 
-    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after = True)
-
-    await menu.start(ctx)
+    menu = utils.Paginator(embeds, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(brief="a hug command to hug people",help="this actually the second hug command and is quite powerful.")
   async def hug2(self, ctx, *, Member: utils.BetterMemberConverter=None):
