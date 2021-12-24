@@ -1,12 +1,11 @@
 from discord.ext import commands
-from discord.ext.menus.views import ViewMenuPages
 import utils
 
 class JDBotHelp(commands.MinimalHelpCommand):
   async def send_pages(self):
-    menu = ViewMenuPages(utils.SendHelp(self.paginator.pages, per_page = 1), delete_message_after = True)
+    menu = utils.SendHelp(self.paginator.pages, ctx = self.context, delete_message_after = True)
 
-    await menu.start(self.context)
+    await menu.send(self.context.channel)
 
 class Help(commands.Cog):
   "The Help Menu Cog"

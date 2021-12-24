@@ -361,8 +361,8 @@ class DevTools(commands.Cog):
       pag.add_line(f"{g} : {rtfm_dictionary.get(g)}")
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(utils.RtfmEmbed(pages, per_page=1),delete_message_after=True)
-    await menu.start(ctx)
+    menu = utils.RtfmEmbed(pages, ctx = ctx , delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(brief = "a command to autoformat your python code to pep8")
   async def pep8(self, ctx, *, args = None):

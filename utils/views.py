@@ -102,11 +102,11 @@ class Paginator(discord.ui.View):
         DEFAULT_BUTTONS: Dict[str, Union[PaginatorButton, None]] = {
             "first": PaginatorButton(emoji = "⏮️", style=discord.ButtonStyle.secondary, position=0),
             "left": PaginatorButton(emoji="◀️", style=discord.ButtonStyle.secondary, position=1),
-            "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=-1),
             "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary, position=2),
             "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary, position=3),
+            "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=-1),
             "page": None
-        }   
+        }
 
         self.ctx: Optional[commands.Context] = ctx
         self.author_id: Optional[int] = author_id
@@ -381,6 +381,16 @@ class ErrorEmbed(Paginator):
 
     item = discord.utils.escape_markdown(item, as_needed = False, ignore_links = True)
     return discord.Embed(title = "Error", description = item, color = random.randint(0, 16777215))
+
+class RtfmEmbed(Paginator):
+  async def format_page(self, item):
+    embed = discord.Embed(title = "Packages:", description = item, color = random.randint(0, 16777215))
+    return embed
+
+class SendHelp(Paginator):
+  async def format_page(self, item): 
+    emby = discord.Embed(description = item, color = 15428885)
+    return emby
 
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):
