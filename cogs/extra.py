@@ -2,7 +2,6 @@ from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 import discord, random, asuna_api, math, chardet, alexflipnote, os, typing, aioimgur, time, asyncio, contextlib, async_cleverbot
 import utils
-from discord.ext.menus.views import ViewMenuPages
 
 class Extra(commands.Cog):
   "Uncategorized Commands, these are more random commands"
@@ -52,8 +51,10 @@ class Extra(commands.Cog):
     
     pages = [page.strip("`") for page in pag.pages]
 
-    menu = ViewMenuPages(utils.RandomHistoryEmbed(pages, per_page = 1), delete_message_after = True)
-    await menu.start(ctx)
+    #menu = ViewMenuPages(utils.RandomHistoryEmbed(pages, per_page = 1), delete_message_after = True)
+    #await menu.start(ctx)
+
+    
 
   @commands.command(brief="gives you the digits of pi that Python knows")
   async def pi(self, ctx):
@@ -439,13 +440,14 @@ class Extra(commands.Cog):
   async def closest_embed(self, ctx):
     embed_history = await ctx.channel.history(limit = 50).flatten()
     embeds = [embed for e in embed_history for embed in e.embeds][:10]
-    menu = ViewMenuPages(utils.QuickMenu(embeds, per_page = 1),delete_message_after=True)
 
     if not embeds:
       return await ctx.send("No embeds found :D")
 
     await ctx.send("Sending you the previous 10 embeds sent in 50 messages if under 10 well the amount that exists, if none well you get none.")
-    await menu.start(ctx)
+
+    menu = utils.Paginator(embeds, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(brief = "takes two numbers and does a cool command")
   async def radical(self, ctx, *numbers : typing.Union[int, str]):

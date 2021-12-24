@@ -88,7 +88,8 @@ class Economy(commands.Cog):
   
     #await menu.start(ctx)
 
-    menu = utils.LeaderboardEmbed(ndata)
+    menu = utils.LeaderboardEmbed(ndata, ctx = ctx, delete_message_after = True)
+    await menu.send(ctx.channel)
 
   @commands.command(brief = "Removes You From Economy")
   async def leave_economy(self, ctx):

@@ -351,6 +351,12 @@ class LeaderboardEmbed(Paginator):
 
     return emby
 
+class RandomHistoryEmbed(Paginator):
+  async def format_page(self, item):
+    embed = discord.Embed(title = "Random History:", description = f"{item}", color = random.randint(0, 16777215))
+    embed.set_footer(text = "Powered by Random quotes From: \nhttps://www.youtube.com/watch?v=xuCn8ux2gbs")
+    return embed
+
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):
   def __init__(self, ctx, pages : list = None, channel : discord.DMChannel = None, **kwargs):
