@@ -2,7 +2,6 @@ from discord.ext import commands
 import discord, typing, random
 import utils
 from discord.ext.commands.cooldowns import BucketType
-
 import collections, itertools
 
 class Test(commands.Cog):

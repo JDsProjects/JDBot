@@ -327,6 +327,8 @@ class Paginator(discord.ui.View):
         
         return self.message
 
+#thank you so much Soheab for allowing me to use this paginator you made and putting in the work to do this :D (That's his github name so...)
+
 class MutualGuildsEmbed(Paginator):
   def format_page(self, item):
     embed = discord.Embed(title = "Mutual Servers:", description = item , color = random.randint(0, 16777215))
