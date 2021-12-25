@@ -2,7 +2,6 @@ import os, discord, time, async_cse, random, cse
 from discord.ext import commands
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
-from discord.ext.menus.views import ViewMenuPages
 import utils
 
 from aiogifs.tenor import TenorClient, ContentFilter
@@ -307,11 +306,9 @@ class Order(commands.Cog):
       return await ctx.send(f"An error occured, error: {e}. Please give this to the owner. This was an error with results")
 
   
-    menu = ViewMenuPages(utils.GoogleEmbed(results, per_page = 1), delete_message_after = True)
+    menu = utils.GoogleEmbed(results, ctx = ctx, delete_message_after = True)
 
-    await menu.start(ctx)
-
-    #this appears to work but I don't know if it's officially supported by the custom button menus team.
+    await menu.send(ctx.channel)
   
   @commands.cooldown(1, 30, BucketType.user)
   @commands.command(brief = "sends a gif of someone dancing to disco (animated)")

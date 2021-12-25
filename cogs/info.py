@@ -135,8 +135,8 @@ class Info(commands.Cog):
   async def fetch_invite(self, ctx, *invites:typing.Union[discord.Invite, str]):
     if invites:
       
-      menu = ViewMenuPages(utils.InviteInfoEmbed(invites, per_page=1),delete_message_after=True)
-      await menu.start(ctx)
+      menu = utils.InviteInfoEmbed(invites, ctx = ctx, delete_message_after = True)
+      await menu.send(ctx.channel)
     if not invites:
       await ctx.send("Please get actual invites to attempt grab")
       ctx.command.reset_cooldown(ctx)
@@ -347,9 +347,9 @@ class DevTools(commands.Cog):
 
     content = textwrap.wrap(values, width = 2000)
 
-    menu = ViewMenuPages(utils.charinfoMenu(content, per_page=1),delete_message_after = True)
+    menu = utils.charinfoMenu(content, ctx = ctx, delete_message_after = True)
 
-    await menu.start(ctx)
+    await menu.send(ctx.channel)
 
   @commands.command(brief = "a command to view the rtfm DB")
   async def rtfm_view(self, ctx):

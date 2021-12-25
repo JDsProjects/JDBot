@@ -100,11 +100,11 @@ class Paginator(discord.ui.View):
 
        
         DEFAULT_BUTTONS: Dict[str, Union[PaginatorButton, None]] = {
-            "first": PaginatorButton(emoji = "⏮️", style=discord.ButtonStyle.secondary, position=0),
-            "left": PaginatorButton(emoji="◀️", style=discord.ButtonStyle.secondary, position=1),
-            "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary, position=2),
-            "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary, position=3),
-            "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary, position=-1),
+            "first": PaginatorButton(emoji = "⏮️", style=discord.ButtonStyle.secondary),
+            "left": PaginatorButton(emoji="◀️", style=discord.ButtonStyle.secondary),
+            "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary),
+            "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary),
+            "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary),
             "page": None
         }
 
@@ -394,6 +394,72 @@ class SendHelp(Paginator):
   async def format_page(self, item): 
     emby = discord.Embed(description = item, color = 15428885)
     return emby
+
+class charinfoMenu(Paginator):
+  async def format_page(self, item):
+    return discord.Embed(description = item, color = random.randint(0, 16777215))
+
+class InviteInfoEmbed(Paginator):
+  async def format_page(self, item):
+    if isinstance(item, discord.Invite):
+      
+      if item.guild:
+        image = item.guild.icon.url if item.guild.icon else "https://i.imgur.com/3ZUrjUP.png"
+        guild = item.guild
+        guild_id = item.guild.id
+      if item.guild is None:
+        guild = "Group Chat"
+        image = "https://i.imgur.com/pQS3jkI.png"
+        guild_id = "Unknown"
+      embed = discord.Embed(title = f"Invite for {guild}:", color = random.randint(0, 16777215))
+      embed.set_author(name = "Discord Invite Details:", icon_url = (image))
+      embed.add_field(name = "Inviter:", value = f"{item.inviter}")
+      embed.add_field(name = "User Count:", value = f"{item.approximate_member_count}")
+      embed.add_field(name = "Active User Count:", value = f"{item.approximate_presence_count}")
+
+      embed.add_field(name = "Invite Channel", value = f"{item.channel}\nChannel Mention : {'None' if isinstance(item.channel, discord.Object) else item.channel.mention}")
+
+      embed.set_footer(text = f"ID: {guild_id}\nInvite Code: {item.code}\nInvite Url: {item.url}")
+  
+    if isinstance(item, str):
+      embed = discord.Embed(title = "Failed grabbing the invite code:", description = f"Discord couldnt fetch the invite with the code {item}.",color = random.randint(0, 16777215))
+      embed.set_footer(text = "If this is a consistent problem please contact JDJG Inc. Official#3493")
+
+    return embed
+
+class GoogleEmbed(Paginator):
+  async def format_page(self, item):
+      
+    embed = discord.Embed(title = "Gooogle Search", description = f"[{item.title}]({item.link}) \n{item.snippet}", color = random.randint(0, 16777215))
+
+    if item.image: embed.set_image(url = item.image)
+
+    embed.set_footer(text = f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
+
+    return embed
+
+def guild_join(guilds):
+  return "\n".join(map(str, guilds))
+
+def grab_mutualguilds(ctx, user):
+  mutual_guilds = set(ctx.author.mutual_guilds)
+  mutual_guilds2 = set(user.mutual_guilds)
+
+  return list(mutual_guilds.intersection(mutual_guilds2))
+
+async def get_sus_reason(ctx, user):
+  sus_users = dict(await ctx.bot.db.fetch("SELECT * FROM SUS_USERS;"))
+  return sus_users.get(user.id)
+
+class ScanGlobalEmbed(Paginator):
+  async def format_page(self, item):
+    embed = discord.Embed(color = random.randint(0, 16777215))
+
+    embed.set_author(name = f"{item}", icon_url = item.display_avatar.url)
+
+    embed.add_field(name = "Shared Guilds:", value = f"{guild_join(grab_mutualguilds(self.ctx, item))}")
+    embed.set_footer(text = f"Sus Reason : {await get_sus_reason(self.ctx, item)}")
+    return embed
 
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):

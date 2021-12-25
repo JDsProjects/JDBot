@@ -2,7 +2,6 @@ from discord.ext import commands
 import discord, random, typing
 import utils
 from discord.ext.commands.cooldowns import BucketType
-from discord.ext.menus.views import ViewMenuPages
 
 class Moderation(commands.Cog):
   "Commands For Moderators to use"
@@ -89,9 +88,9 @@ class Moderation(commands.Cog):
 
       valid_users = [u for u in mutual_guild_users if utils.mutual_guild_check(ctx, u)]
 
-      menu = ViewMenuPages(utils.ScanGlobalEmbed(valid_users, per_page = 1), delete_message_after = True)
+      menu = utils.ScanGlobalEmbed(valid_users, ctx = ctx, delete_message_after = True)
       
-      await menu.start(ctx)
+      await menu.send(ctx.channel)
 
   @commands.command(brief = "gives stats about the sus users", aliases = ["sususers_stats"])
   async def sus_users_stats(self, ctx):
