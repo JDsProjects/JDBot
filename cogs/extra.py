@@ -746,5 +746,9 @@ class Extra(commands.Cog):
   async def hi(self, ctx):
     await ctx.send(f"hi {ctx.author}")
 
+  @commands.command(brief = "snipe")
+  async def snipe(self, ctx):
+    await ctx.send("We don't snipe messages, sorry :(")
+
 def setup(bot):
   bot.add_cog(Extra(bot))
