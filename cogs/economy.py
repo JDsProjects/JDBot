@@ -84,10 +84,6 @@ class Economy(commands.Cog):
     
     ndata = utils.groupby(ndata, 6)
 
-    #menu = ViewMenuPages(utils.LeaderboardEmbed(ndata, per_page = 1), delete_message_after = True)
-  
-    #await menu.start(ctx)
-
     menu = utils.LeaderboardEmbed(ndata, ctx = ctx, delete_message_after = True)
     await menu.send(ctx.channel)
 

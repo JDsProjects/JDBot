@@ -3,7 +3,6 @@ import re, discord , random , typing, emoji, unicodedata, textwrap, contextlib, 
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
-from discord.ext.menus.views import ViewMenuPages
 from jishaku.codeblocks import codeblock_converter
 
 class Info(commands.Cog):
@@ -218,12 +217,12 @@ class Info(commands.Cog):
     await ctx.send(f"Username : {userNearest} \nDisplay name : {user_nick} \nNickname: {nearest_server_nick}")
 
   
-  @commands.command(help="gives info on default emoji and custom emojis",name="emoji")
-  async def emoji_info(self,ctx,*emojis: typing.Union[utils.EmojiConverter ,str]):
+  @commands.command(help = "gives info on default emoji and custom emojis", name = "emoji")
+  async def emoji_info(self,ctx, *emojis: typing.Union[utils.EmojiConverter ,str]):
     if emojis:
 
-      menu = ViewMenuPages(utils.EmojiInfoEmbed(emojis, per_page=1),delete_message_after=True)
-      await menu.start(ctx)
+      menu = utils.EmojiInfoEmbed(emojis, ctx = ctx,delete_message_after = True)
+      await menu.send(ctx.channel)
       
     if not emojis:
       await ctx.send("Looks like there was no emojis.")
