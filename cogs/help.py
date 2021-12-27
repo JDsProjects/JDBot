@@ -9,7 +9,7 @@ class JDBotHelp(Commands.MinimalHelpCommand):
     await menu.send(self.context.channel)
 
   def add_bot_commands_formatting(self, heading):
-    self.paginator.add_line(f'**{heading}**')
+    self.paginator.add_line(f'{heading}')
 
   async def send_bot_help(self, mapping):
     ctx = self.context
@@ -27,7 +27,7 @@ class JDBotHelp(Commands.MinimalHelpCommand):
 
     def get_category(command, *, no_category=no_category):
       cog = command.cog
-      return cog.qualified_name if cog is not None else no_category
+      return f"**{cog.qualified_name}** \n{cog.description}" if cog is not None else no_category
 
     filtered = await self.filter_commands(bot.commands, sort = True, key=get_category)
     to_iterate = itertools.groupby(filtered, key=get_category)
