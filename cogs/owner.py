@@ -530,5 +530,31 @@ class Owner(commands.Cog):
     menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx = ctx, delete_message_after = True)
     await menu.send(ctx.channel)
 
+  @commands.command(brief = "adds a job for economy")
+  async def addjob(self, ctx, amount : typing.Optional[int] = None, *, job = None):
+
+    if not job:
+      return await ctx.send("Please make sure to add a job in.")
+
+    amount = amount or 10
+
+    job_wanted =  await self.bot.db.fetchrow("SELECT * FROM jobs WHERE job_name = $1", job)
+
+    if job_wanted:
+      return await ctx.send("Job already exists")
+
+  
+    await self.bot.db.execute("INSERT INTO JOBS VALUES($1, $2)", job, amount)
+
+    await ctx.send(f"Added {job} to economy with a pay of ${amount}.")
+
+  @commands.command(brief = "removes jobs from economy")
+  async def removejob(self, ctx, *, job = None):
+    if job is None:
+      return await ctx.send("You can't remove None")
+
+    await self.bot.db.execute("DELETE FROM jobs WHERE job_name = $1", job)
+    await ctx.send(f"Removed {job} from economy.")
+
 def setup(bot):
   bot.add_cog(Owner(bot))
