@@ -5,7 +5,7 @@ class JDBotHelp(commands.MinimalHelpCommand):
   async def send_pages(self):
     menu = utils.SendHelp(self.paginator.pages, ctx = self.context, delete_message_after = True)
 
-    await menu.send(self.context.channel)  
+    await menu.send(self.context.channel)
 
 class Help(commands.Cog):
   "The Help Menu Cog"
