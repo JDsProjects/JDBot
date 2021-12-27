@@ -1,13 +1,13 @@
-from discord.ext import commands as Commands
+from discord.ext import commands
 import utils
 
-class JDBotHelp(Commands.MinimalHelpCommand):
+class JDBotHelp(commands.MinimalHelpCommand):
   async def send_pages(self):
     menu = utils.SendHelp(self.paginator.pages, ctx = self.context, delete_message_after = True)
 
     await menu.send(self.context.channel)  
 
-class Help(Commands.Cog):
+class Help(commands.Cog):
   "The Help Menu Cog"
   def __init__(self, bot):
     self.bot = bot
