@@ -15,6 +15,8 @@ class Reddit(commands.Cog):
     subreddit = await self.reddit.subreddit(sub_name)
     meme_list = [result async for result in subreddit.new()]
 
+    meme_list = list(filter(lambda m: not m.over_18, meme_list))
+
     data = random.choice(meme_list)
     embed = discord.Embed(title=f"{data.subreddit_name_prefixed}",description=f"[{data.title}](https://reddit.com{data.permalink})", color=0x00FF00)
     embed.set_image(url=data.url)
@@ -107,7 +109,7 @@ class Reddit(commands.Cog):
     await ctx.send(embed = embed)
 
   @commands.command()
-  async def advice(self, ctx):
+  async def _advice(self, ctx):
     embed = await self.asyncpraw_handler("advice")
     await ctx.send(embed = embed)
 
