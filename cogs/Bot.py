@@ -1,5 +1,5 @@
 from discord.ext import commands, tasks
-import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os, typing, inspecting
+import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os, typing, inspect
 
 import utils
 from discord.ext.commands.cooldowns import BucketType
@@ -186,25 +186,9 @@ class Bot(commands.Cog):
     embed.add_field(name = "Approximate Member Count:", value = f"{sum(g.member_count for g in self.bot.guilds)}")
     embed.set_footer(text = f"if you at all don't get what this means, you can ask our support team, if you do understand you can ask for clarification")
     await ctx.send(embed = embed)
-
-  @commands.command(brief="a way to view open source",help="you can see the open source with the link it provides")
-  async def open_source(self, ctx):
-    embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot. Please don't just copy the source code, cause this may cause issues with you or the user instead ask if you want to use my code or learn from my code and look to see if that's a valid command a.ka ask me first, then discord.py about the bot! Thanks :D",color=random.randint(0, 16777215))
-    embed.set_author(name=f"{self.bot.user}'s source code:", icon_url = self.bot.user.display_avatar.url)
-    await ctx.send(embed=embed)
-
-  @commands.group(name="open", invoke_without_command=True)
-  async def open(self, ctx):
-    embed = discord.Embed(title="Project at:\nhttps://github.com/JDJGInc/JDBot !",description="you can also contact the owner if you want more info(by using the owner command) you can see who owns the bot. Please don't just copy the source code, cause this may cause issues with you or the user instead ask if you want to use my code or learn from my code and look to see if that's a valid command a.ka ask me first, then discord.py about the bot! Thanks :D",color=random.randint(0, 16777215))
-    embed.set_author(name=f"{self.bot.user}'s source code:", icon_url = self.bot.user.display_avatar.url)
-    await ctx.send(embed = embed)
   
-  @open.command(brief = "a way to view open source", help = "you can see the open source with the link it provides")
-  async def source(self, ctx):
-    await self.open(ctx)
-
-  @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
-  async def _source(self, ctx, *, command = None):
+  @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)")
+  async def source(self, ctx, *, command = None):
     github_url = "https://github.com/JDJGInc/JDBot"
     branch = "master"
 
