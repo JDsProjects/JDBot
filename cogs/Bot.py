@@ -203,13 +203,20 @@ class Bot(commands.Cog):
     if not command_wanted:
       return await ctx.send(f"Couldn't find {command}. Here's source anyway:", embed = embed)
 
-    lines, firstline = inspect.getsourcelines(command_wanted.callback.__code__)
-
     src = command_wanted.callback.__code__
     filename = src.co_filename
 
     module = command_wanted.callback.__module__
+
+    if command == "help":
+      src = type(self.bot.help_command)
+      module = src.__module__
+      filename = inspect.getsourcefile(src)
+
+    lines, firstline = inspect.getsourcelines(src)
+
     filename = module.replace('.', '/') + '.py'
+    
     if module.startswith("discord") or module.startswith("jishaku"):
       
       return await ctx.send("We don't support getting the source of discord.py or jishaku internals like help. Here's my bot's source:", embed = embed)
