@@ -59,13 +59,20 @@ class Test(commands.Cog):
   @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
   async def _source(self, ctx, *, command = None):
     github_url = "https://github.com/JDJGInc/JDBot"
+
+    embed = discord.Embed(title = "Github link", description = f"{github_url}", color = 15428885, timestamp = ctx.message.created_at)
     
     if command is None:
+      return await ctx.send("Here's the github link:", embed = embed)
 
-      embed = discord.Embed(title = "Github link", description = f"{github_url}", color = 15428885, timestamp = ctx.message.created_at)
-      await ctx.send("Here's the github link:", embed = embed)
+    command_wanted = self.bot.get_command(command)
+    if not command_wanted:
+      return await ctx.send(f"Couldn't find {command}. Here's source anyway:", embed = embed)
 
-    await ctx.send(f"finding out where the command is located is not around yet.")
+    import inspect
+    lines, firstline = inspect.getsourcelines(command_wanted.callback.__code__)
+
+    print(lines)
 
   @commands.command(brief = "scans statuses to see if there is any bad ones.")
   async def scan_status(self, ctx):
