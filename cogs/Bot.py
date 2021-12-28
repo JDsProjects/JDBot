@@ -216,7 +216,7 @@ class Bot(commands.Cog):
     lines, firstline = inspect.getsourcelines(src)
 
     filename = module.replace('.', '/') + '.py'
-    
+
     if module.startswith("discord") or module.startswith("jishaku"):
 
     #make this check the locations...
