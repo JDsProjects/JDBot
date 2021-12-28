@@ -210,13 +210,13 @@ class Bot(commands.Cog):
 
     module = command_wanted.callback.__module__
     filename = module.replace('.', '/') + '.py'
-    if module.startswith("discord"):
+    if module.startswith("discord") or module.startswith("jishaku"):
       
-      return await ctx.send("We don't support getting the source of discord.py internals like help. Here's my bot's source:", embed = embed)
+      return await ctx.send("We don't support getting the source of discord.py or jishaku internals like help. Here's my bot's source:", embed = embed)
 
     embed = discord.Embed(title = f"Source for {command_wanted}:", description =  f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})", color = 15428885, timestamp = ctx.message.created_at)
 
-    embed.set_footer(text = "This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works.")
+    embed.set_footer(text = "This Bot's License is MIT, You must credit me if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works.")
 
     await ctx.send(embed = embed)
   
