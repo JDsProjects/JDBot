@@ -218,6 +218,8 @@ class Bot(commands.Cog):
     filename = module.replace('.', '/') + '.py'
     
     if module.startswith("discord") or module.startswith("jishaku"):
+
+    #make this check the locations...
       
       return await ctx.send("We don't support getting the source of discord.py or jishaku internals like help. Here's my bot's source:", embed = embed)
 
