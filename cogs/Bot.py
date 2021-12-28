@@ -232,9 +232,8 @@ class Bot(commands.Cog):
         module = module.split(".")[0]
         return await ctx.send(f"We don't support getting the source of {module}. Here's my bot's source:", embed = embed)
 
-    embed = discord.Embed(title = f"Source for {command_wanted}:", description =  f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})", color = 15428885, timestamp = ctx.message.created_at)
-
-    embed.set_footer(text = "This Bot's License is MIT, You must credit me if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works.")
+    embed.title = f"Source for {command_wanted}:"
+    embed.description = f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})"
 
     await ctx.send(embed = embed)
   
