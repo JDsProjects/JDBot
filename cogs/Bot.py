@@ -1,5 +1,5 @@
 from discord.ext import commands, tasks
-import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os, typing
+import discord, random, time, asyncio, difflib, contextlib, platform, psutil, os, typing, inspecting
 
 import utils
 from discord.ext.commands.cooldowns import BucketType
@@ -202,6 +202,39 @@ class Bot(commands.Cog):
   @open.command(brief = "a way to view open source", help = "you can see the open source with the link it provides")
   async def source(self, ctx):
     await self.open(ctx)
+
+  @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
+  async def _source(self, ctx, *, command = None):
+    github_url = "https://github.com/JDJGInc/JDBot"
+    branch = "master"
+
+    embed = discord.Embed(title = "Github link", description = f"{github_url}", color = 15428885, timestamp = ctx.message.created_at)
+
+    embed.set_footer(text = "This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works.")
+    
+    if command is None:
+      return await ctx.send("Here's the github link:", embed = embed)
+
+    command_wanted = self.bot.get_command(command)
+    if not command_wanted:
+      return await ctx.send(f"Couldn't find {command}. Here's source anyway:", embed = embed)
+
+    lines, firstline = inspect.getsourcelines(command_wanted.callback.__code__)
+
+    src = command_wanted.callback.__code__
+    filename = src.co_filename
+
+    module = command_wanted.callback.__module__
+    filename = module.replace('.', '/') + '.py'
+    if module.startswith("discord"):
+      
+      return await ctx.send("We don't support getting the source of discord.py internals like help. Here's my bot's source:", embed = embed)
+
+    embed = discord.Embed(title = f"Source for {command_wanted}:", description =  f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})", color = 15428885, timestamp = ctx.message.created_at)
+
+    embed.set_footer(text = "This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works.")
+
+    await ctx.send(embed = embed)
   
   @commands.command(brief="a set of rules we will follow")
   async def promise(self,ctx):

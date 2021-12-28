@@ -56,40 +56,6 @@ class Test(commands.Cog):
     await ctx.send("WIP")
     #look at the JDJG Bot orginal
 
-  @commands.command(brief = "finds out where the location of the command on my github repo(so people can learn from my commands)", name = "source")
-  async def _source(self, ctx, *, command = None):
-    github_url = "https://github.com/JDJGInc/JDBot"
-    branch = "master"
-
-    embed = discord.Embed(title = "Github link", description = f"{github_url}", color = 15428885, timestamp = ctx.message.created_at)
-
-    embed.set_footer(text = "This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works.")
-    
-    if command is None:
-      return await ctx.send("Here's the github link:", embed = embed)
-
-    command_wanted = self.bot.get_command(command)
-    if not command_wanted:
-      return await ctx.send(f"Couldn't find {command}. Here's source anyway:", embed = embed)
-
-    import inspect
-    lines, firstline = inspect.getsourcelines(command_wanted.callback.__code__)
-
-    src = command_wanted.callback.__code__
-    filename = src.co_filename
-
-    module = command_wanted.callback.__module__
-    filename = module.replace('.', '/') + '.py'
-    if module.startswith("discord"):
-      
-      return await ctx.send("We don't support getting the source of discord.py internals like help. Here's my bot's source:", embed = embed)
-
-    embed = discord.Embed(title = f"Source for {command_wanted}:", description =  f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})", color = 15428885, timestamp = ctx.message.created_at)
-
-    embed.set_footer(text = "This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works.")
-
-    await ctx.send(embed = embed)
-
   @commands.command(brief = "scans statuses to see if there is any bad ones.")
   async def scan_status(self, ctx):
     await ctx.send("will scan statuses in a guild to see if there is a bad one.")
