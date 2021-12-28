@@ -213,16 +213,24 @@ class Bot(commands.Cog):
       module = src.__module__
       filename = inspect.getsourcefile(src)
 
+    
     lines, firstline = inspect.getsourcelines(src)
 
+    check_path = filename.startswith(os.getcwd())
     filename = module.replace('.', '/') + '.py'
 
-    if module.startswith("discord") or module.startswith("jishaku"):
+    if not check_path:
 
-    #make this check the locations...
-    #hmmm
-      
-      return await ctx.send("We don't support getting the source of discord.py or jishaku internals like help. Here's my bot's source:", embed = embed)
+      if module.startswith("jishaku"):
+        github_url = "https://github.com/Gorialis/jishaku"
+
+      if module.startswith("discord"):
+        github_url = "https://github.com/iDevision/enhanced-discord.py"
+        branch = "2.0.0"
+
+      else:
+        module = module.split(".")[0]
+        return await ctx.send(f"We don't support getting the source of {module}. Here's my bot's source:", embed = embed)
 
     embed = discord.Embed(title = f"Source for {command_wanted}:", description =  f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})", color = 15428885, timestamp = ctx.message.created_at)
 
