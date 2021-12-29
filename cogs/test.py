@@ -77,11 +77,8 @@ class Test(commands.Cog):
 
   @commands.group(brief = "list of commands of plans of stuff to do in the future", invoke_without_command = True)
   async def todo(self, ctx):
-    page = "\n".join(f"{c.name}" for c in ctx.command.commands)
 
-    await ctx.send(f"Please run the subcommands with the prefix {ctx.prefix}: \n{page}")
-
-    #needs to be a bit better, and to embed it.
+    await ctx.send_help(ctx.command)
 
   @todo.command(brief = "lists stuff in todo")
   async def list(self, ctx):
