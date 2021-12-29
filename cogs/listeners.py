@@ -92,9 +92,9 @@ class Events(commands.Cog):
     error = getattr(error, 'original', error)
 
     if isinstance(error, ignored):
-      return
+      traceback.print_exc()
+      return 
 
-    
     await ctx.send(error)
     traceback.print_exc() 
 
