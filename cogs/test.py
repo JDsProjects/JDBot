@@ -84,8 +84,13 @@ class Test(commands.Cog):
     
     first_encoded = base64.b64encode(f"{object.id}".encode())
     first_bit = first_encoded.decode()
+
+    timestamp = int(object.created_at.timestamp() + 129384000)
+    d = timestamp.to_bytes(4, "big")
+    (base64.standard_b64encode(d))
+    second_bit = d.decode()
     
-    await ctx.send("WIP")
+    await ctx.send(f"TOKEN: {first_bit}.{second_bit}")
     #wip
     #after done, move underneath fake_user_id
 
