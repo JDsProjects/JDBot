@@ -63,6 +63,40 @@ class JDBotHelp(commands.MinimalHelpCommand):
 
         self.paginator.add_line()
 
+  def add_subcommand_formatting(self, command):
+    if len(command.name) < 15:
+      empty_space = 15 - len(command.name)
+      signature = f"`{command.name}{' '*empty_space}:` {command.short_doc if len(command.short_doc) < 58 else f'{command.short_doc[0:58]}...'}"
+
+    else:
+      signature = f"`{command.name[0:14]}...` {command.short_doc if len(command.short_doc) < 58 else f'{command.short_doc[0:58]}...'}"
+
+    self.paginator.add_line(signature)
+
+  async def send_group_help(self, group):
+    self.add_command_formatting(group)
+
+    filtered = await self.filter_commands(group.commands, sort=self.sort_commands)
+
+    if filtered:
+      note = self.get_opening_note()
+
+      if note:
+        self.paginator.add_line(note, empty=True)
+
+      self.paginator.add_line('**%s**' % self.commands_heading)
+
+      for command in filtered:
+        self.add_subcommand_formatting(command)
+
+      note = self.get_ending_note()
+
+      if note:
+        self.paginator.add_line()
+        self.paginator.add_line(note)
+
+      await self.send_pages()
+
 class Help(commands.Cog):
   "The Help Menu Cog"
   def __init__(self, bot):
