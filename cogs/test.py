@@ -75,6 +75,13 @@ class Test(commands.Cog):
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
 
+  class TodoEmbed(utils.Paginator):
+    def format_page(self, item):
+      embed = discord.Embed(title = "Todo:", description = item , color = random.randint(0, 16777215))
+
+      embed.set_author(name = f"{self.ctx.author}", icon_url = self.ctx.author.display_avatar.url)
+      return embed
+
   @commands.group(brief = "list of commands of plans of stuff to do in the future", invoke_without_command = True)
   async def todo(self, ctx):
 
@@ -92,9 +99,16 @@ class Test(commands.Cog):
       
       return await ctx.send(embed = embed)
       
-    pag = commands.Paginator()
+    pag = commands.Paginator(max_size = 4098)
       
-    #Idk from here
+    for v in values:
+      pag.add_line(f"{v.get('text')}")
+
+    pages = [page.strip("`") for page in pag.pages]
+
+    menu = self.TodoEmbed(pages, ctx = ctx, delete_message_after = True)
+
+    await menu.send(ctx.channel)
 
   @todo.command(brief = "adds items to todo")
   async def add(self, ctx, *, text : commands.clean_content = None):
@@ -105,11 +119,13 @@ class Test(commands.Cog):
     value = await self.bot.db.fetchrow("SELECT * FROM todo WHERE user_id = $1 AND TEXT = $2", ctx.author.id, text)
 
     if value:
-      return await ctx.send("What?")
+      return await ctx.send("That was already added")
+      #do more stuff here
       
     await self.bot.db.execute("INSERT INTO todo (user_id, text, jump_url, added_time) VALUES ($1, $2, $3, $4)", ctx.author.id, text[0:4000], ctx.message.jump_url, ctx.message.created_at)
 
     await ctx.send("ADDED")
+    #show what was added, or at least the text
 
   @todo.command(brief = "edits items in todo")
   async def edit(self, ctx):
