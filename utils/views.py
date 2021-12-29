@@ -511,37 +511,33 @@ class EmojiInfoEmbed(Paginator):
 
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):
-  def __init__(self, ctx, pages : list = None, channel : discord.DMChannel = None, **kwargs):
+  def __init__(self, ctx, menu = None, channel : discord.DMChannel = None, **kwargs):
     super().__init__(**kwargs)
     self.ctx = ctx
     self.channel = channel
-    self.pages = pages
+    self.menu = menu
 
   @discord.ui.button(label = "Secret Message(Ephemeral)", style = discord.ButtonStyle.success, emoji = "🕵️")
   async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
 
     self.clear_items()
-    await self.message.edit(content = "Will be sending you the mutual guilds empherally", view = self)
+    await self.message.edit(content = "Will be sending you the information, empherally", view = self)
 
-    menu = MutualGuildsEmbed(self.pages, ctx = self.ctx, disable_after = True)
-
-    await menu.send_as_interaction(interaction, ephemeral = True)
+    await self.menu.send_as_interaction(interaction, ephemeral = True)
 
   @discord.ui.button(label = "Secret Message(DM)", style = discord.ButtonStyle.success, emoji = "📥")
   async def dmMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
 
     self.clear_items()
-    await self.message.edit(content = "Well be Dming you the Mutual Guilds", view = self)
+    await self.message.edit(content = "Well be Dming you the paginator to view this info", view = self)
 
-    menu = MutualGuildsEmbed(self.pages, ctx = self.ctx, delete_message_after = True)
-
-    await menu.send(self.channel)
+    await self.menu.send(self.channel)
 
   @discord.ui.button(label="Deny", style = discord.ButtonStyle.danger , emoji = "❌")
   async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
 
     self.clear_items()
-    await self.message.edit(content = "not sending the mutual guilds to you", view = self)
+    await self.message.edit(content = f"not sending the paginator to you", view = self)
     
 
   async def interaction_check(self, interaction: discord.Interaction):

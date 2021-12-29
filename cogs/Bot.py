@@ -150,7 +150,8 @@ class Bot(commands.Cog):
     if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
     
-    view = utils.dm_or_ephemeral(ctx, pages, ctx.author.dm_channel)
+    menu = utils.MutualGuildsEmbed(pages, ctx = ctx, disable_after = True)
+    view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
     
     view.message = await ctx.send("Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds", embed = embed, view = view)
 
