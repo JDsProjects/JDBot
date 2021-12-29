@@ -78,6 +78,7 @@ class Test(commands.Cog):
   @commands.command(brief = "Generates a fake token from the current time")
   async def fake_user_token(self, ctx):
     import base64
+    import secrets
     
     #move import to top of the info file when done
     object = discord.Object(utils.generate_snowflake())
@@ -88,9 +89,11 @@ class Test(commands.Cog):
     timestamp = int(object.created_at.timestamp() + 129384000)
     d = timestamp.to_bytes(4, "big")
     second_bit_encoded = (base64.standard_b64encode(d))
-    second_bit = second_bit_encoded.decode().strip("==")
+    second_bit = second_bit_encoded.decode().rstrip("==")
     
-    await ctx.send(f"TOKEN: {first_bit}.{second_bit}")
+    last_bit = secrets.token_urlsafe(20)
+    
+    await ctx.send(f"TOKEN: {first_bit}.{second_bit}.{last_bit}")
     #wip
     #after done, move underneath fake_user_id
 
