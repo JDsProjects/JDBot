@@ -418,9 +418,7 @@ class Bot(commands.Cog):
   @commands.group(name = "support", invoke_without_command = True)
   async def support(self, ctx):
 
-    page = "\n".join(f"{c.name}" for c in ctx.command.commands)
-
-    await ctx.send(f"Please run the subcommands with the prefix {ctx.prefix}: \n{page}")
+    await ctx.send_help(ctx.command)
 
   @support.command(brief = "a command that Dms support help to JDJG", name = "dm")
   async def support_dm(self, ctx, *, args = None):
