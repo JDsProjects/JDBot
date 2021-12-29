@@ -53,7 +53,15 @@ class JDBotHelp(commands.MinimalHelpCommand):
     else:
       self.paginator.add_line(discord.utils.escape_markdown(signature), empty=True)
 
-    
+    if command.help:
+      try:
+        self.paginator.add_line(command.help, empty=True)
+
+      except RuntimeError:
+        for line in command.help.splitlines():
+          self.paginator.add_line(line)
+
+        self.paginator.add_line()
 
 class Help(commands.Cog):
   "The Help Menu Cog"
