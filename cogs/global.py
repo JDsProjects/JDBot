@@ -12,7 +12,7 @@ class Global(commands.Cog):
     await ctx.send("currently global chat is WIP for JDBot.")
 
   @commands.command(brief = "makes a global chat example message from your message", aliases = ["test_gc", "generate_message"])
-  async def test_globalchat(self, ctx, *, args = None):
+  async def test_global(self, ctx, *, args = None):
 
     args = args or "Test Content"
 

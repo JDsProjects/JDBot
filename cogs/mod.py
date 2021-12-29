@@ -92,8 +92,8 @@ class Moderation(commands.Cog):
       
       await menu.send(ctx.channel)
 
-  @commands.command(brief = "gives stats about the sus users", aliases = ["sususers_stats"])
-  async def sus_users_stats(self, ctx):
+  @commands.command(brief = "gives stats about the sus users")
+  async def ss_stats(self, ctx):
     
     sus_users = dict(await self.bot.db.fetch("SELECT * FROM SUS_USERS;"))
     await ctx.send(content = f"Total sus user count: {len(sus_users)}")
@@ -155,7 +155,7 @@ class Moderation(commands.Cog):
       await ctx.send(f"An Error occured with {e}")
 
   @commands.command(brief = "Unarchives thread channel")
-  async def unarchive_thread(self, ctx, channel : typing.Optional[discord.Thread] = None):
+  async def unlock_thread(self, ctx, channel : typing.Optional[discord.Thread] = None):
 
     channel = channel or ctx.channel
   

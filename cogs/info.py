@@ -173,7 +173,7 @@ class Info(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief="this is a way to get the nearest channel.")
-  async def closest_channel(self,ctx,*,args=None):
+  async def find_channel(self,ctx,*,args=None):
     if args is None:
       await ctx.send("Please specify a channel")
     
@@ -466,17 +466,13 @@ class DevTools(commands.Cog):
       return await ctx.send("That's not a legit bot")
 
     invite = discord.utils.oauth_url(client_id = user.id)
-    await ctx.send(f"Invite url for that bot is {invite} !")
+    slash_invite = discord.utils.oauth_url(client_id = user.id, scopes = ("bot", "applications.commands"))
 
-  @commands.command(brief = "make a quick bot invite with 0 perms and with slash")
-  async def invite_bot_slash(self, ctx, *, user : typing.Optional[discord.User] = None):
-    user = user or ctx.author
-
-    if not user.bot:
-      return await ctx.send("That's not a legit bot")
-
-    invite = discord.utils.oauth_url(client_id = user.id, scopes = ("bot", "applications.commands"))
-    await ctx.send(f"Invite url for that bot is {invite} !")
+    view = discord.ui.View()
+    view.add_item(discord.ui.Button(label = f"{user.name}'s Normal Invite", url = invite, style = discord.ButtonStyle.link))
+    view.add_item(discord.ui.Button(label = f"{user.name}'s Invite With Slash Commands", url = slash_invite, style = discord.ButtonStyle.link))
+    
+    await ctx.send(f"Invite with slash commands and the bot scope or only with a bot scope:", view = view)
 
   @commands.command(brief = "gets you a guild's icon", aliases = ["guild_icon"])
   async def server_icon(self, ctx, *, guild : typing.Optional[discord.Guild] = None):
@@ -553,7 +549,7 @@ class DevTools(commands.Cog):
     await ctx.send(embed = embed)
 
   @commands.command(brief = "Generates a fake token from the current time")
-  async def fake_user_token(self, ctx):
+  async def fake_token(self, ctx):
     
     object = discord.Object(utils.generate_snowflake())
     

@@ -217,7 +217,7 @@ class Extra(commands.Cog):
       await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS",file=file)
 
   @commands.command(help="learn about a secret custom xbox controller",brief="this will give you a message of JDJG's classic wanted xbox design.")
-  async def secret_controller(self,ctx):
+  async def sc(self,ctx):
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name="Secret Xbox Image:")
     embed.add_field(name="Body:",value="Zest Orange")
@@ -349,8 +349,8 @@ class Extra(commands.Cog):
     embed.set_footer(text=f"Joke Requested By {ctx.author} \nPowered by jokeapi.dev")
     await ctx.send(embed=embed)
 
-  @commands.command()
-  async def cookieclicker_save(self, ctx):
+  @commands.command(brief = "a cookie clicker save")
+  async def cc_save(self, ctx):
     import io
   
     paste = await utils.get_paste(self.bot, "pun8d5")
@@ -666,8 +666,8 @@ class Extra(commands.Cog):
 
 
   @commands.cooldown(1, 30, BucketType.user)
-  @commands.command(brief = "generates a random sm64 color code", aliases = ["generate_cc", "generate_colorcode", "g_cc", "cc_generator"])
-  async def generate_color_code(self, ctx):
+  @commands.command(brief = "generates a random sm64 color code", aliases = ["generate_color_code", "generate_colorcode", "g_cc", "cc_generator"])
+  async def generate_cc(self, ctx):
 
     embed = discord.Embed(description = f"```{utils.cc_generate()}```", color = random.randint(0, 16777215))
 

@@ -286,7 +286,7 @@ class Bot(commands.Cog):
     await ctx.send("Because I don't have any alternative suggestions, and I don't feel like changing it to jd! or something. I can confirm this isn't a test bot :D")
 
   @commands.command()
-  async def closest_command(self, ctx, *, command = None):
+  async def find_command(self, ctx, *, command = None):
     if command is None:
       await ctx.send("Please provide an arg.")
 
