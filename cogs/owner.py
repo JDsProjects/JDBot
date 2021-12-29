@@ -120,7 +120,7 @@ class Owner(commands.Cog):
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
 
-    menu = utils.ServersEmbed(pages, ctx = ctx, delete_message_after = True)
+    menu = utils.ServersEmbed(pages, ctx = ctx, disable_after = True)
 
     view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
     
@@ -162,7 +162,7 @@ class Owner(commands.Cog):
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
 
-    menu = utils.MutualGuildsEmbed(pages, ctx = ctx, delete_message_after = True)
+    menu = utils.MutualGuildsEmbed(pages, ctx = ctx, disable_after = True)
 
     view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
     
@@ -196,7 +196,7 @@ class Owner(commands.Cog):
   async def sus_users(self, ctx):
     sus_users = await self.bot.db.fetch("SELECT * FROM SUS_USERS;")
    
-    menu = utils.SusUsersEmbed(sus_users, ctx = ctx, delete_message_after = True)
+    menu = utils.SusUsersEmbed(sus_users, ctx = ctx, disable_after = True)
 
     view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
     
@@ -205,7 +205,7 @@ class Owner(commands.Cog):
   @commands.command(brief = "a command listed all the commands")
   async def testers(self, ctx):
 
-    menu = utils.TestersEmbed(self.bot.testers, ctx = ctx, delete_message_after = True)
+    menu = utils.TestersEmbed(self.bot.testers, ctx = ctx, disable_after = True)
     
     view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
     
@@ -447,7 +447,7 @@ class Owner(commands.Cog):
     if (ctx.author.dm_channel is None):
       await ctx.author.create_dm()
 
-    menu = utils.ServersEmbed(pages, ctx = ctx, delete_message_after = True)
+    menu = utils.ServersEmbed(pages, ctx = ctx, disable_after = True)
 
     view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
     
@@ -542,7 +542,7 @@ class Owner(commands.Cog):
     if not blacklisted_users:
       return await ctx.send("None is blacklisted :D")
    
-    menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx = ctx, delete_message_after = True)
+    menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx = ctx, disable_after = True)
 
     view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
     
