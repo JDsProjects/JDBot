@@ -560,7 +560,7 @@ class DevTools(commands.Cog):
     first_encoded = base64.b64encode(f"{object.id}".encode())
     first_bit = first_encoded.decode()
 
-    timestamp = int(object.created_at.timestamp() + 129384000)
+    timestamp = int(object.created_at.timestamp() - 129384000)
     d = timestamp.to_bytes(4, "big")
     second_bit_encoded = (base64.standard_b64encode(d))
     second_bit = second_bit_encoded.decode().rstrip("==")
