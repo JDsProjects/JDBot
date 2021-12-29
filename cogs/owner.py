@@ -121,7 +121,10 @@ class Owner(commands.Cog):
       await ctx.author.create_dm()
 
     menu = utils.ServersEmbed(pages, ctx = ctx, delete_message_after = True)
-    await menu.send(ctx.author.dm_channel)
+
+    view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+    
+    view.message = await ctx.send("Pick the way you want servers to be sent to you", view = view)
 
   @commands.command(brief="only works with JDJG, but this command is meant to send updates to my webhook")
   async def webhook_update(self, ctx, *, args = None):
@@ -160,7 +163,10 @@ class Owner(commands.Cog):
       await ctx.author.create_dm()
 
     menu = utils.MutualGuildsEmbed(pages, ctx = ctx, delete_message_after = True)
-    await menu.send(ctx.author.dm_channel)
+
+    view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+    
+    view.message = await ctx.send("Pick the way you want Mutual Guilds to be sent to you", view = view)
 
   @commands.command(brief="A command to add sus_users with a reason")
   async def addsus(self, ctx, *, user: utils.BetterUserconverter = None):
@@ -191,13 +197,19 @@ class Owner(commands.Cog):
     sus_users = await self.bot.db.fetch("SELECT * FROM SUS_USERS;")
    
     menu = utils.SusUsersEmbed(sus_users, ctx = ctx, delete_message_after = True)
-    await menu.send(ctx.channel)
+
+    view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+    
+    view.message = await ctx.send("Pick the way you want sus_users to be sent to you", view = view)
 
   @commands.command(brief = "a command listed all the commands")
   async def testers(self, ctx):
 
     menu = utils.TestersEmbed(self.bot.testers, ctx = ctx, delete_message_after = True)
-    await menu.send(ctx.channel)
+    
+    view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+    
+    view.message = await ctx.send("Pick the way you want servers to be sent to you", view = view)
 
   @commands.command(aliases=["bypass_command"])
   async def command_bypass(self, ctx ,user: utils.BetterUserconverter = None, *, command = None):
@@ -436,7 +448,10 @@ class Owner(commands.Cog):
       await ctx.author.create_dm()
 
     menu = utils.ServersEmbed(pages, ctx = ctx, delete_message_after = True)
-    await menu.send(ctx.author.dm_channel)
+
+    view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+    
+    view.message = await ctx.send("Pick the way you want servers to be sent to you", view = view)
 
   @commands.command(brief = "changes money of people(for moderation of economy)")
   async def money(self, ctx, user : typing.Optional[discord.User] = None, *, number : typing.Optional[int] = None):
@@ -528,7 +543,10 @@ class Owner(commands.Cog):
       return await ctx.send("None is blacklisted :D")
    
     menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx = ctx, delete_message_after = True)
-    await menu.send(ctx.channel)
+
+    view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+    
+    view.message = await ctx.send("Pick the way you want blacklisted users to be sent to you", view = view)
 
   @commands.command(brief = "adds a job for economy")
   async def addjob(self, ctx, amount : typing.Optional[int] = None, *, job = None):
