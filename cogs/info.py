@@ -1,5 +1,5 @@
 from discord.ext import commands
-import re, discord , random , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio, async_tio, itertools, os
+import re, discord , random , typing, emoji, unicodedata, textwrap, contextlib, io, asyncio, async_tio, itertools, os, base64, secrets
 import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
@@ -551,6 +551,23 @@ class DevTools(commands.Cog):
     embed.set_footer(text = f"Snowflake ID: {snowflake.id}")
 
     await ctx.send(embed = embed)
+
+  @commands.command(brief = "Generates a fake token from the current time")
+  async def fake_user_token(self, ctx):
+    
+    object = discord.Object(utils.generate_snowflake())
+    
+    first_encoded = base64.b64encode(f"{object.id}".encode())
+    first_bit = first_encoded.decode()
+
+    timestamp = int(object.created_at.timestamp() + 129384000)
+    d = timestamp.to_bytes(4, "big")
+    second_bit_encoded = (base64.standard_b64encode(d))
+    second_bit = second_bit_encoded.decode().rstrip("==")
+    
+    last_bit = secrets.token_urlsafe(20)
+    
+    await ctx.send(f"FAKE TOKEN with a fake user id: {first_bit}.{second_bit}.{last_bit}")
 
   @commands.cooldown(1, 60, BucketType.user)
   @commands.command(brief = "makes a request to add a bot to the test guild")

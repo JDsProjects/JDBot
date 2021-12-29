@@ -75,28 +75,6 @@ class Test(commands.Cog):
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
 
-  @commands.command(brief = "Generates a fake token from the current time")
-  async def fake_user_token(self, ctx):
-    import base64
-    import secrets
-    
-    #move import to top of the info file when done
-    object = discord.Object(utils.generate_snowflake())
-    
-    first_encoded = base64.b64encode(f"{object.id}".encode())
-    first_bit = first_encoded.decode()
-
-    timestamp = int(object.created_at.timestamp() + 129384000)
-    d = timestamp.to_bytes(4, "big")
-    second_bit_encoded = (base64.standard_b64encode(d))
-    second_bit = second_bit_encoded.decode().rstrip("==")
-    
-    last_bit = secrets.token_urlsafe(20)
-    
-    await ctx.send(f"TOKEN: {first_bit}.{second_bit}.{last_bit}")
-    #wip
-    #after done, move underneath fake_user_id
-
   @commands.group(brief = "list of commands of plans of stuff to do in the future", invoke_without_command = True)
   async def todo(self, ctx):
     page = "\n".join(f"{c.name}" for c in ctx.command.commands)
