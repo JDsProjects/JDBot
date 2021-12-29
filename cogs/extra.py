@@ -766,10 +766,20 @@ class Extra(commands.Cog):
 
   @commands.command(brief = "looks up stuff from reddit")
   async def reddit(self, ctx):
-    await ctx.send("TEST")
+    
+    subreddits = await self.bot.db.fetch("SELECT * FROM SUBREDDITS")
 
-    #embed = await self.asyncpraw_handler(view.value)
-    #await ctx.send(embed = embed)
+    view = utils.SubredditChoice(ctx, subreddits, timeout = 15.0)
+
+    view.message = await ctx.send("Please Pick a Subreddit to get a random post from:", view = view)
+    await view.wait()
+
+    subreddit =  await self.bot.db.fetchrow("SELECT * FROM SUBREDDITS WHERE name = $1", view.value)
+
+    subreddit_name = subreddit.get("name")
+
+    embed = await self.asyncpraw_handler(subreddit_name)
+    await ctx.send(embed = embed)
 
 def setup(bot):
   bot.add_cog(Extra(bot))

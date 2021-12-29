@@ -753,3 +753,37 @@ class JobChoice(discord.ui.View):
       item.disabled = True
 
     await self.message.edit(content = "Here's the default...", view = self)
+
+class SubRedditSelects(discord.ui.Select):
+  def __init__(self, options):
+    
+    super().__init__(placeholder = "Chose a Subreddit.", min_values = 1, max_values = 1, options = options)
+
+  async def callback(self, interaction: discord.Interaction):
+    self.view.value = self.values[0]
+    self.view.clear_items()
+    await interaction.message.delete()
+    self.view.stop()
+
+class SubredditChoice(discord.ui.View):
+  def __init__(self, ctx, subreddits, **kwargs):
+    super().__init__(**kwargs)
+    
+    self.value = [o.get("name") for o in subreddits][0]
+    self.ctx = ctx
+
+    self.add_item(SubRedditSelects([discord.SelectOption(label = o['name'], emoji = "<:reddit:309459767758290944>") for o in subreddits]))
+
+  async def interaction_check(self, interaction: discord.Interaction):
+    
+    if self.ctx.author.id != interaction.user.id:
+      return await interaction.response.send_message(content = f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.", ephemeral = True)
+
+    return True
+
+  async def on_timeout(self):
+    for item in self.children:
+      item.disabled = True
+
+    await self.message.edit(content = "Here's the default...", view = self)
+  

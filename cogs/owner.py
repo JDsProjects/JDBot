@@ -574,5 +574,29 @@ class Owner(commands.Cog):
     await self.bot.db.execute("DELETE FROM jobs WHERE job_name = $1", job)
     await ctx.send(f"Removed {job} from economy.")
 
+  @commands.command(brief = "adds subreddit to the subreddit database")
+  async def add_reddit(self, ctx, *, reddit = None):
+
+    if not reddit:
+      return await ctx.send("Please make sure to add a reddit in.")
+
+    subreddit_wanted =  await self.bot.db.fetchrow("SELECT * FROM SUBREDDITS WHERE name = $1", reddit)
+
+    if subreddit_wanted:
+      return await ctx.send("Subreddit already exists")
+
+    await self.bot.db.execute("INSERT INTO SUBREDDITS VALUES($1)", reddit)
+
+    await ctx.send(f"Added {reddit} to the subreddit database.")
+
+  @commands.command(brief = "Removes subreddit from database")
+  async def remove_reddit(self, ctx, *, reddit = None):
+
+    if reddit is None:
+      return await ctx.send("You can't remove None")
+
+    await self.bot.db.execute("DELETE FROM SUBREDDITS WHERE name = $1", reddit)
+    await ctx.send(f"Removed {reddit} from economy.")
+
 def setup(bot):
   bot.add_cog(Owner(bot))
