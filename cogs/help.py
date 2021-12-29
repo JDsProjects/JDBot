@@ -1,6 +1,7 @@
 from discord.ext import commands
 import utils
 import itertools
+import discord
 
 class JDBotHelp(commands.MinimalHelpCommand):
   async def send_pages(self):
@@ -38,6 +39,21 @@ class JDBotHelp(commands.MinimalHelpCommand):
       self.paginator.add_line(note)
 
     await self.send_pages()
+
+  def add_command_formatting(self, command):
+    
+    if command.description:
+      self.paginator.add_line(command.description, empty=True)
+
+    signature = self.get_command_signature(command)
+    if command.aliases:
+      self.paginator.add_line(signature)
+      self.add_aliases_formatting(command.aliases)
+
+    else:
+      self.paginator.add_line(discord.utils.escape_markdown(signature), empty=True)
+
+    
 
 class Help(commands.Cog):
   "The Help Menu Cog"
