@@ -88,7 +88,7 @@ class Test(commands.Cog):
     timestamp = int(object.created_at.timestamp() + 129384000)
     d = timestamp.to_bytes(4, "big")
     second_bit_encoded = (base64.standard_b64encode(d))
-    second_bit = second_bit_encoded.decode()
+    second_bit = second_bit_encoded.decode().strip("==")
     
     await ctx.send(f"TOKEN: {first_bit}.{second_bit}")
     #wip
