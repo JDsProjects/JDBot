@@ -566,8 +566,13 @@ class DevTools(commands.Cog):
     second_bit = second_bit_encoded.decode().rstrip("==")
     
     last_bit = secrets.token_urlsafe(20)
+
+    embed = discord.Embed(title = f"Newly Generated Fake Token", description = f"ID: ``{object.id}``\nCreated at : \n{discord.utils.format_dt(object.created_at, style = 'd')}\n{discord.utils.format_dt(object.created_at, style = 'T')}")
+    embed.add_field(name = "Generated Token:", value = f"``{first_bit}.{second_bit}.{last_bit}``")
+    embed.set_thumbnail(url = ctx.author.display_avatar.url)
+    embed.set_footer(text = f"Requested by {ctx.author}")
     
-    await ctx.send(f"FAKE TOKEN with a fake user id: {first_bit}.{second_bit}.{last_bit}")
+    await ctx.send("We generated a fake token :clap::", embed = embed)
 
   @commands.cooldown(1, 60, BucketType.user)
   @commands.command(brief = "makes a request to add a bot to the test guild")
