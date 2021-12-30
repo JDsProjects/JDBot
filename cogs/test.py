@@ -147,7 +147,26 @@ class Test(commands.Cog):
   @todo.command(brief = "removes all your items in todo")
   async def clear(self, ctx):
 
-    await ctx.send("WIP")
+    values = await self.bot.db.fetch("SELECT * FROM todo WHERE user_id = $1 ORDER BY added_time ASC", ctx.author.id)
+
+    if not values:
+      return await ctx.send("You haven't added any todo items, so we can't clear any items as you don't have any.")
+
+    view = utils.BasicButtons(ctx)
+
+    msg = await ctx.send(f"Are you sure you want to clear your todo list?", view = view)
+
+    await view.wait() 
+    if view.value is None:
+      return await msg.edit("you didn't respond quickly enough")
+
+    if not view.value:
+      return await msg.edit("Not removing your todo list from the database, 0 items are removed as a result.")
+
+    if view.value:
+
+      await self.bot.db.execute("DELETE FROM todo WHERE user_id = $1", ctx.author.id)
+      await msg.edit(f"We Removed **{len(values)}** values")  
 
   #add support for https://discordpy.readthedocs.io/en/master/api.html#discord.Member.mobile_status 
  #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.desktop_status 
