@@ -47,9 +47,14 @@ class Test(commands.Cog):
     await ctx.send("WIP")
 
   @commands.command(brief = "gets tweets from a username")
-  async def tweet(self, ctx, *, args = None):
+  async def tweet(self, ctx, amount : typing.Optional[int] = None, username = None):
+
+    amount = amount or 10
+
+    if not username:
+      return await ctx.send("You Need to pick a username.")
+
     await ctx.send("WIP")
-    #look at the JDJG Bot orginal
 
   @commands.command(brief = "add emoji to your guild lol")
   async def emoji_add(self, ctx):
