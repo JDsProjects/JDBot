@@ -146,6 +146,7 @@ class Test(commands.Cog):
 
   @todo.command(brief = "removes all your items in todo")
   async def clear(self, ctx):
+
     await ctx.send("WIP")
 
   #add support for https://discordpy.readthedocs.io/en/master/api.html#discord.Member.mobile_status 
