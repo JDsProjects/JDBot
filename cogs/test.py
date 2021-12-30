@@ -82,9 +82,9 @@ class Test(commands.Cog):
 
   class TodoEmbed(utils.Paginator):
     def format_page(self, item):
-      embed = discord.Embed(title = "Todo:", description = item , color = random.randint(0, 16777215))
+      embed = discord.Embed(description = item , color = random.randint(0, 16777215), timestamp = self.ctx.message.created_at)
 
-      embed.set_author(name = f"{self.ctx.author}", icon_url = self.ctx.author.display_avatar.url)
+      embed.set_author(name = f"Todo Requested By {self.ctx.author}:", icon_url = self.ctx.author.display_avatar.url)
       return embed
 
   @commands.group(brief = "list of commands of plans of stuff to do in the future", invoke_without_command = True)
@@ -105,9 +105,9 @@ class Test(commands.Cog):
       return await ctx.send(embed = embed)
       
     pag = commands.Paginator(max_size = 4098)
-      
-    for v in values:
-      pag.add_line(f"{v.get('text')}")
+    
+    for index, todo_entry in enumerate(values):
+      pag.add_line(f"[{index+1}]({todo_entry['jump_url']}). {discord.utils.format_dt(todo_entry['added_time'], 'R')} {todo_entry['text']}")
 
     pages = [page.strip("`") for page in pag.pages]
 
