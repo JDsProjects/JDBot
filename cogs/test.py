@@ -131,8 +131,10 @@ class Test(commands.Cog):
       
     await self.bot.db.execute("INSERT INTO todo (user_id, text, jump_url, added_time) VALUES ($1, $2, $3, $4)", ctx.author.id, text[0:4000], ctx.message.jump_url, ctx.message.created_at)
 
-    await ctx.send("ADDED")
-    #show what was added, or at least the text
+    embed = discord.Embed(color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+    embed.add_field(name = "Text:", value = f"{text[0:4000]}")
+    embed.set_footer(text = "Text Added Successfully", icon_url = ctx.author.display_avatar.url)
+    await ctx.send(content = "**Added Succesfully**:", embed = embed)
 
   @todo.command(brief = "edits items in todo")
   async def edit(self, ctx):
