@@ -124,8 +124,10 @@ class Test(commands.Cog):
     value = await self.bot.db.fetchrow("SELECT * FROM todo WHERE user_id = $1 AND TEXT = $2", ctx.author.id, text)
 
     if value:
-      return await ctx.send("That was already added")
-      #do more stuff here
+      embed = discord.Embed(description = f"[ADDED HERE]({value['jump_url']}) : {discord.utils.format_dt(value['added_time'], 'R')}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+      embed.add_field(name = "Text:", value = f"{value['text']}")
+      embed.set_footer(text = "Repeated Text", icon_url = "https://i.imgur.com/nPAONbK.png")
+      return await ctx.send(content = "That was already added here:", embed = embed)
       
     await self.bot.db.execute("INSERT INTO todo (user_id, text, jump_url, added_time) VALUES ($1, $2, $3, $4)", ctx.author.id, text[0:4000], ctx.message.jump_url, ctx.message.created_at)
 
