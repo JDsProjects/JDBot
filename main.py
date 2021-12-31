@@ -78,7 +78,7 @@ async def check_blacklist(ctx):
 
 @bot.check
 async def check_suspended(ctx):
-  return not ctx.bot.suspended or await bot.is_owner(ctx)
+  return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author)
 
 for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
