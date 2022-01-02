@@ -138,6 +138,7 @@ class Test(commands.Cog):
 
   @todo.command(brief = "edits items in todo")
   async def edit(self, ctx, number : typing.Optional[int] = None, *, text = None):
+    
     if not number:
       return await ctx.send("Looks like you didn't input a valid number starting from one.")
 
@@ -148,7 +149,7 @@ class Test(commands.Cog):
 
     if not values:
       
-      await ctx.send("Good News, you don't need to remove anything as you lack items.")
+      return await ctx.send("You can't edit anything as you lack items.")
 
     if number < 1:
       return await ctx.send("You need to start from 1.")
@@ -189,8 +190,45 @@ class Test(commands.Cog):
       await msg.edit("Edited the item Succesfully.", embed = embed)
 
   @todo.command(brief = "removes items in todo")
-  async def remove(self, ctx):
-    await ctx.send("WIP")
+  async def remove(self, ctx, *, number : typing.Optional[int] = None):
+     
+    if not number:
+      return await ctx.send("Looks like you didn't input a valid number starting from one.")
+
+    values = await self.bot.db.fetch("SELECT * FROM todo WHERE user_id = $1 ORDER BY added_time ASC", ctx.author.id)
+      
+    if not values:
+      
+      return await ctx.send("Good News, you don't need to remove anything as you lack items.")
+
+    if number < 1:
+      return await ctx.send("You need to start from 1.")
+
+    if (number - 1) > len(values):
+      return await ctx.send("You don't have that many items, pick something lower.")
+
+    todo = values[number-1]
+
+    embed = discord.Embed(color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+    embed.add_field(name = "Text:", value = f"{todo['text']}")
+
+    view = utils.BasicButtons(ctx, timeout = 15.0)
+
+    msg = await ctx.send("Are you sure you want to remove the item?:", embed = embed, view = view)
+
+    await view.wait() 
+
+    if view.value is None:
+      return await msg.edit("you didn't respond quickly enough")
+
+    if not view.value:
+      return await msg.edit("Not remove your item from todo.")
+
+    if view.value:
+      
+      await self.bot.db.execute("DELETE FROM todo WHERE user_id = $1 and ADDED_TIME = $2", ctx.author.id, todo["added_time"])
+      
+      await msg.edit("Successfully removed your item :D")
 
   @todo.command(brief = "removes all your items in todo")
   async def clear(self, ctx):
