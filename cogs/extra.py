@@ -102,10 +102,6 @@ class Extra(commands.Cog):
     if args:
       if args > 99 and args < 600: code = args
       else: code = "404"
-      
-    else:
-      await ctx.send("Not a valid arg using 404")
-      code = "404"
     
     response = await self.bot.session.get(f"https://http.cat/{code}")
     if response.status:
