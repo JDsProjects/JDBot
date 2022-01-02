@@ -137,8 +137,52 @@ class Test(commands.Cog):
     await ctx.send(content = "**Added Succesfully**:", embed = embed)
 
   @todo.command(brief = "edits items in todo")
-  async def edit(self, ctx):
-    await ctx.send("WIP")
+  async def edit(self, ctx, number : typing.Optional[int] = None, *, text = None):
+    if not number:
+      return await ctx.send("Looks like you didn't input a valid number starting from one.")
+
+    values = await self.bot.db.fetch("SELECT * FROM todo WHERE user_id = $1 ORDER BY added_time ASC", ctx.author.id)
+
+    if not text:
+      return await ctx.send("I have no text to work with.")
+
+    if not values:
+      
+      await ctx.send("Good News, you don't need to remove anything as you lack items.")
+
+    if number < 1:
+      return await ctx.send("You need to start from 1.")
+
+    if (number - 1) > len(values):
+      return await ctx.send("You don't have that many items, pick something lower.")
+
+    todo = values[number-1]
+
+    embed = discord.Embed(color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+    embed.add_field(name = "Text:", value = f"{todo['text']}")
+
+    view = utils.BasicButtons(ctx)
+
+    msg = await ctx.send("Are you sure you want to edit the item?:", embed = embed, view = view)
+
+    await view.wait() 
+
+    await view.wait() 
+    if view.value is None:
+      return await msg.edit("you didn't respond quickly enough")
+
+    if not view.value:
+      return await msg.edit("Not editing your item from todo.")
+
+    if view.value:
+
+      await self.bot.db.execute("UPDATE TODO SET TEXT = $1 WHERE user_id = $2", text[0:4000], ctx.author.id)
+      
+      embed = discord.Embed(title = f"You edited task {number} from todo", color = random.randint(0, 16777215), timestamp = todo["added_time"])
+      embed.add_field(name = "Old Text:", value = f"{todo['text']}")
+      embed.add_field(name = "New Text:", value = f"{text[0:4000]}")
+      embed.set_footer(text = "Creation Date")
+      await msg.edit("Removed the item Succesfully.", embed = embed)
 
   @todo.command(brief = "removes items in todo")
   async def remove(self, ctx):
