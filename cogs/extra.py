@@ -96,17 +96,16 @@ class Extra(commands.Cog):
     await ctx.send(embed=embed)
 
   @commands.command(brief = "Gets a cat based on http status code", aliases = ["http"])
-  async def http_cat(self, ctx, * , args : typing.Optional[typing.Union[int,str]] = None ):
+  async def http_cat(self, ctx, args : typing.Optional[int] = None ):
+    
     if args is None: code = "404"
-
     if args:
-      if isinstance(args,int):
-        if args > 99 and args < 600: code = args
-        else: code = "404"
+      if args > 99 and args < 600: code = args
+      else: code = "404"
       
-      else:
-        await ctx.send("Not a valid arg using 404")
-        code = "404"
+    else:
+      await ctx.send("Not a valid arg using 404")
+      code = "404"
     
     response = await self.bot.session.get(f"https://http.cat/{code}")
     if response.status:
