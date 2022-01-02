@@ -509,6 +509,13 @@ class EmojiInfoEmbed(Paginator):
       embed=discord.Embed(title = "Failed grabbing emoji:", description = f"Discord couldn't fetch the emoji with regex: {item}", color = random.randint(0, 16777215))
       return embed
 
+class TodoEmbed(Paginator):
+  def format_page(self, item):
+    embed = discord.Embed(description = item , color = random.randint(0, 16777215), timestamp = self.ctx.message.created_at)
+
+    embed.set_author(name = f"Todo Requested By {self.ctx.author}:", icon_url = self.ctx.author.display_avatar.url)
+    return embed
+
 #this is using the paginator above, which is why It's not underneath the BasicButtons.
 class dm_or_ephemeral(discord.ui.View):
   def __init__(self, ctx, menu = None, channel : discord.DMChannel = None, **kwargs):
