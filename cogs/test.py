@@ -161,7 +161,7 @@ class Test(commands.Cog):
     embed = discord.Embed(color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
     embed.add_field(name = "Text:", value = f"{todo['text']}")
 
-    view = utils.BasicButtons(ctx)
+    view = utils.BasicButtons(ctx, timeout = 15.0)
 
     msg = await ctx.send("Are you sure you want to edit the item?:", embed = embed, view = view)
 
