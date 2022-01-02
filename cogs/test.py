@@ -178,15 +178,15 @@ class Test(commands.Cog):
       value = await self.bot.db.fetchrow("SELECT * FROM todo WHERE user_id = $1 AND TEXT = $2", ctx.author.id, text)
 
       if value:
-        return await ctx.send("Looks like you already did that text.")
+        return await ctx.send("Looks like you already edited that text.")
 
-      await self.bot.db.execute("UPDATE TODO SET TEXT = $1 WHERE user_id = $2 and added_at = $3", text[0:4000], ctx.author.id, todo['added_at'])
+      await self.bot.db.execute("UPDATE TODO SET TEXT = $1 WHERE user_id = $2 and added_time = $3", text[0:4000], ctx.author.id, todo['added_time'])
       
       embed = discord.Embed(title = f"You edited task {number} from todo", color = random.randint(0, 16777215), timestamp = todo["added_time"])
       embed.add_field(name = "Old Text:", value = f"{todo['text']}")
       embed.add_field(name = "New Text:", value = f"{text[0:4000]}")
       embed.set_footer(text = "Creation Date")
-      await msg.edit("Removed the item Succesfully.", embed = embed)
+      await msg.edit("Edited the item Succesfully.", embed = embed)
 
   @todo.command(brief = "removes items in todo")
   async def remove(self, ctx):
