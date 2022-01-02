@@ -70,8 +70,6 @@ class Test(commands.Cog):
     await ctx.send("logging wip.")
 
   #look at global_chat stuff for global_chat features, rank for well rank, add an update system too, add cc_ over. nick too, as well as kick and ban, ofc unban and other guild ban moderation stuff. Port over emoji_check but public and make that do it's best to upload less than 256 kB, try to and ofc an os emulation mode, as well as update mode, and nick.
-  
-  #make the bot be able to lock commands to owners only, for testing purposes or not respond to commands.
 
   #Unrelated to Urban:
   #https://discordpy.readthedocs.io/en/master/api.html?highlight=interaction#discord.InteractionResponse.send_message
