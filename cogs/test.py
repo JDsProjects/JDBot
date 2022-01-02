@@ -175,7 +175,12 @@ class Test(commands.Cog):
 
     if view.value:
 
-      await self.bot.db.execute("UPDATE TODO SET TEXT = $1 WHERE user_id = $2", text[0:4000], ctx.author.id)
+      value = await self.bot.db.fetchrow("SELECT * FROM todo WHERE user_id = $1 AND TEXT = $2", ctx.author.id, text)
+
+      if value:
+        return await ctx.send("Looks like you already did that text.")
+
+      await self.bot.db.execute("UPDATE TODO SET TEXT = $1 WHERE user_id = $2 and added_at = $3", text[0:4000], ctx.author.id, todo['added_at'])
       
       embed = discord.Embed(title = f"You edited task {number} from todo", color = random.randint(0, 16777215), timestamp = todo["added_time"])
       embed.add_field(name = "Old Text:", value = f"{todo['text']}")
