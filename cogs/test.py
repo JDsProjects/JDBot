@@ -167,7 +167,6 @@ class Test(commands.Cog):
 
     await view.wait() 
 
-    await view.wait() 
     if view.value is None:
       return await msg.edit("you didn't respond quickly enough")
 
