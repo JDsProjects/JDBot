@@ -25,7 +25,7 @@ class BetterMemberConverter(commands.Converter):
 class BetterUserconverter(commands.Converter):
   async def convert(self, ctx, argument):
     try:
-     user = await commands.UserConverter().convert(ctx,argument)
+     user = await commands.UserConverter().convert(ctx, argument)
     except commands.UserNotFound:
       user = None
     if not user and ctx.guild:

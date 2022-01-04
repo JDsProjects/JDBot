@@ -25,18 +25,41 @@ class Info(commands.Cog):
     
     user = user or ctx.author
     user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
-
-    flags = user.public_flags.all()
     
-    badges="\u0020".join(utils.profile_converter(f.name) for f in flags)
+    statuses = []
 
-    if user.bot: badges = f"{badges} {utils.profile_converter('bot')}"
+    badges = [utils.profile_converter(f.name) for f in user.public_flags.all()] if user.public_flags else []
+    if user.bot: badges.append(utils.profile_converter("bot"))
 
-    embed=discord.Embed(title=f"{user}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+    if isinstance(user, discord.Member):
+      nickname = user.nick
+      joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
+      highest_role = user.top_role
+
+      for name, status in (
+        ("Status", user.status), ("Desktop", user.desktop_status), ("Mobile", user.mobile_status), ("Web", user.web_status)):
+        statuses.append((name, status.value.upper()))
+
+    else:
+
+      nickname = str(user)
+      joined_guild = "N/A"
+      highest_role = "None Found"
+
+      member = discord.utils.find(lambda member: member.id == user.id, self.bot.get_all_members())
+      if member:
+        for name, status in (
+          ("Status", member.status), ("Desktop", member.desktop_status), ("Mobile", member.mobile_status), ("Web", member.web_status)):
+          statuses.append((name, status.value.upper()))
+
+    embed = discord.Embed(title = f"{user}", color = random.randint(0, 16777215),timestamp=ctx.message.created_at)
 
     embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}")
 
-    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n**Status**: {status}")
+    join_badges: str = '\u0020'.join(badges) if badges else 'N/A'
+    join_statuses = " | ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "Unknown"
+
+    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n**Status**: {join_statuses}")
 
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
     
