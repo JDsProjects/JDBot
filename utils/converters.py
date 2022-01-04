@@ -29,7 +29,10 @@ class BetterUserconverter(commands.Converter):
     except commands.UserNotFound:
       user = None
     if not user and ctx.guild:
-      user=ctx.guild.get_member_named(argument)
+      try:
+        user = await commands.MemberConverter().convert(ctx, argument)
+      except commands.MemberNotFound:
+        user = None
 
     if user is None:
       role = None
@@ -40,10 +43,10 @@ class BetterUserconverter(commands.Converter):
       if role:
         if role.is_bot_managed():
           user=role.tags.bot_id
-          user = ctx.bot.get_user(user) or await ctx.bot.fetch_user(user)
+          user = await ctx.bot.try_user(user)
 
     if user is None:
-      tag = re.match(r"#?(\d{4})",argument)
+      tag = re.match(r"#?(\d{4})", argument)
       if tag and not ctx.bot.users:
         test = discord.utils.get(ctx.bot.users, discriminator = tag.group(1))
         user = test or ctx.author

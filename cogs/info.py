@@ -24,7 +24,7 @@ class Info(commands.Cog):
   async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
     
     user = user or ctx.author
-    user_type = ("Bot" if user.bot else "User")
+    user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
 
     flags = user.public_flags.all()
     
