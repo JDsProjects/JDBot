@@ -59,7 +59,7 @@ class Info(commands.Cog):
     join_badges: str = '\u0020'.join(badges) if badges else 'N/A'
     join_statuses = " | ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "Unknown"
 
-    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n**Status**: {join_statuses}")
+    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}")
 
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
     
