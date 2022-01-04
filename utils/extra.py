@@ -34,11 +34,11 @@ def profile_converter(name):
     "early_supporter" : "<:supporter:585763690868113455> ",
     "system" : "<:verifiedsystem:848399959564222494>",
     "bug_hunter_level_2" : "<:goldbughunter:853274684337946648>",
-    "verified_bot" : "<:verified_bot:863128487610548304>",
+    "verified_bot" : "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
     "verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
     "early_verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
     "discord_certified_moderator" : "<:certifiedmod:853274382339670046>",
-    "bot" : "<:bot:863128982136684614>"
+    "bot" : "<:bot:848395737138069514>"
   }
   
   return names_to_emojis.get(name)
