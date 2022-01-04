@@ -32,13 +32,28 @@ def profile_converter(name):
     "hypesquad_brilliance" : "<:brilliance:585763004495298575>",
     "hypesquad_balance" : "<:balance:585763004574859273>",
     "early_supporter" : "<:supporter:585763690868113455> ",
-    "system" : "<:system:863129934611349555><:system2:863129934633631774>",
+    "system" : "<:verifiedsystem:848399959564222494>",
     "bug_hunter_level_2" : "<:goldbughunter:853274684337946648>",
     "verified_bot" : "<:verified_bot:863128487610548304>",
     "verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
     "early_verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
     "discord_certified_moderator" : "<:certifiedmod:853274382339670046>",
     "bot" : "<:bot:863128982136684614>"
+  }
+  
+  return names_to_emojis.get(name)
+
+def status_converter(name):
+  
+  names_to_emojis = {
+    "ONLINE" : "<:online:715050614379249744>",
+    "OFFLINE" : "<:offline:715050614366928906>",
+    "IDLE" : "<:idle:715050614291431475>",
+    "DND" : "<:dnd:715050614429712394>",
+    "MOBILE_ONLINE" : "<:onlinemobile:715050614429712384>",
+    "MOBILE_DND" : "<:dndmobile:715050614047899741>",
+    "MOBILE_IDLE" : "<:idlemobile:715050614278717500>",
+    "MOBILE_OFFLINE" : "<:offline:715050614366928906>",
   }
   
   return names_to_emojis.get(name)
