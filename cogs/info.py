@@ -37,7 +37,7 @@ class Info(commands.Cog):
       highest_role = user.top_role
 
       for name, status in (
-        ("Status", user.status), ("Desktop", user.desktop_status), ("Mobile", f"MOBILE_{user.mobile_status}"), ("Web", user.web_status)):
+        ("Status", user.status), ("Desktop", user.desktop_status), ("Mobile", user.mobile_status), ("Web", user.web_status)):
         statuses.append((name, status.value.upper()))
 
     else:
