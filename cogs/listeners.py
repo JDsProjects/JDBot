@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, traceback, re, logging
+import discord, random, re
 import utils
 
 class Events(commands.Cog):
@@ -95,7 +95,7 @@ class Events(commands.Cog):
       return print(error)
 
     await ctx.send(error)
-    traceback.print_exc() 
+    print(error)
 
     #look more at this https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612
 
