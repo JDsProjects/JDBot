@@ -73,51 +73,48 @@ class Bot(commands.Cog):
 
     support_guild =  self.bot.get_guild(736422329399246990)
 
-    if not support_guild.get_member(owner_id):
-      await ctx.send("attempting to cache with query_members in discord.py the owner id in the support guild, if they don't exist this will not work")
-
-      try:
-        await support_guild.query_members(cache = True, limit = 5, user_ids = [owner_id]) 
-
-      except:
-        await ctx.send("failed caching members with query_members in discord.py")
-
     owner = await support_guild.try_member(owner_id) or await self.bot.try_user(owner_id)
 
-    user_type = ("Bot" if owner.bot else "User")
+    user_type = "Bot" if owner.bot else "User" if isinstance(owner, discord.User) else "Member"
     
-    if owner:
-      nickname = str(owner.nick)
-      joined_guild = f"{discord.utils.format_dt(owner.joined_at, style = 'd')}\n{discord.utils.format_dt(owner.joined_at, style = 'T')}"
-      status = str(owner.status).upper()
-      highest_role = owner.roles[-1]
-    
-    if owner is None:
-      nickname = "None"
-      joined_guild = "N/A"
-      status = "Unknown"
+    statuses = []
 
-      for guild in owner.mutual_guilds:
-        member=guild.get_member(owner.id)
-        if member:
-          status=str(member.status).upper()
-          break
+    badges = [utils.profile_converter(f.name) for f in owner.public_flags.all()] if owner.public_flags else []
+    if owner.bot: badges.append(utils.profile_converter("bot"))
+
+    if isinstance(owner, discord.Member):
+      nickname = owner.nick
+      joined_guild = f"{discord.utils.format_dt(owner.joined_at, style = 'd')}\n{discord.utils.format_dt(owner.joined_at, style = 'T')}"
+      highest_role = owner.top_role
+
+      for name, status in (
+        ("Status", owner.status), ("Desktop", owner.desktop_status), ("Mobile", owner.mobile_status), ("Web", owner.web_status)):
+        statuses.append((name, status.value.upper()))
+
+    else:
+
+      nickname = "None Found"
+      joined_guild = "N/A"
       highest_role = "None Found"
 
-
-    flags = owner.public_flags.all()
-    
-    badges="\u0020".join(utils.profile_converter(f.name) for f in flags)
-
-    if owner.bot: badges = f"{badges} {utils.profile_converter('bot')}"
+      member = discord.utils.find(lambda member: member.id == owner.id, self.bot.get_all_members())
+      if member:
+        for name, status in (
+          ("Status", member.status), ("Desktop", member.desktop_status), ("Mobile", member.mobile_status), ("Web", member.web_status)):
+          statuses.append((name, status.value.upper()))
     
     embed=discord.Embed(title=f"Bot Owner: {owner}",color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
     
-    embed.add_field(name = "User Info: ", value = f"**Username**: {owner.name} \n**Discriminator**: {owner.discriminator} \n**ID**: {owner.id}")
+    embed.add_field(name = "User Info: ", value = f"**Username**: {owner.name} \n**Discriminator**: {owner.discriminator} \n**ID**: {owner.id}", inline = False)
 
-    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {badges} \n**Joined Discord**: {discord.utils.format_dt(owner.created_at, style = 'd')}\n{discord.utils.format_dt(owner.created_at, style = 'T')}\n**Status**: {status}")
+    join_badges: str = '\u0020'.join(badges) if badges else 'N/A'
+    join_statuses = " \n| ".join(f"**{name}**: {utils.status_converter(value)}" for name, value in statuses) if statuses else "Unknown"
+
+    #Make the backend of badge conversion and stuff better, as well status
     
-    embed.add_field(name = "Guild Info:", value = f"**Nickname**: {nickname} \n**Joined Guild**: {joined_guild} \n**Highest Role**: {highest_role}")
+    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(owner.created_at, style = 'd')}\n{discord.utils.format_dt(owner.created_at, style = 'T')}\n {join_statuses}", inline = False)
+    
+    embed.add_field(name = "Guild Info:", value = f"**Nickname**: {nickname} \n**Joined Guild**: {joined_guild} \n**Highest Role**: {highest_role}", inline = False)
 
     embed.set_footer(text = f"Support Guild's Name: \n{support_guild}")    
 
