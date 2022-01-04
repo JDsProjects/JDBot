@@ -524,33 +524,29 @@ class dm_or_ephemeral(discord.ui.View):
     self.channel = channel
     self.menu = menu
 
+    self.message: Optional[discord.Message] = None
+
   @discord.ui.button(label = "Secret Message(Ephemeral)", style = discord.ButtonStyle.success, emoji = "🕵️")
   async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-    self.clear_items()
-    await self.message.edit(content = "Will be sending you the information, empherally", view = self)
+    await self.message.edit(content = "Will be sending you the information, empherally", view = None)
 
     await self.menu.send_as_interaction(interaction, ephemeral = True)
 
   @discord.ui.button(label = "Secret Message(DM)", style = discord.ButtonStyle.success, emoji = "📥")
   async def dmMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-    self.clear_items()
-    await self.message.edit(content = "Well be Dming you the paginator to view this info", view = self)
+    await self.message.edit(content = "Well be Dming you the paginator to view this info", view = None)
 
     await self.menu.send(self.channel)
 
   @discord.ui.button(label="Deny", style = discord.ButtonStyle.danger , emoji = "❌")
   async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-    self.clear_items()
-    await self.message.edit(content = f"not sending the paginator to you", view = self)
+    await self.message.edit(content = f"not sending the paginator to you", view = None)
     
 
   async def interaction_check(self, interaction: discord.Interaction):
-    
     if self.ctx.author.id != interaction.user.id:
-      return await interaction.response.send_message(content = f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.", ephemeral = True)
+      return await interaction.response.send_message(
+        content = f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.", ephemeral = True)
 
     return True
 

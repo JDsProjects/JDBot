@@ -1,3 +1,4 @@
+from typing import Optional
 import discord, random, tabulate
 import io, os
 
@@ -21,7 +22,7 @@ def reference(message):
 
   return None
 
-def profile_converter(name):
+def profile_converter(name) -> Optional[str]:
   
   names_to_emojis = {
     "staff" : "<:staff:314068430787706880>",

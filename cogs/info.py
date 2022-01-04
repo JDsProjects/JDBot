@@ -20,76 +20,83 @@ class Info(commands.Cog):
     if guild:
       await utils.guildinfo(ctx, guild)
 
-  @commands.command(aliases=["user_info", "user-info", "ui", "whois"], brief="a command that gives information on users", help="this can work with mentions, ids, usernames, and even full names.")
-  async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
-    user = user or ctx.author
-    user_type = ("Bot" if user.bot else "User")
+  @commands.command(
+    aliases=["user_info", "user-info", "ui", "whois"],
+    brief="a command that gives information on users",
+    help="this can work with mentions, ids, usernames, and even full names."
+  )
+  async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):  # type: ignore
+    user: typing.Union[discord.Member, discord.User]  # type: ignore
+    user = user or ctx.author  # type: ignore
+    user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
     
-    if ctx.guild:
-      member_version = await ctx.guild.try_member(user.id)
-  
-      if member_version:
-        nickname = f"{member_version.nick}"
-        joined_guild = f"{discord.utils.format_dt(member_version.joined_at, style = 'd')}\n{discord.utils.format_dt(member_version.joined_at, style = 'T')}"
+    statuses: typing.List[typing.Tuple[str, str]] = []
+    badges: typing.List[str] = [utils.profile_converter(f.name) for f in user.public_flags.all()] if user.public_flags else []  # type: ignore
+    if user.bot:
+      badges.append(utils.profile_converter("bot"))  # type: ignore
 
-        status = str(member_version.status).upper()
-        highest_role = member_version.top_role
-        
-      if not member_version:
+    if isinstance(user, discord.Member):
+      nickname = user.nick
+      joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"  # type: ignore
+      highest_role = user.top_role
 
-        nickname = str(member_version)
+      for name, status in (
+        ("Status", user.status), ("Desktop", user.desktop_status), ("Mobile", user.mobile_status), ("Web", user.web_status)
+      ):
+        statuses.append((name, status.value.upper()))
 
-        joined_guild = "N/A"
-        status = "Unknown"
 
-        for guild in self.bot.guilds:
-          member = guild.get_member(user.id)
-          if member:
-            status=str(member.status).upper()
-            
-            break
-            
-        highest_role = "None Found"
+    else:
 
-    if not ctx.guild:
-        nickname = "None"
-        joined_guild = "N/A"
-        status = "Unknown"
+      nickname = str(user)
+      joined_guild = "N/A"
+      highest_role = "None Found"
 
-        for guild in self.bot.guilds:
-          member=guild.get_member(user.id)
-          if member:
-            status=str(member.status).upper()
-            break
-            
-        highest_role = "None Found"
+      member = discord.utils.find(lambda member: member.id == user.id, self.bot.get_all_members())  # type: ignore
+      if member:
+        for name, status in (
+          ("Status", member.status), ("Desktop", member.desktop_status), ("Mobile", member.mobile_status), ("Web", member.web_status)
+        ):
+          statuses.append((name, status.value.upper()))
 
-    flags = user.public_flags.all()
     
-    badges="\u0020".join(utils.profile_converter(f.name) for f in flags)
+    embed=discord.Embed(
+      title = f"{user}",
+      color = discord.Color.random(),
+      timestamp = ctx.message.created_at)
 
-    if user.bot: badges = f"{badges} {utils.profile_converter('bot')}"
+    embed.add_field(
+      name = "User Info: ", 
+      value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}"
+    )
 
-    embed=discord.Embed(title=f"{user}", color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
+    join_badges: str = '\u0020'.join(badges) if badges else 'N/A'
+    join_statuses = " | ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "Unknown"
 
-    embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}")
-
-    embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n**Status**: {status}")
-
-    embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
-    
+    embed.add_field(
+      name = "User Info 2:",
+      value = f"Type: {user_type} "
+              f"\nBadges: {join_badges} "
+              f"\n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}"
+              f"\n{discord.utils.format_dt(user.created_at, style = 'T')}"
+              f"\n**Status**: {join_statuses}"
+    )
+    embed.add_field(
+      name = "Guild Info:",
+      value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}"
+    )
     embed.set_image(url = user.display_avatar.url)
+
     #I need some way to make this look better and be more constient.
     
     guilds_list = utils.grab_mutualguilds(ctx, user)
 
-    pag = commands.Paginator()
+    pag = commands.Paginator(prefix="", suffix="")
 
     for g in guilds_list:
       pag.add_line(f"{g}")
 
-    pages = [page.strip("`") for page in pag.pages]
-    pages = pages or ["None"]
+    pages = pag.pages or ["None"]
 
     if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
@@ -97,7 +104,11 @@ class Info(commands.Cog):
     menu = utils.MutualGuildsEmbed(pages, ctx = ctx, disable_after = True)
     view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
     
-    view.message = await ctx.send("Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds", embed = embed, view = view)
+    view.message = await ctx.send(
+      "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
+      embed = embed,
+      view = view
+    )  # type: ignore
 
   @commands.command(brief="uploads your emojis into a Senarc Bin link")
   async def look_at(self, ctx):

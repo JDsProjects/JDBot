@@ -1,3 +1,4 @@
+
 import discord, re, emoji, contextlib, typing, datetime
 from discord.ext import commands
 from discord.http import Route
@@ -22,14 +23,18 @@ class BetterMemberConverter(commands.Converter):
                
     return user
 
-class BetterUserconverter(commands.Converter):
-  async def convert(self, ctx, argument):
+class BetterUserconverter(commands.Converter[typing.Union[discord.User, discord.Member]]):
+  async def convert(self, ctx, argument) -> typing.Union[discord.User, discord.Member, None]:
     try:
      user = await commands.UserConverter().convert(ctx,argument)
     except commands.UserNotFound:
       user = None
+
     if not user and ctx.guild:
-      user=ctx.guild.get_member_named(argument)
+      try:
+        user = await commands.MemberConverter().convert(ctx, argument)
+      except commands.MemberNotFound:
+        user = None
 
     if user is None:
       role = None
@@ -40,13 +45,14 @@ class BetterUserconverter(commands.Converter):
       if role:
         if role.is_bot_managed():
           user=role.tags.bot_id
-          user = ctx.bot.get_user(user) or await ctx.bot.fetch_user(user)
+          user = await ctx.bot.try_user(user)
 
     if user is None:
-      tag = re.match(r"#?(\d{4})",argument)
+      tag = re.match(r"#?(\d{4})", argument)
       if tag and not ctx.bot.users:
         test = discord.utils.get(ctx.bot.users, discriminator = tag.group(1))
         user = test or ctx.author
+
     return user
 
   
