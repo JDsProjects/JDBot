@@ -3,12 +3,9 @@ import os
 
 async def guildinfo(ctx, guild):
 
-  base_animated = collections.Counter([e.animated for e in guild.emojis])
-  static_emojis = base_animated[False]
-  animated_emojis = base_animated[True]
-
-  base_available = collections.Counter([e.available for e in guild.emojis])
-  usable_emojis = base_available[True]
+  static_emojis = sum(not e.animated for e in guild.emojis)
+  animated_emojis = sum(e.animated for e in guild.emojis)
+  usable_emojis = sum(e.available for e in guild.emojis)
 
   base_status = collections.Counter([x.status for x in guild.members])
 
