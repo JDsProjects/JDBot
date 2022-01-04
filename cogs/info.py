@@ -42,7 +42,7 @@ class Info(commands.Cog):
 
     else:
 
-      nickname = str(user)
+      nickname = "None Found"
       joined_guild = "N/A"
       highest_role = "None Found"
 
