@@ -78,11 +78,6 @@ class Test(commands.Cog):
   #guild_prefixes table in my sql database
   #spyco data table in my sql database
 
-  #add support for https://discordpy.readthedocs.io/en/master/api.html#discord.Member.mobile_status 
- #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.desktop_status 
-   #https://discordpy.readthedocs.io/en/master/api.html#discord.Member.web_status
-  #do something with this: https://discordpy.readthedocs.io/en/master/api.html#discord.Member.status
-
 
 class Slash(commands.Cog):
   """A Testing Category for Slash Commands"""
