@@ -2,9 +2,6 @@ import collections, random, discord, aioimgur, sr_api, asyncdagpi, jeyyapi
 import os
 
 async def guildinfo(ctx, guild):
-  base_user = collections.Counter([u.bot for u in guild.members])
-  bots = base_user[True]
-  users = base_user[False]
 
   base_animated = collections.Counter([e.animated for e in guild.emojis])
   static_emojis = base_animated[False]
@@ -27,7 +24,7 @@ async def guildinfo(ctx, guild):
 
   embed.add_field(name="Server Owner Info:", value = f"Owner : {guild.owner} \nOwner ID : {guild.owner_id}")
 
-  embed.add_field(name = "Member info", value = f"Member Count : {guild.member_count}\nUsers : {users} \nBots : {bots} ")
+  embed.add_field(name = "Member info", value = f"Member Count : {guild.member_count}\nUsers : {len(guild.humans)} \nBots : {len(guild.bots)} ")
 
   embed.add_field(name="Channel Count:", value = len(guild.channels))
   embed.add_field(name="Role Count:", value = len(guild.roles))
