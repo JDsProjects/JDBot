@@ -22,47 +22,9 @@ class Info(commands.Cog):
 
   @commands.command(aliases=["user_info", "user-info", "ui", "whois"], brief="a command that gives information on users", help="this can work with mentions, ids, usernames, and even full names.")
   async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
+    
     user = user or ctx.author
     user_type = ("Bot" if user.bot else "User")
-    
-    if ctx.guild:
-      member_version = await ctx.guild.try_member(user.id)
-  
-      if member_version:
-        nickname = f"{member_version.nick}"
-        joined_guild = f"{discord.utils.format_dt(member_version.joined_at, style = 'd')}\n{discord.utils.format_dt(member_version.joined_at, style = 'T')}"
-
-        status = str(member_version.status).upper()
-        highest_role = member_version.top_role
-        
-      if not member_version:
-
-        nickname = str(member_version)
-
-        joined_guild = "N/A"
-        status = "Unknown"
-
-        for guild in self.bot.guilds:
-          member = guild.get_member(user.id)
-          if member:
-            status=str(member.status).upper()
-            
-            break
-            
-        highest_role = "None Found"
-
-    if not ctx.guild:
-        nickname = "None"
-        joined_guild = "N/A"
-        status = "Unknown"
-
-        for guild in self.bot.guilds:
-          member=guild.get_member(user.id)
-          if member:
-            status=str(member.status).upper()
-            break
-            
-        highest_role = "None Found"
 
     flags = user.public_flags.all()
     
@@ -79,17 +41,15 @@ class Info(commands.Cog):
     embed.add_field(name = "Guild Info:", value = f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}")
     
     embed.set_image(url = user.display_avatar.url)
-    #I need some way to make this look better and be more constient.
     
     guilds_list = utils.grab_mutualguilds(ctx, user)
 
-    pag = commands.Paginator()
+    pag = commands.Paginator(prefix="", suffix="")
 
     for g in guilds_list:
       pag.add_line(f"{g}")
-
-    pages = [page.strip("`") for page in pag.pages]
-    pages = pages or ["None"]
+  
+    pages = pag.pages or ["None"]
 
     if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
