@@ -56,7 +56,7 @@ class Info(commands.Cog):
     embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}", inline = False)
 
     join_badges: str = '\u0020'.join(badges) if badges else 'N/A'
-    join_statuses = " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "Unknown"
+    join_statuses = " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
 
     embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}", inline = False)
 

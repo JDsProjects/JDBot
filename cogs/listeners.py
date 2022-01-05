@@ -95,10 +95,10 @@ class Events(commands.Cog):
       print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
     return traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
-    await ctx.send(error)
-
     print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
     traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+
+    await ctx.send(error)
 
   @commands.Cog.listener()
   async def on_member_join(self, member):

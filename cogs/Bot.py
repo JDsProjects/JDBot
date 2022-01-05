@@ -107,7 +107,7 @@ class Bot(commands.Cog):
     embed.add_field(name = "User Info: ", value = f"**Username**: {owner.name} \n**Discriminator**: {owner.discriminator} \n**ID**: {owner.id}", inline = False)
 
     join_badges: str = '\u0020'.join(badges) if badges else 'N/A'
-    join_statuses = " \n| ".join(f"**{name}**: {utils.status_converter(value)}" for name, value in statuses) if statuses else "Unknown"
+    join_statuses = " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
 
     #Make the backend of badge conversion and stuff better, as well status
     
