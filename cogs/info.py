@@ -49,9 +49,8 @@ class Info(commands.Cog):
 
       member = discord.utils.find(lambda member: member.id == user.id, self.bot.get_all_members())
       if member:
-        for name, status in (
-          ("Status", member.status), ("Desktop", member.desktop_status), ("Mobile", member.mobile_status), ("Web", member.web_status)):
-          statuses.append((name, status.value.upper()))
+        for name, status in (("Status", member.status), ("Desktop", member.desktop_status), ("Mobile", member.mobile_status), ("Web", member.web_status)):
+          statuses.append((name, profile_converter(name.lower(), status))
 
     embed = discord.Embed(title = f"{user}", color = random.randint(0, 16777215),timestamp=ctx.message.created_at)
 

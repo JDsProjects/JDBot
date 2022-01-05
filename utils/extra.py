@@ -1,4 +1,4 @@
-import discord, random, tabulate
+import discord, random, tabulate, typing
 import io, os
 
 async def google_tts(bot, text):
@@ -43,20 +43,12 @@ def profile_converter(name):
   
   return names_to_emojis.get(name)
 
-def status_converter(name):
+def convert_status(_type: typing.Literal["mobile", "status"], status: discord.Status):
+  mobile_emojis = {discord.Status.online: "<:onlinemobile:715050614429712384>", discord.Status.dnd: "<:dndmobile:715050614047899741>", discord.Status.idle: "<:idlemobile:715050614278717500>", discord.Status.offline: "<:offline:715050614366928906>"}
   
-  names_to_emojis = {
-    "ONLINE" : "<:online:715050614379249744>",
-    "OFFLINE" : "<:offline:715050614366928906>",
-    "IDLE" : "<:idle:715050614291431475>",
-    "DND" : "<:dnd:715050614429712394>",
-    "MOBILE_ONLINE" : "<:onlinemobile:715050614429712384>",
-    "MOBILE_DND" : "<:dndmobile:715050614047899741>",
-    "MOBILE_IDLE" : "<:idlemobile:715050614278717500>",
-    "MOBILE_OFFLINE" : "<:offline:715050614366928906>",
-  }
+  status_emojis = {discord.Status.online: "<:online:715050614379249744>", discord.Status.dnd: "<:dnd:715050614429712394>", discord.Status.idle: "<:idle:715050614291431475>", discord.Status.offline: "<:offline:715050614366928906>"}
   
-  return names_to_emojis.get(name)
+  return  {"mobile": mobile_emojis, "status": status_emojis}.get(_type, "status").get(status)
 
 
 def bit_generator():
