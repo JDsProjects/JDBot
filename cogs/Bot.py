@@ -79,7 +79,7 @@ class Bot(commands.Cog):
     
     statuses = []
 
-    badges = [utils.profile_converter("badges", f) for f in user.public_flags.all()] if owner.public_flags else []
+    badges = [utils.profile_converter("badges", f) for f in owner.public_flags.all()] if owner.public_flags else []
     if owner.bot: badges.append(utils.profile_converter("badges","bot"))
     if owner.system: badges.append(utils.profile_converter("badges","system"))
 
