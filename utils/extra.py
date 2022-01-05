@@ -32,9 +32,9 @@ def profile_converter(_type: typing.Literal["badges", "mobile", "status"], _enum
   status_emojis = {discord.Status.online: "<:online:715050614379249744>", discord.Status.dnd: "<:dnd:715050614429712394>", discord.Status.idle: "<:idle:715050614291431475>", discord.Status.offline: "<:offline:715050614366928906>"}
 
   dc = {"mobile": mobile_emojis, "status": status_emojis, "badges": badges_emoji}
-  print(dc.get(_type, "status"))
-  return dc.get(_type, "status").get(_enum)
+  if _type in ("status", "desktop", "web"): _type = "status"
 
+  return dc.get(_type).get(_enum)
 
 def bit_generator():
   return hex(random.randint(0, 255))[2:]
