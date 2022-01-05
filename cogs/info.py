@@ -30,6 +30,7 @@ class Info(commands.Cog):
 
     badges = [utils.profile_converter(f.name) for f in user.public_flags.all()] if user.public_flags else []
     if user.bot: badges.append(utils.profile_converter("bot"))
+    if user.system: badges.append(utils.profile_converter("system"))
 
     if isinstance(user, discord.Member):
       nickname = user.nick

@@ -24,15 +24,15 @@ def reference(message):
 def profile_converter(name):
   
   names_to_emojis = {
-    "staff" : "<:staff:314068430787706880>",
-    "partner" : "<:partnernew:754032603081998336>",
+    "staff" : "<:DiscordStaff:859400539221917698>",
+    "partner" : "<:partner:848402357863710762>",
     "hypesquad" : "<:hypesquad:314068430854684672>",
     "bug_hunter" : "<:bughunter:585765206769139723>",
     "hypesquad_bravery" : "<:bravery:585763004218343426>",
     "hypesquad_brilliance" : "<:brilliance:585763004495298575>",
     "hypesquad_balance" : "<:balance:585763004574859273>",
     "early_supporter" : "<:supporter:585763690868113455> ",
-    "system" : "<:verifiedsystem:848399959564222494>",
+    "system" : "<<:verifiedsystem1:848399959539843082><:verifiedsystem2:848399959241261088>",
     "bug_hunter_level_2" : "<:goldbughunter:853274684337946648>",
     "verified_bot" : "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
     "verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
