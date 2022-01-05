@@ -93,7 +93,7 @@ class Events(commands.Cog):
 
     if isinstance(error, ignored):
       print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-    return traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+      return traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
     print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
     traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
