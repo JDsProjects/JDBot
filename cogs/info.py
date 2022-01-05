@@ -28,18 +28,17 @@ class Info(commands.Cog):
     
     statuses = []
 
-    badges = [utils.profile_converter(f.name) for f in user.public_flags.all()] if user.public_flags else []
-    if user.bot: badges.append(utils.profile_converter("bot"))
-    if user.system: badges.append(utils.profile_converter("system"))
+    badges = [utils.profile_converter("badges", f) for f in user.public_flags.all()] if user.public_flags else []
+    if user.bot: badges.append(utils.profile_converter("badges","bot"))
+    if user.system: badges.append(utils.profile_converter("badges","system"))
 
     if isinstance(user, discord.Member):
       nickname = user.nick
       joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
       highest_role = user.top_role
 
-      for name, status in (
-        ("Status", user.status), ("Desktop", user.desktop_status), ("Mobile", user.mobile_status), ("Web", user.web_status)):
-        statuses.append((name, status.value.upper()))
+      for name, status in (("Status", user.status), ("Desktop", user.desktop_status), ("Mobile", user.mobile_status), ("Web", user.web_status)):
+        statuses.append((name, utils.profile_converter(name.lower(), status)))
 
     else:
 
@@ -50,16 +49,14 @@ class Info(commands.Cog):
       member = discord.utils.find(lambda member: member.id == user.id, self.bot.get_all_members())
       if member:
         for name, status in (("Status", member.status), ("Desktop", member.desktop_status), ("Mobile", member.mobile_status), ("Web", member.web_status)):
-          statuses.append((name, profile_converter(name.lower(), status))
+          statuses.append((name, utils.profile_converter(name.lower(), status)))
 
     embed = discord.Embed(title = f"{user}", color = random.randint(0, 16777215),timestamp=ctx.message.created_at)
 
     embed.add_field(name = "User Info: ", value = f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}", inline = False)
 
     join_badges: str = '\u0020'.join(badges) if badges else 'N/A'
-    join_statuses = " \n| ".join(f"**{name}**: {utils.status_converter(value)}" for name, value in statuses) if statuses else "Unknown"
-
-    #Make the backend of badge conversion and stuff better, as well status
+    join_statuses = " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "Unknown"
 
     embed.add_field(name = "User Info 2:", value = f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}", inline = False)
 

@@ -1,4 +1,5 @@
 import discord, random, tabulate, typing
+from discord.flags import UserFlags
 import io, os
 
 async def google_tts(bot, text):
@@ -20,35 +21,18 @@ def reference(message):
     return reference.resolved.to_reference()
 
   return None
-
-def profile_converter(name):
   
-  names_to_emojis = {
-    "staff" : "<:DiscordStaff:859400539221917698>",
-    "partner" : "<:partner:848402357863710762>",
-    "hypesquad" : "<:hypesquad:314068430854684672>",
-    "bug_hunter" : "<:bughunter:585765206769139723>",
-    "hypesquad_bravery" : "<:bravery:585763004218343426>",
-    "hypesquad_brilliance" : "<:brilliance:585763004495298575>",
-    "hypesquad_balance" : "<:balance:585763004574859273>",
-    "early_supporter" : "<:supporter:585763690868113455> ",
-    "system" : "<<:verifiedsystem1:848399959539843082><:verifiedsystem2:848399959241261088>",
-    "bug_hunter_level_2" : "<:goldbughunter:853274684337946648>",
-    "verified_bot" : "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
-    "verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
-    "early_verified_bot_developer" : "<:verifiedbotdev:853277205264859156>",
-    "discord_certified_moderator" : "<:certifiedmod:853274382339670046>",
-    "bot" : "<:bot:848395737138069514>"
-  }
-  
-  return names_to_emojis.get(name)
 
-def convert_status(_type: typing.Literal["mobile", "status"], status: discord.Status):
+def profile_converter(_type: typing.Literal["badges", "mobile", "status"], _enum: typing.Union[discord.Status, discord.UserFlags, str]):
+
+  badges_emoji = {UserFlags.staff : "<:DiscordStaff:859400539221917698>", UserFlags.partner : "<:partner:848402357863710762>", UserFlags.hypesquad: "<:hypesquad:314068430854684672>", UserFlags.bug_hunter: "<:bughunter:585765206769139723>", UserFlags.hypesquad_bravery: "<:bravery:585763004218343426>", UserFlags.hypesquad_brilliance: "<:brilliance:585763004495298575>", UserFlags.hypesquad_balance: "<:balance:585763004574859273>", UserFlags.early_supporter: "<:supporter:585763690868113455> ", "system": "<:verifiedsystem1:848399959539843082><:verifiedsystem2:848399959241261088>", UserFlags.bug_hunter_level_2: "<:goldbughunter:853274684337946648>", UserFlags.verified_bot: "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>", UserFlags.verified_bot_developer: "<:verifiedbotdev:853277205264859156>", UserFlags.early_verified_bot_developer: "<:verifiedbotdev:853277205264859156>", UserFlags.discord_certified_moderator: "<:certifiedmod:853274382339670046>", "bot": "<:bot:848395737138069514>"}
+  
   mobile_emojis = {discord.Status.online: "<:onlinemobile:715050614429712384>", discord.Status.dnd: "<:dndmobile:715050614047899741>", discord.Status.idle: "<:idlemobile:715050614278717500>", discord.Status.offline: "<:offline:715050614366928906>"}
   
   status_emojis = {discord.Status.online: "<:online:715050614379249744>", discord.Status.dnd: "<:dnd:715050614429712394>", discord.Status.idle: "<:idle:715050614291431475>", discord.Status.offline: "<:offline:715050614366928906>"}
   
-  return  {"mobile": mobile_emojis, "status": status_emojis}.get(_type, "status").get(status)
+  dc = {"mobile": mobile_emojis, "status": status_emojis, "badges": badges_emoji}
+  return dc.get(_type, "status").get(_enum)
 
 
 def bit_generator():

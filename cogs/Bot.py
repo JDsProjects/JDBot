@@ -79,17 +79,16 @@ class Bot(commands.Cog):
     
     statuses = []
 
-    badges = [utils.profile_converter(f.name) for f in owner.public_flags.all()] if owner.public_flags else []
-    if owner.bot: badges.append(utils.profile_converter("bot"))
+    badges = [utils.profile_converter("badges", f) for f in user.public_flags.all()] if owner.public_flags else []
+    if owner.bot: badges.append(utils.profile_converter("badges","bot"))
+    if owner.system: badges.append(utils.profile_converter("badges","system"))
 
     if isinstance(owner, discord.Member):
       nickname = owner.nick
       joined_guild = f"{discord.utils.format_dt(owner.joined_at, style = 'd')}\n{discord.utils.format_dt(owner.joined_at, style = 'T')}"
       highest_role = owner.top_role
 
-      for name, status in (
-        ("Status", owner.status), ("Desktop", owner.desktop_status), ("Mobile", owner.mobile_status), ("Web", owner.web_status)):
-        statuses.append((name, status.value.upper()))
+      
 
     else:
 
