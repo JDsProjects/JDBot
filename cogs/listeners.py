@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, re
+import discord, random, re, sys, traceback
 import utils
 
 class Events(commands.Cog):
@@ -92,12 +92,13 @@ class Events(commands.Cog):
     error = getattr(error, 'original', error)
 
     if isinstance(error, ignored):
-      return print(error)
+      print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+    return traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
     await ctx.send(error)
-    print(error)
 
-    #look more at this https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612
+    print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+    traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
   @commands.Cog.listener()
   async def on_member_join(self, member):
