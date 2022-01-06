@@ -18,7 +18,8 @@ import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
-
+import autopep8
+from yapf.yapflib.yapf_api import FormatCode
 
 class Info(commands.Cog):
     "Gives you Information about data you are allowed to access"
@@ -433,37 +434,27 @@ class DevTools(commands.Cog):
         await menu.send(ctx.channel)
 
     @commands.command(brief="a command to autoformat your python code to pep8")
-    async def pep8(self, ctx, *, args=None):
-        if not args:
+    async def pep8(self, ctx, *, code: codeblock_converter = None):
+        if not code:
             return await ctx.send("You need to give it code to work with it.")
 
-        import autopep8
-
-        # make this use a jsk codeblock, and the other pep8 commands.
-
-        code = autopep8.fix_code(args)
-        args = args.strip("```python```")
-        args = args.strip("```")
-        await ctx.send(content=f"code returned: \n```{code}```")
+        code = autopep8.fix_code(code.content)
+        embed = discord.Embed(description = f"code returned: \n```python\n{code}```", color=random.randint(0, 16777215))
+        embed.set_footer(text = "Make sure you use python code, otherwise it will not work properly.")
+        await ctx.send(embed = embed)
 
     @commands.command(brief="normal pep8 but more agressive")
-    async def pep8_agressive(self, ctx, *, args=None):
-        if not args:
+    async def pep8_agressive(self, ctx, *, code: codeblock_converter = None):
+        if not code:
             return await ctx.send("You need to give it code to work with it.")
 
-        import autopep8
-
         code = autopep8.fix_code(args, options={"aggressive": 3})
-        args = args.strip("```python```")
-        args = args.strip("```")
-        await ctx.send(content=f"code returned: \n```{code}```")
+        
 
     @commands.command(brief="a command like pep8 but with google's yapf tool.")
     async def pep8_2(self, ctx, *, args=None):
         if not args:
             return await ctx.send("you need code for it to work with.")
-
-        from yapf.yapflib.yapf_api import FormatCode
 
         args = args.strip("```python```")
         args = args.strip("```")
