@@ -12,8 +12,7 @@ I will have a code check at some point.
 You should use Pylance to make sure your code is clean and well
 Or you can use
 ```bash
-black -l120 .
-``` formatted.
+black -l120 .``` formatted.
 I will make a way to check it in the future.
 Thank You,
 JDJG
