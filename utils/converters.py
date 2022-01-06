@@ -77,10 +77,10 @@ class EmojiConverter(commands.Converter):
   async def convert(self, ctx: commands.Context, arg: str): 
     emojis = emoji.unicode_codes.EMOJI_UNICODE["en"].values()
     try:
-      return await commands.PartialEmojiConverter().convert(ctx,arg)
+      return await commands.PartialEmojiConverter().convert(ctx, arg)
     except commands.PartialEmojiConversionFailure: pass
     if arg.rstrip("\N{variation selector-16}") in emojis or arg in emojis:
-      return discord.PartialEmoji(name=arg)
+      return discord.PartialEmoji(name = arg)
     else:
       raise commands.BadArgument(f"{arg} is not an emoji")
 
