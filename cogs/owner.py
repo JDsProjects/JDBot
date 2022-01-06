@@ -16,6 +16,7 @@ class Owner(commands.Cog):
     if user:
       await ctx.reply("Please give me a message to use.")
       message = await self.bot.wait_for("message",check = utils.check(ctx))
+      #make this use modals when modals come out.
       embed_message = discord.Embed(title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215))
       embed_message.set_author(name=f"Mail from: {ctx.author}",icon_url=(ctx.author.display_avatar.url))
       embed_message.set_footer(text = f"{ctx.author.id}")
@@ -176,6 +177,7 @@ class Owner(commands.Cog):
     if user:
       await ctx.reply("Please give me a reason why:")
       reason = await self.bot.wait_for("message", check= utils.check(ctx))
+      #make it use modals when modals release.
 
       await self.bot.db.execute("INSERT INTO sus_users VALUES ($1, $2)", user.id, reason.content)
       
@@ -518,6 +520,7 @@ class Owner(commands.Cog):
     if user:
       await ctx.reply("Please give me a reason why:")
       reason = await self.bot.wait_for("message", check= utils.check(ctx))
+      #Make it use modals when modals release, with proper checks.
 
       await self.bot.db.execute("INSERT INTO BLACKLISTED_USERS VALUES ($1, $2)", user.id, reason.content)
       

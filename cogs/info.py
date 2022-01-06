@@ -558,6 +558,8 @@ class DevTools(commands.Cog):
     
     user = user or ctx.author
 
+    #args will eventually become modals when they release.
+
     if not user.bot:
       ctx.command.reset_cooldown(ctx) 
       return await ctx.send("Please Use A **Bot** ID, not a **User** ID.")
