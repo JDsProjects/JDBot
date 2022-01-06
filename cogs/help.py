@@ -6,8 +6,7 @@ import discord
 
 class JDBotHelp(commands.MinimalHelpCommand):
     async def send_pages(self):
-        menu = utils.SendHelp(self.paginator.pages,
-                              ctx=self.context, delete_message_after=True)
+        menu = utils.SendHelp(self.paginator.pages, ctx=self.context, delete_message_after=True)
 
         await menu.send(self.context.channel)
 
@@ -23,7 +22,7 @@ class JDBotHelp(commands.MinimalHelpCommand):
         if note:
             self.paginator.add_line(note, empty=True)
 
-        no_category = f'\u200b{self.no_category}'
+        no_category = f"\u200b{self.no_category}"
 
         def get_category(command, *, no_category=no_category):
             cog = command.cog
@@ -53,8 +52,7 @@ class JDBotHelp(commands.MinimalHelpCommand):
             self.add_aliases_formatting(command.aliases)
 
         else:
-            self.paginator.add_line(
-                discord.utils.escape_markdown(signature), empty=True)
+            self.paginator.add_line(discord.utils.escape_markdown(signature), empty=True)
 
         if command.help:
             try:
@@ -87,7 +85,7 @@ class JDBotHelp(commands.MinimalHelpCommand):
             if note:
                 self.paginator.add_line(note, empty=True)
 
-            self.paginator.add_line('**%s**' % self.commands_heading)
+            self.paginator.add_line("**%s**" % self.commands_heading)
 
             for command in filtered:
                 self.add_subcommand_formatting(command)

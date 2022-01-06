@@ -18,17 +18,18 @@ class Dice(commands.Cog):
         if number < 1:
             return await ctx.send("NO")
 
-        url_dict = {20: "https://i.imgur.com/9dbBkqj.gif",
-                    6: "https://i.imgur.com/6ul8ZGY.gif"}
+        url_dict = {20: "https://i.imgur.com/9dbBkqj.gif", 6: "https://i.imgur.com/6ul8ZGY.gif"}
         url = url_dict.get(number, "https://i.imgur.com/gaLM6AG.gif")
 
-        embed = discord.Embed(title=f"Rolled a {random.randint(1,number)}", color=random.randint(
-            0, 16777215), timestamp=(ctx.message.created_at))
+        embed = discord.Embed(
+            title=f"Rolled a {random.randint(1,number)}",
+            color=random.randint(0, 16777215),
+            timestamp=(ctx.message.created_at),
+        )
 
         embed.set_footer(text=f"{ctx.author.id}")
         embed.set_thumbnail(url="https://i.imgur.com/AivZBWP.png")
-        embed.set_author(name=f"d{number} Rolled by {ctx.author}:",
-                         icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"d{number} Rolled by {ctx.author}:", icon_url=ctx.author.display_avatar.url)
         embed.set_image(url=url)
         await ctx.send(embed=embed)
 
@@ -39,7 +40,11 @@ class Dice(commands.Cog):
 
         await self.generate_embed(ctx, int(number))
 
-    @commands.command(brief="Gives random emojis(from guild and bot)", help="Please use this wisely.", aliases=["e_spin", "emoji_spin"])
+    @commands.command(
+        brief="Gives random emojis(from guild and bot)",
+        help="Please use this wisely.",
+        aliases=["e_spin", "emoji_spin"],
+    )
     async def emoji_spinner(self, ctx):
 
         emoji_choosen = random.choice(self.bot.emojis)
@@ -68,8 +73,7 @@ class Dice(commands.Cog):
         kawaii_emotes = self.bot.get_guild(773571474761973840)
         kawaii_emotes2 = self.bot.get_guild(806669712410411068)
         kawaii_emotes3 = self.bot.get_guild(692576207404793946)
-        emoji_choosen = random.choice(
-            kawaii_emotes.emojis+kawaii_emotes2.emojis+kawaii_emotes3.emojis)
+        emoji_choosen = random.choice(kawaii_emotes.emojis + kawaii_emotes2.emojis + kawaii_emotes3.emojis)
         await ctx.send(emoji_choosen)
 
     @commands.command(brief="a magic 8ball command(uses rng)", aliases=["8ball"])
@@ -77,14 +81,53 @@ class Dice(commands.Cog):
         if args is None:
             await ctx.send("Please give us a value to work with.")
         if args:
-            responses = ["As I see it, yes.", "Ask again later.", "Better not tell you now.", "Cannot predict now.", "Concentrate and ask again.", "Don’t count on it.", "It is certain.", "It is decidedly so.", "Most likely.",
-                         "My reply is no.", "My sources say no.", "Outlook not so good.", "Outlook good.", "Reply hazy, try again.", "Signs point to yes.", "Very doubtful.", "Without a doubt.", "Yes.", "Yes – definitely.", "You may rely on it."]
+            responses = [
+                "As I see it, yes.",
+                "Ask again later.",
+                "Better not tell you now.",
+                "Cannot predict now.",
+                "Concentrate and ask again.",
+                "Don’t count on it.",
+                "It is certain.",
+                "It is decidedly so.",
+                "Most likely.",
+                "My reply is no.",
+                "My sources say no.",
+                "Outlook not so good.",
+                "Outlook good.",
+                "Reply hazy, try again.",
+                "Signs point to yes.",
+                "Very doubtful.",
+                "Without a doubt.",
+                "Yes.",
+                "Yes – definitely.",
+                "You may rely on it.",
+            ]
             await ctx.send(f"{random.choice(responses)}")
 
-    @commands.command(brief="gordon ramsay insults you(I don't own his likeness)", help="Please only use if you can handle insults :D (with some profanity)")
+    @commands.command(
+        brief="gordon ramsay insults you(I don't own his likeness)",
+        help="Please only use if you can handle insults :D (with some profanity)",
+    )
     async def insult2(self, ctx, *, args=None):
-        ramsay_responses = ["You are getting your kn*ckers in a twist! Calm down!", "WHAT ARE YOU? An idiot sandwich", "You fucking Donkey!", "How about a thank you, you miserable wee-bitch", "Hey, panini head, are you listening to me?", "For what we are about to eat, may the Lord make us truly not vomit", "Do you want a fucking medal?", "That fucking gremlin, everything you touch, you screw... there you go",
-                            "Your name is Elsa, isn't it? Because this shit is so fucking frozen", "This pork is so raw it's still singing Hakuna Matata", "Fuck off you bloody donut", "This crab is so raw it just offered me a krabby patty", "The fucking bass is fucking RAW!", "This chicken is so raw it's still asking why it crossed the road!", "Hey excuse me madam, fuck me? How about fuck you.", "Move It, Grandpa"]
+        ramsay_responses = [
+            "You are getting your kn*ckers in a twist! Calm down!",
+            "WHAT ARE YOU? An idiot sandwich",
+            "You fucking Donkey!",
+            "How about a thank you, you miserable wee-bitch",
+            "Hey, panini head, are you listening to me?",
+            "For what we are about to eat, may the Lord make us truly not vomit",
+            "Do you want a fucking medal?",
+            "That fucking gremlin, everything you touch, you screw... there you go",
+            "Your name is Elsa, isn't it? Because this shit is so fucking frozen",
+            "This pork is so raw it's still singing Hakuna Matata",
+            "Fuck off you bloody donut",
+            "This crab is so raw it just offered me a krabby patty",
+            "The fucking bass is fucking RAW!",
+            "This chicken is so raw it's still asking why it crossed the road!",
+            "Hey excuse me madam, fuck me? How about fuck you.",
+            "Move It, Grandpa",
+        ]
 
         if args is None:
             await ctx.send(content=f"{ctx.author}, {random.choice(ramsay_responses)}")
@@ -92,7 +135,9 @@ class Dice(commands.Cog):
         if args:
             await ctx.send(random.choice(ramsay_responses))
 
-    @commands.command(brief="a command meant to flip coins", help="commands to flip coins, etc.", aliases=["coinflip", "cf"])
+    @commands.command(
+        brief="a command meant to flip coins", help="commands to flip coins, etc.", aliases=["coinflip", "cf"]
+    )
     async def coin(self, ctx):
         value = random.choice([True, False])
 
@@ -119,13 +164,10 @@ class Dice(commands.Cog):
 
         pic_name = "Heads" if (value) else "Tails"
 
-        url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png",
-                   "Tails": "https://i.imgur.com/qTf1owU.png"}
+        url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png", "Tails": "https://i.imgur.com/qTf1owU.png"}
 
-        embed = discord.Embed(
-            title="coin flip", color=random.randint(0, 16777215))
-        embed.set_author(name=f"{ctx.author}",
-                         icon_url=ctx.author.display_avatar.url)
+        embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
+        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
 
         embed.add_field(name=f"The Coin Flipped:", value=f"{pic_name}")
         embed.add_field(name="You guessed:", value=f"{view.value}")
@@ -144,8 +186,7 @@ class Dice(commands.Cog):
             await ctx.send("Please specify an emote")
         if args:
             emoji = discord.utils.get(self.bot.emojis, name=args)
-            emoji = emoji or sorted(self.bot.emojis, key=lambda x: SequenceMatcher(
-                None, x.name, args).ratio())[-1]
+            emoji = emoji or sorted(self.bot.emojis, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
             emoji = emoji or "We haven't found anything"
 
             if not emoji.available:
@@ -160,7 +201,8 @@ class Dice(commands.Cog):
 
         else:
             embed = discord.Embed(
-                title=f"Random Number: {random.randint(numbers[0],numbers[-1])} ", color=random.randint(0, 16777215))
+                title=f"Random Number: {random.randint(numbers[0],numbers[-1])} ", color=random.randint(0, 16777215)
+            )
             embed.add_field(name="Lowest Number:", value=f"{numbers[0]}")
             embed.add_field(name="Highest Number:", value=f"{numbers[-1]}")
             await ctx.send(embed=embed)
@@ -169,25 +211,35 @@ class Dice(commands.Cog):
     async def works(self, ctx, *args: commands.clean_content):
 
         if len(args) < 2:
-            return await ctx.send("you didn't give me enough objects to checks the status of two items and make sure to have two objects.")
+            return await ctx.send(
+                "you didn't give me enough objects to checks the status of two items and make sure to have two objects."
+            )
 
         item1 = args[0]
         item2 = args[-1]
 
         item_relationship = random.randint(1, 100)
 
-        responses = ["They don't work well together at ALL :angry:", "They work quite poorly together...",
-                     "They work kinda good together, maybe", "They work REALLY good together, wow. Nice.", "Let them collaborate anytime."]
+        responses = [
+            "They don't work well together at ALL :angry:",
+            "They work quite poorly together...",
+            "They work kinda good together, maybe",
+            "They work REALLY good together, wow. Nice.",
+            "Let them collaborate anytime.",
+        ]
 
         breakpoints = [51, 70, 89, 100, 101]
         i = bisect.bisect(breakpoints, item_relationship)
         resp = responses[i]
 
-        embed = discord.Embed(title=f"How well does {item1} and {item2} work together?",
-                              description=f"They work at a rate {item_relationship}% \n**{resp}**", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
+        embed = discord.Embed(
+            title=f"How well does {item1} and {item2} work together?",
+            description=f"They work at a rate {item_relationship}% \n**{resp}**",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+        )
 
-        embed.set_author(name=f"{ctx.author}",
-                         icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
 
         embed.set_footer(text=f"{ctx.author.id}")
 
@@ -206,32 +258,28 @@ class Dice(commands.Cog):
         await view.wait()
 
         if view.value is None:
-            return await view.message.edit("You didn't respond fast enough, you lost.(Play again by running game again)")
+            return await view.message.edit(
+                "You didn't respond fast enough, you lost.(Play again by running game again)"
+            )
 
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors"}
 
-        embed = discord.Embed(title=f"RPS Game", color=random.randint(
-            0, 16777215), timestamp=(ctx.message.created_at))
+        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=(ctx.message.created_at))
 
         if view.value == deciding:
-            embed.set_author(
-                name=f"Tie!", icon_url=ctx.author.display_avatar.url)
+            embed.set_author(name=f"Tie!", icon_url=ctx.author.display_avatar.url)
 
         if view.value == 1 and deciding == 3 or view.value == 2 and deciding == 1 or view.value == 3 and deciding == 2:
-            embed.set_author(name=f"You Won!",
-                             icon_url=ctx.author.display_avatar.url)
+            embed.set_author(name=f"You Won!", icon_url=ctx.author.display_avatar.url)
 
         if view.value == 3 and deciding == 1 or view.value == 1 and deciding == 2 or view.value == 2 and deciding == 3:
-            embed.set_author(name=f"You lost!",
-                             icon_url=ctx.author.display_avatar.url)
+            embed.set_author(name=f"You lost!", icon_url=ctx.author.display_avatar.url)
 
         embed.set_footer(text=f"{ctx.author.id}")
 
-        embed.add_field(name="You Picked:",
-                        value=f"{number_to_text[view.value]}")
-        embed.add_field(name="Bot Picked:",
-                        value=f"{number_to_text[deciding]}")
+        embed.add_field(name="You Picked:", value=f"{number_to_text[view.value]}")
+        embed.add_field(name="Bot Picked:", value=f"{number_to_text[deciding]}")
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 

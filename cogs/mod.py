@@ -22,8 +22,7 @@ class Moderation(commands.Cog):
         if warn_useable:
 
             embed = discord.Embed(color=random.randint(0, 16777215))
-            embed.set_author(name=f"You have been warned by {ctx.author}", icon_url=(
-                "https://i.imgur.com/vkleJ9a.png"))
+            embed.set_author(name=f"You have been warned by {ctx.author}", icon_url=("https://i.imgur.com/vkleJ9a.png"))
             embed.set_image(url="https://i.imgur.com/jDLcaYc.gif")
             embed.set_footer(text=f"ID: {ctx.author.id}")
 
@@ -37,10 +36,11 @@ class Moderation(commands.Cog):
                 await ctx.send("they don't seem like a valid user or they weren't DMable.")
 
             embed.set_footer(
-                text=f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}")
+                text=f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}"
+            )
             await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-            if (ctx.author.dm_channel is None):
+            if ctx.author.dm_channel is None:
                 await ctx.author.create_dm()
 
             try:
@@ -50,10 +50,15 @@ class Moderation(commands.Cog):
                 await ctx.send("we can't DM them :(")
 
         elif warn_useable is False:
-            await ctx.send(f"{ctx.author.mention}, you don't have permission to use that. You need to have manage_messages, have a higher hieracy in a guild, and have higher permissions than the target to use that.", allowed_mentions=discord.AllowedMentions.none())
+            await ctx.send(
+                f"{ctx.author.mention}, you don't have permission to use that. You need to have manage_messages, have a higher hieracy in a guild, and have higher permissions than the target to use that.",
+                allowed_mentions=discord.AllowedMentions.none(),
+            )
 
     @commands.cooldown(1, 90, BucketType.user)
-    @commands.command(help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake")
+    @commands.command(
+        help="a command to scan for malicious bots, specificially ones that only give you random invites and are fake"
+    )
     async def scan_guild(self, ctx):
         if isinstance(ctx.channel, discord.TextChannel):
 
@@ -62,8 +67,7 @@ class Moderation(commands.Cog):
 
             # some code here to do a list compreshion to see if they are cached using get_user, those who return as None will be passed to query_members
 
-            ids = [u for u in list(sus_users.keys())
-                   if not ctx.guild.get_member(u)]
+            ids = [u for u in list(sus_users.keys()) if not ctx.guild.get_member(u)]
 
             await ctx.guild.query_members(limit=100, cache=True, user_ids=ids)
 
@@ -87,17 +91,15 @@ class Moderation(commands.Cog):
 
         ss_users = [await self.bot.try_user(u) for u in sus_users if not None]
 
-        if not(ss_users):
+        if not (ss_users):
             await ctx.send("no sus users found")
 
         else:
             mutual_guild_users = [u for u in ss_users if u.mutual_guilds]
 
-            valid_users = [
-                u for u in mutual_guild_users if utils.mutual_guild_check(ctx, u)]
+            valid_users = [u for u in mutual_guild_users if utils.mutual_guild_check(ctx, u)]
 
-            menu = utils.ScanGlobalEmbed(
-                valid_users, ctx=ctx, delete_message_after=True)
+            menu = utils.ScanGlobalEmbed(valid_users, ctx=ctx, delete_message_after=True)
 
             await menu.send(ctx.channel)
 
@@ -120,16 +122,17 @@ class Moderation(commands.Cog):
             reason = tuple(result)[1]
             await ctx.send(f"{user} for {reason}")
 
-    @commands.command(help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)")
+    @commands.command(
+        help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)"
+    )
     async def report(self, ctx, *, args=None):
         if args:
             jdjg = await self.bot.try_user(168422909482762240)
-            if (jdjg.dm_channel is None):
+            if jdjg.dm_channel is None:
                 await jdjg.create_dm()
 
             embed = discord.Embed(color=random.randint(0, 16777215))
-            embed.set_author(name=f"Report by {ctx.author}", icon_url=(
-                ctx.author.display_avatar.url))
+            embed.set_author(name=f"Report by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
             embed.add_field(name="Details:", value=args)
             embed.set_footer(text=f"Reporter's ID is {ctx.author.id}")
             await jdjg.send(embed=embed)
@@ -153,7 +156,7 @@ class Moderation(commands.Cog):
         amount += 1
 
         if amount > 100:
-            await ctx.send('too high setting to 100')
+            await ctx.send("too high setting to 100")
             amount = 101
 
         try:
@@ -181,7 +184,9 @@ class Moderation(commands.Cog):
                 await ctx.send("you don't have permission to edit to the thread channel.")
 
         else:
-            await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
+            await ctx.send(
+                "You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread."
+            )
 
     @commands.command(brief="Unarchives thread channel")
     async def archive_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
@@ -202,7 +207,9 @@ class Moderation(commands.Cog):
                 await ctx.send("you don't have permission to edit to the thread channel.")
 
         else:
-            await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
+            await ctx.send(
+                "You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread."
+            )
 
     @commands.command(brief="locks the thread channel")
     async def lock_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
@@ -223,7 +230,9 @@ class Moderation(commands.Cog):
                 await ctx.send("you don't have permission to edit to the thread channel.")
 
         else:
-            await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
+            await ctx.send(
+                "You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread."
+            )
 
     @commands.command(brief="unlocks the thread channel")
     async def unlock_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
@@ -244,7 +253,9 @@ class Moderation(commands.Cog):
                 await ctx.send("you don't have permission to edit to the thread channel.")
 
         else:
-            await ctx.send("You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread.")
+            await ctx.send(
+                "You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread."
+            )
 
 
 def setup(bot):

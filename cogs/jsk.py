@@ -11,12 +11,11 @@ from jishaku.functools import AsyncSender
 
 
 class Jishaku(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
-
     @Feature.Command(parent="jsk", name="py", aliases=["python"])
     async def jsk_python(self, ctx: commands.Context, *, argument: codeblock_converter):
 
-        arg_dict = get_var_dict_from_ctx(ctx, '')
-        arg_dict.update(get_var_dict_from_ctx(ctx, '_'))
+        arg_dict = get_var_dict_from_ctx(ctx, "")
+        arg_dict.update(get_var_dict_from_ctx(ctx, "_"))
         arg_dict["_"] = self.last_result
 
         scope = self.scope
@@ -24,8 +23,7 @@ class Jishaku(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
         try:
             async with ReplResponseReactor(ctx.message):
                 with self.submit(ctx):
-                    executor = AsyncCodeExecutor(
-                        argument.content, scope, arg_dict=arg_dict)
+                    executor = AsyncCodeExecutor(argument.content, scope, arg_dict=arg_dict)
                     async for send, result in AsyncSender(executor):
                         if result is None:
                             continue

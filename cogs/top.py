@@ -22,14 +22,12 @@ class DSLCount(commands.Cog):
 
     @tasks.loop(minutes=5)
     async def update_stats(self):
-        self.logger.info('Attempting to post server count')
+        self.logger.info("Attempting to post server count")
         try:
             await self.topgg.post_guild_count()
-            self.logger.info('Posted server count ({})'.format(
-                self.topgg.guild_count))
+            self.logger.info("Posted server count ({})".format(self.topgg.guild_count))
         except Exception as e:
-            self.logger.exception(
-                'Failed to post server count\n{}: {}'.format(type(e).__name__, e))
+            self.logger.exception("Failed to post server count\n{}: {}".format(type(e).__name__, e))
 
     def cog_unload(self):
         self.update_stats.stop()
@@ -39,5 +37,5 @@ class DSLCount(commands.Cog):
 
 
 def setup(bot):
-    DSLCount.logger = logging.getLogger('bot')
+    DSLCount.logger = logging.getLogger("bot")
     bot.add_cog(DSLCount(bot))

@@ -12,8 +12,7 @@ from discord.ext import commands
 async def get_prefix(bot, message):
     extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te."]
 
-    comp = re.compile(
-        "^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
+    comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
     match = comp.match(message.content)
     if match is not None:
         extras.append(match.group(1))
@@ -67,8 +66,13 @@ class JDBot(commands.Bot):
 
 intents = discord.Intents.all()
 
-bot = JDBot(command_prefix=(get_prefix), intents=intents, chunk_guilds_at_startup=False,
-            strip_after_prefix=True, allowed_mentions=discord.AllowedMentions(everyone=False, roles=False))
+bot = JDBot(
+    command_prefix=(get_prefix),
+    intents=intents,
+    chunk_guilds_at_startup=False,
+    strip_after_prefix=True,
+    allowed_mentions=discord.AllowedMentions(everyone=False, roles=False),
+)
 
 bot.launch_time = discord.utils.utcnow()
 
@@ -93,10 +97,11 @@ async def check_blacklist(ctx):
 async def check_suspended(ctx):
     return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author)
 
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
+
+for filename in os.listdir("./cogs"):
+    if filename.endswith(".py"):
         try:
-            bot.load_extension(f'cogs.{filename[:-3]}')
+            bot.load_extension(f"cogs.{filename[:-3]}")
         except commands.errors.ExtensionError:
             traceback.print_exc()
 

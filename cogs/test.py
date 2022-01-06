@@ -30,7 +30,10 @@ class Test(commands.Cog):
     async def cog_check(self, ctx):
         return ctx.author.id in self.bot.testers
 
-    @commands.command(brief="a command to email you(work in progress)", help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary")
+    @commands.command(
+        brief="a command to email you(work in progress)",
+        help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary",
+    )
     async def email(self, ctx, *args):
         print(args)
         await ctx.send("WIP")

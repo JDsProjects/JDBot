@@ -31,8 +31,7 @@ class Image(commands.Cog):
         url = await asuna.get_gif("slap")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} slapped you! Ow...",
-                         icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} slapped you! Ow...", icon_url=(person.display_avatar.url))
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
 
@@ -53,8 +52,9 @@ class Image(commands.Cog):
         asuna = asuna_api.Client(session=self.bot.session)
         url = await asuna.get_gif("wholesome_foxes")
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{ctx.author} requested a wholesome fox picture", icon_url=(
-            ctx.author.display_avatar.url))
+        embed.set_author(
+            name=f"{ctx.author} requested a wholesome fox picture", icon_url=(ctx.author.display_avatar.url)
+        )
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
         await ctx.send(embed=embed)
@@ -75,8 +75,7 @@ class Image(commands.Cog):
         url = await asuna.get_gif("pat")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(
-            name=f"{person} patted you! *pat pat pat*", icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} patted you! *pat pat pat*", icon_url=(person.display_avatar.url))
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
 
@@ -107,8 +106,7 @@ class Image(commands.Cog):
         sr_client = sr_api.Client(session=self.bot.session)
         image = await sr_client.get_gif("pat")
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} patted you",
-                         icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} patted you", icon_url=(person.display_avatar.url))
         embed.set_image(url=image.url)
         embed.set_footer(text="powered by some random api")
 
@@ -140,8 +138,7 @@ class Image(commands.Cog):
         image = await sr_client.get_gif("hug")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} hugged you! Awwww...", icon_url=(
-            person.display_avatar.url))
+        embed.set_author(name=f"{person} hugged you! Awwww...", icon_url=(person.display_avatar.url))
         embed.set_image(url=image.url)
         embed.set_footer(text="powered by some random api")
 
@@ -180,7 +177,9 @@ class Image(commands.Cog):
         menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
         await menu.send(ctx.channel)
 
-    @commands.command(brief="uses our headpat program to pat you", help="a command that uses jeyyapi to make a headpat of you.")
+    @commands.command(
+        brief="uses our headpat program to pat you", help="a command that uses jeyyapi to make a headpat of you."
+    )
     async def headpat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
         y = 0
@@ -202,7 +201,9 @@ class Image(commands.Cog):
         menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
         await menu.send(ctx.channel)
 
-    @commands.command(brief="a hug command to hug people", help="this actually the second hug command and is quite powerful.")
+    @commands.command(
+        brief="a hug command to hug people", help="this actually the second hug command and is quite powerful."
+    )
     async def hug2(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
 
@@ -218,8 +219,7 @@ class Image(commands.Cog):
         url = await asuna.get_gif("hug")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} super hugged you!",
-                         icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} super hugged you!", icon_url=(person.display_avatar.url))
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
 
@@ -235,7 +235,10 @@ class Image(commands.Cog):
             except discord.Forbidden:
                 await ctx.author.send("Failed DM'ing them...")
 
-    @commands.command(brief="a kiss command", help="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)")
+    @commands.command(
+        brief="a kiss command",
+        help="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)",
+    )
     async def kiss(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
 
@@ -251,11 +254,9 @@ class Image(commands.Cog):
         url = await asuna.get_gif("kiss")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} kissed you",
-                         icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} kissed you", icon_url=(person.display_avatar.url))
         embed.set_image(url=url.url)
-        embed.set_footer(
-            text="Why did I make this command? powered using the asuna.ga api")
+        embed.set_footer(text="Why did I make this command? powered using the asuna.ga api")
 
         if isinstance(ctx.channel, discord.TextChannel):
             await ctx.send(content=target.mention, embed=embed)
@@ -275,13 +276,14 @@ class Image(commands.Cog):
         url = await asuna.get_gif("neko")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{ctx.author} requested a neko picture", icon_url=(
-            ctx.author.display_avatar.url))
+        embed.set_author(name=f"{ctx.author} requested a neko picture", icon_url=(ctx.author.display_avatar.url))
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
         await ctx.send(embed=embed)
 
-    @commands.command(brief="a command to send wink gifs", wink="you select a user to send it to and it will send it to you lol")
+    @commands.command(
+        brief="a command to send wink gifs", wink="you select a user to send it to and it will send it to you lol"
+    )
     async def wink(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
 
@@ -297,8 +299,7 @@ class Image(commands.Cog):
         image = await sr_client.get_gif("wink")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} winked at you",
-                         icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} winked at you", icon_url=(person.display_avatar.url))
         embed.set_image(url=image.url)
         embed.set_footer(text="powered by some random api")
 
@@ -316,10 +317,9 @@ class Image(commands.Cog):
 
     @commands.command(brief="Gives you a random waifu image.")
     async def waifu(self, ctx):
-        r = await self.bot.session.get('https://api.waifu.pics/sfw/waifu')
+        r = await self.bot.session.get("https://api.waifu.pics/sfw/waifu")
         res = await r.json()
-        embed = discord.Embed(color=random.randint(
-            0, 16777215), timestamp=(ctx.message.created_at))
+        embed = discord.Embed(color=random.randint(0, 16777215), timestamp=(ctx.message.created_at))
         embed.set_author(name=f"{ctx.author} Requested A Waifu")
         embed.set_image(url=res["url"])
         embed.set_footer(text="Powered by waifu.pics")
@@ -327,16 +327,17 @@ class Image(commands.Cog):
 
     @commands.command(brief="Gives you a random bonk picture")
     async def bonk(self, ctx):
-        r = await self.bot.session.get('https://api.waifu.pics/sfw/bonk')
+        r = await self.bot.session.get("https://api.waifu.pics/sfw/bonk")
         res = await r.json()
-        embed = discord.Embed(color=random.randint(
-            0, 16777215), timestamp=(ctx.message.created_at))
+        embed = discord.Embed(color=random.randint(0, 16777215), timestamp=(ctx.message.created_at))
         embed.set_author(name=f"{ctx.author} Requested A Bonk")
         embed.set_image(url=res["url"])
         embed.set_footer(text="Powered by waifu.pics")
         await ctx.send(embed=embed)
 
-    @commands.command(brief="a command to send facepalm gifs", help="using some random api it sends you a facepalm gif lol")
+    @commands.command(
+        brief="a command to send facepalm gifs", help="using some random api it sends you a facepalm gif lol"
+    )
     async def facepalm(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
 
@@ -352,8 +353,7 @@ class Image(commands.Cog):
         image = await sr_client.get_gif("face-palm")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(
-            name=f"{target} you made {person} facepalm", icon_url=person.display_avatar.url)
+        embed.set_author(name=f"{target} you made {person} facepalm", icon_url=person.display_avatar.url)
         embed.set_image(url=image.url)
         embed.set_footer(text="powered by some random api")
 
@@ -371,21 +371,19 @@ class Image(commands.Cog):
 
     @commands.command(help="gives a random objection", aliases=["obj", "ob", "object"])
     async def objection(self, ctx):
-        r = await self.bot.session.get('https://jdjgapi.nom.mu/api/objection')
+        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/objection")
         res = await r.json()
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{ctx.author} yelled OBJECTION!", icon_url=(
-            ctx.author.display_avatar.url))
+        embed.set_author(name=f"{ctx.author} yelled OBJECTION!", icon_url=(ctx.author.display_avatar.url))
         embed.set_image(url=res["url"])
         embed.set_footer(text="Powered By JDJG Api!")
         await ctx.send(embed=embed)
 
     @commands.command(help="gives the truth about opinions(may offend)", aliases=["opinion"])
     async def opinional(self, ctx):
-        r = await self.bot.session.get('https://jdjgapi.nom.mu/api/opinional')
+        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/opinional")
         res = await r.json()
-        embed = discord.Embed(
-            title="Truth about opinions(may offend some people):", color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Truth about opinions(may offend some people):", color=random.randint(0, 16777215))
         embed.set_image(url=res["url"])
         embed.set_footer(text="Powered by JDJG Api!")
         await ctx.send(embed=embed)
@@ -398,8 +396,7 @@ class Image(commands.Cog):
 
     @commands.command(brief="gives you the milkman gif", help="you summoned the milkman oh no")
     async def milk(self, ctx):
-        embed = discord.Embed(
-            title="You have summoned the milkman", color=random.randint(0, 16777215))
+        embed = discord.Embed(title="You have summoned the milkman", color=random.randint(0, 16777215))
         embed.set_image(url="https://i.imgur.com/JdyaI1Y.gif")
         embed.set_footer(text="his milk is delicious")
         await ctx.send(embed=embed)

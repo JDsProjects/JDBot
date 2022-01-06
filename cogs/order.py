@@ -29,19 +29,17 @@ class Order(commands.Cog):
         image_api_key = os.environ["image_api_key"]
         image_engine_key = os.environ["google_image_key"]
 
-        self.image_client = async_cse.Search(
-            image_api_key, engine_id=image_engine_key, session=self.bot.session)
+        self.image_client = async_cse.Search(image_api_key, engine_id=image_engine_key, session=self.bot.session)
 
-        self.tenor_client = TenorClient(
-            api_key=tenor_key, session=self.bot.session)
-        self.giphy_client = GiphyClient(
-            api_key=giphy_key, session=self.bot.session)
+        self.tenor_client = TenorClient(api_key=tenor_key, session=self.bot.session)
+        self.giphy_client = GiphyClient(api_key=giphy_key, session=self.bot.session)
 
-        self.google_engine = cse.Search(
-            image_api_key, session=self.bot.session, engine_id=image_engine_key)
+        self.google_engine = cse.Search(image_api_key, session=self.bot.session, engine_id=image_engine_key)
 
     @commands.cooldown(1, 30, BucketType.user)
-    @commands.group(name="order", invoke_without_command=True, brief="searches from google images to find the closest google image")
+    @commands.group(
+        name="order", invoke_without_command=True, brief="searches from google images to find the closest google image"
+    )
     async def order(self, ctx, *, args=None):
         if not args:
             await ctx.send("You can't order nothing.")
@@ -52,8 +50,7 @@ class Order(commands.Cog):
 
             try:
                 results = await self.image_client.search(args, safesearch=True, image_search=True)
-                emoji_image = sorted(results, key=lambda x: SequenceMatcher(
-                    None, x.image_url, args).ratio())[-1]
+                emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url, args).ratio())[-1]
 
             except async_cse.search.NoResults:
                 return await ctx.send("No results found :(")
@@ -64,21 +61,24 @@ class Order(commands.Cog):
             except discord.errors.Forbidden:
                 pass
 
-            embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
-                0, 16777215), timestamp=ctx.message.created_at)
-            embed.set_author(name=f"order for {ctx.author}:", icon_url=(
-                ctx.author.display_avatar.url))
-            embed.add_field(name="Time Spent:",
-                            value=f"{int((time_after - time_before)*1000)}MS")
+            embed = discord.Embed(
+                title=f"Item: {args}",
+                description=f"{ctx.author} ordered a {args}",
+                color=random.randint(0, 16777215),
+                timestamp=ctx.message.created_at,
+            )
+            embed.set_author(name=f"order for {ctx.author}:", icon_url=(ctx.author.display_avatar.url))
+            embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
             embed.add_field(name="Powered by:", value="Google Images Api")
 
-            embed.add_field(name="Image link:",
-                            value=f"[Image Link]({emoji_image.image_url})")
+            embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
 
             embed.set_image(url=emoji_image.image_url)
-            embed.set_footer(
-                text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-            await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+            embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+            await ctx.send(
+                content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+                embed=embed,
+            )
 
             await self.bot.get_channel(855217084710912050).send(embed=embed)
 
@@ -102,21 +102,24 @@ class Order(commands.Cog):
             except discord.errors.Forbidden:
                 pass
 
-            embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
-                0, 16777215), timestamp=ctx.message.created_at)
-            embed.set_author(name=f"order for {ctx.author}:", icon_url=(
-                ctx.author.display_avatar.url))
-            embed.add_field(name="Time Spent:",
-                            value=f"{int((time_after - time_before)*1000)}MS")
+            embed = discord.Embed(
+                title=f"Item: {args}",
+                description=f"{ctx.author} ordered a {args}",
+                color=random.randint(0, 16777215),
+                timestamp=ctx.message.created_at,
+            )
+            embed.set_author(name=f"order for {ctx.author}:", icon_url=(ctx.author.display_avatar.url))
+            embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
             embed.add_field(name="Powered by:", value="Google Images Api")
 
-            embed.add_field(name="Image link:",
-                            value=f"[Image Link]({emoji_image.image_url})")
+            embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
 
             embed.set_image(url=emoji_image.image_url)
-            embed.set_footer(
-                text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-            await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+            embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+            await ctx.send(
+                content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+                embed=embed,
+            )
             await self.bot.get_channel(855217084710912050).send(embed=embed)
 
     @commands.cooldown(1, 30, BucketType.user)
@@ -142,21 +145,24 @@ class Order(commands.Cog):
             except discord.errors.Forbidden:
                 pass
 
-            embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
-                0, 16777215), timestamp=ctx.message.created_at)
-            embed.set_author(name=f"order for {ctx.author}:", icon_url=(
-                ctx.author.display_avatar.url))
-            embed.add_field(name="Time Spent:",
-                            value=f"{int((time_after - time_before)*1000)}MS")
+            embed = discord.Embed(
+                title=f"Item: {args}",
+                description=f"{ctx.author} ordered a {args}",
+                color=random.randint(0, 16777215),
+                timestamp=ctx.message.created_at,
+            )
+            embed.set_author(name=f"order for {ctx.author}:", icon_url=(ctx.author.display_avatar.url))
+            embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
             embed.add_field(name="Powered by:", value="Google Images Api")
 
-            embed.add_field(name="Image link:",
-                            value=f"[Image Link]({emoji_image.image_url})")
+            embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
 
             embed.set_image(url=emoji_image.image_url)
-            embed.set_footer(
-                text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-            await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+            embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+            await ctx.send(
+                content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+                embed=embed,
+            )
             await self.bot.get_channel(855217084710912050).send(embed=embed)
 
     @commands.cooldown(1, 30, BucketType.user)
@@ -178,14 +184,16 @@ class Order(commands.Cog):
         if not results_media:
             return await ctx.send("I got no gif results from tenor.")
 
-        gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(
-            None, x.item_url, args).ratio())[-1]
+        gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.item_url, args).ratio())[-1]
 
-        embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
-            0, 16777215), timestamp=ctx.message.created_at)
+        embed = discord.Embed(
+            title=f"Item: {args}",
+            description=f"{ctx.author} ordered a {args}",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+        )
 
-        embed.set_author(
-            name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
         embed.add_field(name="Powered by:", value="Tenor")
 
         if gifNearest.gif:
@@ -195,7 +203,10 @@ class Order(commands.Cog):
 
         embed.set_footer(text=f"{ctx.author.id}")
 
-        await ctx.send(content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+        await ctx.send(
+            content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+            embed=embed,
+        )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
 
@@ -219,11 +230,14 @@ class Order(commands.Cog):
 
         gifNearest = random.choice(results_media)
 
-        embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
-            0, 16777215), timestamp=ctx.message.created_at)
+        embed = discord.Embed(
+            title=f"Item: {args}",
+            description=f"{ctx.author} ordered a {args}",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+        )
 
-        embed.set_author(
-            name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
         embed.add_field(name="Powered by:", value="Tenor")
 
         if gifNearest.gif:
@@ -233,7 +247,10 @@ class Order(commands.Cog):
 
         embed.set_footer(text=f"{ctx.author.id}")
 
-        await ctx.send(content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+        await ctx.send(
+            content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+            embed=embed,
+        )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
 
@@ -265,22 +282,26 @@ class Order(commands.Cog):
         if not results_media:
             return await ctx.send("I got no gif results from giphy.")
 
-        gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(
-            None, x.url, args).ratio())[-1]
+        gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.url, args).ratio())[-1]
 
-        embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",  color=random.randint(
-            0, 16777215), timestamp=ctx.message.created_at)
+        embed = discord.Embed(
+            title=f"Item: {args}",
+            description=f"{ctx.author} ordered a {args}",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+        )
 
         embed.set_footer(text=f"{ctx.author.id}")
 
-        embed.set_author(
-            name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
         embed.add_field(name="Powered by:", value="GIPHY")
-        embed.set_image(
-            url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
+        embed.set_image(url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
 
-        await ctx.send(content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+        await ctx.send(
+            content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+            embed=embed,
+        )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
 
@@ -304,19 +325,24 @@ class Order(commands.Cog):
 
         gifNearest = random.choice(results_media)
 
-        embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",  color=random.randint(
-            0, 16777215), timestamp=ctx.message.created_at)
+        embed = discord.Embed(
+            title=f"Item: {args}",
+            description=f"{ctx.author} ordered a {args}",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+        )
 
         embed.set_footer(text=f"{ctx.author.id}")
 
-        embed.set_author(
-            name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
         embed.add_field(name="Powered by:", value="GIPHY")
-        embed.set_image(
-            url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
+        embed.set_image(url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
 
-        await ctx.send(content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+        await ctx.send(
+            content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+            embed=embed,
+        )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
 
@@ -340,7 +366,9 @@ class Order(commands.Cog):
             results = await self.google_engine.search(args, max_results=10, safe_search=True)
 
         except Exception as e:
-            return await ctx.send(f"An error occured, error: {e}. Please give this to the owner. This was an error with results")
+            return await ctx.send(
+                f"An error occured, error: {e}. Please give this to the owner. This was an error with results"
+            )
 
         menu = utils.GoogleEmbed(results, ctx=ctx, delete_message_after=True)
 
@@ -364,13 +392,16 @@ class Order(commands.Cog):
 
         gifNearest = random.choice(results_media)
 
-        embed = discord.Embed(title="Item: disco", description=f"Random Disco Gif:",
-                              color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
+        embed = discord.Embed(
+            title="Item: disco",
+            description=f"Random Disco Gif:",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+        )
 
         embed.set_footer(text=f"{ctx.author.id}")
 
-        embed.set_author(
-            name=f"Random Disco Gif for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"Random Disco Gif for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
         embed.add_field(name="Powered by:", value="Tenor")
 
@@ -379,7 +410,10 @@ class Order(commands.Cog):
         else:
             embed.set_image("https://i.imgur.com/sLQzAiW.png")
 
-        await ctx.send(content="Disco has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+        await ctx.send(
+            content="Disco has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+            embed=embed,
+        )
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="sends a gif of someone dancing to all but disco(animated)")
@@ -399,13 +433,16 @@ class Order(commands.Cog):
 
         gifNearest = random.choice(results_media)
 
-        embed = discord.Embed(title="Item: dance", description=f"Random Dance Gif:",
-                              color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
+        embed = discord.Embed(
+            title="Item: dance",
+            description=f"Random Dance Gif:",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+        )
 
         embed.set_footer(text=f"{ctx.author.id}")
 
-        embed.set_author(
-            name=f"Random Dance Gif for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"Random Dance Gif for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
         embed.add_field(name="Powered by:", value="Tenor")
 
@@ -414,7 +451,10 @@ class Order(commands.Cog):
         else:
             embed.set_image("https://i.imgur.com/sLQzAiW.png")
 
-        await ctx.send(content="Dance has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+        await ctx.send(
+            content="Dance has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+            embed=embed,
+        )
 
 
 def setup(bot):

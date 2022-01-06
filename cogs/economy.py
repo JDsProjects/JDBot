@@ -26,12 +26,18 @@ class Economy(commands.Cog):
 
         add_money = job.get("amount_paid")
 
-        await self.bot.db.execute("UPDATE economy SET wallet = wallet + ($1) WHERE user_id = ($2)", add_money, ctx.author.id)
+        await self.bot.db.execute(
+            "UPDATE economy SET wallet = wallet + ($1) WHERE user_id = ($2)", add_money, ctx.author.id
+        )
 
         await ctx.send(f"You worked as a {job.get('job_name')} and got ${add_money} for working.")
 
     @commands.cooldown(1, 15, BucketType.user)
-    @commands.command(brief="a command to send how much money you have", help="using the JDBot database you can see how much money you have", aliases=["bal"])
+    @commands.command(
+        brief="a command to send how much money you have",
+        help="using the JDBot database you can see how much money you have",
+        aliases=["bal"],
+    )
     async def balance(self, ctx, *, member: utils.BetterMemberConverter = None):
 
         member = member or ctx.author
@@ -42,7 +48,9 @@ class Economy(commands.Cog):
             view = utils.BasicButtons(ctx)
 
             if ctx.author.id != member.id:
-                return await ctx.send(f"You aren't {member}. \nOnly they can join the database. You must ask them to join if you want them to be in there")
+                return await ctx.send(
+                    f"You aren't {member}. \nOnly they can join the database. You must ask them to join if you want them to be in there"
+                )
 
             msg = await ctx.send(f"{member}, needs to join the database to run this. You can do it now", view=view)
 
@@ -64,14 +72,14 @@ class Economy(commands.Cog):
         wallet = economy.get("wallet")
         bank = economy.get("bank")
 
-        embed = discord.Embed(
-            title=f"{member}'s Balance:", color=random.randint(0, 16777215))
+        embed = discord.Embed(title=f"{member}'s Balance:", color=random.randint(0, 16777215))
         embed.add_field(name="Wallet:", value=f"${wallet:,}")
         embed.add_field(name="Bank:", value=f"${bank:,}")
         embed.add_field(name="Total:", value=f"${wallet+bank:,}")
         embed.add_field(name="Currency:", value="<:jmoney:919431869928464404>")
         embed.set_footer(
-            text="Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
+            text="Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive."
+        )
         await ctx.send(embed=embed)
 
     @commands.cooldown(1, 30, BucketType.user)
@@ -85,13 +93,11 @@ class Economy(commands.Cog):
             place = [n.get("user_id") for n in data].index(n.get("user_id"))
             user = await self.bot.try_user(n.get("user_id"))
 
-            ndata.append(
-                [f"{place + 1}. {user}", n.get("bank"), n.get("wallet")])
+            ndata.append([f"{place + 1}. {user}", n.get("bank"), n.get("wallet")])
 
         ndata = utils.groupby(ndata, 6)
 
-        menu = utils.LeaderboardEmbed(
-            ndata, ctx=ctx, delete_message_after=True)
+        menu = utils.LeaderboardEmbed(ndata, ctx=ctx, delete_message_after=True)
         await menu.send(ctx.channel)
 
     @commands.command(brief="Removes You From Economy")
@@ -119,19 +125,23 @@ class Economy(commands.Cog):
             wallet = economy.get("wallet")
             bank = economy.get("bank")
 
-            embed = discord.Embed(
-                title=f"{ctx.author}'s Balance:", color=random.randint(0, 16777215))
+            embed = discord.Embed(title=f"{ctx.author}'s Balance:", color=random.randint(0, 16777215))
             embed.add_field(name="Wallet:", value=f"${wallet:,}")
             embed.add_field(name="Bank:", value=f"${bank:,}")
             embed.add_field(name="Total:", value=f"${wallet+bank:,}")
-            embed.add_field(name="Currency:",
-                            value="<:jmoney:919431869928464404>")
+            embed.add_field(name="Currency:", value="<:jmoney:919431869928464404>")
             embed.set_footer(
-                text="Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive.")
+                text="Do not for any reason, trade JDJGbucks, sell or otherwise use real money or any other money to give others JDJGBucks or receive."
+            )
 
-            await msg.edit("removing you from the database for economy and archiving the economy data to our channel(so we can have you join back if you want, if you want it to fully removed, you can ask JDJG Inc. Official#3493, but once it's gone from the channel, it's gone for good) and in the guild right there...", embed=embed)
+            await msg.edit(
+                "removing you from the database for economy and archiving the economy data to our channel(so we can have you join back if you want, if you want it to fully removed, you can ask JDJG Inc. Official#3493, but once it's gone from the channel, it's gone for good) and in the guild right there...",
+                embed=embed,
+            )
 
-        await self.bot.get_channel(855217084710912050).send(content=f"Backup of {ctx.author}'s Economy Data!", embed=embed)
+        await self.bot.get_channel(855217084710912050).send(
+            content=f"Backup of {ctx.author}'s Economy Data!", embed=embed
+        )
 
         await self.bot.db.execute("DELETE FROM economy WHERE user_id = $1", ctx.author.id)
 

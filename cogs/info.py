@@ -26,7 +26,16 @@ class Info(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="gives you info about a guild", aliases=["server_info", "guild_fetch", "guild_info", "fetch_guild", "guildinfo", ])
+    @commands.command(
+        help="gives you info about a guild",
+        aliases=[
+            "server_info",
+            "guild_fetch",
+            "guild_info",
+            "fetch_guild",
+            "guildinfo",
+        ],
+    )
     async def serverinfo(self, ctx, *, guild: typing.Optional[discord.Guild] = None):
         guild = guild or ctx.guild
 
@@ -36,17 +45,19 @@ class Info(commands.Cog):
         if guild:
             await utils.guildinfo(ctx, guild)
 
-    @commands.command(aliases=["user_info", "user-info", "ui", "whois"], brief="a command that gives information on users", help="this can work with mentions, ids, usernames, and even full names.")
+    @commands.command(
+        aliases=["user_info", "user-info", "ui", "whois"],
+        brief="a command that gives information on users",
+        help="this can work with mentions, ids, usernames, and even full names.",
+    )
     async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
 
         user = user or ctx.author
-        user_type = "Bot" if user.bot else "User" if isinstance(
-            user, discord.User) else "Member"
+        user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
 
         statuses = []
 
-        badges = [utils.profile_converter(
-            "badges", f) for f in user.public_flags.all()] if user.public_flags else []
+        badges = [utils.profile_converter("badges", f) for f in user.public_flags.all()] if user.public_flags else []
         if user.bot:
             badges.append(utils.profile_converter("badges", "bot"))
         if user.system:
@@ -57,9 +68,13 @@ class Info(commands.Cog):
             joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
             highest_role = user.top_role
 
-            for name, status in (("Status", user.status), ("Desktop", user.desktop_status), ("Mobile", user.mobile_status), ("Web", user.web_status)):
-                statuses.append(
-                    (name, utils.profile_converter(name.lower(), status)))
+            for name, status in (
+                ("Status", user.status),
+                ("Desktop", user.desktop_status),
+                ("Mobile", user.mobile_status),
+                ("Web", user.web_status),
+            ):
+                statuses.append((name, utils.profile_converter(name.lower(), status)))
 
         else:
 
@@ -67,28 +82,40 @@ class Info(commands.Cog):
             joined_guild = "N/A"
             highest_role = "None Found"
 
-            member = discord.utils.find(
-                lambda member: member.id == user.id, self.bot.get_all_members())
+            member = discord.utils.find(lambda member: member.id == user.id, self.bot.get_all_members())
             if member:
-                for name, status in (("Status", member.status), ("Desktop", member.desktop_status), ("Mobile", member.mobile_status), ("Web", member.web_status)):
-                    statuses.append(
-                        (name, utils.profile_converter(name.lower(), status)))
+                for name, status in (
+                    ("Status", member.status),
+                    ("Desktop", member.desktop_status),
+                    ("Mobile", member.mobile_status),
+                    ("Web", member.web_status),
+                ):
+                    statuses.append((name, utils.profile_converter(name.lower(), status)))
 
-        embed = discord.Embed(title=f"{user}", color=random.randint(
-            0, 16777215), timestamp=ctx.message.created_at)
-
-        embed.add_field(
-            name="User Info: ", value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}", inline=False)
-
-        join_badges: str = '\u0020'.join(badges) if badges else 'N/A'
-        join_statuses = " \n| ".join(
-            f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
+        embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
 
         embed.add_field(
-            name="User Info 2:", value=f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}", inline=False)
+            name="User Info: ",
+            value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
+            inline=False,
+        )
+
+        join_badges: str = "\u0020".join(badges) if badges else "N/A"
+        join_statuses = (
+            " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
+        )
 
         embed.add_field(
-            name="Guild Info:", value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}", inline=False)
+            name="User Info 2:",
+            value=f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}",
+            inline=False,
+        )
+
+        embed.add_field(
+            name="Guild Info:",
+            value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
+            inline=False,
+        )
 
         embed.set_image(url=user.display_avatar.url)
 
@@ -101,20 +128,24 @@ class Info(commands.Cog):
 
         pages = pag.pages or ["None"]
 
-        if (ctx.author.dm_channel is None):
+        if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
         menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
-        view.message = await ctx.send("Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds", embed=embed, view=view)
+        view.message = await ctx.send(
+            "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
+            embed=embed,
+            view=view,
+        )
 
     @commands.command(brief="uploads your emojis into a Senarc Bin link")
     async def look_at(self, ctx):
         if isinstance(ctx.message.channel, discord.TextChannel):
             message_emojis = ""
             for x in ctx.guild.emojis:
-                message_emojis = message_emojis+" "+str(x)+"\n"
+                message_emojis = message_emojis + " " + str(x) + "\n"
 
             paste = await utils.post(self.bot, message_emojis)
             await ctx.send(paste)
@@ -138,25 +169,31 @@ class Info(commands.Cog):
     async def mention(self, ctx, *, user: utils.BetterUserconverter = None):
         user = user or ctx.author
 
-        await ctx.send(f"Discord Mention: {user.mention} \nRaw Mention:  {discord.utils.escape_mentions(user.mention)}", allowed_mentions=discord.AllowedMentions.none())
+        await ctx.send(
+            f"Discord Mention: {user.mention} \nRaw Mention:  {discord.utils.escape_mentions(user.mention)}",
+            allowed_mentions=discord.AllowedMentions.none(),
+        )
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(help="fetch invite details")
     async def fetch_invite(self, ctx, *invites: typing.Union[discord.Invite, str]):
         if invites:
 
-            menu = utils.InviteInfoEmbed(
-                invites, ctx=ctx, delete_message_after=True)
+            menu = utils.InviteInfoEmbed(invites, ctx=ctx, delete_message_after=True)
             await menu.send(ctx.channel)
         if not invites:
             await ctx.send("Please get actual invites to attempt grab")
             ctx.command.reset_cooldown(ctx)
 
         if len(invites) > 50:
-            await ctx.send("Reporting using more than 50 invites in this command. This is to prevent ratelimits with the api.")
+            await ctx.send(
+                "Reporting using more than 50 invites in this command. This is to prevent ratelimits with the api."
+            )
 
             jdjg = await self.bot.try_user(168422909482762240)
-            await self.bot.get_channel(855217084710912050).send(f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites")
+            await self.bot.get_channel(855217084710912050).send(
+                f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites"
+            )
 
     @commands.command(brief="gives info about a file")
     async def file(self, ctx):
@@ -166,22 +203,22 @@ class Info(commands.Cog):
             await ctx.send("no file submitted")
 
         if ctx.message.attachments:
-            embed = discord.Embed(title="Attachment info",
-                                  color=random.randint(0, 16777215))
+            embed = discord.Embed(title="Attachment info", color=random.randint(0, 16777215))
             for a in ctx.message.attachments:
-                embed.add_field(name=f"ID: {a.id}",
-                                value=f"[{a.filename}]({a.url})")
-                embed.set_footer(
-                    text="Check on the url/urls to get a direct download to the url.")
+                embed.add_field(name=f"ID: {a.id}", value=f"[{a.filename}]({a.url})")
+                embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
             await ctx.send(embed=embed, content="\nThat's good")
 
-    @commands.command(brief="a command to get the avatar of a user", help="using the userinfo technology it now powers avatar grabbing.", aliases=["pfp", "av"])
+    @commands.command(
+        brief="a command to get the avatar of a user",
+        help="using the userinfo technology it now powers avatar grabbing.",
+        aliases=["pfp", "av"],
+    )
     async def avatar(self, ctx, *, user: utils.BetterUserconverter = None):
         user = user or ctx.author
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{user.name}'s avatar:",
-                         icon_url=user.display_avatar.url)
+        embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
 
         embed.set_image(url=user.display_avatar.url)
         embed.set_footer(text=f"Requested by {ctx.author}")
@@ -216,18 +253,17 @@ class Info(commands.Cog):
             user_nick = discord.utils.get(self.bot.users, display_name=args)
 
             if userNearest is None:
-                userNearest = sorted(self.bot.users, key=lambda x: SequenceMatcher(
-                    None, x.name, args).ratio())[-1]
+                userNearest = sorted(self.bot.users, key=lambda x: SequenceMatcher(None, x.name, args).ratio())[-1]
 
             if user_nick is None:
-                user_nick = sorted(self.bot.users, key=lambda x: SequenceMatcher(
-                    None, x.display_name, args).ratio())[-1]
+                user_nick = sorted(self.bot.users, key=lambda x: SequenceMatcher(None, x.display_name, args).ratio())[
+                    -1
+                ]
 
         if isinstance(ctx.channel, discord.TextChannel):
             member_list = [x for x in ctx.guild.members if x.nick]
 
-            nearest_server_nick = sorted(
-                member_list, key=lambda x: SequenceMatcher(None, x.nick, args).ratio())[-1]
+            nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick, args).ratio())[-1]
 
         if isinstance(ctx.channel, discord.DMChannel):
 
@@ -239,26 +275,31 @@ class Info(commands.Cog):
     async def emoji_info(self, ctx, *emojis: typing.Union[utils.EmojiConverter, str]):
         if emojis:
 
-            menu = utils.EmojiInfoEmbed(
-                emojis, ctx=ctx, delete_message_after=True)
+            menu = utils.EmojiInfoEmbed(emojis, ctx=ctx, delete_message_after=True)
             await menu.send(ctx.channel)
 
         if not emojis:
             await ctx.send("Looks like there was no emojis.")
 
     @commands.command(brief="gives info on emoji_id and emoji image.")
-    async def emoji_id(self, ctx, *, emoji: typing.Optional[typing.Union[discord.PartialEmoji, discord.Message, utils.EmojiBasic]] = None):
+    async def emoji_id(
+        self,
+        ctx,
+        *,
+        emoji: typing.Optional[typing.Union[discord.PartialEmoji, discord.Message, utils.EmojiBasic]] = None,
+    ):
 
         if isinstance(emoji, discord.Message):
             emoji_message = emoji.content
             emoji = None
 
             with contextlib.suppress(commands.CommandError, commands.BadArgument):
-                emoji = await utils.EmojiBasic.convert(ctx, emoji_message) or await commands.PartialEmojiConverter().convert(ctx, emoji_message)
+                emoji = await utils.EmojiBasic.convert(
+                    ctx, emoji_message
+                ) or await commands.PartialEmojiConverter().convert(ctx, emoji_message)
 
         if emoji:
-            embed = discord.Embed(
-                description=f" Emoji ID: {emoji.id}", color=random.randint(0, 16777215))
+            embed = discord.Embed(description=f" Emoji ID: {emoji.id}", color=random.randint(0, 16777215))
             embed.set_image(url=emoji.url)
             await ctx.send(embed=embed)
 
@@ -272,8 +313,7 @@ class Info(commands.Cog):
 
         if args:
             args = discord.utils.escape_mentions(args)
-            args = discord.utils.escape_markdown(
-                args, as_needed=False, ignore_links=False)
+            args = discord.utils.escape_markdown(args, as_needed=False, ignore_links=False)
 
         for x in ctx.message.mentions:
             args = args.replace(x.mention, f"\{x.mention}")
@@ -284,7 +324,7 @@ class Info(commands.Cog):
         for x in emojis_return:
             args = args.replace(x, f"\{x}")
 
-        for x in re.findall(r':\w*:\d*', args):
+        for x in re.findall(r":\w*:\d*", args):
             args = args.replace(x, f"\{x}")
 
         await ctx.send(f"{args}", allowed_mentions=discord.AllowedMentions.none())
@@ -312,7 +352,11 @@ class DevTools(commands.Cog):
 
         else:
 
-            res = await self.bot.session.get("https://repi.openrobot.xyz/search_docs", params={"query": args, "documentation": url}, headers={"Authorization": os.environ["frostiweeb_api"]})
+            res = await self.bot.session.get(
+                "https://repi.openrobot.xyz/search_docs",
+                params={"query": args, "documentation": url},
+                headers={"Authorization": os.environ["frostiweeb_api"]},
+            )
 
             results = await res.json()
 
@@ -331,13 +375,16 @@ class DevTools(commands.Cog):
             embed = discord.Embed(color=random.randint(0, 16777215))
 
             results = dict(itertools.islice(results.items(), 10))
-            embed.description = "\n".join(
-                f"[`{result}`]({results.get(result)})" for result in results)
+            embed.description = "\n".join(f"[`{result}`]({results.get(result)})" for result in results)
 
             reference = utils.reference(ctx.message)
             await ctx.send(embed=embed, reference=reference)
 
-    @commands.command(aliases=["rtd", "rtfs"], invoke_without_command=True, brief="a rtfm command that allows you to lookup at any library we support looking up(using selects)")
+    @commands.command(
+        aliases=["rtd", "rtfs"],
+        invoke_without_command=True,
+        brief="a rtfm command that allows you to lookup at any library we support looking up(using selects)",
+    )
     async def rtfm(self, ctx, *, args=None):
 
         rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
@@ -365,7 +412,7 @@ class DevTools(commands.Cog):
         if not args:
             return await ctx.send("That doesn't help out all :(")
 
-        values = '\n'.join(map(self.charinfo_converter, set(args)))
+        values = "\n".join(map(self.charinfo_converter, set(args)))
 
         content = textwrap.wrap(values, width=2000)
 
@@ -392,6 +439,7 @@ class DevTools(commands.Cog):
             return await ctx.send("You need to give it code to work with it.")
 
         import autopep8
+
         code = autopep8.fix_code(args)
         args = args.strip("```python```")
         args = args.strip("```")
@@ -403,7 +451,8 @@ class DevTools(commands.Cog):
             return await ctx.send("You need to give it code to work with it.")
 
         import autopep8
-        code = autopep8.fix_code(args, options={'aggressive': 3})
+
+        code = autopep8.fix_code(args, options={"aggressive": 3})
         args = args.strip("```python```")
         args = args.strip("```")
         await ctx.send(content=f"code returned: \n```{code}```")
@@ -464,20 +513,32 @@ class DevTools(commands.Cog):
 
                 pypi_data = pypi_response["info"]
 
-                embed = discord.Embed(title=f"{pypi_data.get('name') or 'None provided'} {pypi_data.get('version') or 'None provided'}",
-                                      url=f"{pypi_data.get('release_url') or 'None provided'}", description=f"{pypi_data.get('summary') or 'None provided'}", color=random.randint(0, 16777215))
+                embed = discord.Embed(
+                    title=f"{pypi_data.get('name') or 'None provided'} {pypi_data.get('version') or 'None provided'}",
+                    url=f"{pypi_data.get('release_url') or 'None provided'}",
+                    description=f"{pypi_data.get('summary') or 'None provided'}",
+                    color=random.randint(0, 16777215),
+                )
 
                 embed.set_thumbnail(url="https://i.imgur.com/oP0e7jK.png")
 
                 embed.add_field(
-                    name="**Author Info**", value=f"**Author Name:** {pypi_data.get('author') or 'None provided'}\n**Author Email:** {pypi_data.get('author_email') or 'None provided'}", inline=False)
+                    name="**Author Info**",
+                    value=f"**Author Name:** {pypi_data.get('author') or 'None provided'}\n**Author Email:** {pypi_data.get('author_email') or 'None provided'}",
+                    inline=False,
+                )
                 embed.add_field(
-                    name="**Package Info**", value=f"**Download URL**: {pypi_data.get('download_url') or 'None provided'}\n**Documentation URL:** {pypi_data.get('docs_url') or 'None provided'}\n**Home Page:** {pypi_data.get('home_page') or 'None provided'}\n**Keywords:** {pypi_data.get('keywords')  or 'None provided'}\n**License:** {pypi_data.get('license')  or 'None provided'}", inline=False)
+                    name="**Package Info**",
+                    value=f"**Download URL**: {pypi_data.get('download_url') or 'None provided'}\n**Documentation URL:** {pypi_data.get('docs_url') or 'None provided'}\n**Home Page:** {pypi_data.get('home_page') or 'None provided'}\n**Keywords:** {pypi_data.get('keywords')  or 'None provided'}\n**License:** {pypi_data.get('license')  or 'None provided'}",
+                    inline=False,
+                )
 
                 await ctx.send(embed=embed)
 
             else:
-                await ctx.send(f"Could not find package **{args}** on pypi.", allowed_mentions=discord.AllowedMentions.none())
+                await ctx.send(
+                    f"Could not find package **{args}** on pypi.", allowed_mentions=discord.AllowedMentions.none()
+                )
 
         else:
             await ctx.send("Please look for a library to get the info of.")
@@ -490,14 +551,17 @@ class DevTools(commands.Cog):
             return await ctx.send("That's not a legit bot")
 
         invite = discord.utils.oauth_url(client_id=user.id)
-        slash_invite = discord.utils.oauth_url(
-            client_id=user.id, scopes=("bot", "applications.commands"))
+        slash_invite = discord.utils.oauth_url(client_id=user.id, scopes=("bot", "applications.commands"))
 
         view = discord.ui.View()
-        view.add_item(discord.ui.Button(
-            label=f"{user.name}'s Normal Invite", url=invite, style=discord.ButtonStyle.link))
-        view.add_item(discord.ui.Button(
-            label=f"{user.name}'s Invite With Slash Commands", url=slash_invite, style=discord.ButtonStyle.link))
+        view.add_item(
+            discord.ui.Button(label=f"{user.name}'s Normal Invite", url=invite, style=discord.ButtonStyle.link)
+        )
+        view.add_item(
+            discord.ui.Button(
+                label=f"{user.name}'s Invite With Slash Commands", url=slash_invite, style=discord.ButtonStyle.link
+            )
+        )
 
         await ctx.send(f"Invite with slash commands and the bot scope or only with a bot scope:", view=view)
 
@@ -521,8 +585,7 @@ class DevTools(commands.Cog):
     @commands.command(brief="puts the message time as a timestamp")
     async def message_time(self, ctx):
 
-        embed = discord.Embed(title="Message Time", color=random.randint(
-            0, 16777215), timestamp=ctx.message.created_at)
+        embed = discord.Embed(title="Message Time", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
         embed.set_footer(text=f"{ctx.message.id}")
 
         await ctx.send(content=f"Only here cause JDJG Bot has it and why not have it here now.", embed=embed)
@@ -541,7 +604,10 @@ class DevTools(commands.Cog):
 
         creation_info = f"{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}"
 
-        await ctx.send(f"\nName : {user}\nMention : {user.mention} was created:\n{creation_info}\nRaw Version: ```{creation_info}```", allowed_mentions=discord.AllowedMentions.none())
+        await ctx.send(
+            f"\nName : {user}\nMention : {user.mention} was created:\n{creation_info}\nRaw Version: ```{creation_info}```",
+            allowed_mentions=discord.AllowedMentions.none(),
+        )
 
     @commands.command(brief="a command that makes a fake user id based on the current time.")
     async def fake_user_id(self, ctx):
@@ -552,7 +618,9 @@ class DevTools(commands.Cog):
     async def snowflake_info(self, ctx, *, snowflake: typing.Optional[utils.ObjectPlus] = None):
 
         if not snowflake:
-            await ctx.send("you either returned nothing or an invalid snowflake now going to the current time for information.")
+            await ctx.send(
+                "you either returned nothing or an invalid snowflake now going to the current time for information."
+            )
 
         # change objectplus convert back to the before(discord.Object), same thing with utls.ObjectPlus, if edpy adds my pull request into the master.
 
@@ -563,7 +631,9 @@ class DevTools(commands.Cog):
         embed = discord.Embed(title="❄️ SnowFlake Info:", color=5793266)
 
         embed.add_field(
-            name="Created At:", value=f"{discord.utils.format_dt(snowflake.created_at, style = 'd')}\n{discord.utils.format_dt(snowflake.created_at, style = 'T')}")
+            name="Created At:",
+            value=f"{discord.utils.format_dt(snowflake.created_at, style = 'd')}\n{discord.utils.format_dt(snowflake.created_at, style = 'T')}",
+        )
 
         embed.add_field(name="Worker ID:", value=f"{snowflake.worker_id}")
 
@@ -585,15 +655,16 @@ class DevTools(commands.Cog):
 
         timestamp = int(object.created_at.timestamp() - 129384000)
         d = timestamp.to_bytes(4, "big")
-        second_bit_encoded = (base64.standard_b64encode(d))
+        second_bit_encoded = base64.standard_b64encode(d)
         second_bit = second_bit_encoded.decode().rstrip("==")
 
         last_bit = secrets.token_urlsafe(20)
 
-        embed = discord.Embed(title=f"Newly Generated Fake Token",
-                              description=f"ID: ``{object.id}``\nCreated at : \n{discord.utils.format_dt(object.created_at, style = 'd')}\n{discord.utils.format_dt(object.created_at, style = 'T')}")
-        embed.add_field(name="Generated Token:",
-                        value=f"``{first_bit}.{second_bit}.{last_bit}``")
+        embed = discord.Embed(
+            title=f"Newly Generated Fake Token",
+            description=f"ID: ``{object.id}``\nCreated at : \n{discord.utils.format_dt(object.created_at, style = 'd')}\n{discord.utils.format_dt(object.created_at, style = 'T')}",
+        )
+        embed.add_field(name="Generated Token:", value=f"``{first_bit}.{second_bit}.{last_bit}``")
         embed.set_thumbnail(url=ctx.author.display_avatar.url)
         embed.set_footer(text=f"Requested by {ctx.author}")
 
@@ -620,39 +691,57 @@ class DevTools(commands.Cog):
         if member is None:
 
             view = discord.ui.View()
-            view.add_item(discord.ui.Button(label=f"Test Guild Invite",
-                          url="https://discord.gg/hKn8qgCDzK", style=discord.ButtonStyle.link, row=1))
-            return await ctx.send("Make sure to join the guild linked soon... then rerun the command. If you are in the guild contact the owner(the owner is listed in the owner command)", view=view)
+            view.add_item(
+                discord.ui.Button(
+                    label=f"Test Guild Invite",
+                    url="https://discord.gg/hKn8qgCDzK",
+                    style=discord.ButtonStyle.link,
+                    row=1,
+                )
+            )
+            return await ctx.send(
+                "Make sure to join the guild linked soon... then rerun the command. If you are in the guild contact the owner(the owner is listed in the owner command)",
+                view=view,
+            )
 
-        embed = discord.Embed(title="Bot Request", colour=discord.Colour.blurple(
-        ), description=f"reason: \n{args}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id)})", timestamp=ctx.message.created_at)
+        embed = discord.Embed(
+            title="Bot Request",
+            colour=discord.Colour.blurple(),
+            description=f"reason: \n{args}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id)})",
+            timestamp=ctx.message.created_at,
+        )
 
-        embed.add_field(
-            name="Author", value=f"{ctx.author} (ID: {ctx.author.id})", inline=False)
-        embed.add_field(
-            name="Bot", value=f"{user} (ID: {user.id})", inline=False)
+        embed.add_field(name="Author", value=f"{ctx.author} (ID: {ctx.author.id})", inline=False)
+        embed.add_field(name="Bot", value=f"{user} (ID: {user.id})", inline=False)
 
         embed.set_footer(text=ctx.author.id)
-        embed.set_author(
-            name=user.id, icon_url=user.display_avatar.with_format("png"))
+        embed.set_author(name=user.id, icon_url=user.display_avatar.with_format("png"))
 
         jdjg = self.bot.get_user(168422909482762240)
         benitz = self.bot.get_user(529499034495483926)
 
         await self.bot.get_channel(816807453215424573).send(content=f"{jdjg.mention} {benitz.mention}", embed=embed)
 
-        await ctx.reply(f"It appears adding your bot worked. \nIf you leave your bot will be kicked, unless you have an alt there, a friend, etc. \n(It will be kicked to prevent raiding and taking up guild space if you leave). \nYour bot will be checked out. {jdjg} will then determine if your bot is good to add to the guild. Make sure to open your Dms to JDJG, so he can dm you about the bot being added. \nIf you don't add him, your bot will be denied.")
+        await ctx.reply(
+            f"It appears adding your bot worked. \nIf you leave your bot will be kicked, unless you have an alt there, a friend, etc. \n(It will be kicked to prevent raiding and taking up guild space if you leave). \nYour bot will be checked out. {jdjg} will then determine if your bot is good to add to the guild. Make sure to open your Dms to JDJG, so he can dm you about the bot being added. \nIf you don't add him, your bot will be denied."
+        )
 
-    @commands.command(brief="a command that takes a url and sees if it's an image (requires embed permissions at the moment).")
+    @commands.command(
+        brief="a command that takes a url and sees if it's an image (requires embed permissions at the moment)."
+    )
     async def image_check(self, ctx):
 
-        await ctx.send("Please wait for discord to edit your message, if it does error about not a valid image, please send a screenshot of your usage and the bot's message.")
+        await ctx.send(
+            "Please wait for discord to edit your message, if it does error about not a valid image, please send a screenshot of your usage and the bot's message."
+        )
         await asyncio.sleep(5)
 
         images = list(filter(lambda e: e.type == "image", ctx.message.embeds))
 
         if not images or not ctx.message.embeds:
-            return await ctx.send("you need to pass a url with an image, if you did, then please run again. This is a discord issue, and I do not want to wait for discord to change its message.")
+            return await ctx.send(
+                "you need to pass a url with an image, if you did, then please run again. This is a discord issue, and I do not want to wait for discord to change its message."
+            )
 
         await ctx.send(f"You have {len(images)} / {len(ctx.message.embeds)} links that are valid images.")
 
@@ -669,13 +758,17 @@ class DevTools(commands.Cog):
                 await ctx.send(embed=utils.npm_create_embed(data))
 
             else:
-                await ctx.send(f"Could not find package **{args}** on npm.", allowed_mentions=discord.AllowedMentions.none())
+                await ctx.send(
+                    f"Could not find package **{args}** on npm.", allowed_mentions=discord.AllowedMentions.none()
+                )
 
         else:
             await ctx.send("Please look for a library to get the info of.")
 
     @commands.cooldown(1, 30, BucketType.user)
-    @commands.command(brief="runs some code in a sandbox(based on Soos's Run command)", aliases=["eval", "run", "sandbox"])
+    @commands.command(
+        brief="runs some code in a sandbox(based on Soos's Run command)", aliases=["eval", "run", "sandbox"]
+    )
     async def console(self, ctx, *, code: codeblock_converter = None):
 
         if not code:
@@ -691,13 +784,17 @@ class DevTools(commands.Cog):
 
         output = await tio.execute(f"{code.content}", language=f"{code.language}")
 
-        text_returned = (f"```{code.language}\n{output}```" if len(f"{output}") < 200 else await utils.post(self.bot, code=f"{output}"))
+        text_returned = (
+            f"```{code.language}\n{output}```"
+            if len(f"{output}") < 200
+            else await utils.post(self.bot, code=f"{output}")
+        )
 
         embed = discord.Embed(
-            title=f"Your code exited with code {output.exit_status}", description=f"{text_returned}", color=242424)
+            title=f"Your code exited with code {output.exit_status}", description=f"{text_returned}", color=242424
+        )
 
-        embed.set_author(name=f"{ctx.author}",
-                         icon_url=ctx.author.display_avatar.url)
+        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
 
         embed.set_footer(text="Powered by Tio.run")
 

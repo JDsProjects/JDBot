@@ -8,7 +8,14 @@ from typing import Literal, Optional, Dict, Any, List, Union, Tuple
 
 
 class PaginatorButton(discord.ui.Button["Paginator"]):
-    def __init__(self, *, emoji: Optional[Union[discord.PartialEmoji, str]] = None, label: Optional[str] = None, style: discord.ButtonStyle = discord.ButtonStyle.blurple, position: Optional[int] = None,) -> None:
+    def __init__(
+        self,
+        *,
+        emoji: Optional[Union[discord.PartialEmoji, str]] = None,
+        label: Optional[str] = None,
+        style: discord.ButtonStyle = discord.ButtonStyle.blurple,
+        position: Optional[int] = None,
+    ) -> None:
 
         super().__init__(emoji=emoji, label=label, style=style)
 
@@ -100,7 +107,7 @@ class Paginator(discord.ui.View):
             "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary),
             "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary),
             "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary),
-            "page": None
+            "page": None,
         }
 
         self.ctx: Optional[commands.Context] = ctx
@@ -109,8 +116,7 @@ class Paginator(discord.ui.View):
         self._disable_after = disable_after
         self._delete_message_after = delete_message_after
         self._clear_after = clear_after
-        self.buttons: Dict[str, Union[PaginatorButton, None]
-                           ] = buttons or DEFAULT_BUTTONS
+        self.buttons: Dict[str, Union[PaginatorButton, None]] = buttons or DEFAULT_BUTTONS
         self.message: Optional[discord.Message] = None
 
         self.pages: Union[List[discord.Embed], List[str]] = pages
@@ -128,12 +134,10 @@ class Paginator(discord.ui.View):
 
         VALID_KEYS = ["first", "left", "right", "last", "stop", "page"]
         if all(b in VALID_KEYS for b in self.buttons.keys()) is False:
-            raise ValueError(
-                f"Buttons keys must be in: `{', '.join(VALID_KEYS)}`")
+            raise ValueError(f"Buttons keys must be in: `{', '.join(VALID_KEYS)}`")
 
         if all(isinstance(b, PaginatorButton) or b is None for b in self.buttons.values()) is False:
-            raise ValueError(
-                "Buttons values must be PaginatorButton instances or None.")
+            raise ValueError("Buttons values must be PaginatorButton instances or None.")
 
         button: Union[PaginatorButton, None]
 
@@ -177,8 +181,7 @@ class Paginator(discord.ui.View):
 
             if button.position is not None:
 
-                self.children.insert(button.position, self.children.pop(
-                    self.children.index(button)))
+                self.children.insert(button.position, self.children.pop(self.children.index(button)))
 
     async def format_page(self, page: Union[discord.Embed, str]) -> Union[discord.Embed, str]:
         return page
@@ -193,7 +196,9 @@ class Paginator(discord.ui.View):
             send_kwargs.pop("embed", None)
             send_kwargs.pop("embeds", None)
 
-        formatted_page: Union[str, discord.Embed, None] = await discord.utils.maybe_coroutine(self.format_page, self.pages[page])
+        formatted_page: Union[str, discord.Embed, None] = await discord.utils.maybe_coroutine(
+            self.format_page, self.pages[page]
+        )
         if isinstance(formatted_page, str):
 
             formatted_page += f"\n\n{self.page_string}"
@@ -201,8 +206,7 @@ class Paginator(discord.ui.View):
 
         elif isinstance(formatted_page, discord.Embed):
             if formatted_page.footer.text is not discord.Embed.Empty:
-                formatted_page.set_footer(
-                    text=f"{formatted_page.footer.text} - {self.page_string}")
+                formatted_page.set_footer(text=f"{formatted_page.footer.text} - {self.page_string}")
 
             else:
                 formatted_page.set_footer(text=self.page_string)
@@ -294,28 +298,26 @@ class Paginator(discord.ui.View):
 
         return self.message
 
+
 # thank you so much Soheab for allowing me to use this paginator you made and putting in the work to do this :D (That's his github name so...)
 
 
 class MutualGuildsEmbed(Paginator):
     def format_page(self, item):
-        embed = discord.Embed(
-            title="Mutual Servers:", description=item, color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Mutual Servers:", description=item, color=random.randint(0, 16777215))
 
         return embed
 
 
 class ServersEmbed(Paginator):
     def format_page(self, item):
-        embed = discord.Embed(
-            title="Servers:", description=item, color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Servers:", description=item, color=random.randint(0, 16777215))
         return embed
 
 
 class PrefixesEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Usable Prefixes:",
-                              description=item, color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Usable Prefixes:", description=item, color=random.randint(0, 16777215))
         return embed
 
 
@@ -323,29 +325,28 @@ class LeaderboardEmbed(Paginator):
     async def format_page(self, item):
 
         emby = discord.Embed(title="Leaderboard", color=15428885)
-        emby.set_author(name=f"Leaderboard Requested by {self.ctx.author}", icon_url=(
-            self.ctx.author.display_avatar.url))
+        emby.set_author(
+            name=f"Leaderboard Requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
+        )
 
         for i, b, w in item:
             emby.add_field(
-                name=f"**${i}:**", value=f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```", inline=False)
+                name=f"**${i}:**", value=f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```", inline=False
+            )
 
         return emby
 
 
 class RandomHistoryEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(
-            title="Random History:", description=f"{item}", color=random.randint(0, 16777215))
-        embed.set_footer(
-            text="Powered by Random quotes From: \nhttps://www.youtube.com/watch?v=xuCn8ux2gbs")
+        embed = discord.Embed(title="Random History:", description=f"{item}", color=random.randint(0, 16777215))
+        embed.set_footer(text="Powered by Random quotes From: \nhttps://www.youtube.com/watch?v=xuCn8ux2gbs")
         return embed
 
 
 class TestersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Testing Users:",
-                              color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Testing Users:", color=random.randint(0, 16777215))
         embed.add_field(name="User ID:", value=f"{item}", inline=False)
 
         return embed
@@ -353,34 +354,32 @@ class TestersEmbed(Paginator):
 
 class SusUsersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(
-            title="Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
-        embed.add_field(name=f"User ID : {item.get('user_id')}",
-                        value=f"**Reason :** {item.get('reason')}", inline=False)
+        embed = discord.Embed(title="Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
+        embed.add_field(
+            name=f"User ID : {item.get('user_id')}", value=f"**Reason :** {item.get('reason')}", inline=False
+        )
         return embed
 
 
 class BlacklistedUsersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(
-            title="Users Blacklisted by JDJG Inc. Official", color=random.randint(0, 16777215))
-        embed.add_field(name=f"User ID : {item.get('user_id')}",
-                        value=f"**Reason :** {item.get('reason')}", inline=False)
+        embed = discord.Embed(title="Users Blacklisted by JDJG Inc. Official", color=random.randint(0, 16777215))
+        embed.add_field(
+            name=f"User ID : {item.get('user_id')}", value=f"**Reason :** {item.get('reason')}", inline=False
+        )
         return embed
 
 
 class ErrorEmbed(Paginator):
     async def format_page(self, item):
 
-        item = discord.utils.escape_markdown(
-            item, as_needed=False, ignore_links=True)
+        item = discord.utils.escape_markdown(item, as_needed=False, ignore_links=True)
         return discord.Embed(title="Error", description=item, color=random.randint(0, 16777215))
 
 
 class RtfmEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(
-            title="Packages:", description=item, color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Packages:", description=item, color=random.randint(0, 16777215))
         return embed
 
 
@@ -407,26 +406,26 @@ class InviteInfoEmbed(Paginator):
                 guild = "Group Chat"
                 image = "https://i.imgur.com/pQS3jkI.png"
                 guild_id = "Unknown"
-            embed = discord.Embed(
-                title=f"Invite for {guild}:", color=random.randint(0, 16777215))
+            embed = discord.Embed(title=f"Invite for {guild}:", color=random.randint(0, 16777215))
             embed.set_author(name="Discord Invite Details:", icon_url=(image))
             embed.add_field(name="Inviter:", value=f"{item.inviter}")
-            embed.add_field(name="User Count:",
-                            value=f"{item.approximate_member_count}")
-            embed.add_field(name="Active User Count:",
-                            value=f"{item.approximate_presence_count}")
+            embed.add_field(name="User Count:", value=f"{item.approximate_member_count}")
+            embed.add_field(name="Active User Count:", value=f"{item.approximate_presence_count}")
 
             embed.add_field(
-                name="Invite Channel", value=f"{item.channel}\nChannel Mention : {'None' if isinstance(item.channel, discord.Object) else item.channel.mention}")
+                name="Invite Channel",
+                value=f"{item.channel}\nChannel Mention : {'None' if isinstance(item.channel, discord.Object) else item.channel.mention}",
+            )
 
-            embed.set_footer(
-                text=f"ID: {guild_id}\nInvite Code: {item.code}\nInvite Url: {item.url}")
+            embed.set_footer(text=f"ID: {guild_id}\nInvite Code: {item.code}\nInvite Url: {item.url}")
 
         if isinstance(item, str):
-            embed = discord.Embed(title="Failed grabbing the invite code:",
-                                  description=f"Discord couldnt fetch the invite with the code {item}.", color=random.randint(0, 16777215))
-            embed.set_footer(
-                text="If this is a consistent problem please contact JDJG Inc. Official#3493")
+            embed = discord.Embed(
+                title="Failed grabbing the invite code:",
+                description=f"Discord couldnt fetch the invite with the code {item}.",
+                color=random.randint(0, 16777215),
+            )
+            embed.set_footer(text="If this is a consistent problem please contact JDJG Inc. Official#3493")
 
         return embed
 
@@ -435,13 +434,17 @@ class GoogleEmbed(Paginator):
     async def format_page(self, item):
 
         embed = discord.Embed(
-            title="Gooogle Search", description=f"[{item.title}]({item.link}) \n{item.snippet}", color=random.randint(0, 16777215))
+            title="Gooogle Search",
+            description=f"[{item.title}]({item.link}) \n{item.snippet}",
+            color=random.randint(0, 16777215),
+        )
 
         if item.image:
             embed.set_image(url=item.image)
 
         embed.set_footer(
-            text=f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D")
+            text=f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D"
+        )
 
         return embed
 
@@ -468,8 +471,7 @@ class ScanGlobalEmbed(Paginator):
 
         embed.set_author(name=f"{item}", icon_url=item.display_avatar.url)
 
-        embed.add_field(name="Shared Guilds:",
-                        value=f"{guild_join(grab_mutualguilds(self.ctx, item))}")
+        embed.add_field(name="Shared Guilds:", value=f"{guild_join(grab_mutualguilds(self.ctx, item))}")
         embed.set_footer(text=f"Sus Reason : {await get_sus_reason(self.ctx, item)}")
         return embed
 
@@ -480,41 +482,48 @@ class EmojiInfoEmbed(Paginator):
             if item.is_unicode_emoji():
                 digit = f"{ord(str(item)):x}"
                 unicode = f"\\U{digit:>08}"
-                emoji_name = item.name.replace(':', '')
+                emoji_name = item.name.replace(":", "")
                 # emoji_url = await emoji_to_url(f"{item}", session = self.ctx.bot.session)
                 # wip
                 emoji_url = "https://i.imgur.com/3ZUrjUP.png"
                 embed = discord.Embed(
-                    title="Default Emote:", url=f"http://www.fileformat.info/info/unicode/char/{digit}", color=random.randint(0, 16777215))
+                    title="Default Emote:",
+                    url=f"http://www.fileformat.info/info/unicode/char/{digit}",
+                    color=random.randint(0, 16777215),
+                )
                 embed.add_field(name="Name:", value=f"{emoji_name}")
                 embed.add_field(name="Unicode:", value=unicode)
                 embed.add_field(
-                    name="unicode url", value=f"[site](http://www.fileformat.info/info/unicode/char/{digit})")
+                    name="unicode url", value=f"[site](http://www.fileformat.info/info/unicode/char/{digit})"
+                )
                 embed.set_image(url=emoji_url)
                 embed.set_footer(text=f"click the title for more unicode data")
                 return embed
 
             else:
-                embed = discord.Embed(
-                    title=f"Custom Emoji: **{item.name}**", color=random.randint(0, 16777215))
+                embed = discord.Embed(title=f"Custom Emoji: **{item.name}**", color=random.randint(0, 16777215))
                 embed.set_image(url=item.url)
                 embed.set_footer(text=f"Emoji ID:{item.id}")
                 return embed
 
         else:
-            embed = discord.Embed(title="Failed grabbing emoji:",
-                                  description=f"Discord couldn't fetch the emoji with regex: {item}", color=random.randint(0, 16777215))
+            embed = discord.Embed(
+                title="Failed grabbing emoji:",
+                description=f"Discord couldn't fetch the emoji with regex: {item}",
+                color=random.randint(0, 16777215),
+            )
             return embed
 
 
 class TodoEmbed(Paginator):
     def format_page(self, item):
-        embed = discord.Embed(description=item, color=random.randint(
-            0, 16777215), timestamp=self.ctx.message.created_at)
+        embed = discord.Embed(
+            description=item, color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
+        )
 
-        embed.set_author(
-            name=f"Todo Requested By {self.ctx.author}:", icon_url=self.ctx.author.display_avatar.url)
+        embed.set_author(name=f"Todo Requested By {self.ctx.author}:", icon_url=self.ctx.author.display_avatar.url)
         return embed
+
 
 # this is using the paginator above, which is why It's not underneath the BasicButtons.
 
@@ -551,9 +560,13 @@ class dm_or_ephemeral(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.", ephemeral=True)
+            return await interaction.response.send_message(
+                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
 
         return True
+
 
 # The Basic Buttons Class.
 
@@ -583,9 +596,13 @@ class BasicButtons(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.", ephemeral=True)
+            return await interaction.response.send_message(
+                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
 
         return True
+
 
 # A Nitro Button Class(not actual nitro)
 
@@ -610,8 +627,11 @@ class nitroButtons(discord.ui.View):
         button.style = discord.ButtonStyle.secondary
         button.label = f'{"Claimed":⠀^39}'
 
-        embed = discord.Embed(title="You received a gift, but...",
-                              description="The gift link has either expired or has been\nrevoked.", color=3092790)
+        embed = discord.Embed(
+            title="You received a gift, but...",
+            description="The gift link has either expired or has been\nrevoked.",
+            color=3092790,
+        )
         embed.set_thumbnail(url="https://i.imgur.com/w9aiD6F.png")
 
         await interaction.message.edit(view=self, embed=embed)
@@ -621,11 +641,15 @@ class nitroButtons(discord.ui.View):
         self.children[0].style = discord.ButtonStyle.secondary
         self.children[0].label = f'{"Claimed":⠀^39}'
 
-        embed = discord.Embed(title="You received a gift, but...",
-                              description="The gift link has either expired or has been\nrevoked.", color=3092790)
+        embed = discord.Embed(
+            title="You received a gift, but...",
+            description="The gift link has either expired or has been\nrevoked.",
+            color=3092790,
+        )
         embed.set_thumbnail(url="https://i.imgur.com/w9aiD6F.png")
 
         await self.message.edit(view=self, embed=embed)
+
 
 # a custom Rps Game View
 
@@ -663,7 +687,10 @@ class RpsGame(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.", ephemeral=True)
+            return await interaction.response.send_message(
+                content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
+                ephemeral=True,
+            )
 
         return True
 
@@ -699,9 +726,13 @@ class CoinFlip(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.", ephemeral=True)
+            return await interaction.response.send_message(
+                content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
+                ephemeral=True,
+            )
 
         return True
+
 
 # A bunch of Select Classes and views for them(below me).
 
@@ -709,8 +740,7 @@ class CoinFlip(discord.ui.View):
 class RtfmSelects(discord.ui.Select):
     def __init__(self, options):
 
-        super().__init__(placeholder="Chose a library to lookup from.",
-                         min_values=1, max_values=1, options=options)
+        super().__init__(placeholder="Chose a library to lookup from.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -726,13 +756,17 @@ class RtfmChoice(discord.ui.View):
         self.value = [o.get("link") for o in libraries][0]
         self.ctx = ctx
 
-        self.add_item(RtfmSelects([discord.SelectOption(
-            label=o['name'], value=o["link"], emoji="🔍") for o in libraries]))
+        self.add_item(
+            RtfmSelects([discord.SelectOption(label=o["name"], value=o["link"], emoji="🔍") for o in libraries])
+        )
 
     async def interaction_check(self, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.", ephemeral=True)
+            return await interaction.response.send_message(
+                content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
 
         return True
 
@@ -746,8 +780,7 @@ class RtfmChoice(discord.ui.View):
 class JobSelects(discord.ui.Select):
     def __init__(self, options):
 
-        super().__init__(placeholder="Chose a Job to do.",
-                         min_values=1, max_values=1, options=options)
+        super().__init__(placeholder="Chose a Job to do.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -763,13 +796,15 @@ class JobChoice(discord.ui.View):
         self.value = [o.get("job_name") for o in jobs][0]
         self.ctx = ctx
 
-        self.add_item(JobSelects([discord.SelectOption(
-            label=o['job_name'], emoji="🧑‍💼") for o in jobs]))
+        self.add_item(JobSelects([discord.SelectOption(label=o["job_name"], emoji="🧑‍💼") for o in jobs]))
 
     async def interaction_check(self, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.", ephemeral=True)
+            return await interaction.response.send_message(
+                content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
 
         return True
 
@@ -783,8 +818,7 @@ class JobChoice(discord.ui.View):
 class SubRedditSelects(discord.ui.Select):
     def __init__(self, options):
 
-        super().__init__(placeholder="Chose a Subreddit.",
-                         min_values=1, max_values=1, options=options)
+        super().__init__(placeholder="Chose a Subreddit.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -800,13 +834,19 @@ class SubredditChoice(discord.ui.View):
         self.value = [o.get("name") for o in subreddits][0]
         self.ctx = ctx
 
-        self.add_item(SubRedditSelects([discord.SelectOption(
-            label=o['name'], emoji="<:reddit:309459767758290944>") for o in subreddits]))
+        self.add_item(
+            SubRedditSelects(
+                [discord.SelectOption(label=o["name"], emoji="<:reddit:309459767758290944>") for o in subreddits]
+            )
+        )
 
     async def interaction_check(self, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.", ephemeral=True)
+            return await interaction.response.send_message(
+                content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
 
         return True
 

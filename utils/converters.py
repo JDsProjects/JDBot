@@ -19,8 +19,7 @@ class BetterMemberConverter(commands.Converter):
             tag = re.match(r"#?(\d{4})", argument)
             if tag:
                 if ctx.guild:
-                    test = discord.utils.get(
-                        ctx.guild.members, discriminator=tag.group(1))
+                    test = discord.utils.get(ctx.guild.members, discriminator=tag.group(1))
                     user = test or ctx.author
 
                 if ctx.guild is None:
@@ -56,8 +55,7 @@ class BetterUserconverter(commands.Converter):
         if user is None:
             tag = re.match(r"#?(\d{4})", argument)
             if tag and not ctx.bot.users:
-                test = discord.utils.get(
-                    ctx.bot.users, discriminator=tag.group(1))
+                test = discord.utils.get(ctx.bot.users, discriminator=tag.group(1))
                 user = test or ctx.author
         return user
 
@@ -69,9 +67,9 @@ class EmojiBasic:
 
     @classmethod
     async def convert(cls, ctx, argument):
-        match = re.match(r'(?P<id>[0-9]{15,21})', argument)
+        match = re.match(r"(?P<id>[0-9]{15,21})", argument)
         if match:
-            emoji_id = (match.group(0))
+            emoji_id = match.group(0)
             extentions = ["gif", "png"]
 
             for x in extentions:
@@ -155,11 +153,10 @@ def generate_snowflake(dt: typing.Optional[datetime.datetime] = None) -> int:
     """
 
     dt = dt or discord.utils.utcnow()
-    return int(dt.timestamp() * 1000 - 1420070400000) << 22 | 0x3fffff
+    return int(dt.timestamp() * 1000 - 1420070400000) << 22 | 0x3FFFFF
 
 
 class ObjectPlus(discord.Object):
-
     @property
     def worker_id(self) -> int:
         """:class:`int`: Returns the worker id that made the snowflake."""
@@ -173,13 +170,12 @@ class ObjectPlus(discord.Object):
     @property
     def increment_id(self) -> int:
         """:class:`int`: Returns the increment id that made the snowflake."""
-        return (self.id & 0xFFF)
+        return self.id & 0xFFF
 
 
 class ObjectPlusConverter(commands.converter.IDConverter[commands.Converter]):
     async def convert(self, ctx: commands.Context, argument: str) -> ObjectPlus:
-        match = self._get_id_match(argument) or re.match(
-            r'<(?:@(?:!|&)?|#)([0-9]{15,20})>$', argument)
+        match = self._get_id_match(argument) or re.match(r"<(?:@(?:!|&)?|#)([0-9]{15,20})>$", argument)
 
         if match is None:
             raise discord.errors.ObjectNotFound(argument)
@@ -187,5 +183,6 @@ class ObjectPlusConverter(commands.converter.IDConverter[commands.Converter]):
         result = int(match.group(1))
 
         return ObjectPlus(id=result)
+
 
 # remove if edpy adds my pull request into the master.

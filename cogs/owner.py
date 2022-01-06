@@ -27,13 +27,13 @@ class Owner(commands.Cog):
             await ctx.reply("Please give me a message to use.")
             message = await self.bot.wait_for("message", check=utils.check(ctx))
             # make this use modals when modals come out.
-            embed_message = discord.Embed(title=message.content, timestamp=(
-                message.created_at), color=random.randint(0, 16777215))
-            embed_message.set_author(
-                name=f"Mail from: {ctx.author}", icon_url=(ctx.author.display_avatar.url))
+            embed_message = discord.Embed(
+                title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215)
+            )
+            embed_message.set_author(name=f"Mail from: {ctx.author}", icon_url=(ctx.author.display_avatar.url))
             embed_message.set_footer(text=f"{ctx.author.id}")
             embed_message.set_thumbnail(url="https://i.imgur.com/1XvDnqC.png")
-            if (user.dm_channel is None):
+            if user.dm_channel is None:
                 await user.create_dm()
             try:
                 await user.send(embed=embed_message)
@@ -105,7 +105,10 @@ class Owner(commands.Cog):
     @commands.command(brief="Changes Bot Status(Owner Only)")
     async def status(self, ctx, *, args=None):
 
-        await self.bot.change_presence(status=discord.Status.do_not_disturb, activity=discord.Activity(type=discord.ActivityType.watching, name=args))
+        await self.bot.change_presence(
+            status=discord.Status.do_not_disturb,
+            activity=discord.Activity(type=discord.ActivityType.watching, name=args),
+        )
 
         await ctx.send("Changed succesfully...")
 
@@ -121,17 +124,20 @@ class Owner(commands.Cog):
         if isinstance(ctx.channel, discord.DMChannel):
             await ctx.send("You can't use that in Dms.")
 
-    @commands.command(brief="a command to give a list of servers(owner only)", help="Gives a list of guilds(Bot Owners only)")
+    @commands.command(
+        brief="a command to give a list of servers(owner only)", help="Gives a list of guilds(Bot Owners only)"
+    )
     async def servers(self, ctx):
 
         pag = commands.Paginator()
         for g in self.bot.guilds:
             pag.add_line(
-                f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}")
+                f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}"
+            )
 
         pages = [page.strip("`") for page in pag.pages]
 
-        if (ctx.author.dm_channel is None):
+        if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
         menu = utils.ServersEmbed(pages, ctx=ctx, disable_after=True)
@@ -150,13 +156,10 @@ class Owner(commands.Cog):
                 except:
                     await ctx.send("It couldn't delete the message in this guils so, I kept it here.")
 
-        webhook = discord.Webhook.from_url(
-            os.environ["webhook99"], session=self.bot.session)
-        embed = discord.Embed(title="Update", color=(
-            35056), timestamp=(ctx.message.created_at))
+        webhook = discord.Webhook.from_url(os.environ["webhook99"], session=self.bot.session)
+        embed = discord.Embed(title="Update", color=(35056), timestamp=(ctx.message.created_at))
         embed.add_field(name="Update Info:", value=args)
-        embed.set_author(name="JDJG's Update",
-                         icon_url='https://i.imgur.com/pdQkCBv.png')
+        embed.set_author(name="JDJG's Update", icon_url="https://i.imgur.com/pdQkCBv.png")
         embed.set_footer(text="JDJG's Updates")
         await webhook.send(embed=embed)
 
@@ -176,7 +179,7 @@ class Owner(commands.Cog):
         pages = [page.strip("`") for page in pag.pages]
         pages = pages or ["No shared servers"]
 
-        if (ctx.author.dm_channel is None):
+        if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
         menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
@@ -223,8 +226,7 @@ class Owner(commands.Cog):
     @commands.command(brief="a command listed all the commands")
     async def testers(self, ctx):
 
-        menu = utils.TestersEmbed(
-            self.bot.testers, ctx=ctx, disable_after=True)
+        menu = utils.TestersEmbed(self.bot.testers, ctx=ctx, disable_after=True)
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
@@ -307,7 +309,12 @@ class Owner(commands.Cog):
 
         new_line = "\n"
 
-        page = "\n".join(f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {msg.content} {new_line}Attachments : {msg.attachments}" if msg.content else f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {new_line.join(f'{e.to_dict()}' for e in msg.embeds)} {new_line}Attachments : {msg.attachments}" for msg in messages)
+        page = "\n".join(
+            f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {msg.content} {new_line}Attachments : {msg.attachments}"
+            if msg.content
+            else f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {new_line.join(f'{e.to_dict()}' for e in msg.embeds)} {new_line}Attachments : {msg.attachments}"
+            for msg in messages
+        )
 
         paste = await utils.post(self.bot, code=page)
         # max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
@@ -319,14 +326,13 @@ class Owner(commands.Cog):
         etype = type(error)
         trace = error.__traceback__
 
-        values = ''.join(
-            map(str, traceback.format_exception(etype, error, trace)))
+        values = "".join(map(str, traceback.format_exception(etype, error, trace)))
 
         pages = textwrap.wrap(values, width=1992)
 
         menu = utils.ErrorEmbed(pages, ctx=ctx, delete_message_after=True)
 
-        if (ctx.author.dm_channel is None):
+        if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
         await menu.send(ctx.author.dm_channel)
@@ -358,7 +364,9 @@ class Owner(commands.Cog):
         if not ctx.message.attachments:
             return await ctx.send("You need to provide some attachments.")
 
-        await ctx.send("JDJG doesn't take any responbility for what you upload here :eyes: don't upload anything bad okay?")
+        await ctx.send(
+            "JDJG doesn't take any responbility for what you upload here :eyes: don't upload anything bad okay?"
+        )
 
         for a in ctx.message.attachments:
             try:
@@ -368,8 +376,7 @@ class Owner(commands.Cog):
                 traceback.print_exc()
                 return await ctx.send(e)
 
-            imgur_client = aioimgur.ImgurClient(
-                os.environ["imgur_id"], os.environ["imgur_secret"])
+            imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
 
             imgur_url = await imgur_client.upload(await a.read())
             await ctx.send(f"{imgur_url['link']}")
@@ -407,13 +414,13 @@ class Owner(commands.Cog):
 
     def tweepy_post(self, post_text=None):
 
-        consumer_key = os.getenv('tweet_key')
-        consumer_secret = os.getenv('tweet_secret')
+        consumer_key = os.getenv("tweet_key")
+        consumer_secret = os.getenv("tweet_secret")
 
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 
-        access_token = os.getenv('tweet_access')
-        access_secret = os.getenv('tweet_token')
+        access_token = os.getenv("tweet_access")
+        access_secret = os.getenv("tweet_token")
 
         auth.set_access_token(access_token, access_secret)
 
@@ -437,7 +444,9 @@ class Owner(commands.Cog):
 
         await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.id}")
 
-    @commands.command(brief="chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)")
+    @commands.command(
+        brief="chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)"
+    )
     async def chunk_guild(self, ctx):
         if ctx.guild is None:
             return await ctx.send("You can't chunk a guild that doesn't exist or a channel that is a DM.")
@@ -453,22 +462,30 @@ class Owner(commands.Cog):
     async def stats_status(self, ctx):
         await ctx.send("changing status, check now....")
 
-        await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(self.bot.guilds)} servers | {len(self.bot.users)} users"))
+        await self.bot.change_presence(
+            status=discord.Status.online,
+            activity=discord.Activity(
+                type=discord.ActivityType.watching, name=f"{len(self.bot.guilds)} servers | {len(self.bot.users)} users"
+            ),
+        )
 
-    @commands.command(brief="a command to give a list of servers(owner only)", help="Gives a list of guilds(Bot Owners only) but with join dates updated.")
+    @commands.command(
+        brief="a command to give a list of servers(owner only)",
+        help="Gives a list of guilds(Bot Owners only) but with join dates updated.",
+    )
     async def servers2(self, ctx):
 
-        sorted_guilds = sorted(
-            self.bot.guilds, key=lambda guild: guild.me.joined_at)
+        sorted_guilds = sorted(self.bot.guilds, key=lambda guild: guild.me.joined_at)
 
         pag = commands.Paginator()
         for g in sorted_guilds:
             pag.add_line(
-                f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n")
+                f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n"
+            )
 
         pages = [page.strip("`") for page in pag.pages]
 
-        if (ctx.author.dm_channel is None):
+        if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
         menu = utils.ServersEmbed(pages, ctx=ctx, disable_after=True)
@@ -487,23 +504,29 @@ class Owner(commands.Cog):
 
         await ctx.send(f"{user} succesfully now has ${number} in wallet.")
 
-    @commands.command(brief="does say but more powerful with the optional option of a channel to say in but doesn't say who used the command(which is why it's owner only)")
-    async def say3(self, ctx, channel: typing.Optional[typing.Union[discord.TextChannel, discord.Thread, discord.User]] = None, *, args=None):
+    @commands.command(
+        brief="does say but more powerful with the optional option of a channel to say in but doesn't say who used the command(which is why it's owner only)"
+    )
+    async def say3(
+        self,
+        ctx,
+        channel: typing.Optional[typing.Union[discord.TextChannel, discord.Thread, discord.User]] = None,
+        *,
+        args=None,
+    ):
 
         channel = channel or ctx.channel
 
         if isinstance(channel, discord.User):
-            if (channel.dm_channel is None):
+            if channel.dm_channel is None:
                 await channel.create_dm()
 
             channel = channel.dm_channel
 
         args = args or "You didn't give us any text to use."
-        args = discord.utils.escape_markdown(
-            args, as_needed=False, ignore_links=False)
+        args = discord.utils.escape_markdown(args, as_needed=False, ignore_links=False)
 
-        bot_member = channel.me if isinstance(
-            channel, discord.DMChannel) else channel.guild.me
+        bot_member = channel.me if isinstance(channel, discord.DMChannel) else channel.guild.me
 
         if channel.permissions_for(bot_member).send_messages or not channel.id == ctx.channel.id:
 
@@ -569,8 +592,7 @@ class Owner(commands.Cog):
         if not blacklisted_users:
             return await ctx.send("None is blacklisted :D")
 
-        menu = utils.BlacklistedUsersEmbed(
-            blacklisted_users, ctx=ctx, disable_after=True)
+        menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx=ctx, disable_after=True)
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
