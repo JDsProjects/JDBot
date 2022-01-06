@@ -572,7 +572,7 @@ class nitroButtons(discord.ui.View):
     super().__init__(**kwargs)
     self.value: str = None
 
-  @discord.ui.button(label = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Claim⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", custom_id = "fun (nitro)", style = discord.ButtonStyle.success)
+  @discord.ui.button(label = f'{"Claim":⠀^37}', custom_id = "fun (nitro)", style = discord.ButtonStyle.success)
   async def nitroButton(self, button: discord.ui.Button, interaction: discord.Interaction):
     
     await interaction.response.send_message(content = "Oh no it was a fake", ephemeral = True)
