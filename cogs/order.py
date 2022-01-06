@@ -1,4 +1,9 @@
-import os, discord, time, async_cse, random, cse
+import os
+import discord
+import time
+import async_cse
+import random
+import cse
 from discord.ext import commands
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
@@ -7,370 +12,410 @@ import utils
 from aiogifs.tenor import TenorClient, ContentFilter
 from aiogifs.giphy import GiphyClient, AgeRating
 
+
 class Order(commands.Cog):
-  "Commands to get (images or gifs) or search results from very specific apis like tenor, giphy, and google custom search"
-  def __init__(self, bot):
-    self.bot = bot
-    bot.loop.create_task(self.__ainit__())
-  
-  async def __ainit__(self):
-    await self.bot.wait_until_ready()
-    
-    tenor_key = os.environ["tenor_key"]
-    giphy_key = os.environ["giphy_token"] 
-
-    image_api_key = os.environ["image_api_key"]  
-    image_engine_key = os.environ["google_image_key"] 
-
-    self.image_client = async_cse.Search(image_api_key, engine_id = image_engine_key, session = self.bot.session)
-
-    self.tenor_client = TenorClient (api_key = tenor_key, session = self.bot.session)
-    self.giphy_client = GiphyClient(api_key=giphy_key, session = self.bot.session)
-
-    self.google_engine = cse.Search(image_api_key, session = self.bot.session, engine_id = image_engine_key)
-
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.group(name = "order", invoke_without_command = True, brief = "searches from google images to find the closest google image")
-  async def order(self, ctx, *, args = None):
-    if not args:
-      await ctx.send("You can't order nothing.")
-      ctx.command.reset_cooldown(ctx) 
-
-    if args:
-      time_before = time.perf_counter()  
-      
-      try:
-        results = await self.image_client.search(args, safesearch = True, image_search = True)
-        emoji_image = sorted(results, key = lambda x: SequenceMatcher(None, x.image_url, args).ratio())[-1]
-
-        
-      except async_cse.search.NoResults:
-        return await ctx.send("No results found :(")
-
-      time_after = time.perf_counter() 
-      try:
-        await ctx.message.delete()
-      except discord.errors.Forbidden:
-        pass
-    
-      embed = discord.Embed(title = f"Item: {args}", description=f"{ctx.author} ordered a {args}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
-      embed.set_author(name=f"order for {ctx.author}:", icon_url = (ctx.author.display_avatar.url))
-      embed.add_field(name="Time Spent:", value = f"{int((time_after - time_before)*1000)}MS")
-      embed.add_field(name="Powered by:", value="Google Images Api")
-
-      embed.add_field(name = "Image link:", value = f"[Image Link]({emoji_image.image_url})")
-
-      embed.set_image(url = emoji_image.image_url)
-      embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-      await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
-
-      await self.bot.get_channel(855217084710912050).send(embed = embed)
-
-  @commands.cooldown(1, 30, BucketType.user)
-  @order.command(brief = "a command to shuffle images from google images")
-  async def shuffle(self, ctx, *, args = None):
-    if not args:
-      await self.order(ctx, args="shuffle")
-
-    if args:
-      time_before=time.perf_counter()
-      try:
-        results = await self.image_client.search(args, safesearch = True, image_search=True)
-      except async_cse.search.NoResults:
-        return await ctx.send("No results found :(")
-
-
-      emoji_image = random.choice(results)
-      time_after=time.perf_counter() 
-      try:
-        await ctx.message.delete()
-      except discord.errors.Forbidden:
-        pass
+    "Commands to get (images or gifs) or search results from very specific apis like tenor, giphy, and google custom search"
+
+    def __init__(self, bot):
+        self.bot = bot
+        bot.loop.create_task(self.__ainit__())
+
+    async def __ainit__(self):
+        await self.bot.wait_until_ready()
+
+        tenor_key = os.environ["tenor_key"]
+        giphy_key = os.environ["giphy_token"]
+
+        image_api_key = os.environ["image_api_key"]
+        image_engine_key = os.environ["google_image_key"]
+
+        self.image_client = async_cse.Search(
+            image_api_key, engine_id=image_engine_key, session=self.bot.session)
+
+        self.tenor_client = TenorClient(
+            api_key=tenor_key, session=self.bot.session)
+        self.giphy_client = GiphyClient(
+            api_key=giphy_key, session=self.bot.session)
+
+        self.google_engine = cse.Search(
+            image_api_key, session=self.bot.session, engine_id=image_engine_key)
+
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.group(name="order", invoke_without_command=True, brief="searches from google images to find the closest google image")
+    async def order(self, ctx, *, args=None):
+        if not args:
+            await ctx.send("You can't order nothing.")
+            ctx.command.reset_cooldown(ctx)
+
+        if args:
+            time_before = time.perf_counter()
+
+            try:
+                results = await self.image_client.search(args, safesearch=True, image_search=True)
+                emoji_image = sorted(results, key=lambda x: SequenceMatcher(
+                    None, x.image_url, args).ratio())[-1]
+
+            except async_cse.search.NoResults:
+                return await ctx.send("No results found :(")
+
+            time_after = time.perf_counter()
+            try:
+                await ctx.message.delete()
+            except discord.errors.Forbidden:
+                pass
+
+            embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
+                0, 16777215), timestamp=ctx.message.created_at)
+            embed.set_author(name=f"order for {ctx.author}:", icon_url=(
+                ctx.author.display_avatar.url))
+            embed.add_field(name="Time Spent:",
+                            value=f"{int((time_after - time_before)*1000)}MS")
+            embed.add_field(name="Powered by:", value="Google Images Api")
+
+            embed.add_field(name="Image link:",
+                            value=f"[Image Link]({emoji_image.image_url})")
+
+            embed.set_image(url=emoji_image.image_url)
+            embed.set_footer(
+                text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+            await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+
+            await self.bot.get_channel(855217084710912050).send(embed=embed)
+
+    @commands.cooldown(1, 30, BucketType.user)
+    @order.command(brief="a command to shuffle images from google images")
+    async def shuffle(self, ctx, *, args=None):
+        if not args:
+            await self.order(ctx, args="shuffle")
+
+        if args:
+            time_before = time.perf_counter()
+            try:
+                results = await self.image_client.search(args, safesearch=True, image_search=True)
+            except async_cse.search.NoResults:
+                return await ctx.send("No results found :(")
+
+            emoji_image = random.choice(results)
+            time_after = time.perf_counter()
+            try:
+                await ctx.message.delete()
+            except discord.errors.Forbidden:
+                pass
+
+            embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
+                0, 16777215), timestamp=ctx.message.created_at)
+            embed.set_author(name=f"order for {ctx.author}:", icon_url=(
+                ctx.author.display_avatar.url))
+            embed.add_field(name="Time Spent:",
+                            value=f"{int((time_after - time_before)*1000)}MS")
+            embed.add_field(name="Powered by:", value="Google Images Api")
+
+            embed.add_field(name="Image link:",
+                            value=f"[Image Link]({emoji_image.image_url})")
+
+            embed.set_image(url=emoji_image.image_url)
+            embed.set_footer(
+                text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+            await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+            await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-      embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",color=random.randint(0, 16777215),timestamp=ctx.message.created_at)
-      embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.display_avatar.url))
-      embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
-      embed.add_field(name="Powered by:",value="Google Images Api")
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.command(brief="a command to shuffle images from google images", aliases=["order-shuffle"])
+    async def order_shuffle(self, ctx, *, args=None):
+        if not args:
+            await ctx.send("You can't order nothing")
+            ctx.command.reset_cooldown(ctx)
 
-      embed.add_field(name = "Image link:", value = f"[Image Link]({emoji_image.image_url})")
+        if args:
+            time_before = time.perf_counter()
+            try:
+                results = await self.image_client.search(args, safesearch=True, image_search=True)
+            except async_cse.search.NoResults:
+                return await ctx.send("No results found :(")
 
-      embed.set_image(url=emoji_image.image_url)
-      embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-      await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-      await self.bot.get_channel(855217084710912050).send(embed=embed)
+            emoji_image = random.choice(results)
 
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.command(brief="a command to shuffle images from google images", aliases=["order-shuffle"])
-  async def order_shuffle(self, ctx, *, args = None):
-    if not args:
-      await ctx.send("You can't order nothing")
-      ctx.command.reset_cooldown(ctx)
+            time_after = time.perf_counter()
 
-    if args:
-      time_before=time.perf_counter()  
-      try:
-        results = await self.image_client.search(args, safesearch = True, image_search=True)
-      except async_cse.search.NoResults:
-        return await ctx.send("No results found :(")
+            try:
+                await ctx.message.delete()
+            except discord.errors.Forbidden:
+                pass
 
-      emoji_image = random.choice(results)
+            embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
+                0, 16777215), timestamp=ctx.message.created_at)
+            embed.set_author(name=f"order for {ctx.author}:", icon_url=(
+                ctx.author.display_avatar.url))
+            embed.add_field(name="Time Spent:",
+                            value=f"{int((time_after - time_before)*1000)}MS")
+            embed.add_field(name="Powered by:", value="Google Images Api")
 
-      time_after = time.perf_counter() 
-      
-      try:
-        await ctx.message.delete()
-      except discord.errors.Forbidden:
-        pass
+            embed.add_field(name="Image link:",
+                            value=f"[Image Link]({emoji_image.image_url})")
 
-      embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
-      embed.set_author(name=f"order for {ctx.author}:",icon_url=(ctx.author.display_avatar.url))
-      embed.add_field(name="Time Spent:",value=f"{int((time_after - time_before)*1000)}MS")
-      embed.add_field(name="Powered by:",value="Google Images Api")
+            embed.set_image(url=emoji_image.image_url)
+            embed.set_footer(
+                text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+            await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+            await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-      embed.add_field(name = "Image link:", value = f"[Image Link]({emoji_image.image_url})")
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.group(name="tenor", invoke_without_command=True, brief="searches from tenor to find the closest image.")
+    async def tenor(self, ctx, *, args=None):
 
-      embed.set_image(url=emoji_image.image_url)
-      embed.set_footer(text = f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-      await ctx.send(content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",embed=embed)
-      await self.bot.get_channel(855217084710912050).send(embed=embed)
+        if not args:
+            return await ctx.send("You can't search for nothing")
+            ctx.command.reset_cooldown(ctx)
 
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.group(name = "tenor", invoke_without_command = True, brief = "searches from tenor to find the closest image.")
-  async def tenor(self, ctx, *, args = None):
+        safesearch_type = ContentFilter.high()
+        results = await self.tenor_client.search(args, content_filter=safesearch_type, limit=10)
 
-    if not args:
-      return await ctx.send("You can't search for nothing")
-      ctx.command.reset_cooldown(ctx)
+        if not results:
+            return await ctx.send("I got no results from tenor.")
 
-    safesearch_type = ContentFilter.high()
-    results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
+        results_media = [r for r in results.media if r]
 
-    if not results:
-      return await ctx.send("I got no results from tenor.")
+        if not results_media:
+            return await ctx.send("I got no gif results from tenor.")
 
-    results_media = [r for r in results.media if r]
+        gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(
+            None, x.item_url, args).ratio())[-1]
 
-    if not results_media:
-      return await ctx.send("I got no gif results from tenor.")
+        embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
+            0, 16777215), timestamp=ctx.message.created_at)
 
-    gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.item_url, args).ratio())[-1]
+        embed.set_author(
+            name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.add_field(name="Powered by:", value="Tenor")
 
-    embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+        if gifNearest.gif:
+            embed.set_image(url=gifNearest.gif.url)
+        else:
+            embed.set_image("https://i.imgur.com/sLQzAiW.png")
 
-    embed.set_author(name = f"order for {ctx.author}:", icon_url= ctx.author.display_avatar.url)
-    embed.add_field(name = "Powered by:", value="Tenor")
+        embed.set_footer(text=f"{ctx.author.id}")
 
-    if gifNearest.gif: embed.set_image(url= gifNearest.gif.url)
-    else: embed.set_image("https://i.imgur.com/sLQzAiW.png")
+        await ctx.send(content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
 
-    embed.set_footer(text = f"{ctx.author.id}")
+        await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-    await ctx.send(content = "Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+    @commands.cooldown(1, 30, BucketType.user)
+    @tenor.command(help="shuffles the results from the tenor results", name="shuffle")
+    async def tenor_random(self, ctx, *, args=None):
 
-    await self.bot.get_channel(855217084710912050).send(embed = embed)
+        if not args:
+            return await self.tenor(ctx, args="shuffle")
 
-  @commands.cooldown(1, 30, BucketType.user)
-  @tenor.command(help = "shuffles the results from the tenor results", name = "shuffle")
-  async def tenor_random(self, ctx, *, args = None):
+        safesearch_type = ContentFilter.high()
+        results = await self.tenor_client.search(args, content_filter=safesearch_type, limit=10)
 
-    if not args:
-      return await self.tenor(ctx, args="shuffle")
+        if not results:
+            return await ctx.send("I got no results from tenor.")
 
+        results_media = [r for r in results.media if r]
 
-    safesearch_type = ContentFilter.high()
-    results = await self.tenor_client.search(args, content_filter = safesearch_type, limit = 10)
+        if not results_media:
+            return await ctx.send("I got no gif results from tenor.")
 
-    if not results:
-      return await ctx.send("I got no results from tenor.")
+        gifNearest = random.choice(results_media)
 
-    results_media = [r for r in results.media if r]
+        embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}", color=random.randint(
+            0, 16777215), timestamp=ctx.message.created_at)
 
-    if not results_media:
-      return await ctx.send("I got no gif results from tenor.")
+        embed.set_author(
+            name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.add_field(name="Powered by:", value="Tenor")
 
+        if gifNearest.gif:
+            embed.set_image(url=gifNearest.gif.url)
+        else:
+            embed.set_image("https://i.imgur.com/sLQzAiW.png")
 
-    gifNearest = random.choice(results_media)
+        embed.set_footer(text=f"{ctx.author.id}")
 
-    embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}", color = random.randint(0, 16777215), timestamp = ctx.message.created_at)
+        await ctx.send(content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
 
-    embed.set_author(name = f"order for {ctx.author}:", icon_url= ctx.author.display_avatar.url)
-    embed.add_field(name = "Powered by:", value="Tenor")
+        await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-    if gifNearest.gif: embed.set_image(url= gifNearest.gif.url)
-    else: embed.set_image("https://i.imgur.com/sLQzAiW.png")
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.command(help="shuffles the results from the tenor results", aliases=["tenor-shuffle"])
+    async def tenor_shuffle(self, ctx, *, args=None):
 
-    embed.set_footer(text = f"{ctx.author.id}")
+        if not args:
+            return await self.tenor(ctx, args="shuffle")
 
-    await ctx.send(content = "Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+        await self.tenor_random(ctx, args=args)
 
-    await self.bot.get_channel(855217084710912050).send(embed = embed)
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.group(brief="looks up an item from giphy.", invoke_without_command=True)
+    async def giphy(self, ctx, *, args=None):
 
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.command(help = "shuffles the results from the tenor results", aliases = ["tenor-shuffle"])
-  async def tenor_shuffle(self, ctx, *, args = None):
+        if not args:
+            return await ctx.send("That doesn't have any value.")
+            ctx.command.reset_cooldown(ctx)
 
-    if not args:
-      return await self.tenor(ctx, args = "shuffle")
+        safesearch_type = AgeRating.g()
+        results = await self.giphy_client.search(args, rating=safesearch_type, limit=10)
 
-    await self.tenor_random(ctx, args = args)
-    
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.group(brief = "looks up an item from giphy.",invoke_without_command = True)
-  async def giphy(self, ctx, *, args = None):
-    
-    if not args:
-      return await ctx.send("That doesn't have any value.")
-      ctx.command.reset_cooldown(ctx) 
+        if not results:
+            return await ctx.send("I got no results from tenor.")
 
-    safesearch_type = AgeRating.g()
-    results = await self.giphy_client.search(args, rating = safesearch_type, limit = 10)
+        results_media = [r for r in results.media if r]
 
-    if not results:
-      return await ctx.send("I got no results from tenor.")
+        if not results_media:
+            return await ctx.send("I got no gif results from giphy.")
 
-    results_media = [r for r in results.media if r]
+        gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(
+            None, x.url, args).ratio())[-1]
 
-    if not results_media:
-      return await ctx.send("I got no gif results from giphy.")
+        embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",  color=random.randint(
+            0, 16777215), timestamp=ctx.message.created_at)
 
-    gifNearest = sorted(results_media, key = lambda x: SequenceMatcher(None, x.url, args).ratio())[-1]
+        embed.set_footer(text=f"{ctx.author.id}")
 
-    embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}",  color=random.randint(0, 16777215), timestamp = ctx.message.created_at)
+        embed.set_author(
+            name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
-    embed.set_footer(text = f"{ctx.author.id}")
+        embed.add_field(name="Powered by:", value="GIPHY")
+        embed.set_image(
+            url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
 
-    embed.set_author(name = f"order for {ctx.author}:", icon_url = ctx.author.display_avatar.url)
+        await ctx.send(content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
 
-    embed.add_field(name = "Powered by:", value="GIPHY")
-    embed.set_image(url = f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
+        await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-    await ctx.send(content = "Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+    @commands.cooldown(1, 30, BucketType.user)
+    @giphy.command(help="looks up an item from giphy but shuffled.", name="shuffle")
+    async def giphy_random(self, ctx, *, args=None):
 
-    await self.bot.get_channel(855217084710912050).send(embed = embed)
+        if not args:
+            return await self.giphy(ctx, args="shuffle")
 
-  @commands.cooldown(1, 30, BucketType.user)
-  @giphy.command(help = "looks up an item from giphy but shuffled.", name = "shuffle")
-  async def giphy_random(self, ctx, *, args = None):
+        safesearch_type = AgeRating.g()
+        results = await self.giphy_client.search(args, rating=safesearch_type, limit=10)
 
-    if not args:
-      return await self.giphy(ctx, args = "shuffle")
+        if not results:
+            return await ctx.send("I got no results from tenor.")
 
-    safesearch_type = AgeRating.g()
-    results = await self.giphy_client.search(args, rating = safesearch_type, limit = 10)
+        results_media = [r for r in results.media if r]
 
-    if not results:
-      return await ctx.send("I got no results from tenor.")
+        if not results_media:
+            return await ctx.send("I got no gif results from giphy.")
 
-    results_media = [r for r in results.media if r]
+        gifNearest = random.choice(results_media)
 
-    if not results_media:
-      return await ctx.send("I got no gif results from giphy.")
+        embed = discord.Embed(title=f"Item: {args}", description=f"{ctx.author} ordered a {args}",  color=random.randint(
+            0, 16777215), timestamp=ctx.message.created_at)
 
-    gifNearest = random.choice(results_media)
+        embed.set_footer(text=f"{ctx.author.id}")
 
-    embed = discord.Embed(title=f"Item: {args}", description = f"{ctx.author} ordered a {args}",  color=random.randint(0, 16777215), timestamp = ctx.message.created_at)
+        embed.set_author(
+            name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
-    embed.set_footer(text = f"{ctx.author.id}")
+        embed.add_field(name="Powered by:", value="GIPHY")
+        embed.set_image(
+            url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
 
-    embed.set_author(name = f"order for {ctx.author}:", icon_url = ctx.author.display_avatar.url)
+        await ctx.send(content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
 
-    embed.add_field(name = "Powered by:", value="GIPHY")
-    embed.set_image(url = f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
+        await self.bot.get_channel(855217084710912050).send(embed=embed)
 
-    await ctx.send(content = "Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.command(help="looks up an item from giphy but shuffled", aliases=["giphy-shuffle"])
+    async def giphy_shuffle(self, ctx, *, args=None):
 
-    await self.bot.get_channel(855217084710912050).send(embed = embed)
+        if not args:
+            return await self.giphy(ctx, args="shuffle")
 
-    
-    
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.command(help = "looks up an item from giphy but shuffled", aliases=["giphy-shuffle"])
-  async def giphy_shuffle(self, ctx, *, args = None):
+        await self.giphy_random(ctx, args=args)
 
-    if not args:
-      return await self.giphy(ctx, args = "shuffle")
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.command(brief="can search a search result from google with safe search!")
+    async def google(self, ctx, *, args=None):
 
-    await self.giphy_random(ctx, args = args)
+        if not args:
+            return await ctx.send("You can't search for nothing, as well you need a thing to lokup.")
 
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.command(brief = "can search a search result from google with safe search!")
-  async def google(self, ctx, *, args = None):
+        try:
+            results = await self.google_engine.search(args, max_results=10, safe_search=True)
 
-    if not args:
-      return await ctx.send("You can't search for nothing, as well you need a thing to lokup.")
+        except Exception as e:
+            return await ctx.send(f"An error occured, error: {e}. Please give this to the owner. This was an error with results")
 
-    try:
-      results = await self.google_engine.search(args, max_results = 10, safe_search = True)
-    
-    except Exception as e:
-      return await ctx.send(f"An error occured, error: {e}. Please give this to the owner. This was an error with results")
+        menu = utils.GoogleEmbed(results, ctx=ctx, delete_message_after=True)
 
-  
-    menu = utils.GoogleEmbed(results, ctx = ctx, delete_message_after = True)
+        await menu.send(ctx.channel)
 
-    await menu.send(ctx.channel)
-  
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.command(brief = "sends a gif of someone dancing to disco (animated)")
-  async def disco(self, ctx):
-    
-    safesearch_type = ContentFilter.high()
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.command(brief="sends a gif of someone dancing to disco (animated)")
+    async def disco(self, ctx):
 
-    results = await self.tenor_client.search("disco", content_filter = safesearch_type, limit = 10)
+        safesearch_type = ContentFilter.high()
 
-    if not results:
-      return await ctx.send("I got no results from tenor.")
+        results = await self.tenor_client.search("disco", content_filter=safesearch_type, limit=10)
 
-    results_media = [r for r in results.media if r]
+        if not results:
+            return await ctx.send("I got no results from tenor.")
 
-    if not results_media:
-      return await ctx.send("I got no gif results from tenor.")
+        results_media = [r for r in results.media if r]
 
-    gifNearest = random.choice(results_media)
+        if not results_media:
+            return await ctx.send("I got no gif results from tenor.")
 
-    embed = discord.Embed(title = "Item: disco", description = f"Random Disco Gif:",  color=random.randint(0, 16777215), timestamp = ctx.message.created_at)
+        gifNearest = random.choice(results_media)
 
-    embed.set_footer(text = f"{ctx.author.id}")
+        embed = discord.Embed(title="Item: disco", description=f"Random Disco Gif:",
+                              color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
 
-    embed.set_author(name = f"Random Disco Gif for {ctx.author}:", icon_url = ctx.author.display_avatar.url)
+        embed.set_footer(text=f"{ctx.author.id}")
 
-    embed.add_field(name = "Powered by:", value = "Tenor")
+        embed.set_author(
+            name=f"Random Disco Gif for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
-    if gifNearest.gif: embed.set_image(url= gifNearest.gif.url)
-    else: embed.set_image("https://i.imgur.com/sLQzAiW.png")
+        embed.add_field(name="Powered by:", value="Tenor")
 
-    await ctx.send(content = "Disco has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
-  
-  @commands.cooldown(1, 30, BucketType.user)
-  @commands.command(brief = "sends a gif of someone dancing to all but disco(animated)")
-  async def dance(self, ctx):
-    
-    safesearch_type = ContentFilter.high()
+        if gifNearest.gif:
+            embed.set_image(url=gifNearest.gif.url)
+        else:
+            embed.set_image("https://i.imgur.com/sLQzAiW.png")
 
-    results = await self.tenor_client.search("dance", content_filter = safesearch_type, limit = 10)
+        await ctx.send(content="Disco has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
 
-    if not results:
-      return await ctx.send("I got no results from tenor.")
+    @commands.cooldown(1, 30, BucketType.user)
+    @commands.command(brief="sends a gif of someone dancing to all but disco(animated)")
+    async def dance(self, ctx):
 
-    results_media = [r for r in results.media if r]
+        safesearch_type = ContentFilter.high()
 
-    if not results_media:
-      return await ctx.send("I got no gif results from tenor.")
+        results = await self.tenor_client.search("dance", content_filter=safesearch_type, limit=10)
 
-    gifNearest = random.choice(results_media)
+        if not results:
+            return await ctx.send("I got no results from tenor.")
 
-    embed = discord.Embed(title = "Item: dance", description = f"Random Dance Gif:",  color=random.randint(0, 16777215), timestamp = ctx.message.created_at)
+        results_media = [r for r in results.media if r]
 
-    embed.set_footer(text = f"{ctx.author.id}")
+        if not results_media:
+            return await ctx.send("I got no gif results from tenor.")
 
-    embed.set_author(name = f"Random Dance Gif for {ctx.author}:", icon_url = ctx.author.display_avatar.url)
+        gifNearest = random.choice(results_media)
 
-    embed.add_field(name = "Powered by:", value="Tenor")
+        embed = discord.Embed(title="Item: dance", description=f"Random Dance Gif:",
+                              color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
 
-    if gifNearest.gif: embed.set_image(url = gifNearest.gif.url)
-    else: embed.set_image("https://i.imgur.com/sLQzAiW.png")
+        embed.set_footer(text=f"{ctx.author.id}")
 
-    await ctx.send(content = "Dance has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed = embed)
+        embed.set_author(
+            name=f"Random Dance Gif for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+
+        embed.add_field(name="Powered by:", value="Tenor")
+
+        if gifNearest.gif:
+            embed.set_image(url=gifNearest.gif.url)
+        else:
+            embed.set_image("https://i.imgur.com/sLQzAiW.png")
+
+        await ctx.send(content="Dance has been logged for safety purposes(we want to make sure no unsafe search is sent)", embed=embed)
+
 
 def setup(bot):
-  bot.add_cog(Order(bot))
+    bot.add_cog(Order(bot))

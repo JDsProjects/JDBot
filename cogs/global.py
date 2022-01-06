@@ -1,39 +1,48 @@
 from discord.ext import commands
-import discord, re
+import discord
+import re
 from better_profanity import profanity
 
+
 class Global(commands.Cog):
-  "Global Chat Commands"
-  def __init__(self, bot):
-    self.bot = bot
+    "Global Chat Commands"
 
-  @commands.command(brief = "wait for it to release")
-  async def global_wip(self, ctx):
-    await ctx.send("currently global chat is WIP for JDBot.")
+    def __init__(self, bot):
+        self.bot = bot
 
-  @commands.command(brief = "makes a global chat example message from your message", aliases = ["test_gc", "generate_message"])
-  async def test_global(self, ctx, *, args = None):
+    @commands.command(brief="wait for it to release")
+    async def global_wip(self, ctx):
+        await ctx.send("currently global chat is WIP for JDBot.")
 
-    args = args or "Test Content"
+    @commands.command(brief="makes a global chat example message from your message", aliases=["test_gc", "generate_message"])
+    async def test_global(self, ctx, *, args=None):
 
-    for x in re.findall(r'<@!?([0-9]{15,20})>', args):
-      user = await self.bot.try_user(int(x))
-      args = args.replace(f"{re.match(rf'<@!?({x})>', args).group()}", f"@{user}")
-      #fix this issue
+        args = args or "Test Content"
 
-    args = await commands.clean_content().convert(ctx, args)
-    args = profanity.censor(args, censor_char = "#")
-    
-    embed = discord.Embed(title=f"{ctx.guild}",
-    description = f"{args}", color = 15428885, timestamp = ctx.message.created_at)
+        for x in re.findall(r'<@!?([0-9]{15,20})>', args):
+            user = await self.bot.try_user(int(x))
+            args = args.replace(
+                f"{re.match(rf'<@!?({x})>', args).group()}", f"@{user}")
+            # fix this issue
 
-    embed.set_author(name=f"{ctx.author}", icon_url = ctx.author.display_avatar.url)
+        args = await commands.clean_content().convert(ctx, args)
+        args = profanity.censor(args, censor_char="#")
 
-    if ctx.guild: embed.set_thumbnail(url = ctx.guild.icon.url if ctx.guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+        embed = discord.Embed(title=f"{ctx.guild}",
+                              description=f"{args}", color=15428885, timestamp=ctx.message.created_at)
 
-    if not ctx.guild: embed.set_thumbnail(url = "https://i.imgur.com/3ZUrjUP.png")
-    
-    await ctx.send(f"Here's what it would look like in Global Chat!", embed = embed)
+        embed.set_author(name=f"{ctx.author}",
+                         icon_url=ctx.author.display_avatar.url)
+
+        if ctx.guild:
+            embed.set_thumbnail(
+                url=ctx.guild.icon.url if ctx.guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+
+        if not ctx.guild:
+            embed.set_thumbnail(url="https://i.imgur.com/3ZUrjUP.png")
+
+        await ctx.send(f"Here's what it would look like in Global Chat!", embed=embed)
+
 
 def setup(bot):
-  bot.add_cog(Global(bot))
+    bot.add_cog(Global(bot))

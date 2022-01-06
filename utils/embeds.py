@@ -1,177 +1,217 @@
-import collections, random, discord, aioimgur, sr_api, asyncdagpi, jeyyapi
+import collections
+import random
+import discord
+import aioimgur
+import sr_api
+import asyncdagpi
+import jeyyapi
 import os
+
 
 async def guildinfo(ctx, guild):
 
-  static_emojis = sum(not e.animated for e in guild.emojis)
-  animated_emojis = sum(e.animated for e in guild.emojis)
-  usable_emojis = sum(e.available for e in guild.emojis)
+    static_emojis = sum(not e.animated for e in guild.emojis)
+    animated_emojis = sum(e.animated for e in guild.emojis)
+    usable_emojis = sum(e.available for e in guild.emojis)
 
-  base_status = collections.Counter([x.status for x in guild.members])
+    base_status = collections.Counter([x.status for x in guild.members])
 
-  online_users = base_status[discord.Status.online]
-  dnd_users = base_status[discord.Status.dnd]
-  idle_users = base_status[discord.Status.idle]
-  offline_users = base_status[discord.Status.offline]
+    online_users = base_status[discord.Status.online]
+    dnd_users = base_status[discord.Status.dnd]
+    idle_users = base_status[discord.Status.idle]
+    offline_users = base_status[discord.Status.offline]
 
-  embed = discord.Embed(title="Guild Info:", color = random.randint(0, 16777215))
-  embed.add_field(name="Server Name:", value=guild.name)
-  embed.add_field(name="Server ID:", value=guild.id)
-  embed.add_field(name = "Server Creation:", value = f"{discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}")
+    embed = discord.Embed(title="Guild Info:",
+                          color=random.randint(0, 16777215))
+    embed.add_field(name="Server Name:", value=guild.name)
+    embed.add_field(name="Server ID:", value=guild.id)
+    embed.add_field(name="Server Creation:",
+                    value=f"{discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}")
 
-  embed.add_field(name="Server Owner Info:", value = f"Owner : {guild.owner} \nOwner ID : {guild.owner_id}")
+    embed.add_field(name="Server Owner Info:",
+                    value=f"Owner : {guild.owner} \nOwner ID : {guild.owner_id}")
 
-  embed.add_field(name = "Member info", value = f"Member Count : {guild.member_count}\nUsers : {len(guild.humans)} \nBots : {len(guild.bots)} ")
+    embed.add_field(name="Member info",
+                    value=f"Member Count : {guild.member_count}\nUsers : {len(guild.humans)} \nBots : {len(guild.bots)} ")
 
-  embed.add_field(name="Channel Count:", value = len(guild.channels))
-  embed.add_field(name="Role Count:", value = len(guild.roles))
+    embed.add_field(name="Channel Count:", value=len(guild.channels))
+    embed.add_field(name="Role Count:", value=len(guild.roles))
 
-  embed.set_thumbnail(url = guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+    embed.set_thumbnail(
+        url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 
-  embed.add_field(name="Emojis Info:", value = f"Limit : {guild.emoji_limit}\nStatic : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}")
+    embed.add_field(name="Emojis Info:",
+                    value=f"Limit : {guild.emoji_limit}\nStatic : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}")
 
-  animated_value = guild.icon.is_animated() if guild.icon else False
+    animated_value = guild.icon.is_animated() if guild.icon else False
 
-  embed.add_field(name="Max File Size:",value=f"{guild.filesize_limit/1000000} MB")
-  embed.add_field(name="Shard ID:",value=guild.shard_id)
-  embed.add_field(name="Animated Icon", value = f"{animated_value}")
-  
-  embed.add_field(name="User Presences Info:", value = f"Online Users: {online_users} \nDND Users: {dnd_users} \nIdle Users : {idle_users} \nOffline Users : {offline_users}")
+    embed.add_field(name="Max File Size:",
+                    value=f"{guild.filesize_limit/1000000} MB")
+    embed.add_field(name="Shard ID:", value=guild.shard_id)
+    embed.add_field(name="Animated Icon", value=f"{animated_value}")
 
-  await ctx.send(embed=embed)
+    embed.add_field(name="User Presences Info:",
+                    value=f"Online Users: {online_users} \nDND Users: {dnd_users} \nIdle Users : {idle_users} \nOffline Users : {offline_users}")
+
+    await ctx.send(embed=embed)
+
 
 async def roleinfo(ctx, role):
-  role_members = collections.Counter([u.bot for u in role.members])
-  role_bots = role_members[True]
-  role_users = role_members[False]
-  
-  if role.tags: 
-    role_bot_id = role.tags.bot_id
+    role_members = collections.Counter([u.bot for u in role.members])
+    role_bots = role_members[True]
+    role_users = role_members[False]
 
-  if not role.tags:
-    role_bot_id = None
+    if role.tags:
+        role_bot_id = role.tags.bot_id
 
-  role_time = f"{discord.utils.format_dt(role.created_at, style = 'd')}{discord.utils.format_dt(role.created_at, style = 'T')}"
+    if not role.tags:
+        role_bot_id = None
 
-  embed = discord.Embed(title = f"{role} Info:" ,color = random.randint(0, 16777215) )
-  embed.add_field(name = "Mention:", value = f"{role.mention}")
-  embed.add_field(name = "ID:", value = f"{role.id}")
-  embed.add_field(name = "Created at:", value = f"{role_time}")
+    role_time = f"{discord.utils.format_dt(role.created_at, style = 'd')}{discord.utils.format_dt(role.created_at, style = 'T')}"
 
-  embed.add_field(name="Member Count:", value = f"Bot Count : {role_bots} \nUser Count : {role_users}" )
+    embed = discord.Embed(title=f"{role} Info:",
+                          color=random.randint(0, 16777215))
+    embed.add_field(name="Mention:", value=f"{role.mention}")
+    embed.add_field(name="ID:", value=f"{role.id}")
+    embed.add_field(name="Created at:", value=f"{role_time}")
 
-  embed.add_field(name = "Position Info:", value = f"Position : {role.position} \nHoisted : {role.hoist}")
+    embed.add_field(name="Member Count:",
+                    value=f"Bot Count : {role_bots} \nUser Count : {role_users}")
 
-  embed.add_field(name = "Managed Info:", value = f"Managed : {role.managed} \nBot : {role.is_bot_managed()} \nBot ID : {role_bot_id} \nDefault : {role.is_default()} \nBooster Role : {role.is_premium_subscriber()} \nIntegrated : {role.is_integration()} \nMentionable : {role.mentionable} ")
+    embed.add_field(name="Position Info:",
+                    value=f"Position : {role.position} \nHoisted : {role.hoist}")
 
-  embed.add_field(name = "Permissions:", value = f"{role.permissions.value}")
-  embed.add_field(name = "Color:", value = f"{role.colour}")
+    embed.add_field(name="Managed Info:",
+                    value=f"Managed : {role.managed} \nBot : {role.is_bot_managed()} \nBot ID : {role_bot_id} \nDefault : {role.is_default()} \nBooster Role : {role.is_premium_subscriber()} \nIntegrated : {role.is_integration()} \nMentionable : {role.mentionable} ")
 
-  embed.set_thumbnail(url = "https://i.imgur.com/liABFL4.png")
+    embed.add_field(name="Permissions:", value=f"{role.permissions.value}")
+    embed.add_field(name="Color:", value=f"{role.colour}")
 
-  embed.set_footer(text = f"Guild: {role.guild}")
+    embed.set_thumbnail(url="https://i.imgur.com/liABFL4.png")
 
-  await ctx.send(embed = embed)
+    embed.set_footer(text=f"Guild: {role.guild}")
+
+    await ctx.send(embed=embed)
 
 
 async def triggered_converter(url, ctx):
-  sr_client = sr_api.Client(session = ctx.bot.session)
-  source_image=sr_client.filter(option="triggered", url = str(url))
+    sr_client = sr_api.Client(session=ctx.bot.session)
+    source_image = sr_client.filter(option="triggered", url=str(url))
 
-  imgur_client= aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url= await imgur_client.upload_from_url(source_image.url)
+    imgur_client = aioimgur.ImgurClient(
+        os.environ["imgur_id"], os.environ["imgur_secret"])
+    imgur_url = await imgur_client.upload_from_url(source_image.url)
 
-  embed = discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"Triggered gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
-  embed.set_image(url = imgur_url["link"])
-  embed.set_footer(text="powered by some random api")
-  return embed
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"Triggered gif requested by {ctx.author}", icon_url=(
+        ctx.author.display_avatar.url))
+    embed.set_image(url=imgur_url["link"])
+    embed.set_footer(text="powered by some random api")
+    return embed
+
 
 async def headpat_converter(url, ctx):
-  try:
-    client = jeyyapi.JeyyAPIClient(session = ctx.bot.session)
-    image = await client.patpat(url)
+    try:
+        client = jeyyapi.JeyyAPIClient(session=ctx.bot.session)
+        image = await client.patpat(url)
 
-  except Exception as e:
-    print(e)
-    return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+    except Exception as e:
+        print(e)
+        return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url = await imgur_client.upload(image)
-  embed=discord.Embed(color=random.randint(0, 16777215))
-  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
-  embed.set_image(url=imgur_url["link"])
-  embed.set_footer(text = "powered by some jeyyapi")
-  
-  return embed
+    imgur_client = aioimgur.ImgurClient(
+        os.environ["imgur_id"], os.environ["imgur_secret"])
+    imgur_url = await imgur_client.upload(image)
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(
+        ctx.author.display_avatar.url))
+    embed.set_image(url=imgur_url["link"])
+    embed.set_footer(text="powered by some jeyyapi")
+
+    return embed
+
 
 def create_channel_permission(ctx):
-  return ctx.author.guild_permissions.manage_channels
+    return ctx.author.guild_permissions.manage_channels
+
 
 def clear_permission(ctx):
-  if isinstance(ctx.channel, discord.TextChannel):
-    return ctx.author.guild_permissions.manage_messages
+    if isinstance(ctx.channel, discord.TextChannel):
+        return ctx.author.guild_permissions.manage_messages
 
-  if isinstance(ctx.channel,discord.DMChannel):
-    return False
+    if isinstance(ctx.channel, discord.DMChannel):
+        return False
 
 
 async def invert_converter(url, ctx):
-  try:
-    sr_client = sr_api.Client(session = ctx.bot.session)
-    source_image = sr_client.filter("invert", url = str(url))
-    image = await source_image.read()
-  except:
-    return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+    try:
+        sr_client = sr_api.Client(session=ctx.bot.session)
+        source_image = sr_client.filter("invert", url=str(url))
+        image = await source_image.read()
+    except:
+        return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url = await imgur_client.upload(image)
-  embed=discord.Embed(color = random.randint(0, 16777215))
-  embed.set_author(name=f"Inverted Image requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
-  embed.set_image(url=imgur_url["link"])
-  embed.set_footer(text="powered by some random api")
-  
-  return embed
+    imgur_client = aioimgur.ImgurClient(
+        os.environ["imgur_id"], os.environ["imgur_secret"])
+    imgur_url = await imgur_client.upload(image)
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"Inverted Image requested by {ctx.author}", icon_url=(
+        ctx.author.display_avatar.url))
+    embed.set_image(url=imgur_url["link"])
+    embed.set_footer(text="powered by some random api")
+
+    return embed
+
 
 async def headpat_converter2(url, ctx):
-  dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session = ctx.bot.session)
-  image=await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(),str(url))
+    dagpi_client = asyncdagpi.Client(
+        os.environ["dagpi_key"], session=ctx.bot.session)
+    image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(), str(url))
 
-  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url = await imgur_client.upload(image.image)
+    imgur_client = aioimgur.ImgurClient(
+        os.environ["imgur_id"], os.environ["imgur_secret"])
+    imgur_url = await imgur_client.upload(image.image)
 
-  embed=discord.Embed(color = random.randint(0, 16777215))
-  embed.set_author(name=f"Headpat gif requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
-  embed.set_image(url = imgur_url["link"])
-  embed.set_footer(text = "powered by dagpi")
-  return embed
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(
+        ctx.author.display_avatar.url))
+    embed.set_image(url=imgur_url["link"])
+    embed.set_footer(text="powered by dagpi")
+    return embed
+
 
 async def jail_converter(url, ctx):
-  dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session = ctx.bot.session)
-  image=await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(),str(url))
+    dagpi_client = asyncdagpi.Client(
+        os.environ["dagpi_key"], session=ctx.bot.session)
+    image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(), str(url))
 
-  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url = await imgur_client.upload(image.image)
+    imgur_client = aioimgur.ImgurClient(
+        os.environ["imgur_id"], os.environ["imgur_secret"])
+    imgur_url = await imgur_client.upload(image.image)
 
-  embed=discord.Embed(color = random.randint(0, 16777215))
-  embed.set_author(name=f"Jail Image requested by {ctx.author}",icon_url=(ctx.author.display_avatar.url))
-  embed.set_image(url = imgur_url["link"])
-  embed.set_footer(text="powered by dagpi")
-  return embed
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"Jail Image requested by {ctx.author}", icon_url=(
+        ctx.author.display_avatar.url))
+    embed.set_image(url=imgur_url["link"])
+    embed.set_footer(text="powered by dagpi")
+    return embed
+
 
 async def invert_converter2(url, ctx):
-  try:
-    client = jeyyapi.JeyyAPIClient(session = ctx.bot.session)
-    image = await client.half_invert(url)
+    try:
+        client = jeyyapi.JeyyAPIClient(session=ctx.bot.session)
+        image = await client.half_invert(url)
 
-  except:
-    return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+    except:
+        return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-  imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"],os.environ["imgur_secret"])
-  imgur_url = await imgur_client.upload(image)
-  embed=discord.Embed(color = random.randint(0, 16777215))
-  embed.set_author(name=f"Inverted Image requested by {ctx.author}",icon_url = (ctx.author.display_avatar.url))
-  embed.set_image(url = imgur_url["link"])
-  embed.set_footer(text="powered by some jeyyapi")
-  
-  return embed
+    imgur_client = aioimgur.ImgurClient(
+        os.environ["imgur_id"], os.environ["imgur_secret"])
+    imgur_url = await imgur_client.upload(image)
+    embed = discord.Embed(color=random.randint(0, 16777215))
+    embed.set_author(name=f"Inverted Image requested by {ctx.author}", icon_url=(
+        ctx.author.display_avatar.url))
+    embed.set_image(url=imgur_url["link"])
+    embed.set_footer(text="powered by some jeyyapi")
+
+    return embed
