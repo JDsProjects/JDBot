@@ -201,10 +201,10 @@ class Info(commands.Cog):
 
   
   @commands.command(help = "gives info on default emoji and custom emojis", name = "emoji")
-  async def emoji_info(self,ctx, *emojis: typing.Union[utils.EmojiConverter ,str]):
+  async def emoji_info(self, ctx, *emojis: typing.Union[utils.EmojiConverter, str]):
     if emojis:
 
-      menu = utils.EmojiInfoEmbed(emojis, ctx = ctx,delete_message_after = True)
+      menu = utils.EmojiInfoEmbed(emojis, ctx = ctx, delete_message_after = True)
       await menu.send(ctx.channel)
       
     if not emojis:
