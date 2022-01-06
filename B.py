@@ -13,5 +13,5 @@ def run():
 
 
 def b():
-    server = Thread(target = run)
+    server = Thread(target=run)
     server.start()
