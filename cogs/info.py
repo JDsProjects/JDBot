@@ -456,7 +456,7 @@ class DevTools(commands.Cog):
         code = autopep8.fix_code(code.content, options={"aggressive": 3})
 
         embed = discord.Embed(
-            title="Reformatted with Autopep8(normal mode)",
+            title="Reformatted with Autopep8(agressive mode)",
             description=f"code returned: \n```python\n{code}```",
             color=random.randint(0, 16777215),
         )
