@@ -9,5 +9,7 @@ if you aren't sure you can join: JDJG Inc. Official#3493
 I will start making sure pylance at some point is ran on my code.
 Anyway, Please Make Pull Requests that seem to fit, if you have an questions you can join my discord which is linked in my readme.
 I will have a code check at some point.
+You should use Pylance to make sure your code is clean and well formatted.
+I will make a way to check it in the future.
 Thank You,
 JDJG
