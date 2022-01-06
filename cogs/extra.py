@@ -47,13 +47,11 @@ class Extra(commands.Cog):
 
     response = utils.random_history(self.bot.history, number)
 
-    pag = commands.Paginator()
+    pag = commands.Paginator(prefix = "", suffix = "")
     for x in response:
       pag.add_line(f":earth_africa: {x}")
     
-    pages = [page.strip("`") for page in pag.pages]
-
-    menu = utils.RandomHistoryEmbed(pages, ctx = ctx, delete_message_after = True)
+    menu = utils.RandomHistoryEmbed(pag.pages, ctx = ctx, delete_message_after = True)
     await menu.send(ctx.channel)
 
   @commands.command(brief="gives you the digits of pi that Python knows")

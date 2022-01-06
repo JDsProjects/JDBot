@@ -72,13 +72,11 @@ class Events(commands.Cog):
     if re.fullmatch(rf"<@!?{self.bot.user.id}>", message.content) and not test.valid and not test.author.bot:
 
       prefixes=await self.bot.get_prefix(message)
-      pag = commands.Paginator()
+      pag = commands.Paginator(prefix="", suffix="")
       for p in prefixes:
         pag.add_line(f"{p}")
 
-      pages = [page.strip("`") for page in pag.pages]
-
-      menu = utils.PrefixesEmbed(pages, ctx = test, delete_message_after = True)
+      menu = utils.PrefixesEmbed(pag.pages, ctx = test, delete_message_after = True)
       await menu.send(test.channel)
 
   @commands.Cog.listener()

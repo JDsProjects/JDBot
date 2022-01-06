@@ -121,13 +121,12 @@ class Bot(commands.Cog):
 
     guilds_list = utils.grab_mutualguilds(ctx, owner)
 
-    pag = commands.Paginator()
+    pag = commands.Paginator(prefix = "", suffix = "")
 
     for g in guilds_list:
       pag.add_line(f"{g}")
 
-    pages = [page.strip("`") for page in pag.pages]
-    pages = pages or ["None"]
+    pages = pag.pages or ["None"]
 
     if (ctx.author.dm_channel is None):
         await ctx.author.create_dm()
@@ -366,13 +365,11 @@ class Bot(commands.Cog):
   @commands.command(brief="Lists the current prefixes that could be used.")
   async def prefixes(self, ctx):
     prefixes=await self.bot.get_prefix(ctx.message)
-    pag = commands.Paginator()
+    pag = commands.Paginator(prefix = "", suffix = "")
     for p in prefixes:
       pag.add_line(f"{p}")
 
-    pages = [page.strip("`") for page in pag.pages]
-
-    menu = utils.PrefixesEmbed(pages, ctx = ctx, delete_message_after = True)
+    menu = utils.PrefixesEmbed(pag.pages, ctx = ctx, delete_message_after = True)
 
     await menu.send(ctx.channel)
     
