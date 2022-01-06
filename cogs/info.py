@@ -438,7 +438,8 @@ class DevTools(commands.Cog):
             return await ctx.send("You need to give it code to work with it.")
 
         import autopep8
-        #make this use a jsk codeblock, and the other pep8 commands.
+
+        # make this use a jsk codeblock, and the other pep8 commands.
 
         code = autopep8.fix_code(args)
         args = args.strip("```python```")

@@ -129,18 +129,16 @@ class Owner(commands.Cog):
     )
     async def servers(self, ctx):
 
-        pag = commands.Paginator()
+        pag = commands.Paginator(prefix="", suffix="")
         for g in self.bot.guilds:
             pag.add_line(
                 f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}"
             )
 
-        pages = [page.strip("`") for page in pag.pages]
-
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
-        menu = utils.ServersEmbed(pages, ctx=ctx, disable_after=True)
+        menu = utils.ServersEmbed(pag.pages, ctx=ctx, disable_after=True)
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
@@ -171,13 +169,12 @@ class Owner(commands.Cog):
     @commands.command(brief="Commands to see what guilds a person is in.")
     async def mutualguilds(self, ctx, *, user: utils.BetterUserconverter = None):
         user = user or ctx.author
-        pag = commands.Paginator()
+        pag = commands.Paginator(prefix="", suffix="")
 
         for g in user.mutual_guilds:
             pag.add_line(f"{g}")
 
-        pages = [page.strip("`") for page in pag.pages]
-        pages = pages or ["No shared servers"]
+        pages = pag.pages or ["No shared servers"]
 
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
@@ -477,18 +474,16 @@ class Owner(commands.Cog):
 
         sorted_guilds = sorted(self.bot.guilds, key=lambda guild: guild.me.joined_at)
 
-        pag = commands.Paginator()
+        pag = commands.Paginator(prefix="", suffix="")
         for g in sorted_guilds:
             pag.add_line(
                 f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n"
             )
 
-        pages = [page.strip("`") for page in pag.pages]
-
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
-        menu = utils.ServersEmbed(pages, ctx=ctx, disable_after=True)
+        menu = utils.ServersEmbed(pag.pages, ctx=ctx, disable_after=True)
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
