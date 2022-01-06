@@ -439,7 +439,7 @@ class DevTools(commands.Cog):
             return await ctx.send("You need to give it code to work with it.")
 
         code = autopep8.fix_code(code.content)
-        embed = discord.Embed(description = f"code returned: \n```python\n{code}```", color=random.randint(0, 16777215))
+        embed = discord.Embed(title = "Reformatted with Autopep8(normal mode)", description = f"code returned: \n```python\n{code}```", color=random.randint(0, 16777215))
         embed.set_footer(text = "Make sure you use python code, otherwise it will not work properly.")
         await ctx.send(embed = embed)
 
@@ -448,30 +448,28 @@ class DevTools(commands.Cog):
         if not code:
             return await ctx.send("You need to give it code to work with it.")
 
-        code = autopep8.fix_code(args, options={"aggressive": 3})
-        
+          
+        code = autopep8.fix_code(code.content, options={"aggressive": 3})
+      
+        embed = discord.Embed(title = "Reformatted with Autopep8(normal mode)", description = f"code returned: \n```python\n{code}```", color=random.randint(0, 16777215))
+        embed.set_footer(text = "Make sure you use python code, otherwise it will not work properly.")
+        await ctx.send(embed = embed)
 
     @commands.command(brief="a command like pep8 but with google's yapf tool.")
-    async def pep8_2(self, ctx, *, args=None):
-        if not args:
+    async def pep8_2(self, ctx, *, code: codeblock_converter = None):
+        if not code:
             return await ctx.send("you need code for it to work with.")
-
-        args = args.strip("```python```")
-        args = args.strip("```")
-        code = FormatCode(args, style_config="pep8")
+          
+        code = FormatCode(code.content, style_config="pep8")
         await ctx.send(content=f"code returned: \n```{code[0]}```")
 
     @commands.command(brief="a command that autoformats to google's standards")
-    async def pep8_google(self, ctx, *, args=None):
+    async def pep8_google(self, ctx, *, code: codeblock_converter = None):
 
-        if not args:
+        if not code:
             return await ctx.send("you need code for it to work with.")
 
-        from yapf.yapflib.yapf_api import FormatCode
-
-        args = args.strip("```python```")
-        args = args.strip("```")
-        code = FormatCode(args, style_config="google")
+        code = FormatCode(code.content, style_config="google")
         await ctx.send(content=f"code returned: \n```{code[0]}```")
 
     @commands.command(brief="grabs your pfp's image")
