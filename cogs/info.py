@@ -425,12 +425,11 @@ class DevTools(commands.Cog):
 
         rtfm_dictionary = dict(await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY"))
 
-        pag = commands.Paginator()
+        pag = commands.Paginator(prefix="", suffix="")
         for g in rtfm_dictionary:
             pag.add_line(f"{g} : {rtfm_dictionary.get(g)}")
-        pages = [page.strip("`") for page in pag.pages]
 
-        menu = utils.RtfmEmbed(pages, ctx=ctx, delete_message_after=True)
+        menu = utils.RtfmEmbed(pag.pages, ctx=ctx, delete_message_after=True)
         await menu.send(ctx.channel)
 
     @commands.command(brief="a command to autoformat your python code to pep8")
@@ -439,6 +438,7 @@ class DevTools(commands.Cog):
             return await ctx.send("You need to give it code to work with it.")
 
         import autopep8
+        #make this use a jsk codeblock, and the other pep8 commands.
 
         code = autopep8.fix_code(args)
         args = args.strip("```python```")

@@ -209,13 +209,12 @@ class Bot(commands.Cog):
 
         guilds_list = utils.grab_mutualguilds(ctx, owner)
 
-        pag = commands.Paginator()
+        pag = commands.Paginator(prefix="", suffix="")
 
         for g in guilds_list:
             pag.add_line(f"{g}")
 
-        pages = [page.strip("`") for page in pag.pages]
-        pages = pages or ["None"]
+        pages = pag.pages or ["None"]
 
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()

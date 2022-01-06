@@ -79,13 +79,11 @@ class Extra(commands.Cog):
 
         response = utils.random_history(self.bot.history, number)
 
-        pag = commands.Paginator()
+        pag = commands.Paginator(prefix="", suffix="")
         for x in response:
             pag.add_line(f":earth_africa: {x}")
 
-        pages = [page.strip("`") for page in pag.pages]
-
-        menu = utils.RandomHistoryEmbed(pages, ctx=ctx, delete_message_after=True)
+        menu = utils.RandomHistoryEmbed(pag.pages, ctx=ctx, delete_message_after=True)
         await menu.send(ctx.channel)
 
     @commands.command(brief="gives you the digits of pi that Python knows")
@@ -931,16 +929,14 @@ class Extra(commands.Cog):
 
             return await ctx.send(embed=embed)
 
-        pag = commands.Paginator(max_size=4098)
+        pag = commands.Paginator(max_size=4098, prefix="", suffix="")
 
         for index, todo_entry in enumerate(values):
             pag.add_line(
                 f"[{index+1}]({todo_entry['jump_url']}). {discord.utils.format_dt(todo_entry['added_time'], 'R')} {todo_entry['text']}"
             )
 
-        pages = [page.strip("`") for page in pag.pages]
-
-        menu = utils.TodoEmbed(pages, ctx=ctx, delete_message_after=True)
+        menu = utils.TodoEmbed(pag.pages, ctx=ctx, delete_message_after=True)
 
         await menu.send(ctx.channel)
 
