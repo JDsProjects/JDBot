@@ -19,6 +19,7 @@ from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
 
+
 class Info(commands.Cog):
     "Gives you Information about data you are allowed to access"
 
@@ -437,7 +438,7 @@ class DevTools(commands.Cog):
             return await ctx.send("You need to give it code to work with it.")
 
         code = code.content
-        #make a select to allow you to pick what versions you want to use.
+        # make a select to allow you to pick what versions you want to use.
         embed = discord.Embed(
             title="Reformatted with Black",
             description=f"code returned: \n```python\n{code}```",
