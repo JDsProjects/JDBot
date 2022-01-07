@@ -439,11 +439,14 @@ class DevTools(commands.Cog):
             return await ctx.send("You need to give it code to work with it.")
 
         view = utils.BasicButtons(ctx, timeout=15.0)
-        msg = await ctx.send("Do you want to use black's line formatter at 120, or just use the default?", view=view)
+        msg = await ctx.send(
+            "Do you want to use black's line formatter at 120 (i.e. black -l120), or just use the default? (i.e black .)",
+            view=view,
+        )
         await view.wait()
 
         if view.value is None or view.value is False:
-            await msg.edit("Default it is.")
+            await msg.edit("Default it is.", view=None)
             boolean = True
 
         if view.value is True:
