@@ -861,12 +861,10 @@ class SubredditChoice(discord.ui.View):
 # calculator buttons go here
 	
 class CalcView(discord.ui.View):
-	def __init__(self,ctx):
-		super().__init__(timeout=180)
+	def __init__(self, ctx):
 		self.expr = ""
 		self.ctx=ctx
 		self.calc = simpcalc.Calculate()
-		self.response=None
 
 	@discord.ui.button(style=discord.ButtonStyle.blurple, label="1", row=0)
 	async def one(self, button: discord.ui.Button, interaction: discord.Interaction):           
@@ -980,4 +978,4 @@ class CalcView(discord.ui.View):
 	async def on_timeout(self):
 		for child in self.children:
 			child.disabled=True
-		await self.response.edit(view=self) 
+		await self.message.edit(view=self) 
