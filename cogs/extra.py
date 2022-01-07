@@ -787,7 +787,7 @@ class Extra(commands.Cog):
         embed.set_thumbnail(url="https://i.imgur.com/w9aiD6F.png")
 
         view = utils.nitroButtons(timeout=180.0)
-        message = await ctx.send(embed=embed, view=view)
+        await ctx.send(embed=embed, view=view)
 
     @commands.cooldown(1, 60, BucketType.user)
     @commands.cooldown(1, 60, BucketType.channel)
