@@ -452,10 +452,10 @@ class DevTools(commands.Cog):
 
         code_conversion = functools.partial(utils.formatter, code.content, boolean)
         try:
-            await self.bot.loop.run_in_executor(None, code_conversion)
+            code = await self.bot.loop.run_in_executor(None, code_conversion)
 
         except Exception as e:
-            return await ctx.send(f"Error Ocurred with {e}")
+            return await msg.edit(f"Error Ocurred with {e}")
 
         embed = discord.Embed(
             title="Reformatted with Black",
@@ -463,7 +463,7 @@ class DevTools(commands.Cog):
             color=random.randint(0, 16777215),
         )
         embed.set_footer(text="Make sure you use python code, otherwise it will not work properly.")
-        await ctx.send(embed=embed)
+        await msg.edit(embed=embed)
 
     @commands.command(brief="grabs your pfp's image")
     async def pfp_grab(self, ctx):
