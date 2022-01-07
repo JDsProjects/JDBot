@@ -22,6 +22,10 @@ async def get_prefix(bot, message):
 
     return commands.when_mentioned_or(*extras)(bot, message)
 
+
+# class JDBotContext(commands.Context):
+
+
 class JDBot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -61,6 +65,9 @@ class JDBot(commands.Bot):
         # print(args)
         # print(kwargs)
         # check about on_error with other repos of mine as well to update this.
+
+    async def get_context(self, message, *, cls=JDBotContext):
+        return await super().get_context(message, cls=cls)
 
 
 intents = discord.Intents.all()
