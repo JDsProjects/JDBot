@@ -2,6 +2,7 @@ import discord
 import asyncio
 import random
 from discord.ext import commands
+import mathjspy
 
 from typing import Literal, Optional, Dict, Any, List, Union, Tuple
 
@@ -858,4 +859,113 @@ class SubredditChoice(discord.ui.View):
         await self.message.edit(content="Here's the default...", view=self)
 
 
-# calculator buttons go here
+# These are Calculator Functions
+def get_highest(iterable):
+    resp = 0
+    for i in iterable:
+        if i > resp:
+            resp = i
+    return resp
+
+
+def get_last_operator(response: str):
+    try:
+        plus = response.rindex("+")
+    except ValueError:
+        plus = None
+    try:
+        minus = response.rindex("-")
+    except ValueError:
+        minus = None
+    try:
+        mul = response.rindex("*")
+    except ValueError:
+        mul = None
+    try:
+        div = response.rindex("/")
+    except ValueError:
+        div = None
+    valid = [n for n in [plus, minus, mul, div] if n != None]
+    indx = get_highest(valid)
+    return response[indx:]
+
+
+async def default_execution_function(view, label, interaction: discord.Interaction):
+    view.expression += str(label)
+    await interaction.response.edit_message(content=view.expression)
+
+
+async def operator_handler(view, label, interaction: discord.Interaction):
+    if not view.expression or not view.expression[0].isdigit():
+        return await interaction.response.send_message("You cannot use operators at start.", ephemeral=True)
+    if not view.expression[-1].isdigit():
+        return await interaction.response.send_message("You cannot add operator after operator.", ephemeral=True)
+    view.expression += label
+    await interaction.response.edit_message(content=view.expression)
+
+
+async def give_result_operator(view, label, interaction: discord.Interaction):
+    parser = view.parser
+    if not view.expression:
+        return await interaction.response.send_message("You didn't tell me anything to evaluate.", ephemeral=True)
+    if view.expression.isdigit() and view.last_expr:
+        view.expression += view.last_expr
+    else:
+        view.last_expr = get_last_operator(view.expression)
+    result = str(parser.eval(view.expression))
+    view.expression = result
+    await interaction.response.edit_message(content=result)
+
+
+async def stop_button(view, label, interaction: discord.Interaction):
+    for i in view.children:
+        i.disabled = True
+    await interaction.response.edit_message(view=view)
+    view.stop()
+
+
+async def go_back(view, label, interaction: discord.Interaction):
+    if not view.expression:
+        return
+    view.expression = view.expression[:-1]
+    await interaction.response.edit_message(content=view.expression)
+
+
+# These are Calculator Buttons
+class CalcButton(discord.ui.Button):
+    def __init__(
+        self, label: str, row: int, execution_function=default_execution_function, style=discord.ButtonStyle.blurple
+    ):
+        super().__init__(label=label, row=row, style=style)
+        self.__func = execution_function
+
+    async def callback(self, interaction: discord.Interaction):
+        await self.__func(self.view, self.label, interaction)
+
+
+# Actual Calculator Buttons
+class CalcView(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+        self.parser = mathjspy.MathJS()
+        self.expression = ""
+        self.last_expr = ""
+        numb = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]
+        for row in range(len(numb)):
+            for i in numb[row]:
+                self.add_item(CalcButton(i, row))
+        for label, row in [["+", 0], ["-", 1], ["*", 2], ["/", 3]]:
+            self.add_item(CalcButton(label, row, operator_handler, discord.ButtonStyle.green))
+        self.add_item(CalcButton("=", 3, give_result_operator, discord.ButtonStyle.gray))
+        self.add_item(CalcButton(f'{"Stop":⠀^29}', 4, stop_button, discord.ButtonStyle.red))
+        self.add_item(CalcButton("<==", 3, go_back))
+
+    async def interaction_check(self, interaction: discord.Interaction):
+        if interaction.user.id not in [self.ctx.author.id, self.ctx.bot.owner_id, [*self.ctx.bot.owner_ids]]:
+            await interaction.response.send_message(
+                f"This button can only be accessed by {self.ctx.author.name}.", ephemeral=True
+            )
+            return False
+        else:
+            return True
