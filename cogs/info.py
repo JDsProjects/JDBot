@@ -135,7 +135,7 @@ class Info(commands.Cog):
         menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
-        view.message = await ctx.send(
+        await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
             embed=embed,
             view=view,
@@ -392,7 +392,7 @@ class DevTools(commands.Cog):
 
         view = utils.RtfmChoice(ctx, rtfm_dictionary, timeout=15.0)
 
-        view.message = await ctx.send(content="Please Pick a library you want to parse", view=view)
+        await ctx.send(content="Please Pick a library you want to parse", view=view)
 
         await view.wait()
 
@@ -440,7 +440,7 @@ class DevTools(commands.Cog):
 
         view = utils.BasicButtons(ctx, timeout=15.0)
         msg = await ctx.send(
-            "Do you want to use black's line formatter at 120 (i.e. black -l120), or just use the default? (i.e black .)",
+            "Do you want to use black's line formatter at 120 (i.e. black -l120 .), or just use the default? (i.e black .)",
             view=view,
         )
         await view.wait()

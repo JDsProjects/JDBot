@@ -23,7 +23,14 @@ async def get_prefix(bot, message):
     return commands.when_mentioned_or(*extras)(bot, message)
 
 
-# class JDBotContext(commands.Context):
+class JDBotContext(commands.Context):
+    async def send(self, *args, **kwargs):
+        msg = await super().send(*args, **kwargs)
+        view = kwargs.get("view")
+        if view is not None:
+            view.message = msg
+
+        return msg
 
 
 class JDBot(commands.Bot):

@@ -1,7 +1,6 @@
 import discord
 import asyncio
 import random
-import aiohttp
 from discord.ext import commands
 
 from typing import Literal, Optional, Dict, Any, List, Union, Tuple
@@ -682,7 +681,9 @@ class RpsGame(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.message.edit(view=self)
+        await self.message.edit(
+            "You didn't respond fast enough, you lost.(Play again by running game again)", view=self
+        )
 
     async def interaction_check(self, interaction: discord.Interaction):
 
@@ -721,7 +722,7 @@ class CoinFlip(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.message.edit(view=self)
+        await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
 

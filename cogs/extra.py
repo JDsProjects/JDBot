@@ -787,7 +787,7 @@ class Extra(commands.Cog):
         embed.set_thumbnail(url="https://i.imgur.com/w9aiD6F.png")
 
         view = utils.nitroButtons(timeout=180.0)
-        view.message = await ctx.send(embed=embed, view=view)
+        message = await ctx.send(embed=embed, view=view)
 
     @commands.cooldown(1, 60, BucketType.user)
     @commands.cooldown(1, 60, BucketType.channel)
@@ -900,7 +900,7 @@ class Extra(commands.Cog):
 
         view = utils.SubredditChoice(ctx, subreddits, timeout=15.0)
 
-        view.message = await ctx.send("Please Pick a Subreddit to get a random post from:", view=view)
+        await ctx.send("Please Pick a Subreddit to get a random post from:", view=view)
         await view.wait()
 
         subreddit = await self.bot.db.fetchrow("SELECT * FROM SUBREDDITS WHERE name = $1", view.value)

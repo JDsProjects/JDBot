@@ -146,12 +146,12 @@ class Dice(commands.Cog):
         embed2 = discord.Embed(color=random.randint(0, 16777215))
         embed2.set_image(url="https://i.imgur.com/O7FscBW.gif")
 
-        view.message = await ctx.send(content="Time to see if you can guess correctly!", embed=embed2, view=view)
+        message = await ctx.send(content="Time to see if you can guess correctly!", embed=embed2, view=view)
 
         await view.wait()
 
         if view.value is None:
-            return await view.message.edit("Looks it like it timed out.(may want to make an new game)")
+            return
 
         if view.value == "Heads" and value:
             win = True
@@ -178,7 +178,7 @@ class Dice(commands.Cog):
         else:
             embed.add_field(name="Result: ", value="You lost")
 
-        await view.message.edit(content="Here's the results:", embed=embed)
+        await message.edit(content="Here's the results:", embed=embed)
 
     @commands.command(brief="a command to find the nearest emoji")
     async def emote(self, ctx, *, args=None):
@@ -253,14 +253,12 @@ class Dice(commands.Cog):
         embed2 = discord.Embed(color=random.randint(0, 16777215))
         embed2.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        view.message = await ctx.send("Rock Paper Scissors Shoot!", embed=embed2, view=view)
+        message = await ctx.send("Rock Paper Scissors Shoot!", embed=embed2, view=view)
 
         await view.wait()
 
         if view.value is None:
-            return await view.message.edit(
-                "You didn't respond fast enough, you lost.(Play again by running game again)"
-            )
+            return
 
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors"}
@@ -283,7 +281,7 @@ class Dice(commands.Cog):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        await view.message.edit(embed=embed, view=None)
+        await message.edit(embed=embed, view=None)
 
         # gnome made a good idea on a run again button, I Just need to make one :D
 
