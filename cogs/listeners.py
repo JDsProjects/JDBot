@@ -130,6 +130,10 @@ class Events(commands.Cog):
     async def on_guild_unavailable(self, guild):
         print(f"{guild} is unavaible")
 
+    @commands.Cog.listener()
+    async def on_message_edit(self, before, after):
+        await self.bot.process_commands(after)
+
 
 def setup(bot):
     bot.add_cog(Events(bot))
