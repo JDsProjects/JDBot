@@ -962,7 +962,7 @@ class CalcView(discord.ui.View):
         self.add_item(CalcButton("<==", 3, go_back))
 
     async def interaction_check(self, interaction: discord.Interaction):
-        if interaction.user.id not in [self.ctx.author.id, self.ctx.bot.owner_id, [*self.ctx.bot.owner_ids]]:
+        if interaction.user.id != self.ctx.author.id:
             await interaction.response.send_message(
                 f"This button can only be accessed by {self.ctx.author.name}.", ephemeral=True
             )
