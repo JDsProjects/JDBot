@@ -973,5 +973,5 @@ class CalcView(discord.ui.View):
     async def on_timeout(self):
         for i in self.children:
             i.disabled = True
-        await self.message.edit(view=self)
+        await self.message.edit(content="If you want your calculator to work you need to make a new one.", view=self)
         self.stop()
