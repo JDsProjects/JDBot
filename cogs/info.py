@@ -18,6 +18,7 @@ import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
+import black
 
 
 class Info(commands.Cog):
@@ -439,6 +440,7 @@ class DevTools(commands.Cog):
 
         code = code.content
         # make a select to allow you to pick what versions you want to use.
+        # either black traditional or black line 120.
         embed = discord.Embed(
             title="Reformatted with Black",
             description=f"code returned: \n```python\n{code}```",
