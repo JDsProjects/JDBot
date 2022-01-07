@@ -1104,6 +1104,11 @@ class Extra(commands.Cog):
             await self.bot.db.execute("DELETE FROM todo WHERE user_id = $1", ctx.author.id)
             await msg.edit(f"We Removed **{len(values)}** values")
 
+    @commands.command(brief="a command that does calc with buttons", aliases=["calculator"])
+    async def calc(self, ctx):
+        view = utils.CalcView(ctx)
+        await ctx.send("\u200b", view=view)
+
 
 def setup(bot):
     bot.add_cog(Extra(bot))
