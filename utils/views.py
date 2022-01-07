@@ -969,3 +969,9 @@ class CalcView(discord.ui.View):
             return False
         else:
             return True
+
+    async def on_timeout(self):
+        for i in self.children:
+            i.disabled = True
+        await self.message.edit(view=self)
+        self.stop()

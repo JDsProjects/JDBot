@@ -86,7 +86,7 @@ class Test(commands.Cog):
     # guild_prefixes table in my sql database
     # spyco data table in my sql database
 
-    @commands.command(brief = "a command that does calc with buttons", aliases = ["calculator"])
+    @commands.command(brief="a command that does calc with buttons", aliases=["calculator"])
     async def calc(self, ctx):
         view = utils.CalcView(ctx)
         await ctx.send("\u200b", view=view)
