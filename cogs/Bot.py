@@ -222,7 +222,7 @@ class Bot(commands.Cog):
         menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
-        view.message = await ctx.send(
+        await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
             embed=embed,
             view=view,

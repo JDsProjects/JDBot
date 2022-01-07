@@ -22,7 +22,6 @@ async def get_prefix(bot, message):
 
     return commands.when_mentioned_or(*extras)(bot, message)
 
-
 class JDBot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
