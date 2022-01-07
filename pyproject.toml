@@ -19,7 +19,6 @@ emoji = "^1.2.0"
 asyncpraw = "^7.3.1"
 tweepy = {git = "https://github.com/tweepy/tweepy.git"}
 topggpy = "^1.1.0"
-autopep8 = "^1.5.7"
 CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 async-cleverbot = "^0.2.2"
@@ -31,6 +30,7 @@ jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi", branch = "main"}
 tabulate = "^0.8.9"
 asyncpg = "^0.25.0"
 psutil = "^5.8.0"
+black = "^21.12b0"
 
 [tool.poetry.dev-dependencies]
 
