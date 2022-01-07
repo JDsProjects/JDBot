@@ -5,6 +5,7 @@ import typing
 from discord.flags import UserFlags
 import io
 import os
+import black
 
 
 async def google_tts(bot, text):
@@ -199,3 +200,11 @@ def get_required_npm(data):
         "license": license,
         "dependencies": dependencies,
     }
+
+
+def formatter(code, number, boolean):
+    src = code
+    mode = black.Mode(line_length=120) if boolean else black.Mode()
+    dst = black.format_str(src, mode=mode)
+    black.dump_to_file = lambda *args, **kwargs: None
+    return dst

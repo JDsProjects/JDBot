@@ -18,7 +18,7 @@ import utils
 from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
-import black
+import functools
 
 
 class Info(commands.Cog):
@@ -438,9 +438,25 @@ class DevTools(commands.Cog):
         if not code:
             return await ctx.send("You need to give it code to work with it.")
 
-        code = code.content
-        # make a select to allow you to pick what versions you want to use.
-        # either black traditional or black line 120.
+        view = utils.BasicButtons(ctx, timeout=15.0)
+        msg = await ctx.send("Do you want to use black's line formatter at 120, or just use the default?")
+        await view.value()
+
+        if view.value is None or view.value is False:
+            await msg.edit("Default it is.")
+            boolean = True
+
+        if view.value is True:
+            await msg.edit("Speacil Formatting at 120 lines it is.")
+            boolean = True
+
+        code_conversion = functools.partial(utils.formatter, code.content, boolean)
+        try:
+            await self.bot.loop.run_in_executor(None, code_conversion)
+
+        except Exception as e:
+            return await ctx.send(f"Error Ocurred with {e}")
+
         embed = discord.Embed(
             title="Reformatted with Black",
             description=f"code returned: \n```python\n{code}```",
