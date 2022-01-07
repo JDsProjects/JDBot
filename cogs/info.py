@@ -447,13 +447,10 @@ class DevTools(commands.Cog):
 
         if view.value is None or view.value is False:
             await msg.edit("Default it is.", view=None)
-            boolean = True
 
         if view.value is True:
             await msg.edit("Speacil Formatting at 120 lines it is.")
-            boolean = True
-
-        code_conversion = functools.partial(utils.formatter, code.content, boolean)
+        code_conversion = functools.partial(utils.formatter, code.content, bool(view.value))
         try:
             code = await self.bot.loop.run_in_executor(None, code_conversion)
 
