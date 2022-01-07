@@ -202,7 +202,7 @@ def get_required_npm(data):
     }
 
 
-def formatter(code, number, boolean):
+def formatter(code, boolean):
     src = code
     mode = black.Mode(line_length=120) if boolean else black.Mode()
     dst = black.format_str(src, mode=mode)
