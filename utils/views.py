@@ -856,3 +856,6 @@ class SubredditChoice(discord.ui.View):
             item.disabled = True
 
         await self.message.edit(content="Here's the default...", view=self)
+
+
+# calculator buttons go here
