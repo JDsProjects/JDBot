@@ -37,6 +37,7 @@ class JDBot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.special_access = {}
+        self.messages = {}
         self.suspended = False
 
     async def start(self, *args, **kwargs):
