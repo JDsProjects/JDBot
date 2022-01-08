@@ -955,11 +955,11 @@ class CalcView(discord.ui.View):
         for row in range(len(numb)):
             for i in numb[row]:
                 self.add_item(CalcButton(i, row))
+        self.add_item(CalcButton("=", 3, give_result_operator, discord.ButtonStyle.gray))
+        self.add_item(CalcButton("<==", 3, go_back))
         for label, row in [["+", 0], ["-", 1], ["*", 2], ["/", 3]]:
             self.add_item(CalcButton(label, row, operator_handler, discord.ButtonStyle.green))
-        self.add_item(CalcButton("=", 3, give_result_operator, discord.ButtonStyle.gray))
         self.add_item(CalcButton(f'{"Stop":⠀^29}', 4, stop_button, discord.ButtonStyle.red))
-        self.add_item(CalcButton("<==", 3, go_back))
 
     async def interaction_check(self, interaction: discord.Interaction):
         if interaction.user.id != self.ctx.author.id:
