@@ -912,7 +912,7 @@ async def give_result_operator(view, label, interaction: discord.Interaction):
         view.expression += view.last_expr
     else:
         view.last_expr = get_last_operator(view.expression)
-    result = str(parser.eval(view.expression))
+    result = str(int(parser.eval(view.expression)))
     view.expression = result
     await interaction.response.edit_message(content=result)
 
