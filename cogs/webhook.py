@@ -2,7 +2,6 @@ from discord.ext import commands
 import discord
 import re
 import random
-import aiohttp
 import utils
 
 
@@ -22,14 +21,14 @@ class Webhook(commands.Cog):
 
         if response.status != 200:
             return await ctx.send("Not a valid link or an error occured.")
-        
+
         if response.status == 200:
             webhook = discord.Webhook.from_url(webhook.group(), session=session)
 
             embed = discord.Embed(
-                    title=f"Webhook {webhook.name}'s Message",
-                    color=random.randint(0, 16777215),
-                    timestamp=(ctx.message.created_at),
+                title=f"Webhook {webhook.name}'s Message",
+                color=random.randint(0, 16777215),
+                timestamp=(ctx.message.created_at),
             )
             embed.add_field(name="Content:", value=content)
             await webhook.send(embed=embed)
@@ -37,18 +36,18 @@ class Webhook(commands.Cog):
             await ctx.send(f"Message was sent to the desired webhook channel.")
 
     @commands.command(brief="a way to create webhooks", help="make commands with this.")
-    async def webhook_create(self, ctx, name: str=None, *, args=None):
+    async def webhook_create(self, ctx, name: str = None, *, args=None):
         if ctx.guild:
             if ctx.author.guild_permissions.manage_webhooks:
                 if not name:
                     return await ctx.send("Please input a webhook name.")
-                
+
                 try:
                     webhook = await ctx.channel.create_webhook(name=name)
                 except Exception as e:
                     return await ctx.send(
-                                f"give the bot manage webhook permissions for this to work and give the error to {e} if an issue."
-                        )
+                        f"give the bot manage webhook permissions for this to work and give the error to {e} if an issue."
+                    )
                 embed = discord.Embed(
                     title=f"{ctx.author}'s message:",
                     color=random.randint(0, 16777215),
@@ -58,7 +57,7 @@ class Webhook(commands.Cog):
 
                 if ctx.message.attachments:
                     await ctx.trigger_typing()
-                    
+
                     image = await ctx.message.attachments[0].read()
                     pass_test = True
                     try:
@@ -84,7 +83,7 @@ class Webhook(commands.Cog):
 
             else:
                 return await ctx.send("You don't have sufficient permissions.")
-            
+
         else:
             return await ctx.send("You cannot use this in DMs!")
 
