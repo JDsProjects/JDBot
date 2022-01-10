@@ -1,6 +1,5 @@
 from discord.ext import commands
 import discord
-import re
 import random
 import utils
 
@@ -12,23 +11,22 @@ class Webhook(commands.Cog):
         self.bot = bot
 
     @commands.command(brief="a way to send stuff to webhooks.", help="this uses webhook urls, and sends stuff to them")
-    async def webhook(self, ctx: commands.Context, webhook: utils.WebhookConverter, *, content: str = None):
-        if not content:
-            await ctx.send("You didn't send anything")
+    async def webhook(self, ctx, webhook: utils.WebhookConverter, *, content=None):
+        content = content or "No Content"
 
         session = self.bot.session
         response = await session.get(webhook.group())
 
         if response.status != 200:
             return await ctx.send("Not a valid link or an error occured.")
-        
+
         if response.status == 200:
             webhook = discord.Webhook.from_url(webhook.group(), session=session)
 
             embed = discord.Embed(
-                    title=f"Webhook {webhook.name}'s Message",
-                    color=random.randint(0, 16777215),
-                    timestamp=(ctx.message.created_at),
+                title=f"Webhook {webhook.name}'s Message",
+                color=random.randint(0, 16777215),
+                timestamp=(ctx.message.created_at),
             )
             embed.add_field(name="Content:", value=content)
             await webhook.send(embed=embed)
@@ -36,18 +34,18 @@ class Webhook(commands.Cog):
             await ctx.send(f"Message was sent to the desired webhook channel.")
 
     @commands.command(brief="a way to create webhooks", help="make commands with this.")
-    async def webhook_create(self, ctx, name: str=None, *, args=None):
+    async def webhook_create(self, ctx, name: str = None, *, args=None):
         if ctx.guild:
             if ctx.author.guild_permissions.manage_webhooks:
                 if not name:
                     return await ctx.send("Please input a webhook name.")
-                
+
                 try:
                     webhook = await ctx.channel.create_webhook(name=name)
                 except Exception as e:
                     return await ctx.send(
-                                f"give the bot manage webhook permissions for this to work and give the error to {e} if an issue."
-                        )
+                        f"give the bot manage webhook permissions for this to work and give the error to {e} if an issue."
+                    )
                 embed = discord.Embed(
                     title=f"{ctx.author}'s message:",
                     color=random.randint(0, 16777215),
@@ -57,7 +55,7 @@ class Webhook(commands.Cog):
 
                 if ctx.message.attachments:
                     await ctx.trigger_typing()
-                    
+
                     image = await ctx.message.attachments[0].read()
                     pass_test = True
                     try:
@@ -83,7 +81,7 @@ class Webhook(commands.Cog):
 
             else:
                 return await ctx.send("You don't have sufficient permissions.")
-            
+
         else:
             return await ctx.send("You cannot use this in DMs!")
 
@@ -113,7 +111,7 @@ class Webhook(commands.Cog):
         await ctx.message.delete(silent=True)
 
     @commands.command(brief="deletes a webhook by url")
-    async def webhook_delete(self, ctx, *, webhook: utils.WebhookConverter= None):
+    async def webhook_delete(self, ctx, *, webhook: utils.WebhookConverter = None):
         if not webhook:
             return await ctx.send("Please pass in a webhook url.")
 
@@ -129,7 +127,9 @@ class Webhook(commands.Cog):
             channel_id = info.get("channel_id")
 
             if not info.get("guild_id") or not info.get("channel_id"):
-                return await ctx.send(f"can't grab permissions from a {None} Guild or {None} Channel \nGuild ID: {webhook.guild_id}\nChannel ID: {webhook.channel_id}")
+                return await ctx.send(
+                    f"can't grab permissions from a {None} Guild or {None} Channel \nGuild ID: {webhook.guild_id}\nChannel ID: {webhook.channel_id}"
+                )
 
             channel = self.bot.get_channel(int(channel_id))
             guild = self.bot.get_guild(int(guild_id))
@@ -151,10 +151,9 @@ class Webhook(commands.Cog):
                     return await ctx.send(f"An error occured with reason:\n{e}")
             else:
                 return await ctx.send("You do not have proper permissions to delete webhooks in that channel.")
-                
+
         if response.status != 200:
             return await ctx.send("Not a valid link or an error occured")
-
 
 
 def setup(bot):
