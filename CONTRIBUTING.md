@@ -8,7 +8,8 @@ You should also try to pick something I agree with.
 if you aren't sure you can join: JDJG Inc. Official#3493
 I will start making sure pylance at some point is ran on my code.
 Anyway, Please Make Pull Requests that seem to fit, if you have an questions you can join my discord which is linked in my readme.
-I will have a code check at some point.
+I will have a code check at s
+If you Contributed succesfully, and it's something I agree to credit you with, you will be added to the credits command.ome point.
 You should use Pylance to make sure your code is clean and well
 Or you can use
 
