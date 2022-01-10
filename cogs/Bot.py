@@ -761,7 +761,7 @@ class Bot(commands.Cog):
     async def credits(self, ctx):
 
         embed = discord.Embed(
-            color=14352639, description=f"```Dutchy#6127 \nMiddlle#0101 \nShadi#9492 \nSoheab_#6240```"
+            color=14352639, description=f"```dartmern#7563 \nDutchy#6127 \nMiddlle#0101 \nShadi#9492 \nSoheab_#6240```"
         )
         embed.set_author(name=f"{self.bot.user} Bot Credits:", icon_url=self.bot.user.display_avatar.url)
         embed.set_footer(
