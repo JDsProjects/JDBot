@@ -757,7 +757,7 @@ class Bot(commands.Cog):
             f"If you are a moderator please contact JDJG Inc. Official#3493, I made a mistake when doing the checks for just doing {self.bot.user.mention}, if you get a massive error or something wrong please contact me, thanks :D"
         )
 
-    @commands.command(brief="a command for proper bot credits")
+    @commands.command(brief="bot contribution credits")
     async def credits(self, ctx):
 
         embed = discord.Embed(
