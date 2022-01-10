@@ -757,6 +757,18 @@ class Bot(commands.Cog):
             f"If you are a moderator please contact JDJG Inc. Official#3493, I made a mistake when doing the checks for just doing {self.bot.user.mention}, if you get a massive error or something wrong please contact me, thanks :D"
         )
 
+    @commands.command(brief="bot contribution credits")
+    async def credits(self, ctx):
+
+        embed = discord.Embed(
+            color=14352639, description=f"```Dutchy#6127 \nMiddlle#0101 \nShadi#9492 \nSoheab_#6240```"
+        )
+        embed.set_author(name=f"{self.bot.user} Bot Credits:", icon_url=self.bot.user.display_avatar.url)
+        embed.set_footer(
+            text="Credits are done in abc order. \nPlease don't randomly contact them unless they allow you to."
+        )
+        await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Bot(bot))
