@@ -3,8 +3,7 @@ import discord
 import re
 import random
 import aiohttp
-
-from JDBot.utils.converters import WebhookConverter
+import utils
 
 
 class Webhook(commands.Cog):
@@ -14,7 +13,7 @@ class Webhook(commands.Cog):
         self.bot = bot
 
     @commands.command(brief="a way to send stuff to webhooks.", help="this uses webhook urls, and sends stuff to them")
-    async def webhook(self, ctx: commands.Context, webhook: WebhookConverter, *, content: str = None):
+    async def webhook(self, ctx, webhook: utils.WebhookConverter, *, content: str = None):
         if not content:
             await ctx.send("You didn't send anything")
 
