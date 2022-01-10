@@ -186,3 +186,11 @@ class ObjectPlusConverter(commands.converter.IDConverter[commands.Converter]):
 
 
 # remove if edpy adds my pull request into the master.
+
+class WebhookConverter(commands.Converter):
+  async def convert(self, ctx: commands.Context, argument: str) -> discord.Webhook:
+    check = re.match(r"https://discord(?:app)?.com/api/webhooks/(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})", argument)
+    if not check:
+      raise commands.BadArgument("Webhook not found.")
+    else:
+        return check
