@@ -13,8 +13,8 @@ class Webhook(commands.Cog):
 
     @commands.command(brief="a way to send stuff to webhooks.", help="this uses webhook urls, and sends stuff to them")
     async def webhook(self, ctx, webhook: utils.WebhookConverter, *, content: str = None):
-        if not content:
-            await ctx.send("You didn't send anything")
+
+        content = content or "No Content"
 
         session = self.bot.session
         response = await session.get(webhook.group())
