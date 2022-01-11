@@ -912,7 +912,7 @@ async def give_result_operator(view, label, interaction: discord.Interaction):
         view.expression += view.last_expr
     else:
         view.last_expr = get_last_operator(view.expression)
-    result = str(parser.eval(view.expression))
+    result = str(float(parser.eval(view.expression)))
     view.expression = result
     await interaction.response.edit_message(content=result)
 
@@ -959,8 +959,9 @@ class CalcView(discord.ui.View):
         self.add_item(CalcButton("<==", 3, go_back))
         for label, row in [["+", 0], ["-", 1], ["*", 2], ["/", 3]]:
             self.add_item(CalcButton(label, row, operator_handler, discord.ButtonStyle.green))
-        self.add_item(CalcButton(f'{"Stop":⠀^29}', 4, stop_button, discord.ButtonStyle.red))
-
+        self.add_item(CalcButton(f'{"Stop":⠀^20}', 4, stop_button, discord.ButtonStyle.red))
+        self.add_item(CalcButton(".", 4, style = discord.ButtonStyle.green))
+        
     async def interaction_check(self, interaction: discord.Interaction):
         if interaction.user.id != self.ctx.author.id:
             await interaction.response.send_message(
