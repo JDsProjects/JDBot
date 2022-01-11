@@ -960,8 +960,8 @@ class CalcView(discord.ui.View):
         for label, row in [["+", 0], ["-", 1], ["*", 2], ["/", 3]]:
             self.add_item(CalcButton(label, row, operator_handler, discord.ButtonStyle.green))
         self.add_item(CalcButton(f'{"Stop":⠀^20}', 4, stop_button, discord.ButtonStyle.red))
-        self.add_item(CalcButton(".", 4, style = discord.ButtonStyle.green))
-        
+        self.add_item(CalcButton(".", 4, style=discord.ButtonStyle.green))
+
     async def interaction_check(self, interaction: discord.Interaction):
         if interaction.user.id != self.ctx.author.id:
             await interaction.response.send_message(
