@@ -908,7 +908,7 @@ async def give_result_operator(view, label, interaction: discord.Interaction):
     parser = view.parser
     if not view.expression:
         return await interaction.response.send_message("You didn't tell me anything to evaluate.", ephemeral=True)
-    if view.expression.isdigit() and view.last_expr:
+    if view.expression.replace(".", "").isdigit() and view.last_expr:
         view.expression += view.last_expr
     else:
         view.last_expr = get_last_operator(view.expression)
