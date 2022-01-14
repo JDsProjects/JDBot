@@ -187,30 +187,30 @@ class Paginator(discord.ui.View):
         return page
 
     async def get_page_kwargs(
-        self: "Paginator", page: int, send_kwargs: Optional[Dict[str, Any]] = None
-    ) -> Tuple[Dict[Literal["content", "embed", "view"], Union[discord.Embed, str, "Paginator", None]], Dict[str, Any]]:
+        self: "Paginator", page: int, send_kwargs: Optional[Dict[str, Any]] = None):
 
         if send_kwargs is not None:
-
             send_kwargs.pop("content", None)
             send_kwargs.pop("embed", None)
             send_kwargs.pop("embeds", None)
 
-        formatted_page: Union[str, discord.Embed, None] = await discord.utils.maybe_coroutine(
-            self.format_page, self.pages[page]
-        )
+        formatted_page = await discord.utils.maybe_coroutine(self.format_page, self.pages[page])  # type: ignore
+        files = []
+        if isinstance(formatted_page, tuple):
+            if len(formatted_page) == 2 and isinstance(formatted_page[1], discord.File):
+                files.append(formatted_page[1])
+                formatted_page = formatted_page[0]
+            
         if isinstance(formatted_page, str):
-
             formatted_page += f"\n\n{self.page_string}"
-            return {"content": formatted_page, "embed": None, "view": self}, send_kwargs or {}
+            return {"content": formatted_page, "embed": None, "files": files, "view": self}, send_kwargs or {}
 
         elif isinstance(formatted_page, discord.Embed):
-            if formatted_page.footer.text is not discord.Embed.Empty:
-                formatted_page.set_footer(text=f"{formatted_page.footer.text} - {self.page_string}")
+            if files:
+                formatted_page.set_image(url=f"attachment://{files[0].filename}")
 
-            else:
-                formatted_page.set_footer(text=self.page_string)
-            return {"content": None, "embed": formatted_page, "view": self}, send_kwargs or {}
+            formatted_page.set_footer(text=self.page_string)
+            return {"content": None, "embed": formatted_page, "files": files, "view": self}, send_kwargs or {}
 
         else:
             return {}, send_kwargs or {}
