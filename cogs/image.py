@@ -475,9 +475,10 @@ class Image(commands.Cog):
             embed.set_author(
                 name=f"Jail Image requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
             )
-            embed.set_image(url=f"attachment://{item.filename}")
+            file = discord.File(item.image, f"jail.{item.format}")
+            embed.set_image(url=f"attachment://{file.filename}")
             embed.set_footer(text="powered by dagpi")
-            return (embed, item)
+            return (embed, file)
 
     @commands.command(brief="uses dagpi to make an image of you in jail")
     async def jail(self, ctx, *, Member: utils.BetterMemberConverter = None):
