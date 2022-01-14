@@ -475,6 +475,7 @@ class Image(commands.Cog):
             embed.set_author(
                 name=f"Jail Image requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
             )
+            item.image.seek(0)
             file = discord.File(item.image, f"jail.{item.format}")
             embed.set_image(url=f"attachment://{file.filename}")
             embed.set_footer(text="powered by dagpi")
