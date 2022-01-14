@@ -192,7 +192,7 @@ async def jail_converter2(url, ctx):
     dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
     image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(), str(url))
 
-    return discord.File(image.image, f"jail.{image.format}")
+    return image.image
 
 
 async def invert_converter2(url, ctx):
