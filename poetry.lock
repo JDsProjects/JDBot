@@ -530,7 +530,7 @@ aiohttp = "*"
 type = "git"
 url = "https://github.com/JeyyGit/jeyyapi"
 reference = "main"
-resolved_reference = "2c5d582778fd749ded6810f4320be1919ae6686c"
+resolved_reference = "65a34769ea053b23954cf2feae4786b3c4cf54a8"
 
 [[package]]
 name = "jinja2"
@@ -836,7 +836,7 @@ test = ["vcrpy (>=1.10.3)"]
 type = "git"
 url = "https://github.com/tweepy/tweepy.git"
 reference = "master"
-resolved_reference = "0d6b68aeb3ed36e8d0e3d400b99351ed628ba1e0"
+resolved_reference = "53ac19e6a588785589174a2d192221154ec48cc5"
 
 [[package]]
 name = "typing-extensions"

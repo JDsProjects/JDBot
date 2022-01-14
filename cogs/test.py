@@ -86,6 +86,10 @@ class Test(commands.Cog):
     # guild_prefixes table in my sql database
     # spyco data table in my sql database
 
+    @commands.command()
+    async def afk(self, ctx):
+        await ctx.send("EH WIP")
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
