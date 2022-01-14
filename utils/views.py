@@ -186,8 +186,7 @@ class Paginator(discord.ui.View):
     async def format_page(self, page: Union[discord.Embed, str]) -> Union[discord.Embed, str]:
         return page
 
-    async def get_page_kwargs(
-        self: "Paginator", page: int, send_kwargs: Optional[Dict[str, Any]] = None):
+    async def get_page_kwargs(self: "Paginator", page: int, send_kwargs: Optional[Dict[str, Any]] = None):
 
         if send_kwargs is not None:
             send_kwargs.pop("content", None)
@@ -200,7 +199,7 @@ class Paginator(discord.ui.View):
             if len(formatted_page) == 2 and isinstance(formatted_page[1], discord.File):
                 files.append(formatted_page[1])
                 formatted_page = formatted_page[0]
-            
+
         if isinstance(formatted_page, str):
             formatted_page += f"\n\n{self.page_string}"
             return {"content": formatted_page, "embed": None, "files": files, "view": self}, send_kwargs or {}
