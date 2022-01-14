@@ -200,17 +200,23 @@ class Paginator(discord.ui.View):
             if len(formatted_page) == 2 and isinstance(formatted_page[1], discord.File):
                 files.append(formatted_page[1])
                 formatted_page = formatted_page[0]
-
+        
+        kwargs = {"content": None, "embed": None, "view": self}
+        if files:
+            kwargs["files"] = files
+            
         if isinstance(formatted_page, str):
             formatted_page += f"\n\n{self.page_string}"
-            return {"content": formatted_page, "embed": None, "files": files, "view": self}, send_kwargs or {}
+            kwargs["content"] = formatted_page
+            return kwargs, send_kwargs or {}
 
         elif isinstance(formatted_page, discord.Embed):
             if files:
                 formatted_page.set_image(url=f"attachment://{files[0].filename}")
 
             formatted_page.set_footer(text=self.page_string)
-            return {"content": None, "embed": formatted_page, "files": files, "view": self}, send_kwargs or {}
+            kwargs["embed"] = formatted_page
+            return kwargs, send_kwargs or {}
 
         else:
             return {}, send_kwargs or {}
