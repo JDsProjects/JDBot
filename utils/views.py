@@ -193,7 +193,8 @@ class Paginator(discord.ui.View):
             send_kwargs.pop("embed", None)
             send_kwargs.pop("embeds", None)
 
-        formatted_page = await discord.utils.maybe_coroutine(self.format_page, self.pages[page])  # type: ignore
+        formatted_page = await discord.utils.maybe_coroutine(self.format_page, self.pages[page])
+
         files = []
         if isinstance(formatted_page, tuple):
             if len(formatted_page) == 2 and isinstance(formatted_page[1], discord.File):
