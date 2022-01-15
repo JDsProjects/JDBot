@@ -174,27 +174,6 @@ async def headpat_converter2(url, ctx):
     return embed
 
 
-async def jail_converter(url, ctx):
-    dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
-    image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(), str(url))
-
-    imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-    imgur_url = await imgur_client.upload(image.image)
-
-    embed = discord.Embed(color=random.randint(0, 16777215))
-    embed.set_author(name=f"Jail Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    embed.set_image(url=imgur_url["link"])
-    embed.set_footer(text="powered by dagpi")
-    return embed
-
-
-async def jail_converter2(url, ctx):
-    dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
-    image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(), str(url))
-
-    return image
-
-
 async def invert_converter2(url, ctx):
     try:
         client = jeyyapi.JeyyAPIClient(session=ctx.bot.session)

@@ -469,18 +469,6 @@ class Image(commands.Cog):
         else:
             await ctx.send("you need svg attachments")
 
-    class JailMenu(utils.Paginator):
-        def format_page(self, item):
-            embed = discord.Embed(color=random.randint(0, 16777215))
-            embed.set_author(
-                name=f"Jail Image requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
-            )
-            item.image.seek(0)
-            file = discord.File(item.image, f"jail.{item.format}")
-            embed.set_image(url=f"attachment://{file.filename}")
-            embed.set_footer(text="powered by dagpi")
-            return (embed, file)
-
     @commands.command(brief="uses dagpi to make an image of you in jail")
     async def jail(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
@@ -492,17 +480,16 @@ class Image(commands.Cog):
                 if a.filename.endswith(".png"):
                     url = a.url
 
-                    files.append(await utils.jail_converter2(url, ctx))
+                    files.append(await utils.jail_converter(url, ctx))
                     y += 1
                 if not a.filename.endswith(".png"):
                     pass
 
         if not ctx.message.attachments or y == 0:
             url = (Member.display_avatar.with_format("png")).url
-            files.append(await utils.jail_converter2(url, ctx))
+            files.append(await utils.jail_converter(url, ctx))
 
-        # menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
-        menu = self.JailMenu(files, ctx=ctx, disable_after=True)
+        menu = utils.JailMenu(files, ctx=ctx, disable_after=True)
         await menu.send(ctx.channel)
 
     @commands.command(brief="inverts any valid image with jeyyapi")
