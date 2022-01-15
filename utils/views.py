@@ -531,6 +531,19 @@ class TodoEmbed(Paginator):
         return embed
 
 
+class JailMenu(Paginator):
+    def format_page(self, item):
+        embed = discord.Embed(color=random.randint(0, 16777215))
+        embed.set_author(
+            name=f"Jail Image requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
+        )
+        item.image.seek(0)
+        file = discord.File(item.image, f"jail.{item.format}")
+        embed.set_image(url=f"attachment://{file.filename}")
+        embed.set_footer(text="powered by dagpi")
+        return (embed, file)
+
+
 # this is using the paginator above, which is why It's not underneath the BasicButtons.
 
 

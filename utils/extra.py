@@ -211,7 +211,7 @@ def formatter(code, boolean):
     return dst
 
 
-async def jail_converter2(url, ctx):
+async def jail_converter(url, ctx):
     dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
     image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(), str(url))
 
