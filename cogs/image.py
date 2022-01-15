@@ -489,7 +489,7 @@ class Image(commands.Cog):
             url = (Member.display_avatar.with_format("png")).url
             files.append(await utils.jail_converter(url, ctx))
 
-        menu = utils.JailMenu(files, ctx=ctx, disable_after=True)
+        menu = utils.JailEmbed(files, ctx=ctx, disable_after=True)
         await menu.send(ctx.channel)
 
     @commands.command(brief="inverts any valid image with jeyyapi")

@@ -531,7 +531,7 @@ class TodoEmbed(Paginator):
         return embed
 
 
-class JailMenu(Paginator):
+class JailEmbed(Paginator):
     def format_page(self, item):
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(
