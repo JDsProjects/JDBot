@@ -33,6 +33,7 @@ psutil = "^5.8.0"
 black = "^21.12b0"
 mathjspy = "^0.0.9"
 chardet = "^3.0.4"
+aiogithub = {git = "https://github.com/reupen/aiogithub.git", extras = ["aiogithub"]}
 
 [tool.poetry.dev-dependencies]
 
