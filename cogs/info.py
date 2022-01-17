@@ -177,7 +177,7 @@ class Info(commands.Cog):
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(help="fetch invite details")
-    async def fetch_invite(self, ctx, *invites: typing.Union[discord.Invite, str]):
+    async def fetch_invite(self, ctx, *invites: typing.Union[discord.Invite]):
         if invites:
 
             menu = utils.InviteInfoEmbed(invites, ctx=ctx, delete_message_after=True)
