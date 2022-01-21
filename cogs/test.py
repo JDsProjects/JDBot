@@ -10,6 +10,7 @@ import tweepy
 import os
 import functools
 
+
 class Test(commands.Cog):
     """A cog to have people test new commands, or wip ones"""
 
@@ -65,8 +66,8 @@ class Test(commands.Cog):
             return await ctx.send("You Need to pick a username.")
 
         await ctx.send("WIP")
-        
-        #when fully completed move to extra.py(not the old Twitter Cog.)
+
+        # when fully completed move to extra.py(not the old Twitter Cog.)
 
     @commands.command(brief="add emoji to your guild lol")
     async def emoji_add(self, ctx):
