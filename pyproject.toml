@@ -21,7 +21,7 @@ tweepy = {git = "https://github.com/tweepy/tweepy.git"}
 topggpy = "^1.1.0"
 CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
-async-cleverbot = {git ="https://github.com/crrapi/async-cleverbot"}
+async-cleverbot = {git = "https://github.com/crrapi/async-cleverbot"}
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
 better-profanity = "^0.7.0"
 "discord.py" = {git = "https://github.com/iDevision/enhanced-discord.py", branch = "2.0", extras = ["voice", "speed"]}
