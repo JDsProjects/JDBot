@@ -692,7 +692,7 @@ class Bot(commands.Cog):
 
         embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```")
 
-        embed.add_field(name="Contributers", value="```Shadi#9492 \nMiddlle#0101 \nDutchy#6127```")
+        embed.add_field(name="Contributers", value="```Shadi#9492 \nMiddlle#8801 \nDutchy#6127```")
 
         embed.add_field(name="Sponsors", value="```No current sponsors :(```")
 
@@ -702,6 +702,7 @@ class Bot(commands.Cog):
             text="Learn More from: \nStats \nOr Any Other Bot Commands \nYou can Even Sponsor the Bot \nIf you want to sponsor the bot DM me. \nI hope I am not missing any contibutors or sponsors"
         )
 
+        embed.set_image(url="https://discord.c99.nl/widget/theme-4/347265035971854337.png")
         await ctx.send(embed=embed)
 
     @commands.cooldown(1, 90, BucketType.user)
@@ -761,7 +762,7 @@ class Bot(commands.Cog):
     async def credits(self, ctx):
 
         embed = discord.Embed(
-            color=14352639, description=f"```dartmern#7563 \nDutchy#6127 \nMiddlle#0101 \nShadi#9492 \nSoheab_#6240```"
+            color=14352639, description=f"```dartmern#7563 \nDutchy#6127 \nMiddlle#8801 \nShadi#9492 \nSoheab_#6240```"
         )
         embed.set_author(name=f"{self.bot.user} Bot Credits:", icon_url=self.bot.user.display_avatar.url)
         embed.set_footer(
