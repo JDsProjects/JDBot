@@ -42,7 +42,8 @@ class JDBot(commands.Bot):
 
     async def start(self, *args, **kwargs):
         self.session = aiohttp.ClientSession()
-        self.db = await asyncpg.create_pool(os.getenv("DB_key"))
+        self.db = await asyncpg.create_pool(os.getenv("DB_key2"))
+        self.db2 = await asyncpg.create_pool(os.getenv("DB_key"))
 
         # loads up some bot variables
 
