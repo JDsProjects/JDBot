@@ -95,7 +95,7 @@ class Economy(commands.Cog):
 
             ndata.append([f"{place + 1}. {user}", n.get("bank"), n.get("wallet")])
 
-        ndata = utils.groupby(ndata, 6)
+        ndata = utils.groupby(ndata, 5)
 
         menu = utils.LeaderboardEmbed(ndata, ctx=ctx, delete_message_after=True)
         await menu.send(ctx.channel)
