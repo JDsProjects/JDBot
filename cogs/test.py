@@ -95,6 +95,23 @@ class Test(commands.Cog):
     async def afk(self, ctx):
         await ctx.send("EH WIP")
 
+    @commands.command(brief="a test of a new paginator :)")
+    async def test_pagination(self, ctx):
+        buttons = {
+            "stop": utils.PaginatorButton(emoji="<:stop:937509712348450827>", style=discord.ButtonStyle.secondary),
+            "right": utils.PaginatorButton(emoji="<:forward:937510952428011570>", style=discord.ButtonStyle.secondary),
+            "left": utils.PaginatorButton(emoji="<:backward:937511314841034803>", style=discord.ButtonStyle.secondary),
+            "last": utils.PaginatorButton(
+                emoji="<:track_next:937518097932382268>", style=discord.ButtonStyle.secondary
+            ),
+            "first": utils.PaginatorButton(
+                emoji="<:track_back:937518391453958145>", style=discord.ButtonStyle.secondary
+            ),
+        }
+        pages = [discord.Embed(title="eh")] * 10
+        menu = utils.Paginator(pages, ctx=ctx, buttons=buttons, delete_message_after=True)
+        await menu.send(ctx.channel)
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
