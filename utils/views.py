@@ -612,7 +612,7 @@ class BasicButtons(discord.ui.View):
         self.value = False
         self.stop()
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
@@ -981,7 +981,7 @@ class CalcView(discord.ui.View):
         self.add_item(CalcButton(f'{"Stop":⠀^20}', 4, stop_button, discord.ButtonStyle.red))
         self.add_item(CalcButton(".", 4, style=discord.ButtonStyle.green))
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
         if interaction.user.id != self.ctx.author.id:
             await interaction.response.send_message(
                 f"This button can only be accessed by {self.ctx.author.name}.", ephemeral=True
