@@ -224,7 +224,7 @@ class Paginator(discord.ui.View):
     async def on_timeout(self) -> None:
         await self.stop()
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
         if not interaction.user or not self.ctx or not self.author_id:
             return True
@@ -576,7 +576,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.clear_items()
         await self.message.edit(content=f"not sending the paginator to you", view=self)
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
@@ -705,7 +705,7 @@ class RpsGame(discord.ui.View):
             "You didn't respond fast enough, you lost.(Play again by running game again)", view=self
         )
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
@@ -744,7 +744,7 @@ class CoinFlip(discord.ui.View):
 
         await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
@@ -781,7 +781,7 @@ class RtfmChoice(discord.ui.View):
             RtfmSelects([discord.SelectOption(label=o["name"], value=o["link"], emoji="🔍") for o in libraries])
         )
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
@@ -819,7 +819,7 @@ class JobChoice(discord.ui.View):
 
         self.add_item(JobSelects([discord.SelectOption(label=o["job_name"], emoji="🧑‍💼") for o in jobs]))
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
@@ -861,7 +861,7 @@ class SubredditChoice(discord.ui.View):
             )
         )
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
