@@ -112,6 +112,16 @@ class Test(commands.Cog):
         menu = utils.Paginator(pages, ctx=ctx, buttons=buttons, delete_message_after=True)
         await menu.send(ctx.channel)
 
+    @commands.command(
+        brief="a command meant to flip coins", help="commands to flip coins, etc.", aliases=["coinflip2", "cf2"]
+    )
+    async def coin2(self, ctx):
+        view = utils.CoinFlip(ctx)
+        embed = discord.Embed(color=random.randint(0, 16777215))
+        embed.set_image(url="https://i.imgur.com/O7FscBW.gif")
+
+        await ctx.send(content="Time to see if you can guess correctly!", embed=embed, view=view)
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
