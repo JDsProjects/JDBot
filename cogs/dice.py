@@ -135,51 +135,6 @@ class Dice(commands.Cog):
         if args:
             await ctx.send(random.choice(ramsay_responses))
 
-    @commands.command(
-        brief="a command meant to flip coins", help="commands to flip coins, etc.", aliases=["coinflip", "cf"]
-    )
-    async def coin(self, ctx):
-        value = random.choice([True, False])
-
-        view = utils.CoinFlip(ctx)
-
-        embed2 = discord.Embed(color=random.randint(0, 16777215))
-        embed2.set_image(url="https://i.imgur.com/O7FscBW.gif")
-
-        message = await ctx.send(content="Time to see if you can guess correctly!", embed=embed2, view=view)
-
-        await view.wait()
-
-        if view.value is None:
-            return
-
-        if view.value == "Heads" and value:
-            win = True
-        elif view.value == "Tails" and not value:
-            win = True
-        elif view.value == "Heads" and not value:
-            win = False
-        elif view.value == "Tails" and value:
-            win = False
-
-        pic_name = "Heads" if (value) else "Tails"
-
-        url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png", "Tails": "https://i.imgur.com/qTf1owU.png"}
-
-        embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
-        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
-
-        embed.add_field(name=f"The Coin Flipped:", value=f"{pic_name}")
-        embed.add_field(name="You guessed:", value=f"{view.value}")
-        embed.set_image(url=url_dic[pic_name])
-
-        if win:
-            embed.add_field(name="Result: ", value="You won")
-        else:
-            embed.add_field(name="Result: ", value="You lost")
-
-        await message.edit(content="Here's the results:", embed=embed)
-
     @commands.command(brief="a command to find the nearest emoji")
     async def emote(self, ctx, *, args=None):
         if args is None:
