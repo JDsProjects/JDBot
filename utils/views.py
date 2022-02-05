@@ -716,8 +716,8 @@ class RpsGameButton(discord.ui.Button):
         view.content = view.message.content
         view.embed = view.message.embeds[0]
         message = view.message
-        await view.message.edit(view=None)
         choosen = int(self.custom_id)
+        await view.message.edit(content="Results:", view=None)
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors"}
 
@@ -740,7 +740,12 @@ class RpsGameButton(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        await message.edit(embed=embed, view=None)
+        # view = ReRun(view)
+        # await message.edit(
+        # content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
+        # embed=embed,
+        # view=view,
+        # )
 
 
 # a custom Rps Game View
