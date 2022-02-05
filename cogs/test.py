@@ -11,6 +11,58 @@ import os
 import functools
 
 
+class CoinFlipButton(discord.ui.Button):
+    def __init__(self, label: str, emoji):
+        super().__init__(style=discord.ButtonStyle.success, label=label, emoji=emoji)
+
+    async def callback(self, interaction: discord.Interaction):
+        assert self.view is not None
+        view = self.view
+        view.clear_items()
+        await interaction.response.edit_message(view=self)
+
+        choosen = self.label
+        value = random.choice([True, False])
+        if choosen == "Heads" and value:
+            win = value
+        elif choosen == "Tails":
+            win = not value
+        pic_name = "Heads" if (value) else "Tails"
+        url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png", "Tails": "https://i.imgur.com/qTf1owU.png"}
+        embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
+        embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
+        embed.add_field(name=f"The Coin Flipped:", value=f"{pic_name}")
+        embed.add_field(name="You guessed:", value=f"{choosen}")
+        embed.set_image(url=url_dic[pic_name])
+        text = "You Won" if (value) else "You lost"
+        embed.add_field(name="Result: ", value=text)
+        await interaction.message.edit(content="Here's the results:", embed=embed)
+
+
+class CoinFlip(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+        self.add_item(CoinFlipButton("Heads", "<:coin:693942559999000628>"))
+        self.add_item(CoinFlipButton("Tails", "🪙"))
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
+                ephemeral=True,
+            )
+
+        return True
+
+
 class Test(commands.Cog):
     """A cog to have people test new commands, or wip ones"""
 
@@ -112,61 +164,11 @@ class Test(commands.Cog):
         menu = utils.Paginator(pages, ctx=ctx, buttons=buttons, delete_message_after=True)
         await menu.send(ctx.channel)
 
-    class CoinFlipButton(discord.ui.Button):
-        def __init__(self, label: str, emoji):
-            super().__init__(style=discord.ButtonStyle.success, label=label, emoji=emoji)
-
-        async def callback(self, interaction: discord.Interaction):
-            assert self.view is not None
-            view = self.view
-            view.clear_items()
-            await interaction.response.edit_message(view=self)
-
-            choosen = self.label
-            value = random.choice([True, False])
-            if choosen == "Heads" and value:
-                win = value
-            elif choosen == "Tails":
-                win = not value
-            pic_name = "Heads" if (value) else "Tails"
-            url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png", "Tails": "https://i.imgur.com/qTf1owU.png"}
-            embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
-            embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
-            embed.add_field(name=f"The Coin Flipped:", value=f"{pic_name}")
-            embed.add_field(name="You guessed:", value=f"{choosen}")
-            embed.set_image(url=url_dic[pic_name])
-            text = "You Won" if (value) else "You lost"
-            embed.add_field(name="Result: ", value=text)
-            await interaction.message.edit(content="Here's the results:", embed=embed)
-
-    class CoinFlip(discord.ui.View):
-        def __init__(self, ctx, **kwargs):
-            super().__init__(**kwargs)
-            self.ctx = ctx
-            self.add_item(CoinFlipButton("Heads", "<:coin:693942559999000628>"))
-            self.add_item(CoinFlipButton("Tails", "🪙"))
-
-        async def on_timeout(self):
-            for item in self.children:
-                item.disabled = True
-
-            await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
-
-        async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
-
-            if self.ctx.author.id != interaction.user.id:
-                return await interaction.response.send_message(
-                    content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
-                    ephemeral=True,
-                )
-
-            return True
-
     @commands.command(
         brief="a command meant to flip coins", help="commands to flip coins, etc.", aliases=["coinflip", "cf"]
     )
     async def coin(self, ctx):
-        view = self.CoinFlip(ctx)
+        view = CoinFlip(ctx)
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_image(url="https://i.imgur.com/O7FscBW.gif")
 
