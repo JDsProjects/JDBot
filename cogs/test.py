@@ -120,7 +120,7 @@ class Test(commands.Cog):
         embed.set_image(url="https://i.imgur.com/O7FscBW.gif")
         view = utils.CoinFlip(ctx)
 
-        await ctx.send(content="Time to see if you can guess correctly!", ephemeral=True, embed=embed, view=view)
+        await ctx.send(content="Time to see if you can guess correctly!", embed=embed, view=view)
 
 
 class Slash(commands.Cog):
