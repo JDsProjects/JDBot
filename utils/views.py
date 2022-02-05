@@ -748,6 +748,8 @@ class CoinFlip(discord.ui.View):
         self.embed = embed
         self.add_item(CoinFlipButton("Heads", "<:coin:693942559999000628>"))
         self.add_item(CoinFlipButton("Tails", "🪙"))
+        self.view = self
+        self.content = self.message.content
 
     async def on_timeout(self):
         for item in self.children:
