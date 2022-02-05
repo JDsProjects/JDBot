@@ -762,7 +762,7 @@ class CoinFlipButton(discord.ui.Button):
         view.content = view.message.content
         view.embed = view.message.embeds[0]
 
-        await interaction.response.edit_message(view=None)
+        await view.message.edit_message(view=None)
 
         choosen = self.label
         value = random.choice(["Heads", "Tails"])
