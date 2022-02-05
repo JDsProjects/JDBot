@@ -716,6 +716,40 @@ class RpsGame(discord.ui.View):
         return True
 
 
+class ReRun(discord.ui.View):
+    def __init__(self, view, **kwargs):
+        super().__init__(**kwargs)
+        self.view = view
+        self.ctx = view.ctx
+
+    @discord.ui.button(label="Rerun", style=discord.ButtonStyle.success, emoji="🔁")
+    async def rerun(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(view=None)
+        # make a new view with having a message tied to the new view, with the orginal content I need
+
+    @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
+    async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(view=None)
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
+                ephemeral=True,
+            )
+
+        return True
+
+
 class CoinFlipButton(discord.ui.Button):
     def __init__(self, label: str, emoji):
         super().__init__(style=discord.ButtonStyle.success, label=label, emoji=emoji)
