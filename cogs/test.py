@@ -19,14 +19,15 @@ class CoinFlipButton(discord.ui.Button):
         assert self.view is not None
         view = self.view
         view.clear_items()
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(view=view)
 
         choosen = self.label
         value = random.choice([True, False])
-        if choosen == "Heads" and value:
+        if choosen == "Heads":
             win = value
         elif choosen == "Tails":
             win = not value
+
         pic_name = "Heads" if (value) else "Tails"
         url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png", "Tails": "https://i.imgur.com/qTf1owU.png"}
         embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
