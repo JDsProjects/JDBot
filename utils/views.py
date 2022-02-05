@@ -716,27 +716,37 @@ class RpsGame(discord.ui.View):
         return True
 
 
+class CoinFlipButton(discord.ui.Button):
+    def __init__(self, label: str, emoji):
+        super().__init__(style=discord.ButtonStyle.success, label=label, emoji=emoji)
+
+    async def callback(self, interaction: discord.Interaction):
+        assert self.view is not None
+        view = self.view
+        view.clear_items()
+        await interaction.response.edit_message(view=view)
+
+        choosen = self.label
+        value = random.choice(["Heads", "Tails"])
+        win = choosen == value
+
+        url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png", "Tails": "https://i.imgur.com/qTf1owU.png"}
+        embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
+        embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
+        embed.add_field(name=f"The Coin Flipped:", value=f"{value}")
+        embed.add_field(name="You guessed:", value=f"{choosen}")
+        embed.set_image(url=url_dic[value])
+        text = "You Won" if (win) else "You lost"
+        embed.add_field(name="Result: ", value=text)
+        await interaction.message.edit(content="Here's the results:", embed=embed)
+
+
 class CoinFlip(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.value: str = None
-
-    @discord.ui.button(label="Heads", style=discord.ButtonStyle.success, emoji="<:coin:693942559999000628>")
-    async def Heads(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-        self.clear_items()
-        await interaction.response.edit_message(view=self)
-        self.value = "Heads"
-        self.stop()
-
-    @discord.ui.button(label="Tails", style=discord.ButtonStyle.success, emoji="🪙")
-    async def tails(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-        self.clear_items()
-        await interaction.response.edit_message(view=self)
-        self.value = "Tails"
-        self.stop()
+        self.add_item(CoinFlipButton("Heads", "<:coin:693942559999000628>"))
+        self.add_item(CoinFlipButton("Tails", "🪙"))
 
     async def on_timeout(self):
         for item in self.children:
