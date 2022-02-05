@@ -742,10 +742,9 @@ class CoinFlipButton(discord.ui.Button):
 
 
 class CoinFlip(discord.ui.View):
-    def __init__(self, ctx, embed, **kwargs):
+    def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.embed = embed
         self.add_item(CoinFlipButton("Heads", "<:coin:693942559999000628>"))
         self.add_item(CoinFlipButton("Tails", "🪙"))
 

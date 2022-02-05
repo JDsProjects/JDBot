@@ -118,7 +118,7 @@ class Test(commands.Cog):
     async def coin(self, ctx):
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_image(url="https://i.imgur.com/O7FscBW.gif")
-        view = utils.CoinFlip(ctx, embed)
+        view = utils.CoinFlip(ctx)
 
         await ctx.send(content="Time to see if you can guess correctly!", embed=embed, view=view)
 
