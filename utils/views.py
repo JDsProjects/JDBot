@@ -670,52 +670,6 @@ class nitroButtons(discord.ui.View):
         await self.message.edit(view=self, embed=embed)
 
 
-# a custom Rps Game View
-
-
-class RpsGame(discord.ui.View):
-    def __init__(self, ctx, **kwargs):
-        super().__init__(**kwargs)
-        self.ctx = ctx
-        self.value: str = None
-
-    @discord.ui.button(label="Rock", style=discord.ButtonStyle.success, emoji="🪨")
-    async def rock(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-        self.value = 1
-        self.stop()
-
-    @discord.ui.button(label="Paper", style=discord.ButtonStyle.success, emoji="📰")
-    async def paper(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-        self.value = 2
-        self.stop()
-
-    @discord.ui.button(label="Scissors", style=discord.ButtonStyle.success, emoji="✂️")
-    async def scissors(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-        self.value = 3
-        self.stop()
-
-    async def on_timeout(self):
-        for item in self.children:
-            item.disabled = True
-
-        await self.message.edit(
-            "You didn't respond fast enough, you lost.(Play again by running game again)", view=self
-        )
-
-    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
-
-        if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(
-                content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
-                ephemeral=True,
-            )
-
-        return True
-
-
 class ReRun(discord.ui.View):
     def __init__(self, view, **kwargs):
         super().__init__(**kwargs)
@@ -740,6 +694,39 @@ class ReRun(discord.ui.View):
             item.disabled = True
 
         await self.view.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
+                ephemeral=True,
+            )
+
+        return True
+
+
+class RpsGameButton(discord.ui.Button):
+    def __init__(self, label: str, emoji, custom_id: int):
+        super().__init__(style=discord.ButtonStyle.success, label=label, emoji=emoji, custom_id=custom_id)
+
+
+# a custom Rps Game View
+class RpsGame(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+        self.add_item(RpsGameButton("Rock", "🪨", 1))
+        self.add_item(RpsGameButton("Paper", "📰", 2))
+        self.add_item(RpsGameButton("Paper", "✂️", 3))
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit(
+            "You didn't respond fast enough, you lost.(Play again by running game again)", view=self
+        )
 
     async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
