@@ -727,7 +727,6 @@ class ReRun(discord.ui.View):
         self.ctx.interaction = interaction
         await interaction.response.edit_message(view=None)
         await self.ctx.reinvoke()
-        self.stop()
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
     async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
