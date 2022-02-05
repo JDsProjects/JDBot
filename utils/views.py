@@ -727,7 +727,7 @@ class ReRun(discord.ui.View):
 
         await interaction.response.edit_message(view=None)
         self.view.message = await interaction.followup.send(
-            content=self.view.content, embed=self.view.embed, view=self.view, wait=True
+            content=self.view.content, embed=self.view.embed, ephemeral=True, view=self.view, wait=True
         )
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
