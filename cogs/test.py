@@ -22,20 +22,16 @@ class CoinFlipButton(discord.ui.Button):
         await interaction.response.edit_message(view=view)
 
         choosen = self.label
-        value = random.choice([True, False])
-        if choosen == "Heads":
-            win = value
-        elif choosen == "Tails":
-            win = not value
+        value = random.choice(["Heads", "Tails"])
+        win = choosen == value
 
-        pic_name = "Heads" if (value) else "Tails"
         url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png", "Tails": "https://i.imgur.com/qTf1owU.png"}
         embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
         embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
-        embed.add_field(name=f"The Coin Flipped:", value=f"{pic_name}")
+        embed.add_field(name=f"The Coin Flipped:", value=f"{value}")
         embed.add_field(name="You guessed:", value=f"{choosen}")
-        embed.set_image(url=url_dic[pic_name])
-        text = "You Won" if (value) else "You lost"
+        embed.set_image(url=url_dic[value])
+        text = "You Won" if (win) else "You lost"
         embed.add_field(name="Result: ", value=text)
         await interaction.message.edit(content="Here's the results:", embed=embed)
 
