@@ -215,40 +215,10 @@ class Dice(commands.Cog):
     async def rps(self, ctx):
         view = utils.RpsGame(ctx)
 
-        embed2 = discord.Embed(color=random.randint(0, 16777215))
-        embed2.set_image(url="https://i.imgur.com/bFYroWk.gif")
-
-        message = await ctx.send("Rock Paper Scissors Shoot!", embed=embed2, view=view)
-
-        await view.wait()
-
-        if view.value is None:
-            return
-
-        deciding = random.randint(1, 3)
-        number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors"}
-
-        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=(ctx.message.created_at))
-
-        if view.value == deciding:
-            embed.set_author(name=f"Tie!", icon_url=ctx.author.display_avatar.url)
-
-        if view.value == 1 and deciding == 3 or view.value == 2 and deciding == 1 or view.value == 3 and deciding == 2:
-            embed.set_author(name=f"You Won!", icon_url=ctx.author.display_avatar.url)
-
-        if view.value == 3 and deciding == 1 or view.value == 1 and deciding == 2 or view.value == 2 and deciding == 3:
-            embed.set_author(name=f"You lost!", icon_url=ctx.author.display_avatar.url)
-
-        embed.set_footer(text=f"{ctx.author.id}")
-
-        embed.add_field(name="You Picked:", value=f"{number_to_text[view.value]}")
-        embed.add_field(name="Bot Picked:", value=f"{number_to_text[deciding]}")
-
+        embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        await message.edit(embed=embed, view=None)
-
-        # gnome made a good idea on a run again button, I Just need to make one :D
+        await ctx.send("Rock Paper Scissors Shoot!", embed=embed, view=view)
 
 
 def setup(bot):

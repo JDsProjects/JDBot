@@ -710,6 +710,38 @@ class RpsGameButton(discord.ui.Button):
     def __init__(self, label: str, emoji, custom_id: int):
         super().__init__(style=discord.ButtonStyle.success, label=label, emoji=emoji, custom_id=custom_id)
 
+    async def callback(self, interaction: discord.Interaction):
+        assert self.view is not None
+        view = self.view
+        view.content = view.message.content
+        view.embed = view.message.embeds[0]
+        message = view.message
+        await view.message.edit(view=None)
+        choosen = int(self.custom_id)
+        deciding = random.randint(1, 3)
+        number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors"}
+
+        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
+
+        if choosen == deciding:
+            text = "Tie!"
+
+        if choosen == 1 and deciding == 3 or choosen == 2 and deciding == 1 or choosen == 3 and deciding == 2:
+            text = "You Won!"
+
+        if choosen.value == 3 and deciding == 1 or choosen == 1 and deciding == 2 or choosen == 2 and deciding == 3:
+            text = "You lost!"
+
+        embed.set_author(name=text, icon_url=message.author.display_avatar.url)
+        embed.set_footer(text=f"{message.author.id}")
+
+        embed.add_field(name="You Picked:", value=f"{number_to_text[choosen]}")
+        embed.add_field(name="Bot Picked:", value=f"{number_to_text[deciding]}")
+
+        embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
+
+        await message.edit(embed=embed, view=None)
+
 
 # a custom Rps Game View
 class RpsGame(discord.ui.View):
