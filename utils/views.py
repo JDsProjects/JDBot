@@ -715,6 +715,7 @@ class RpsGame(discord.ui.View):
 
         return True
 
+
 class ReRun(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
@@ -722,7 +723,7 @@ class ReRun(discord.ui.View):
 
     @discord.ui.button(label="Rerun", style=discord.ButtonStyle.success, emoji="🔁")
     async def rerun(self, button: discord.ui.Button, interaction: discord.Interaction):
-        
+
         self.ctx.interaction = interaction
         await interaction.response.edit_message(view=None)
         await self.ctx.reinvoke()
@@ -730,7 +731,7 @@ class ReRun(discord.ui.View):
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
     async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
-        
+
         self.ctx.interaction = interaction
         await interaction.response.edit_message(view=None)
         self.stop()
@@ -750,6 +751,7 @@ class ReRun(discord.ui.View):
             )
 
         return True
+
 
 class CoinFlipButton(discord.ui.Button):
     def __init__(self, label: str, emoji):
@@ -774,8 +776,13 @@ class CoinFlipButton(discord.ui.Button):
         text = "You Won" if (win) else "You lost"
         embed.add_field(name="Result: ", value=text)
         view = ReRun(view.ctx)
-        await interaction.message.edit(content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):", embed=embed, view = view)
-        self.stop()
+        await interaction.message.edit(
+            content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
+            embed=embed,
+            view=view,
+        )
+        view.stop()
+
 
 class CoinFlip(discord.ui.View):
     def __init__(self, ctx, **kwargs):
