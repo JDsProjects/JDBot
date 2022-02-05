@@ -116,9 +116,9 @@ class Test(commands.Cog):
         brief="a command meant to flip coins", help="commands to flip coins, etc.", aliases=["coinflip", "cf"]
     )
     async def coin(self, ctx):
-        view = utils.CoinFlip(ctx)
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_image(url="https://i.imgur.com/O7FscBW.gif")
+        view = utils.CoinFlip(ctx, embed)
 
         await ctx.send(content="Time to see if you can guess correctly!", embed=embed, view=view)
 
