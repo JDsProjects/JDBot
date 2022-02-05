@@ -759,6 +759,9 @@ class CoinFlipButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         assert self.view is not None
         view = self.view
+        self.content = view.message.content
+        self.embed = view.message.embeds[0]
+
         await interaction.response.edit_message(view=None)
 
         choosen = self.label
@@ -785,8 +788,6 @@ class CoinFlip(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.content = self.message.content
-        self.embed = self.message.embeds[0]
         self.add_item(CoinFlipButton("Heads", "<:coin:693942559999000628>"))
         self.add_item(CoinFlipButton("Tails", "🪙"))
 
