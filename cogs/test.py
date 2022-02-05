@@ -156,9 +156,9 @@ class Test(commands.Cog):
 
             if self.ctx.author.id != interaction.user.id:
                 return await interaction.response.send_message(
-                        content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
-                        ephemeral=True,
-                    )
+                    content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
+                    ephemeral=True,
+                )
 
             return True
 
