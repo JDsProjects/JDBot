@@ -762,7 +762,7 @@ class CoinFlipButton(discord.ui.Button):
         view.content = view.message.content
         view.embed = view.message.embeds[0]
 
-        await view.message.edit_message(view=None)
+        await view.message.edit(view=None)
 
         choosen = self.label
         value = random.choice(["Heads", "Tails"])
@@ -777,7 +777,7 @@ class CoinFlipButton(discord.ui.Button):
         text = "You Won" if (win) else "You lost"
         embed.add_field(name="Result: ", value=text)
         view = ReRun(view)
-        await interaction.message.edit(
+        await view.message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
             embed=embed,
             view=view,
