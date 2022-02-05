@@ -726,10 +726,12 @@ class ReRun(discord.ui.View):
     async def rerun(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
-
-        webhook = await interaction.followup()
+        webhook = interaction.followup()
         self.view.message = webhook
-        await webhook.send(content=self.view.content, embed=self.view.embed, view=self.view)
+
+        self.view.message = await interaction.followup.send(
+            content=self.view.content, embed=self.view.embed, view=self.view, wait=True
+        )
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
     async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
@@ -740,7 +742,7 @@ class ReRun(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+        await self.view.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
 
     async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
 
@@ -777,7 +779,7 @@ class CoinFlipButton(discord.ui.Button):
         embed.set_image(url=url_dic[value])
         text = "You Won" if (win) else "You lost"
         embed.add_field(name="Result: ", value=text)
-        view = ReRun(view)
+        view = ReRun(view, timeout=3.0)
         await interaction.message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
             embed=embed,
