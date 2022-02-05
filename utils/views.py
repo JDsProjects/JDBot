@@ -726,9 +726,6 @@ class ReRun(discord.ui.View):
     async def rerun(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
-        webhook = interaction.followup()
-        self.view.message = webhook
-
         self.view.message = await interaction.followup.send(
             content=self.view.content, embed=self.view.embed, view=self.view, wait=True
         )
