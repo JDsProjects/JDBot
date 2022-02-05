@@ -715,25 +715,29 @@ class RpsGame(discord.ui.View):
 
         return True
 
+class ReRunButton(discord.ui.Button):
+    def __init__(self):
+        super().__init__(style=discord.ButtonStyle.success, label="ReRun", emoji="🔁")
+
+    async def callback(self, interaction):
+        self.view.ctx.interaction = interaction
+        await self.view.ctx.command.reinvoke()
+
+class ExitButton(discord.ui.Button):
+    def __init__(self):
+        super().__init__(style=discord.ButtonStyle.success, label="Exit", emoji="🔒")
+
+    async def callback(self, interaction):
+        await interaction.response.edit_message(view=None)
+        self.stop()
+
 
 class ReRun(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-
-    @discord.ui.button(label="Rerun", style=discord.ButtonStyle.success, emoji="🔁")
-    async def rerun(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-        self.ctx.interaction = interaction
-        await interaction.response.edit_message(view=None)
-        await self.ctx.reinvoke()
-
-    @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
-    async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
-
-        self.ctx.interaction = interaction
-        await interaction.response.edit_message(view=None)
-        self.stop()
+        self.add_item(ReRunButton())
+        self.add_item(ExitButton)
 
     async def on_timeout(self):
         for item in self.children:
