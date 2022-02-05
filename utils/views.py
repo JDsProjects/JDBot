@@ -759,8 +759,8 @@ class CoinFlipButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         assert self.view is not None
         view = self.view
-        self.content = view.message.content
-        self.embed = view.message.embeds[0]
+        view.content = view.message.content
+        view.embed = view.message.embeds[0]
 
         await interaction.response.edit_message(view=None)
 
