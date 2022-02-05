@@ -732,8 +732,8 @@ class RpsGameButton(discord.ui.Button):
         if choosen == 3 and deciding == 1 or choosen == 1 and deciding == 2 or choosen == 2 and deciding == 3:
             text = "You lost!"
 
-        embed.set_author(name=text, icon_url=message.author.display_avatar.url)
-        embed.set_footer(text=f"{message.author.id}")
+        embed.set_author(name=text, icon_url=view.ctx.author.display_avatar.url)
+        embed.set_footer(text=f"{view.ctx.author.id}")
 
         embed.add_field(name="You Picked:", value=f"{number_to_text[choosen]}")
         embed.add_field(name="Bot Picked:", value=f"{number_to_text[deciding]}")
