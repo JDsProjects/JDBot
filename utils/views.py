@@ -740,12 +740,12 @@ class RpsGameButton(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        # view = ReRun(view)
-        # await message.edit(
-        # content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
-        # embed=embed,
-        # view=view,
-        # )
+        view = ReRun(view)
+        await message.edit(
+            content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
+            embed=embed,
+            view=view,
+        )
 
 
 # a custom Rps Game View
@@ -755,7 +755,7 @@ class RpsGame(discord.ui.View):
         self.ctx = ctx
         self.add_item(RpsGameButton("Rock", "🪨", "1"))
         self.add_item(RpsGameButton("Paper", "📰", "2"))
-        self.add_item(RpsGameButton("Paper", "✂️", "3"))
+        self.add_item(RpsGameButton("Scissors", "✂️", "3"))
 
     async def on_timeout(self):
         for item in self.children:
