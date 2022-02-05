@@ -726,9 +726,10 @@ class ReRun(discord.ui.View):
     async def rerun(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
-        # make a new view with having a message tied to the new view, with the orginal content I need
 
-        self.view.message = await interaction.followup()
+        webhook = await interaction.followup()
+        self.view.message = webhook
+        await webhook.send(content=self.view.content, embed=self.view.embed, view=self.view)
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
     async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
@@ -776,7 +777,7 @@ class CoinFlipButton(discord.ui.Button):
         embed.set_image(url=url_dic[value])
         text = "You Won" if (win) else "You lost"
         embed.add_field(name="Result: ", value=text)
-        # view = ReRun(view)
+        view = ReRun(view)
         await interaction.message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
             embed=embed,
