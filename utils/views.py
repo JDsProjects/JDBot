@@ -715,6 +715,41 @@ class RpsGame(discord.ui.View):
 
         return True
 
+class ReRun(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+
+    @discord.ui.button(label="Rerun", style=discord.ButtonStyle.success, emoji="🔁")
+    async def rerun(self, button: discord.ui.Button, interaction: discord.Interaction):
+        
+        self.ctx.interaction = interaction
+        await interaction.response.edit_message(view=None)
+        await self.ctx.reinvoke()
+        self.stop()
+
+    @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
+    async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
+        
+        self.ctx.interaction = interaction
+        await interaction.response.edit_message(view=None)
+        self.stop()
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
+                ephemeral=True,
+            )
+
+        return True
 
 class CoinFlipButton(discord.ui.Button):
     def __init__(self, label: str, emoji):
@@ -738,8 +773,9 @@ class CoinFlipButton(discord.ui.Button):
         embed.set_image(url=url_dic[value])
         text = "You Won" if (win) else "You lost"
         embed.add_field(name="Result: ", value=text)
-        await interaction.message.edit(content="Here's the results:", embed=embed)
-
+        view = ReRun(view.ctx)
+        await interaction.message.edit(content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):", embed=embed, view = view)
+        self.stop()
 
 class CoinFlip(discord.ui.View):
     def __init__(self, ctx, **kwargs):
