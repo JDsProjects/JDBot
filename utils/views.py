@@ -707,7 +707,7 @@ class ReRun(discord.ui.View):
 
 
 class RpsGameButton(discord.ui.Button):
-    def __init__(self, label: str, emoji, custom_id: str):
+    def __init__(self, label: str, emoji, custom_id):
         super().__init__(style=discord.ButtonStyle.success, label=label, custom_id=custom_id, emoji=emoji)
 
     async def callback(self, interaction: discord.Interaction):
@@ -753,9 +753,9 @@ class RpsGame(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.add_item(RpsGameButton("Rock", "🪨", 1))
-        self.add_item(RpsGameButton("Paper", "📰", 2))
-        self.add_item(RpsGameButton("Paper", "✂️", 3))
+        self.add_item(RpsGameButton("Rock", "🪨", "1"))
+        self.add_item(RpsGameButton("Paper", "📰", "2"))
+        self.add_item(RpsGameButton("Paper", "✂️", "3"))
 
     async def on_timeout(self):
         for item in self.children:
