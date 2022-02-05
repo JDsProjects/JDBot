@@ -728,6 +728,8 @@ class ReRun(discord.ui.View):
         await interaction.response.edit_message(view=None)
         # make a new view with having a message tied to the new view, with the orginal content I need
 
+        self.view.message = await interaction.followup()
+
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
     async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
 
