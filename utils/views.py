@@ -708,7 +708,7 @@ class ReRun(discord.ui.View):
 
 class RpsGameButton(discord.ui.Button):
     def __init__(self, label: str, emoji, custom_id: str):
-        super().__init__(style=discord.ButtonStyle.success, label=label, emoji=emoji, custom_id=custom_id)
+        super().__init__(style=discord.ButtonStyle.success, label=label, custom_id=custom_id, emoji=emoji)
 
     async def callback(self, interaction: discord.Interaction):
         assert self.view is not None
