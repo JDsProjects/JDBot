@@ -781,7 +781,6 @@ class CoinFlipButton(discord.ui.Button):
             embed=embed,
             view=view,
         )
-        view.stop()
 
 
 class CoinFlip(discord.ui.View):
