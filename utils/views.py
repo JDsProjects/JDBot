@@ -729,7 +729,7 @@ class RpsGameButton(discord.ui.Button):
         if choosen == 1 and deciding == 3 or choosen == 2 and deciding == 1 or choosen == 3 and deciding == 2:
             text = "You Won!"
 
-        if choosen.value == 3 and deciding == 1 or choosen == 1 and deciding == 2 or choosen == 2 and deciding == 3:
+        if choosen == 3 and deciding == 1 or choosen == 1 and deciding == 2 or choosen == 2 and deciding == 3:
             text = "You lost!"
 
         embed.set_author(name=text, icon_url=message.author.display_avatar.url)
