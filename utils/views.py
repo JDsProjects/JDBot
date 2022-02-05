@@ -715,6 +715,7 @@ class RpsGame(discord.ui.View):
 
         return True
 
+
 # A bunch of Select Classes and views for them(below me).
 
 
