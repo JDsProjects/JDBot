@@ -5,17 +5,8 @@ from jishaku.codeblocks import codeblock_converter
 from jishaku.exception_handling import ReplResponseReactor
 from jishaku.repl import AsyncCodeExecutor, get_var_dict_from_ctx
 from jishaku.functools import AsyncSender
-import jishaku
 
 # look into making more jishaku commands: https://jishaku.readthedocs.io/en/latest/cog.html
-
-
-class JskFix(jishaku.shim.paginator_200.PaginatorInterface):
-    async def interaction_check(self, item, interaction):
-        return not self.owner or interaction.user.id == self.owner.id
-
-
-jishaku.shim.paginator_200.PaginatorInterface = JskFix
 
 
 class Jishaku(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
