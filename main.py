@@ -7,6 +7,7 @@ import traceback
 import asyncpg
 import B
 from discord.ext import commands
+import jishaku
 
 
 async def get_prefix(bot, message):
@@ -111,6 +112,13 @@ async def check_blacklist(ctx):
 async def check_suspended(ctx):
     return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author)
 
+
+class JskFix(jishaku.shim.paginator_200.PaginatorInterface):
+    async def interaction_check(self, item, interaction):
+        return not self.owner or interaction.user.id == self.owner.id
+
+
+jishaku.shim.paginator_200.PaginatorInterface = JskFix
 
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
