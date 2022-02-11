@@ -423,7 +423,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "discord.py"
-version = "2.0.0a3687+g1b185bc3"
+version = "2.0.0a3693+gabe4e4e6"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -444,7 +444,7 @@ voice = ["PyNaCl (>=1.3.0,<1.5)"]
 type = "git"
 url = "https://github.com/iDevision/enhanced-discord.py"
 reference = "2.0"
-resolved_reference = "1b185bc3e28c9a65ed20560efb841450c0906b26"
+resolved_reference = "abe4e4e6aae1522a9d1f6700bc13ca563e76e9b4"
 
 [[package]]
 name = "discordlists.py"
@@ -519,7 +519,7 @@ test = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "importlib-metadata"
-version = "4.10.1"
+version = "4.11.0"
 description = "Read metadata from Python packages"
 category = "main"
 optional = false
@@ -575,7 +575,7 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "jishaku"
-version = "2.3.2a359+gd8e676f.master"
+version = "2.3.2a363+gcba113f.master"
 description = "A discord.py extension including useful tools for bot development and debugging."
 category = "main"
 optional = false
@@ -599,7 +599,7 @@ voice = ["youtube-dl"]
 type = "git"
 url = "https://github.com/Gorialis/jishaku"
 reference = "master"
-resolved_reference = "d8e676f55a48e1ffad14e13e733debd4ab93eccb"
+resolved_reference = "cba113f968524c5cc2cfb0c5a23bafdb35eeb6d4"
 
 [[package]]
 name = "markupsafe"
@@ -672,7 +672,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "platformdirs"
-version = "2.4.1"
+version = "2.5.0"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
 category = "main"
 optional = false
@@ -850,11 +850,12 @@ python-versions = ">=3.6"
 develop = false
 
 [package.dependencies]
+oauthlib = ">=3.2.0,<4"
 requests = ">=2.27.0,<3"
-requests-oauthlib = ">=1.0.0,<2"
+requests-oauthlib = ">=1.2.0,<2"
 
 [package.extras]
-async = ["aiohttp (>=3.7.3,<4)", "oauthlib (>=3.1.0,<4)"]
+async = ["aiohttp (>=3.7.3,<4)"]
 dev = ["coveralls (>=2.1.0)", "tox (>=3.14.0)"]
 socks = ["requests[socks] (>=2.27.0,<3)"]
 test = ["vcrpy (>=1.10.3)"]
@@ -863,7 +864,7 @@ test = ["vcrpy (>=1.10.3)"]
 type = "git"
 url = "https://github.com/tweepy/tweepy.git"
 reference = "master"
-resolved_reference = "77015065f63022747eb10f6ed081b39dbc75c4a3"
+resolved_reference = "db11353e1840aec2a08581b3776f8ac38b61f963"
 
 [[package]]
 name = "typing-extensions"
@@ -912,7 +913,7 @@ python-versions = "*"
 
 [[package]]
 name = "werkzeug"
-version = "2.0.2"
+version = "2.0.3"
 description = "The comprehensive WSGI web application library."
 category = "main"
 optional = false
@@ -1298,8 +1299,8 @@ import-expression = [
     {file = "import_expression-1.1.4.tar.gz", hash = "sha256:06086a6ab3bfa528b1c478e633d6adf2b3a990e31440f6401b0f3ea12b0659a9"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-4.10.1-py3-none-any.whl", hash = "sha256:899e2a40a8c4a1aec681feef45733de8a6c58f3f6a0dbed2eb6574b4387a77b6"},
-    {file = "importlib_metadata-4.10.1.tar.gz", hash = "sha256:951f0d8a5b7260e9db5e41d429285b5f451e928479f19d80818878527d36e95e"},
+    {file = "importlib_metadata-4.11.0-py3-none-any.whl", hash = "sha256:6affcdb3aec542dd98df8211e730bba6c5f2bec8288d47bacacde898f548c9ad"},
+    {file = "importlib_metadata-4.11.0.tar.gz", hash = "sha256:9e5e553bbba1843cb4a00823014b907616be46ee503d2b9ba001d214a8da218f"},
 ]
 itsdangerous = [
     {file = "itsdangerous-2.0.1-py3-none-any.whl", hash = "sha256:5174094b9637652bdb841a3029700391451bd092ba3db90600dea710ba28e97c"},
@@ -1522,8 +1523,8 @@ pillow = [
     {file = "Pillow-9.0.1.tar.gz", hash = "sha256:6c8bc8238a7dfdaf7a75f5ec5a663f4173f8c367e5a39f87e720495e1eed75fa"},
 ]
 platformdirs = [
-    {file = "platformdirs-2.4.1-py3-none-any.whl", hash = "sha256:1d7385c7db91728b83efd0ca99a5afb296cab9d0ed8313a45ed8ba17967ecfca"},
-    {file = "platformdirs-2.4.1.tar.gz", hash = "sha256:440633ddfebcc36264232365d7840a970e75e1018d15b4327d11f91909045fda"},
+    {file = "platformdirs-2.5.0-py3-none-any.whl", hash = "sha256:30671902352e97b1eafd74ade8e4a694782bd3471685e78c32d0fdfd3aa7e7bb"},
+    {file = "platformdirs-2.5.0.tar.gz", hash = "sha256:8ec11dfba28ecc0715eb5fb0147a87b1bf325f349f3da9aab2cd6b50b96b692b"},
 ]
 psutil = [
     {file = "psutil-5.9.0-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:55ce319452e3d139e25d6c3f85a1acf12d1607ddedea5e35fb47a552c051161b"},
@@ -1631,8 +1632,8 @@ webencodings = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 werkzeug = [
-    {file = "Werkzeug-2.0.2-py3-none-any.whl", hash = "sha256:63d3dc1cf60e7b7e35e97fa9861f7397283b75d765afcaefd993d6046899de8f"},
-    {file = "Werkzeug-2.0.2.tar.gz", hash = "sha256:aa2bb6fc8dee8d6c504c0ac1e7f5f7dc5810a9903e793b6f715a9f015bdadb9a"},
+    {file = "Werkzeug-2.0.3-py3-none-any.whl", hash = "sha256:1421ebfc7648a39a5c58c601b154165d05cf47a3cd0ccb70857cbdacf6c8f2b8"},
+    {file = "Werkzeug-2.0.3.tar.gz", hash = "sha256:b863f8ff057c522164b6067c9e28b041161b4be5ba4d0daceeaa50a163822d3c"},
 ]
 yarl = [
     {file = "yarl-1.7.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:f2a8508f7350512434e41065684076f640ecce176d262a7d54f0da41d99c5a95"},
