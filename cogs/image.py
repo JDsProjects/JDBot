@@ -371,12 +371,12 @@ class Image(commands.Cog):
 
     @commands.command(help="gives a random objection", aliases=["obj", "ob", "object"])
     async def objection(self, ctx):
-        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/objection")
+        r = await self.bot.session.get("https://api.senarc.org/misc/objection")
         res = await r.json()
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{ctx.author} yelled OBJECTION!", icon_url=(ctx.author.display_avatar.url))
         embed.set_image(url=res["url"])
-        embed.set_footer(text="Powered By JDJG Api!")
+        embed.set_footer(text="Powered By Senarc Api!")
         await ctx.send(embed=embed)
 
     @commands.command(help="gives the truth about opinions(may offend)", aliases=["opinion"])
