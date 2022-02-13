@@ -625,8 +625,8 @@ class BasicButtons(discord.ui.View):
 
 # A Nitro Button Class(not actual nitro)
 
-class nitroButtons(discord.ui.View):
 
+class nitroButtons(discord.ui.View):
     @discord.ui.button(label=f'{"Claim":⠀^37}', custom_id="fun (nitro)", style=discord.ButtonStyle.success)
     async def nitroButton(self, button: discord.ui.Button, interaction: discord.Interaction):
 
