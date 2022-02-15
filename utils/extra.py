@@ -143,7 +143,9 @@ async def post(bot, code):
 
 
 async def get_paste(bot, paste_id):
-    response = await bot.session.get(f"https://api.senarc.org/bin/{paste_id}", headers = {'accept': 'application/json', "headless": "true"})
+    response = await bot.session.get(
+        f"https://api.senarc.org/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
+    )
     response = await response.json()
     return response.get("content")
 
