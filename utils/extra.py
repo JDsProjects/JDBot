@@ -123,13 +123,16 @@ def cc_generate():
 
 
 async def post(bot, code):
-    response = await bot.session.post("https://api.senarc.org/paste", json={"content": code})
+
+    paste_body = {"title": "JDBot Paste", "content": code, "description": "posted from jdbot", "text_colour": "#FFFFFF", "background_colour": "#000000", "embed_colour": "#FFFFFF"}
+    
+    response = await bot.session.post("https://api.senarc.org/paste",  json=paste_body, headers = {'accept': 'application/json','Content-Type': 'application/json'})
     response = await response.json()
-    return response.get("web_url")
+    return response.get("url")
 
 
 async def get_paste(bot, paste_id):
-    response = await bot.session.get(f"https://api.senarc.org/bin-headless/{paste_id}")
+    response = await bot.session.get(f"https://api.senarc.org/bin/{paste_id}")
     response = await response.json()
     return response.get("content")
 
