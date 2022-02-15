@@ -406,7 +406,7 @@ class Extra(commands.Cog):
     async def cc_save(self, ctx):
         import io
 
-        paste = await utils.get_paste(self.bot, "pun8d5")
+        paste = await utils.get_paste(self.bot, "lnti5V")
         s = io.StringIO()
         s.write(paste)
         s.seek(0)
