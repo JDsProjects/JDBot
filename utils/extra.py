@@ -134,7 +134,7 @@ async def post(bot, code):
     }
 
     response = await bot.session.post(
-        "https://api.senarc.org/paste",
+        "https://api.senarc.org/bin/paste",
         json=paste_body,
         headers={"accept": "application/json", "Content-Type": "application/json"},
     )
