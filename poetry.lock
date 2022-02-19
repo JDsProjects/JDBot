@@ -535,7 +535,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 
 [[package]]
 name = "itsdangerous"
-version = "2.1.0"
+version = "2.0.1"
 description = "Safely pass data to untrusted environments and back."
 category = "main"
 optional = false
