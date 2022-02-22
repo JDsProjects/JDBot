@@ -696,7 +696,7 @@ class Bot(commands.Cog):
 
         embed.add_field(name="Sponsors", value="```No current sponsors :(```")
 
-        embed.add_field(name = "Source code Info:", value = f"```yaml\n{utils.linecount()}```")
+        embed.add_field(name="Source code Info:", value=f"```yaml\n{utils.linecount()}```", inline=False)
 
         embed.set_author(name=f"{self.bot.user}", icon_url=self.bot.user.display_avatar.url)
 
