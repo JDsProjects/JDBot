@@ -696,6 +696,8 @@ class Bot(commands.Cog):
 
         embed.add_field(name="Sponsors", value="```No current sponsors :(```")
 
+        embed.add_field(name = "Source code Info:", value = f"```yaml\n{utils.linecount()}```")
+
         embed.set_author(name=f"{self.bot.user}", icon_url=self.bot.user.display_avatar.url)
 
         embed.set_footer(
@@ -769,18 +771,6 @@ class Bot(commands.Cog):
             text="Credits are done in abc order. \nPlease don't randomly contact them unless they allow you to."
         )
         await ctx.send(embed=embed)
-
-    @commands.command(brief="gets the line count of the bot")
-    async def linecount(self, ctx):
-        embed = discord.Embed(
-            title="Source code Info:",
-            description=f"```yaml\n{utils.linecount()}```",
-            timestamp=ctx.message.created_at,
-            color=15428885,
-        )
-        embed.set_author(name=f"{self.bot.user}", icon_url=self.bot.user.display_avatar.url)
-
-        await ctx.send("Here you go:", embed=embed)
 
 
 def setup(bot):
