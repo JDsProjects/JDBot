@@ -770,6 +770,18 @@ class Bot(commands.Cog):
         )
         await ctx.send(embed=embed)
 
+    @commands.command(brief="gets the line count of the bot")
+    async def linecount(self, ctx):
+        embed = discord.Embed(
+            title="Source code Info:",
+            description=f"```yaml\n{utils.linecount()}```",
+            timestamp=ctx.message.created_at,
+            color=15428885,
+        )
+        embed.set_author(name=f"{self.bot.user}", icon_url=self.bot.user.display_avatar.url)
+
+        await ctx.send("Here you go:", embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Bot(bot))
