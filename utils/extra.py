@@ -7,6 +7,7 @@ import io
 import os
 import black
 import asyncdagpi
+import pathlib
 
 
 async def google_tts(bot, text):
@@ -232,3 +233,27 @@ async def jail_converter(url, ctx):
     image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(), str(url))
 
     return image
+
+
+def linecount():
+
+    p = pathlib.Path("./")
+    cm = cr = fn = cl = ls = fc = 0
+    for f in p.rglob("*.py"):
+        if str(f).startswith("venv"):
+            continue
+        fc += 1
+        with f.open() as of:
+            for l in of.readlines():
+                l = l.strip()
+                if l.startswith("class "):
+                    cl += 1
+                if l.startswith("def"):
+                    fn += 1
+                if l.startswith("async def"):
+                    cr += 1
+                if "#" in l:
+                    cm += 1
+                ls += 1
+
+    return f"file: {fc}\nline: {ls:,}\nclass: {cl}\nfunction: {fn}\ncoroutine: {cr}\ncomment: {cm:,}"
