@@ -238,7 +238,7 @@ async def jail_converter(url, ctx):
 def linecount():
 
     p = pathlib.Path("./")
-    cm = cr = fn = cl = ls = fc = 0
+    im = cm = cr = fn = cl = ls = fc = 0
     for f in p.rglob("*.py"):
         if str(f).startswith("venv"):
             continue
@@ -254,6 +254,8 @@ def linecount():
                     cr += 1
                 if "#" in l:
                     cm += 1
+                if "import" in l:
+                    im += 1
                 ls += 1
 
-    return f"Files: {fc}\nLines: {ls:,}\nClasses: {cl}\nFunctions: {fn}\nCoroutines: {cr}\nComments: {cm:,}"
+    return f"Files: {fc}\nLines: {ls:,}\nClasses: {cl}\nFunctions: {fn}\nCoroutines: {cr}\nComments: {cm:,}\nImports: {im:,}"
