@@ -381,11 +381,11 @@ class Image(commands.Cog):
 
     @commands.command(help="gives the truth about opinions(may offend)", aliases=["opinion"])
     async def opinional(self, ctx):
-        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/opinional")
+        r = await self.bot.session.get("https://api.senarc.org/misc/opinional")
         res = await r.json()
         embed = discord.Embed(title="Truth about opinions(may offend some people):", color=random.randint(0, 16777215))
         embed.set_image(url=res["url"])
-        embed.set_footer(text="Powered by JDJG Api!")
+        embed.set_footer(text="Powered by Senarc Api!")
         await ctx.send(embed=embed)
 
     @commands.command(brief="a command to send I hate spam.")

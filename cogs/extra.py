@@ -146,13 +146,13 @@ class Extra(commands.Cog):
         embed.set_footer(text="Powered by http.cat")
         await ctx.send(embed=embed)
 
-    @commands.command(help="Gives advice from JDJG api.", aliases=["ad"])
+    @commands.command(help="Gives advice from Senarc api.", aliases=["ad"])
     async def advice(self, ctx):
-        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/advice")
+        r = await self.bot.session.get("https://api.senarc.org/misc/advice")
         res = await r.json()
         embed = discord.Embed(title="Here is some advice for you!", color=random.randint(0, 16777215))
         embed.add_field(name=f"{res['text']}", value="Hopefully this helped!")
-        embed.set_footer(text="Powered by JDJG Api!")
+        embed.set_footer(text="Powered by Senarc Api!")
         try:
             await ctx.send(embed=embed)
         except:
@@ -160,38 +160,38 @@ class Extra(commands.Cog):
 
     @commands.command(help="gives random compliment")
     async def compliment(self, ctx):
-        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/compliment")
+        r = await self.bot.session.get("https://api.senarc.org/misc/compliment")
         res = await r.json()
         embed = discord.Embed(title="Here is a compliment:", color=random.randint(0, 16777215))
         embed.add_field(name=f"{res['text']}", value="Hopefully this helped your day!")
-        embed.set_footer(text="Powered by JDJG Api!")
+        embed.set_footer(text="Powered by Senarc Api!")
         await ctx.send(embed=embed)
 
     @commands.command(help="gives an insult")
     async def insult(self, ctx):
-        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/insult")
+        r = await self.bot.session.get("https://api.senarc.org/misc/insult")
         res = await r.json()
         embed = discord.Embed(title="Here is a insult:", color=random.randint(0, 16777215))
         embed.add_field(name=f"{res['text']}", value="Hopefully this Helped?")
-        embed.set_footer(text="Powered by JDJG Api!")
+        embed.set_footer(text="Powered by Senarc Api!")
         await ctx.send(embed=embed)
 
     @commands.command(help="gives response to slur")
     async def noslur(self, ctx):
-        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/noslur")
+        r = await self.bot.session.get("https://api.senarc.org/misc/noslur")
         res = await r.json()
         embed = discord.Embed(title="Don't Swear", color=random.randint(0, 16777215))
         embed.add_field(name=f"{res['text']}", value="WHY MUST YOU SWEAR?")
-        embed.set_footer(text="Powered by JDJG Api!")
+        embed.set_footer(text="Powered by Senarc Api!")
         await ctx.send(embed=embed)
 
     @commands.command(help="gives random message", aliases=["rm"])
     async def random_message(self, ctx):
-        r = await self.bot.session.get("https://jdjgapi.nom.mu/api/randomMessage")
+        r = await self.bot.session.get("https://api.senarc.org/misc/randomMessage")
         res = await r.json()
         embed = discord.Embed(title="Random Message:", color=random.randint(0, 16777215))
         embed.add_field(name="Here:", value=res["text"])
-        embed.set_footer(text="Powered by JDJG Api!")
+        embed.set_footer(text="Powered by Senarc Api!")
         await ctx.send(embed=embed)
 
     @commands.command(
