@@ -5,10 +5,11 @@ import re
 import aiohttp
 import traceback
 import asyncpg
-import B
 from discord.ext import commands
 import jishaku
+import dotenv
 
+dotenv.load_dotenv()
 
 async def get_prefix(bot, message):
     extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te."]
@@ -32,7 +33,6 @@ class JDBotContext(commands.Context):
             view.message = msg
 
         return msg
-
 
 class JDBot(commands.Bot):
     def __init__(self, *args, **kwargs):
@@ -129,5 +129,5 @@ for filename in os.listdir("./cogs"):
 
 
 logging.basicConfig(level=logging.INFO)
-B.b()
+
 bot.run(os.environ["classic_token"])

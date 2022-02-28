@@ -6,7 +6,6 @@ authors = ["repl.it user <replituser@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-Flask = "^1.1.2"
 aioimgur = "^0.1.1"
 asuna-api = "^0.2.8"
 async-cse = "^0.3.0"
@@ -33,6 +32,7 @@ psutil = "^5.8.0"
 black = "^21.12b0"
 mathjspy = "^0.0.9"
 chardet = "^3.0.4"
+python-dotenv = "^0.19.2"
 
 [tool.poetry.dev-dependencies]
 
