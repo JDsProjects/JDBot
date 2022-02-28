@@ -11,6 +11,7 @@ import dotenv
 
 dotenv.load_dotenv()
 
+
 async def get_prefix(bot, message):
     extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te."]
 
@@ -33,6 +34,7 @@ class JDBotContext(commands.Context):
             view.message = msg
 
         return msg
+
 
 class JDBot(commands.Bot):
     def __init__(self, *args, **kwargs):
