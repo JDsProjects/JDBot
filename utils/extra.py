@@ -8,6 +8,7 @@ import os
 import black
 import asyncdagpi
 import pathlib
+import sys
 
 
 async def google_tts(bot, text):
