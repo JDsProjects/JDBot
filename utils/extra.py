@@ -240,7 +240,7 @@ def linecount():
     p = pathlib.Path("./")
     im = cm = cr = fn = cl = ls = fc = 0
     for f in p.rglob("*.py"):
-        if str(f).startswith("venv"):
+        if str(f).startswith("venv") or str(f).startswith("src"):
             continue
         fc += 1
         with f.open() as of:
@@ -248,14 +248,14 @@ def linecount():
                 l = l.strip()
                 if l.startswith("class "):
                     cl += 1
-                if l.startswith("def"):
+                elif l.startswith("def"):
                     fn += 1
-                if l.startswith("async def"):
+                elif l.startswith("async def"):
                     cr += 1
+                elif l.startswith(("from", "import")):
+                    im += 1
                 if "#" in l:
                     cm += 1
-                if "import" in l:
-                    im += 1
                 ls += 1
 
     return f"Files: {fc}\nLines: {ls:,}\nClasses: {cl}\nFunctions: {fn}\nCoroutines: {cr}\nComments: {cm:,}\nImports: {im:,}"
