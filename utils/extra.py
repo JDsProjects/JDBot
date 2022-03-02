@@ -238,7 +238,7 @@ async def jail_converter(url, ctx):
 
 def linecount():
     to_ignore = (str(sys.prefix.split("\\")[-1]), "src") if str(sys.prefix) != str(sys.base_prefix) else "src"
-    #make some check system to check the operating system, if windows, use \\ instead of /
+    # make some check system to check the operating system, if windows, use \\ instead of /
 
     p = pathlib.Path("./")
     im = cm = cr = fn = cl = ls = fc = 0
