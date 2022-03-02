@@ -236,11 +236,12 @@ async def jail_converter(url, ctx):
 
 
 def linecount():
-
+    to_ignore = (str(sys.prefix.split("\\")[-1]), "src") if str(sys.prefix) != str(sys.base_prefix) else "src"
+    
     p = pathlib.Path("./")
     im = cm = cr = fn = cl = ls = fc = 0
     for f in p.rglob("*.py"):
-        if str(f).startswith("venv") or str(f).startswith("src"):
+        if f.is_dir() or str(f).startswith(to_ignore):
             continue
         fc += 1
         with f.open() as of:
