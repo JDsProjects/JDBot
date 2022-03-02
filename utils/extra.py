@@ -8,6 +8,7 @@ import os
 import black
 import asyncdagpi
 import pathlib
+import sys
 
 
 async def google_tts(bot, text):
@@ -237,7 +238,7 @@ async def jail_converter(url, ctx):
 
 def linecount():
     to_ignore = (str(sys.prefix.split("\\")[-1]), "src") if str(sys.prefix) != str(sys.base_prefix) else "src"
-    
+
     p = pathlib.Path("./")
     im = cm = cr = fn = cl = ls = fc = 0
     for f in p.rglob("*.py"):
