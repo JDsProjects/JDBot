@@ -139,6 +139,7 @@ async def headpat_converter(url, ctx):
         return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
     url = await cdn_upload(ctx.bot, image)
+    #I am aware of the cdn issues, will be fixed soon.
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
