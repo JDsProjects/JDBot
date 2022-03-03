@@ -111,7 +111,9 @@ async def cdn_upload(bot, bytes):
         "https://cdn.jdjgbot.com/upload", data=form, headers={"Authorization": os.environ["cdn_key"]}
     )
     returned_data = await resp.json()
-    url = f"https://cdn.jdjgbot.com/image/{returned_data.get('file_id')}.gif"
+    url = f"https://cdn.jdjgbot.com/image/{returned_data.get('file_id')}.gif/?opengraph_pass=true"
+    # I have to do this opengraph pass thing because the cdn is a bit weird and doesn't like it if I don't
+    # because opengraph is enabled, I have to do this.
     return url
 
 
@@ -139,7 +141,7 @@ async def headpat_converter(url, ctx):
         return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
     url = await cdn_upload(ctx.bot, image)
-    # I am aware of the cdn issues, will be fixed soon.
+    # I am aware of the cdn issues, will be fixed soon, cdn stuff will change too cause the creator of imoog is making a rust version.
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
