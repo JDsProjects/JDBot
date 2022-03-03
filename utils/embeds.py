@@ -111,7 +111,7 @@ async def cdn_upload(bot, bytes):
         "https://cdn.jdjgbot.com/upload", data=form, headers={"Authorization": os.environ["cdn_key"]}
     )
     returned_data = await resp.json()
-    url = f"https://cdn.jdjgbot.com/image/{returned_data.get('file_id')}.gif/?opengraph_pass=true"
+    url = f"https://cdn.jdjgbot.com/image/{returned_data.get('file_id')}.gif?opengraph_pass=true"
     # I have to do this opengraph pass thing because the cdn is a bit weird and doesn't like it if I don't
     # because opengraph is enabled, I have to do this.
     return url
