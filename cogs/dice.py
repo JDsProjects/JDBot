@@ -221,7 +221,8 @@ class Dice(commands.Cog):
         await ctx.send("Rock Paper Scissors Shoot!", embed=embed, view=view)
 
     @commands.command(
-        brief="Guess 1 number out of 4 that the bot comes up with", help="command to let you pick a number the bot choose."
+        brief="Guess 1 number out of 4 that the bot comes up with",
+        help="command to let you pick a number the bot choose.",
     )
     async def guess_number(self, ctx):
         embed = discord.Embed(color=random.randint(0, 16777215))
