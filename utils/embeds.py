@@ -210,7 +210,7 @@ async def invert_converter2(url, ctx):
 async def jail_converter(url, ctx):
     dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
     image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(), str(url))
-    url = await cdn_upload(ctx.bot, image)
+    url = await cdn_upload(ctx.bot, image.image)
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Jail Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
