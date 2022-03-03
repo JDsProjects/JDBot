@@ -1,7 +1,6 @@
 import collections
 import random
 import discord
-import aioimgur
 import sr_api
 import asyncdagpi
 import jeyyapi
@@ -119,14 +118,13 @@ async def cdn_upload(bot, bytes):
 
 async def triggered_converter(url, ctx):
     sr_client = sr_api.Client(session=ctx.bot.session)
-    source_image = sr_client.filter(option="triggered", url=str(url))
+    image = sr_client.filter(option="triggered", url=str(url))
 
-    imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-    imgur_url = await imgur_client.upload_from_url(source_image.url)
+    url = await cdn_upload(ctx.bot, await image.read())
 
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Triggered gif requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    embed.set_image(url=imgur_url["link"])
+    embed.set_image(url=url)
     embed.set_footer(text="powered by some random api")
     return embed
 
@@ -141,7 +139,8 @@ async def headpat_converter(url, ctx):
         return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
     url = await cdn_upload(ctx.bot, image)
-    # I am aware of the cdn issues, will be fixed soon, cdn stuff will change too cause the creator of imoog is making a rust version.
+    # I am aware of the cdn issues, will be fixed soon
+    # cdn stuff will change too cause the creator of imoog is making a rust version.
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
@@ -183,12 +182,10 @@ async def headpat_converter2(url, ctx):
     dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
     image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(), str(url))
 
-    imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-    imgur_url = await imgur_client.upload(image.image)
-
+    url = await cdn_upload(ctx.bot, image.image)
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    embed.set_image(url=imgur_url["link"])
+    embed.set_image(url=url)
     embed.set_footer(text="powered by dagpi")
     return embed
 
@@ -201,11 +198,10 @@ async def invert_converter2(url, ctx):
     except:
         return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-    imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-    imgur_url = await imgur_client.upload(image)
+    url = await cdn_upload(ctx.bot, image)
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Inverted Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    embed.set_image(url=imgur_url["link"])
+    embed.set_image(url=url)
     embed.set_footer(text="powered by some jeyyapi")
 
     return embed
