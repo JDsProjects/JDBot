@@ -220,6 +220,15 @@ class Dice(commands.Cog):
 
         await ctx.send("Rock Paper Scissors Shoot!", embed=embed, view=view)
 
+    @commands.command(
+        brief="Guess 1 number of 3 the bot comes up with", help="command to let you pick a number the bot choose."
+    )
+    async def guess_number(self, ctx):
+        embed = discord.Embed(color=random.randint(0, 16777215))
+        embed.set_image(url="https://i.imgur.com/B1pWnLj.png")
+        embed.set_footer("PlaceHolders for Now")
+        view = utils.GuessingGame(ctx)
+
 
 def setup(bot):
     bot.add_cog(Dice(bot))

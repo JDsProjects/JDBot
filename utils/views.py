@@ -828,6 +828,65 @@ class CoinFlip(discord.ui.View):
         return True
 
 
+class GuessingButton(discord.ui.Button):
+    def __init__(self, number: int):
+        self.number = number
+        super().__init__(style=discord.ButtonStyle.success, label=str(number), emoji="🎲")
+
+    async def callback(self, interaction: discord.Interaction):
+        assert self.view is not None
+        view = self.view
+        view.content = view.message.content
+        view.embed = view.message.embeds[0]
+        message = view.message
+        await view.message.edit(view=None)
+
+        choosen = self.label
+        value = str(random.choice(self.view.numbers))
+        win = choosen == value
+
+        embed = discord.Embed(title="Picked Random Number", color=random.randint(0, 16777215))
+        embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
+        embed.add_field(name=f"The Bot picked:", value=f"{value}")
+        embed.add_field(name="You guessed:", value=f"{choosen}")
+        embed.set_image(url="https://i.imgur.com/B1pWnLj.png")
+        text = "You Won" if (win) else "You lost"
+        embed.add_field(name="Result: ", value=text)
+        view = ReRun(view)
+        await message.edit(
+            content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
+            embed=embed,
+            view=view,
+        )
+
+
+class GuessingGame(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+        numbers = random.sample(range(10, 100), k=3)
+        self.numbers = numbers
+        self.add_item(GuessingButton(numbers[0]))
+        self.add_item(GuessingButton(numbers[1]))
+        self.add_item(GuessingButton(numbers[-1]))
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
+                ephemeral=True,
+            )
+
+        return True
+
+
 # A bunch of Select Classes and views for them(below me).
 
 
