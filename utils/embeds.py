@@ -170,11 +170,10 @@ async def invert_converter(url, ctx):
     except:
         return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-    imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-    imgur_url = await imgur_client.upload(image)
+    url = await cdn_upload(ctx.bot, image)
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Inverted Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    embed.set_image(url=imgur_url["link"])
+    embed.set_image(url=url)
     embed.set_footer(text="powered by some random api")
 
     return embed
