@@ -229,6 +229,8 @@ class Dice(commands.Cog):
         embed.set_footer(text="PlaceHolders for Now")
         view = utils.GuessingGame(ctx)
 
+        await ctx.send("Try to Guess the Number!", embed=embed, view=view)
+
 
 def setup(bot):
     bot.add_cog(Dice(bot))
