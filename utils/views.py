@@ -864,10 +864,11 @@ class GuessingGame(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        numbers = random.sample(range(10, 100), k=3)
+        numbers = random.sample(range(10, 100), k=4)
         self.numbers = numbers
         self.add_item(GuessingButton(numbers[0]))
         self.add_item(GuessingButton(numbers[1]))
+        self.add_item(GuessingButton(numbers[2]))
         self.add_item(GuessingButton(numbers[-1]))
 
     async def on_timeout(self):
