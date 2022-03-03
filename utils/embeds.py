@@ -6,6 +6,8 @@ import sr_api
 import asyncdagpi
 import jeyyapi
 import os
+import aiohttp
+import io
 
 
 async def guildinfo(ctx, guild):
@@ -101,6 +103,18 @@ async def roleinfo(ctx, role):
     await ctx.send(embed=embed)
 
 
+async def cdn_upload(bot, bytes):
+    form = aiohttp.FormData()
+    form.add_field("file", bytes, content_type="application/octet-stream")
+    # debate about the content_type exists, but it seems to be fine, so I will leave for now.
+    resp = await bot.session.post(
+        "https://cdn.jdjgbot.com/upload", data=form, headers={"Authorization": os.environ["cdn_key"]}
+    )
+    returned_data = await resp.json()
+    url = f"https://cdn.jdjgbot.com/image/{returned_data.get('file_id')}.gif"
+    return url
+
+
 async def triggered_converter(url, ctx):
     sr_client = sr_api.Client(session=ctx.bot.session)
     source_image = sr_client.filter(option="triggered", url=str(url))
@@ -124,11 +138,10 @@ async def headpat_converter(url, ctx):
         print(e)
         return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-    imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-    imgur_url = await imgur_client.upload(image)
+    url = await cdn_upload(ctx.bot, image)
     embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    embed.set_image(url=imgur_url["link"])
+    embed.set_image(url=url)
     embed.set_footer(text="powered by some jeyyapi")
 
     return embed
