@@ -6,7 +6,6 @@ from discord.flags import UserFlags
 import io
 import os
 import black
-import asyncdagpi
 import pathlib
 import sys
 
@@ -227,13 +226,6 @@ def formatter(code, boolean):
     dst = black.format_str(src, mode=mode)
     black.dump_to_file = lambda *args, **kwargs: None
     return dst
-
-
-async def jail_converter(url, ctx):
-    dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
-    image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.jail(), str(url))
-
-    return image
 
 
 def linecount():

@@ -473,23 +473,23 @@ class Image(commands.Cog):
     async def jail(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
         y = 0
-        files = []
+        embeds = []
 
         if ctx.message.attachments:
             for a in ctx.message.attachments:
                 if a.filename.endswith(".png"):
                     url = a.url
 
-                    files.append(await utils.jail_converter(url, ctx))
+                    embeds.append(await utils.jail_converter(url, ctx))
                     y += 1
                 if not a.filename.endswith(".png"):
                     pass
 
         if not ctx.message.attachments or y == 0:
             url = (Member.display_avatar.with_format("png")).url
-            files.append(await utils.jail_converter(url, ctx))
+            embeds.append(await utils.jail_converter(url, ctx))
 
-        menu = utils.JailEmbed(files, ctx=ctx, disable_after=True)
+        menu = utils.Paginator(embeds, ctx=ctx, disable_after=True)
         await menu.send(ctx.channel)
 
     @commands.command(brief="inverts any valid image with jeyyapi")
