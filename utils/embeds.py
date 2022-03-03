@@ -215,3 +215,5 @@ async def jail_converter(url, ctx):
     embed.set_author(name=f"Jail Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
     embed.set_footer(text="powered by dagpi")
+
+    return embed
