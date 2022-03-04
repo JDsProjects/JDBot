@@ -130,18 +130,25 @@ async def triggered_converter(url, ctx):
 
 
 async def headpat_converter(url, ctx):
+
+    embed = discord.Embed(color=random.randint(0, 16777215))
+
     try:
         client = jeyyapi.JeyyAPIClient(session=ctx.bot.session)
         image = await client.patpat(url)
 
     except Exception as e:
         print(e)
-        return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+        await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+
+        embed.set_author(name=f"Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
+        embed.set_image(url=url)
+        embed.set_footer(text="An Unexcepted Error Occured")
+        return embed
 
     url = await cdn_upload(ctx.bot, image)
     # I am aware of the cdn issues, will be fixed soon
     # cdn stuff will change too cause the creator of imoog is making a rust version.
-    embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
     embed.set_footer(text="powered by some jeyyapi")
@@ -172,7 +179,6 @@ async def invert_converter(url, ctx):
     except:
         await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
 
-        embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
         embed.set_image(url=url)
         embed.set_footer(text="An Unexcepted Error Occured")
