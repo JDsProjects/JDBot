@@ -373,6 +373,7 @@ class Owner(commands.Cog):
                 return await ctx.send(e)
 
             url = await utils.cdn_upload(ctx.bot, await a.read())
+            await ctx.send(url)
 
     @commands.command(brief="A command to remove testers")
     async def remove_tester(self, ctx, *, user: utils.BetterUserconverter = None):
