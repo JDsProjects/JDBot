@@ -5,7 +5,6 @@ import discord
 import os
 import importlib
 import typing
-import aioimgur
 import functools
 import tweepy
 import traceback
@@ -373,10 +372,7 @@ class Owner(commands.Cog):
                 traceback.print_exc()
                 return await ctx.send(e)
 
-            imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-
-            imgur_url = await imgur_client.upload(await a.read())
-            await ctx.send(f"{imgur_url['link']}")
+            url = await utils.cdn_upload(ctx.bot, await a.read())
 
     @commands.command(brief="A command to remove testers")
     async def remove_tester(self, ctx, *, user: utils.BetterUserconverter = None):

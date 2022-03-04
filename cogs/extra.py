@@ -8,7 +8,6 @@ import chardet
 import alexflipnote
 import os
 import typing
-import aioimgur
 import time
 import asyncio
 import contextlib
@@ -423,12 +422,8 @@ class Extra(commands.Cog):
 
         args = args or "You called No one :("
         image = await alex_api.calling(text=args)
-
-        imgur_client = aioimgur.ImgurClient(os.environ["imgur_id"], os.environ["imgur_secret"])
-
-        imgur_url = await imgur_client.upload(await image.read())
-
-        await ctx.send(imgur_url["link"])
+        url = await utils.cdn_upload(ctx.bot, await image.read())
+        await ctx.send(url)
 
     @commands.command(brief="allows you to quote a user, without pings")
     async def quote(self, ctx, *, message=None):
