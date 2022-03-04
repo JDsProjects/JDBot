@@ -218,7 +218,7 @@ class Paginator(discord.ui.View):
                 formatted_page.set_footer(text=str(formatted_page.footer.text) + self.page_string)
             else:
                 formatted_page.set_footer(text=self.page_string)
-                
+
             kwargs["embed"] = formatted_page
             return kwargs, send_kwargs or {}
 
