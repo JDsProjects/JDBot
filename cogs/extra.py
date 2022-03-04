@@ -421,8 +421,9 @@ class Extra(commands.Cog):
         alex_api = alexflipnote.Client(os.environ["alex_apikey"], session=self.bot.session)
 
         args = args or "You called No one :("
-        image = await alex_api.calling(text=args)
-        url = await utils.cdn_upload(ctx.bot, await image.read())
+        # image = await alex_api.calling(text=args)
+        # url = await utils.cdn_upload(ctx.bot, await image.read())
+        url = "Something will be made to replace the orginal image soon or we will host the public open sourced code"
         await ctx.send(url)
 
     @commands.command(brief="allows you to quote a user, without pings")
