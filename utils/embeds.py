@@ -162,15 +162,23 @@ def clear_permission(ctx):
 
 
 async def invert_converter(url, ctx):
+
+    embed = discord.Embed(color=random.randint(0, 16777215))
+
     try:
         sr_client = sr_api.Client(session=ctx.bot.session)
         source_image = sr_client.filter("invert", url=str(url))
         image = await source_image.read()
     except:
-        return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+        await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+
+        embed = discord.Embed(color=random.randint(0, 16777215))
+        embed.set_author(name=f"Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
+        embed.set_image(url=url)
+        embed.set_footer(text="An Unexcepted Error Occured")
+        return embed
 
     url = await cdn_upload(ctx.bot, image)
-    embed = discord.Embed(color=random.randint(0, 16777215))
     embed.set_author(name=f"Inverted Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
     embed.set_footer(text="powered by some random api")
@@ -191,15 +199,23 @@ async def headpat_converter2(url, ctx):
 
 
 async def invert_converter2(url, ctx):
+
+    embed = discord.Embed(color=random.randint(0, 16777215))
+
     try:
         client = jeyyapi.JeyyAPIClient(session=ctx.bot.session)
         image = await client.half_invert(url)
 
     except:
-        return await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+        await ctx.send("the api failed on us. Please contact the Bot owner if this is a perstient issue.")
+
+        embed.set_author(name=f"Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
+        embed.set_image(url=url)
+        embed.set_footer(text="An Unexcepted Error Occured")
+        return embed
 
     url = await cdn_upload(ctx.bot, image)
-    embed = discord.Embed(color=random.randint(0, 16777215))
+
     embed.set_author(name=f"Inverted Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
     embed.set_footer(text="powered by some jeyyapi")
