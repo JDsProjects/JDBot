@@ -540,7 +540,7 @@ class Owner(commands.Cog):
             await ctx.send("doesn't have permissions to send in that channel.")
 
     @commands.command(brief="manages a couple of bot settings")
-    async def bot_settings(self, ctx):
+    async def owner_settings(self, ctx):
 
         view = utils.BotSettings(ctx)
 
