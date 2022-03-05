@@ -226,8 +226,7 @@ class Dice(commands.Cog):
     )
     async def guess_number(self, ctx):
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_image(url="https://i.imgur.com/B1pWnLj.png")
-        embed.set_footer(text="PlaceHolders for Now")
+        embed.set_image(url="https://i.imgur.com/SSgk15U.gif")
         view = utils.GuessingGame(ctx)
 
         await ctx.send("Try to Guess the Number!", embed=embed, view=view)

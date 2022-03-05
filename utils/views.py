@@ -879,9 +879,9 @@ class CoinFlip(discord.ui.View):
 
 
 class GuessingButton(discord.ui.Button):
-    def __init__(self, number: int):
+    def __init__(self, number: int, emoji: str):
         self.number = number
-        super().__init__(style=discord.ButtonStyle.success, label=str(number), emoji="🎲")
+        super().__init__(style=discord.ButtonStyle.success, label=str(number), emoji=emoji)
 
     async def callback(self, interaction: discord.Interaction):
         assert self.view is not None
@@ -899,7 +899,7 @@ class GuessingButton(discord.ui.Button):
         embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
         embed.add_field(name=f"The Bot picked:", value=f"{value}")
         embed.add_field(name="You guessed:", value=f"{choosen}")
-        embed.set_image(url="https://i.imgur.com/B1pWnLj.png")
+        embed.set_image(url="https://i.imgur.com/SSgk15U.gif")
         text = "You Won" if (win) else "You lost"
         embed.add_field(name="Result: ", value=text)
         view = ReRun(view)
@@ -916,10 +916,10 @@ class GuessingGame(discord.ui.View):
         self.ctx = ctx
         numbers = random.sample(range(10, 100), k=4)
         self.numbers = numbers
-        self.add_item(GuessingButton(numbers[0]))
-        self.add_item(GuessingButton(numbers[1]))
-        self.add_item(GuessingButton(numbers[2]))
-        self.add_item(GuessingButton(numbers[-1]))
+        self.add_item(GuessingButton(numbers[0], "<:dice:949543735417524234>"))
+        self.add_item(GuessingButton(numbers[1], "<:dice:949543734985490493>"))
+        self.add_item(GuessingButton(numbers[2], "<:dice:949543735404949504>"))
+        self.add_item(GuessingButton(numbers[-1], "🎲"))
 
     async def on_timeout(self):
         for item in self.children:
