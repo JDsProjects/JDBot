@@ -635,9 +635,7 @@ class BotSettings(discord.ui.View):
             content="Alright Boss, I unlocked the commands, they will work with you all again.", ephemeral=True
         )
 
-    @discord.ui.button(
-        label="Prefixless", style=discord.ButtonStyle.success, emoji="<:Toggle_on:904382025207775232>", row=1
-    )
+    @discord.ui.button(label="Prefixless", style=discord.ButtonStyle.success, emoji="🔛", row=1)
     async def Prefixless(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(content="owner only blank prefixes are enabled", view=None)
@@ -659,7 +657,7 @@ class BotSettings(discord.ui.View):
             content="Alright Boss, I now made the bot require a prefix for everyone.", ephemeral=True
         )
 
-    @discord.ui.button(label="Cancel the command", style=discord.ButtonStyle.success, emoji="❌", row=2)
+    @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="❌", row=2)
     async def cancel(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(content="Canceling, this boss.", view=None)
