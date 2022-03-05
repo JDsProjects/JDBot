@@ -620,19 +620,16 @@ class BotSettings(discord.ui.View):
     async def suspend(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
-        followup = interaction.followup()
         self.ctx.bot.suspended = True
-
-        await followup.send(content="Alright Boss, I now locked the bot to owners only", empheral=True)
+        await interaction.followup.send(content="Alright Boss, I now locked the bot to owners only", empheral=True)
 
     @discord.ui.button(label="Unsuspend", style=discord.ButtonStyle.success, emoji="🔓", row=0)
     async def unsuspend(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
-        followup = interaction.followup()
         self.ctx.bot.suspended = False
 
-        await followup.send(
+        await interaction.followup.send(
             content="Alright Boss, I unlocked the commands, they will work with you all again.", empheral=True
         )
 
@@ -640,10 +637,11 @@ class BotSettings(discord.ui.View):
     async def Prefixless(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
-        followup = interaction.followup()
         self.ctx.bot.prefixless = True
 
-        await followup.send(content="Alright Boss, I now made the bot prefixless(for owners only)", empheral=True)
+        await interaction.followup.send(
+            content="Alright Boss, I now made the bot prefixless(for owners only)", empheral=True
+        )
 
     @discord.ui.button(
         label="Returns the Bot Back to the status quo", style=discord.ButtonStyle.success, emoji="📁", row=1
@@ -651,10 +649,11 @@ class BotSettings(discord.ui.View):
     async def prefix_back(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
-        followup = interaction.followup()
         self.ctx.bot.prefixless = False
 
-        await followup.send(content="Alright Boss, I now made the bot require a prefix for everyone.", empheral=True)
+        await interaction.followup.send(
+            content="Alright Boss, I now made the bot require a prefix for everyone.", empheral=True
+        )
 
     @discord.ui.button(label="Cancel the command", style=discord.ButtonStyle.success, emoji="❌", row=2)
     async def cancel(self, button: discord.ui.Button, interaction: discord.Interaction):
