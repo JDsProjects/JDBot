@@ -544,8 +544,19 @@ class Owner(commands.Cog):
 
         view = utils.BotSettings(ctx)
 
+        embed = discord.Embed(
+            title="Bot Settings:",
+            description=f"Suspended : {self.bot.suspended}\nPrefixless : {self.bot.prefixless}",
+            color=15428885,
+            timestamp=ctx.message.created_at,
+        )
+
+        embed.set_thumbnail(url=self.bot.user.display_avatar.url)
+        embed.set_footer(text="The Bot embed will not change, so re-running the command will change it.")
+
         await ctx.send(
             "What settings Do You Want to Change? \n(Please Note That prefix ones are owner only, suspend effects everyone, etc.):",
+            embed=embed,
             view=view,
         )
 
