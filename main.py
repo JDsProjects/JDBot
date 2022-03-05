@@ -20,7 +20,7 @@ async def get_prefix(bot, message):
     if match is not None:
         extras.append(match.group(1))
 
-    if await bot.is_owner(message.author):
+    if await bot.is_owner(message.author) and bot.prefixless:
         extras.append("")
 
     return commands.when_mentioned_or(*extras)(bot, message)
@@ -42,6 +42,8 @@ class JDBot(commands.Bot):
         self.special_access = {}
         self.messages = {}
         self.suspended = False
+        self.prefixless = False
+        # used for testing purposes and to make the bot prefixless for owners only
 
     async def start(self, *args, **kwargs):
         self.session = aiohttp.ClientSession()

@@ -551,6 +551,18 @@ class Owner(commands.Cog):
         self.bot.suspended = False
         await ctx.send("Unlock commands, so operation is running like normal.")
 
+    @commands.command(brief="makes the bot prefixless")
+    async def prefixless(self, ctx):
+        self.bot.prefixless = True
+
+        await ctx.send("I made the bot prefixless for you boss.")
+
+    @commands.command(brief="makes the bot only able to respond to a prefix.")
+    async def un_prefixless(self, ctx):
+        self.bot.prefixless = False
+
+        await ctx.send("The bot is not prefixless to anyone, a.k.a it requires a prefix.")
+
     @commands.command(brief="A command to blacklist users with a reason")
     async def blacklist(self, ctx, *, user: utils.BetterUserconverter = None):
         if user is None:
