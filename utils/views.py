@@ -645,7 +645,7 @@ class BotSettings(discord.ui.View):
             content="Alright Boss, I now made the bot prefixless(for owners only)", ephemeral=True
         )
 
-    @discord.ui.button(label="Prefix Needed(owner too)", style=discord.ButtonStyle.success, emoji="📁", row=1)
+    @discord.ui.button(label="Prefix Needed(everyone)", style=discord.ButtonStyle.success, emoji="📁", row=1)
     async def prefix_back(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(content="Requiring everyone to use prefixes again", view=None)
