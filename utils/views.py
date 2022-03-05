@@ -611,6 +611,73 @@ class BasicButtons(discord.ui.View):
         return True
 
 
+class BotSettings(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+
+    @discord.ui.button(label="Suspend", style=discord.ButtonStyle.success, emoji="🔒")
+    async def suspend(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(view=None)
+        followup = interaction.followup()
+        self.ctx.bot.suspended = True
+
+        await followup.send(content="Alright Boss, I now locked the bot to owners only", empheral=True)
+
+    @discord.ui.button(label="Suspend", style=discord.ButtonStyle.success, emoji="🔒")
+    async def suspend(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(view=None)
+        followup = interaction.followup()
+        self.ctx.bot.suspended = True
+
+        await followup.send(content="Alright Boss, I now locked the bot to owners only", empheral=True)
+
+    @discord.ui.button(label="Unsuspend", style=discord.ButtonStyle.success, emoji="🔓")
+    async def unsuspend(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(view=None)
+        followup = interaction.followup()
+        self.ctx.bot.suspended = False
+
+        await followup.send(content="Alright Boss, I now unlocked the bot to owners only", empheral=True)
+
+    @discord.ui.button(label="Prefixless(owner only)", style=discord.ButtonStyle.success, emoji="📂")
+    async def Prefixless(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(view=None)
+        followup = interaction.followup()
+        self.ctx.bot.prefixless = True
+
+        await followup.send(content="Alright Boss, I now made the bot prefixless(for owners only)", empheral=True)
+
+    @discord.ui.button(label="Prefixless off (owner only)", style=discord.ButtonStyle.success, emoji="📁")
+    async def prefix_back(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(view=None)
+        followup = interaction.followup()
+        self.ctx.bot.prefixless = True
+
+        await followup.send(content="Alright Boss, I now made the bot require a prefix for everyone.", empheral=True)
+
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.success, emoji="❌")
+    async def cancel(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(content="Canceling, this boss.", view=None)
+        self.ctx.bot.prefixless = True
+
+    async def interaction_check(self, item: discord.ui.Item, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+
 # A Nitro Button Class(not actual nitro)
 
 

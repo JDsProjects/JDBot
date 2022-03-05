@@ -539,29 +539,12 @@ class Owner(commands.Cog):
         else:
             await ctx.send("doesn't have permissions to send in that channel.")
 
-    @commands.command(brief="suspends the bot so the bot is only usable by the owner")
-    async def suspend(self, ctx):
+    @commands.command(brief="manages a couple of bot settings")
+    async def bot_settings(self, ctx):
 
-        self.bot.suspended = True
-        await ctx.send("Locked all commands to only owners of the bot.")
+        view = utils.BotSettings(ctx)
 
-    @commands.command(brief="unsuspends the bot, so the bot is running normally")
-    async def unsuspend(self, ctx):
-
-        self.bot.suspended = False
-        await ctx.send("Unlock commands, so operation is running like normal.")
-
-    @commands.command(brief="makes the bot prefixless")
-    async def prefixless(self, ctx):
-        self.bot.prefixless = True
-
-        await ctx.send("I made the bot prefixless for you boss.")
-
-    @commands.command(brief="makes the bot only able to respond to a prefix.")
-    async def un_prefixless(self, ctx):
-        self.bot.prefixless = False
-
-        await ctx.send("The bot is not prefixless to anyone, a.k.a it requires a prefix.")
+        await ctx.send("What settings Do You Want to Change?", view=view)
 
     @commands.command(brief="A command to blacklist users with a reason")
     async def blacklist(self, ctx, *, user: utils.BetterUserconverter = None):
