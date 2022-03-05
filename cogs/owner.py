@@ -544,7 +544,10 @@ class Owner(commands.Cog):
 
         view = utils.BotSettings(ctx)
 
-        await ctx.send("What settings Do You Want to Change?:", view=view)
+        await ctx.send(
+            "What settings Do You Want to Change? \n(Please Note That prefix ones are owner only, suspend effects everyone, etc.):",
+            view=view,
+        )
 
     @commands.command(brief="A command to blacklist users with a reason")
     async def blacklist(self, ctx, *, user: utils.BetterUserconverter = None):
