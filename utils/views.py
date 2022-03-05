@@ -619,14 +619,16 @@ class BotSettings(discord.ui.View):
     @discord.ui.button(label="Suspend", style=discord.ButtonStyle.success, emoji="🔒", row=0)
     async def suspend(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        await interaction.response.edit_message(view=None)
+        await interaction.response.edit_message(
+            content="Alright Suspending the bot(check the confirmation you will get).", view=None
+        )
         self.ctx.bot.suspended = True
         await interaction.followup.send(content="Alright Boss, I now locked the bot to owners only", ephemeral=True)
 
     @discord.ui.button(label="Unsuspend", style=discord.ButtonStyle.success, emoji="🔓", row=0)
     async def unsuspend(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        await interaction.response.edit_message(view=None)
+        await interaction.response.edit_message(content="Unsuspended the bot :)", view=None)
         self.ctx.bot.suspended = False
 
         await interaction.followup.send(
@@ -636,7 +638,7 @@ class BotSettings(discord.ui.View):
     @discord.ui.button(label="Prefixless(owner only)", style=discord.ButtonStyle.success, emoji="📂", row=1)
     async def Prefixless(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        await interaction.response.edit_message(view=None)
+        await interaction.response.edit_message(content="owner only blank prefixes are enabled", view=None)
         self.ctx.bot.prefixless = True
 
         await interaction.followup.send(
@@ -648,7 +650,7 @@ class BotSettings(discord.ui.View):
     )
     async def prefix_back(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        await interaction.response.edit_message(view=None)
+        await interaction.response.edit_message(content="Requiring everyone to use prefixes again", view=None)
         self.ctx.bot.prefixless = False
 
         await interaction.followup.send(
