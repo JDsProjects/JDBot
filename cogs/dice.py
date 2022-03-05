@@ -225,7 +225,7 @@ class Dice(commands.Cog):
         help="command to let you pick a number the bot choose.",
     )
     async def guess_number(self, ctx):
-        embed = discord.Embed(title = "Please pick a number below:" ,color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Please pick a number Below:", color=random.randint(0, 16777215))
         embed.set_image(url="https://i.imgur.com/SSgk15U.gif")
         view = utils.GuessingGame(ctx)
 
