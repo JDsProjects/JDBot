@@ -616,7 +616,7 @@ class BotSettings(discord.ui.View):
         super().__init__(**kwargs)
         self.ctx = ctx
 
-    @discord.ui.button(label="Suspend", style=discord.ButtonStyle.success, emoji="🔒")
+    @discord.ui.button(label="Suspend", style=discord.ButtonStyle.success, emoji="🔒", row=0)
     async def suspend(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
@@ -625,7 +625,7 @@ class BotSettings(discord.ui.View):
 
         await followup.send(content="Alright Boss, I now locked the bot to owners only", empheral=True)
 
-    @discord.ui.button(label="Suspend", style=discord.ButtonStyle.success, emoji="🔒")
+    @discord.ui.button(label="Suspend", style=discord.ButtonStyle.success, emoji="🔒", row=0)
     async def suspend(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
@@ -634,7 +634,7 @@ class BotSettings(discord.ui.View):
 
         await followup.send(content="Alright Boss, I now locked the bot to owners only", empheral=True)
 
-    @discord.ui.button(label="Unsuspend", style=discord.ButtonStyle.success, emoji="🔓")
+    @discord.ui.button(label="Unsuspend", style=discord.ButtonStyle.success, emoji="🔓", row=1)
     async def unsuspend(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
@@ -643,7 +643,7 @@ class BotSettings(discord.ui.View):
 
         await followup.send(content="Alright Boss, I now unlocked the bot to owners only", empheral=True)
 
-    @discord.ui.button(label="Prefixless(owner only)", style=discord.ButtonStyle.success, emoji="📂")
+    @discord.ui.button(label="Prefixless(owner only)", style=discord.ButtonStyle.success, emoji="📂", row=1)
     async def Prefixless(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
@@ -652,7 +652,7 @@ class BotSettings(discord.ui.View):
 
         await followup.send(content="Alright Boss, I now made the bot prefixless(for owners only)", empheral=True)
 
-    @discord.ui.button(label="Prefixless off (owner only)", style=discord.ButtonStyle.success, emoji="📁")
+    @discord.ui.button(label="Prefixless off (owner only)", style=discord.ButtonStyle.success, emoji="📁", row=2)
     async def prefix_back(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(view=None)
@@ -661,7 +661,7 @@ class BotSettings(discord.ui.View):
 
         await followup.send(content="Alright Boss, I now made the bot require a prefix for everyone.", empheral=True)
 
-    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.success, emoji="❌")
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.success, emoji="❌", row=2)
     async def cancel(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(content="Canceling, this boss.", view=None)
