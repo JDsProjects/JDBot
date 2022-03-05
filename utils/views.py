@@ -546,7 +546,7 @@ class dm_or_ephemeral(discord.ui.View):
     async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         self.clear_items()
-        await self.message.edit(content="Will be sending you the information, empherally", view=self)
+        await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
 
         await self.menu.send_as_interaction(interaction, ephemeral=True)
 
@@ -621,7 +621,7 @@ class BotSettings(discord.ui.View):
 
         await interaction.response.edit_message(view=None)
         self.ctx.bot.suspended = True
-        await interaction.followup.send(content="Alright Boss, I now locked the bot to owners only", empheral=True)
+        await interaction.followup.send(content="Alright Boss, I now locked the bot to owners only", ephemeral=True)
 
     @discord.ui.button(label="Unsuspend", style=discord.ButtonStyle.success, emoji="🔓", row=0)
     async def unsuspend(self, button: discord.ui.Button, interaction: discord.Interaction):
@@ -630,7 +630,7 @@ class BotSettings(discord.ui.View):
         self.ctx.bot.suspended = False
 
         await interaction.followup.send(
-            content="Alright Boss, I unlocked the commands, they will work with you all again.", empheral=True
+            content="Alright Boss, I unlocked the commands, they will work with you all again.", ephemeral=True
         )
 
     @discord.ui.button(label="Prefixless(owner only)", style=discord.ButtonStyle.success, emoji="📂", row=1)
@@ -640,7 +640,7 @@ class BotSettings(discord.ui.View):
         self.ctx.bot.prefixless = True
 
         await interaction.followup.send(
-            content="Alright Boss, I now made the bot prefixless(for owners only)", empheral=True
+            content="Alright Boss, I now made the bot prefixless(for owners only)", ephemeral=True
         )
 
     @discord.ui.button(
@@ -652,7 +652,7 @@ class BotSettings(discord.ui.View):
         self.ctx.bot.prefixless = False
 
         await interaction.followup.send(
-            content="Alright Boss, I now made the bot require a prefix for everyone.", empheral=True
+            content="Alright Boss, I now made the bot require a prefix for everyone.", ephemeral=True
         )
 
     @discord.ui.button(label="Cancel the command", style=discord.ButtonStyle.success, emoji="❌", row=2)
