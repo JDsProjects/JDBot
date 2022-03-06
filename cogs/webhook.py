@@ -108,7 +108,11 @@ class Webhook(commands.Cog):
         if response.status != 200:
             await ctx.send("Not a valid link or an error occured")
 
-        await ctx.message.delete(silent=True)
+        try:
+            await ctx.message.delete()
+
+        except Exception:
+            print(Exception)
 
     @commands.command(brief="deletes a webhook by url")
     async def webhook_delete(self, ctx, *, webhook: utils.WebhookConverter = None):
