@@ -1178,3 +1178,51 @@ class CalcView(discord.ui.View):
             i.disabled = True
         await self.message.edit(content="If you want your calculator to work you need to make a new one.", view=self)
         self.stop()
+
+
+# Modal Classes
+class CodeBlockModal(discord.ui.Modal):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_item(discord.ui.TextInput(label="Code Block", placeholder="Please your code here."))
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message("Code Block Submitted.", ephemeral=True)
+        await self.view.message.edit("Received Code Block", view=None)
+        self.stop()
+
+    async def on_timeout(self):
+        for i in self.children:
+            i.disabled = True
+        await self.view.edit(content="You May want to run the pep8 formatter again.", view=self)
+        self.stop()
+
+
+class CodeBlockView(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        self.value: str = None
+        self.ctx = ctx
+        super().__init__(**kwargs)
+
+    async def interaction_check(self, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit(content="Looks like the view timed out try again", view=self)
+        self.stop()
+
+    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>")
+    async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
+        modal = CodeBlockModal()
+        await interaction.response.send_modal(modal)
+        await modal.wait()
