@@ -1188,7 +1188,7 @@ class CodeBlockModal(discord.ui.Modal):
         self.add_item(discord.ui.TextInput(label="Code Block", placeholder="Please your code here."))
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.edit_message("Code Block Submitted.")
+        await interaction.response.edit_message(content="Code Block Submitted.")
         self.stop()
 
     async def on_timeout(self):
