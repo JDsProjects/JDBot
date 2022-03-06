@@ -434,28 +434,35 @@ class DevTools(commands.Cog):
         await menu.send(ctx.channel)
 
     @commands.command(brief="a command to autoformat your python code to pep8")
-    async def pep8(self, ctx, *, code: codeblock_converter = None):
-        if not code:
+    async def pep8(self, ctx):
+
+        modal = utils.CodeBlockView(ctx, timeout=180.0)
+        message = await ctx.send("Please Submit the Code Block:", view=modal)
+        await modal.wait()
+
+        if not modal.value:
             return await ctx.send("You need to give it code to work with it.")
 
+        code = codeblock_converter(argument=f"{modal.value}")
+
         view = utils.BasicButtons(ctx, timeout=15.0)
-        msg = await ctx.send(
+        message.edit(
             "Do you want to use black's line formatter at 120 (i.e. black -l120 .), or just use the default? (i.e black .)",
             view=view,
         )
         await view.wait()
 
         if view.value is None or view.value is False:
-            await msg.edit("Default it is.", view=None)
+            await message.edit("Default it is.", view=None)
 
         if view.value is True:
-            await msg.edit("Speacil Formatting at 120 lines it is.")
+            await message.edit("Speacil Formatting at 120 lines it is.")
         code_conversion = functools.partial(utils.formatter, code.content, bool(view.value))
         try:
             code = await self.bot.loop.run_in_executor(None, code_conversion)
 
         except Exception as e:
-            return await msg.edit(f"Error Ocurred with {e}")
+            return await message.edit(f"Error Ocurred with {e}")
 
         embed = discord.Embed(
             title="Reformatted with Black",
@@ -463,7 +470,7 @@ class DevTools(commands.Cog):
             color=random.randint(0, 16777215),
         )
         embed.set_footer(text="Make sure you use python code, otherwise it will not work properly.")
-        await msg.edit(embed=embed)
+        await message.edit(embed=embed)
 
     @commands.command(brief="grabs your pfp's image")
     async def pfp_grab(self, ctx):
