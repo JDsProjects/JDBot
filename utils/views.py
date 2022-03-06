@@ -1373,3 +1373,58 @@ class ChatBotView(discord.ui.View):
     async def Close(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(content="Closing ChatBot", view=None)
+
+
+class ReportModal(discord.ui.Modal):
+    def __init__(self, view, **kwargs):
+        self.view = view
+        super().__init__(**kwargs)
+        self.add_item(
+            discord.ui.TextInput(
+                label="Report Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
+            )
+        )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(content="Message Received.", ephemeral=True)
+        self.stop()
+
+    async def on_timeout(self):
+        for i in self.view.children:
+            i.disabled = True
+        await self.view.message.edit(content="You May want to run report again.", view=self.view)
+        self.stop()
+
+
+class ReportView(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        self.ctx = ctx
+        self.value: str = None
+        super().__init__(**kwargs)
+
+    async def interaction_check(self, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit(content="Looks like the view timed out try again", view=self)
+        self.stop()
+
+    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
+    async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
+        modal = ReportModal(self, title="Report:", timeout=180.0)
+        await interaction.response.send_modal(modal)
+        await modal.wait()
+        self.value = modal.children[0].value
+        button.disabled = True
+        await self.message.edit(view=self)
+        self.stop()

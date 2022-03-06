@@ -125,20 +125,24 @@ class Moderation(commands.Cog):
     @commands.command(
         help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)"
     )
-    async def report(self, ctx, *, args=None):
-        if args:
+    async def report(self, ctx):
+
+        modal = utils.ReportView(ctx, timeout=180.0)
+        await modal.wait()
+
+        if modal.value:
             jdjg = await self.bot.try_user(168422909482762240)
             if jdjg.dm_channel is None:
                 await jdjg.create_dm()
 
             embed = discord.Embed(color=random.randint(0, 16777215))
             embed.set_author(name=f"Report by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-            embed.add_field(name="Details:", value=args)
+            embed.add_field(name="Details:", value=modal.value)
             embed.set_footer(text=f"Reporter's ID is {ctx.author.id}")
             await jdjg.send(embed=embed)
             await ctx.send(content="report sent to JDJG", embed=embed)
 
-        if args is None:
+        if modal.value is None:
             await ctx.send("You didn't give enough information to use.")
 
     @commands.command(brief="cleat amount/purge messages above to 100 msgs each", aliases=["purge"])
