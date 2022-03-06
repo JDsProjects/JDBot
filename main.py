@@ -93,13 +93,13 @@ class JDBot(commands.Bot):
             return None
 
     async def try_member(self, guild: discord.Guild, member_id: int, /):
-        member = self.get_member(member_id)
+        member = guild.get_member(member_id)
 
         if member:
             return member
         else:
             try:
-                return await self.fetch_member(member_id)
+                return await guild.fetch_member(member_id)
             except discord.errors.NotFound:
                 return None
 
