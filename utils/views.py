@@ -1192,7 +1192,7 @@ class CodeBlockModal(discord.ui.Modal):
         )
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(content="Code Block Submitted.")
+        await interaction.response.send_message(content="Code Block Submitted and Received.", ephemeral=True)
         self.stop()
 
     async def on_timeout(self):
