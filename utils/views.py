@@ -1357,6 +1357,12 @@ class ChatBotView(discord.ui.View):
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
     async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
         modal = ChatBotModal(self, title="ChatBot:", timeout=180.0)
-        await interaction.response.send_modal(modal)
+        await interaction.defer()
+        await interaction.followup.send_modal(modal)
         await self.message.edit(view=None)
         await modal.wait()
+
+    @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="❌", row=2)
+    async def cancel(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(content="Closing ChatBot", view=None)
