@@ -670,7 +670,7 @@ class DevTools(commands.Cog):
             return await ctx.send("Provide a reason why you want your bot added to your guild")
 
         guild = self.bot.get_guild(438848185008390158)
-        member = await guild.try_member(ctx.author.id)
+        member = await self.bot.try_member(guild, ctx.author.id)
         if member is None:
 
             view = discord.ui.View()

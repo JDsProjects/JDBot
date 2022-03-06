@@ -141,7 +141,7 @@ class Webhook(commands.Cog):
             if not guild or not channel:
                 return await ctx.send("I can't check permissions of a guild that is none.")
 
-            member = await guild.try_member(ctx.author.id)
+            member = await self.bot.try_member(guild, ctx.author.id)
 
             if member is None:
                 return await ctx.send("You don't exist in the guild that you used the webhook of.")

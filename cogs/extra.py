@@ -307,7 +307,7 @@ class Extra(commands.Cog):
 
             if isinstance(bot_member, discord.Member):
 
-                author_member = await bot_member.guild.try_member(ctx.author.id)
+                author_member = await self.bot.try_member(bot_member.guild, ctx.author.id)
 
                 channel = channel if author_member else ctx.channel
 

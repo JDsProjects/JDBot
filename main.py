@@ -92,6 +92,17 @@ class JDBot(commands.Bot):
         except discord.errors.NotFound:
             return None
 
+    async def try_member(self, guild: discord.Guild, member_id: int, /):
+        member = self.get_member(member_id)
+
+        if member:
+            return member
+        else:
+            try:
+                return await self.fetch_member(member_id)
+            except discord.errors.NotFound:
+                return None
+
 
 intents = discord.Intents.all()
 
