@@ -1230,5 +1230,6 @@ class CodeBlockView(discord.ui.View):
         modal = CodeBlockModal(self, title="Pep8 Project Formatter:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
-        self.value = modal.children[0]
+        self.value = modal.children[0].value
+        await self.message.edit(view=None)
         self.stop()
