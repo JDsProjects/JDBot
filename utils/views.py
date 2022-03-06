@@ -1185,7 +1185,11 @@ class CodeBlockModal(discord.ui.Modal):
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
-        self.add_item(discord.ui.TextInput(label="Code Block", placeholder="Please your code here."))
+        self.add_item(
+            discord.ui.TextInput(
+                label="Code Block:", placeholder="Please your code here.", style=discord.TextStyle.paragraph
+            )
+        )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.edit_message(content="Code Block Submitted.")
