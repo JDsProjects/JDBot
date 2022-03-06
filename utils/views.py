@@ -1308,6 +1308,5 @@ class MailView(discord.ui.View):
         await modal.wait()
         self.value = modal.children[0].value
         button.disabled = True
-        assert self.message is not None
         await self.message.edit(view=self)
         self.stop()

@@ -34,6 +34,15 @@ class JDBotContext(commands.Context):
 
         return msg
 
+    async def reply(self, *args, **kwargs):
+        msg = await super().reply(*args, **kwargs)
+
+        view = kwargs.get("view")
+        if view is not None:
+            view.message = msg
+
+        return msg
+
 
 class JDBot(commands.Bot):
     def __init__(self, *args, **kwargs):
