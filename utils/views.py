@@ -1187,12 +1187,12 @@ class CodeBlockModal(discord.ui.Modal):
         super().__init__(**kwargs)
         self.add_item(
             discord.ui.TextInput(
-                label="Code Block:", placeholder="Please your code here.", style=discord.TextStyle.paragraph
+                label="Code Block:", placeholder="Please Put your code here:", style=discord.TextStyle.paragraph
             )
         )
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.edit_message(content="Code Block Submitted.")
+        await interaction.response.send_message(content="Code Block Submitted.")
         self.stop()
 
     async def on_timeout(self):
@@ -1230,6 +1230,5 @@ class CodeBlockView(discord.ui.View):
         modal = CodeBlockModal(self, title="Pep8 Project Formatter:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
-
-        for child in modal.children:
-            print(child.value)
+        self.value = modal.children[0]
+        self.stop()
