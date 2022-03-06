@@ -1229,14 +1229,14 @@ class CodeBlockView(discord.ui.View):
     @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅")
     async def accept(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        self.disabled = True
+        button.disabled = True
         await interaction.response.edit_message(view=self)
         self.value2 = True
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        self.disabled = True
+        button.disabled = True
         await interaction.response.edit_message(view=self)
         self.value2 = False
 
@@ -1246,6 +1246,6 @@ class CodeBlockView(discord.ui.View):
         await interaction.response.send_modal(modal)
         await modal.wait()
         self.value = modal.children[0].value
-        self.disabled = True
+        button.disabled = True
         await self.message.edit(view=self)
         self.stop()
