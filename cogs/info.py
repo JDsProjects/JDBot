@@ -658,19 +658,21 @@ class DevTools(commands.Cog):
 
     @commands.cooldown(1, 60, BucketType.user)
     @commands.command(brief="makes a request to add a bot to the test guild")
-    async def addbot(self, ctx, user: typing.Optional[discord.User] = None, *, args=None):
+    async def addbot(self, ctx, *, user: typing.Optional[discord.User] = None):
 
         user = user or ctx.author
-
-        # args will eventually become modals when they release.
 
         if not user.bot:
             ctx.command.reset_cooldown(ctx)
             return await ctx.send("Please Use A **Bot** ID, not a **User** ID.")
 
-        if args is None:
+        modal = utils.AddBotView(ctx, timeout=180.0)
+        message = await ctx.send("Please Tell us the reason you want to add your bot to the test guild.", view=modal)
+        await modal.wait()
+
+        if modal.value is None:
             ctx.command.reset_cooldown(ctx)
-            return await ctx.send("Provide a reason why you want your bot added to your guild")
+            return await message.edit("Provide a reason why you want your bot added to your guild")
 
         guild = self.bot.get_guild(438848185008390158)
         member = await self.bot.try_member(guild, ctx.author.id)
@@ -685,7 +687,7 @@ class DevTools(commands.Cog):
                     row=1,
                 )
             )
-            return await ctx.send(
+            return await message.edit(
                 "Make sure to join the guild linked soon... then rerun the command. If you are in the guild contact the owner(the owner is listed in the owner command)",
                 view=view,
             )
@@ -693,7 +695,7 @@ class DevTools(commands.Cog):
         embed = discord.Embed(
             title="Bot Request",
             colour=discord.Colour.blurple(),
-            description=f"reason: \n{args}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id)})",
+            description=f"reason: \n{modal.value}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id)})",
             timestamp=ctx.message.created_at,
         )
 
