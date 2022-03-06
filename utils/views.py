@@ -1323,7 +1323,7 @@ class ChatBotModal(discord.ui.Modal):
         )
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(content="Message Received.", ephemeral=True)
+        await interaction.response.send_message(content="Message Received.", ephemeral=True, view=self)
         arg = self.children[0].value
         self.view.message = interaction.followup
         await interaction.followup.send(f"{arg}", view=self)
