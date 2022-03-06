@@ -1310,3 +1310,55 @@ class MailView(discord.ui.View):
         button.disabled = True
         await self.message.edit(view=self)
         self.stop()
+
+
+class ChatBotModal(discord.ui.Modal):
+    def __init__(self, view, **kwargs):
+        self.view = view
+        super().__init__(**kwargs)
+        self.add_item(
+            discord.ui.TextInput(
+                label="Message:", placeholder="Please Put Your Message Here:", style=discord.TextStyle.paragraph
+            )
+        )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(content="Message Received.", ephemeral=True)
+        arg = self.children[0].value
+        self.view.message = interaction.followup
+        await interaction.followup.send(f"{arg}", view=self)
+
+    async def on_timeout(self):
+        for i in self.view.children:
+            i.disabled = True
+        await self.view.message.edit(content="You May want to run chatbot again.", view=self.view)
+
+
+class ChatBotView(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        self.ctx = ctx
+        super().__init__(**kwargs)
+
+    async def interaction_check(self, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit(content="Looks like the view timed out try again", view=self)
+
+    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
+    async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
+        modal = ChatBotModal(self, title="ChatBot:")
+        await interaction.response.send_modal(modal, timeout=180.0)
+        await modal.wait()
+        button.disabled = True
+        await self.message.edit(view=self)
