@@ -564,38 +564,14 @@ class Extra(commands.Cog):
     @commands.max_concurrency(number=1, per=BucketType.channel, wait=True)
     @commands.max_concurrency(number=1, per=BucketType.user, wait=False)
     @commands.command(brief="a way to talk to cleverbot", aliases=["chatbot"])
-    async def cleverbot(self, ctx, *, args=None):
+    async def cleverbot(self, ctx):
 
-        args = args or "Hello CleverBot"
-
+        view = utils.ChatBotView(ctx)
+        view.ask = self.cleverbot.ask
         await ctx.reply(
-            "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.) use chat*stop, chat*close, or chat*cancel to stop the chatbot link. (powered by Travita api and the wrapper async_cleverbot). if someone else runs a different session, they will need to wait"
+            "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.)\Please Hit the buttons now to start the modal ",
+            view=view,
         )
-
-        res = await self.cleverbot.ask(args, ctx.author.id)
-        await ctx.reply(res.text, mention_author=False, allowed_mentions=discord.AllowedMentions.none())
-
-        while True:
-            try:
-                msg = await self.bot.wait_for(
-                    "message",
-                    check=lambda msg: msg.author.id == ctx.author.id and msg.channel.id == ctx.channel.id,
-                    timeout=30,
-                )
-            except asyncio.TimeoutError:
-                await ctx.send(f"Shut it off as {ctx.author} didn't respond :(")
-                break
-
-            else:
-                if msg.content.lower() in ["chat*stop", "chat*close", "chat*cancel"]:
-                    await ctx.send("shut off chatbot.")
-                    break
-                else:
-                    async with ctx.typing():
-                        res = await self.cleverbot.ask(msg.content, msg.author.id)
-                        await msg.reply(res.text, mention_author=False, allowed_mentions=discord.AllowedMentions.none())
-
-        return
 
     @commands.command(brief="a command to create a voice channel")
     async def voice_create(self, ctx, *, args=None):
