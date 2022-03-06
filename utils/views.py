@@ -1223,6 +1223,6 @@ class CodeBlockView(discord.ui.View):
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>")
     async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
-        modal = CodeBlockModal()
+        modal = CodeBlockModal(title="Pep8 Project Formatter:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
