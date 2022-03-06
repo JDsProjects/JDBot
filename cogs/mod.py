@@ -128,6 +128,7 @@ class Moderation(commands.Cog):
     async def report(self, ctx):
 
         modal = utils.ReportView(ctx, timeout=180.0)
+        message = await ctx.send("Please Submit your Reason here", view=modal)
         await modal.wait()
 
         if modal.value:
@@ -140,10 +141,10 @@ class Moderation(commands.Cog):
             embed.add_field(name="Details:", value=modal.value)
             embed.set_footer(text=f"Reporter's ID is {ctx.author.id}")
             await jdjg.send(embed=embed)
-            await ctx.send(content="report sent to JDJG", embed=embed)
+            await message.edit(content="report sent to JDJG", embed=embed)
 
         if modal.value is None:
-            await ctx.send("You didn't give enough information to use.")
+            await message.edit("You didn't give enough information to use.")
 
     @commands.command(brief="cleat amount/purge messages above to 100 msgs each", aliases=["purge"])
     async def clear(self, ctx, *, amount: typing.Optional[int] = None):
