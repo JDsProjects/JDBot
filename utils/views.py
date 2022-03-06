@@ -1318,7 +1318,11 @@ class ChatBotModal(discord.ui.Modal):
         super().__init__(**kwargs)
         self.add_item(
             discord.ui.TextInput(
-                label="Message:", placeholder="Please Put Your Message Here:", style=discord.TextStyle.paragraph
+                label="Message:",
+                placeholder="Please Put Your Message Here:",
+                style=discord.TextStyle.paragraph,
+                min_length=3,
+                max_length=60,
             )
         )
 
