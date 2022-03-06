@@ -34,11 +34,10 @@ async def guildinfo(ctx, guild):
 
     bots = [m for m in guild.members if m.bot]
     humans = [m for m in guild.members if not m.bot]
-    # going to use this unless edpy removes guild.humans and guild.bots
 
     embed.add_field(
         name="Member info",
-        value=f"Member Count : {guild.member_count}\nUsers : {len(guild.humans)} \nBots : {len(guild.bots)} ",
+        value=f"Member Count : {guild.member_count}\nUsers : {len(humans)} \nBots : {len(bots)} ",
     )
 
     embed.add_field(name="Channel Count:", value=len(guild.channels))

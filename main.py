@@ -81,6 +81,17 @@ class JDBot(commands.Bot):
     async def get_context(self, message, *, cls=JDBotContext):
         return await super().get_context(message, cls=cls)
 
+    async def try_user(self, id: int, /):
+        maybe_user = self.get_user(id)
+
+        if maybe_user is not None:
+            return maybe_user
+
+        try:
+            return await self.fetch_user(id)
+        except discord.Errors.NotFound:
+            return None
+
 
 intents = discord.Intents.all()
 
