@@ -128,7 +128,9 @@ class Moderation(commands.Cog):
     async def report(self, ctx):
 
         modal = utils.ReportView(ctx, timeout=180.0)
-        message = await ctx.send("Please Submit your Reason here", view=modal)
+        message = await ctx.send(
+            "Please Submit your Reason Here(if you don't respond with in 3 minutes, it will not work):", view=modal
+        )
         await modal.wait()
 
         if modal.value:
