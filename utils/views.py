@@ -1230,7 +1230,7 @@ class CodeBlockView(discord.ui.View):
     async def accept(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         for i in self.children:
-            if self.children.custom_id == "accept" or self.children.custom_id == "Deny":
+            if i.custom_id == "accept" or i.custom_id == "Deny":
                 i.disabled = True
 
         await interaction.response.edit_message(view=self)
@@ -1240,7 +1240,7 @@ class CodeBlockView(discord.ui.View):
     async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         for i in self.children:
-            if self.children.custom_id == "accept" or self.children.custom_id == "Deny":
+            if i.custom_id == "accept" or i.custom_id == "Deny":
                 i.disabled = True
 
         await interaction.response.edit_message(view=self)
