@@ -23,9 +23,8 @@ class Owner(commands.Cog):
             await ctx.reply("User not found, returning Letter")
             user = ctx.author
         if user:
-            await ctx.reply("Please give me a message to use.")
-
             modal = utils.MailView(ctx, timeout=180.0)
+            await ctx.reply("Please give me a message to use.", view=modal)
 
             await modal.wait()
 
