@@ -446,7 +446,7 @@ class DevTools(commands.Cog):
         code = codeblock_converter(argument=f"{modal.value}")
 
         view = utils.BasicButtons(ctx, timeout=15.0)
-        message.edit(
+        await message.edit(
             "Do you want to use black's line formatter at 120 (i.e. black -l120 .), or just use the default? (i.e black .)",
             view=view,
         )
