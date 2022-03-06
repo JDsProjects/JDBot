@@ -203,7 +203,14 @@ class Paginator(discord.ui.View):
 
         kwargs = {"content": None, "embed": None, "view": self}
         if files:
-            kwargs["attachments"] = files
+            this = kwargs.get("files")
+            this2 = kwargs.get("attachments")
+
+            if this and not this2:
+                kwargs["files"] = files
+
+            if this2 and not this:
+                kwargs["attachments"] = files
 
         if isinstance(formatted_page, str):
             formatted_page += f"\n\n{self.page_string}"
