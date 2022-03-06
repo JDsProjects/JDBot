@@ -89,7 +89,7 @@ class JDBot(commands.Bot):
 
         try:
             return await self.fetch_user(id)
-        except discord.Errors.NotFound:
+        except discord.errors.NotFound:
             return None
 
 
