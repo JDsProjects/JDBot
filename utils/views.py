@@ -1326,7 +1326,7 @@ class ChatBotModal(discord.ui.Modal):
         await interaction.response.send_message(content="Message Received.", ephemeral=True)
         arg = self.children[0].value
         self.view.message = interaction.followup
-        await interaction.followup.send(f"{arg}", view=self.view)
+        await interaction.followup.send(f"{arg}", view=self.view, ephemeral=True)
 
     async def on_timeout(self):
         for i in self.view.children:
