@@ -1359,5 +1359,4 @@ class ChatBotView(discord.ui.View):
         modal = ChatBotModal(self, title="ChatBot:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
-        button.disabled = True
         await self.message.edit(view=self)
