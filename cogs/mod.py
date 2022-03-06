@@ -16,10 +16,11 @@ class Moderation(commands.Cog):
 
     @commands.cooldown(1, 90, BucketType.user)
     @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
-    async def warn(self, ctx, Member: utils.BetterMemberConverter = None):
+    async def warn(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
 
         warn_useable = utils.warn_permission(ctx, Member)
+        # modal for a reason(basically the same button as well above)
 
         if warn_useable:
 
