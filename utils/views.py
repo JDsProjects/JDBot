@@ -1196,15 +1196,16 @@ class CodeBlockModal(discord.ui.Modal):
         self.stop()
 
     async def on_timeout(self):
-        for i in self.children:
+        for i in self.view.children:
             i.disabled = True
-        await self.view.message.edit(content="You May want to run the pep8 formatter again.", view=self)
+        await self.view.message.edit(content="You May want to run the pep8 formatter again.", view=self.view)
         self.stop()
 
 
 class CodeBlockView(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         self.value: str = None
+        self.value2: str = None
         self.ctx = ctx
         super().__init__(**kwargs)
 
@@ -1225,11 +1226,27 @@ class CodeBlockView(discord.ui.View):
         await self.message.edit(content="Looks like the view timed out try again", view=self)
         self.stop()
 
-    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>")
+    @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅")
+    async def accept(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        await interaction.response.edit_message(view=None)
+        self.value2 = True
+        self.stop()
+
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
+    async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
+
+        self.clear_items()
+        await interaction.response.edit_message(view=None)
+        self.value2 = False
+        self.stop()
+
+    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>", row=1)
     async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
         modal = CodeBlockModal(self, title="Pep8 Project Formatter:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
         self.value = modal.children[0].value
-        await self.message.edit(view=None)
+        self.disabled = True
+        await self.message.edit(view=self)
         self.stop()

@@ -437,7 +437,10 @@ class DevTools(commands.Cog):
     async def pep8(self, ctx):
 
         modal = utils.CodeBlockView(ctx, timeout=180.0)
-        message = await ctx.send("Please Submit the Code Block:", view=modal)
+        message = await ctx.send(
+            "Please Submit the Code Block\nDo you want to use black's line formatter at 120 (i.e. black - l120 .), or just use the default? (i.e black .):",
+            view=modal,
+        )
         await modal.wait()
 
         if not modal.value:
@@ -445,19 +448,12 @@ class DevTools(commands.Cog):
 
         code = codeblock_converter(argument=f"{modal.value}")
 
-        view = utils.BasicButtons(ctx, timeout=15.0)
-        await message.edit(
-            "Do you want to use black's line formatter at 120 (i.e. black -l120 .), or just use the default? (i.e black .)",
-            view=view,
-        )
-        await view.wait()
-
-        if view.value is None or view.value is False:
+        if modal.value2 is None or modal.value2 is False:
             await message.edit("Default it is.", view=None)
 
-        if view.value is True:
+        if modal.value is True:
             await message.edit("Speacil Formatting at 120 lines it is.")
-        code_conversion = functools.partial(utils.formatter, code.content, bool(view.value))
+        code_conversion = functools.partial(utils.formatter, code.content, bool(modal.value))
         try:
             code = await self.bot.loop.run_in_executor(None, code_conversion)
 
