@@ -5,6 +5,8 @@ import typing
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
+from utils.converters import BetterUserconverter
+
 
 class Moderation(commands.Cog):
     "Commands For Moderators to use"
@@ -125,7 +127,11 @@ class Moderation(commands.Cog):
     @commands.command(
         help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)"
     )
-    async def report(self, ctx):
+    async def report(self, ctx, *, user: utils.BetterUserconverter = None):
+
+        if not user:
+            await ctx.send("Please Pick a user to report like this.")
+            return await ctx.send_help(ctx.command)
 
         modal = utils.ReportView(ctx, timeout=180.0)
         message = await ctx.send(
@@ -141,6 +147,7 @@ class Moderation(commands.Cog):
             embed = discord.Embed(color=random.randint(0, 16777215))
             embed.set_author(name=f"Report by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
             embed.add_field(name="Details:", value=modal.value)
+            embed.add_field(name="User Reported:", value=f"{user}")
             embed.set_footer(text=f"Reporter's ID is {ctx.author.id}")
             await jdjg.send(embed=embed)
             await message.edit(content="report sent to JDJG", embed=embed)
