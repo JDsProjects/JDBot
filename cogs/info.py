@@ -667,7 +667,7 @@ class DevTools(commands.Cog):
             return await ctx.send("Please Use A **Bot** ID, not a **User** ID.")
 
         modal = utils.AddBotView(ctx, timeout=180.0)
-        message = await ctx.send("Please Tell us the reason you want to add your bot to the test guild.", view=modal)
+        message = await ctx.send("Please Tell us the reason you want to add your bot to the Test Guild:", view=modal)
         await modal.wait()
 
         if modal.value is None:
