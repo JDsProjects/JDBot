@@ -40,6 +40,7 @@ class Test(commands.Cog):
     async def email(self, ctx, *args):
         print(args)
         await ctx.send("WIP")
+        # will use modals on final
 
     @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
     async def setprefix(self, ctx, *, arg=None):
@@ -67,7 +68,7 @@ class Test(commands.Cog):
 
         await ctx.send("WIP")
 
-        # when fully completed move to extra.py(not the old Twitter Cog.)
+        # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
     @commands.command(brief="add emoji to your guild lol")
     async def emoji_add(self, ctx):
