@@ -6,7 +6,6 @@ import aiohttp
 import traceback
 import asyncpg
 from discord.ext import commands
-import jishaku
 import dotenv
 
 dotenv.load_dotenv()
@@ -116,13 +115,6 @@ async def check_blacklist(ctx):
 async def check_suspended(ctx):
     return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author)
 
-
-class JskFix(jishaku.shim.paginator_200.PaginatorInterface):
-    async def interaction_check(self, item, interaction):
-        return not self.owner or interaction.user.id == self.owner.id
-
-
-jishaku.shim.paginator_200.PaginatorInterface = JskFix
 
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
