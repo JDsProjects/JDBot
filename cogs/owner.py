@@ -24,10 +24,16 @@ class Owner(commands.Cog):
             user = ctx.author
         if user:
             await ctx.reply("Please give me a message to use.")
-            message = await self.bot.wait_for("message", check=utils.check(ctx))
-            # make this use modals when modals come out.
+
+            modal = utils.MailView(ctx, timeout=180.0)
+
+            await modal.wait()
+
+            if not modal.value:
+                return await ctx.send("You need to give a message to send.")
+
             embed_message = discord.Embed(
-                title=message.content, timestamp=(message.created_at), color=random.randint(0, 16777215)
+                title=f"{modal.value}", timestamp=(ctx.message.created_at), color=random.randint(0, 16777215)
             )
             embed_message.set_author(name=f"Mail from: {ctx.author}", icon_url=(ctx.author.display_avatar.url))
             embed_message.set_footer(text=f"{ctx.author.id}")

@@ -444,7 +444,7 @@ class DevTools(commands.Cog):
         await modal.wait()
 
         if not modal.value:
-            return await ctx.send("You need to give it code to work with it.")
+            return await ctx.reply("You need to give it code to work with it.", mention_author=False)
 
         code = codeblock_converter(argument=f"{modal.value}")
 
