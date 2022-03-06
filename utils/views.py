@@ -1226,17 +1226,23 @@ class CodeBlockView(discord.ui.View):
         await self.message.edit(content="Looks like the view timed out try again", view=self)
         self.stop()
 
-    @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅")
+    @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅", custom_id="accept")
     async def accept(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        button.disabled = True
+        for i in self.children:
+            if self.children == "accept" or self.children == "Deny":
+                i.disabled = True
+
         await interaction.response.edit_message(view=self)
         self.value2 = True
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌", custom_id="Deny")
     async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        button.disabled = True
+        for i in self.children:
+            if self.children == "accept" or self.children == "Deny":
+                i.disabled = True
+
         await interaction.response.edit_message(view=self)
         self.value2 = False
 
