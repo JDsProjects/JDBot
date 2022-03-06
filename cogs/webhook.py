@@ -60,7 +60,7 @@ class Webhook(commands.Cog):
                     pass_test = True
                     try:
                         discord.utils._get_mime_type_for_image(image)
-                    except discord.errors.InvalidArgument:
+                    except ValueError:
                         pass_test = False
 
                     if pass_test:

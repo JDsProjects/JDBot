@@ -125,7 +125,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"{user} for {reason}")
 
     @commands.command(
-        help="a way to report a user, who might appear in the sus list. also please provide ids and reasons. (WIP)"
+        help="a way to report a user, who might appear in the sus list. also please provide ids and reasons"
     )
     async def report(self, ctx, *, user: utils.BetterUserconverter = None):
 
