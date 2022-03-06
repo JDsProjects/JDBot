@@ -382,7 +382,7 @@ class DevTools(commands.Cog):
             await ctx.send(embed=embed, reference=reference)
 
     @commands.command(
-        aliases=["rtd", "rtfs"],
+        aliases=["rtd", "rtfs", "rtdm"],
         invoke_without_command=True,
         brief="a rtfm command that allows you to lookup at any library we support looking up(using selects)",
     )
