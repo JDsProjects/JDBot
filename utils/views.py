@@ -1362,7 +1362,7 @@ class ChatBotView(discord.ui.View):
         await self.message.edit(view=None)
         await modal.wait()
 
-    @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="❌", row=2)
-    async def cancel(self, button: discord.ui.Button, interaction: discord.Interaction):
+    @discord.ui.button(label="Close", style=discord.ButtonStyle.success, emoji="❌")
+    async def Close(self, button: discord.ui.Button, interaction: discord.Interaction):
 
         await interaction.response.edit_message(content="Closing ChatBot", view=None)
