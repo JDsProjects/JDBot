@@ -1182,19 +1182,19 @@ class CalcView(discord.ui.View):
 
 # Modal Classes
 class CodeBlockModal(discord.ui.Modal):
-    def __init__(self, **kwargs):
+    def __init__(self, view, **kwargs):
+        self.view = view
         super().__init__(**kwargs)
         self.add_item(discord.ui.TextInput(label="Code Block", placeholder="Please your code here."))
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message("Code Block Submitted.", ephemeral=True)
-        await self.view.message.edit("Received Code Block", view=None)
+        await interaction.response.edit_message("Code Block Submitted.")
         self.stop()
 
     async def on_timeout(self):
         for i in self.children:
             i.disabled = True
-        await self.view.edit(content="You May want to run the pep8 formatter again.", view=self)
+        await self.view.message.edit(content="You May want to run the pep8 formatter again.", view=self)
         self.stop()
 
 
@@ -1223,6 +1223,6 @@ class CodeBlockView(discord.ui.View):
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>")
     async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
-        modal = CodeBlockModal(title="Pep8 Project Formatter:", timeout=180.0)
+        modal = CodeBlockModal(self, title="Pep8 Project Formatter:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
