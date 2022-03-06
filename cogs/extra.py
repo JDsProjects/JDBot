@@ -569,7 +569,7 @@ class Extra(commands.Cog):
         view = utils.ChatBotView(ctx)
         view.ask = self.cleverbot.ask
         await ctx.reply(
-            "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.)\Please Hit the buttons now to start the modal ",
+            "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.)\nPlease Hit the buttons now to start the modal ",
             view=view,
         )
 
