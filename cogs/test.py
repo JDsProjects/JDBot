@@ -113,6 +113,10 @@ class Test(commands.Cog):
         menu = utils.Paginator(pages, ctx=ctx, buttons=buttons, delete_message_after=True)
         await menu.send(ctx.channel)
 
+    @commands.command()
+    async def tags(self, ctx):
+        await ctx.send("WIP")
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
