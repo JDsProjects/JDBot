@@ -11,7 +11,6 @@ asuna-api = "^0.2.8"
 async-cse = "^0.3.0"
 asyncdagpi = "^3.3.2"
 sr-api = {git = "https://github.com/iDutchy/sr_api"}
-jishaku = {git = "https://github.com/Gorialis/jishaku"}
 "discordlists.py" = "^1.1.1"
 emoji = "^1.2.0"
 "alexflipnote.py" = "^2.4.0"
@@ -33,6 +32,7 @@ black = "^21.12b0"
 mathjspy = "^0.0.9"
 chardet = "^3.0.4"
 python-dotenv = "^0.19.2"
+jishaku = {git = "https://github.com/Gorialis/jishaku"}
 
 [tool.poetry.dev-dependencies]
 
