@@ -790,9 +790,9 @@ class Extra(commands.Cog):
         embed = discord.Embed(
             color=random.randint(0, 16777215),
             timestamp=ctx.message.created_at,
-            description=f"Click on [message link]({messages[0].jump_url}) to see the channel listed below's first message",
+            description=f"Click on [message link]({messages[0].jump_url}) to see the channel listed below's first message \nChannel : {channel.mention}",
         )
-        embed.add_field(name=f"Channel:", value=f"{channel.mention}")
+
         embed.set_author(
             name=f"Message Author: {messages[0].author}", icon_url=f"{messages[0].author.display_avatar.url}"
         )
