@@ -306,7 +306,7 @@ class Owner(commands.Cog):
     @commands.command(brief="backs up a channel and then sends it into a file or Senarc Bin")
     async def channel_backup(self, ctx):
 
-        messages = await ctx.channel.history(limit=None, oldest_first=True).flatten()
+        messages = [message async for message in ctx.channel.history(limit=None, oldest_first=True)]
 
         new_line = "\n"
 
