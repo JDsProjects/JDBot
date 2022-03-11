@@ -496,7 +496,7 @@ class Extra(commands.Cog):
     @commands.cooldown(1, 40, BucketType.user)
     @commands.command(brief="allows you to review recent embeds", aliases=["embedhistory", "embed_history"])
     async def closest_embed(self, ctx):
-        embed_history = await ctx.channel.history(limit=50).flatten()
+        embed_history = [embed async for embed in ctx.channel.history(limit=50)]
         embeds = [embed for e in embed_history for embed in e.embeds][:10]
 
         if not embeds:
