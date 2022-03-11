@@ -782,7 +782,7 @@ class Extra(commands.Cog):
         channel = channel or ctx.channel
         print(type(channel))
 
-        messages = await channel.history(limit=1, oldest_first=True).flatten()
+        messages = [message async for message in channel.history(limit=1, oldest_first=True)]
 
         if not messages:
             return await ctx.send("Couldn't find the first message or any message :shrug: Not sure why")
