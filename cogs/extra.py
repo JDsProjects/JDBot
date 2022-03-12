@@ -786,7 +786,7 @@ class Extra(commands.Cog):
 
         if not messages:
             return await ctx.send(
-                "Couldn't find the first message or any message :shrug: Not sure why \nPlease Check if you dmed the bot at all, if not dm it :) \nOTherwise, please note that it will always return this message"
+                "Couldn't find the first message or any message :shrug: Not sure why \nPlease Check if you dmed the bot at all, if not dm it :) \nOtherwise, please note that it will always return this message"
             )
 
         embed = discord.Embed(
