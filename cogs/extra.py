@@ -785,7 +785,9 @@ class Extra(commands.Cog):
         messages = [message async for message in channel.history(limit=1, oldest_first=True)]
 
         if not messages:
-            return await ctx.send("Couldn't find the first message or any message :shrug: Not sure why")
+            return await ctx.send(
+                "Couldn't find the first message or any message :shrug: Not sure why \nPlease Check if you dmed the bot at all, if not dm it :) \nOTherwise, please note that it will always return this message"
+            )
 
         embed = discord.Embed(
             color=random.randint(0, 16777215),
