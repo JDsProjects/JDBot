@@ -48,17 +48,6 @@ yarl = ">=1.0,<2.0"
 speedups = ["aiodns", "brotli", "cchardet"]
 
 [[package]]
-name = "aioimgur"
-version = "0.1.1"
-description = "Fork of the official ImgurPython library rewritten with aiohttp"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-aiohttp = "*"
-
-[[package]]
 name = "aiosignal"
 version = "1.2.0"
 description = "aiosignal: a list of registered asynchronous callbacks"
@@ -423,7 +412,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "discord.py"
-version = "2.0.0a3817+gd22a7fb7"
+version = "2.0.0a3849+g6def5c91"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -445,7 +434,7 @@ voice = ["PyNaCl (>=1.3.0,<1.6)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py"
 reference = "master"
-resolved_reference = "d22a7fb793331257eebdad696087754659e5c511"
+resolved_reference = "6def5c9131ac686edc3a2294cc6735cbbc30c909"
 
 [[package]]
 name = "discordlists.py"
@@ -535,7 +524,7 @@ resolved_reference = "5beec81bc23edaae994cd4d94aaf51e629ba9807"
 
 [[package]]
 name = "jishaku"
-version = "2.3.2a375+g63ba7ef.master"
+version = "2.3.2a380+g0cc4978.master"
 description = "A discord.py extension including useful tools for bot development and debugging."
 category = "main"
 optional = false
@@ -549,6 +538,7 @@ import-expression = ">=1.0.0,<2.0.0"
 importlib-metadata = {version = ">=3.7.0", markers = "python_version < \"3.10\""}
 
 [package.extras]
+discordpy = ["discord.py (>=1.7.3)"]
 docs = ["sphinx (>=3.5.4)", "sphinxcontrib-asyncio"]
 procinfo = ["psutil"]
 publish = ["jinja2"]
@@ -559,7 +549,7 @@ voice = ["youtube-dl"]
 type = "git"
 url = "https://github.com/Gorialis/jishaku"
 reference = "master"
-resolved_reference = "63ba7ef8ee157a4272e65879868408cd02d744ca"
+resolved_reference = "0cc49781288c514d563d07c17a5eabfaf8fd6d29"
 
 [[package]]
 name = "mathjspy"
@@ -900,7 +890,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "87c552c8a7c565aac97417f0fac880aea563d50f0fadff96cd783559bb6c9259"
+content-hash = "c95ea3cf68d4f8006dcbdac3eb10a78fd4ad48a9537e83e79b823648e138a9fc"
 
 [metadata.files]
 aiofiles = [
@@ -981,9 +971,6 @@ aiohttp = [
     {file = "aiohttp-3.8.1-cp39-cp39-win32.whl", hash = "sha256:7187a76598bdb895af0adbd2fb7474d7f6025d170bc0a1130242da817ce9e7d1"},
     {file = "aiohttp-3.8.1-cp39-cp39-win_amd64.whl", hash = "sha256:1c182cb873bc91b411e184dab7a2b664d4fea2743df0e4d57402f7f3fa644bac"},
     {file = "aiohttp-3.8.1.tar.gz", hash = "sha256:fc5471e1a54de15ef71c1bc6ebe80d4dc681ea600e68bfd1cbce40427f0b7578"},
-]
-aioimgur = [
-    {file = "aioimgur-0.1.1.tar.gz", hash = "sha256:7684079e3cd804b30198913e302a19f58c4c589d160865d466cfced4ba827527"},
 ]
 aiosignal = [
     {file = "aiosignal-1.2.0-py3-none-any.whl", hash = "sha256:26e62109036cd181df6e6ad646f91f0dcfd05fe16d0cb924138ff2ab75d64e3a"},
