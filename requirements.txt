@@ -1,4 +1,3 @@
-aioimgur >= 0.1.1
 asuna-api >= 0.2.8
 async-cse >= 0.3.0
 asyncdagpi >= 3.3.2
