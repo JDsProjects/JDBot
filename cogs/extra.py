@@ -763,7 +763,7 @@ class Extra(commands.Cog):
 
     @commands.cooldown(1, 60, BucketType.user)
     @commands.cooldown(1, 60, BucketType.channel)
-    @commands.command(brief="gets the first message in a channel", aliases=["first_message"])
+    @commands.command(brief="gets the first message in a channel", aliases=["first_message", "firstmessage"])
     async def firstmsg(
         self,
         ctx,
