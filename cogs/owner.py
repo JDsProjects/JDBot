@@ -51,7 +51,7 @@ class Owner(commands.Cog):
     async def load(self, ctx, *, cog=None):
         if cog:
             try:
-                self.bot.load_extension(cog)
+                await self.bot.load_extension(cog)
             except Exception as e:
                 await ctx.send(e)
                 traceback.print_exc()
@@ -69,7 +69,7 @@ class Owner(commands.Cog):
         if cog == "all":
             for x in list(self.bot.extensions):
                 try:
-                    self.bot.reload_extension(x)
+                    await self.bot.reload_extension(x)
                 except commands.errors.ExtensionError as e:
                     await ctx.send(e)
                     traceback.print_exc()
@@ -78,7 +78,7 @@ class Owner(commands.Cog):
 
         else:
             try:
-                self.bot.reload_extension(cog)
+                await self.bot.reload_extension(cog)
 
             except commands.errors.ExtensionError as e:
                 await ctx.send(e)
@@ -90,7 +90,7 @@ class Owner(commands.Cog):
     async def unload(self, ctx, *, cog=None):
         if cog:
             try:
-                self.bot.unload_extension(cog)
+                await self.bot.unload_extension(cog)
             except commands.errors.ExtensionError as e:
                 await ctx.send(e)
                 traceback.print_exc()
