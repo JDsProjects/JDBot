@@ -112,6 +112,14 @@ class JDBot(commands.Bot):
             except discord.errors.NotFound:
                 return None
 
+    async def setup_hook(self) -> None:
+        for filename in os.listdir("./cogs"):
+            if filename.endswith(".py"):
+                try:
+                    await self.load_extension(f"cogs.{filename[:-3]}")
+                except commands.errors.ExtensionError:
+                    traceback.print_exc()
+
 
 intents = discord.Intents.all()
 
@@ -145,14 +153,6 @@ async def check_blacklist(ctx):
 @bot.check
 async def check_suspended(ctx):
     return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author)
-
-
-for filename in os.listdir("./cogs"):
-    if filename.endswith(".py"):
-        try:
-            bot.load_extension(f"cogs.{filename[:-3]}")
-        except commands.errors.ExtensionError:
-            traceback.print_exc()
 
 
 logging.basicConfig(level=logging.INFO)
