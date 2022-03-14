@@ -160,5 +160,5 @@ class Webhook(commands.Cog):
             return await ctx.send("Not a valid link or an error occured")
 
 
-def setup(bot):
-    bot.add_cog(Webhook(bot))
+async def setup(bot):
+    await bot.add_cog(Webhook(bot))

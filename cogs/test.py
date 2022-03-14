@@ -125,6 +125,6 @@ class Slash(commands.Cog):
         self.bot = bot
 
 
-def setup(bot):
-    bot.add_cog(Test(bot))
-    bot.add_cog(Slash(bot))
+async def setup(bot):
+    await bot.add_cog(Test(bot))
+    await bot.add_cog(Slash(bot))

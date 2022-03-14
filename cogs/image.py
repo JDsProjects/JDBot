@@ -517,5 +517,5 @@ class Image(commands.Cog):
         await menu.send(ctx.channel)
 
 
-def setup(bot):
-    bot.add_cog(Image(bot))
+async def setup(bot):
+    await bot.add_cog(Image(bot))

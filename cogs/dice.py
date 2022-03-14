@@ -232,5 +232,5 @@ class Dice(commands.Cog):
         await ctx.send("Try to Guess the Number!", embed=embed, view=view)
 
 
-def setup(bot):
-    bot.add_cog(Dice(bot))
+async def setup(bot):
+    await bot.add_cog(Dice(bot))

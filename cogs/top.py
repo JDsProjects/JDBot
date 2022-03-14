@@ -36,6 +36,6 @@ class DSLCount(commands.Cog):
         # not sure if doing self.api is okay, but it should be.
 
 
-def setup(bot):
+async def setup(bot):
     DSLCount.logger = logging.getLogger("bot")
-    bot.add_cog(DSLCount(bot))
+    await bot.add_cog(DSLCount(bot))

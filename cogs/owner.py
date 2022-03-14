@@ -654,5 +654,5 @@ class Owner(commands.Cog):
         await ctx.send(f"Removed {reddit} from economy.")
 
 
-def setup(bot):
-    bot.add_cog(Owner(bot))
+async def setup(bot):
+    await bot.add_cog(Owner(bot))

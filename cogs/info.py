@@ -789,6 +789,6 @@ class DevTools(commands.Cog):
         await ctx.send(content="I executed your code in a sandbox", embed=embed)
 
 
-def setup(bot):
-    bot.add_cog(Info(bot))
-    bot.add_cog(DevTools(bot))
+async def setup(bot):
+    await bot.add_cog(Info(bot))
+    await bot.add_cog(DevTools(bot))

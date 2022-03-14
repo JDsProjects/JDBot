@@ -135,5 +135,5 @@ class Events(commands.Cog):
         await self.bot.process_commands(after)
 
 
-def setup(bot):
+async def setup(bot):
     bot.add_cog(Events(bot))
