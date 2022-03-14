@@ -21,9 +21,8 @@ class Extra(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        bot.loop.create_task(self.__ainit__())
 
-    async def __ainit__(self):
+    async def cog_load(self):
         await self.bot.wait_until_ready()
         self.reddit = asyncpraw.Reddit(
             client_id=os.getenv("reddit_client_id"),
@@ -1084,5 +1083,5 @@ class Extra(commands.Cog):
         await ctx.send("\u200b", view=view)
 
 
-def setup(bot):
-    bot.add_cog(Extra(bot))
+async def setup(bot):
+    await bot.add_cog(Extra(bot))
