@@ -20,7 +20,6 @@ class Order(commands.Cog):
         self.bot = bot
 
     async def cog_load(self):
-        await self.bot.wait_until_ready()
 
         tenor_key = os.environ["tenor_key"]
         giphy_key = os.environ["giphy_token"]
