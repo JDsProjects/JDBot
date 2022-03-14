@@ -23,7 +23,6 @@ class Extra(commands.Cog):
         self.bot = bot
 
     async def cog_load(self):
-        await self.bot.wait_until_ready()
         self.reddit = asyncpraw.Reddit(
             client_id=os.getenv("reddit_client_id"),
             client_secret=os.getenv("reddit_client_secret"),
