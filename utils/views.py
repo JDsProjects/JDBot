@@ -757,6 +757,7 @@ class RpsGameButton(discord.ui.Button):
         super().__init__(style=discord.ButtonStyle.success, label=label, custom_id=custom_id, emoji=emoji)
 
     async def callback(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=False)
         assert self.view is not None
         view = self.view
         view.content = view.message.content
@@ -827,6 +828,7 @@ class CoinFlipButton(discord.ui.Button):
         super().__init__(style=discord.ButtonStyle.success, label=label, emoji=emoji)
 
     async def callback(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=False)
         assert self.view is not None
         view = self.view
         view.content = view.message.content
