@@ -845,6 +845,8 @@ class RpsGame(discord.ui.View):
         if random.random() < 0.125:
             self.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
 
+        # I don't know what I will do to make this check work but I will try to make it work
+
     async def on_timeout(self):
         for item in self.children:
             item.disabled = True
