@@ -795,6 +795,44 @@ class RpsGameButton(discord.ui.Button):
         )
 
 
+class RpsGameButtonGun(discord.ui.Button):
+    def __init__(self, label: str, emoji, custom_id):
+        super().__init__(style=discord.ButtonStyle.success, label=label, custom_id=custom_id, emoji=emoji)
+
+    async def callback(self, interaction: discord.Interaction):
+        await interaction.response.send_message(
+            content="You got the legendary gun :) \nYou Instantly Won!", ephemeral=True
+        )
+        assert self.view is not None
+        view = self.view
+        view.content = view.message.content
+        view.embed = view.message.embeds[0]
+        message = view.message
+        choosen = int(self.custom_id)
+        await view.message.edit(content="Results:", view=None)
+        deciding = random.randint(1, 3)
+        number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors", "4": "Gun"}
+
+        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
+
+        text = "You Won"
+
+        embed.set_author(name=text, icon_url=view.ctx.author.display_avatar.url)
+        embed.set_footer(text=f"{view.ctx.author.id}")
+
+        embed.add_field(name="You Picked:", value=f"{number_to_text[choosen]}")
+        embed.add_field(name="Bot Picked:", value=f"{number_to_text[deciding]}")
+
+        embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
+
+        view = ReRun(view)
+        await message.edit(
+            content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
+            embed=embed,
+            view=view,
+        )
+
+
 # a custom Rps Game View
 class RpsGame(discord.ui.View):
     def __init__(self, ctx, **kwargs):
@@ -803,6 +841,9 @@ class RpsGame(discord.ui.View):
         self.add_item(RpsGameButton("Rock", "🪨", "1"))
         self.add_item(RpsGameButton("Paper", "📰", "2"))
         self.add_item(RpsGameButton("Scissors", "✂️", "3"))
+
+        if random.random() < 0.125:
+            self.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
 
     async def on_timeout(self):
         for item in self.children:
