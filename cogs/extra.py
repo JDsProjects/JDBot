@@ -301,7 +301,7 @@ class Extra(commands.Cog):
 
         bot_member = channel.me if isinstance(channel, discord.DMChannel) else channel.guild.me
 
-        if channel.permissions_for(bot_member).send_messages or not channel.id == ctx.channel.id:
+        if channel.permissions_for(bot_member).send_messages:
 
             if isinstance(bot_member, discord.Member):
 
