@@ -513,6 +513,7 @@ class Owner(commands.Cog):
     ):
 
         channel = channel or ctx.channel
+        print(channel)
 
         if isinstance(channel, discord.User):
             if channel.dm_channel is None:
