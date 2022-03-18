@@ -513,13 +513,26 @@ class Owner(commands.Cog):
     ):
 
         channel = channel or ctx.channel
-        print(channel)
 
         if isinstance(channel, discord.User):
             if channel.dm_channel is None:
                 await channel.create_dm()
 
             channel = channel.dm_channel
+
+            view = utils.BasicButtons(ctx)
+            await ctx.send(f"Are you sure you want to send it to {channel} ?", view=view)
+            await view.wait()
+
+            if view.value is None:
+                return await ctx.reply("You let me time out :(")
+
+            if view.value is True:
+                await ctx.send("alright boss, sending message now...")
+
+            if view.value is False:
+                await ctx.send("Okay sorry picked the wrong person")
+                channel = ctx.channel
 
         args = args or "You didn't give us any text to use."
         args = discord.utils.escape_markdown(args, as_needed=False, ignore_links=False)
