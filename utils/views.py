@@ -846,6 +846,7 @@ class RpsGame(discord.ui.View):
             self.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
 
         # I don't know what I will do to make this check work but I will try to make it work
+        # self.__init__()
 
     async def on_timeout(self):
         for item in self.children:
