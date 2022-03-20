@@ -788,7 +788,7 @@ class RpsGameButton(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        view.__init__(self.ctx)
+        view.__init__(view.ctx)
         view = ReRun(view)
         await message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
@@ -828,7 +828,7 @@ class RpsGameButtonGun(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        view.__init__(self.ctx)
+        view.__init__(view.ctx)
         view = ReRun(view)
         await message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
