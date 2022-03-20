@@ -759,6 +759,7 @@ class RpsGameButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
         assert self.view is not None
+        self.view.clear_items()
         view = self.view
         view.content = view.message.content
         view.embed = view.message.embeds[0]
@@ -787,6 +788,7 @@ class RpsGameButton(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
+        view.__init__()
         view = ReRun(view)
         await message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
@@ -804,6 +806,7 @@ class RpsGameButtonGun(discord.ui.Button):
             content="You got the legendary gun :) \nYou Instantly Won!", ephemeral=True
         )
         assert self.view is not None
+        self.view.clear_items()
         view = self.view
         view.content = view.message.content
         view.embed = view.message.embeds[0]
@@ -825,6 +828,7 @@ class RpsGameButtonGun(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
+        view.__init__()
         view = ReRun(view)
         await message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
@@ -844,9 +848,6 @@ class RpsGame(discord.ui.View):
 
         if random.random() < 0.125:
             self.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
-
-        # I don't know what I will do to make this check work but I will try to make it work
-        # self.__init__()
 
     async def on_timeout(self):
         for item in self.children:
