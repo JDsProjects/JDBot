@@ -210,7 +210,7 @@ class Dice(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.cooldown(1, 15, BucketType.user)
+    @commands.cooldown(1, 5, BucketType.user)
     @commands.command(brief="a nice rock scissors paper game with the bot")
     async def rps(self, ctx):
         view = utils.RpsGame(ctx)
