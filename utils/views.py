@@ -71,8 +71,6 @@ class PaginatorButton(discord.ui.Button["Paginator"]):
         page_kwargs, _ = await self.view.get_page_kwargs(self.view.current_page)
         assert interaction.message is not None and self.view.message is not None
 
-
-
         if "files" in page_kwargs:
             page_kwargs["attachments"] = page_kwargs.pop("files")
 
@@ -195,12 +193,8 @@ class Paginator(discord.ui.View):
     async def format_page(self, page: Union[discord.Embed, str]) -> Union[discord.Embed, str]:
         return page
 
-
     async def get_page_kwargs(
-        self: "Paginator",
-        page,
-        send_kwargs: Optional[Dict[str, Any]] = None,
-        skip_formatting: bool = False
+        self: "Paginator", page, send_kwargs: Optional[Dict[str, Any]] = None, skip_formatting: bool = False
     ):
 
         if send_kwargs is not None:
