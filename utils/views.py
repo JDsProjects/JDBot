@@ -846,7 +846,7 @@ class RpsGame(discord.ui.View):
         self.add_item(RpsGameButton("Paper", "📰", "2"))
         self.add_item(RpsGameButton("Scissors", "✂️", "3"))
 
-        if random.random() < 0.125:
+        if random.random() < 0.167:
             self.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
 
     async def on_timeout(self):
