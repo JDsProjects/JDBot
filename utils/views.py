@@ -71,8 +71,17 @@ class PaginatorButton(discord.ui.Button["Paginator"]):
         page_kwargs, _ = await self.view.get_page_kwargs(self.view.current_page)
         assert interaction.message is not None and self.view.message is not None
 
+
+
+        if "files" in page_kwargs:
+            page_kwargs["attachments"] = page_kwargs.pop("files")
+
+        edit = interaction.response.edit_message
+        if interaction.response.is_done():
+            edit = interaction.message.edit
+
         try:
-            await interaction.message.edit(**page_kwargs)
+            await edit(**page_kwargs)
         except (discord.HTTPException, discord.Forbidden, discord.NotFound):
             await self.view.message.edit(**page_kwargs)
 
@@ -186,38 +195,41 @@ class Paginator(discord.ui.View):
     async def format_page(self, page: Union[discord.Embed, str]) -> Union[discord.Embed, str]:
         return page
 
-    async def get_page_kwargs(self: "Paginator", page: int, send_kwargs: Optional[Dict[str, Any]] = None):
+
+    async def get_page_kwargs(
+        self: "Paginator",
+        page,
+        send_kwargs: Optional[Dict[str, Any]] = None,
+        skip_formatting: bool = False
+    ):
 
         if send_kwargs is not None:
             send_kwargs.pop("content", None)
             send_kwargs.pop("embed", None)
             send_kwargs.pop("embeds", None)
 
-        formatted_page = await discord.utils.maybe_coroutine(self.format_page, self.pages[page])
-
-        files = []
-        if isinstance(formatted_page, tuple):
-            if len(formatted_page) == 2 and isinstance(formatted_page[1], discord.File):
-                files.append(formatted_page[1])
-                formatted_page = formatted_page[0]
-
-        kwargs = {"content": None, "embed": None, "view": self}
-        if files:
-            kwargs["files"] = files
+        page = self.pages[page] if isinstance(page, int) else page
+        if not skip_formatting:
+            formatted_page = await discord.utils.maybe_coroutine(self.format_page, page)
+        else:
+            formatted_page = page
 
         if isinstance(formatted_page, str):
-            formatted_page += f"\n\n{self.page_string}"
-            kwargs["content"] = formatted_page
-            return kwargs, send_kwargs or {}
+            formatted_page += f"\n\n{self.page_string}"  # type: ignore
+            return {"content": formatted_page, "embed": None, "view": self}, send_kwargs or {}
 
         elif isinstance(formatted_page, discord.Embed):
-            if files:
-                formatted_page.set_image(url=f"attachment://{files[0].filename}")
-
             formatted_page.set_footer(text=self.page_string)
+            return {"content": None, "embed": formatted_page, "view": self}, send_kwargs or {}
 
-            kwargs["embed"] = formatted_page
-            return kwargs, send_kwargs or {}
+        elif isinstance(formatted_page, tuple):
+            actual_page, file = formatted_page
+            if not isinstance(file, discord.File):
+                raise TypeError("Second item in tuple must be discord.File")
+
+            page_kwargs, send_kwargs = await self.get_page_kwargs(actual_page, send_kwargs, skip_formatting=True)  # type: ignore
+            page_kwargs["files"] = [file]
+            return page_kwargs, send_kwargs or {}
 
         else:
             return {}, send_kwargs or {}
@@ -271,7 +283,6 @@ class Paginator(discord.ui.View):
         if not interaction.response.is_done():
             send = interaction.response.send_message
         else:
-
             if not interaction.response.is_done():
                 await interaction.response.defer(ephemeral=ephemeral)
 
