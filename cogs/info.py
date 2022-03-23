@@ -536,7 +536,7 @@ class DevTools(commands.Cog):
         if not user.bot:
             return await ctx.send("That's not a legit bot")
 
-        invite = discord.utils.oauth_url(client_id=user.id, scopes=("bot"))
+        invite = discord.utils.oauth_url(client_id=user.id, scopes=("bot",))
         slash_invite = discord.utils.oauth_url(client_id=user.id)
 
         view = discord.ui.View()
