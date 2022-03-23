@@ -69,7 +69,7 @@ class Bot(commands.Cog):
             self.bot.user.id, permissions=discord.Permissions(permissions=8), scopes=("bot",)
         )
         minimial_invite = discord.utils.oauth_url(
-            self.bot.user.id, permissions=discord.Permissions(permissions=70635073), scopes=("bot",)
+            self.bot.user.id, permissions=discord.Permissions(permissions=70634561), scopes=("bot",)
         )
 
         normal_inv_slash = discord.utils.oauth_url(
@@ -78,7 +78,7 @@ class Bot(commands.Cog):
         )
         minimial_invite_slash = discord.utils.oauth_url(
             self.bot.user.id,
-            permissions=discord.Permissions(permissions=70635073),
+            permissions=discord.Permissions(permissions=70634561),
         )
 
         embed = discord.Embed(title="Invite link:", color=random.randint(0, 16777215))
