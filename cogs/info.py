@@ -536,8 +536,8 @@ class DevTools(commands.Cog):
         if not user.bot:
             return await ctx.send("That's not a legit bot")
 
-        invite = discord.utils.oauth_url(client_id=user.id)
-        slash_invite = discord.utils.oauth_url(client_id=user.id, scopes=("bot", "applications.commands"))
+        invite = discord.utils.oauth_url(client_id=user.id, scopes=("bot"))
+        slash_invite = discord.utils.oauth_url(client_id=user.id)
 
         view = discord.ui.View()
         view.add_item(
@@ -695,7 +695,7 @@ class DevTools(commands.Cog):
         embed = discord.Embed(
             title="Bot Request",
             colour=discord.Colour.blurple(),
-            description=f"reason: \n{modal.value}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id)})",
+            description=f"reason: \n{modal.value}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id, scopes=('bot'))})",
             timestamp=ctx.message.created_at,
         )
 

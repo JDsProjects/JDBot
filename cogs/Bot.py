@@ -65,18 +65,20 @@ class Bot(commands.Cog):
 
     @commands.command(brief="gives you an invite to invite the bot.", aliases=["inv"])
     async def invite(self, ctx):
-        normal_inv = discord.utils.oauth_url(self.bot.user.id, permissions=discord.Permissions(permissions=8))
+        normal_inv = discord.utils.oauth_url(
+            self.bot.user.id, permissions=discord.Permissions(permissions=8), scopes=("bot")
+        )
         minimial_invite = discord.utils.oauth_url(
-            self.bot.user.id, permissions=discord.Permissions(permissions=70635073)
+            self.bot.user.id, permissions=discord.Permissions(permissions=70635073), scopes=("bot")
         )
 
         normal_inv_slash = discord.utils.oauth_url(
-            self.bot.user.id, permissions=discord.Permissions(permissions=8), scopes=("bot", "applications.commands")
+            self.bot.user.id,
+            permissions=discord.Permissions(permissions=8),
         )
         minimial_invite_slash = discord.utils.oauth_url(
             self.bot.user.id,
             permissions=discord.Permissions(permissions=70635073),
-            scopes=("bot", "applications.commands"),
         )
 
         embed = discord.Embed(title="Invite link:", color=random.randint(0, 16777215))
