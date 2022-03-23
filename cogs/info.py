@@ -695,7 +695,7 @@ class DevTools(commands.Cog):
         embed = discord.Embed(
             title="Bot Request",
             colour=discord.Colour.blurple(),
-            description=f"reason: \n{modal.value}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id, scopes=('bot'))})",
+            description=f"reason: \n{modal.value}\n\n[Invite URL]({discord.utils.oauth_url(client_id = user.id, scopes=('bot',))})",
             timestamp=ctx.message.created_at,
         )
 
