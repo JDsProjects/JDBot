@@ -1550,7 +1550,7 @@ class AceModal(discord.ui.Modal):
         self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph, max_length=240))
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(content="Please wait for your message to be sent :).", ephemeral=True)
+        await interaction.response.defer()
         await self.view.message.delete()
         name = self.children[0].value
         text = self.children[1].value
