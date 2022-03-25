@@ -598,7 +598,7 @@ class BasicButtons(discord.ui.View):
         self.stop()
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
-    async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
         await interaction.response.edit_message(view=self)
@@ -622,7 +622,7 @@ class BotSettings(discord.ui.View):
         self.ctx = ctx
 
     @discord.ui.button(label="Suspend", style=discord.ButtonStyle.danger, emoji="🔒", row=0)
-    async def suspend(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def suspend(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(
             content="Alright Suspending the bot(check the confirmation you will get).", view=None
@@ -631,7 +631,7 @@ class BotSettings(discord.ui.View):
         await interaction.followup.send(content="Alright Boss, I now locked the bot to owners only", ephemeral=True)
 
     @discord.ui.button(label="Unsuspend", style=discord.ButtonStyle.success, emoji="🔓", row=0)
-    async def unsuspend(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def unsuspend(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="Unsuspended the bot :)", view=None)
         interaction.client.suspended = False
@@ -641,7 +641,7 @@ class BotSettings(discord.ui.View):
         )
 
     @discord.ui.button(label="Prefixless", style=discord.ButtonStyle.success, emoji="🔛", row=1)
-    async def Prefixless(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def Prefixless(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="owner only blank prefixes are enabled", view=None)
         interaction.client.prefixless = True
@@ -653,7 +653,7 @@ class BotSettings(discord.ui.View):
     @discord.ui.button(
         label="Prefix", style=discord.ButtonStyle.danger, emoji="<:Toggle_Off:904381963828346930>", row=1
     )
-    async def prefix_back(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def prefix_back(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="Requiring everyone to use prefixes again", view=None)
         interaction.client.prefixless = False
@@ -663,7 +663,7 @@ class BotSettings(discord.ui.View):
         )
 
     @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="❌", row=2)
-    async def cancel(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="Canceling, this boss.", view=None)
 
@@ -683,7 +683,7 @@ class BotSettings(discord.ui.View):
 
 class nitroButtons(discord.ui.View):
     @discord.ui.button(label=f'{"Claim":⠀^37}', custom_id="fun (nitro)", style=discord.ButtonStyle.success)
-    async def nitroButton(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def nitroButton(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.send_message(content="Oh no it was a fake", ephemeral=True)
         await asyncio.sleep(2)
@@ -1280,7 +1280,7 @@ class CodeBlockView(discord.ui.View):
         self.stop()
 
     @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅", custom_id="accept")
-    async def accept(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def accept(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for i in self.children:
             if i.custom_id == "accept" or i.custom_id == "Deny":
@@ -1290,7 +1290,7 @@ class CodeBlockView(discord.ui.View):
         self.value2 = True
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌", custom_id="Deny")
-    async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for i in self.children:
             if i.custom_id == "accept" or i.custom_id == "Deny":
@@ -1300,7 +1300,7 @@ class CodeBlockView(discord.ui.View):
         self.value2 = False
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>", row=1)
-    async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = CodeBlockModal(self, title="Pep8 Project Formatter:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
@@ -1355,7 +1355,7 @@ class MailView(discord.ui.View):
         self.stop()
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
-    async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = MailModal(self, title="Mail:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
@@ -1416,14 +1416,14 @@ class ChatBotView(discord.ui.View):
         await self.message.edit(content="Looks like the view timed out try again", view=self)
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
-    async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = ChatBotModal(self, title="ChatBot:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await self.message.edit(view=None)
         await modal.wait()
 
     @discord.ui.button(label="Close", style=discord.ButtonStyle.success, emoji="❌")
-    async def Close(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def Close(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="Closing ChatBot", view=None)
 
@@ -1473,7 +1473,7 @@ class ReportView(discord.ui.View):
         self.stop()
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
-    async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = ReportModal(self, title="Report:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
@@ -1528,7 +1528,7 @@ class AddBotView(discord.ui.View):
         self.stop()
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
-    async def Submit(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AddBotModal(self, title="Reason:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
