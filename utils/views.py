@@ -1599,6 +1599,7 @@ class AceView(discord.ui.View):
         modal = AceModal(self, title="Attorney Text:", timeout=180.0)
         modal.side = button.label.lower()
         await interaction.response.send_modal(modal)
+        self.stop()
 
     @discord.ui.button(
         label="Prosecutor", style=discord.ButtonStyle.danger, emoji="<a:edgeworthZoom:703531746699903046>"
@@ -1607,3 +1608,4 @@ class AceView(discord.ui.View):
         modal = AceModal(self, title="Prosecutor Text:", timeout=180.0)
         modal.side = button.label.lower()
         await interaction.response.send_modal(modal)
+        self.stop()
