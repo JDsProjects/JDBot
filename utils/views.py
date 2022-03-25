@@ -1547,7 +1547,7 @@ class AceModal(discord.ui.Modal):
         self.add_item(
             discord.ui.TextInput(label="Name:", default=default, placeholder=default, style=discord.TextStyle.short)
         )
-        self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph))
+        self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph, max_length=240))
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="Please wait for your message to be sent :).", ephemeral=True)
@@ -1593,13 +1593,15 @@ class AceView(discord.ui.View):
         await self.message.edit(content="Looks like the view timed out try again", view=self)
         self.stop()
 
-    @discord.ui.button(label="Attorney", style=discord.ButtonStyle.success, emoji="📥")
+    @discord.ui.button(label="Attorney", style=discord.ButtonStyle.success, emoji="<a:think:626236311539286016>")
     async def Attorney(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Attorney Text:", timeout=180.0)
         modal.side = button.label.lower()
         await interaction.response.send_modal(modal)
 
-    @discord.ui.button(label="Prosecutor", style=discord.ButtonStyle.danger, emoji="📥")
+    @discord.ui.button(
+        label="Prosecutor", style=discord.ButtonStyle.danger, emoji="<a:edgeworthZoom:703531746699903046>"
+    )
     async def Prosecutor(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Prosecutor Text:", timeout=180.0)
         modal.side = button.label.lower()
