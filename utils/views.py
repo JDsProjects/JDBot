@@ -728,7 +728,7 @@ class ReRun(discord.ui.View):
         self.ctx = view.ctx
 
     @discord.ui.button(label="Rerun", style=discord.ButtonStyle.success, emoji="🔁")
-    async def rerun(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def rerun(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(view=None)
         self.view.message = await interaction.followup.send(
