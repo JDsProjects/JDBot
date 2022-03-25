@@ -1562,7 +1562,7 @@ class AceModal(discord.ui.Modal):
 
 
 class AceView(discord.ui.View):
-    def __init__(self, jeyy_client, ctx, **kwargs):
+    def __init__(self, ctx, jeyy_client, **kwargs):
         self.ctx = ctx
         self.jeyy_client = jeyy_client
         self.value: str = None
