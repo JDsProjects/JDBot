@@ -1599,7 +1599,7 @@ class AceView(discord.ui.View):
         modal.side = button.label.lower()
         await interaction.response.send_modal(modal)
 
-    @discord.ui.button(label="Prosecutor", style=discord.ButtonStyle.success, emoji="📥")
+    @discord.ui.button(label="Prosecutor", style=discord.ButtonStyle.danger, emoji="📥")
     async def Prosecutor(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Prosecutor Text:", timeout=180.0)
         modal.side = button.label.lower()
