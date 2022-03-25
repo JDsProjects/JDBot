@@ -548,7 +548,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.menu = menu
 
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
-    async def secretMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
         await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
@@ -556,7 +556,7 @@ class dm_or_ephemeral(discord.ui.View):
         await self.menu.send_as_interaction(interaction, ephemeral=True)
 
     @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
-    async def dmMessage(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
         await self.message.edit(content="Well be Dming you the paginator to view this info", view=self)
@@ -564,7 +564,7 @@ class dm_or_ephemeral(discord.ui.View):
         await self.menu.send(self.channel)
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
-    async def denied(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
         await self.message.edit(content=f"not sending the paginator to you", view=self)
@@ -590,7 +590,7 @@ class BasicButtons(discord.ui.View):
         self.value: str = None
 
     @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅")
-    async def accept(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def accept(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
         await interaction.response.edit_message(view=self)
@@ -736,7 +736,7 @@ class ReRun(discord.ui.View):
         )
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
-    async def exit(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def exit(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(view=None)
 
