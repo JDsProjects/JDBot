@@ -1536,3 +1536,58 @@ class AddBotView(discord.ui.View):
         button.disabled = True
         await self.message.edit(view=self)
         self.stop()
+
+
+class AceModal(discord.ui.Modal):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_item(
+            discord.ui.TextInput(
+                label="Addbot Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
+            )
+        )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(content="Message Received.", ephemeral=True)
+        self.stop()
+
+    async def on_timeout(self):
+        for i in self.view.children:
+            i.disabled = True
+        await self.view.message.edit(content="You May want to run report again.", view=self.view)
+        self.stop()
+
+
+class AceView(discord.ui.View):
+    def __init__(self, jeyy_client, ctx, **kwargs):
+        self.ctx = ctx
+        self.jeyy_client = jeyy_client
+        self.value: str = None
+        super().__init__(**kwargs)
+
+    async def interaction_check(self, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit(content="Looks like the view timed out try again", view=self)
+        self.stop()
+
+    @discord.ui.button(label="Attorney", style=discord.ButtonStyle.success, emoji="📥")
+    async def Attorney(self, interaction: discord.Interaction, button: discord.ui.Button):
+        modal = AceModal(self, title="Attorney Text:", timeout=180.0)
+        await interaction.response.send_modal(modal)
+
+    @discord.ui.button(label="Attorney", style=discord.ButtonStyle.success, emoji="📥")
+    async def Prosecutor(self, interaction: discord.Interaction, button: discord.ui.Button):
+        modal = AceModal(self, title="Prosecutor Text:", timeout=180.0)
+        await interaction.response.send_modal(modal)
