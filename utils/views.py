@@ -1556,7 +1556,7 @@ class AceModal(discord.ui.Modal):
         text = self.children[1].value
         buf = await self.view.jeyy_client.ace(name, self.side, text)
         file = discord.File(buf, "out.gif")
-        await interaction.followup.send(content="Take That!", file=file, reference=self.ctx.message)
+        await interaction.followup.send(content="Take That!", file=file, reference=self.view.ctx.message)
 
     async def on_timeout(self):
         for i in self.view.children:
