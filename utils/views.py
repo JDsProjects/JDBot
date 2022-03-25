@@ -1539,7 +1539,9 @@ class AddBotView(discord.ui.View):
 
 
 class AceModal(discord.ui.Modal):
-    def __init__(self, **kwargs):
+    def __init__(self, view, **kwargs):
+        print(self.view)
+        self.view = self
         super().__init__(**kwargs)
         self.add_item(
             discord.ui.TextInput(label="Name:", placeholder=f"{self.view.ctx}", style=discord.TextStyle.paragraph)
