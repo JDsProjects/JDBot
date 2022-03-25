@@ -1543,7 +1543,7 @@ class AceModal(discord.ui.Modal):
         self.view = view
         super().__init__(**kwargs)
         self.add_item(
-            discord.ui.TextInput(label="Name:", placeholder=f"{self.view.ctx}", style=discord.TextStyle.paragraph)
+            discord.ui.TextInput(label="Name:", placeholder=f"{self.view.ctx.author}", style=discord.TextStyle.short)
         )
         self.add_item(discord.ui.TextInput(label="Text", style=discord.TextStyle.paragraph))
 
