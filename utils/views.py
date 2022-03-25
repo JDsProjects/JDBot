@@ -1548,13 +1548,17 @@ class AceModal(discord.ui.Modal):
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="Message Received.", ephemeral=True)
-        self.stop()
+        name = self.children[0].value
+        text = self.children[1].value
+        buf = await self.view.jeyy_client.ace(name, self.side, text)
+        await interaction.response.defer(ephemeral=False)
+        file = discord.File(buf, "out.gif")
+        await interaction.followup.send(file=file)
 
     async def on_timeout(self):
         for i in self.view.children:
             i.disabled = True
         await self.view.message.edit(content="You May want to run ace again.", view=self.view)
-        self.stop()
 
 
 class AceView(discord.ui.View):
@@ -1584,9 +1588,11 @@ class AceView(discord.ui.View):
     @discord.ui.button(label="Attorney", style=discord.ButtonStyle.success, emoji="📥")
     async def Attorney(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Attorney Text:", timeout=180.0)
+        modal.side = button.label.lower()
         await interaction.response.send_modal(modal)
 
     @discord.ui.button(label="Attorney", style=discord.ButtonStyle.success, emoji="📥")
     async def Prosecutor(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Prosecutor Text:", timeout=180.0)
+        modal.side = button.label.lower()
         await interaction.response.send_modal(modal)
