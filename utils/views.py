@@ -1551,7 +1551,7 @@ class AceModal(discord.ui.Modal):
 
     async def on_submit(self, interaction: discord.Interaction):
         await self.view.message.delete()
-        await interaction.defer()
+        await interaction.response.defer()
         name = self.children[0].value
         text = self.children[1].value
         buf = await self.view.jeyy_client.ace(name, self.side, text)
