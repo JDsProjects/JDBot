@@ -1550,14 +1550,13 @@ class AceModal(discord.ui.Modal):
         self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph))
 
     async def on_submit(self, interaction: discord.Interaction):
-        await self.view.message.delete()
-        await interaction.response.defer()
+        await interaction.delete_original_message()
         name = self.children[0].value
         text = self.children[1].value
         buf = await self.view.jeyy_client.ace(name, self.side, text)
         file = discord.File(buf, "out.gif")
-        await interaction.followup.send(
-            content="Take That! (Thank you Jeyy for providing your api)", file=file, reference=self.view.ctx.message
+        await self.view.message.reply(
+            content="Take That! (Thank you Jeyy for providing your api)", file=file, mention_author=None
         )
 
     async def on_timeout(self):
