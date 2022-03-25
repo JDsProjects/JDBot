@@ -1542,17 +1542,18 @@ class AceModal(discord.ui.Modal):
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
+
+        default = f"{self.view.ctx.author}"
         self.add_item(
-            discord.ui.TextInput(label="Name:", placeholder=f"{self.view.ctx.author}", style=discord.TextStyle.short)
+            discord.ui.TextInput(label="Name:", default=default, placeholder=default, style=discord.TextStyle.short)
         )
         self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph))
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(content="Message Received.", ephemeral=True)
+        await interaction.response.edit_message(content="Message Received.", ephemeral=True)
         name = self.children[0].value
         text = self.children[1].value
         buf = await self.view.jeyy_client.ace(name, self.side, text)
-        await interaction.response.defer(ephemeral=False)
         file = discord.File(buf, "out.gif")
         await interaction.followup.send(content="Take That!", file=file)
 
