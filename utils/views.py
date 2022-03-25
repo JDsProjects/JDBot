@@ -1557,7 +1557,9 @@ class AceModal(discord.ui.Modal):
         buf = await self.view.jeyy_client.ace(name, self.side, text)
         file = discord.File(buf, "out.gif")
         await self.view.ctx.message.reply(
-            content="Take That! (Thank you Jeyy for providing your api)", file=file, mention_author=None
+            content="Take That! (Thank you Jeyy for providing your api)",
+            file=file,
+            allowed_mentions=discord.AllowedMentions.none(),
         )
 
     async def on_timeout(self):
