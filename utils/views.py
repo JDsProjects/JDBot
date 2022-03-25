@@ -1545,7 +1545,7 @@ class AceModal(discord.ui.Modal):
         self.add_item(
             discord.ui.TextInput(label="Name:", placeholder=f"{self.view.ctx.author}", style=discord.TextStyle.short)
         )
-        self.add_item(discord.ui.TextInput(label="Text", style=discord.TextStyle.paragraph))
+        self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph))
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="Message Received.", ephemeral=True)
@@ -1554,7 +1554,7 @@ class AceModal(discord.ui.Modal):
         buf = await self.view.jeyy_client.ace(name, self.side, text)
         await interaction.response.defer(ephemeral=False)
         file = discord.File(buf, "out.gif")
-        await interaction.followup.send(file=file)
+        await interaction.followup.send(content="Take That!", file=file)
 
     async def on_timeout(self):
         for i in self.view.children:

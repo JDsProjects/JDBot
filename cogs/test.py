@@ -122,7 +122,7 @@ class Test(commands.Cog):
     async def ace(self, ctx):
         jeyy_client = jeyyapi.JeyyAPIClient(session=self.bot.session)
         view = utils.AceView(ctx, jeyy_client)
-        await ctx.send(content="Please Pick a side to represent", view=view)
+        await ctx.send(content="Please Pick a side to represent:", view=view)
 
 
 class Slash(commands.Cog):
