@@ -1555,7 +1555,7 @@ class AceModal(discord.ui.Modal):
         text = self.children[1].value
         buf = await self.view.jeyy_client.ace(name, self.side, text)
         file = discord.File(buf, "out.gif")
-        await self.view.message.reply(
+        await self.view.ctx.message.reply(
             content="Take That! (Thank you Jeyy for providing your api)", file=file, mention_author=None
         )
 
