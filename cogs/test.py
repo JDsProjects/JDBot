@@ -9,7 +9,6 @@ import itertools
 import tweepy
 import os
 import functools
-import jeyyapi
 
 
 class Test(commands.Cog):
@@ -117,12 +116,6 @@ class Test(commands.Cog):
     @commands.command()
     async def tags(self, ctx):
         await ctx.send("WIP")
-
-    @commands.command(brief="Generates ace attronetry gifs")
-    async def ace(self, ctx):
-        jeyy_client = jeyyapi.JeyyAPIClient(session=self.bot.session)
-        view = utils.AceView(ctx, jeyy_client)
-        await ctx.send(content="Please Pick a side to represent:", view=view)
 
 
 class Slash(commands.Cog):

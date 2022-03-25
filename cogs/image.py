@@ -7,6 +7,7 @@ import cairosvg
 import functools
 from discord.ext import commands
 import utils
+import jeyyapi
 
 
 class Image(commands.Cog):
@@ -515,6 +516,12 @@ class Image(commands.Cog):
 
         menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
         await menu.send(ctx.channel)
+
+    @commands.command(brief="Generates ace attronetry gifs")
+    async def ace(self, ctx):
+        jeyy_client = jeyyapi.JeyyAPIClient(session=self.bot.session)
+        view = utils.AceView(ctx, jeyy_client)
+        await ctx.send(content="Please Pick a side to represent:", view=view)
 
 
 async def setup(bot):
