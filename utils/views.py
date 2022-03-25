@@ -1562,6 +1562,7 @@ class AceModal(discord.ui.Modal):
             file=file,
             allowed_mentions=discord.AllowedMentions.none(),
         )
+        self.stop()
 
     async def on_timeout(self):
         for i in self.view.children:
