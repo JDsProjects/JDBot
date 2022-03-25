@@ -1550,7 +1550,8 @@ class AceModal(discord.ui.Modal):
         self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph))
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.edit_message(view=None)
+        await self.ctx.message.delete()
+        await interaction.defer()
         name = self.children[0].value
         text = self.children[1].value
         buf = await self.view.jeyy_client.ace(name, self.side, text)
