@@ -1500,7 +1500,7 @@ class AddBotModal(discord.ui.Modal):
     async def on_timeout(self):
         for i in self.view.children:
             i.disabled = True
-        await self.view.message.edit(content="You May want to run report again.", view=self.view)
+        await self.view.message.edit(content="You May want to run addbot again.", view=self.view)
         self.stop()
 
 
@@ -1542,10 +1542,9 @@ class AceModal(discord.ui.Modal):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.add_item(
-            discord.ui.TextInput(
-                label="Addbot Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
-            )
+            discord.ui.TextInput(label="Name:", placeholder=f"{self.view.ctx}", style=discord.TextStyle.paragraph)
         )
+        self.add_item(discord.ui.TextInput(label="Text", style=discord.TextStyle.paragraph))
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="Message Received.", ephemeral=True)
@@ -1554,7 +1553,7 @@ class AceModal(discord.ui.Modal):
     async def on_timeout(self):
         for i in self.view.children:
             i.disabled = True
-        await self.view.message.edit(content="You May want to run report again.", view=self.view)
+        await self.view.message.edit(content="You May want to run ace again.", view=self.view)
         self.stop()
 
 
