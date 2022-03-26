@@ -568,7 +568,7 @@ class Extra(commands.Cog):
 
         view = utils.ChatBotView(ctx)
         view.ask = self.cleverbot.ask
-        view.rasp = self.rsap.ai_response
+        view.rsap = self.rsap.ai_response
         await ctx.reply(
             "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.)\nPlease Hit the buttons now to start the modal ",
             view=view,
