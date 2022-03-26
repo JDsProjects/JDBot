@@ -41,7 +41,7 @@ class PaginatorButton(discord.ui.Button["Paginator"]):
         elif self.custom_id == "last_button":
             self.view.current_page = self.view.max_pages - 1
 
-        self.view.page_string: str = f"Page {self.view.current_page + 1}/{self.view.max_pages}"
+        self.view.page_string: str = f"Page {self.view.current_page + 1}/{self.view.max_pages}"  # type: ignore
 
         if self.view.PAGE_BUTTON is not None:
             self.view.PAGE_BUTTON.label = self.view.page_string
