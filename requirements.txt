@@ -24,4 +24,3 @@ mathjspy >= 0.0.9
 chardet >= 3.0.4
 python-dotenv >= 0.19.2
 jishaku @ git+https://github.com/Gorialis/jishaku
-rsap @ git+https://github.com/Hunter2807/RSAP@main

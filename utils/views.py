@@ -1412,7 +1412,7 @@ class ChatBotModal2(discord.ui.Modal):
         self.view.message = await interaction.followup.send(
             "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
-        response = await self.view.rsap(args, self.view.ctx.author.id)
+        response = await self.view.ask(args, self.view.ctx.author.id)
         await self.view.message.edit(f"{response}", view=self.view)
 
     async def on_timeout(self):
