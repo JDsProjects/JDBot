@@ -14,6 +14,7 @@ import contextlib
 import async_cleverbot
 import asyncpraw
 import utils
+import rsap
 
 
 class Extra(commands.Cog):
@@ -33,6 +34,7 @@ class Extra(commands.Cog):
         )
 
         self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
+        self.rsap = rsap.AsyncRSAP(os.environ["rsap_key"], dev_name="JDJG", bot_name="JDBot")
 
     @commands.command(
         brief="a way to look up minecraft usernames",
@@ -566,6 +568,7 @@ class Extra(commands.Cog):
 
         view = utils.ChatBotView(ctx)
         view.ask = self.cleverbot.ask
+        view.rasp = self.rsap.ai_response
         await ctx.reply(
             "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.)\nPlease Hit the buttons now to start the modal ",
             view=view,

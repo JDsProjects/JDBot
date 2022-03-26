@@ -1394,6 +1394,33 @@ class ChatBotModal(discord.ui.Modal):
         await self.view.message.edit(content="You May want to run chatbot again.", view=self.view)
 
 
+class ChatBotModal2(discord.ui.Modal):
+    def __init__(self, view, **kwargs):
+        self.view = view
+        super().__init__(**kwargs)
+        self.add_item(
+            discord.ui.TextInput(
+                label="Message:",
+                placeholder="Please Put Your Message Here:",
+                style=discord.TextStyle.paragraph,
+            )
+        )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.defer()
+        args = self.children[0].value
+        self.view.message = await interaction.followup.send(
+            "Message Received(you will receive your chatbot response in a moment", ephemeral=True
+        )
+        response = await self.view.rsap(args, self.view.ctx.author.id)
+        await self.view.message.edit(f"{response}", view=self.view)
+
+    async def on_timeout(self):
+        for i in self.view.children:
+            i.disabled = True
+        await self.view.message.edit(content="You May want to run chatbot again.", view=self.view)
+
+
 class ChatBotView(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         self.ctx = ctx
@@ -1418,6 +1445,13 @@ class ChatBotView(discord.ui.View):
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
     async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = ChatBotModal(self, title="ChatBot:", timeout=180.0)
+        await interaction.response.send_modal(modal)
+        await self.message.edit(view=None)
+        await modal.wait()
+
+    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
+    async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
+        modal = ChatBotModal2(self, title="ChatBot:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await self.message.edit(view=None)
         await modal.wait()
