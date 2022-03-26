@@ -1449,8 +1449,8 @@ class ChatBotView(discord.ui.View):
         await self.message.edit(view=None)
         await modal.wait()
 
-    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
-    async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
+    @discord.ui.button(label="Submit 2", style=discord.ButtonStyle.success, emoji="📥")
+    async def Submit_alt(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = ChatBotModal2(self, title="ChatBot:", timeout=180.0)
         await interaction.response.send_modal(modal)
         await self.message.edit(view=None)
