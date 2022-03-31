@@ -125,7 +125,7 @@ class Order(commands.Cog):
     async def order_shuffle(self, ctx, *, args=None):
         if not args:
             await ctx.send("You can't order nothing")
-            ctx.command.reset_cooldown(ctx)
+            return ctx.command.reset_cooldown(ctx)
 
         if args:
             time_before = time.perf_counter()
@@ -168,8 +168,8 @@ class Order(commands.Cog):
     async def tenor(self, ctx, *, args=None):
 
         if not args:
-            return await ctx.send("You can't search for nothing")
-            ctx.command.reset_cooldown(ctx)
+            await ctx.send("You can't search for nothing")
+            return ctx.command.reset_cooldown(ctx)
 
         safesearch_type = ContentFilter.high()
         results = await self.tenor_client.search(args, content_filter=safesearch_type, limit=10)
@@ -288,6 +288,7 @@ class Order(commands.Cog):
         if view.value:
             await msg.edit("Shuffled it is")
 
+        time_before = time.perf_counter()
         safesearch_type = AgeRating.g()
         results = await self.giphy_client.search(args, rating=safesearch_type, limit=10)
 
@@ -304,6 +305,8 @@ class Order(commands.Cog):
 
         if view.value:
             gifNearest = random.choice(results_media)
+
+        time_after = time.perf_counter()
 
         embed = discord.Embed(
             title=f"Item: {args}",
@@ -374,6 +377,7 @@ class Order(commands.Cog):
 
         embed.set_author(name=f"Random Disco Gif for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
+        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
         embed.add_field(name="Powered by:", value="Tenor")
 
         if gifNearest.gif:
