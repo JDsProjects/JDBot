@@ -262,7 +262,7 @@ class Order(commands.Cog):
         await self.tenor_random(ctx, args=args)
 
     @commands.cooldown(1, 30, BucketType.user)
-    @commands.group(brief="looks up an item from giphy.", invoke_without_command=True)
+    @commands.command(brief="looks up an item from giphy.", invoke_without_command=True)
     async def giphy(self, ctx, *, args=None):
 
         if not args:
