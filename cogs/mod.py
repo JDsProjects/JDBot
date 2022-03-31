@@ -5,8 +5,6 @@ import typing
 import utils
 from discord.ext.commands.cooldowns import BucketType
 
-from utils.converters import BetterUserconverter
-
 
 class Moderation(commands.Cog):
     "Commands For Moderators to use"
