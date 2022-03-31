@@ -622,7 +622,7 @@ class BasicShuffleQuestion(discord.ui.View):
         self.ctx = ctx
         self.value: str = None
 
-    @discord.ui.button(label="Closest", style=discord.ButtonStyle.success, emoji="🔍 ")
+    @discord.ui.button(label="Closest", style=discord.ButtonStyle.success, emoji="🔍")
     async def closest(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
