@@ -266,8 +266,8 @@ class Order(commands.Cog):
     async def giphy(self, ctx, *, args=None):
 
         if not args:
-            return await ctx.send("That doesn't have any value.")
-            ctx.command.reset_cooldown(ctx)
+            await ctx.send("That doesn't have any value.")
+            return ctx.command.reset_cooldown(ctx)
 
         view = utils.BasicButtons(ctx)
 
