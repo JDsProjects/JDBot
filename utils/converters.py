@@ -185,7 +185,6 @@ class ObjectPlusConverter(commands.converter.IDConverter[commands.Converter]):
         return ObjectPlus(id=result)
 
 
-# remove if edpy adds my pull request into the master.
 class WebhookConverter(commands.Converter):
     async def convert(self, ctx, argument) -> discord.Webhook:
         check = re.match(

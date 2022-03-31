@@ -269,7 +269,7 @@ class Order(commands.Cog):
             await ctx.send("That doesn't have any value.")
             return ctx.command.reset_cooldown(ctx)
 
-        view = utils.BasicButtons(ctx)
+        view = utils.BasicShuffleQuestion(ctx)
 
         msg = await ctx.send(
             "What would rather see random results or the closest result(if yes hit yes if no for random hit no)?",

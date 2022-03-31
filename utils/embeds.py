@@ -147,7 +147,7 @@ async def headpat_converter(url, ctx):
 
     url = await cdn_upload(ctx.bot, image)
     # I am aware of the cdn issues, will be fixed soon
-    # cdn stuff will change too cause the creator of imoog is making a rust version.
+    # cdn stuff will change too cause the creator of imoog is making a better python version.
     embed.set_author(name=f"Headpat gif requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
     embed.set_image(url=url)
     embed.set_footer(text="powered by some jeyyapi")
