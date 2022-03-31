@@ -269,18 +269,41 @@ class Order(commands.Cog):
             return await ctx.send("That doesn't have any value.")
             ctx.command.reset_cooldown(ctx)
 
+        view = utils.BasicButtons(ctx)
+
+        msg = await view.send(
+            "What would rather see random results or the closest result(if yes hit yes if no for random hit no)?"
+        )
+
+        await view.wait()
+
+        if view.value is None:
+            await msg.edit("Finding the closest url")
+
+        if not view.value:
+            await msg.edit("Not using random results")
+
+        if view.value:
+            await msg.edit("Shuffled it is")
+
         safesearch_type = AgeRating.g()
         results = await self.giphy_client.search(args, rating=safesearch_type, limit=10)
 
         if not results:
-            return await ctx.send("I got no results from tenor.")
+            return await ctx.send("I got no results from giphy.")
 
         results_media = [r for r in results.media if r]
 
         if not results_media:
             return await ctx.send("I got no gif results from giphy.")
 
-        gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.url, args).ratio())[-1]
+        if not view.value:
+            gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.url, args).ratio())[-1]
+            print("not random")
+
+        if view.value:
+            gifNearest = random.choice(results_media)
+            print("random")
 
         embed = discord.Embed(
             title=f"Item: {args}",
@@ -296,62 +319,12 @@ class Order(commands.Cog):
         embed.add_field(name="Powered by:", value="GIPHY")
         embed.set_image(url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
 
-        await ctx.send(
+        await msg.edit(
             content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)",
             embed=embed,
         )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
-
-    @commands.cooldown(1, 30, BucketType.user)
-    @giphy.command(help="looks up an item from giphy but shuffled.", name="shuffle")
-    async def giphy_random(self, ctx, *, args=None):
-
-        if not args:
-            return await self.giphy(ctx, args="shuffle")
-
-        safesearch_type = AgeRating.g()
-        results = await self.giphy_client.search(args, rating=safesearch_type, limit=10)
-
-        if not results:
-            return await ctx.send("I got no results from tenor.")
-
-        results_media = [r for r in results.media if r]
-
-        if not results_media:
-            return await ctx.send("I got no gif results from giphy.")
-
-        gifNearest = random.choice(results_media)
-
-        embed = discord.Embed(
-            title=f"Item: {args}",
-            description=f"{ctx.author} ordered a {args}",
-            color=random.randint(0, 16777215),
-            timestamp=ctx.message.created_at,
-        )
-
-        embed.set_footer(text=f"{ctx.author.id}")
-
-        embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
-
-        embed.add_field(name="Powered by:", value="GIPHY")
-        embed.set_image(url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
-
-        await ctx.send(
-            content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)",
-            embed=embed,
-        )
-
-        await self.bot.get_channel(855217084710912050).send(embed=embed)
-
-    @commands.cooldown(1, 30, BucketType.user)
-    @commands.command(help="looks up an item from giphy but shuffled", aliases=["giphy-shuffle"])
-    async def giphy_shuffle(self, ctx, *, args=None):
-
-        if not args:
-            return await self.giphy(ctx, args="shuffle")
-
-        await self.giphy_random(ctx, args=args)
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="can search a search result from google with safe search!")
