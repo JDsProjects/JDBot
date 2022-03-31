@@ -271,9 +271,11 @@ class Order(commands.Cog):
 
         view = utils.BasicButtons(ctx)
 
-        msg = await view.send(
-            "What would rather see random results or the closest result(if yes hit yes if no for random hit no)?"
+        msg = await ctx.send(
+            "What would rather see random results or the closest result(if yes hit yes if no for random hit no)?",
+            view=view,
         )
+        # embed this later
 
         await view.wait()
 
