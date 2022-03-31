@@ -275,7 +275,7 @@ class Order(commands.Cog):
             "What would rather see random results or the closest result(if yes hit yes if no for random hit no)?",
             view=view,
         )
-        # embed this later
+        # embed this later, and aknowledge timeout
 
         await view.wait()
 
@@ -301,11 +301,9 @@ class Order(commands.Cog):
 
         if not view.value:
             gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.url, args).ratio())[-1]
-            print("not random")
 
         if view.value:
             gifNearest = random.choice(results_media)
-            print("random")
 
         embed = discord.Embed(
             title=f"Item: {args}",
