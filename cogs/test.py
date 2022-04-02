@@ -68,6 +68,7 @@ class Test(commands.Cog):
 
         access_token = os.getenv("tweet_access")
         access_secret = os.getenv("tweet_token")
+        bearer_token = os.getenv("tweet_bearer")
 
         client = tweepy.Client(
             consumer_key=consumer_key,
