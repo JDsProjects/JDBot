@@ -214,6 +214,8 @@ class Order(commands.Cog):
         if view.value:
             gifNearest = random.choice(results_media)
 
+        time_after = time.perf_counter()
+
         embed = discord.Embed(
             title=f"Item: {args}",
             description=f"{ctx.author} ordered a {args}",
@@ -222,6 +224,7 @@ class Order(commands.Cog):
         )
 
         embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
+        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
         embed.add_field(name="Powered by:", value="Tenor")
 
         if gifNearest.gif:
