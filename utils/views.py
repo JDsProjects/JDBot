@@ -624,7 +624,7 @@ class BasicShuffleQuestion(discord.ui.View):
 
         self.clear_items()
         await interaction.response.edit_message(view=self)
-        self.value = True
+        self.value = False
         self.stop()
 
     @discord.ui.button(label="shuffle", style=discord.ButtonStyle.danger, emoji="🔀")
@@ -632,7 +632,7 @@ class BasicShuffleQuestion(discord.ui.View):
 
         self.clear_items()
         await interaction.response.edit_message(view=self)
-        self.value = False
+        self.value = True
         self.stop()
 
     async def interaction_check(self, interaction: discord.Interaction):
