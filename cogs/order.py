@@ -44,7 +44,7 @@ class Order(commands.Cog):
         view = utils.BasicShuffleQuestion(ctx)
 
         embed = discord.Embed(
-            title="Tenor",
+            title="Order",
             color=random.randint(0, 16777215),
             description="Would you want to see results shuffled or closest to what you search ?\n\nIf you do not pick anything within 3 minutes, it will default to closest matches.",
         )
