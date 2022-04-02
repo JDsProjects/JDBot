@@ -99,12 +99,10 @@ class Test(commands.Cog):
     @commands.command(brief="a test of a new paginator :)")
     async def test_pagination(self, ctx):
         buttons = {
-            "stop": utils.PaginatorButton(emoji="<:stop:937509712348450827>", style=discord.ButtonStyle.secondary),
+            "stop": utils.PaginatorButton(emoji="<:stop:959853381885775902>", style=discord.ButtonStyle.secondary),
             "right": utils.PaginatorButton(emoji="<:next:959851091506364486>", style=discord.ButtonStyle.secondary),
             "left": utils.PaginatorButton(emoji="<:back:959851091284095017>", style=discord.ButtonStyle.secondary),
-            "last": utils.PaginatorButton(
-                emoji="<:track_next:937518097932382268>", style=discord.ButtonStyle.secondary
-            ),
+            "last": utils.PaginatorButton(emoji="<:last:959851091330220042>", style=discord.ButtonStyle.secondary),
             "first": utils.PaginatorButton(emoji="<:start:959851091502190674>", style=discord.ButtonStyle.secondary),
         }
         pages = [discord.Embed(title="eh")] * 10
