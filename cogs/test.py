@@ -101,7 +101,7 @@ class Test(commands.Cog):
         buttons = {
             "stop": utils.PaginatorButton(emoji="<:stop:937509712348450827>", style=discord.ButtonStyle.secondary),
             "right": utils.PaginatorButton(emoji="<:next:959851091506364486>", style=discord.ButtonStyle.secondary),
-            "left": utils.PaginatorButton(emoji="<:backward:937511314841034803>", style=discord.ButtonStyle.secondary),
+            "left": utils.PaginatorButton(emoji="<:back:959851091284095017>", style=discord.ButtonStyle.secondary),
             "last": utils.PaginatorButton(
                 emoji="<:track_next:937518097932382268>", style=discord.ButtonStyle.secondary
             ),
