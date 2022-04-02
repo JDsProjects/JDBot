@@ -98,6 +98,7 @@ class Order(commands.Cog):
         await msg.edit(
             content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
             embed=embed,
+            view=None,
         )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
