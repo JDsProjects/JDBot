@@ -271,14 +271,14 @@ class Order(commands.Cog):
 
         view = utils.BasicShuffleQuestion(ctx)
 
-        e = discord.Embed(
+        embed = discord.Embed(
             title="Giphy",
             color=random.randint(0, 16777215),
             description="Would you want to see results shuffled or closest to what you search ?\n\nIf you do not pick anything within 3 minutes, it will default to closest matches.",
         )
 
         msg = await ctx.send(
-            "What would rather see random results or the closest result(if yes hit yes if no for random hit no)?",
+            embed=embed,
             view=view,
         )
 
