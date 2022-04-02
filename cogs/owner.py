@@ -423,9 +423,21 @@ class Owner(commands.Cog):
 
         auth.set_access_token(access_token, access_secret)
 
-        twitter_api = tweepy.API(auth)
+        auth = tweepy.OAuth2AppHandler(consumer_key, consumer_secret)
 
-        return twitter_api.update_status(status=post_text)
+        access_token = os.getenv("tweet_access")
+        access_secret = os.getenv("tweet_token")
+        bearer_token = os.getenv("tweet_bearer")
+
+        client = tweepy.Client(
+            bearer_token,
+            consumer_key=consumer_key,
+            consumer_secret=consumer_secret,
+            access_token=access_token,
+            access_token_secret=access_secret,
+        )
+
+        return client.create_tweet(text=post_text)
 
     @commands.command(brief="sends tweet to JDBot Twitter")
     async def send_tweet(self, ctx, *, args=None):
