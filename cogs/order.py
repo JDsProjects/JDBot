@@ -164,7 +164,7 @@ class Order(commands.Cog):
             await self.bot.get_channel(855217084710912050).send(embed=embed)
 
     @commands.cooldown(1, 30, BucketType.user)
-    @commands.group(name="tenor", invoke_without_command=True, brief="searches from tenor to find the closest image.")
+    @commands.command(brief="searches from tenor to find the closest image.")
     async def tenor(self, ctx, *, args=None):
 
         if not args:
