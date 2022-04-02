@@ -69,12 +69,15 @@ class Test(commands.Cog):
         access_token = os.getenv("tweet_access")
         access_secret = os.getenv("tweet_token")
 
-        # auth.set_access_token(access_token, access_secret)
+        client = tweepy.Client(
+            consumer_key=consumer_key,
+            consumer_secret=consumer_secret,
+            access_token=access_token,
+            access_token_secret=access_secret,
+        )
 
-        twitter_api = tweepy.API(auth)
-
-        tweets = twitter_api.user_timeline(screen_name=username, count=amount, tweet_mode="extended")
-        tweepy_fetch_user = twitter_api.get_user(username)
+        # tweets = twitter_api.user_timeline(screen_name=username, count=amount, tweet_mode="extended")
+        # tweepy_fetch_user = twitter_api.get_user(username)
 
     @commands.command(brief="gets tweets from a username")
     async def tweet(self, ctx, amount: typing.Optional[int] = None, username=None):
