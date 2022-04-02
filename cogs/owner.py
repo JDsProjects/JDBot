@@ -435,10 +435,9 @@ class Owner(commands.Cog):
             consumer_secret=consumer_secret,
             access_token=access_token,
             access_token_secret=access_secret,
-            user_auth=True,
         )
 
-        return client.create_tweet(text=post_text)
+        return client.create_tweet(text=post_text, user_auth=True)
 
     @commands.command(brief="sends tweet to JDBot Twitter")
     async def send_tweet(self, ctx, *, args=None):
