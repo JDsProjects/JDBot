@@ -113,6 +113,11 @@ class Test(commands.Cog):
     async def tags(self, ctx):
         await ctx.send("WIP")
 
+    @commands.command()
+    async def reminders(self, ctx):
+        await ctx.send("WIP")
+        # soon to be a reminders like thing like R.danny's ofc with my own code
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
