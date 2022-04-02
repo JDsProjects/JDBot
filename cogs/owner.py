@@ -416,14 +416,14 @@ class Owner(commands.Cog):
         consumer_key = os.getenv("tweet_key")
         consumer_secret = os.getenv("tweet_secret")
 
-        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        # auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 
         access_token = os.getenv("tweet_access")
         access_secret = os.getenv("tweet_token")
 
-        auth.set_access_token(access_token, access_secret)
+        # auth.set_access_token(access_token, access_secret)
 
-        auth = tweepy.OAuth2AppHandler(consumer_key, consumer_secret)
+        # auth = tweepy.OAuth2AppHandler(consumer_key, consumer_secret)
 
         access_token = os.getenv("tweet_access")
         access_secret = os.getenv("tweet_token")
@@ -435,6 +435,7 @@ class Owner(commands.Cog):
             consumer_secret=consumer_secret,
             access_token=access_token,
             access_token_secret=access_secret,
+            user_auth=True,
         )
 
         return client.create_tweet(text=post_text)
