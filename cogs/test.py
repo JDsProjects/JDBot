@@ -69,7 +69,7 @@ class Test(commands.Cog):
         access_token = os.getenv("tweet_access")
         access_secret = os.getenv("tweet_token")
 
-        auth.set_access_token(access_token, access_secret)
+        # auth.set_access_token(access_token, access_secret)
 
         twitter_api = tweepy.API(auth)
 
