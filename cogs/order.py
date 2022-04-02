@@ -171,6 +171,32 @@ class Order(commands.Cog):
             await ctx.send("You can't search for nothing")
             return ctx.command.reset_cooldown(ctx)
 
+        view = utils.BasicShuffleQuestion(ctx)
+
+        embed = discord.Embed(
+            title="Tenor",
+            color=random.randint(0, 16777215),
+            description="Would you want to see results shuffled or closest to what you search ?\n\nIf you do not pick anything within 3 minutes, it will default to closest matches.",
+        )
+
+        msg = await ctx.send(
+            embed=embed,
+            view=view,
+        )
+
+        await view.wait()
+
+        if view.value is None:
+            await msg.edit("Finding the closest url")
+
+        if not view.value:
+            await msg.edit("Not using random results")
+
+        if view.value:
+            await msg.edit("Shuffled it is")
+
+        time_before = time.perf_counter()
+
         safesearch_type = ContentFilter.high()
         results = await self.tenor_client.search(args, content_filter=safesearch_type, limit=10)
 
@@ -182,7 +208,11 @@ class Order(commands.Cog):
         if not results_media:
             return await ctx.send("I got no gif results from tenor.")
 
-        gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.item_url, args).ratio())[-1]
+        if not view.value:
+            gifNearest = sorted(results_media, key=lambda x: SequenceMatcher(None, x.item_url, args).ratio())[-1]
+
+        if view.value:
+            gifNearest = random.choice(results_media)
 
         embed = discord.Embed(
             title=f"Item: {args}",
@@ -207,59 +237,6 @@ class Order(commands.Cog):
         )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
-
-    @commands.cooldown(1, 30, BucketType.user)
-    @tenor.command(help="shuffles the results from the tenor results", name="shuffle")
-    async def tenor_random(self, ctx, *, args=None):
-
-        if not args:
-            return await self.tenor(ctx, args="shuffle")
-
-        safesearch_type = ContentFilter.high()
-        results = await self.tenor_client.search(args, content_filter=safesearch_type, limit=10)
-
-        if not results:
-            return await ctx.send("I got no results from tenor.")
-
-        results_media = [r for r in results.media if r]
-
-        if not results_media:
-            return await ctx.send("I got no gif results from tenor.")
-
-        gifNearest = random.choice(results_media)
-
-        embed = discord.Embed(
-            title=f"Item: {args}",
-            description=f"{ctx.author} ordered a {args}",
-            color=random.randint(0, 16777215),
-            timestamp=ctx.message.created_at,
-        )
-
-        embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
-        embed.add_field(name="Powered by:", value="Tenor")
-
-        if gifNearest.gif:
-            embed.set_image(url=gifNearest.gif.url)
-        else:
-            embed.set_image("https://i.imgur.com/sLQzAiW.png")
-
-        embed.set_footer(text=f"{ctx.author.id}")
-
-        await ctx.send(
-            content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)",
-            embed=embed,
-        )
-
-        await self.bot.get_channel(855217084710912050).send(embed=embed)
-
-    @commands.cooldown(1, 30, BucketType.user)
-    @commands.command(help="shuffles the results from the tenor results", aliases=["tenor-shuffle"])
-    async def tenor_shuffle(self, ctx, *, args=None):
-
-        if not args:
-            return await self.tenor(ctx, args="shuffle")
-
-        await self.tenor_random(ctx, args=args)
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="looks up an item from giphy.")
