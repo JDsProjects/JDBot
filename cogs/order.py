@@ -231,9 +231,10 @@ class Order(commands.Cog):
 
         embed.set_footer(text=f"{ctx.author.id}")
 
-        await ctx.send(
+        await msg.edit(
             content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)",
             embed=embed,
+            view=None,
         )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
