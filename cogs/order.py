@@ -35,133 +35,72 @@ class Order(commands.Cog):
         self.google_engine = cse.Search(image_api_key, session=self.bot.session, engine_id=image_engine_key)
 
     @commands.cooldown(1, 30, BucketType.user)
-    @commands.group(
-        name="order", invoke_without_command=True, brief="searches from google images to find the closest google image"
-    )
+    @commands.command(brief="searches from google images to find the closest google image")
     async def order(self, ctx, *, args=None):
         if not args:
             await ctx.send("You can't order nothing.")
             ctx.command.reset_cooldown(ctx)
 
-        if args:
-            time_before = time.perf_counter()
+        view = utils.BasicShuffleQuestion(ctx)
 
-            try:
-                results = await self.image_client.search(args, safesearch=True, image_search=True)
-                emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url, args).ratio())[-1]
+        embed = discord.Embed(
+            title="Tenor",
+            color=random.randint(0, 16777215),
+            description="Would you want to see results shuffled or closest to what you search ?\n\nIf you do not pick anything within 3 minutes, it will default to closest matches.",
+        )
 
-            except async_cse.search.NoResults:
-                return await ctx.send("No results found :(")
+        msg = await ctx.send(
+            embed=embed,
+            view=view,
+        )
 
-            time_after = time.perf_counter()
-            try:
-                await ctx.message.delete()
-            except discord.errors.Forbidden:
-                pass
+        await view.wait()
 
-            embed = discord.Embed(
-                title=f"Item: {args}",
-                description=f"{ctx.author} ordered a {args}",
-                color=random.randint(0, 16777215),
-                timestamp=ctx.message.created_at,
-            )
-            embed.set_author(name=f"order for {ctx.author}:", icon_url=(ctx.author.display_avatar.url))
-            embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
-            embed.add_field(name="Powered by:", value="Google Images Api")
+        if view.value is None:
+            await msg.edit("Finding the closest url")
 
-            embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
+        if not view.value:
+            await msg.edit("Not using random results")
 
-            embed.set_image(url=emoji_image.image_url)
-            embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-            await ctx.send(
-                content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
-                embed=embed,
-            )
+        if view.value:
+            await msg.edit("Shuffled it is")
 
-            await self.bot.get_channel(855217084710912050).send(embed=embed)
+        time_before = time.perf_counter()
 
-    @commands.cooldown(1, 30, BucketType.user)
-    @order.command(brief="a command to shuffle images from google images")
-    async def shuffle(self, ctx, *, args=None):
-        if not args:
-            await self.order(ctx, args="shuffle")
+        try:
+            results = await self.image_client.search(args, safesearch=True, image_search=True)
 
-        if args:
-            time_before = time.perf_counter()
-            try:
-                results = await self.image_client.search(args, safesearch=True, image_search=True)
-            except async_cse.search.NoResults:
-                return await ctx.send("No results found :(")
+        except async_cse.search.NoResults:
+            return await ctx.send("No results found :(")
 
-            emoji_image = random.choice(results)
-            time_after = time.perf_counter()
-            try:
-                await ctx.message.delete()
-            except discord.errors.Forbidden:
-                pass
+        if not view.value:
+            emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url, args).ratio())[-1]
 
-            embed = discord.Embed(
-                title=f"Item: {args}",
-                description=f"{ctx.author} ordered a {args}",
-                color=random.randint(0, 16777215),
-                timestamp=ctx.message.created_at,
-            )
-            embed.set_author(name=f"order for {ctx.author}:", icon_url=(ctx.author.display_avatar.url))
-            embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
-            embed.add_field(name="Powered by:", value="Google Images Api")
-
-            embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
-
-            embed.set_image(url=emoji_image.image_url)
-            embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-            await ctx.send(
-                content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
-                embed=embed,
-            )
-            await self.bot.get_channel(855217084710912050).send(embed=embed)
-
-    @commands.cooldown(1, 30, BucketType.user)
-    @commands.command(brief="a command to shuffle images from google images", aliases=["order-shuffle"])
-    async def order_shuffle(self, ctx, *, args=None):
-        if not args:
-            await ctx.send("You can't order nothing")
-            return ctx.command.reset_cooldown(ctx)
-
-        if args:
-            time_before = time.perf_counter()
-            try:
-                results = await self.image_client.search(args, safesearch=True, image_search=True)
-            except async_cse.search.NoResults:
-                return await ctx.send("No results found :(")
-
+        if view.value:
             emoji_image = random.choice(results)
 
-            time_after = time.perf_counter()
+        time_after = time.perf_counter()
 
-            try:
-                await ctx.message.delete()
-            except discord.errors.Forbidden:
-                pass
+        embed = discord.Embed(
+            title=f"Item: {args}",
+            description=f"{ctx.author} ordered a {args}",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+        )
+        embed.set_author(name=f"order for {ctx.author}:", icon_url=(ctx.author.display_avatar.url))
+        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
+        embed.add_field(name="Powered by:", value="Google Images Api")
 
-            embed = discord.Embed(
-                title=f"Item: {args}",
-                description=f"{ctx.author} ordered a {args}",
-                color=random.randint(0, 16777215),
-                timestamp=ctx.message.created_at,
-            )
-            embed.set_author(name=f"order for {ctx.author}:", icon_url=(ctx.author.display_avatar.url))
-            embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
-            embed.add_field(name="Powered by:", value="Google Images Api")
+        embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
 
-            embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
+        embed.set_image(url=emoji_image.image_url)
+        embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
+        await ctx.send(
+            content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
+            embed=embed,
+        )
 
-            embed.set_image(url=emoji_image.image_url)
-            embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-            await ctx.send(
-                content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
-                embed=embed,
-            )
-            await self.bot.get_channel(855217084710912050).send(embed=embed)
+        await self.bot.get_channel(855217084710912050).send(embed=embed)
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="searches from tenor to find the closest image.")
