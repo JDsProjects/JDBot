@@ -233,9 +233,6 @@ class Paginator(discord.ui.View):
 
     async def interaction_check(self, interaction: discord.Interaction):
 
-        if not interaction.user or not self.ctx or not self.author_id:
-            return True
-
         if self.author_id and not self.ctx:
             return interaction.user.id == self.author_id
         else:
