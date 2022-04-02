@@ -95,7 +95,7 @@ class Order(commands.Cog):
 
         embed.set_image(url=emoji_image.image_url)
         embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
-        await ctx.send(
+        await msg.edit(
             content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
             embed=embed,
         )
