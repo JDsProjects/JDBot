@@ -9,6 +9,7 @@ import itertools
 import tweepy
 import os
 import functools
+import traceback
 
 
 class Test(commands.Cog):
@@ -58,6 +59,23 @@ class Test(commands.Cog):
     async def set_wakeuptime(self, ctx):
         await ctx.send("WIP")
 
+    def tweepy_grab(self, amount: int, username: str):
+
+        consumer_key = os.getenv("tweet_key")
+        consumer_secret = os.getenv("tweet_secret")
+
+        auth = tweepy.OAuth2AppHandler(consumer_key, consumer_secret)
+
+        access_token = os.getenv("tweet_access")
+        access_secret = os.getenv("tweet_token")
+
+        auth.set_access_token(access_token, access_secret)
+
+        twitter_api = tweepy.API(auth)
+
+        tweets = twitter_api.user_timeline(screen_name=username, count=amount, tweet_mode="extended")
+        tweepy_fetch_user = twitter_api.get_user(username)
+
     @commands.command(brief="gets tweets from a username")
     async def tweet(self, ctx, amount: typing.Optional[int] = None, username=None):
 
@@ -66,7 +84,16 @@ class Test(commands.Cog):
         if not username:
             return await ctx.send("You Need to pick a username.")
 
-        await ctx.send("WIP")
+        if amount > 30:
+            return await ctx.send("You can only get 30 tweets at a time.")
+
+        try:
+            tweet_time = functools.partial(self.tweepy_grab, amount, username)
+            post = await self.bot.loop.run_in_executor(None, tweet_time)
+
+        except Exception as e:
+            traceback.print_exc()
+            return await ctx.send(f"Exception occured at {e}")
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
