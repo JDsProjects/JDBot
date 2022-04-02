@@ -75,11 +75,11 @@ class Order(commands.Cog):
 
         if not view.value:
             emoji_image = sorted(results, key=lambda x: SequenceMatcher(None, x.image_url, args).ratio())[-1]
-            print("test")
+            print("test 1")
 
         if view.value:
             emoji_image = random.choice(results)
-            print("test")
+            print("test 2")
 
         time_after = time.perf_counter()
 
