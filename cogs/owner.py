@@ -439,7 +439,7 @@ class Owner(commands.Cog):
 
         return client.create_tweet(text=post_text, user_auth=True)
 
-    @commands.command(brief="sends tweet to JDBot Twitter")
+    @commands.command(brief="sends tweet to JDBot Twitter", aliases=["tweet_send"])
     async def send_tweet(self, ctx, *, args=None):
 
         if not args:
