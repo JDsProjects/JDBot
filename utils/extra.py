@@ -83,7 +83,7 @@ def profile_converter(
             discord.Status.online: "<:onlinemobile:715050614429712384>",
             discord.Status.dnd: "<:dndmobile:715050614047899741>",
             discord.Status.idle: "<:idlemobile:715050614278717500>",
-            discord.Status.offline: "<:offline:715050614366928906>",
+            discord.Status.offline: "<:mobile_offline:917752338532425739> ",
         },
         "desktop": {
             discord.Status.online: "<:desktop_online:917755694852235265>",
