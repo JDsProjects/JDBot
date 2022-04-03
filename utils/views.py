@@ -587,9 +587,9 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        children = self.children
-        for child in children:
-            if isinstance(child, discord.ui.Button):
+        # children = self.children
+        for child in self.children:
+            if isinstance(child, (discord.Button, discord.ui.button.Button, discord.ui.Button)):
                 self.remove_item(child)
 
         await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
@@ -599,9 +599,9 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        children = self.children
+        # children = self.children
         for child in self.children:
-            if isinstance(child, discord.ui.Button):
+            if isinstance(child, (discord.Button, discord.ui.button.Button, discord.ui.Button)):
                 self.remove_item(child)
 
         await interaction.response.edit_message(content=f"Well be Dming you the paginator to view this info", view=self)
@@ -611,10 +611,9 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        children = self.children
+        # children = self.children
         for child in self.children:
-            print(type(child))
-            if isinstance(child, discord.ui.Button):
+            if isinstance(child, (discord.Button, discord.ui.button.Button, discord.ui.Button)):
                 self.remove_item(child)
 
         await interaction.response.edit_message(content=f"not sending the paginator to you", view=self)
