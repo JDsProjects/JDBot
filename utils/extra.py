@@ -99,11 +99,12 @@ def profile_converter(
         },
     }
 
+    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis}
+    is_devices = False
     if _type in ("mobile", "desktop", "web"):
-        _type = "devices"
-    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis[_type]}
+        is_devices = True
 
-    dict_to_use = dc.get(_type)
+    dict_to_use = dc.get(_type) if not is_devices else dc["devices"][_type]
     emoji = dict_to_use.get(_enum)
     if not emoji:
         emoji = status_emojis[_enum]
