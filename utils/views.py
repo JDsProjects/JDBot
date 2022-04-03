@@ -920,7 +920,7 @@ class CoinFlipButton(discord.ui.Button):
         value = random.choice(["Heads", "Tails"])
         win = choosen == value
 
-        url_dic = {"Heads": "https://i.imgur.com/MzdU5Z7.png", "Tails": "https://i.imgur.com/qTf1owU.png"}
+        url_dic = {"Heads": "https://i.imgur.com/C3tF8ud.png", "Tails": "https://i.imgur.com/tSmhWgg.png"}
         embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
         embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
         embed.add_field(name=f"The Coin Flipped:", value=f"{value}")
@@ -940,8 +940,8 @@ class CoinFlip(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.add_item(CoinFlipButton("Heads", "<:coin:693942559999000628>"))
-        self.add_item(CoinFlipButton("Tails", "🪙"))
+        self.add_item(CoinFlipButton("Heads", "<:Moon:960236758342172722>"))
+        self.add_item(CoinFlipButton("Tails", "<:Star:960236759944409178>"))
 
     async def on_timeout(self):
         for item in self.children:
