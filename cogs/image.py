@@ -331,7 +331,7 @@ class Image(commands.Cog):
         r = await self.bot.session.get("https://api.waifu.im/random/?is_nsfw=false&many=false&full=false")
         res = await r.json()
         image = res["images"][0]
-        embed = discord.Embed(color=random.randint(0, 16777215), timestamp=(ctx.message.created_at))
+        embed = discord.Embed(color=random.randint(0, 16777215), timestamp=(ctx.message.created_at), url=image["url"])
         embed.set_author(name=f"{ctx.author} Requested A Waifu")
         embed.set_image(url=image["url"])
         embed.set_footer(text="Powered by waifu.im")
