@@ -587,7 +587,10 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        self.clear_items()
+        for child in self.children:
+            if isinstance(child, discord.ui.Button):
+                self.remove_item(child)
+
         await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
 
         await self.menu.send_as_interaction(interaction, ephemeral=True)
@@ -595,7 +598,10 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        self.clear_items()
+        for child in self.children:
+            if isinstance(child, discord.ui.Button):
+                self.remove_item(child)
+
         await self.message.edit(content="Well be Dming you the paginator to view this info", view=self)
 
         await self.menu.send(self.channel)
@@ -603,7 +609,10 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        self.clear_items()
+        for child in self.children:
+            if isinstance(child, discord.ui.Button):
+                self.remove_item(child)
+
         await self.message.edit(content=f"not sending the paginator to you", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
