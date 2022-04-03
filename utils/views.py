@@ -977,7 +977,7 @@ class CoinFlipButton(discord.ui.Button):
         embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
         embed.add_field(name=f"The Coin Flipped:", value=f"{value}")
         embed.add_field(name="You guessed:", value=f"{choosen}")
-        embed.set_image(url=url_dic[value])
+        embed.set_thumbnail(url=url_dic[value])
         text = "You Won" if (win) else "You lost"
         embed.add_field(name="Result: ", value=text)
         view = ReRun(view)
