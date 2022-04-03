@@ -50,7 +50,8 @@ def reference(message):
 
 
 def profile_converter(
-    _type: typing.Literal["badges", "mobile", "status"], _enum: typing.Union[discord.Status, discord.UserFlags, str]
+    _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile"],
+    _enum: typing.Union[discord.Status, discord.UserFlags, str],
 ):
 
     badges_emoji = {
@@ -70,13 +71,6 @@ def profile_converter(
         "bot": "<:bot:848395737138069514>",
     }
 
-    mobile_emojis = {
-        discord.Status.online: "<:onlinemobile:715050614429712384>",
-        discord.Status.dnd: "<:dndmobile:715050614047899741>",
-        discord.Status.idle: "<:idlemobile:715050614278717500>",
-        discord.Status.offline: "<:offline:715050614366928906>",
-    }
-
     status_emojis = {
         discord.Status.online: "<:online:715050614379249744>",
         discord.Status.dnd: "<:dnd:715050614429712394>",
@@ -84,9 +78,21 @@ def profile_converter(
         discord.Status.offline: "<:offline:715050614366928906>",
     }
 
-    dc = {"mobile": mobile_emojis, "status": status_emojis, "badges": badges_emoji}
-    if _type in ("status", "desktop", "web"):
+    devices_emojis = {
+        "mobile": {
+            discord.Status.online: "<:onlinemobile:715050614429712384>",
+            discord.Status.dnd: "<:dndmobile:715050614047899741>",
+            discord.Status.idle: "<:idlemobile:715050614278717500>",
+            discord.Status.offline: "<:offline:715050614366928906>",
+        }
+    }
+
+    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis[_type]}
+    if _type == "status":
         _type = "status"
+
+    elif _type in ("mobile", "desktop", "web"):
+        _type = "devices"
 
     return dc.get(_type).get(_enum)
 
