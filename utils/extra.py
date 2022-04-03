@@ -84,17 +84,30 @@ def profile_converter(
             discord.Status.dnd: "<:dndmobile:715050614047899741>",
             discord.Status.idle: "<:idlemobile:715050614278717500>",
             discord.Status.offline: "<:offline:715050614366928906>",
-        }
+        },
+        "desktop": {
+            discord.Status.online: "",
+            discord.Status.dnd: "",
+            discord.Status.idle: "",
+            discord.Status.offline: "",
+        },
+        "web": {
+            discord.Status.online: "",
+            discord.Status.dnd: "",
+            discord.Status.idle: "",
+            discord.Status.offline: "",
+        },
     }
 
     dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis[_type]}
-    if _type == "status":
-        _type = "status"
-
-    elif _type in ("mobile", "desktop", "web"):
+    if _type in ("mobile", "desktop", "web"):
         _type = "devices"
 
-    return dc.get(_type).get(_enum)
+    dict_to_use = dc.get(_type)
+    emoji = dict_to_use.get(_enum)
+    if not emoji:
+        emoji = status_emojis[_enum]
+    return dc.get(_enum)
 
 
 def bit_generator():
