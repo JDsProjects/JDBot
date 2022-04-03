@@ -39,7 +39,7 @@ class Order(commands.Cog):
     async def order(self, ctx, *, args=None):
         if not args:
             await ctx.send("You can't order nothing.")
-            ctx.command.reset_cooldown(ctx)
+            return ctx.command.reset_cooldown(ctx)
 
         view = utils.BasicShuffleQuestion(ctx)
 
