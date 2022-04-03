@@ -610,7 +610,7 @@ class UserInfoSuper(discord.ui.View):
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for child in self.children:
-            print(child)
+            print(type(child))
             if isinstance(child, discord.ui.Button):
                 self.remove_item(child)
 
