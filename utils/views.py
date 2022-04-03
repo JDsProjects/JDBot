@@ -602,7 +602,7 @@ class UserInfoSuper(discord.ui.View):
             if isinstance(child, discord.ui.Button):
                 self.remove_item(child)
 
-        await self.message.edit(content="Well be Dming you the paginator to view this info", view=self)
+        await interaction.response.edit_message(content=f"Well be Dming you the paginator to view this info", view=self)
 
         await self.menu.send(self.channel)
 
@@ -614,7 +614,7 @@ class UserInfoSuper(discord.ui.View):
             if isinstance(child, discord.ui.Button):
                 self.remove_item(child)
 
-        await self.message.edit(content=f"not sending the paginator to you", view=self)
+        await interaction.response.edit_message(content=f"not sending the paginator to you", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
 
