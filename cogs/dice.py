@@ -141,6 +141,7 @@ class Dice(commands.Cog):
     async def coin(self, ctx):
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_image(url="https://i.imgur.com/O7FscBW.gif")
+        embed.set_footer("Thank You ⚶ Juuzou Suzuya Zeno#3621 \nCleaner Emojis")
         view = utils.CoinFlip(ctx)
 
         await ctx.send(content="Time to see if you can guess correctly!", embed=embed, view=view)
