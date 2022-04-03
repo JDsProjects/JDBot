@@ -587,8 +587,8 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        # children = self.children
-        for child in self.children:
+        children = self.children
+        for child in children:
             if isinstance(child, (discord.Button, discord.ui.Button)):
                 self.remove_item(child)
 
@@ -599,8 +599,8 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        # children = self.children
-        for child in self.children:
+        children = self.children
+        for child in children:
             if isinstance(child, (discord.Button, discord.ui.Button)):
                 self.remove_item(child)
 
@@ -611,8 +611,8 @@ class UserInfoSuper(discord.ui.View):
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        # children = self.children
-        for child in self.children:
+        children = self.children
+        for child in children:
             if isinstance(child, (discord.Button, discord.ui.Button)):
                 self.remove_item(child)
 
