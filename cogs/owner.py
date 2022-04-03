@@ -453,6 +453,8 @@ class Owner(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
+        print(post)
+
         await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.id}")
 
     @commands.command(
