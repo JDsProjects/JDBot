@@ -589,7 +589,7 @@ class UserInfoSuper(discord.ui.View):
 
         # children = self.children
         for child in self.children:
-            if isinstance(child, (discord.Button, discord.ui.button.Button, discord.ui.Button)):
+            if isinstance(child, (discord.Button, discord.ui.Button)):
                 self.remove_item(child)
 
         await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
@@ -601,7 +601,7 @@ class UserInfoSuper(discord.ui.View):
 
         # children = self.children
         for child in self.children:
-            if isinstance(child, (discord.Button, discord.ui.button.Button, discord.ui.Button)):
+            if isinstance(child, (discord.Button, discord.ui.Button)):
                 self.remove_item(child)
 
         await interaction.response.edit_message(content=f"Well be Dming you the paginator to view this info", view=self)
@@ -613,7 +613,7 @@ class UserInfoSuper(discord.ui.View):
 
         # children = self.children
         for child in self.children:
-            if isinstance(child, (discord.Button, discord.ui.button.Button, discord.ui.Button)):
+            if isinstance(child, (discord.Button, discord.ui.Button)):
                 self.remove_item(child)
 
         await interaction.response.edit_message(content=f"not sending the paginator to you", view=self)
