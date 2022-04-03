@@ -107,7 +107,7 @@ def profile_converter(
     emoji = dict_to_use.get(_enum)
     if not emoji:
         emoji = status_emojis[_enum]
-    return dc.get(_enum)
+    return emoji
 
 
 def bit_generator():
