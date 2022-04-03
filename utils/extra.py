@@ -86,16 +86,16 @@ def profile_converter(
             discord.Status.offline: "<:offline:715050614366928906>",
         },
         "desktop": {
-            discord.Status.online: "",
-            discord.Status.dnd: "",
-            discord.Status.idle: "",
-            discord.Status.offline: "",
+            discord.Status.online: "<:desktop_online:917755694852235265>",
+            discord.Status.dnd: "<:desktop_dnd:917755694839656448>",
+            discord.Status.idle: "<:desktop_away:917755694902558790>",
+            discord.Status.offline: "<:desktop_offline:917755694948708402> ",
         },
         "web": {
-            discord.Status.online: "",
-            discord.Status.dnd: "",
-            discord.Status.idle: "",
-            discord.Status.offline: "",
+            discord.Status.online: "<:website_online:917753204396142623>",
+            discord.Status.dnd: "<:website_dnd:917753204396142622>",
+            discord.Status.idle: "<:website_away:917753204400336956> ",
+            discord.Status.offline: "<:website_offline:917752338574348289>",
         },
     }
 
