@@ -453,6 +453,10 @@ class Owner(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
+        twitter_id = post.data.get("id")
+        if twitter_id is None:
+            return await ctx.send("no id found :/")
+
         await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.data.id}")
 
     @commands.command(
