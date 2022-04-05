@@ -457,7 +457,7 @@ class Owner(commands.Cog):
         if twitter_id is None:
             return await ctx.send("no id found :/")
 
-        await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.data.id}")
+        await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{twitter_id}")
 
     @commands.command(
         brief="chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)"
