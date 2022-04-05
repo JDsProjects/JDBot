@@ -453,7 +453,7 @@ class Owner(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.id}")
+        await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{post.data.id}")
 
     @commands.command(
         brief="chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)"
