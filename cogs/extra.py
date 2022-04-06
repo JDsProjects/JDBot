@@ -80,8 +80,8 @@ class Extra(commands.Cog):
         for x in response:
             pag.add_line(f":earth_africa: {x}")
 
-        menu = utils.RandomHistoryEmbed(pag.pages, ctx=ctx, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.RandomHistoryEmbed(pag.pages, ctx=ctx, delete_after=True)
+        await menu.send()
 
     @commands.command(brief="gives you the digits of pi that Python knows")
     async def pi(self, ctx):
@@ -908,9 +908,9 @@ class Extra(commands.Cog):
                 f"[{index+1}]({todo_entry['jump_url']}). {discord.utils.format_dt(todo_entry['added_time'], 'R')} {todo_entry['text']}"
             )
 
-        menu = utils.TodoEmbed(pag.pages, ctx=ctx, delete_message_after=True)
+        menu = utils.TodoEmbed(pag.pages, ctx=ctx, delete_after=True)
 
-        await menu.send(ctx.channel)
+        await menu.send()
 
     @todo.command(brief="adds items to todo")
     async def add(self, ctx, *, text: commands.clean_content = None):

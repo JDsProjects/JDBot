@@ -272,9 +272,9 @@ class Order(commands.Cog):
                 f"An error occured, error: {e}. Please give this to the owner. This was an error with results"
             )
 
-        menu = utils.GoogleEmbed(results, ctx=ctx, delete_message_after=True)
+        menu = utils.GoogleEmbed(results, ctx=ctx, delete_after=True)
 
-        await menu.send(ctx.channel)
+        await menu.send()
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="sends a gif of someone dancing to disco (animated)")

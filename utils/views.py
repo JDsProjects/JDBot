@@ -680,7 +680,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.clear_items()
         await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
 
-        await self.menu.send_as_interaction(interaction, ephemeral=True)
+        await self.menu.send(interaction=interaction, ephemeral=True)
 
     @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -688,7 +688,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.clear_items()
         await self.message.edit(content="Well be Dming you the paginator to view this info", view=self)
 
-        await self.menu.send(self.channel)
+        await self.menu.send(send_to=self.channel)
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -723,7 +723,7 @@ class UserInfoSuper(discord.ui.View):
 
         await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
 
-        await self.menu.send_as_interaction(interaction, ephemeral=True)
+        await self.menu.send(interaction=interaction, ephemeral=True)
 
     @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -734,7 +734,7 @@ class UserInfoSuper(discord.ui.View):
 
         await interaction.response.edit_message(content=f"Well be Dming you the paginator to view this info", view=self)
 
-        await self.menu.send(self.channel)
+        await self.menu.send(send_to=self.channel)
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):

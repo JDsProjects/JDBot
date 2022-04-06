@@ -331,12 +331,12 @@ class Owner(commands.Cog):
 
         pages = textwrap.wrap(values, width=1992)
 
-        menu = utils.ErrorEmbed(pages, ctx=ctx, delete_message_after=True)
+        menu = utils.ErrorEmbed(pages, ctx=ctx, delete_after=True)
 
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
-        await menu.send(ctx.author.dm_channel)
+        await menu.send(send_to=ctx.author.dm_channel)
 
         paste = await utils.post(self.bot, code=values)
         # max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
