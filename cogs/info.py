@@ -180,8 +180,8 @@ class Info(commands.Cog):
     async def fetch_invite(self, ctx, *invites: typing.Union[discord.Invite, str]):
         if invites:
 
-            menu = utils.InviteInfoEmbed(invites, ctx=ctx, delete_message_after=True)
-            await menu.send(ctx.channel)
+            menu = utils.InviteInfoEmbed(invites, ctx=ctx, delete_after=True)
+            await menu.send()
         if not invites:
             await ctx.send("Please get actual invites to attempt grab")
             ctx.command.reset_cooldown(ctx)
@@ -276,8 +276,8 @@ class Info(commands.Cog):
     async def emoji_info(self, ctx, *emojis: typing.Union[utils.EmojiConverter, str]):
         if emojis:
 
-            menu = utils.EmojiInfoEmbed(emojis, ctx=ctx, delete_message_after=True)
-            await menu.send(ctx.channel)
+            menu = utils.EmojiInfoEmbed(emojis, ctx=ctx, delete_after=True)
+            await menu.send()
 
         if not emojis:
             await ctx.send("Looks like there was no emojis.")
@@ -417,9 +417,9 @@ class DevTools(commands.Cog):
 
         content = textwrap.wrap(values, width=2000)
 
-        menu = utils.charinfoMenu(content, ctx=ctx, delete_message_after=True)
+        menu = utils.charinfoMenu(content, ctx=ctx, delete_after=True)
 
-        await menu.send(ctx.channel)
+        await menu.send()
 
     @commands.command(brief="a command to view the rtfm DB")
     async def rtfm_view(self, ctx):
@@ -430,8 +430,8 @@ class DevTools(commands.Cog):
         for g in rtfm_dictionary:
             pag.add_line(f"{g} : {rtfm_dictionary.get(g)}")
 
-        menu = utils.RtfmEmbed(pag.pages, ctx=ctx, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.RtfmEmbed(pag.pages, ctx=ctx, delete_after=True)
+        await menu.send()
 
     @commands.command(brief="a command to autoformat your python code to pep8")
     async def pep8(self, ctx):

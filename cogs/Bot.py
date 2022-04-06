@@ -563,9 +563,9 @@ class Bot(commands.Cog):
         for p in prefixes:
             pag.add_line(f"{p}")
 
-        menu = utils.PrefixesEmbed(pag.pages, ctx=ctx, delete_message_after=True)
+        menu = utils.PrefixesEmbed(pag.pages, ctx=ctx, delete_after=True)
 
-        await menu.send(ctx.channel)
+        await menu.send()
 
     @commands.command(brief="Lists the current used prefix", aliases=["prefix"])
     async def currentprefix(self, ctx):

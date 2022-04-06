@@ -95,8 +95,8 @@ class Events(commands.Cog):
             for p in prefixes:
                 pag.add_line(f"{p}")
 
-            menu = utils.PrefixesEmbed(pag.pages, ctx=test, delete_message_after=True)
-            await menu.send(test.channel)
+            menu = utils.PrefixesEmbed(pag.pages, ctx=test, delete_after=True)
+            await menu.send()
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):

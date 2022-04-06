@@ -100,9 +100,9 @@ class Moderation(commands.Cog):
 
             valid_users = [u for u in mutual_guild_users if utils.mutual_guild_check(ctx, u)]
 
-            menu = utils.ScanGlobalEmbed(valid_users, ctx=ctx, delete_message_after=True)
+            menu = utils.ScanGlobalEmbed(valid_users, ctx=ctx, delete_after=True)
 
-            await menu.send(ctx.channel)
+            await menu.send()
 
     @commands.command(brief="gives stats about the sus users")
     async def ss_stats(self, ctx):

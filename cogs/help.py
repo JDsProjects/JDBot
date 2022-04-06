@@ -6,9 +6,9 @@ import discord
 
 class JDBotHelp(commands.MinimalHelpCommand):
     async def send_pages(self):
-        menu = utils.SendHelp(self.paginator.pages, ctx=self.context, delete_message_after=True)
+        menu = utils.SendHelp(self.paginator.pages, ctx=self.context, delete_after=True)
 
-        await menu.send(self.context.channel)
+        await menu.send()
 
     async def send_bot_help(self, mapping):
         ctx = self.context
