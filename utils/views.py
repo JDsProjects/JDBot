@@ -175,7 +175,7 @@ class Paginator(View):
             self._buttons.update(buttons)
 
         self.timeout: Union[int, float] = timeout
-        self._message: PossibleMessage = None  # type: ignore # this cannot be None # filled in .send()
+        # self._message: PossibleMessage = None  # type: ignore # this cannot be None # filled in .send()
 
         self.ctx = ctx  # can be filled in .send()
         self.interaction = interaction  # can be filled in .send() and when the paginator is used
@@ -278,14 +278,6 @@ class Paginator(View):
         return self._max_pages
 
     @property
-    def message(self):
-        return self._message
-
-    @message.setter
-    def message_set(self, value):
-        self._message = value
-
-    @property
     def page_string(self) -> str:
         return f"Page {self.current_page + 1} / {self.max_pages}"
 
@@ -309,18 +301,18 @@ class Paginator(View):
         if self.interaction is not MISSING:
             respond = self.interaction.response.edit_message  # type: ignore
             if self.interaction.response.is_done():  # type: ignore
-                respond = self._message.edit if self._message else _interaction.message.edit  # type: ignore
+                respond = self.message.edit if self.message else _interaction.message.edit  # type: ignore
 
             await respond(**kwargs)
         else:
-            await self._message.edit(**kwargs)
+            await self.message.edit(**kwargs)
 
     async def stop(self) -> None:
         self.__reset_base_kwargs()
         super().stop()
 
         if self._should_delete_after:
-            await self._message.delete()
+            await self.message.delete()
             return
 
         if self._should_clear_buttons_after:
@@ -416,8 +408,8 @@ class Paginator(View):
         self.ctx = self.ctx if ctx is MISSING else ctx  # type: ignore
 
         if send_to is not MISSING:
-            self._message = await send_to.send(**send_kwargs)
-            return self._message
+            self.message = await send_to.send(**send_kwargs)
+            return self.message
 
         elif self.interaction is not MISSING:
             respond = self.interaction.response.send_message  # type: ignore
@@ -428,15 +420,15 @@ class Paginator(View):
 
             maybe_message = await respond(**send_kwargs)
             if maybe_message:
-                self._message = maybe_message
-                return self._message
+                self.message = maybe_message
+                return self.message
             else:
-                self._message = await self.interaction.original_message()  # type: ignore
-                return self._message
+                self.message = await self.interaction.original_message()  # type: ignore
+                return self.message
 
         elif self.ctx is not MISSING:
-            self._message = await self.ctx.send(**send_kwargs)  # type: ignore
-            return self._message
+            self.message = await self.ctx.send(**send_kwargs)  # type: ignore
+            return self.message
 
         else:
             raise ValueError("ctx or interaction or send_to must be provided")
