@@ -281,6 +281,10 @@ class Paginator(View):
     def message(self):
         return self._message
 
+    @message.setter
+    def message_set(self, value):
+        self._message = value
+
     @property
     def page_string(self) -> str:
         return f"Page {self.current_page + 1} / {self.max_pages}"
