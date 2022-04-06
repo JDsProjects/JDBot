@@ -14,6 +14,7 @@ from typing import Callable, Optional, Any, Union, Sequence, TYPE_CHECKING
 if TYPE_CHECKING:
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
+
 def default_check(author_id: int, /, *, interaction: Interaction = MISSING, ctx: Context = MISSING) -> bool:
     if interaction is MISSING and ctx is MISSING:
         return True
@@ -25,6 +26,7 @@ def default_check(author_id: int, /, *, interaction: Interaction = MISSING, ctx:
         TO_CHECK.union({client.owner_id})  # type: ignore
 
     return author_id in TO_CHECK
+
 
 class ChooseNumber(Modal):
     def __init__(self, current_page: int, total_pages: int, page_string: str, /):
@@ -73,6 +75,7 @@ class ChooseNumber(Modal):
         self.value = number
         await interaction.response.send_message(f"There is page {self.value + 1} for you <3", ephemeral=True)
         self.stop()
+
 
 class PaginatorButton(Button["Paginator"]):
     def __init__(
@@ -158,7 +161,7 @@ class Paginator(View):
         DEFAULT_BUTTONS = {
             "FIRST": PaginatorButton(emoji="⏮️", position=0, style=ButtonStyle.secondary),
             "LEFT": PaginatorButton(emoji="◀️", position=1, style=ButtonStyle.secondary),
-            #"PAGE_INDICATOR": PaginatorButton(label="Page N/A / N/A", position=2, style=ButtonStyle.secondary),
+            # "PAGE_INDICATOR": PaginatorButton(label="Page N/A / N/A", position=2, style=ButtonStyle.secondary),
             "PAGE_INDICATOR": None,
             "STOP": PaginatorButton(emoji="⏹️", position=2, style=ButtonStyle.danger),
             "RIGHT": PaginatorButton(emoji="▶️", position=3, style=ButtonStyle.secondary),
