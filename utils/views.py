@@ -1,15 +1,15 @@
 import discord
 import asyncio
 import random
-from discord.ext import commands
 import mathjspy
 
-from discord import Interaction, ButtonStyle, Embed, File, Messageable
+from discord import Interaction, ButtonStyle, Embed, File
+from discord.abc import Messageable
 from discord.utils import MISSING, maybe_coroutine
 from discord.ui import Button, TextInput, Modal, View
 
 from discord.ext.commands.context import Context
-from typing import Callable, Literal, Optional, Dict, Any, List, Union, Tuple, Sequence, TYPE_CHECKING
+from typing import Callable, Optional, Any, Union, Sequence, TYPE_CHECKING
 
 if TYPE_CHECKING:
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
