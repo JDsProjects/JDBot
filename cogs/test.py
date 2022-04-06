@@ -138,8 +138,8 @@ class Test(commands.Cog):
             "first": utils.PaginatorButton(emoji="<:start:959851091502190674>", style=discord.ButtonStyle.secondary),
         }
         pages = [discord.Embed(title="eh")] * 10
-        menu = utils.Paginator(pages, ctx=ctx, buttons=buttons, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.Paginator(pages, ctx=ctx, buttons=buttons, delete_after=True)
+        await menu.send()
 
     @commands.command()
     async def tags(self, ctx):

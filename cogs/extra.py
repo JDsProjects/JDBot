@@ -504,8 +504,8 @@ class Extra(commands.Cog):
             "Sending you the previous 10 embeds sent in 50 messages if under 10 well the amount that exists, if none well you get none."
         )
 
-        menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        await menu.send()
 
     @commands.command(brief="takes two numbers and does a cool command")
     async def radical(self, ctx, *numbers: typing.Union[int, str]):

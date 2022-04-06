@@ -175,8 +175,8 @@ class Image(commands.Cog):
             url = (Member.display_avatar.with_format("png")).url
             embeds.append(await utils.triggered_converter(url, ctx))
 
-        menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        await menu.send()
 
     @commands.command(
         brief="uses our headpat program to pat you", help="a command that uses jeyyapi to make a headpat of you."
@@ -199,8 +199,8 @@ class Image(commands.Cog):
             url = (Member.display_avatar.with_format("png")).url
             embeds.append(await utils.headpat_converter(url, ctx))
 
-        menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        await menu.send()
 
     @commands.command(
         brief="a hug command to hug people", help="this actually the second hug command and is quite powerful."
@@ -435,8 +435,8 @@ class Image(commands.Cog):
             url = (Member.display_avatar.with_format("png")).url
             embeds.append(await utils.invert_converter(url, ctx))
 
-        menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        await menu.send()
 
     @commands.command(help="Headpat generator :D")
     async def headpat(self, ctx, Member: utils.BetterMemberConverter = None):
@@ -459,8 +459,8 @@ class Image(commands.Cog):
 
             embeds.append(await utils.headpat_converter2(url, ctx))
 
-        menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        await menu.send()
 
     def convert_svg(self, svg_image):
         converted_bytes = cairosvg.svg2png(bytestring=svg_image, scale=6.0)
@@ -504,7 +504,7 @@ class Image(commands.Cog):
             embeds.append(await utils.jail_converter(url, ctx))
 
         menu = utils.Paginator(embeds, ctx=ctx, disable_after=True)
-        await menu.send(ctx.channel)
+        await menu.send()
 
     @commands.command(brief="inverts any valid image with jeyyapi")
     async def invert(self, ctx, Member: utils.BetterMemberConverter = None):
@@ -527,8 +527,8 @@ class Image(commands.Cog):
             url = (Member.display_avatar.with_format("png")).url
             embeds.append(await utils.invert_converter2(url, ctx))
 
-        menu = utils.Paginator(embeds, ctx=ctx, delete_message_after=True)
-        await menu.send(ctx.channel)
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        await menu.send()
 
     @commands.command(brief="Generates ace attronetry gifs")
     async def ace(self, ctx):
