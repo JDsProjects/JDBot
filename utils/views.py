@@ -1,311 +1,439 @@
 import discord
 import asyncio
 import random
-from discord.ext import commands
 import mathjspy
 
-from typing import Literal, Optional, Dict, Any, List, Union, Tuple
+from discord import Interaction, ButtonStyle, Embed, File
+from discord.abc import Messageable
+from discord.utils import MISSING, maybe_coroutine
+from discord.ui import Button, TextInput, Modal, View
+
+from discord.ext.commands.context import Context
+from typing import Callable, Optional, Any, Union, Sequence, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
-class PaginatorButton(discord.ui.Button["Paginator"]):
+def default_check(author_id: int, /, *, interaction: Interaction = MISSING, ctx: Context = MISSING) -> bool:
+    if interaction is MISSING and ctx is MISSING:
+        return True
+
+    client = interaction.client if interaction is not MISSING else ctx.bot  # type: ignore
+    author = interaction.user if interaction is not MISSING else ctx.author  # type: ignore
+    TO_CHECK = {author.id}.union(set(getattr(client, "owner_ids", set())))
+    if getattr(client, "owner_id", None):
+        TO_CHECK.union({client.owner_id})  # type: ignore
+
+    return author_id in TO_CHECK
+
+
+class ChooseNumber(Modal):
+    def __init__(self, current_page: int, total_pages: int, page_string: str, /):
+        super().__init__(
+            title="Which page would you like to go to?",
+            timeout=15,
+            custom_id="paginator:modal:choose_number",
+        )
+
+        self._current_page: int = current_page
+        self._total_pages: int = total_pages
+
+        self.value: Optional[int] = None  # filled in by on_submit
+
+        self.number_input = TextInput(
+            placeholder=f"Current: {page_string}",
+            label=f"Enter a page number between 1 and {total_pages}",
+            custom_id="paginator:choose_number",
+            max_length=len(str(total_pages)),
+            min_length=1,
+        )
+
+        self.add_item(self.number_input)
+
+    async def on_submit(self, interaction: Interaction) -> None:
+        assert isinstance(self.number_input.value, str)
+
+        if (
+            not self.number_input.value.isdigit()
+            or int(self.number_input.value) <= 0
+            or int(self.number_input.value) > self._total_pages
+        ):
+            await interaction.response.send_message(
+                f"Please enter a valid number between 1 and {self._total_pages}", ephemeral=True
+            )
+            self.stop()
+            return
+
+        number = int(self.number_input.value) - 1
+
+        if number == self._current_page:  # type: ignore
+            await interaction.response.send_message("That is the current page!", ephemeral=True)
+            self.stop()
+            return
+
+        self.value = number
+        await interaction.response.send_message(f"There is page {self.value + 1} for you <3", ephemeral=True)
+        self.stop()
+
+
+class PaginatorButton(Button["Paginator"]):
     def __init__(
         self,
         *,
-        emoji: Optional[Union[discord.PartialEmoji, str]] = None,
+        emoji: Optional[str] = None,
         label: Optional[str] = None,
-        style: discord.ButtonStyle = discord.ButtonStyle.blurple,
-        position: Optional[int] = None,
-    ) -> None:
+        custom_id: Optional[str] = None,
+        style: ButtonStyle = ButtonStyle.blurple,
+        row: Optional[int] = None,
+        disabled: bool = False,
+        position: int = MISSING,
+    ):
+        super().__init__(emoji=emoji, label=label, custom_id=custom_id, style=style, row=row, disabled=disabled)
+        self.position = position
+        self.view: Paginator
 
-        super().__init__(emoji=emoji, label=label, style=style)
+    async def __handle_number_modal(self, interaction: Interaction) -> Optional[int]:
+        modal = ChooseNumber(self.view._current_page, self.view.max_pages, self.view.page_string)
+        await interaction.response.send_modal(modal)
+        await modal.wait()
+        return modal.value
 
-        if not emoji and not label:
-            raise ValueError("A label or emoji must be provided.")
-
-        self.position: Optional[int] = position
-
-    async def callback(self, interaction: discord.Interaction):
-
-        assert self.view is not None
+    async def callback(self, interaction: Interaction) -> None:
+        self.view.interaction = interaction
 
         if self.custom_id == "stop_button":
             await self.view.stop()
             return
 
         if self.custom_id == "right_button":
-            self.view.current_page += 1
+            self.view._current_page += 1
         elif self.custom_id == "left_button":
-            self.view.current_page -= 1
+            self.view._current_page -= 1
         elif self.custom_id == "first_button":
-            self.view.current_page = 0
+            self.view._current_page = 0
         elif self.custom_id == "last_button":
-            self.view.current_page = self.view.max_pages - 1
+            self.view._current_page = self.view.max_pages - 1
+        elif self.custom_id == "page_indicator_button":
+            new_page = await self.__handle_number_modal(interaction)
+            if new_page is not None:
+                self.view._current_page = new_page
+            else:
+                return
 
-        self.view.page_string: str = f"Page {self.view.current_page + 1}/{self.view.max_pages}"  # type: ignore
+        self.view._update_buttons_state()
+        pages = self.view.get_page(self.view._current_page)
+        edit_kwargs = (await self.view.get_kwargs_from_page(pages)).copy()
+        edit_kwargs["attachments"] = edit_kwargs.pop("files")
 
-        if self.view.PAGE_BUTTON is not None:
-            self.view.PAGE_BUTTON.label = self.view.page_string
-
-        if self.view.current_page == 0:
-            if self.view.FIRST_BUTTON is not None:
-                self.view.FIRST_BUTTON.disabled = True
-            if self.view.LEFT_BUTTON is not None:
-                self.view.LEFT_BUTTON.disabled = True
-        else:
-            if self.view.FIRST_BUTTON is not None:
-                self.view.FIRST_BUTTON.disabled = False
-            if self.view.LEFT_BUTTON is not None:
-                self.view.LEFT_BUTTON.disabled = False
-
-        if self.view.current_page >= self.view.max_pages - 1:
-            if self.view.LAST_BUTTON is not None:
-                self.view.LAST_BUTTON.disabled = True
-            if self.view.RIGHT_BUTTON is not None:
-                self.view.RIGHT_BUTTON.disabled = True
-        else:
-            if self.view.LAST_BUTTON is not None:
-                self.view.LAST_BUTTON.disabled = False
-            if self.view.RIGHT_BUTTON is not None:
-                self.view.RIGHT_BUTTON.disabled = False
-
-        page_kwargs, _ = await self.view.get_page_kwargs(self.view.current_page)
-        assert interaction.message is not None and self.view.message is not None
-
-        if "files" in page_kwargs:
-            page_kwargs["attachments"] = page_kwargs.pop("files")
-
-        edit = interaction.response.edit_message
-        if interaction.response.is_done():
-            edit = interaction.message.edit
-
-        try:
-            await edit(**page_kwargs)
-        except (discord.HTTPException, discord.Forbidden, discord.NotFound):
-            await self.view.message.edit(**page_kwargs)
+        await self.view._edit_message(interaction, **edit_kwargs)
 
 
-class Paginator(discord.ui.View):
-
-    FIRST_BUTTON: PaginatorButton
-    LAST_BUTTON: PaginatorButton
-    LEFT_BUTTON: PaginatorButton
-    RIGHT_BUTTON: PaginatorButton
-    STOP_BUTTON: PaginatorButton
-    PAGE_BUTTON: PaginatorButton
+class Paginator(View):
+    FIRST: Optional[PaginatorButton] = None  # filled in __add_buttons
+    LEFT: Optional[PaginatorButton] = None  # filled in __add_buttons
+    RIGHT: Optional[PaginatorButton] = None  # filled in __add_buttons
+    LAST: Optional[PaginatorButton] = None  # filled in __add_buttons
+    STOP: Optional[PaginatorButton] = None  # filled in __add_buttons
+    PAGE_INDICATOR: Optional[PaginatorButton] = None  # filled in __add_buttons
 
     def __init__(
         self,
-        pages: Union[List[discord.Embed], List[str]],
-        ctx: Optional[commands.Context] = None,
-        author_id: Optional[int] = None,
+        pages: Sequence[PossiblePage],
         *,
-        buttons: Dict[str, Union[PaginatorButton, None]] = {},
+        ctx: Context = MISSING,
+        interaction: Interaction = MISSING,
+        author_id: int = MISSING,
+        per_page: int = 1,
+        buttons: dict = MISSING,
+        check: Callable = MISSING,
+        timeout: Union[int, float] = 180.0,
+        always_show_stop_button: bool = False,
+        delete_after: bool = False,
         disable_after: bool = False,
-        delete_message_after: bool = False,
-        clear_after: bool = False,
-        timeout: int = 180,
-    ):
-
+        clear_buttons_after: bool = False,
+    ) -> None:
+        """Initialize the Paginator."""
         super().__init__(timeout=timeout)
+        if ctx is not MISSING and interaction is not MISSING:
+            raise ValueError("ctx and interaction cannot be used together")
 
-        DEFAULT_BUTTONS: Dict[str, Union[PaginatorButton, None]] = {
-            "first": PaginatorButton(emoji="⏮️", style=discord.ButtonStyle.secondary),
-            "left": PaginatorButton(emoji="◀️", style=discord.ButtonStyle.secondary),
-            "right": PaginatorButton(emoji="▶️", style=discord.ButtonStyle.secondary),
-            "last": PaginatorButton(emoji="⏭️", style=discord.ButtonStyle.secondary),
-            "stop": PaginatorButton(emoji="⏹️", style=discord.ButtonStyle.secondary),
-            "page": None,
+        DEFAULT_BUTTONS = {
+            "FIRST": PaginatorButton(emoji="⏮️", position=0, style=ButtonStyle.secondary),
+            "LEFT": PaginatorButton(emoji="◀️", position=1, style=ButtonStyle.secondary),
+            # "PAGE_INDICATOR": PaginatorButton(label="Page N/A / N/A", position=2, style=ButtonStyle.secondary),
+            "PAGE_INDICATOR": None,
+            "STOP": PaginatorButton(emoji="⏹️", position=2, style=ButtonStyle.danger),
+            "RIGHT": PaginatorButton(emoji="▶️", position=3, style=ButtonStyle.secondary),
+            "LAST": PaginatorButton(emoji="⏭️", position=4, style=ButtonStyle.secondary),
         }
 
-        self.ctx: Optional[commands.Context] = ctx
-        self.author_id: Optional[int] = author_id
+        self._buttons: dict[str, PaginatorButton] = DEFAULT_BUTTONS.copy()
+        if buttons is not MISSING:
+            self._buttons.update(buttons)
 
-        self._disable_after = disable_after
-        self._delete_message_after = delete_message_after
-        self._clear_after = clear_after
-        self.buttons: Dict[str, Union[PaginatorButton, None]] = buttons or DEFAULT_BUTTONS
-        self.message: Optional[discord.Message] = None
+        self.timeout: Union[int, float] = timeout
+        self._message: PossibleMessage = None  # type: ignore # this cannot be None # filled in .send()
 
-        self.pages: Union[List[discord.Embed], List[str]] = pages
-        self.current_page: int = 0
-        self.max_pages: int = len(self.pages)
-        self.page_string: str = f"Page {self.current_page + 1}/{self.max_pages}"
+        self.ctx = ctx  # can be filled in .send()
+        self.interaction = interaction  # can be filled in .send() and when the paginator is used
+        self.author_id: int = author_id
+        self.check = check if check is not MISSING else default_check
 
-        self._add_buttons(DEFAULT_BUTTONS)
+        self.pages: Sequence[PossiblePage] = pages
+        self.per_page: int = per_page
 
-    def _add_buttons(self, default_buttons: Dict[str, Union[PaginatorButton, None]]) -> None:
+        self._max_pages_passed: int = len(pages)
+        self._should_always_show_stop_button: bool = always_show_stop_button
+        self._should_delete_after: bool = delete_after
+        self._should_disable_after: bool = disable_after
+        self._should_clear_buttons_after: bool = clear_buttons_after
 
-        if self.max_pages <= 1:
-            super().stop()
+        self._current_page: int = 0
+
+        if per_page > self._max_pages_passed or per_page < 1:
+            raise ValueError(  # nice try though
+                f"per_page ({per_page}) must be >= 1 or = len(pages) # >>> {self._max_pages_passed}"
+            )
+
+        total_pages, left_over = divmod(self._max_pages_passed, per_page)
+        if left_over:
+            total_pages += 1
+
+        self._max_pages = total_pages
+        self.__add_buttons()
+
+        self.__base_kwargs = {"content": None, "embeds": [], "files": [], "view": self}
+
+    def __reset_base_kwargs(self) -> None:
+        self.__base_kwargs = {"content": None, "embeds": [], "files": [], "view": self}
+
+    def __add_buttons(self) -> None:
+        if not self._max_pages > 1:
+            if self._should_always_show_stop_button:
+                if "STOP" not in self._buttons:
+                    raise ValueError("STOP button is required if always_show_stop_button is True.")
+
+                name = "STOP"
+                button = self._buttons[name]
+                button.custom_id = f"{name.lower()}_button"
+                setattr(self, name, button)
+                self.add_item(button)
+                return
+            else:
+                super().stop()
             return
 
-        VALID_KEYS = ["first", "left", "right", "last", "stop", "page"]
-        if all(b in VALID_KEYS for b in self.buttons.keys()) is False:
-            raise ValueError(f"Buttons keys must be in: `{', '.join(VALID_KEYS)}`")
+        _buttons: dict[str, PaginatorButton] = {
+            name: button for name, button in self._buttons.items() if button is not None
+        }
+        sorted_buttons = sorted(_buttons.items(), key=lambda b: b[1].position if b[1].position is not MISSING else 0)
+        for name, button in sorted_buttons:
+            button.custom_id = f"{name.lower()}_button"
+            setattr(self, name, button)
 
-        if all(isinstance(b, PaginatorButton) or b is None for b in self.buttons.values()) is False:
-            raise ValueError("Buttons values must be PaginatorButton instances or None.")
-
-        button: Union[PaginatorButton, None]
-
-        for name, button in default_buttons.items():
-
-            for custom_name, custom_button in self.buttons.items():
-
-                if name == custom_name:
-                    button = custom_button
-
-            setattr(self, f"{name}_button".upper(), button)
-
-            if button is None:
-                continue
-
-            button.custom_id = f"{name}_button"
-
-            if button.custom_id == "page_button":
+            if button.custom_id == "page_indicator_button":
                 button.label = self.page_string
-                button.disabled = True
+                if self._max_pages <= 2:
+                    button.disabled = True
 
             if button.custom_id in ("first_button", "last_button") and self.max_pages <= 2:
                 continue
 
-            if button.custom_id in ("first_button", "left_button") and self.current_page <= 0:
-                button.disabled = True
-
-            if button.custom_id in ("last_button", "right_button") and self.current_page >= self.max_pages - 1:
-                button.disabled = True
-
             self.add_item(button)
 
-        self._set_button_positions()
+        self._update_buttons_state()
 
-    def _set_button_positions(self) -> None:
-        """Moves the buttons to the desired position"""
-
+    def _update_buttons_state(self) -> None:
         button: PaginatorButton
+        for button in self.children:  # type: ignore
+            if button.custom_id in ("page_indicator_button", "stop_button"):
+                if button.custom_id == "page_indicator_button":
+                    button.label = self.page_string
+                continue
 
-        for button in self.children:
+            elif button.custom_id in ("right_button", "last_button"):
+                button.disabled = self._current_page >= self.max_pages - 1
+            elif button.custom_id in ("left_button", "first_button"):
+                button.disabled = self._current_page <= 0
 
-            if button.position is not None:
+            if not button.disabled:
+                button.style = ButtonStyle.green
+            elif button.disabled:
+                button.style = ButtonStyle.blurple
 
-                self.children.insert(button.position, self.children.pop(self.children.index(button)))
+    @property
+    def current_page(self) -> int:
+        return self._current_page
 
-    async def format_page(self, page: Union[discord.Embed, str]) -> Union[discord.Embed, str]:
-        return page
+    @current_page.setter
+    def current_page(self, value: int) -> None:
+        self._current_page = value
+        self._update_buttons_state()
 
-    async def get_page_kwargs(
-        self: "Paginator", page, send_kwargs: Optional[Dict[str, Any]] = None, skip_formatting: bool = False
-    ):
+    @property
+    def max_pages(self) -> int:
+        return self._max_pages
 
-        if send_kwargs is not None:
-            send_kwargs.pop("content", None)
-            send_kwargs.pop("embed", None)
-            send_kwargs.pop("embeds", None)
+    @property
+    def message(self):
+        return self._message
 
-        page = self.pages[page] if isinstance(page, int) else page
-        if not skip_formatting:
-            formatted_page = await discord.utils.maybe_coroutine(self.format_page, page)
-        else:
-            formatted_page = page
-
-        if isinstance(formatted_page, str):
-            formatted_page += f"\n\n{self.page_string}"  # type: ignore
-            return {"content": formatted_page, "embed": None, "view": self}, send_kwargs or {}
-
-        elif isinstance(formatted_page, discord.Embed):
-            formatted_page.set_footer(text=self.page_string)
-            return {"content": None, "embed": formatted_page, "view": self}, send_kwargs or {}
-
-        elif isinstance(formatted_page, tuple):
-            actual_page, file = formatted_page
-            if not isinstance(file, discord.File):
-                raise TypeError("Second item in tuple must be discord.File")
-
-            page_kwargs, send_kwargs = await self.get_page_kwargs(actual_page, send_kwargs, skip_formatting=True)  # type: ignore
-            page_kwargs["files"] = [file]
-            return page_kwargs, send_kwargs or {}
-
-        else:
-            return {}, send_kwargs or {}
+    @property
+    def page_string(self) -> str:
+        return f"Page {self.current_page + 1} / {self.max_pages}"
 
     async def on_timeout(self) -> None:
         await self.stop()
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, interaction: Interaction):
+        # Allow everyone if interaction.user or ctx or author_id is None.
+        if self.author_id is MISSING and self.ctx is MISSING and self.interaction is MISSING:
+            return True
 
-        if self.author_id and not self.ctx:
-            return interaction.user.id == self.author_id
+        is_allowed = await maybe_coroutine(
+            self.check, interaction.user.id, interaction=interaction, ctx=self.ctx  # type: ignore
+        )
+        return is_allowed
+
+    async def _edit_message(self, interaction: Interaction = MISSING, /, **kwargs: Any) -> None:
+        if interaction is not MISSING:
+            self.interaction = interaction
+
+        if self.interaction is not MISSING:
+            respond = self.interaction.response.edit_message  # type: ignore
+            if self.interaction.response.is_done():  # type: ignore
+                respond = self._message.edit if self._message else _interaction.message.edit  # type: ignore
+
+            await respond(**kwargs)
         else:
+            await self._message.edit(**kwargs)
 
-            if not interaction.user.id in {
-                getattr(self.ctx.bot, "owner_id", None),
-                self.ctx.author.id,
-                *getattr(self.ctx.bot, "owner_ids", {}),
-            }:
-                return False
-
-        return True
-
-    async def stop(self):
-
+    async def stop(self) -> None:
+        self.__reset_base_kwargs()
         super().stop()
 
-        assert self.message is not None
-
-        if self._delete_message_after:
-            await self.message.delete()
+        if self._should_delete_after:
+            await self._message.delete()
             return
 
-        elif self._clear_after:
-            await self.message.edit(view=None)
+        if self._should_clear_buttons_after:
+            await self._edit_message(view=None)
+            return
+        elif self._should_disable_after:
+            for button in self.children:
+                button.disabled = True  # type: ignore
+
+            await self._edit_message(view=self)
             return
 
-        elif self._disable_after:
+    def format_page(self, page: Union[PossiblePage, Sequence[PossiblePage]]) -> PossiblePage:
+        return page  # type: ignore
 
-            for item in self.children:
-                item.disabled = True
+    def get_page(self, page_number: int) -> Union[PossiblePage, Sequence[PossiblePage]]:
+        if page_number < 0 or page_number >= self.max_pages:
+            self._current_page = 0
+            return self.pages[self._current_page]
 
-            await self.message.edit(view=self)
-
-    async def send_as_interaction(
-        self, interaction: discord.Interaction, ephemeral: bool = False, *args, **kwargs
-    ) -> Optional[Union[discord.Message, discord.WebhookMessage]]:
-        page_kwargs, send_kwargs = await self.get_page_kwargs(self.current_page, kwargs)
-        if not interaction.response.is_done():
-            send = interaction.response.send_message
+        if self.per_page == 1:
+            return self.pages[page_number]
         else:
-            if not interaction.response.is_done():
-                await interaction.response.defer(ephemeral=ephemeral)
+            base = page_number * self.per_page
+            return self.pages[base : base + self.per_page]
 
-            send_kwargs["wait"] = True
-            send = interaction.followup.send
+    async def get_kwargs_from_page(
+        self,
+        page: Union[PossiblePage, Sequence[PossiblePage]],
+        send_kwargs: dict[str, Any] = {},
+        skip_formatting: bool = False,
+    ) -> dict[str, Any]:
+        if not skip_formatting:
+            self.__reset_base_kwargs()
+            page = await maybe_coroutine(self.format_page, page)
 
-        ret = await send(*args, ephemeral=ephemeral, **page_kwargs, **send_kwargs)
+        if send_kwargs:
+            for key, value in send_kwargs.items():
+                if key in ("embed", "file"):
+                    self.__base_kwargs[f"{key}s"] = value
+                elif key == "view":
+                    continue
+                else:
+                    self.__base_kwargs.update(send_kwargs)  # type: ignore
 
-        if not ret:
-            try:
-                self.message = await interaction.original_message()
-            except (discord.ClientException, discord.HTTPException):
-                self.message = None
-        else:
-            self.message = ret
+        if self.per_page > 1 and isinstance(page, (list, tuple)):
+            raise ValueError("format_page must be used to format multiple pages.")
 
-        return self.message
+        if isinstance(page, (list, tuple)):
+            _page: PossiblePage
+            for _page in page:  # type: ignore
+                await self.get_kwargs_from_page(_page, skip_formatting=True)  # type: ignore
+
+        if isinstance(page, str):
+            self.__base_kwargs["content"] = f"{page}\n\n{self.page_string}"
+        elif isinstance(page, dict):
+            self.__base_kwargs.update(page)  # type: ignore
+        elif isinstance(page, Embed):
+            self.__base_kwargs["embeds"].append(page)
+            set_footer_on = self.__base_kwargs["embeds"][-1]
+            if not set_footer_on.footer.text or set_footer_on.footer.text == self.page_string:
+                set_footer_on.set_footer(text=self.page_string)
+            else:
+                set_footer_on.set_footer(text=f"{set_footer_on.footer.text} | {self.page_string}")
+
+        elif isinstance(page, File):
+            page.reset()
+            self.__base_kwargs["files"].append(page)
+
+            if not self.__base_kwargs["content"]:
+                self.__base_kwargs["content"] = self.page_string
+            else:
+                self.__base_kwargs["content"] += f"\n\n{self.page_string}"
+
+        return self.__base_kwargs
 
     async def send(
-        self, send_to: Union[discord.abc.Messageable, discord.Message], *args: Any, **kwargs: Any
-    ) -> discord.Message:
+        self,
+        *,
+        ctx: Context = MISSING,
+        send_to: Messageable = MISSING,
+        interaction: Interaction = MISSING,
+        override_custom: bool = True,
+        **kwargs,
+    ):
+        if interaction is not MISSING and ctx is not MISSING:
+            raise ValueError("ctx and interaction cannot be used together")
 
-        page_kwargs, send_kwargs = await self.get_page_kwargs(self.current_page, kwargs)
+        page = self.get_page(self.current_page)
+        send_kwargs = await self.get_kwargs_from_page(page, send_kwargs=kwargs if override_custom else {})
 
-        if isinstance(send_to, discord.Message):
+        self.interaction = self.interaction if interaction is MISSING else interaction  # type: ignore
+        self.ctx = self.ctx if ctx is MISSING else ctx  # type: ignore
 
-            self.message = await send_to.reply(*args, **page_kwargs, **send_kwargs)
+        if send_to is not MISSING:
+            self._message = await send_to.send(**send_kwargs)
+            return self._message
+
+        elif self.interaction is not MISSING:
+            respond = self.interaction.response.send_message  # type: ignore
+            if self.interaction.response.is_done():  # type: ignore
+                send_kwargs["wait"] = True  # type: ignore
+
+                respond = self.interaction.followup.send  # type: ignore
+
+            maybe_message = await respond(**send_kwargs)
+            if maybe_message:
+                self._message = maybe_message
+                return self._message
+            else:
+                self._message = await self.interaction.original_message()  # type: ignore
+                return self._message
+
+        elif self.ctx is not MISSING:
+            self._message = await self.ctx.send(**send_kwargs)  # type: ignore
+            return self._message
+
         else:
-
-            self.message = await send_to.send(*args, **page_kwargs, **send_kwargs)
-
-        return self.message
+            raise ValueError("ctx or interaction or send_to must be provided")
 
 
 # thank you so much Soheab for allowing me to use this paginator you made and putting in the work to do this :D (That's his github name so...)
