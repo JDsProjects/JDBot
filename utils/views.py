@@ -1377,7 +1377,7 @@ async def give_result_operator(view, label, interaction: discord.Interaction):
         view.last_expr = get_last_operator(view.expression)
     result = str(float(parser.eval(view.expression)))
     if "e+" in result:
-        result = result.partition("e+")[0]
+        result = result.split("e+")[0]
     view.expression = result
     await interaction.response.edit_message(content=result)
 
