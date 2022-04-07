@@ -915,7 +915,7 @@ class nitroButtons(discord.ui.View):
         await interaction.message.edit(view=self, embed=embed)
 
     async def on_timeout(self):
-        self.children.disabled = True
+        self.children[0].disabled = True
         self.children[0].style = discord.ButtonStyle.secondary
         self.children[0].label = f'{"Claimed":⠀^39}'
 
