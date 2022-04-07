@@ -371,12 +371,15 @@ class Paginator(View):
         elif isinstance(page, dict):
             self.__base_kwargs.update(page)  # type: ignore
         elif isinstance(page, Embed):
-            self.__base_kwargs["embeds"].append(page)
-            set_footer_on = self.__base_kwargs["embeds"][-1]
-            if not set_footer_on.footer.text or set_footer_on.footer.text == self.page_string:
-                set_footer_on.set_footer(text=self.page_string)
+            # self.__base_kwargs["embeds"].append(page)
+            # set_footer_on = self.__base_kwargs["embeds"][-1]
+            # if not set_footer_on.footer.text or set_footer_on.footer.text == self.page_string:
+            if not page.footer.text:
+                page.set_footer(text=self.page_string)
             else:
-                set_footer_on.set_footer(text=f"{set_footer_on.footer.text} | {self.page_string}")
+                # set_footer_on.set_footer(text=f"{set_footer_on.footer.text} | {self.page_string}")
+                page.set_footer(text=f"{page.footer.text} | {self.page_string}")
+            self.__base_kwargs["embeds"].append(page)
 
         elif isinstance(page, File):
             page.reset()
