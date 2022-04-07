@@ -262,7 +262,7 @@ class Paginator(View):
             if not button.disabled:
                 button.style = ButtonStyle.green
             elif button.disabled:
-                button.style = ButtonStyle.blurple
+                button.style = ButtonStyle.secondary
 
     @property
     def current_page(self) -> int:
