@@ -249,7 +249,7 @@ class Paginator(View):
     def _update_buttons_state(self) -> None:
         button: PaginatorButton
         for button in [n for n in self.children if n.custom_id != "stop_button"]:  # type: ignore
-            if button.custom_id in ("page_indicator_button", ):
+            if button.custom_id in ("page_indicator_button",):
                 if button.custom_id == "page_indicator_button":
                     button.label = self.page_string
                 continue
@@ -915,7 +915,7 @@ class nitroButtons(discord.ui.View):
         await interaction.message.edit(view=self, embed=embed)
 
     async def on_timeout(self):
-        self.children[0].disabled = True
+        self.children.disabled = True
         self.children[0].style = discord.ButtonStyle.secondary
         self.children[0].label = f'{"Claimed":⠀^39}'
 
