@@ -14,14 +14,7 @@ from discord.ext.commands.context import Context
 from typing import Callable, Optional, Any, Union, Sequence, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    PossiblePage = Union[
-        str,
-        Embed,
-        File,
-        Sequence[Union[Embed, Any]],
-        tuple[Union[File, Any], ...],
-        dict[str, Any],
-    ]
+    PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
 def default_check(author_id: int, /, *, interaction: Interaction = MISSING, ctx: Context = MISSING) -> bool:
@@ -69,8 +62,7 @@ class ChooseNumber(Modal):
             or int(self.number_input.value) > self._total_pages
         ):
             await interaction.response.send_message(
-                f"Please enter a valid number between 1 and {self._total_pages}",
-                ephemeral=True,
+                f"Please enter a valid number between 1 and {self._total_pages}", ephemeral=True
             )
             self.stop()
             return
@@ -99,14 +91,7 @@ class PaginatorButton(Button["Paginator"]):
         disabled: bool = False,
         position: int = MISSING,
     ):
-        super().__init__(
-            emoji=emoji,
-            label=label,
-            custom_id=custom_id,
-            style=style,
-            row=row,
-            disabled=disabled,
-        )
+        super().__init__(emoji=emoji, label=label, custom_id=custom_id, style=style, row=row, disabled=disabled)
         self.position = position
         self.view: Paginator
 
@@ -244,10 +229,7 @@ class Paginator(View):
         _buttons: dict[str, PaginatorButton] = {
             name: button for name, button in self._buttons.items() if button is not None
         }
-        sorted_buttons = sorted(
-            _buttons.items(),
-            key=lambda b: b[1].position if b[1].position is not MISSING else 0,
-        )
+        sorted_buttons = sorted(_buttons.items(), key=lambda b: b[1].position if b[1].position is not MISSING else 0)
         for name, button in sorted_buttons:
             button.custom_id = f"{name.lower()}_button"
             setattr(self, name, button)
@@ -278,7 +260,7 @@ class Paginator(View):
                 button.disabled = self._current_page >= self.max_pages - 1
             elif button.custom_id in ("left_button", "first_button"):
                 button.disabled = self._current_page <= 0
-
+            
             if not button.disabled:
                 button.style = ButtonStyle.green
             elif button.disabled:
@@ -476,11 +458,7 @@ class ServersEmbed(Paginator):
 
 class PrefixesEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(
-            title="Usable Prefixes:",
-            description=item,
-            color=random.randint(0, 16777215),
-        )
+        embed = discord.Embed(title="Usable Prefixes:", description=item, color=random.randint(0, 16777215))
         return embed
 
 
@@ -489,15 +467,12 @@ class LeaderboardEmbed(Paginator):
 
         emby = discord.Embed(title="Leaderboard", color=15428885)
         emby.set_author(
-            name=f"Leaderboard Requested by {self.ctx.author}",
-            icon_url=(self.ctx.author.display_avatar.url),
+            name=f"Leaderboard Requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
         )
 
         for i, b, w in item:
             emby.add_field(
-                name=f"**${i}:**",
-                value=f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```",
-                inline=False,
+                name=f"**${i}:**", value=f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```", inline=False
             )
 
         return emby
@@ -505,11 +480,7 @@ class LeaderboardEmbed(Paginator):
 
 class RandomHistoryEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(
-            title="Random History:",
-            description=f"{item}",
-            color=random.randint(0, 16777215),
-        )
+        embed = discord.Embed(title="Random History:", description=f"{item}", color=random.randint(0, 16777215))
         embed.set_footer(text="Powered by Random quotes From: \nhttps://www.youtube.com/watch?v=xuCn8ux2gbs")
         return embed
 
@@ -524,28 +495,18 @@ class TestersEmbed(Paginator):
 
 class SusUsersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(
-            title="Users Deemed Suspicious by JDJG Inc. Official",
-            color=random.randint(0, 16777215),
-        )
+        embed = discord.Embed(title="Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
         embed.add_field(
-            name=f"User ID : {item.get('user_id')}",
-            value=f"**Reason :** {item.get('reason')}",
-            inline=False,
+            name=f"User ID : {item.get('user_id')}", value=f"**Reason :** {item.get('reason')}", inline=False
         )
         return embed
 
 
 class BlacklistedUsersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(
-            title="Users Blacklisted by JDJG Inc. Official",
-            color=random.randint(0, 16777215),
-        )
+        embed = discord.Embed(title="Users Blacklisted by JDJG Inc. Official", color=random.randint(0, 16777215))
         embed.add_field(
-            name=f"User ID : {item.get('user_id')}",
-            value=f"**Reason :** {item.get('reason')}",
-            inline=False,
+            name=f"User ID : {item.get('user_id')}", value=f"**Reason :** {item.get('reason')}", inline=False
         )
         return embed
 
@@ -651,10 +612,7 @@ class ScanGlobalEmbed(Paginator):
 
         embed.set_author(name=f"{item}", icon_url=item.display_avatar.url)
 
-        embed.add_field(
-            name="Shared Guilds:",
-            value=f"{guild_join(grab_mutualguilds(self.ctx, item))}",
-        )
+        embed.add_field(name="Shared Guilds:", value=f"{guild_join(grab_mutualguilds(self.ctx, item))}")
         embed.set_footer(text=f"Sus Reason : {await get_sus_reason(self.ctx, item)}")
         return embed
 
@@ -677,18 +635,14 @@ class EmojiInfoEmbed(Paginator):
                 embed.add_field(name="Name:", value=f"{emoji_name}")
                 embed.add_field(name="Unicode:", value=unicode)
                 embed.add_field(
-                    name="unicode url",
-                    value=f"[site](http://www.fileformat.info/info/unicode/char/{digit})",
+                    name="unicode url", value=f"[site](http://www.fileformat.info/info/unicode/char/{digit})"
                 )
                 embed.set_image(url=emoji_url)
                 embed.set_footer(text=f"click the title for more unicode data")
                 return embed
 
             else:
-                embed = discord.Embed(
-                    title=f"Custom Emoji: **{item.name}**",
-                    color=random.randint(0, 16777215),
-                )
+                embed = discord.Embed(title=f"Custom Emoji: **{item.name}**", color=random.randint(0, 16777215))
                 embed.set_image(url=item.url)
                 embed.set_footer(text=f"Emoji ID:{item.id}")
                 return embed
@@ -705,15 +659,10 @@ class EmojiInfoEmbed(Paginator):
 class TodoEmbed(Paginator):
     def format_page(self, item):
         embed = discord.Embed(
-            description=item,
-            color=random.randint(0, 16777215),
-            timestamp=self.ctx.message.created_at,
+            description=item, color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
         )
 
-        embed.set_author(
-            name=f"Todo Requested By {self.ctx.author}:",
-            icon_url=self.ctx.author.display_avatar.url,
-        )
+        embed.set_author(name=f"Todo Requested By {self.ctx.author}:", icon_url=self.ctx.author.display_avatar.url)
         return embed
 
 
@@ -887,8 +836,7 @@ class BotSettings(discord.ui.View):
     async def suspend(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(
-            content="Alright Suspending the bot(check the confirmation you will get).",
-            view=None,
+            content="Alright Suspending the bot(check the confirmation you will get).", view=None
         )
         interaction.client.suspended = True
         await interaction.followup.send(content="Alright Boss, I now locked the bot to owners only", ephemeral=True)
@@ -900,8 +848,7 @@ class BotSettings(discord.ui.View):
         interaction.client.suspended = False
 
         await interaction.followup.send(
-            content="Alright Boss, I unlocked the commands, they will work with you all again.",
-            ephemeral=True,
+            content="Alright Boss, I unlocked the commands, they will work with you all again.", ephemeral=True
         )
 
     @discord.ui.button(label="Prefixless", style=discord.ButtonStyle.success, emoji="🔛", row=1)
@@ -911,15 +858,11 @@ class BotSettings(discord.ui.View):
         interaction.client.prefixless = True
 
         await interaction.followup.send(
-            content="Alright Boss, I now made the bot prefixless(for owners only)",
-            ephemeral=True,
+            content="Alright Boss, I now made the bot prefixless(for owners only)", ephemeral=True
         )
 
     @discord.ui.button(
-        label="Prefix",
-        style=discord.ButtonStyle.danger,
-        emoji="<:Toggle_Off:904381963828346930>",
-        row=1,
+        label="Prefix", style=discord.ButtonStyle.danger, emoji="<:Toggle_Off:904381963828346930>", row=1
     )
     async def prefix_back(self, interaction: discord.Interaction, button: discord.ui.Button):
 
@@ -927,8 +870,7 @@ class BotSettings(discord.ui.View):
         interaction.client.prefixless = False
 
         await interaction.followup.send(
-            content="Alright Boss, I now made the bot require a prefix for everyone.",
-            ephemeral=True,
+            content="Alright Boss, I now made the bot require a prefix for everyone.", ephemeral=True
         )
 
     @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="❌", row=2)
@@ -951,11 +893,7 @@ class BotSettings(discord.ui.View):
 
 
 class nitroButtons(discord.ui.View):
-    @discord.ui.button(
-        label=f'{"Claim":⠀^37}',
-        custom_id="fun (nitro)",
-        style=discord.ButtonStyle.success,
-    )
+    @discord.ui.button(label=f'{"Claim":⠀^37}', custom_id="fun (nitro)", style=discord.ButtonStyle.success)
     async def nitroButton(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.send_message(content="Oh no it was a fake", ephemeral=True)
@@ -1005,11 +943,7 @@ class ReRun(discord.ui.View):
 
         await interaction.response.edit_message(view=None)
         self.view.message = await interaction.followup.send(
-            content=self.view.content,
-            embed=self.view.embed,
-            ephemeral=True,
-            view=self.view,
-            wait=True,
+            content=self.view.content, embed=self.view.embed, ephemeral=True, view=self.view, wait=True
         )
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
@@ -1036,12 +970,7 @@ class ReRun(discord.ui.View):
 
 class RpsGameButton(discord.ui.Button):
     def __init__(self, label: str, emoji, custom_id):
-        super().__init__(
-            style=discord.ButtonStyle.success,
-            label=label,
-            custom_id=custom_id,
-            emoji=emoji,
-        )
+        super().__init__(style=discord.ButtonStyle.success, label=label, custom_id=custom_id, emoji=emoji)
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
@@ -1056,11 +985,7 @@ class RpsGameButton(discord.ui.Button):
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors"}
 
-        embed = discord.Embed(
-            title=f"RPS Game",
-            color=random.randint(0, 16777215),
-            timestamp=message.created_at,
-        )
+        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
 
         if choosen == deciding:
             text = "Tie!"
@@ -1090,12 +1015,7 @@ class RpsGameButton(discord.ui.Button):
 
 class RpsGameButtonGun(discord.ui.Button):
     def __init__(self, label: str, emoji, custom_id):
-        super().__init__(
-            style=discord.ButtonStyle.success,
-            label=label,
-            custom_id=custom_id,
-            emoji=emoji,
-        )
+        super().__init__(style=discord.ButtonStyle.success, label=label, custom_id=custom_id, emoji=emoji)
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.send_message(
@@ -1112,11 +1032,7 @@ class RpsGameButtonGun(discord.ui.Button):
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors", 4: "Gun"}
 
-        embed = discord.Embed(
-            title=f"RPS Game",
-            color=random.randint(0, 16777215),
-            timestamp=message.created_at,
-        )
+        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
 
         text = "You Won"
 
@@ -1154,8 +1070,7 @@ class RpsGame(discord.ui.View):
             item.disabled = True
 
         await self.message.edit(
-            "You didn't respond fast enough, you lost.(Play again by running game again)",
-            view=self,
+            "You didn't respond fast enough, you lost.(Play again by running game again)", view=self
         )
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -1186,10 +1101,7 @@ class CoinFlipButton(discord.ui.Button):
         value = random.choice(["Heads", "Tails"])
         win = choosen == value
 
-        url_dic = {
-            "Heads": "https://i.imgur.com/C3tF8ud.png",
-            "Tails": "https://i.imgur.com/tSmhWgg.png",
-        }
+        url_dic = {"Heads": "https://i.imgur.com/C3tF8ud.png", "Tails": "https://i.imgur.com/tSmhWgg.png"}
         embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
         embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
         embed.add_field(name=f"The Coin Flipped:", value=f"{value}")
@@ -1296,12 +1208,7 @@ class GuessingGame(discord.ui.View):
 class RtfmSelects(discord.ui.Select):
     def __init__(self, options):
 
-        super().__init__(
-            placeholder="Chose a library to lookup from.",
-            min_values=1,
-            max_values=1,
-            options=options,
-        )
+        super().__init__(placeholder="Chose a library to lookup from.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -1341,12 +1248,7 @@ class RtfmChoice(discord.ui.View):
 class JobSelects(discord.ui.Select):
     def __init__(self, options):
 
-        super().__init__(
-            placeholder="Chose a Job to do.",
-            min_values=1,
-            max_values=1,
-            options=options,
-        )
+        super().__init__(placeholder="Chose a Job to do.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -1384,12 +1286,7 @@ class JobChoice(discord.ui.View):
 class SubRedditSelects(discord.ui.Select):
     def __init__(self, options):
 
-        super().__init__(
-            placeholder="Chose a Subreddit.",
-            min_values=1,
-            max_values=1,
-            options=options,
-        )
+        super().__init__(placeholder="Chose a Subreddit.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -1505,11 +1402,7 @@ async def go_back(view, label, interaction: discord.Interaction):
 # These are Calculator Buttons
 class CalcButton(discord.ui.Button):
     def __init__(
-        self,
-        label: str,
-        row: int,
-        execution_function=default_execution_function,
-        style=discord.ButtonStyle.blurple,
+        self, label: str, row: int, execution_function=default_execution_function, style=discord.ButtonStyle.blurple
     ):
         super().__init__(label=label, row=row, style=style)
         self.__func = execution_function
@@ -1540,8 +1433,7 @@ class CalcView(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction):
         if interaction.user.id != self.ctx.author.id:
             await interaction.response.send_message(
-                f"This button can only be accessed by {self.ctx.author.name}.",
-                ephemeral=True,
+                f"This button can only be accessed by {self.ctx.author.name}.", ephemeral=True
             )
             return False
         else:
@@ -1550,10 +1442,7 @@ class CalcView(discord.ui.View):
     async def on_timeout(self):
         for i in self.children:
             i.disabled = True
-        await self.message.edit(
-            content="If you want your calculator to work you need to make a new one.",
-            view=self,
-        )
+        await self.message.edit(content="If you want your calculator to work you need to make a new one.", view=self)
         self.stop()
 
 
@@ -1564,9 +1453,7 @@ class CodeBlockModal(discord.ui.Modal):
         super().__init__(**kwargs)
         self.add_item(
             discord.ui.TextInput(
-                label="Code Block:",
-                placeholder="Please Put your code here:",
-                style=discord.TextStyle.paragraph,
+                label="Code Block:", placeholder="Please Put your code here:", style=discord.TextStyle.paragraph
             )
         )
 
@@ -1625,12 +1512,7 @@ class CodeBlockView(discord.ui.View):
         await interaction.response.edit_message(view=self)
         self.value2 = False
 
-    @discord.ui.button(
-        label="Submit",
-        style=discord.ButtonStyle.success,
-        emoji="<:click:264897397337882624>",
-        row=1,
-    )
+    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>", row=1)
     async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = CodeBlockModal(self, title="Pep8 Project Formatter:", timeout=180.0)
         await interaction.response.send_modal(modal)
@@ -1647,9 +1529,7 @@ class MailModal(discord.ui.Modal):
         super().__init__(**kwargs)
         self.add_item(
             discord.ui.TextInput(
-                label="Message:",
-                placeholder="Please Put Your Message Here:",
-                style=discord.TextStyle.paragraph,
+                label="Message:", placeholder="Please Put Your Message Here:", style=discord.TextStyle.paragraph
             )
         )
 
@@ -1716,8 +1596,7 @@ class ChatBotModal(discord.ui.Modal):
         await interaction.response.defer()
         args = self.children[0].value
         self.view.message = await interaction.followup.send(
-            "Message Received(you will receive your chatbot response in a moment",
-            ephemeral=True,
+            "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
         response = await self.view.ask(args, self.view.ctx.author.id)
         await self.view.message.edit(f"{response}", view=self.view)
@@ -1744,8 +1623,7 @@ class ChatBotModal2(discord.ui.Modal):
         await interaction.response.defer()
         args = self.children[0].value
         self.view.message = await interaction.followup.send(
-            "Message Received(you will receive your chatbot response in a moment",
-            ephemeral=True,
+            "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
         response = await self.view.ask(args, self.view.ctx.author.id)
         await self.view.message.edit(f"{response}", view=self.view)
@@ -1803,9 +1681,7 @@ class ReportModal(discord.ui.Modal):
         super().__init__(**kwargs)
         self.add_item(
             discord.ui.TextInput(
-                label="Report Reason:",
-                placeholder="Please Put Your Reason here:",
-                style=discord.TextStyle.paragraph,
+                label="Report Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
             )
         )
 
@@ -1860,9 +1736,7 @@ class AddBotModal(discord.ui.Modal):
         super().__init__(**kwargs)
         self.add_item(
             discord.ui.TextInput(
-                label="Addbot Reason:",
-                placeholder="Please Put Your Reason here:",
-                style=discord.TextStyle.paragraph,
+                label="Addbot Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
             )
         )
 
@@ -1918,12 +1792,7 @@ class AceModal(discord.ui.Modal):
 
         default = f"{self.view.ctx.author}"
         self.add_item(
-            discord.ui.TextInput(
-                label="Name:",
-                default=default,
-                placeholder=default,
-                style=discord.TextStyle.short,
-            )
+            discord.ui.TextInput(label="Name:", default=default, placeholder=default, style=discord.TextStyle.short)
         )
         self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph, max_length=240))
 
@@ -1972,11 +1841,7 @@ class AceView(discord.ui.View):
         await self.message.edit(content="Looks like the view timed out try again", view=self)
         self.stop()
 
-    @discord.ui.button(
-        label="Attorney",
-        style=discord.ButtonStyle.success,
-        emoji="<a:think:626236311539286016>",
-    )
+    @discord.ui.button(label="Attorney", style=discord.ButtonStyle.success, emoji="<a:think:626236311539286016>")
     async def Attorney(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Attorney Text:", timeout=180.0)
         modal.side = button.label.lower()
@@ -1984,9 +1849,7 @@ class AceView(discord.ui.View):
         self.stop()
 
     @discord.ui.button(
-        label="Prosecutor",
-        style=discord.ButtonStyle.danger,
-        emoji="<a:edgeworthZoom:703531746699903046>",
+        label="Prosecutor", style=discord.ButtonStyle.danger, emoji="<a:edgeworthZoom:703531746699903046>"
     )
     async def Prosecutor(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Prosecutor Text:", timeout=180.0)
