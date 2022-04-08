@@ -258,6 +258,11 @@ class Paginator(View):
                 button.disabled = self._current_page >= self.max_pages - 1
             elif button.custom_id in ("left_button", "first_button"):
                 button.disabled = self._current_page <= 0
+            
+            if not button.disabled:
+                button.style = ButtonStyle.green
+            elif button.disabled:
+                button.style = ButtonStyle.secondary
 
     @property
     def current_page(self) -> int:
