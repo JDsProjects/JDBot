@@ -252,6 +252,8 @@ class Paginator(View):
             if button.custom_id in ("page_indicator_button", "stop_button"):
                 if button.custom_id == "page_indicator_button":
                     button.label = self.page_string
+                else:
+                    button.style = ButtonStyle.red
                 continue
 
             elif button.custom_id in ("right_button", "last_button"):
