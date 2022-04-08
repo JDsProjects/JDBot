@@ -249,7 +249,7 @@ class Paginator(View):
     def _update_buttons_state(self) -> None:
         button: PaginatorButton
         for button in self.children:  # type: ignore
-            if button.custom_id in ("page_indicator_button",):
+            if button.custom_id in ("page_indicator_button","stop_button"):
                 if button.custom_id == "page_indicator_button":
                     button.label = self.page_string
                 continue
