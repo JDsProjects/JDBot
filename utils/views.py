@@ -373,7 +373,8 @@ class Paginator(View):
                 page.set_footer(text=self.page_string)
             else:
                 # set_footer_on.set_footer(text=f"{set_footer_on.footer.text} | {self.page_string}")
-                page.set_footer(text=f"{page.footer.text} | {self.page_string}")
+                if not "|" in page.footer.text:
+                    page.set_footer(text=f"{page.footer.text} | {self.page_string}")
             self.__base_kwargs["embeds"].append(page)
 
         elif isinstance(page, File):
