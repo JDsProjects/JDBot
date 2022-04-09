@@ -693,7 +693,7 @@ class dm_or_ephemeral(discord.ui.View):
 
         await self.menu.send(send_to=self.channel)
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -716,19 +716,17 @@ class UserinfoButton(discord.ui.Button):
 
     async def callback(self, interaction: discord.Interaction):
 
+        for child in self.view.children:
+            if isinstance(child, (discord.Button, discord.ui.Button)):
+                self.remove_item(child)
+
         if self.custom_id == "0":
-            for child in self.children:
-                if isinstance(child, (discord.Button, discord.ui.Button)):
-                    self.remove_item(child)
 
             await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
 
             await self.menu.send(interaction=interaction, ephemeral=True)
 
         if self.custom_id == "1":
-            for child in self.children:
-                if isinstance(child, (discord.Button, discord.ui.Button)):
-                    self.view.remove_item(child)
 
             await interaction.response.edit_message(
                 content=f"Well be Dming you the paginator to view this info", view=self
@@ -761,7 +759,7 @@ class UserInfoSuper(discord.ui.View):
             UserinfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
         )
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for child in self.children:
@@ -798,7 +796,7 @@ class BasicButtons(discord.ui.View):
         self.value = True
         self.stop()
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -896,7 +894,7 @@ class BotSettings(discord.ui.View):
             content="Alright Boss, I now made the bot require a prefix for everyone.", ephemeral=True
         )
 
-    @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="❌", row=2)
+    @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="✖️", row=2)
     async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="Canceling, this boss.", view=None)
@@ -1535,7 +1533,7 @@ class CodeBlockView(discord.ui.View):
         await interaction.response.edit_message(view=self)
         self.value2 = True
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌", custom_id="Deny")
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="Deny")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for i in self.children:
@@ -1702,7 +1700,7 @@ class ChatBotView(discord.ui.View):
         await self.message.edit(view=None)
         await modal.wait()
 
-    @discord.ui.button(label="Close", style=discord.ButtonStyle.success, emoji="❌")
+    @discord.ui.button(label="Close", style=discord.ButtonStyle.success, emoji="✖️")
     async def Close(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="Closing ChatBot", view=None)
