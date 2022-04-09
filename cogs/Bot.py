@@ -209,18 +209,6 @@ class Bot(commands.Cog):
 
         embed.set_image(url=owner.display_avatar.url)
 
-        guilds_list = utils.grab_mutualguilds(ctx, owner)
-
-        pag = commands.Paginator(prefix="", suffix="")
-
-        for g in guilds_list:
-            pag.add_line(f"{g}")
-
-        pages = pag.pages or ["None"]
-
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
         view = utils.UserInfoSuper(ctx, owner)
 
         await ctx.send(
