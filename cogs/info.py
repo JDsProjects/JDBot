@@ -54,6 +54,7 @@ class Info(commands.Cog):
     async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
 
         user = user or ctx.author
+        user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
 
         statuses = []
 
@@ -65,7 +66,7 @@ class Info(commands.Cog):
 
         if isinstance(user, discord.Member):
             nickname = user.nick
-            joined_guild = f"\n{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
+            joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
             highest_role = user.top_role
 
             for name, status in (
@@ -92,8 +93,32 @@ class Info(commands.Cog):
                 ):
                     statuses.append((name, utils.profile_converter(name.lower(), status)))
 
-        view = utils.UserInfoSuper(ctx)
-        view.user = user
+        embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
+
+        embed.add_field(
+            name="User Info: ",
+            value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
+            inline=False,
+        )
+
+        join_badges: str = "\u0020".join(badges) if badges else "N/A"
+        join_statuses = (
+            " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
+        )
+
+        embed.add_field(
+            name="User Info 2:",
+            value=f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}",
+            inline=False,
+        )
+
+        embed.add_field(
+            name="Guild Info:",
+            value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
+            inline=False,
+        )
+
+        embed.set_image(url=user.display_avatar.url)
 
         guilds_list = utils.grab_mutualguilds(ctx, user)
 
@@ -104,25 +129,11 @@ class Info(commands.Cog):
 
         pages = pag.pages or ["None"]
 
-        view.menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
 
-        join_badges: str = "\u0020".join(badges) if badges else "N/A"
-        join_statuses = (
-            " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
-        )
-
-        view.join_badges = join_badges
-        view.join_statuses = join_statuses
-        view.joined_guild = joined_guild
-        view.nickname = nickname
-        view.highest_role = highest_role
-
-        embed = discord.Embed(
-            title=f"{user}",
-            color=random.randint(0, 16777215),
-            timestamp=ctx.message.created_at,
-            description="Please pick a select value to get started",
-        )
+        menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
+        view = utils.UserInfoSuper(ctx, menu, ctx.author.dm_channel)
 
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
@@ -198,6 +209,21 @@ class Info(commands.Cog):
                 embed.add_field(name=f"ID: {a.id}", value=f"[{a.filename}]({a.url})")
                 embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
             await ctx.send(embed=embed, content="\nThat's good")
+
+    @commands.command(
+        brief="a command to get the avatar of a user",
+        help="using the userinfo technology it now powers avatar grabbing.",
+        aliases=["pfp", "av"],
+    )
+    async def avatar(self, ctx, *, user: utils.BetterUserconverter = None):
+        user = user or ctx.author
+
+        embed = discord.Embed(color=random.randint(0, 16777215))
+        embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
+
+        embed.set_image(url=user.display_avatar.url)
+        embed.set_footer(text=f"Requested by {ctx.author}")
+        await ctx.send(embed=embed)
 
     @commands.command(brief="this is a way to get the nearest channel.")
     async def find_channel(self, ctx, *, args=None):
