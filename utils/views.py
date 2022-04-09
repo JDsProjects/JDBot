@@ -718,7 +718,10 @@ class UserInfoSuperSelects(discord.ui.Select):
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝", default=True),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badge", emoji="📛"),
             discord.SelectOption(
-                label="Avatar", description="Shows user's profile picture in large thumbnail.", emoji="🖼️"
+                label="Avatar",
+                description="Shows user's profile picture in large thumbnail.",
+                emoji="🖼️",
+                value="avatar",
             ),
         ]
 

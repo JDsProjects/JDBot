@@ -130,8 +130,16 @@ class Info(commands.Cog):
         # view.data.guild_info = embed
         # embed.remove_field(0)
 
+        embed = discord.Embed(
+            title=f"{user}",
+            color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
+            description="Please pick a select value to get started",
+        )
+
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
+            embed=embed,
             view=view,
         )
 
