@@ -1007,6 +1007,8 @@ class RpsGameButton(discord.ui.Button):
         if random.random() < 0.167:
             self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
 
+        self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
+
         view = ReRun(view)
         await message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
