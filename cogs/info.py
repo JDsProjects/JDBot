@@ -144,7 +144,13 @@ class Info(commands.Cog):
         view.data.guild_info = embed
         embed.remove_field(0)
 
+        embed = discord.Embed(color=random.randint(0, 16777215))
+        embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
+
         embed.set_image(url=user.display_avatar.url)
+        embed.set_footer(text=f"Requested by {ctx.author}")
+
+        view.data.avatar = embed
 
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
@@ -219,21 +225,6 @@ class Info(commands.Cog):
                 embed.add_field(name=f"ID: {a.id}", value=f"[{a.filename}]({a.url})")
                 embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
             await ctx.send(embed=embed, content="\nThat's good")
-
-    @commands.command(
-        brief="a command to get the avatar of a user",
-        help="using the userinfo technology it now powers avatar grabbing.",
-        aliases=["pfp", "av"],
-    )
-    async def avatar(self, ctx, *, user: utils.BetterUserconverter = None):
-        user = user or ctx.author
-
-        embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
-
-        embed.set_image(url=user.display_avatar.url)
-        embed.set_footer(text=f"Requested by {ctx.author}")
-        await ctx.send(embed=embed)
 
     @commands.command(brief="this is a way to get the nearest channel.")
     async def find_channel(self, ctx, *, args=None):
