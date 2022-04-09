@@ -1003,6 +1003,10 @@ class RpsGameButton(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
+        for i in view.children:
+            if i.custom_id == "4":
+                view.remove_item(i)
+
         self.view.gun_check()
 
         view = ReRun(view)
@@ -1042,6 +1046,10 @@ class RpsGameButtonGun(discord.ui.Button):
         embed.add_field(name="Bot Picked:", value=f"{number_to_text[deciding]}")
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
+
+        for i in view.children:
+            if i.custom_id == "4":
+                view.remove_item(i)
 
         self.view.gun_check()
 
