@@ -718,7 +718,7 @@ class UserinfoButton(discord.ui.Button):
 
         for child in self.view.children:
             if isinstance(child, (discord.Button, discord.ui.Button)):
-                self.remove_item(child)
+                self.view.remove_item(child)
 
         if self.custom_id == "0":
 
