@@ -725,7 +725,7 @@ class UserInfoSuperSelects(discord.ui.Select):
                 value="avatar",
             ),
             discord.SelectOption(
-                label="status", description="Shows user's current status.", emoji="🖼️", value="avatar"
+                label="status", description="Shows user's current status.", emoji="🖼️", value="status"
             ),
         ]
 
