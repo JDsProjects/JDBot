@@ -715,9 +715,7 @@ class UserInfoSuperSelects(discord.ui.Select):
         self.ctx = ctx
 
         options = [
-            discord.SelectOption(
-                label="Basic Info", description="Simple Info", value="basic_info", emoji="📝", default=True
-            ),
+            discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝", default=True),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badge", emoji="📛"),
             discord.SelectOption(
                 label="Avatar", description="Shows user's profile picture in large thumbnail.", emoji="🖼️"
@@ -733,7 +731,7 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at)
 
-        if choice == "basic_info":
+        if choice == "basic":
             embed.add_field(
                 name="User Info: ",
                 value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
