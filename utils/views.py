@@ -710,7 +710,7 @@ class dm_or_ephemeral(discord.ui.View):
         return True
 
 
-class UserinfoButton(discord.ui.Button):
+class UserInfoButton(discord.ui.Button):
     def __init__(self, style, label: str, emoji, custom_id: str):
         super().__init__(style=style, label=label, emoji=emoji, custom_id=custom_id)
 
@@ -748,6 +748,10 @@ class UserinfoButton(discord.ui.Button):
 
             await menu.send(send_to=self.view.ctx.author.dm_channel)
 
+        if self.custom_id == "2":
+
+            await interaction.response.edit_message(content=f"not sending the paginator to you", view=self.view)
+
 
 class UserInfoSuper(discord.ui.View):
     def __init__(self, ctx, user, **kwargs):
@@ -755,19 +759,11 @@ class UserInfoSuper(discord.ui.View):
         self.ctx = ctx
         self.user = user
 
-        self.add_item(UserinfoButton(discord.ButtonStyle.success, "Secret Message(Ephemeral)", "🕵️", custom_id="0"))
+        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Secret Message(Ephemeral)", "🕵️", custom_id="0"))
         self.add_item(
-            UserinfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
+            UserInfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
         )
-
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
-    async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
-
-        for child in self.children:
-            if isinstance(child, (discord.Button, discord.ui.Button)):
-                self.remove_item(child)
-
-        await interaction.response.edit_message(content=f"not sending the paginator to you", view=self)
+        self.add_item(UserInfoButton(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
 
     async def interaction_check(self, interaction: discord.Interaction):
 
