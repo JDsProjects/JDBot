@@ -715,7 +715,7 @@ class UserInfoSuperSelects(discord.ui.Select):
         self.ctx = ctx
 
         options = [
-            discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝", default=True),
+            discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badge", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -729,8 +729,6 @@ class UserInfoSuperSelects(discord.ui.Select):
 
     async def callback(self, interaction: discord.Interaction):
         choice = self.values[0]
-
-        print(choice)
 
         user = self.view.user
 
