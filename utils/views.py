@@ -723,6 +723,9 @@ class UserInfoSuperSelects(discord.ui.Select):
                 emoji="🖼️",
                 value="avatar",
             ),
+            discord.SelectOption(
+                label="status", description="Shows user's current status.", emoji="🖼️", value="avatar"
+            ),
         ]
 
         super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
@@ -754,6 +757,9 @@ class UserInfoSuperSelects(discord.ui.Select):
             embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
             embed.set_image(url=user.display_avatar.url)
             embed.set_footer(text=f"Requested by {self.ctx.author}")
+
+        if choice == "status":
+            embed.add_field(name=f"{self.view.join_statuses}", value="\u0020", inline=False)
 
         await interaction.response.edit_message(embed=embed)
 

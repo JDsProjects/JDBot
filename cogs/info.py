@@ -114,13 +114,6 @@ class Info(commands.Cog):
         view.join_badges = join_badges
         view.join_statuses = join_statuses
 
-        # embed.remove_field(0)
-
-        # embed.add_field(name=f"{join_statuses}", value="\u0020", inline=False)
-
-        # view.data.statuses = embed
-        # embed.remove_field(0)
-
         # embed.add_field(
         # name="Guild Info:",
         # value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
