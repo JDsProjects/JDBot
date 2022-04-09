@@ -9,6 +9,7 @@ from discord import Interaction, ButtonStyle, Embed, File
 from discord.abc import Messageable
 from discord.utils import MISSING, maybe_coroutine
 from discord.ui import Button, TextInput, Modal, View
+from discord.ext import commands
 
 from discord.ext.commands.context import Context
 from typing import Callable, Optional, Any, Union, Sequence, TYPE_CHECKING
@@ -717,7 +718,12 @@ class UserInfoSuper(discord.ui.View):
 
         guilds_list = grab_mutualguilds(ctx, user)
 
-        pages = [f"{g}" for g in guilds_list] or ["None"]
+        pag = commands.Paginator(prefix="", suffix="")
+
+        for g in guilds_list:
+            pag.add_line(f"{g}")
+
+        pages = pag.pages or ["None"]
 
         self.menu = MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
 
