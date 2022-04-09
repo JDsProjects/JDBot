@@ -1004,10 +1004,7 @@ class RpsGameButton(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        if random.random() < 0.167:
-            self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
-
-        self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
+        self.view.gun_check()
 
         view = ReRun(view)
         await message.edit(
@@ -1048,10 +1045,7 @@ class RpsGameButtonGun(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        if random.random() < 0.167:
-            self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
-
-        self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
+        self.view.gun_check()
 
         view = ReRun(view)
         await message.edit(
@@ -1069,7 +1063,9 @@ class RpsGame(discord.ui.View):
         self.add_item(RpsGameButton("Rock", "🪨", "1"))
         self.add_item(RpsGameButton("Paper", "📰", "2"))
         self.add_item(RpsGameButton("Scissors", "✂️", "3"))
+        self.gun_check()
 
+    def gun_check(self):
         if random.random() < 0.167:
             self.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
 
