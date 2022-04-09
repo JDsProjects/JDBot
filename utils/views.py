@@ -757,7 +757,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
             embed.add_field(
                 name="User Info 2:",
-                value=f"Type: {user_type} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}",
+                value=f"Type: {user_type} \n**Joined Discord**: \n{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}",
                 inline=False,
             )
 
@@ -768,7 +768,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             embed.set_footer(text=f"Requested by {self.ctx.author}")
 
         if choice == "status":
-            embed.add_field(name=f"{self.view.join_statuses}", value="\u0020", inline=False)
+            embed.add_field(name=f"{self.view.join_statuses}", value="\u2800", inline=False)
 
         await interaction.response.edit_message(embed=embed)
 
