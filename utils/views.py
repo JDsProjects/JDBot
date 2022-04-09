@@ -9,6 +9,7 @@ from discord import Interaction, ButtonStyle, Embed, File
 from discord.abc import Messageable
 from discord.utils import MISSING, maybe_coroutine
 from discord.ui import Button, TextInput, Modal, View
+from discord.ext import commands
 
 from discord.ext.commands.context import Context
 from typing import Callable, Optional, Any, Union, Sequence, TYPE_CHECKING
@@ -710,11 +711,21 @@ class dm_or_ephemeral(discord.ui.View):
 
 
 class UserInfoSuper(discord.ui.View):
-    def __init__(self, ctx, menu=None, channel: discord.DMChannel = None, **kwargs):
+    def __init__(self, ctx, user, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.channel = channel
-        self.menu = menu
+        self.user = user
+
+        guilds_list = grab_mutualguilds(ctx, user)
+
+        pag = commands.Paginator(prefix="", suffix="")
+
+        for g in guilds_list:
+            pag.add_line(f"{g}")
+
+        pages = pag.pages or ["None"]
+
+        self.menu = MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
 
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -736,7 +747,10 @@ class UserInfoSuper(discord.ui.View):
 
         await interaction.response.edit_message(content=f"Well be Dming you the paginator to view this info", view=self)
 
-        await self.menu.send(send_to=self.channel)
+        if self.ctx.author.dm_channel is None:
+            await self.ctx.author.create_dm()
+
+        await self.menu.send(send_to=self.ctx.author.dm_channel)
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):

@@ -120,20 +120,7 @@ class Info(commands.Cog):
 
         embed.set_image(url=user.display_avatar.url)
 
-        guilds_list = utils.grab_mutualguilds(ctx, user)
-
-        pag = commands.Paginator(prefix="", suffix="")
-
-        for g in guilds_list:
-            pag.add_line(f"{g}")
-
-        pages = pag.pages or ["None"]
-
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
-        menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
-        view = utils.UserInfoSuper(ctx, menu, ctx.author.dm_channel)
+        view = utils.UserInfoSuper(ctx, user)
 
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
