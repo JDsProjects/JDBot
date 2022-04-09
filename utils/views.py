@@ -716,6 +716,17 @@ class UserinfoButton(discord.ui.Button):
 
     async def callback(self, interaction: discord.Interaction):
 
+        guilds_list = grab_mutualguilds(self.view.ctx, self.view.user)
+
+        pag = commands.Paginator(prefix="", suffix="")
+
+        for g in guilds_list:
+            pag.add_line(f"{g}")
+
+        pages = pag.pages or ["None"]
+
+        menu = MutualGuildsEmbed(pages, ctx=self.view.ctx, disable_after=True)
+
         for child in self.view.children:
             if isinstance(child, (discord.Button, discord.ui.Button)):
                 self.view.remove_item(child)
@@ -724,7 +735,7 @@ class UserinfoButton(discord.ui.Button):
 
             await self.view.message.edit(content="Will be sending you the information, ephemerally", view=self.view)
 
-            await self.menu.send(interaction=interaction, ephemeral=True)
+            await menu.send(interaction=interaction, ephemeral=True)
 
         if self.custom_id == "1":
 
@@ -735,7 +746,7 @@ class UserinfoButton(discord.ui.Button):
             if self.view.ctx.author.dm_channel is None:
                 await self.view.ctx.author.create_dm()
 
-            await self.menu.send(send_to=self.view.ctx.author.dm_channel)
+            await menu.send(send_to=self.view.ctx.author.dm_channel)
 
 
 class UserInfoSuper(discord.ui.View):
@@ -744,16 +755,6 @@ class UserInfoSuper(discord.ui.View):
         self.ctx = ctx
         self.user = user
 
-        guilds_list = grab_mutualguilds(ctx, user)
-
-        pag = commands.Paginator(prefix="", suffix="")
-
-        for g in guilds_list:
-            pag.add_line(f"{g}")
-
-        pages = pag.pages or ["None"]
-
-        self.menu = MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
         self.add_item(UserinfoButton(discord.ButtonStyle.success, "Secret Message(Ephemeral)", "🕵️", custom_id="0"))
         self.add_item(
             UserinfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
