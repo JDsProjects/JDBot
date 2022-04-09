@@ -1004,7 +1004,9 @@ class RpsGameButton(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        view.__init__(view.ctx)
+        if random.random() < 0.167:
+            self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
+
         view = ReRun(view)
         await message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
@@ -1044,7 +1046,11 @@ class RpsGameButtonGun(discord.ui.Button):
 
         embed.set_image(url="https://i.imgur.com/bFYroWk.gif")
 
-        view.__init__(view.ctx)
+        if random.random() < 0.167:
+            self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
+
+        self.view.add_item(RpsGameButtonGun("Gun", "🔫", "4"))
+
         view = ReRun(view)
         await message.edit(
             content="Here's the results(Hit the Rerun button to run again, if not exit with the exit button):",
