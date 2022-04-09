@@ -709,10 +709,55 @@ class dm_or_ephemeral(discord.ui.View):
         return True
 
 
+class UserInfoSuperSelects(discord.ui.Select):
+    def __init__(self, ctx, **kwargs):
+
+        self.user = self.view.user
+        self.ctx = ctx
+
+        options = [
+            discord.SelectOption(
+                label="Basic Info", description="Simple Info", value="basic_info", emoji="📝", default=True
+            ),
+            discord.SelectOption(label="Badges", description="Show's the badges they have", value="badge", emoji="📛"),
+            discord.SelectOption(
+                label="Avatar", description="Shows user's profile picture in large thumbnail.", emoji="🖼️"
+            ),
+        ]
+
+        super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
+
+    async def callback(self, interaction: discord.Interaction):
+        choice = self.values[0]
+
+        embed = discord.Embed(
+            title=f"{self.user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
+        )
+
+        if choice == "basic_info":
+            embed.add_field(
+                name="User Info: ",
+                value=f"**Username**: {self.user.name} \n**Discriminator**: {self.user.discriminator} \n**ID**: {self.user.id}",
+                inline=False,
+            )
+
+        if choice == "badge":
+            user = self.user
+            user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
+            embed.add_field(
+                name="User Info 2:",
+                value=f"Type: {user_type} \nBadges: {self.view.join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}",
+                inline=False,
+            )
+
+        await interaction.response.edit_message(embed=embed)
+
+
 class UserInfoSuper(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
+        self.add_item(UserInfoSuperSelects(ctx))
 
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
