@@ -712,7 +712,6 @@ class dm_or_ephemeral(discord.ui.View):
 class UserInfoSuperSelects(discord.ui.Select):
     def __init__(self, ctx, **kwargs):
 
-        self.user = self.view.user
         self.ctx = ctx
 
         options = [
@@ -730,19 +729,18 @@ class UserInfoSuperSelects(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         choice = self.values[0]
 
-        embed = discord.Embed(
-            title=f"{self.user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
-        )
+        user = self.view.user
+
+        embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at)
 
         if choice == "basic_info":
             embed.add_field(
                 name="User Info: ",
-                value=f"**Username**: {self.user.name} \n**Discriminator**: {self.user.discriminator} \n**ID**: {self.user.id}",
+                value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
                 inline=False,
             )
 
         if choice == "badge":
-            user = self.user
             user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
             embed.add_field(
                 name="User Info 2:",
