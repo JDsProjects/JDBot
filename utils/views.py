@@ -759,9 +759,11 @@ class UserInfoSuperSelects(discord.ui.Select):
 
 class UserInfoSuper(discord.ui.View):
     def __init__(self, ctx, **kwargs):
+
+        self.add_item(UserInfoSuperSelects(ctx))
+
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.add_item(UserInfoSuperSelects(ctx))
 
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
