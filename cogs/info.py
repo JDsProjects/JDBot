@@ -65,7 +65,7 @@ class Info(commands.Cog):
 
         if isinstance(user, discord.Member):
             nickname = user.nick
-            joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
+            joined_guild = f"\n{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
             highest_role = user.top_role
 
             for name, status in (
