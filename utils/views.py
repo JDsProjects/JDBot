@@ -770,6 +770,16 @@ class UserInfoSuperSelects(discord.ui.Select):
         if choice == "status":
             embed.add_field(name=f"{self.view.join_statuses}", value="\u2800", inline=False)
 
+        if choice == "guild_info":
+            joined_guild = self.view.joined_guild
+            nickname = self.view.nickname
+            highest_role = self.view.highest_role
+            embed.add_field(
+                name="Guild Info:",
+                value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
+                inline=False,
+            )
+
         await interaction.response.edit_message(embed=embed)
 
 

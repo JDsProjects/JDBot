@@ -113,15 +113,9 @@ class Info(commands.Cog):
 
         view.join_badges = join_badges
         view.join_statuses = join_statuses
-
-        # embed.add_field(
-        # name="Guild Info:",
-        # value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
-        # inline=False,
-        # )
-
-        # view.data.guild_info = embed
-        # embed.remove_field(0)
+        view.joined_guild = joined_guild
+        view.nickname = nickname
+        view.highest_role = highest_role
 
         embed = discord.Embed(
             title=f"{user}",
