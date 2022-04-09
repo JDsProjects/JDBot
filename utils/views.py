@@ -748,6 +748,12 @@ class UserInfoSuperSelects(discord.ui.Select):
                 inline=False,
             )
 
+        if choice == "avatar":
+            embed = discord.Embed(color=random.randint(0, 16777215))
+            embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
+            embed.set_image(url=user.display_avatar.url)
+            embed.set_footer(text=f"Requested by {self.ctx.author}")
+
         await interaction.response.edit_message(embed=embed)
 
 

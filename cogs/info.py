@@ -130,14 +130,6 @@ class Info(commands.Cog):
         # view.data.guild_info = embed
         # embed.remove_field(0)
 
-        # embed = discord.Embed(color=random.randint(0, 16777215))
-        # embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
-
-        # embed.set_image(url=user.display_avatar.url)
-        # embed.set_footer(text=f"Requested by {ctx.author}")
-
-        # view.data.avatar = embed
-
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
             view=view,
