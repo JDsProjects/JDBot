@@ -102,7 +102,9 @@ class Info(commands.Cog):
         for g in guilds_list:
             pag.add_line(f"{g}")
 
-        view.pages = pag.pages or ["None"]
+        pages = pag.pages or ["None"]
+
+        view.menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
 
         join_badges: str = "\u0020".join(badges) if badges else "N/A"
         join_statuses = (
