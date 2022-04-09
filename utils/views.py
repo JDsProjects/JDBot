@@ -727,6 +727,12 @@ class UserInfoSuperSelects(discord.ui.Select):
             discord.SelectOption(
                 label="status", description="Shows user's current status.", emoji="🖼️", value="status"
             ),
+            discord.SelectOption(
+                label="Guild Info",
+                description="Shows user's guild info",
+                value="guildinfo",
+                emoji="<:members:917747437429473321>",
+            ),
         ]
 
         super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
@@ -770,7 +776,7 @@ class UserInfoSuperSelects(discord.ui.Select):
         if choice == "status":
             embed.add_field(name=f"{self.view.join_statuses}", value="\u2800", inline=False)
 
-        if choice == "guild_info":
+        if choice == "guildinfo":
             joined_guild = self.view.joined_guild
             nickname = self.view.nickname
             highest_role = self.view.highest_role
