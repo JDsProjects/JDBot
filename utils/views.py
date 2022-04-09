@@ -730,6 +730,8 @@ class UserInfoSuperSelects(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         choice = self.values[0]
 
+        print(choice)
+
         user = self.view.user
 
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at)
