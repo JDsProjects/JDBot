@@ -209,7 +209,7 @@ class Bot(commands.Cog):
 
         embed.set_image(url=owner.display_avatar.url)
 
-        view = utils.UserInfoSuper(ctx, owner)
+        view = utils.OwnerInfoSuper(ctx, owner)
 
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",

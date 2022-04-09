@@ -776,6 +776,29 @@ class UserInfoSuper(discord.ui.View):
         return True
 
 
+class OwnerInfoSuper(discord.ui.View):
+    def __init__(self, ctx, user, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+        self.user = user
+
+        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Secret Message(Ephemeral)", "🕵️", custom_id="0"))
+        self.add_item(
+            UserInfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
+        )
+        self.add_item(UserInfoButton(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+
+    async def interaction_check(self, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+
 # The Basic Buttons Class.
 
 
