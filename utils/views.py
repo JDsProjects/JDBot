@@ -709,93 +709,14 @@ class dm_or_ephemeral(discord.ui.View):
         return True
 
 
-class UserInfoSuperSelects(discord.ui.Select):
-    def __init__(self, ctx, **kwargs):
-
-        self.ctx = ctx
-
-        options = [
-            discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
-            discord.SelectOption(label="Badges", description="Show's the badges they have", value="badge", emoji="📛"),
-            discord.SelectOption(
-                label="Avatar",
-                description="Shows user's profile picture in large thumbnail.",
-                emoji="🖼️",
-                value="avatar",
-            ),
-            discord.SelectOption(
-                label="status", description="Shows user's current status.", emoji="🖼️", value="status"
-            ),
-            discord.SelectOption(
-                label="Guild Info",
-                description="Shows user's guild info",
-                value="guildinfo",
-                emoji="<:members:917747437429473321>",
-            ),
-        ]
-
-        super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
-
-    async def callback(self, interaction: discord.Interaction):
-        choice = self.values[0]
-
-        user = self.view.user
-
-        embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at)
-
-        if choice == "basic":
-            embed.add_field(
-                name="User Info: ",
-                value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
-                inline=False,
-            )
-
-        if choice == "badge":
-            user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
-            embed.add_field(
-                name="User Info 2:",
-                value=f"Badges: {self.view.join_badges}",
-                inline=False,
-            )
-
-        if choice == "misc":
-            user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
-            embed.add_field(
-                name="User Info 2:",
-                value=f"Type: {user_type} \n**Joined Discord**: \n{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}",
-                inline=False,
-            )
-
-        if choice == "avatar":
-            embed = discord.Embed(color=random.randint(0, 16777215))
-            embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
-            embed.set_image(url=user.display_avatar.url)
-            embed.set_footer(text=f"Requested by {self.ctx.author}")
-
-        if choice == "status":
-            embed.add_field(name=f"{self.view.join_statuses}", value="\u2800", inline=False)
-
-        if choice == "guildinfo":
-            joined_guild = self.view.joined_guild
-            nickname = self.view.nickname
-            highest_role = self.view.highest_role
-            embed.add_field(
-                name="Guild Info:",
-                value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
-                inline=False,
-            )
-
-        await interaction.response.edit_message(embed=embed)
-
-
 class UserInfoSuper(discord.ui.View):
-    def __init__(self, ctx, **kwargs):
+    def __init__(self, ctx, menu=None, channel: discord.DMChannel = None, **kwargs):
         super().__init__(**kwargs)
-        self.add_item(UserInfoSuperSelects(ctx, row=0))
         self.ctx = ctx
+        self.channel = channel
+        self.menu = menu
 
-    @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️", row=1)
+    @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for child in self.children:
@@ -806,7 +727,7 @@ class UserInfoSuper(discord.ui.View):
 
         await self.menu.send(interaction=interaction, ephemeral=True)
 
-    @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", row=1)
+    @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for child in self.children:
@@ -815,12 +736,9 @@ class UserInfoSuper(discord.ui.View):
 
         await interaction.response.edit_message(content=f"Well be Dming you the paginator to view this info", view=self)
 
-        if self.ctx.author.dm_channel is None:
-            await self.ctx.author.create_dm()
+        await self.menu.send(send_to=self.channel)
 
-        await self.menu.send(send_to=self.ctx.author.dm_channel)
-
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌", row=1)
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for child in self.children:
