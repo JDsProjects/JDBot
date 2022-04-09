@@ -716,9 +716,7 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="basic2", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badge", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -755,7 +753,7 @@ class UserInfoSuperSelects(discord.ui.Select):
                 inline=False,
             )
 
-        if choice == "basic2":
+        if choice == "misc":
             user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
             embed.add_field(
                 name="User Info 2:",
