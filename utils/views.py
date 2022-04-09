@@ -761,7 +761,7 @@ class UserInfoSuper(discord.ui.View):
         self.add_item(UserInfoSuperSelects(ctx, row=0))
         self.ctx = ctx
 
-    @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
+    @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️", row=1)
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for child in self.children:
@@ -772,7 +772,7 @@ class UserInfoSuper(discord.ui.View):
 
         await self.menu.send(interaction=interaction, ephemeral=True)
 
-    @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
+    @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", row=1)
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for child in self.children:
@@ -786,7 +786,7 @@ class UserInfoSuper(discord.ui.View):
 
         await self.menu.send(send_to=self.ctx.author.dm_channel)
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌", row=1)
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         for child in self.children:
