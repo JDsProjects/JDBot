@@ -722,14 +722,14 @@ class UserinfoButton(discord.ui.Button):
 
         if self.custom_id == "0":
 
-            await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
+            await self.view.message.edit(content="Will be sending you the information, ephemerally", view=self.view)
 
             await self.menu.send(interaction=interaction, ephemeral=True)
 
         if self.custom_id == "1":
 
             await interaction.response.edit_message(
-                content=f"Well be Dming you the paginator to view this info", view=self
+                content=f"Well be Dming you the paginator to view this info", view=self.view
             )
 
             if self.view.ctx.author.dm_channel is None:
