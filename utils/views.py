@@ -975,7 +975,6 @@ class RpsGameButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
         assert self.view is not None
-        self.view.clear_items()
         view = self.view
         view.content = view.message.content
         view.embed = view.message.embeds[0]
@@ -1023,7 +1022,6 @@ class RpsGameButtonGun(discord.ui.Button):
             content="You got the legendary gun :) \nYou Instantly Won!", ephemeral=True
         )
         assert self.view is not None
-        self.view.clear_items()
         view = self.view
         view.content = view.message.content
         view.embed = view.message.embeds[0]
