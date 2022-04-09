@@ -710,11 +710,9 @@ class dm_or_ephemeral(discord.ui.View):
 
 
 class UserInfoSuper(discord.ui.View):
-    def __init__(self, ctx, menu=None, channel: discord.DMChannel = None, **kwargs):
+    def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.channel = channel
-        self.menu = menu
 
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):

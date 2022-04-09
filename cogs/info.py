@@ -93,13 +93,13 @@ class Info(commands.Cog):
                 ):
                     statuses.append((name, utils.profile_converter(name.lower(), status)))
 
-        embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
+        # embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
 
-        embed.add_field(
-            name="User Info: ",
-            value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
-            inline=False,
-        )
+        # embed.add_field(
+        # name="User Info: ",
+        # value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
+        # inline=False,
+        # )
 
         guilds_list = utils.grab_mutualguilds(ctx, user)
 
@@ -108,49 +108,53 @@ class Info(commands.Cog):
         for g in guilds_list:
             pag.add_line(f"{g}")
 
-        pages = pag.pages or ["None"]
+        view.pages = pag.pages or ["None"]
 
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
+        # if ctx.author.dm_channel is None:
+        # await ctx.author.create_dm()
 
-        menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
-        view = utils.UserInfoSuper(ctx, menu, ctx.author.dm_channel)
+        # menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
+        view = utils.UserInfoSuper(ctx)
+        view.user = user
 
-        view.data.basic_info = embed
-
-        embed.remove_field(0)
+        # view.data.basic_info = embed
+        # embed.remove_field(0)
 
         join_badges: str = "\u0020".join(badges) if badges else "N/A"
         join_statuses = (
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
         )
 
-        embed.add_field(
-            name="User Info 2:",
-            value=f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}",
-            inline=False,
-        )
+        # embed.add_field(
+        # name="User Info 2:",
+        # value=f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}",
+        # inline=False,
+        # )
 
-        view.data.basic_info2 = embed
+        # view.data.basic_info2 = embed
+        # embed.remove_field(0)
 
-        embed.remove_field(0)
+        # embed.add_field(name=f"{join_statuses}", value="\u0020", inline=False)
 
-        embed.add_field(
-            name="Guild Info:",
-            value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
-            inline=False,
-        )
+        # view.data.statuses = embed
+        # embed.remove_field(0)
 
-        view.data.guild_info = embed
-        embed.remove_field(0)
+        # embed.add_field(
+        # name="Guild Info:",
+        # value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
+        # inline=False,
+        # )
 
-        embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
+        # view.data.guild_info = embed
+        # embed.remove_field(0)
 
-        embed.set_image(url=user.display_avatar.url)
-        embed.set_footer(text=f"Requested by {ctx.author}")
+        # embed = discord.Embed(color=random.randint(0, 16777215))
+        # embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
 
-        view.data.avatar = embed
+        # embed.set_image(url=user.display_avatar.url)
+        # embed.set_footer(text=f"Requested by {ctx.author}")
+
+        # view.data.avatar = embed
 
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
