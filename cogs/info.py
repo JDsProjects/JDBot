@@ -92,6 +92,9 @@ class Info(commands.Cog):
                 ):
                     statuses.append((name, utils.profile_converter(name.lower(), status)))
 
+        view = utils.UserInfoSuper(ctx)
+        view.user = user
+
         guilds_list = utils.grab_mutualguilds(ctx, user)
 
         pag = commands.Paginator(prefix="", suffix="")
@@ -100,13 +103,6 @@ class Info(commands.Cog):
             pag.add_line(f"{g}")
 
         view.pages = pag.pages or ["None"]
-
-        # if ctx.author.dm_channel is None:
-        # await ctx.author.create_dm()
-
-        # menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
-        view = utils.UserInfoSuper(ctx)
-        view.user = user
 
         join_badges: str = "\u0020".join(badges) if badges else "N/A"
         join_statuses = (

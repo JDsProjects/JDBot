@@ -758,6 +758,7 @@ class UserInfoSuper(discord.ui.View):
         super().__init__(**kwargs)
         self.ctx = ctx
         self.add_item(UserInfoSuperSelects(ctx))
+        self.menu = MutualGuildsEmbed(self.pages, ctx=ctx, disable_after=True)
 
     @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -779,7 +780,10 @@ class UserInfoSuper(discord.ui.View):
 
         await interaction.response.edit_message(content=f"Well be Dming you the paginator to view this info", view=self)
 
-        await self.menu.send(send_to=self.channel)
+        if self.ctx.author.dm_channel is None:
+            await self.ctx.author.create_dm()
+
+        await self.menu.send(send_to=self.ctx.author.dm_channel)
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="❌")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
