@@ -462,12 +462,7 @@ class DevTools(commands.Cog):
 
         save_type = ".gif" if if_animated else ".png"
 
-        icon_file = await ctx.author.display_avatar.read()
-        buffer = io.BytesIO(icon_file)
-        buffer.seek(0)
-        # print(len(buffer.getvalue()))
-
-        file = discord.File(buffer, filename=f"pfp{save_type}")
+        file = ctx.author.display_avatar.to_file(filename=f"pfp{save_type}")
         try:
             await ctx.send(content="here's your avatar:", file=file)
 
