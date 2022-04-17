@@ -462,7 +462,7 @@ class DevTools(commands.Cog):
 
         save_type = ".gif" if if_animated else ".png"
 
-        file = ctx.author.display_avatar.to_file(filename=f"pfp{save_type}")
+        file = await ctx.author.display_avatar.to_file(filename=f"pfp{save_type}")
         try:
             await ctx.send(content="here's your avatar:", file=file)
 
