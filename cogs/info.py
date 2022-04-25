@@ -340,6 +340,7 @@ class DevTools(commands.Cog):
 
         else:
 
+            # replace the url and grabbing when frostii ports rtfm to senarc.
             res = await self.bot.session.get(
                 "https://repi.openrobot.xyz/search_docs",
                 params={"query": args, "documentation": url},
