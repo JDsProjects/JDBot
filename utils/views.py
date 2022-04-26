@@ -926,7 +926,6 @@ class UserInfoSuperSelects(discord.ui.Select):
             )
 
         if choice == "badges":
-            user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
 
             badges = badge_collect(user)
             join_badges: str = "\u0020".join(badges) if badges else "N/A"
@@ -1013,17 +1012,167 @@ class UserInfoSuper(discord.ui.View):
         return True
 
 
+class OwnerSuperSelects(discord.ui.Select):
+    def __init__(self, ctx, **kwargs):
+        self.ctx = ctx
+        self.banner = None
+        self.banner_fetched = False
+
+        options = [
+            discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
+            discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
+            discord.SelectOption(
+                label="Avatar",
+                description="Shows Owner's profile picture in large thumbnail.",
+                emoji="🖼️",
+                value="avatar",
+            ),
+            discord.SelectOption(
+                label="status", description="Shows Owner's current status.", emoji="🖼️", value="status"
+            ),
+            discord.SelectOption(
+                label="Guild Info",
+                description="Shows Owner's guild info",
+                value="guildinfo",
+                emoji="<:members:917747437429473321>",
+            ),
+            discord.SelectOption(
+                label="Banner",
+                description="Shows Owner banner",
+                value="banner",
+                emoji="🏳️",
+            ),
+            discord.SelectOption(
+                label="Close",
+                description="Closes the Select",
+                value="close",
+                emoji="❌",
+            ),
+        ]
+
+        super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
+
+    async def callback(self, interaction):
+
+        choice = self.values[0]
+
+        user = self.view.user
+        support_guild = self.view.support_guild
+        statuses = []
+
+        if isinstance(user, discord.Member):
+            nickname = user.nick
+            joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
+            highest_role = user.top_role
+
+            statuses = status_collect(user)
+
+        else:
+
+            nickname = "None Found"
+            joined_guild = "N/A"
+            highest_role = "None Found"
+
+            member = discord.utils.find(lambda member: member.id == user.id, self.bot.get_all_members())
+            if member:
+                statuses = status_collect(member)
+
+        join_statuses = (
+            " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
+        )
+
+        embed = discord.Embed(
+            title=f"Bot Owner: {user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
+        )
+
+        embed.set_image(url=user.display_avatar.url)
+
+        if choice == "basic":
+            embed.add_field(
+                name="User Info: ",
+                value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
+                inline=False,
+            )
+
+        if choice == "badges":
+
+            badges = badge_collect(user)
+            join_badges: str = "\u0020".join(badges) if badges else "N/A"
+
+            embed.add_field(
+                name="User Info 2:",
+                value=f"Badges: {join_badges}",
+                inline=False,
+            )
+
+        if choice == "misc":
+            user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
+            embed.add_field(
+                name="User Info 2:",
+                value=f"Type: {user_type} \n**Joined Discord**: \n{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}",
+                inline=False,
+            )
+
+        if choice == "avatar":
+            embed = discord.Embed(color=random.randint(0, 16777215))
+            embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
+            embed.set_image(url=user.display_avatar.url)
+            embed.set_footer(text=f"Requested by {self.ctx.author}")
+
+        if choice == "status":
+            embed.add_field(name=f"{join_statuses}", value="\u2800", inline=False)
+
+        if choice == "guildinfo":
+            embed.add_field(
+                name="Guild Info:",
+                value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
+                inline=False,
+            )
+
+        if choice == "banner":
+
+            if self.banner is None and not self.banner_fetched:
+
+                try:
+                    user_banner = await interaction.client.fetch_user(user.id)
+
+                except:
+                    user_banner = user
+                    traceback.print_exc()
+
+                self.banner = user_banner.banner
+                self.banner_fetched = True
+
+            banner = self.banner
+            if banner:
+                embed.set_image(url=banner.url)
+
+            else:
+                embed.add_field(name="Banner:", value="No Banner Found", inline=False)
+
+        if choice == "close":
+            self.view.remove_item(self)
+            return await interaction.response.edit_message(view=self.view, embed=None)
+
+        embed.set_footer(text=f"Support Guild's Name: \n{support_guild}")
+
+        await interaction.response.edit_message(embed=embed)
+
+
 class OwnerInfoSuper(discord.ui.View):
-    def __init__(self, ctx, user, **kwargs):
+    def __init__(self, ctx, user, support_guild, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
         self.user = user
+        self.support_guild = support_guild
 
         self.add_item(UserInfoButton(discord.ButtonStyle.success, "Secret Message(Ephemeral)", "🕵️", custom_id="0"))
         self.add_item(
             UserInfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
         )
         self.add_item(UserInfoButton(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+        self.add_item((OwnerSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
 

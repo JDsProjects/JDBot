@@ -137,59 +137,11 @@ class Bot(commands.Cog):
 
         owner = await self.bot.try_member(support_guild, owner_id) or await self.bot.try_user(owner_id)
 
-        user_type = "Bot" if owner.bot else "User" if isinstance(owner, discord.User) else "Member"
-
-        badges = utils.badge_collect(owner)
-
-        if isinstance(owner, discord.Member):
-            nickname = owner.nick
-            joined_guild = f"{discord.utils.format_dt(owner.joined_at, style = 'd')}\n{discord.utils.format_dt(owner.joined_at, style = 'T')}"
-            highest_role = owner.top_role
-
-            statuses = utils.status_collect(owner)
-
-        else:
-
-            nickname = "None Found"
-            joined_guild = "N/A"
-            highest_role = "None Found"
-
-            member = discord.utils.find(lambda member: member.id == owner.id, self.bot.get_all_members())
-            if member:
-                statuses = utils.status_collect(member) or []
-
         embed = discord.Embed(
             title=f"Bot Owner: {owner}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at
         )
 
-        embed.add_field(
-            name="User Info: ",
-            value=f"**Username**: {owner.name} \n**Discriminator**: {owner.discriminator} \n**ID**: {owner.id}",
-            inline=False,
-        )
-
-        join_badges: str = "\u0020".join(badges) if badges else "N/A"
-        join_statuses = (
-            " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
-        )
-
-        embed.add_field(
-            name="User Info 2:",
-            value=f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(owner.created_at, style = 'd')}\n{discord.utils.format_dt(owner.created_at, style = 'T')}\n {join_statuses}",
-            inline=False,
-        )
-
-        embed.add_field(
-            name="Guild Info:",
-            value=f"**Nickname**: {nickname} \n**Joined Guild**: {joined_guild} \n**Highest Role**: {highest_role}",
-            inline=False,
-        )
-
-        embed.set_footer(text=f"Support Guild's Name: \n{support_guild}")
-
-        embed.set_image(url=owner.display_avatar.url)
-
-        view = utils.OwnerInfoSuper(ctx, owner)
+        view = utils.OwnerInfoSuper(ctx, owner, support_guild)
 
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
