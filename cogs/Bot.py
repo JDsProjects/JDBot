@@ -140,6 +140,7 @@ class Bot(commands.Cog):
         embed = discord.Embed(
             title=f"Bot Owner: {owner}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at
         )
+        embed.set_image(url=owner.display_avatar.url)
 
         view = utils.OwnerInfoSuper(ctx, owner, support_guild)
 
