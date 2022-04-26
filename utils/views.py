@@ -971,7 +971,7 @@ class UserInfoSuperSelects(discord.ui.Select):
                     user_banner = user
                     traceback.print_exc()
 
-                self.banner = user.banner
+                self.banner = user_banner.banner
                 self.banner_fetched = True
 
             banner = self.banner
