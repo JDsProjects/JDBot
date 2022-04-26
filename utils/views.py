@@ -4,6 +4,7 @@ import discord
 import asyncio
 import random
 import mathjspy
+import typing
 
 from discord import Interaction, ButtonStyle, Embed, File
 from discord.abc import Messageable
@@ -13,6 +14,7 @@ from discord.ext import commands
 
 from discord.ext.commands.context import Context
 from typing import Callable, Optional, Any, Union, Sequence, TYPE_CHECKING
+from discord.flags import UserFlags
 
 if TYPE_CHECKING:
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
@@ -751,6 +753,206 @@ class UserInfoButton(discord.ui.Button):
         if self.custom_id == "2":
 
             await interaction.response.edit_message(content=f"not sending the paginator to you", view=self.view)
+
+
+def profile_converter(
+    _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile"],
+    _enum: typing.Union[discord.Status, discord.UserFlags, str],
+):
+
+    badges_emoji = {
+        UserFlags.staff: "<:DiscordStaff:859400539221917698>",
+        UserFlags.partner: "<:partner:848402357863710762>",
+        UserFlags.hypesquad: "<:hypesquad:314068430854684672>",
+        UserFlags.bug_hunter: "<:bughunter:585765206769139723>",
+        UserFlags.hypesquad_bravery: "<:bravery:585763004218343426>",
+        UserFlags.hypesquad_brilliance: "<:brilliance:585763004495298575>",
+        UserFlags.hypesquad_balance: "<:balance:585763004574859273>",
+        UserFlags.early_supporter: "<:supporter:585763690868113455> ",
+        "system": "<:verifiedsystem1:848399959539843082><:verifiedsystem2:848399959241261088>",
+        UserFlags.bug_hunter_level_2: "<:goldbughunter:853274684337946648>",
+        UserFlags.verified_bot: "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
+        UserFlags.verified_bot_developer: "<:verifiedbotdev:853277205264859156>",
+        UserFlags.discord_certified_moderator: "<:certifiedmod:853274382339670046>",
+        "bot": "<:bot:848395737138069514>",
+    }
+
+    status_emojis = {
+        discord.Status.online: "<:online:715050614379249744>",
+        discord.Status.dnd: "<:dnd:715050614429712394>",
+        discord.Status.idle: "<:idle:715050614291431475>",
+        discord.Status.offline: "<:offline:715050614366928906>",
+    }
+
+    devices_emojis = {
+        "mobile": {
+            discord.Status.online: "<:onlinemobile:715050614429712384>",
+            discord.Status.dnd: "<:dndmobile:715050614047899741>",
+            discord.Status.idle: "<:idlemobile:715050614278717500>",
+            discord.Status.offline: "<:mobile_offline:917752338532425739> ",
+        },
+        "desktop": {
+            discord.Status.online: "<:desktop_online:917755694852235265>",
+            discord.Status.dnd: "<:desktop_dnd:917755694839656448>",
+            discord.Status.idle: "<:desktop_away:917755694902558790>",
+            discord.Status.offline: "<:desktop_offline:917755694948708402> ",
+        },
+        "web": {
+            discord.Status.online: "<:website_online:917753204396142623>",
+            discord.Status.dnd: "<:website_dnd:917753204396142622>",
+            discord.Status.idle: "<:website_away:917753204400336956> ",
+            discord.Status.offline: "<:website_offline:917752338574348289>",
+        },
+    }
+
+    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis}
+    is_devices = False
+    if _type in ("mobile", "desktop", "web"):
+        is_devices = True
+
+    dict_to_use = dc.get(_type) if not is_devices else dc["devices"][_type]
+    emoji = dict_to_use.get(_enum)
+    if not emoji:
+        emoji = status_emojis[_enum]
+    return emoji
+
+
+def status_collect(user):
+
+    statuses = []
+
+    for name, status in (
+        ("Status", user.status),
+        ("Desktop", user.desktop_status),
+        ("Mobile", user.mobile_status),
+        ("Web", user.web_status),
+    ):
+        statuses.append((name, profile_converter(name.lower(), status)))
+
+    return statuses
+
+
+def badge_collect(user):
+
+    badges = [profile_converter("badges", f) for f in user.public_flags.all()] if user.public_flags else []
+    if user.bot:
+        badges.append(profile_converter("badges", "bot"))
+
+    if user.system:
+        badges.append(profile_converter("badges", "system"))
+
+    return badges
+
+
+class UserInfoSuperSelects(discord.ui.Select):
+    def __init__(self, ctx, **kwargs):
+        self.ctx = ctx
+
+        options = [
+            discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
+            discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
+            discord.SelectOption(
+                label="Avatar",
+                description="Shows user's profile picture in large thumbnail.",
+                emoji="🖼️",
+                value="avatar",
+            ),
+            discord.SelectOption(
+                label="status", description="Shows user's current status.", emoji="🖼️", value="status"
+            ),
+            discord.SelectOption(
+                label="Guild Info",
+                description="Shows user's guild info",
+                value="guildinfo",
+                emoji="<:members:917747437429473321>",
+            ),
+            discord.SelectOption(
+                label="Close",
+                description="Closes the Select",
+                value="close",
+                emoji="❌",
+            ),
+        ]
+
+        super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
+
+    async def callback(self, interaction: discord.Interaction):
+        choice = self.values[0]
+
+        user = self.view.user
+
+        embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at)
+
+        if isinstance(user, discord.Member):
+            nickname = user.nick
+            joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
+            highest_role = user.top_role
+
+            statuses = status_collect(user)
+
+        else:
+
+            nickname = "None Found"
+            joined_guild = "N/A"
+            highest_role = "None Found"
+
+            member = discord.utils.find(lambda member: member.id == user.id, interaction.client.get_all_members())
+
+            statuses = status_collect(member)
+
+        join_statuses = (
+            " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
+        )
+
+        if choice == "basic":
+            embed.add_field(
+                name="User Info: ",
+                value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
+                inline=False,
+            )
+
+        if choice == "badges":
+            user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
+
+            badges = badge_collect(user)
+            join_badges: str = "\u0020".join(badges) if badges else "N/A"
+
+            embed.add_field(
+                name="User Info 2:",
+                value=f"Badges: {join_badges}",
+                inline=False,
+            )
+
+        if choice == "misc":
+            user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
+            embed.add_field(
+                name="User Info 2:",
+                value=f"Type: {user_type} \n**Joined Discord**: \n{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}",
+                inline=False,
+            )
+
+        if choice == "avatar":
+            embed = discord.Embed(color=random.randint(0, 16777215))
+            embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
+            embed.set_image(url=user.display_avatar.url)
+            embed.set_footer(text=f"Requested by {self.ctx.author}")
+
+        if choice == "status":
+            embed.add_field(name=f"{join_statuses}", value="\u2800", inline=False)
+
+        if choice == "guildinfo":
+            embed.add_field(
+                name="Guild Info:",
+                value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
+                inline=False,
+            )
+
+        if choice == "close":
+            self.view.remove_item(self)
+            return await interaction.response.edit_message(view=self.view, embed=None)
+
+        await interaction.response.edit_message(embed=embed)
 
 
 class UserInfoSuper(discord.ui.View):
