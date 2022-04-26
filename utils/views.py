@@ -884,6 +884,8 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at)
 
+        statuses = []
+
         if isinstance(user, discord.Member):
             nickname = user.nick
             joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
@@ -900,7 +902,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             member = discord.utils.find(lambda member: member.id == user.id, interaction.client.get_all_members())
 
             if member:
-                statuses = status_collect(member) or []
+                statuses = status_collect(member)
 
         join_statuses = (
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
