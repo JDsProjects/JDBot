@@ -1074,7 +1074,7 @@ class OwnerSuperSelects(discord.ui.Select):
             joined_guild = "N/A"
             highest_role = "None Found"
 
-            member = discord.utils.find(lambda member: member.id == user.id, self.bot.get_all_members())
+            member = discord.utils.find(lambda member: member.id == user.id, interaction.client.get_all_members())
             if member:
                 statuses = status_collect(member)
 
