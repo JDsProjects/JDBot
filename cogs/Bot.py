@@ -152,13 +152,7 @@ class Bot(commands.Cog):
             joined_guild = f"{discord.utils.format_dt(owner.joined_at, style = 'd')}\n{discord.utils.format_dt(owner.joined_at, style = 'T')}"
             highest_role = owner.top_role
 
-            for name, status in (
-                ("Status", owner.status),
-                ("Desktop", owner.desktop_status),
-                ("Mobile", owner.mobile_status),
-                ("Web", owner.web_status),
-            ):
-                statuses.append((name, utils.profile_converter(name.lower(), status)))
+            statuses = utils.status_collect(owner)
 
         else:
 
@@ -168,13 +162,7 @@ class Bot(commands.Cog):
 
             member = discord.utils.find(lambda member: member.id == owner.id, self.bot.get_all_members())
             if member:
-                for name, status in (
-                    ("Status", member.status),
-                    ("Desktop", member.desktop_status),
-                    ("Mobile", member.mobile_status),
-                    ("Web", member.web_status),
-                ):
-                    statuses.append((name, utils.profile_converter(name.lower(), status)))
+                statuses = utils.status_collect(member)
 
         embed = discord.Embed(
             title=f"Bot Owner: {owner}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at
