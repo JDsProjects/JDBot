@@ -5,6 +5,7 @@ import asyncio
 import random
 import mathjspy
 import typing
+import traceback
 
 from discord import Interaction, ButtonStyle, Embed, File
 from discord.abc import Messageable
@@ -968,6 +969,7 @@ class UserInfoSuperSelects(discord.ui.Select):
 
                 except:
                     user_banner = user
+                    traceback.print_exc()
 
                 banner = user.banner
 
