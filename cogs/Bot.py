@@ -139,13 +139,7 @@ class Bot(commands.Cog):
 
         user_type = "Bot" if owner.bot else "User" if isinstance(owner, discord.User) else "Member"
 
-        statuses = []
-
-        badges = [utils.profile_converter("badges", f) for f in owner.public_flags.all()] if owner.public_flags else []
-        if owner.bot:
-            badges.append(utils.profile_converter("badges", "bot"))
-        if owner.system:
-            badges.append(utils.profile_converter("badges", "system"))
+        badges = utils.badge_collect(owner)
 
         if isinstance(owner, discord.Member):
             nickname = owner.nick
@@ -178,8 +172,6 @@ class Bot(commands.Cog):
         join_statuses = (
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
         )
-
-        # Make the backend of badge conversion and stuff better, as well status
 
         embed.add_field(
             name="User Info 2:",
