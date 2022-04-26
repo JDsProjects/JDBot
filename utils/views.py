@@ -892,6 +892,7 @@ class UserInfoSuperSelects(discord.ui.Select):
         user = self.view.user
 
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at)
+        embed.set_image(url=user.display_avatar.url)
 
         statuses = []
 
