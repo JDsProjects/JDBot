@@ -135,7 +135,7 @@ class Bot(commands.Cog):
 
         support_guild = self.bot.get_guild(736422329399246990)
 
-        owner = self.bot.try_user(owner_id)
+        owner = await self.bot.try_user(owner_id)
 
         user_type = "Bot" if owner.bot else "User" if isinstance(owner, discord.User) else "Member"
 
