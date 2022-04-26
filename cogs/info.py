@@ -46,6 +46,103 @@ class Info(commands.Cog):
         if guild:
             await utils.guildinfo(ctx, guild)
 
+    class UserInfoSuperSelects(discord.ui.Select):
+        def __init__(self, ctx, **kwargs):
+            self.ctx = ctx
+
+            options = [
+                discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
+                discord.SelectOption(
+                    label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
+                ),
+                discord.SelectOption(
+                    label="Badges", description="Show's the badges they have", value="badges", emoji="📛"
+                ),
+                discord.SelectOption(
+                    label="Avatar",
+                    description="Shows user's profile picture in large thumbnail.",
+                    emoji="🖼️",
+                    value="avatar",
+                ),
+                discord.SelectOption(
+                    label="status", description="Shows user's current status.", emoji="🖼️", value="status"
+                ),
+                discord.SelectOption(
+                    label="Guild Info",
+                    description="Shows user's guild info",
+                    value="guildinfo",
+                    emoji="<:members:917747437429473321>",
+                ),
+            ]
+
+            super().__init__(
+                placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options
+            )
+
+        async def callback(self, interaction: discord.Interaction):
+            choice = self.values[0]
+
+            user = self.view.user
+
+            embed = discord.Embed(
+                title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
+            )
+
+            if choice == "basic":
+                embed.add_field(
+                    name="User Info: ",
+                    value=f"**Username**: {user.name} \n**Discriminator**: {user.discriminator} \n**ID**: {user.id}",
+                    inline=False,
+                )
+
+            if choice == "badges":
+                user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
+
+                badges = (
+                    [utils.profile_converter("badges", f) for f in user.public_flags.all()] if user.public_flags else []
+                )
+                if user.bot:
+                    badges.append(utils.profile_converter("badges", "bot"))
+                if user.system:
+                    badges.append(utils.profile_converter("badges", "system"))
+
+                join_badges: str = "\u0020".join(badges) if badges else "N/A"
+
+                embed.add_field(
+                    name="User Info 2:",
+                    value=f"Badges: {join_badges}",
+                    inline=False,
+                )
+
+            if choice == "misc":
+                user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
+                embed.add_field(
+                    name="User Info 2:",
+                    value=f"Type: {user_type} \n**Joined Discord**: \n{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}",
+                    inline=False,
+                )
+
+            if choice == "avatar":
+                embed = discord.Embed(color=random.randint(0, 16777215))
+                embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
+                embed.set_image(url=user.display_avatar.url)
+                embed.set_footer(text=f"Requested by {self.ctx.author}")
+
+            if choice == "status" and 2 == 3:
+                embed.add_field(name=f"{self.view.join_statuses}", value="\u2800", inline=False)
+
+            if choice == "guildinfo" and 3 == 1:
+                joined_guild = self.view.joined_guild
+                nickname = self.view.nickname
+                highest_role = self.view.highest_role
+                embed.add_field(
+                    name="Guild Info:",
+                    value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
+                    inline=False,
+                )
+
+            await interaction.response.edit_message(embed=embed)
+
     @commands.command(
         aliases=["user_info", "user-info", "ui", "whois"],
         brief="a command that gives information on users",
@@ -57,12 +154,6 @@ class Info(commands.Cog):
         user_type = "Bot" if user.bot else "User" if isinstance(user, discord.User) else "Member"
 
         statuses = []
-
-        badges = [utils.profile_converter("badges", f) for f in user.public_flags.all()] if user.public_flags else []
-        if user.bot:
-            badges.append(utils.profile_converter("badges", "bot"))
-        if user.system:
-            badges.append(utils.profile_converter("badges", "system"))
 
         if isinstance(user, discord.Member):
             nickname = user.nick
@@ -101,14 +192,13 @@ class Info(commands.Cog):
             inline=False,
         )
 
-        join_badges: str = "\u0020".join(badges) if badges else "N/A"
         join_statuses = (
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
         )
 
         embed.add_field(
             name="User Info 2:",
-            value=f"Type: {user_type} \nBadges: {join_badges} \n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}",
+            value=f"\n**Joined Discord**: {discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}\n {join_statuses}",
             inline=False,
         )
 
