@@ -46,6 +46,20 @@ class Info(commands.Cog):
         if guild:
             await utils.guildinfo(ctx, guild)
 
+    def status_collect(self, user):
+
+        statuses = []
+
+        for name, status in (
+            ("Status", user.status),
+            ("Desktop", user.desktop_status),
+            ("Mobile", user.mobile_status),
+            ("Web", user.web_status),
+        ):
+            statuses.append((name, utils.profile_converter(name.lower(), status)))
+
+        return statuses
+
     class UserInfoSuperSelects(discord.ui.Select):
         def __init__(self, ctx, **kwargs):
             self.ctx = ctx
@@ -94,20 +108,12 @@ class Info(commands.Cog):
                 title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
             )
 
-            statuses = []
-
             if isinstance(user, discord.Member):
                 nickname = user.nick
                 joined_guild = f"{discord.utils.format_dt(user.joined_at, style = 'd')}\n{discord.utils.format_dt(user.joined_at, style = 'T')}"
                 highest_role = user.top_role
 
-                for name, status in (
-                    ("Status", user.status),
-                    ("Desktop", user.desktop_status),
-                    ("Mobile", user.mobile_status),
-                    ("Web", user.web_status),
-                ):
-                    statuses.append((name, utils.profile_converter(name.lower(), status)))
+                statuses = self.status_collect(user)
 
             else:
 
@@ -116,14 +122,8 @@ class Info(commands.Cog):
                 highest_role = "None Found"
 
                 member = discord.utils.find(lambda member: member.id == user.id, interaction.client.get_all_members())
-                if member:
-                    for name, status in (
-                        ("Status", member.status),
-                        ("Desktop", member.desktop_status),
-                        ("Mobile", member.mobile_status),
-                        ("Web", member.web_status),
-                    ):
-                        statuses.append((name, utils.profile_converter(name.lower(), status)))
+
+                statuses = self.status_collect(member)
 
             join_statuses = (
                 " \n| ".join(f"**{name}**: {value}" for name, value in statuses)
