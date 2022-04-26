@@ -971,8 +971,6 @@ class UserInfoSuperSelects(discord.ui.Select):
                     user_banner = user
                     traceback.print_exc()
 
-                user_banner = user
-
                 self.banner = user.banner
                 self.banner_fetched = True
 
@@ -980,7 +978,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             if banner:
                 embed.set_image(url=banner.url)
 
-            if not banner:
+            else:
                 embed.add_field(name="Banner:", value="No Banner Found", inline=False)
 
         if choice == "close":
