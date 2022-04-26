@@ -847,6 +847,8 @@ def badge_collect(user):
 class UserInfoSuperSelects(discord.ui.Select):
     def __init__(self, ctx, **kwargs):
         self.ctx = ctx
+        self.banner = None
+        self.banner_fetched = False
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
@@ -866,6 +868,12 @@ class UserInfoSuperSelects(discord.ui.Select):
                 description="Shows user's guild info",
                 value="guildinfo",
                 emoji="<:members:917747437429473321>",
+            ),
+            discord.SelectOption(
+                label="Banner",
+                description="Shows user banner",
+                value="banner",
+                emoji="🏳️",
             ),
             discord.SelectOption(
                 label="Close",
@@ -950,6 +958,27 @@ class UserInfoSuperSelects(discord.ui.Select):
                 value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
                 inline=False,
             )
+
+        if choice == "banner":
+
+            if self.banner is None and not self.banner_fetched:
+
+                try:
+                    user_banner = await interaction.client.fetch_user(user.id)
+
+                except:
+                    user_banner = user
+
+                banner = user.banner
+
+                self.banner = banner
+                self.banner_fetched = True
+
+            if banner:
+                embed.set_image(url=banner.url)
+
+            if not banner:
+                embed.add_field(name="Banner:", value="No Banner Found", inline=False)
 
         if choice == "close":
             self.view.remove_item(self)
