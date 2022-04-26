@@ -73,6 +73,12 @@ class Info(commands.Cog):
                     value="guildinfo",
                     emoji="<:members:917747437429473321>",
                 ),
+                discord.SelectOption(
+                    label="Close",
+                    description="Closes the Select",
+                    value="close",
+                    emoji="❌",
+                ),
             ]
 
             super().__init__(
@@ -174,6 +180,10 @@ class Info(commands.Cog):
                     value=f"**Joined Guild**: {joined_guild} \n**Nickname**: {nickname} \n**Highest Role:** {highest_role}",
                     inline=False,
                 )
+
+            if choice == "close":
+                self.view.remove_item(self)
+                return await interaction.response.edit_message(view=self.view, embed=None)
 
             await interaction.response.edit_message(embed=embed)
 
