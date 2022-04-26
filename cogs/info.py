@@ -60,7 +60,6 @@ class Info(commands.Cog):
         embed.set_image(url=user.display_avatar.url)
 
         view = utils.UserInfoSuper(ctx, user)
-        # view.add_item((self.UserInfoSuperSelects(ctx)))
 
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",

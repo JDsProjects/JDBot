@@ -966,6 +966,7 @@ class UserInfoSuper(discord.ui.View):
             UserInfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
         )
         self.add_item(UserInfoButton(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+        self.add_item((UserInfoSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
 
