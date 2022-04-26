@@ -156,7 +156,7 @@ class Bot(commands.Cog):
 
             member = discord.utils.find(lambda member: member.id == owner.id, self.bot.get_all_members())
             if member:
-                statuses = utils.status_collect(member)
+                statuses = utils.status_collect(member) or []
 
         embed = discord.Embed(
             title=f"Bot Owner: {owner}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at

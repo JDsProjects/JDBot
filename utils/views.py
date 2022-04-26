@@ -899,7 +899,8 @@ class UserInfoSuperSelects(discord.ui.Select):
 
             member = discord.utils.find(lambda member: member.id == user.id, interaction.client.get_all_members())
 
-            statuses = status_collect(member)
+            if member:
+                statuses = status_collect(member) or []
 
         join_statuses = (
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
