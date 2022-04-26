@@ -974,6 +974,7 @@ class UserInfoSuperSelects(discord.ui.Select):
                 self.banner = banner
                 self.banner_fetched = True
 
+            banner = self.banner
             if banner:
                 embed.set_image(url=banner.url)
 
