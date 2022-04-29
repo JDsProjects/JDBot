@@ -268,7 +268,8 @@ class Paginator(View):
             if not button.disabled:
                 button.style = ButtonStyle.green
             elif button.disabled:
-                button.style = ButtonStyle.secondary
+                key = button.custom_id.split("_")[0].upper()  # type: ignore
+                button.style = self._buttons[key].style
 
     @property
     def current_page(self) -> int:
