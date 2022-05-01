@@ -52,8 +52,12 @@ class Test(commands.Cog):
         else:
             is_dm = 1
             tid = ctx.author.id
-        if await db.fetchrow("SELECT * FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid):
+        existing = await db.fetchrow("SELECT * FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)
+        
+        if prefix and existing:
             return await ctx.send("You already have custom prefix set.")
+        if not prefix and not existing:
+            return await ctx.send("You are trying to remove an inexistant prefix.")
 
         if prefix:
             view = utils.BasicButtons(ctx)
