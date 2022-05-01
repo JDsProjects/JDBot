@@ -47,6 +47,8 @@ class Test(commands.Cog):
     async def setprefix(self, ctx, *, prefix: str = None):
         db = self.bot.db
         if ctx.guild:
+            if not ctx.author.guild_permissions.administrator:
+                return await ctx.send("You do not have proper permission for this.")
             is_dm = 0
             tid = ctx.guild.id
         else:
