@@ -53,7 +53,7 @@ class Test(commands.Cog):
             is_dm = 1
             tid = ctx.author.id
         existing = await db.fetchrow("SELECT * FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)
-        
+
         if prefix and existing:
             return await ctx.send("You already have custom prefix set.")
         if not prefix and not existing:
