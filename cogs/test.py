@@ -52,12 +52,12 @@ class Test(commands.Cog):
         else:
             is_dm = 1
             tid = ctx.author.id
-        if (await db.fetchrow("SELECT * FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)):
+        if await db.fetchrow("SELECT * FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid):
             return await ctx.send("You already have custom prefix set.")
-        
+
         if prefix:
             view = utils.BasicButtons(ctx)
-            msg = await ctx.send("Are you sure you want to add prefix ?", view = view)
+            msg = await ctx.send("Are you sure you want to add prefix ?", view=view)
             await view.wait()
             if view.value == None:
                 await msg.delete()
@@ -70,22 +70,21 @@ class Test(commands.Cog):
                 await ctx.send("Successfully set the prefix.")
             else:
                 return await ctx.send("Cancelled.")
-        
+
         else:
             view = utils.BasicButtons(ctx)
-            msg = await ctx.send("Are you sure you want to clear custom prefix ?", view = view)
+            msg = await ctx.send("Are you sure you want to clear custom prefix ?", view=view)
             await view.wait()
 
             if view.value == None:
                 await msg.delete()
                 return await ctx.send("You did not respond in time.")
-            
+
             if view.value:
                 await db.execute("DELETE FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)
                 await ctx.send("Successfully removed prefix.")
             else:
                 return await ctx.send("Cancelled.")
-
 
     @commands.command(brief="WIP thing for birthday set up lol")
     async def birthday_setup(self, ctx):
