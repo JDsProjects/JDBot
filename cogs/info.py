@@ -378,9 +378,10 @@ class DevTools(commands.Cog):
         if modal.value2 is None or modal.value2 is False:
             await message.edit("Default it is.", view=None)
 
-        if modal.value is True:
+        if modal.value2 is True:
             await message.edit("Speacil Formatting at 120 lines it is.")
-        code_conversion = functools.partial(utils.formatter, code.content, bool(modal.value))
+
+        code_conversion = functools.partial(utils.formatter, code.content, bool(modal.value2))
         try:
             code = await self.bot.loop.run_in_executor(None, code_conversion)
 
