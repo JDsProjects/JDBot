@@ -2223,21 +2223,22 @@ class AddBotView(discord.ui.View):
 
 
 class AceModal(discord.ui.Modal):
+    name = discord.ui.TextInput(label="Name", style=discord.TextStyle.short)
+    text = discord.ui.TextInput(label="Text", style=discord.TextStyle.paragraph, max_length=240)
+
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
 
         default = f"{self.view.ctx.author}"
-        self.add_item(
-            discord.ui.TextInput(label="Name:", default=default, placeholder=default, style=discord.TextStyle.short)
-        )
-        self.add_item(discord.ui.TextInput(label="Text:", style=discord.TextStyle.paragraph, max_length=240))
+        self.name.default = default
+        self.name.placeholder = default
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.defer()
         await self.view.message.delete()
-        name = self.children[0].value
-        text = self.children[1].value
+        name = self.name
+        text = self.text
         buf = await self.view.jeyy_client.ace(name, self.side, text)
         buf.seek(0)
         file = discord.File(buf, "out.gif")
