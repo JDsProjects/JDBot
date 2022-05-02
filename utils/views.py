@@ -1884,15 +1884,14 @@ class CalcView(discord.ui.View):
 
 
 # Modal Classes
-class CodeBlockModal(discord.ui.Modal):
+class CodeBlockModal(discord.ui.Modal, title="Pep8 Project Formatter:"):
+    code = discord.ui.TextInput(
+        label="Code Block:", placeholder="Please Put your code here:", style=discord.TextStyle.paragraph
+    )
+
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
-        self.add_item(
-            discord.ui.TextInput(
-                label="Code Block:", placeholder="Please Put your code here:", style=discord.TextStyle.paragraph
-            )
-        )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="Code Block Submitted and Received.", ephemeral=True)
@@ -1951,24 +1950,23 @@ class CodeBlockView(discord.ui.View):
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>", row=1)
     async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
-        modal = CodeBlockModal(self, title="Pep8 Project Formatter:", timeout=180.0)
+        modal = CodeBlockModal(self, timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
-        self.value = modal.children[0].value
+        self.value = modal.code
         button.disabled = True
         await self.message.edit(view=self)
         self.stop()
 
 
-class MailModal(discord.ui.Modal):
+class MailModal(discord.ui.Modal, title="Mail:"):
+    message = discord.ui.TextInput(
+        label="Message:", placeholder="Please Put Your Message Here:", style=discord.TextStyle.paragraph
+    )
+
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
-        self.add_item(
-            discord.ui.TextInput(
-                label="Message:", placeholder="Please Put Your Message Here:", style=discord.TextStyle.paragraph
-            )
-        )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="Message Received.", ephemeral=True)
@@ -2006,32 +2004,31 @@ class MailView(discord.ui.View):
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
     async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
-        modal = MailModal(self, title="Mail:", timeout=180.0)
+        modal = MailModal(self, timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
-        self.value = modal.children[0].value
+        self.value = modal.message
         button.disabled = True
         await self.message.edit(view=self)
         self.stop()
 
 
-class ChatBotModal(discord.ui.Modal):
+class ChatBotModal(discord.ui.Modal, title="ChatBot:"):
+    args = discord.ui.TextInput(
+        label="Message:",
+        placeholder="Please Put Your Message Here:",
+        style=discord.TextStyle.paragraph,
+        min_length=3,
+        max_length=60,
+    )
+
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
-        self.add_item(
-            discord.ui.TextInput(
-                label="Message:",
-                placeholder="Please Put Your Message Here:",
-                style=discord.TextStyle.paragraph,
-                min_length=3,
-                max_length=60,
-            )
-        )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.defer()
-        args = self.children[0].value
+        args = self.args
         self.view.message = await interaction.followup.send(
             "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
@@ -2044,21 +2041,20 @@ class ChatBotModal(discord.ui.Modal):
         await self.view.message.edit(content="You May want to run chatbot again.", view=self.view)
 
 
-class ChatBotModal2(discord.ui.Modal):
+class ChatBotModal2(discord.ui.Modal, title="ChatBot:"):
+    args = discord.ui.TextInput(
+        label="Message:",
+        placeholder="Please Put Your Message Here:",
+        style=discord.TextStyle.paragraph,
+    )
+
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
-        self.add_item(
-            discord.ui.TextInput(
-                label="Message:",
-                placeholder="Please Put Your Message Here:",
-                style=discord.TextStyle.paragraph,
-            )
-        )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.defer()
-        args = self.children[0].value
+        args = self.args
         self.view.message = await interaction.followup.send(
             "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
@@ -2094,14 +2090,14 @@ class ChatBotView(discord.ui.View):
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
     async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
-        modal = ChatBotModal(self, title="ChatBot:", timeout=180.0)
+        modal = ChatBotModal(self, timeout=180.0)
         await interaction.response.send_modal(modal)
         await self.message.edit(view=None)
         await modal.wait()
 
     @discord.ui.button(label="Submit 2", style=discord.ButtonStyle.success, emoji="📥")
     async def Submit_alt(self, interaction: discord.Interaction, button: discord.ui.Button):
-        modal = ChatBotModal2(self, title="ChatBot:", timeout=180.0)
+        modal = ChatBotModal2(self, timeout=180.0)
         await interaction.response.send_modal(modal)
         await self.message.edit(view=None)
         await modal.wait()
@@ -2112,15 +2108,14 @@ class ChatBotView(discord.ui.View):
         await interaction.response.edit_message(content="Closing ChatBot", view=None)
 
 
-class ReportModal(discord.ui.Modal):
+class ReportModal(discord.ui.Modal, title="Report:"):
+    report = discord.ui.TextInput(
+        label="Report Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
+    )
+
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
-        self.add_item(
-            discord.ui.TextInput(
-                label="Report Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
-            )
-        )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="Message Received.", ephemeral=True)
@@ -2158,10 +2153,10 @@ class ReportView(discord.ui.View):
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
     async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
-        modal = ReportModal(self, title="Report:", timeout=180.0)
+        modal = ReportModal(self, timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
-        self.value = modal.children[0].value
+        self.value = modal.report
         button.disabled = True
         await self.message.edit(view=self)
         self.stop()
