@@ -19,6 +19,7 @@ class Moderation(commands.Cog):
 
         warn_useable = utils.warn_permission(ctx, Member)
         # modal for a reason(basically the same button as well above)
+        # soon
 
         if warn_useable:
 

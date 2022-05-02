@@ -42,6 +42,7 @@ class Test(commands.Cog):
         print(args)
         await ctx.send("WIP")
         # will use modals on final
+        # :)
 
     @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
     async def setprefix(self, ctx, *, prefix: str = None):

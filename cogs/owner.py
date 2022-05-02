@@ -604,6 +604,7 @@ class Owner(commands.Cog):
             await ctx.reply("Please give me a reason why:")
             reason = await self.bot.wait_for("message", check=utils.check(ctx))
             # Make it use modals when modals release, with proper checks.
+            # kek
 
             await self.bot.db.execute("INSERT INTO BLACKLISTED_USERS VALUES ($1, $2)", user.id, reason.content)
 
