@@ -2167,15 +2167,14 @@ class ReportView(discord.ui.View):
         self.stop()
 
 
-class AddBotModal(discord.ui.Modal):
+class AddBotModal(discord.ui.Modal, title="Reason:"):
+    reason = discord.ui.TextInput(
+        label="Addbot Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
+    )
+
     def __init__(self, view, **kwargs):
         self.view = view
         super().__init__(**kwargs)
-        self.add_item(
-            discord.ui.TextInput(
-                label="Addbot Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
-            )
-        )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="Message Received.", ephemeral=True)
@@ -2213,10 +2212,10 @@ class AddBotView(discord.ui.View):
 
     @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="📥")
     async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
-        modal = AddBotModal(self, title="Reason:", timeout=180.0)
+        modal = AddBotModal(self, timeout=180.0)
         await interaction.response.send_modal(modal)
         await modal.wait()
-        self.value = modal.children[0].value
+        self.value = modal.reason
         button.disabled = True
         await self.message.edit(view=self)
         self.stop()
