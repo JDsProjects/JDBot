@@ -481,7 +481,7 @@ class Image(commands.Cog):
                 except Exception as e:
                     await ctx.send(f"couldn't convert that :( due to error: {e}")
 
-        elif code:
+        if code:
             try:
                 convert_time = functools.partial(self.convert_svg, code.content)
                 file = await self.bot.loop.run_in_executor(None, convert_time)
@@ -490,7 +490,7 @@ class Image(commands.Cog):
             except Exception as e:
                 await ctx.send(f"couldn't convert that :( due to error: {e}")
 
-        else:
+        if not code and not ctx.message.attachments:
             await ctx.send("you need svg attachments")
 
     @commands.command(brief="uses dagpi to make an image of you in jail")
