@@ -34,7 +34,7 @@ class Extra(commands.Cog):
         )
 
         self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
-        self.sr_api = sr_api.client(session=self.bot.session)
+        self.sr_api = sr_api.Client(session=self.bot.session)
 
     @commands.command(
         brief="a way to look up minecraft usernames",
