@@ -62,6 +62,7 @@ class Test(commands.Cog):
         if not prefix and not existing:
             return await ctx.send("You are trying to remove an inexistant prefix.")
 
+        cache = self.bot.prefix_cache
         if prefix:
             view = utils.BasicButtons(ctx)
             msg = await ctx.send("Are you sure you want to add prefix ?", view=view)
@@ -74,6 +75,7 @@ class Test(commands.Cog):
                 if len(prefix) > 5:
                     return await ctx.send("Prefix cannot be longer than 5 characters.")
                 await db.execute("INSERT INTO PREFIXES VALUES ($1, $2, $3)", is_dm, tid, prefix)
+                cache[tid] = prefix
                 await ctx.send("Successfully set the prefix.")
             else:
                 return await ctx.send("Cancelled.")
@@ -89,6 +91,8 @@ class Test(commands.Cog):
 
             if view.value:
                 await db.execute("DELETE FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)
+                if tid in cache: # to account potential race condition
+                    del cache[tid]
                 await ctx.send("Successfully removed prefix.")
             else:
                 return await ctx.send("Cancelled.")
