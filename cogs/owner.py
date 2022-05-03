@@ -200,7 +200,7 @@ class Owner(commands.Cog):
             # make it use modals when modals release.
 
             await self.bot.db.execute("INSERT INTO sus_users VALUES ($1, $2)", user.id, reason.content)
-
+            self.bot.db.sus_users[user.id] = reason.content
             await ctx.send("added sus users, succesfully")
 
     @commands.command(brief="a command to remove sus users.")
@@ -211,12 +211,13 @@ class Owner(commands.Cog):
         if user:
 
             await self.bot.db.execute("DELETE FROM sus_users WHERE user_id = $1", user.id)
-
+            if user.id in self.bot.db.sus_users:
+                del self.bot.db.sus_users[user.id]
             await ctx.send("Removed sus users.")
 
     @commands.command(brief="a command to grab all in the sus_users list")
     async def sus_users(self, ctx):
-        sus_users = await self.bot.db.fetch("SELECT * FROM SUS_USERS;")
+        sus_users = await self.bot.db.fetch("SELECT * FROM SUS_USERS;") # should we use cache ?
 
         menu = utils.SusUsersEmbed(sus_users, ctx=ctx, disable_after=True)
 
@@ -607,7 +608,7 @@ class Owner(commands.Cog):
             # kek
 
             await self.bot.db.execute("INSERT INTO BLACKLISTED_USERS VALUES ($1, $2)", user.id, reason.content)
-
+            self.bot.db.blacklisted_users[user.id] = reason.content
             await ctx.send(f"blacklisted {user}, succesfully")
 
     @commands.command(brief="a command to blacklist users with a reason")
@@ -619,12 +620,13 @@ class Owner(commands.Cog):
         if user:
 
             await self.bot.db.execute("DELETE FROM BLACKLISTED_USERS WHERE user_id = $1", user.id)
-
+            if user.id in self.bot.db.blacklisted_users:
+                del self.bot.blacklisted_users[user.id]
             await ctx.send(f"unblacklisted {user}, succesfully")
 
     @commands.command(brief="a command to grab all in the blacklisted_users list")
     async def blacklisted(self, ctx):
-        blacklisted_users = await self.bot.db.fetch("SELECT * FROM BLACKLISTED_USERS;")
+        blacklisted_users = await self.bot.db.fetch("SELECT * FROM BLACKLISTED_USERS;") # should we use cache ?
 
         if not blacklisted_users:
             return await ctx.send("None is blacklisted :D")

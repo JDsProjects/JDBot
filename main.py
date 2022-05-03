@@ -93,8 +93,7 @@ class JDBot(commands.Bot):
         # does the DB connection and then assigns it a tester list
 
         self.blacklisted_users = dict(await self.db.fetch("SELECT * FROM BLACKLISTED_USERS;"))
-
-        self.blacklisted_users.update(dict(await self.db.fetch("SELECT * FROM SUS_USERS;")))
+        self.sus_users = dict(await self.db.fetch("SELECT * FROM SUS_USERS;"))
 
         self.history = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
 
