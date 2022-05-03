@@ -481,7 +481,7 @@ class Image(commands.Cog):
                 except Exception as e:
                     await ctx.send(f"couldn't convert that :( due to error: {e}")
 
-        if code:
+        elif code:
             try:
                 convert_time = functools.partial(self.convert_svg, code.content)
                 file = await self.bot.loop.run_in_executor(None, convert_time)
