@@ -14,6 +14,7 @@ import contextlib
 import async_cleverbot
 import asyncpraw
 import utils
+from better_profanity import profanity
 
 
 class Extra(commands.Cog):
@@ -1082,6 +1083,62 @@ class Extra(commands.Cog):
     async def calc(self, ctx):
         view = utils.CalcView(ctx)
         await ctx.send("\u200b", view=view)
+
+    @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
+    async def setprefix(self, ctx, *, prefix: str = None):
+        db = self.bot.db
+        if ctx.guild:
+            if not ctx.author.guild_permissions.administrator and not ctx.author.id in self.bot.owner_ids:
+                return await ctx.send("You do not have proper permission for this.")
+            is_dm = 0
+            tid = ctx.guild.id
+        else:
+            is_dm = 1
+            tid = ctx.author.id
+        existing = await db.fetchrow("SELECT * FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)
+
+        if prefix:
+            if profanity.contains_profanity(prefix):
+                return await ctx.send("Prefix contains profanity, so cannot add it into prefix list.")
+            if existing:
+                return await ctx.send("You already have custom prefix set.")
+        if not prefix and not existing:
+            return await ctx.send("You are trying to remove an inexistant prefix.")
+
+        cache = self.bot.prefix_cache
+        if prefix:
+            view = utils.BasicButtons(ctx)
+            msg = await ctx.send("Are you sure you want to add prefix ?", view=view)
+            await view.wait()
+            if view.value == None:
+                await msg.delete()
+                return await ctx.send("You did not respond in time.")
+
+            if view.value:
+                if len(prefix) > 5:
+                    return await ctx.send("Prefix cannot be longer than 5 characters.")
+                await db.execute("INSERT INTO PREFIXES VALUES ($1, $2, $3)", is_dm, tid, prefix)
+                cache[tid] = prefix
+                await ctx.send("Successfully set the prefix.")
+            else:
+                return await ctx.send("Cancelled.")
+
+        else:
+            view = utils.BasicButtons(ctx)
+            msg = await ctx.send("Are you sure you want to clear custom prefix ?", view=view)
+            await view.wait()
+
+            if view.value == None:
+                await msg.delete()
+                return await ctx.send("You did not respond in time.")
+
+            if view.value:
+                await db.execute("DELETE FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)
+                if tid in cache:  # to account potential race condition
+                    del cache[tid]
+                await ctx.send("Successfully removed prefix.")
+            else:
+                return await ctx.send("Cancelled.")
 
 
 async def setup(bot):
