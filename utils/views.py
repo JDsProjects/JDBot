@@ -2058,8 +2058,8 @@ class ChatBotModal2(discord.ui.Modal, title="ChatBot (Some Random Api):"):
         self.view.message = await interaction.followup.send(
             "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
-        response = await self.view.ask2(args)
-        await self.view.message.edit(f"{response}", view=self.view)
+        # response = await self.view.ask2(args)
+        # await self.view.message.edit(f"{response}", view=self.view)
 
     async def on_timeout(self):
         for i in self.view.children:
