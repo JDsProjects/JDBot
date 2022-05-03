@@ -8,6 +8,7 @@ import functools
 from discord.ext import commands
 import utils
 import jeyyapi
+from jishaku.codeblocks import codeblock_converter
 
 
 class Image(commands.Cog):
@@ -469,7 +470,7 @@ class Image(commands.Cog):
         return discord.File(buffer, filename="converted.png")
 
     @commands.command(brief="Converts svg images to png images")
-    async def svgconvert(self, ctx, *, code: str = None):
+    async def svgconvert(self, ctx, *, code: codeblock_converter = None):
         if ctx.message.attachments:
             for a in ctx.message.attachments:
                 try:
@@ -482,7 +483,7 @@ class Image(commands.Cog):
 
         if code:
             try:
-                convert_time = functools.partial(self.convert_svg, code)
+                convert_time = functools.partial(self.convert_svg, code.content)
                 file = await self.bot.loop.run_in_executor(None, convert_time)
                 await ctx.send(file=file)
 
