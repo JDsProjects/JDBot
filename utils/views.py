@@ -510,7 +510,7 @@ class BlacklistedUsersEmbed(Paginator):
     async def format_page(self, item):
         embed = discord.Embed(title="Users Blacklisted by JDJG Inc. Official", color=random.randint(0, 16777215))
         embed.add_field(
-            name=f"User ID : {item.get('user_id')}", value=f"**Reason :** {item.get('reason')}", inline=False
+            name=f"User ID : {item}", value=f"**Reason :** {self.ctx.bot.blacklisted_users.get(item)}", inline=False
         )
         return embed
 
