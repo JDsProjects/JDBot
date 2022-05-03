@@ -217,7 +217,7 @@ class Owner(commands.Cog):
 
     @commands.command(brief="a command to grab all in the sus_users list")
     async def sus_users(self, ctx):
-        sus_users = self.bot.sus_users
+        sus_users = list(self.bot.sus_users)
 
         menu = utils.SusUsersEmbed(sus_users, ctx=ctx, disable_after=True)
 
@@ -626,7 +626,7 @@ class Owner(commands.Cog):
 
     @commands.command(brief="a command to grab all in the blacklisted_users list")
     async def blacklisted(self, ctx):
-        blacklisted_users = self.bot.blacklisted_users
+        blacklisted_users = list(self.bot.blacklisted_users)
 
         if not blacklisted_users:
             return await ctx.send("None is blacklisted :D")
