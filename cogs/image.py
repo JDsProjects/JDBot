@@ -466,10 +466,10 @@ class Image(commands.Cog):
         converted_bytes = cairosvg.svg2png(bytestring=svg_image, scale=6.0)
         buffer = io.BytesIO(converted_bytes)
         buffer.seek(0)
-        return discord.File(buffer, filename=f"converted.png")
+        return discord.File(buffer, filename="converted.png")
 
     @commands.command(brief="Converts svg images to png images")
-    async def svgconvert(self, ctx):
+    async def svgconvert(self, ctx, *, code: str = None):
         if ctx.message.attachments:
             for a in ctx.message.attachments:
                 try:
@@ -479,6 +479,15 @@ class Image(commands.Cog):
 
                 except Exception as e:
                     await ctx.send(f"couldn't convert that :( due to error: {e}")
+
+        if code:
+            try:
+                convert_time = functools.partial(self.convert_svg, code)
+                file = await self.bot.loop.run_in_executor(None, convert_time)
+                await ctx.send(file=file)
+
+            except Exception as e:
+                await ctx.send(f"couldn't convert that :( due to error: {e}")
 
         else:
             await ctx.send("you need svg attachments")
