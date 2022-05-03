@@ -10,7 +10,7 @@ import tweepy
 import os
 import functools
 import traceback
-
+from better_profanity import profanity
 
 class Test(commands.Cog):
     """A cog to have people test new commands, or wip ones"""
@@ -57,8 +57,11 @@ class Test(commands.Cog):
             tid = ctx.author.id
         existing = await db.fetchrow("SELECT * FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)
 
-        if prefix and existing:
-            return await ctx.send("You already have custom prefix set.")
+        if prefix:
+            if profanity.contains_profanity(prefix):
+                return await ctx.send("Prefix contains profanity, so cannot add it into prefix list.")
+            if existing:
+                return await ctx.send("You already have custom prefix set.")
         if not prefix and not existing:
             return await ctx.send("You are trying to remove an inexistant prefix.")
 
