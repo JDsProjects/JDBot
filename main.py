@@ -14,18 +14,19 @@ dotenv.load_dotenv()
 async def get_prefix(bot, message):
     extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te."]
 
-    if message.guild.id in bot.prefix_cache:
-        prefix = bot.prefix_cache[message.guild.id]
-        if prefix != None:
-            extras.append(prefix)
-    else:
-        db = bot.db
-        dbprefix = await db.fetchrow("SELECT prefix FROM PREFIXES WHERE is_dm = 0 AND id = $1", message.guild.id)
-        if dbprefix:
-            dbprefix = dbprefix.get("prefix")
-        bot.prefix_cache[message.guild.id] = dbprefix
-        if dbprefix:
-            extras.append(dbprefix)
+    if message.guild:
+        if message.guild.id in bot.prefix_cache:
+            prefix = bot.prefix_cache[message.guild.id]
+            if prefix != None:
+                extras.append(prefix)
+        else:
+            db = bot.db
+            dbprefix = await db.fetchrow("SELECT prefix FROM PREFIXES WHERE is_dm = 0 AND id = $1", message.guild.id)
+            if dbprefix:
+                dbprefix = dbprefix.get("prefix")
+            bot.prefix_cache[message.guild.id] = dbprefix
+            if dbprefix:
+                extras.append(dbprefix)
 
     if message.author.id in bot.prefix_cache:
         prefix = bot.prefix_cache[message.author.id]
