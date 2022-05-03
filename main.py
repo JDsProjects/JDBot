@@ -14,6 +14,33 @@ dotenv.load_dotenv()
 async def get_prefix(bot, message):
     extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te."]
 
+    if message.guild.id in bot.prefix_cache:
+        prefix = bot.prefix_cache[message.guild.id]
+        if prefix != None:
+            extras.append(prefix)
+    else:
+        db = bot.db
+        dbprefix = await db.fetchrow("SELECT prefix FROM PREFIXES WHERE is_dm = 0 AND id = $1", message.guild.id)
+        if dbprefix:
+            dbprefix = dbprefix.get("prefix")
+        bot.prefix_cache[message.guild.id] = dbprefix
+        if dbprefix:
+            extras.append(dbprefix)
+
+    if message.author.id in bot.prefix_cache:
+        prefix = bot.prefix_cache[message.author.id]
+        if prefix != None:
+            extras.append(prefix)
+    else:
+        db = bot.db
+        dbprefix = await db.fetchrow("SELECT prefix FROM PREFIXES WHERE is_dm = 1 AND id = $1", message.author.id)
+        if dbprefix:
+            dbprefix = dbprefix.get("prefix")
+        bot.prefix_cache[message.author.id] = dbprefix
+        if dbprefix:
+            extras.append(dbprefix)
+
+
     comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
     match = comp.match(message.content)
     if match is not None:
@@ -51,6 +78,7 @@ class JDBot(commands.Bot):
         self.messages = {}
         self.suspended = False
         self.prefixless = False
+        self.prefix_cache = {}
         # used for testing purposes and to make the bot prefixless for owners only
 
     async def start(self, *args, **kwargs):
