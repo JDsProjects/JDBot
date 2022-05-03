@@ -2013,7 +2013,7 @@ class MailView(discord.ui.View):
         self.stop()
 
 
-class ChatBotModal(discord.ui.Modal, title="ChatBot:"):
+class ChatBotModal(discord.ui.Modal, title="ChatBot(Travitia API):"):
     args = discord.ui.TextInput(
         label="Message:",
         placeholder="Please Put Your Message Here:",
@@ -2041,7 +2041,7 @@ class ChatBotModal(discord.ui.Modal, title="ChatBot:"):
         await self.view.message.edit(content="You May want to run chatbot again.", view=self.view)
 
 
-class ChatBotModal2(discord.ui.Modal, title="ChatBot:"):
+class ChatBotModal2(discord.ui.Modal, title="ChatBot (Some Random Api):"):
     args = discord.ui.TextInput(
         label="Message:",
         placeholder="Please Put Your Message Here:",
@@ -2058,7 +2058,7 @@ class ChatBotModal2(discord.ui.Modal, title="ChatBot:"):
         self.view.message = await interaction.followup.send(
             "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
-        response = await self.view.ask(args, self.view.ctx.author.id)
+        response = await self.view.ask2(args)
         await self.view.message.edit(f"{response}", view=self.view)
 
     async def on_timeout(self):
