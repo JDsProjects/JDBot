@@ -41,7 +41,6 @@ async def get_prefix(bot, message):
         if dbprefix:
             extras.append(dbprefix)
 
-
     comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
     match = comp.match(message.content)
     if match is not None:
@@ -175,7 +174,7 @@ async def check_command_access(ctx):
 
 @bot.check
 async def check_blacklist(ctx):
-    return not ctx.author.id in bot.blacklisted_users
+    return not ctx.author.id in bot.blacklisted_users or not ctx.author.id in bot.sus_users
 
 
 @bot.check

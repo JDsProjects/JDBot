@@ -13,7 +13,6 @@ import asyncio
 import contextlib
 import async_cleverbot
 import asyncpraw
-import sr_api
 import utils
 
 
@@ -34,7 +33,7 @@ class Extra(commands.Cog):
         )
 
         self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
-        self.sr_api = sr_api.Client(session=self.bot.session)
+        # self.sr_api = sr_api.Client(session=self.bot.session)
 
     @commands.command(
         brief="a way to look up minecraft usernames",
@@ -568,7 +567,7 @@ class Extra(commands.Cog):
 
         view = utils.ChatBotView(ctx)
         view.ask = self.cleverbot.ask
-        view.ask2 = self.sr_api.chatbot
+        # view.ask2 = self.sr_api.chatbot
         await ctx.reply(
             "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.)\nPlease Hit the buttons now to start the modal ",
             view=view,

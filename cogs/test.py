@@ -12,6 +12,7 @@ import functools
 import traceback
 from better_profanity import profanity
 
+
 class Test(commands.Cog):
     """A cog to have people test new commands, or wip ones"""
 
@@ -94,7 +95,7 @@ class Test(commands.Cog):
 
             if view.value:
                 await db.execute("DELETE FROM PREFIXES WHERE is_dm = $1 AND id = $2", is_dm, tid)
-                if tid in cache: # to account potential race condition
+                if tid in cache:  # to account potential race condition
                     del cache[tid]
                 await ctx.send("Successfully removed prefix.")
             else:
