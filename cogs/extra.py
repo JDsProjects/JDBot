@@ -1141,7 +1141,7 @@ class Extra(commands.Cog):
             else:
                 return await ctx.send("Cancelled.")
 
-    @commands.command(alias=["aki"], brief="akinator game made by Tom the Bomb")
+    @commands.command(aliases=["aki"], brief="akinator game made by Tom the Bomb")
     async def akinator(self, ctx):
 
         game = button_games.BetaAkinator()
