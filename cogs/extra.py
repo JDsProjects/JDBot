@@ -15,6 +15,7 @@ import async_cleverbot
 import asyncpraw
 import utils
 from better_profanity import profanity
+from Discord_Games import button_games
 
 
 class Extra(commands.Cog):
@@ -1139,6 +1140,12 @@ class Extra(commands.Cog):
                 await ctx.send("Successfully removed prefix.")
             else:
                 return await ctx.send("Cancelled.")
+
+    @commands.command(alias=["aki"], brief="akinator game made by Tom the Bomb")
+    async def akinator(self, ctx):
+
+        game = button_games.BetaAkinator()
+        await game.start(ctx, timeout=120, delete_button=True)
 
 
 async def setup(bot):
