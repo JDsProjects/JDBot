@@ -454,7 +454,7 @@ Pillow = "*"
 type = "git"
 url = "https://github.com/Tom-the-Bomb/Discord-Games"
 reference = "master"
-resolved_reference = "0bae572e0c41c43d80ca3bc318e2461f64b10457"
+resolved_reference = "8ec70e4f36bf4c4cf90aa34682d89663a5d2bd93"
 
 [[package]]
 name = "discord.py"
