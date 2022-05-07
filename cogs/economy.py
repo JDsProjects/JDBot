@@ -57,10 +57,10 @@ class Economy(commands.Cog):
             await view.wait()
 
             if view.value is None:
-                return await msg.edit("you didn't respond quickly enough")
+                return await msg.edit(content="you didn't respond quickly enough")
 
             if not view.value:
-                return await msg.edit("Not adding you to the database")
+                return await msg.edit(content="Not adding you to the database")
 
             if view.value:
                 await ctx.send("adding you to the database for economy...")
@@ -115,10 +115,10 @@ class Economy(commands.Cog):
         await view.wait()
 
         if view.value is None:
-            return await msg.edit("you didn't respond quickly enough")
+            return await msg.edit(content="you didn't respond quickly enough")
 
         if not view.value:
-            return await msg.edit("Not removing you from the database")
+            return await msg.edit(content="Not removing you from the database")
 
         if view.value:
 
@@ -135,7 +135,7 @@ class Economy(commands.Cog):
             )
 
             await msg.edit(
-                "removing you from the database for economy and archiving the economy data to our channel(so we can have you join back if you want, if you want it to fully removed, you can ask JDJG Inc. Official#3493, but once it's gone from the channel, it's gone for good) and in the guild right there...",
+                content="removing you from the database for economy and archiving the economy data to our channel(so we can have you join back if you want, if you want it to fully removed, you can ask JDJG Inc. Official#3493, but once it's gone from the channel, it's gone for good) and in the guild right there...",
                 embed=embed,
             )
 
