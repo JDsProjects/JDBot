@@ -102,7 +102,7 @@ class Ticket(commands.Cog):
             author = self.ticket_cache[message.channel.id]["author"]
             author = self.bot.get_user(author)
             await author.send(f"`{message.author}:` {message.content}")
-        elif message.author.id in self.ticket_cache:
+        elif not message.guild and message.author.id in self.ticket_cache:
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
             await thread.send(f"`{message.author}:` {message.content}")
