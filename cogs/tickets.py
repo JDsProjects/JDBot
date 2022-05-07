@@ -52,7 +52,7 @@ class Ticket(commands.Cog):
             }
 
     async def handle_ticket_db_side(self, author_id: int, remote_id: int):
-        timestamp = datetime.datetime.now(tz=datetime.timezone.utc)
+        timestamp = discord.utils.utcnow()
         timestamp = timestamp + datetime.timedelta(3)
         self.ticket_cache[author_id] = self.ticket_cache[remote_id] = {
             "author": author_id,
