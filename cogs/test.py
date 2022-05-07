@@ -11,8 +11,6 @@ import os
 import functools
 import traceback
 
-from ..main import JDBot
-
 
 class Test(commands.Cog):
     """A cog to have people test new commands, or wip ones"""
