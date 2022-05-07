@@ -69,8 +69,8 @@ class Economy(commands.Cog):
 
                 economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = $1", member.id)
 
-        wallet = economy.get("wallet")
-        bank = economy.get("bank")
+        wallet = economy.wallet
+        bank = economy.bank
 
         embed = discord.Embed(title=f"{member}'s Balance:", color=random.randint(0, 16777215))
         embed.add_field(name="Wallet:", value=f"${wallet:,}")
