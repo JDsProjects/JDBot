@@ -146,6 +146,11 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # soon to be a reminders like thing like R.danny's ofc with my own code
 
+    @commands.command(brief="Notes so you can refer back to them for important stuff")
+    async def notes(self, ctx):
+        await ctx.send("WIP")
+        #Note this is not like todo, todo is for small things, notes is for big things
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
