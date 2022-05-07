@@ -72,12 +72,12 @@ class JDBotContext(commands.Context):
         return msg
 
 
-
 class CustomRecordClass(asyncpg.Record):
     def __getattr__(self, name: str) -> typing.Any:
         if name in self.keys():
             return self[name]
         return super().__getattr__(name)
+
 
 class JDBot(commands.Bot):
     def __init__(self, *args, **kwargs):

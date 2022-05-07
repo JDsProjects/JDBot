@@ -6,12 +6,14 @@ if TYPE_CHECKING:
     from asyncpg import Pool
 
     class RecordType(Protocol):
-        def get(self, key: str) -> Any: ...
+        def get(self, key: str) -> Any:
+            ...
 
     class TicketCacheData(TypedDict):
         author: discord.User
         remote: int
         timestamp: datetime.datetime
+
 
 import datetime
 import time
@@ -19,37 +21,43 @@ import time
 import discord
 from discord.ext import commands
 
+
 class Ticket(commands.Cog):
     def __init__(self, bot: JDBot):
         self.bot = bot
         self.pool: Pool = self.bot.db
         self.ticket_cache: dict[int, TicketCacheData] = {}
-        self.main_channel: discord.TextChannel = None # filled in create_ticket
-    
+        self.main_channel: discord.TextChannel = None  # filled in create_ticket
+
     async def cog_load(self):
         pool = self.pool
-        
+
         records: list[RecordType] = await pool.fetch("SELECT * FROM TICKETS")
-        now = datetime.datetime.now(tz = datetime.timezone.utc)
+        now = datetime.datetime.now(tz=datetime.timezone.utc)
         for record in records:
             author: int = record.get("author_id")
             remote: int = record.get("remote_id")
             end_timestamp: int = (record.get("end_timestamp")) / 1000
-            
-            end_timestamp = datetime.datetime.fromtimestamp(
-                end_timestamp, 
-                tz = datetime.timezone.utc
-            )
+
+            end_timestamp = datetime.datetime.fromtimestamp(end_timestamp, tz=datetime.timezone.utc)
             if now > end_timestamp:
                 # How did this even exist in first place ?
                 await pool.execute("DELETE FROM TICKETS WHERE author_id = $1 AND remote_id = $2", author, remote)
                 continue
-            self.ticket_cache[author] = self.ticket_cache[remote] = {"author": author, "remote": remote, "timestamp": end_timestamp}
-    
+            self.ticket_cache[author] = self.ticket_cache[remote] = {
+                "author": author,
+                "remote": remote,
+                "timestamp": end_timestamp,
+            }
+
     async def handle_ticket_db_side(self, author_id: int, remote_id: int):
-        timestamp = datetime.datetime.now(tz = datetime.timezone.utc)
+        timestamp = datetime.datetime.now(tz=datetime.timezone.utc)
         timestamp = timestamp + datetime.timedelta(3)
-        self.ticket_cache[author_id] = self.ticket_cache[remote_id] = {"author": author_id, "remote": remote_id, "timestamp": timestamp}
+        self.ticket_cache[author_id] = self.ticket_cache[remote_id] = {
+            "author": author_id,
+            "remote": remote_id,
+            "timestamp": timestamp,
+        }
         unix = timestamp.timetuple()
         unix = time.mktime(unix) * 1000
         await self.pool.execute("INSERT INTO TICKETS VALUES ($1, $2, $3)", author_id, remote_id, unix)
@@ -62,11 +70,13 @@ class Ticket(commands.Cog):
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket while a ticket is not responded.")
         ticket_channel = self.main_channel
-        thread_channel = await ticket_channel.create_thread(name = f"User {context.author.name}#{context.author.discriminator} - {context.author.id}")
+        thread_channel = await ticket_channel.create_thread(
+            name=f"User {context.author.name}#{context.author.discriminator} - {context.author.id}"
+        )
         await thread_channel.send(f"`{context.author}:` {starter_message}")
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
         await ticket_channel.send("<@168422909482762240> New support ticket.")
-    
+
     @create_ticket.error
     async def create_ticker_error(self, context: JDBotContext, exception: Exception):
         error = getattr(exception, "original", exception)
