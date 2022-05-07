@@ -99,4 +99,4 @@ class Ticket(commands.Cog):
 
 
 async def setup(bot: JDBot):
-    bot.add_cog(Ticket(bot))
+    await bot.add_cog(Ticket(bot))
