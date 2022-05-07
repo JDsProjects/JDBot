@@ -67,13 +67,6 @@ class Events(commands.Cog):
     async def on_message(self, message):
         test = await self.bot.get_context(message)
 
-        if isinstance(message.channel, discord.DMChannel):
-            if test.prefix is None or self.bot.user.mentioned_in(message):
-                if message.author.id != self.bot.user.id and test.valid is False:
-                    await message.channel.send(
-                        "Ticket Support is coming soon. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493"
-                    )
-
         if (test.valid) == False and test.prefix != None and test.command is None and test.prefix != "":
 
             embed_message = discord.Embed(
