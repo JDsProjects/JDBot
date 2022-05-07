@@ -29,7 +29,7 @@ class Ticket(commands.Cog):
         self.pool: Pool = self.bot.db
         self.ticket_cache: dict[int, TicketCacheData] = {}
         self.main_channel: discord.TextChannel = None  # filled in create_ticket
-        self.support_role: discord.Role = None # filled in create_ticket
+        self.support_role: discord.Role = None  # filled in create_ticket
 
     async def cog_load(self):
         pool = self.pool
@@ -63,8 +63,8 @@ class Ticket(commands.Cog):
         unix = timestamp.timetuple()
         unix = time.mktime(unix) * 1000
         await self.pool.execute("INSERT INTO TICKETS VALUES ($1, $2, $3)", author_id, remote_id, unix)
-    
-    @commands.command(brief = "Closes support ticket.")
+
+    @commands.command(brief="Closes support ticket.")
     async def close(self, context: JDBotContext):
         if not context.guild:
             if context.author.id not in self.ticket_cache:
@@ -72,17 +72,19 @@ class Ticket(commands.Cog):
             remote = self.ticket_cache[context.author.id]["remote"]
             remote = self.bot.get_channel(remote)
             await remote.send("The user closed the ticket.")
-        
+
         else:
             if not context.channel.id in self.ticket_cache:
                 return await context.send("This is not ticket channel.")
             author = self.ticket_cache[context.channel.id]["author"]
             author = self.bot.get_user(author)
             await author.send("Support team has closed your ticket.")
-        
+
         del self.ticket_cache[remote.id]
         del self.ticket_cache[context.author.id]
-        await self.pool.execute("DELETE FROM TICKETS WHERE author_id = $1 AND remote_id = $2", context.author.id, remote.id)
+        await self.pool.execute(
+            "DELETE FROM TICKETS WHERE author_id = $1 AND remote_id = $2", context.author.id, remote.id
+        )
 
     @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
@@ -123,15 +125,17 @@ class Ticket(commands.Cog):
         if not self.main_channel:
             self.main_channel = self.bot.get_channel(855947100730949683)
             self.support_role = self.bot.get_guild(736422329399246990).get_role(855219483295875072)
-       
+
         if message.guild and message.guild.id == 736422329399246990 and message.channel.id in self.ticket_cache:
             author = self.ticket_cache[message.channel.id]["author"]
             author = self.bot.get_user(author)
             await author.send(f"`{message.author}:` {message.content}")
-        
+
         elif not message.guild and message.author.id in self.ticket_cache:
             if self.support_role not in message.author.roles:
-                return await message.reply("<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't staff.")
+                return await message.reply(
+                    "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't staff."
+                )
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
             await thread.send(f"`{message.author}:` {message.content}")
