@@ -710,10 +710,12 @@ class Extra(commands.Cog):
 
                 except Exception as e:
                     await asyncio.sleep(1)
-                    return await msg.edit(f"failed caching members with query_members in discord.py with error {e}")
+                    return await msg.edit(
+                        content=f"failed caching members with query_members in discord.py with error {e}"
+                    )
 
                 await asyncio.sleep(1)
-                await msg.edit("successfully cached you")
+                await msg.edit(content="successfully cached you")
 
             else:
                 await msg.delete()
@@ -980,10 +982,10 @@ class Extra(commands.Cog):
         await view.wait()
 
         if view.value is None:
-            return await msg.edit("you didn't respond quickly enough")
+            return await msg.edit(content="you didn't respond quickly enough")
 
         if not view.value:
-            return await msg.edit("Not editing your item from todo.")
+            return await msg.edit(content="Not editing your item from todo.")
 
         if view.value:
 
@@ -1009,7 +1011,7 @@ class Extra(commands.Cog):
             embed.add_field(name="Old Text:", value=f"{todo['text']}")
             embed.add_field(name="New Text:", value=f"{text[0:4000]}")
             embed.set_footer(text="Creation Date")
-            await msg.edit("Edited the item Succesfully.", embed=embed)
+            await msg.edit(content="Edited the item Succesfully.", embed=embed)
 
     @todo.command(brief="removes items in todo")
     async def remove(self, ctx, *, number: typing.Optional[int] = None):
@@ -1041,10 +1043,10 @@ class Extra(commands.Cog):
         await view.wait()
 
         if view.value is None:
-            return await msg.edit("you didn't respond quickly enough")
+            return await msg.edit(content="you didn't respond quickly enough")
 
         if not view.value:
-            return await msg.edit("Not remove your item from todo.")
+            return await msg.edit(content="Not remove your item from todo.")
 
         if view.value:
 
@@ -1052,7 +1054,7 @@ class Extra(commands.Cog):
                 "DELETE FROM todo WHERE user_id = $1 and ADDED_TIME = $2", ctx.author.id, todo["added_time"]
             )
 
-            await msg.edit("Successfully removed your item :D")
+            await msg.edit(content="Successfully removed your item :D")
 
     @todo.command(brief="removes all your items in todo")
     async def clear(self, ctx):
@@ -1070,15 +1072,17 @@ class Extra(commands.Cog):
 
         await view.wait()
         if view.value is None:
-            return await msg.edit("you didn't respond quickly enough")
+            return await msg.edit(content="you didn't respond quickly enough")
 
         if not view.value:
-            return await msg.edit("Not removing your todo list from the database, 0 items are removed as a result.")
+            return await msg.edit(
+                content="Not removing your todo list from the database, 0 items are removed as a result."
+            )
 
         if view.value:
 
             await self.bot.db.execute("DELETE FROM todo WHERE user_id = $1", ctx.author.id)
-            await msg.edit(f"We Removed **{len(values)}** values")
+            await msg.edit(content=f"We Removed **{len(values)}** values")
 
     @commands.command(brief="a command that does calc with buttons", aliases=["calculator"])
     async def calc(self, ctx):

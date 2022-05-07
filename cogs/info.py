@@ -376,17 +376,17 @@ class DevTools(commands.Cog):
         code = codeblock_converter(argument=f"{modal.value}")
 
         if modal.value2 is None or modal.value2 is False:
-            await message.edit("Default it is.", view=None)
+            await message.edit(content="Default it is.", view=None)
 
         if modal.value2 is True:
-            await message.edit("Speacil Formatting at 120 lines it is.")
+            await message.edit(content="Speacil Formatting at 120 lines it is.")
 
         code_conversion = functools.partial(utils.formatter, code.content, bool(modal.value2))
         try:
             code = await self.bot.loop.run_in_executor(None, code_conversion)
 
         except Exception as e:
-            return await message.edit(f"Error Ocurred with {e}")
+            return await message.edit(content=f"Error Ocurred with {e}")
 
         embed = discord.Embed(
             title="Reformatted with Black",
@@ -595,7 +595,7 @@ class DevTools(commands.Cog):
 
         if modal.value is None:
             ctx.command.reset_cooldown(ctx)
-            return await message.edit("Provide a reason why you want your bot added to your guild")
+            return await message.edit(content="Provide a reason why you want your bot added to your guild")
 
         guild = self.bot.get_guild(438848185008390158)
         member = await self.bot.try_member(guild, ctx.author.id)
@@ -611,7 +611,7 @@ class DevTools(commands.Cog):
                 )
             )
             return await message.edit(
-                "Make sure to join the guild linked soon... then rerun the command. If you are in the guild contact the owner(the owner is listed in the owner command)",
+                content="Make sure to join the guild linked soon... then rerun the command. If you are in the guild contact the owner(the owner is listed in the owner command)",
                 view=view,
             )
 
