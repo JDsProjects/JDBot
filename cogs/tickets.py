@@ -34,7 +34,7 @@ class Ticket(commands.Cog):
         pool = self.pool
 
         records: list[RecordType] = await pool.fetch("SELECT * FROM TICKETS")
-        now = datetime.datetime.now(tz=datetime.timezone.utc)
+        now = discord.utils.utcnow()
         for record in records:
             author: int = record.get("author_id")
             remote: int = record.get("remote_id")
