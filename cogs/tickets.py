@@ -71,6 +71,7 @@ class Ticket(commands.Cog):
             return await context.send("You cannot create another ticket while a ticket is not responded.")
         ticket_channel = self.main_channel
         thread_channel = await ticket_channel.create_thread(name=f"User {context.author} - {context.author.id}")
+        await self.handle_ticket_db_side(context.author.id, thread_channel.id)
         await thread_channel.send(f"`{context.author}:` {starter_message}")
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
         await ticket_channel.send("<@168422909482762240> New support ticket.")
@@ -99,4 +100,4 @@ class Ticket(commands.Cog):
 
 
 async def setup(bot: JDBot):
-    bot.add_cog(Ticket(bot))
+    await bot.add_cog(Ticket(bot))
