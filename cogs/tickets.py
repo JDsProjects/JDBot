@@ -98,8 +98,6 @@ class Ticket(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.guild:
-            return
         if message.channel.id in self.ticket_cache:
             author = self.ticket_cache[message.channel.id]["author"]
             author = self.bot.get_user(author)
