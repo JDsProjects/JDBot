@@ -100,7 +100,7 @@ class Ticket(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
-        print(message.channel)
+
         if message.guild and message.guild.id == 736422329399246990 and message.channel.id in self.ticket_cache:
             author = self.ticket_cache[message.channel.id]["author"]
             author = self.bot.get_user(author)
