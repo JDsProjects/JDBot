@@ -74,7 +74,7 @@ class Ticket(commands.Cog):
         thread_channel = await ticket_channel.create_thread(
             name=f"User {context.author} - {context.author.id}",
             type=discord.ChannelType.public_thread,
-            reason="Support Request"
+            reason="Support Request",
         )
         await self.handle_ticket_db_side(context.author.id, thread_channel.id)
 
