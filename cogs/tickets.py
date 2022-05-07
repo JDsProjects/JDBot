@@ -98,7 +98,7 @@ class Ticket(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.author.bot: 
+        if message.author.bot:
             return
         print(message.channel)
         if message.guild and message.guild.id == 736422329399246990 and message.channel.id in self.ticket_cache:
