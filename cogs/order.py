@@ -57,13 +57,13 @@ class Order(commands.Cog):
         await view.wait()
 
         if view.value is None:
-            await msg.edit("Finding the closest url")
+            await msg.edit(content="Finding the closest url")
 
         if not view.value:
-            await msg.edit("Not using random results")
+            await msg.edit(content="Not using random results")
 
         if view.value:
-            await msg.edit("Shuffled it is")
+            await msg.edit(content="Shuffled it is")
 
         time_before = time.perf_counter()
 
@@ -127,13 +127,13 @@ class Order(commands.Cog):
         await view.wait()
 
         if view.value is None:
-            await msg.edit("Finding the closest url")
+            await msg.edit(content="Finding the closest url")
 
         if not view.value:
-            await msg.edit("Not using random results")
+            await msg.edit(content="Not using random results")
 
         if view.value:
-            await msg.edit("Shuffled it is")
+            await msg.edit(content="Shuffled it is")
 
         time_before = time.perf_counter()
 
@@ -206,13 +206,13 @@ class Order(commands.Cog):
         await view.wait()
 
         if view.value is None:
-            await msg.edit("Finding the closest url")
+            await msg.edit(content="Finding the closest url")
 
         if not view.value:
-            await msg.edit("Not using random results")
+            await msg.edit(content="Not using random results")
 
         if view.value:
-            await msg.edit("Shuffled it is")
+            await msg.edit(content="Shuffled it is")
 
         time_before = time.perf_counter()
         safesearch_type = AgeRating.g()

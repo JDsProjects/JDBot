@@ -153,7 +153,7 @@ class Moderation(commands.Cog):
             await message.edit(content="report sent to JDJG", embed=embed)
 
         if modal.value is None:
-            await message.edit("You didn't give enough information to use.")
+            await message.edit(content="You didn't give enough information to use.")
 
     @commands.command(brief="cleat amount/purge messages above to 100 msgs each", aliases=["purge"])
     async def clear(self, ctx, *, amount: typing.Optional[int] = None):

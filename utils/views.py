@@ -1382,7 +1382,7 @@ class ReRun(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.view.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+        await self.view.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
 
@@ -1507,7 +1507,7 @@ class RpsGame(discord.ui.View):
             item.disabled = True
 
         await self.message.edit(
-            "You didn't respond fast enough, you lost.(Play again by running game again)", view=self
+            content="You didn't respond fast enough, you lost.(Play again by running game again)", view=self
         )
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -1565,7 +1565,7 @@ class CoinFlip(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+        await self.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
 
@@ -1626,7 +1626,7 @@ class GuessingGame(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.message.edit("Looks it like it timed out.(may want to make an new game)", view=self)
+        await self.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
 
@@ -2033,7 +2033,7 @@ class ChatBotModal(discord.ui.Modal, title="ChatBot(Travitia API):"):
             "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
         response = await self.view.ask(args, self.view.ctx.author.id)
-        await self.view.message.edit(f"{response}", view=self.view)
+        await self.view.message.edit(content=f"{response}", view=self.view)
 
     async def on_timeout(self):
         for i in self.view.children:
@@ -2059,7 +2059,7 @@ class ChatBotModal2(discord.ui.Modal, title="ChatBot (Some Random Api):"):
             "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
         # response = await self.view.ask2(args)
-        # await self.view.message.edit(f"{response}", view=self.view)
+        # await self.view.message.edit(content=f"{response}", view=self.view)
 
     async def on_timeout(self):
         for i in self.view.children:
