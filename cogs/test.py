@@ -18,10 +18,6 @@ class Test(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def ticket_make(self, ctx):
-        await ctx.send("WIP, will make ticket soon.. Please Contact the owner with the support command")
-
     @commands.command(brief="this command will error by sending no content")
     async def te(self, ctx):
         await ctx.send("this command will likely error...")
