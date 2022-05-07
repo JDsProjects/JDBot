@@ -20,6 +20,7 @@ import time
 
 import discord
 from discord.ext import commands
+import traceback
 
 
 class Ticket(commands.Cog):
@@ -89,6 +90,7 @@ class Ticket(commands.Cog):
             return await context.send("You have to run this command in DM.")
         else:
             await context.send(error)
+            traceback.print_exc()
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
