@@ -26,7 +26,7 @@ class Ticket(commands.Cog):
         self.ticket_cache: dict[int, TicketCacheData] = {}
         self.main_channel: discord.TextChannel = None # filled in create_ticket
     
-    async def __ainit__(self):
+    async def cog_load(self):
         pool = self.pool
         
         records: list[RecordType] = await pool.fetch("SELECT * FROM TICKETS")
@@ -91,6 +91,4 @@ class Ticket(commands.Cog):
 
 
 async def setup(bot: JDBot):
-    inst = Ticket(bot)
-    await inst.__ainit__()
-    bot.add_cog(inst)
+    bot.add_cog(Ticket(bot))
