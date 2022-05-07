@@ -63,7 +63,7 @@ class Ticket(commands.Cog):
             return await context.send("You cannot create another ticket while a ticket is not responded.")
         ticket_channel = self.main_channel
         thread_channel = await ticket_channel.create_thread(name = f"User {context.author.name}#{context.author.discriminator} - {context.author.id}")
-        await thread_channel.send(f"`{context.author.name}#{context.author.discriminator}:` {starter_message}")
+        await thread_channel.send(f"`{context.author}:` {starter_message}")
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
         await ticket_channel.send("<@168422909482762240> New support ticket.")
     
@@ -83,11 +83,11 @@ class Ticket(commands.Cog):
         if message.channel.id in self.ticket_cache:
             author = self.ticket_cache[message.channel.id]["author"]
             author = self.bot.get_user(author)
-            await author.send(f"`{message.author.name}#{message.author.discriminator}:` {message.content}")
+            await author.send(f"`{message.author}:` {message.content}")
         elif message.author.id in self.ticket_cache:
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
-            await thread.send(f"`{message.author.name}#{message.author.discriminator}:` {message.content}")
+            await thread.send(f"`{message.author}:` {message.content}")
 
 
 async def setup(bot: JDBot):
