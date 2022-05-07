@@ -149,7 +149,7 @@ class Test(commands.Cog):
     @commands.command(brief="Notes so you can refer back to them for important stuff")
     async def notes(self, ctx):
         await ctx.send("WIP")
-        #Note this is not like todo, todo is for small things, notes is for big things
+        # Note this is not like todo, todo is for small things, notes is for big things
 
 
 class Slash(commands.Cog):
