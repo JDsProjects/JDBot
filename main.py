@@ -7,6 +7,7 @@ import traceback
 import asyncpg
 from discord.ext import commands
 import dotenv
+import typing
 
 dotenv.load_dotenv()
 
@@ -71,6 +72,13 @@ class JDBotContext(commands.Context):
         return msg
 
 
+
+class CustomRecordClass(asyncpg.Record):
+    def __getattr__(self, name: str) -> typing.Any:
+        if name in self.keys():
+            return self[name]
+        return super().__getattr__(name)
+
 class JDBot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -83,7 +91,7 @@ class JDBot(commands.Bot):
 
     async def start(self, *args, **kwargs):
         self.session = aiohttp.ClientSession()
-        self.db = await asyncpg.create_pool(os.getenv("DB_key"))
+        self.db = await asyncpg.create_pool(os.getenv("DB_key"), record_class=CustomRecordClass)
 
         # loads up some bot variables
 
