@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Protocol, Any, TypedDict
+from typing import TYPE_CHECKING, Protocol, Any, TypedDict, Optional
 
 if TYPE_CHECKING:
     from ..main import JDBot, JDBotContext
@@ -64,7 +64,7 @@ class Ticket(commands.Cog):
 
     @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
-    async def create_ticket(self, context: JDBotContext, *, starter_message: str):
+    async def create_ticket(self, context: JDBotContext, *, starter_message: Optional[str] = None):
         if not self.main_channel:
             self.main_channel = self.bot.get_channel(855947100730949683)
         if context.author.id in self.ticket_cache:
@@ -72,6 +72,11 @@ class Ticket(commands.Cog):
         ticket_channel = self.main_channel
         thread_channel = await ticket_channel.create_thread(name=f"User {context.author} - {context.author.id}")
         await self.handle_ticket_db_side(context.author.id, thread_channel.id)
+
+        if not starter_message:
+            starter_message = "Hello i need help, i Haven't provided a reason quite yet."
+            # place holder for now will use modals later
+
         await thread_channel.send(f"`{context.author}:` {starter_message}")
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
         await ticket_channel.send("<@168422909482762240> New support ticket.")
