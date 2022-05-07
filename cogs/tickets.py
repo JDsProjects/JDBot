@@ -98,17 +98,16 @@ class Ticket(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.guild:
-            return
-        if message.channel.id in self.ticket_cache:
+        print(message.channel)
+        if message.guild.id == 736422329399246990 and message.channel.id in self.ticket_cache:
             author = self.ticket_cache[message.channel.id]["author"]
             author = self.bot.get_user(author)
             await author.send(f"`{message.author}:` {message.content}")
-        elif message.author.id in self.ticket_cache:
+        elif not message.guild and message.author.id in self.ticket_cache:
+            print("Second condition matches fine.")
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
             await thread.send(f"`{message.author}:` {message.content}")
-
 
 async def setup(bot: JDBot):
     await bot.add_cog(Ticket(bot))
