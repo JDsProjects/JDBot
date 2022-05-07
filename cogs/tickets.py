@@ -62,7 +62,7 @@ class Ticket(commands.Cog):
         unix = time.mktime(unix) * 1000
         await self.pool.execute("INSERT INTO TICKETS VALUES ($1, $2, $3)", author_id, remote_id, unix)
 
-    @commands.command(brief="creates a ticket for support")
+    @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
     async def create_ticket(self, context: JDBotContext, *, starter_message: str):
         if not self.main_channel:
