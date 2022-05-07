@@ -98,7 +98,7 @@ class Ticket(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.channel.id in self.ticket_cache:
+        if message.guild.id == 736422329399246990 and message.channel.id in self.ticket_cache:
             author = self.ticket_cache[message.channel.id]["author"]
             author = self.bot.get_user(author)
             await author.send(f"`{message.author}:` {message.content}")
