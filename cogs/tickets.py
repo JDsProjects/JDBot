@@ -109,5 +109,6 @@ class Ticket(commands.Cog):
             thread = self.bot.get_channel(thread)
             await thread.send(f"`{message.author}:` {message.content}")
 
+
 async def setup(bot: JDBot):
     await bot.add_cog(Ticket(bot))
