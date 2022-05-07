@@ -62,7 +62,7 @@ class Ticket(commands.Cog):
         unix = time.mktime(unix) * 1000
         await self.pool.execute("INSERT INTO TICKETS VALUES ($1, $2, $3)", author_id, remote_id, unix)
 
-    @commands.command()
+    @commands.command(brief="creates a ticket for support")
     @commands.dm_only()
     async def create_ticket(self, context: JDBotContext, *, starter_message: str):
         if not self.main_channel:
@@ -70,9 +70,7 @@ class Ticket(commands.Cog):
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket while a ticket is not responded.")
         ticket_channel = self.main_channel
-        thread_channel = await ticket_channel.create_thread(
-            name=f"User {context.author.name}#{context.author.discriminator} - {context.author.id}"
-        )
+        thread_channel = await ticket_channel.create_thread(name=f"User {context.author} - {context.author.id}")
         await thread_channel.send(f"`{context.author}:` {starter_message}")
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
         await ticket_channel.send("<@168422909482762240> New support ticket.")
