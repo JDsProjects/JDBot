@@ -71,7 +71,11 @@ class Ticket(commands.Cog):
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket while a ticket is not responded.")
         ticket_channel = self.main_channel
-        thread_channel = await ticket_channel.create_thread(name=f"User {context.author} - {context.author.id}")
+        thread_channel = await ticket_channel.create_thread(
+            name=f"User {context.author} - {context.author.id}",
+            type=discord.ChannelType.public_thread,
+            reason="Support Request"
+        )
         await self.handle_ticket_db_side(context.author.id, thread_channel.id)
 
         if not starter_message:
