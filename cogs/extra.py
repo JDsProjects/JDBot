@@ -1,21 +1,23 @@
-from discord.ext import commands
-from discord.ext.commands.cooldowns import BucketType
-import discord
-import random
-import asuna_api
-import math
-import chardet
-import alexflipnote
-import os
-import typing
-import time
 import asyncio
 import contextlib
+import math
+import os
+import random
+import time
+import typing
+
+import alexflipnote
+import asuna_api
 import async_cleverbot
 import asyncpraw
-import utils
+import chardet
+import discord
 from better_profanity import profanity
+from discord.ext import commands
+from discord.ext.commands.cooldowns import BucketType
 from Discord_Games import button_games
+
+import utils
 
 
 class Extra(commands.Cog):
