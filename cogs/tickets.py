@@ -78,8 +78,9 @@ class Ticket(commands.Cog):
         else:
             if not context.channel.id in self.ticket_cache:
                 return await context.send("This is not ticket channel.")
-            author = self.ticket_cache[context.channel.id]["author"]
-            author = self.bot.get_user(author)
+            cache = self.ticket_cache[context.channel.id]
+            author = self.bot.get_user(cache["author"])
+            remote = self.bot.get_channel(cache["remote"])
             await author.send("Support team has closed your ticket.")
 
         del self.ticket_cache[remote.id]
@@ -91,6 +92,10 @@ class Ticket(commands.Cog):
     @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
     async def create_ticket(self, context: JDBotContext, *, starter_message: Optional[str] = None):
+        if not self.main_channel:
+            self.main_channel = self.bot.get_channel(855947100730949683)
+            self.support_role = self.bot.get_guild(736422329399246990).get_role(855219483295875072)
+        
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket while a ticket is not responded.")
         ticket_channel = self.main_channel
@@ -123,6 +128,10 @@ class Ticket(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
+        
+        if not self.main_channel:
+            self.main_channel = self.bot.get_channel(855947100730949683)
+            self.support_role = self.bot.get_guild(736422329399246990).get_role(855219483295875072)
 
         context = await self.bot.get_context(message)
 
@@ -134,10 +143,6 @@ class Ticket(commands.Cog):
                     )
 
         # edit later idk
-
-        if not self.main_channel:
-            self.main_channel = self.bot.get_channel(855947100730949683)
-            self.support_role = self.bot.get_guild(736422329399246990).get_role(855219483295875072)
 
         if message.guild and message.guild.id == 736422329399246990 and message.channel.id in self.ticket_cache:
 
