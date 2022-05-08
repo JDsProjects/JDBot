@@ -95,7 +95,7 @@ class Ticket(commands.Cog):
         if not self.main_channel:
             self.main_channel = self.bot.get_channel(855947100730949683)
             self.support_role = self.bot.get_guild(736422329399246990).get_role(855219483295875072)
-        
+
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket while a ticket is not responded.")
         ticket_channel = self.main_channel
@@ -128,7 +128,7 @@ class Ticket(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
-        
+
         if not self.main_channel:
             self.main_channel = self.bot.get_channel(855947100730949683)
             self.support_role = self.bot.get_guild(736422329399246990).get_role(855219483295875072)
