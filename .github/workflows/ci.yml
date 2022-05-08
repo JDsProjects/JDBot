@@ -16,7 +16,7 @@ jobs:
           src: "."
 
       - name: Commit & push changes (main only)
-        if: github.event_name == 'push' && github.ref_name == 'main'
+        if: github.event_name == 'push' && github.ref_name == 'master'
         continue-on-error: true
         run: |
           git config user.name "github-actions"
