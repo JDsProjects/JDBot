@@ -42,10 +42,12 @@ class Owner(commands.Cog):
             except Exception as error_text:
                 description += f"<:bigger_no_emoji:917747437370736670> {cog} - {error_text}\n"
                 text = traceback.format_exc()
-                embed = discord.Embed(title = f"Error reloading cog `{cog}`", color = 0xFF0000, description = f"```py\n{text}```")
-                await context.send(embed = embed)
-        embed = discord.Embed(title = "Reload Status", color = random_color(), description = description)
-        await context.send(embed = embed)
+                embed = discord.Embed(
+                    title=f"Error reloading cog `{cog}`", color=0xFF0000, description=f"```py\n{text}```"
+                )
+                await context.send(embed=embed)
+        embed = discord.Embed(title="Reload Status", color=random_color(), description=description)
+        await context.send(embed=embed)
 
     @commands.command(brief="a command to send mail")
     async def mail(self, ctx, *, user: utils.BetterUserconverter = None):
