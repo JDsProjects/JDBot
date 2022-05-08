@@ -12,5 +12,19 @@ jobs:
       - name: Run linter
         uses: psf/black@stable
         with:
-          options: "--line-length 120 --check"
+          options: "--line-length 120"
           src: "."
+
+      - name: Commit & push changes (main only)
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@example.com"
+          git add -A
+          git commit -m "[ci] Autoformat with black"
+          git push
+
+      - name: Fail job if changes were made (PR only)
+        if: github.event_name == 'pull_request'
+        run: git diff-index --quiet HEAD -- || (git diff && exit 1)
