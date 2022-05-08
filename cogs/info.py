@@ -1,24 +1,26 @@
-from discord.ext import commands
-import re
-import discord
-import random
-import typing
-import emoji
-import unicodedata
-import textwrap
-import contextlib
-import io
 import asyncio
-import async_tio
+import base64
+import contextlib
+import functools
+import io
 import itertools
 import os
-import base64
+import random
+import re
 import secrets
-import utils
+import textwrap
+import typing
+import unicodedata
 from difflib import SequenceMatcher
+
+import async_tio
+import discord
+import emoji
+from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
-import functools
+
+import utils
 
 
 class Info(commands.Cog):
