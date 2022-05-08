@@ -17,12 +17,10 @@ import utils
 if typing.TYPE_CHECKING:
     from ..main import JDBot, JDBotContext
 
+
 def random_color():
-    return discord.Color.from_rgb(
-        random.randint(0, 255),
-        random.randint(0, 255),
-        random.randint(0, 255)
-    )
+    return discord.Color.from_rgb(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
 
 class Owner(commands.Cog):
     "Owner Only Commands"
@@ -44,10 +42,12 @@ class Owner(commands.Cog):
             except Exception as error_text:
                 description += f"<:bigger_no_emoji:917747437370736670> {cog} - {error_text}\n"
                 text = traceback.format_exc()
-                embed = discord.Embed(title = F"Error reloading cog `{cog}`", color = 0xFF0000, description = f"```py\n{text}```")
-                await context.send(embed = embed)
-        embed = discord.Embed(title = "Reload Status", color = random_color(), description = description)
-        await context.send(embed = embed)
+                embed = discord.Embed(
+                    title=f"Error reloading cog `{cog}`", color=0xFF0000, description=f"```py\n{text}```"
+                )
+                await context.send(embed=embed)
+        embed = discord.Embed(title="Reload Status", color=random_color(), description=description)
+        await context.send(embed=embed)
 
     @commands.command(brief="a command to send mail")
     async def mail(self, ctx, *, user: utils.BetterUserconverter = None):
