@@ -78,8 +78,9 @@ class Ticket(commands.Cog):
         else:
             if not context.channel.id in self.ticket_cache:
                 return await context.send("This is not ticket channel.")
-            author = self.ticket_cache[context.channel.id]["author"]
-            author = self.bot.get_user(author)
+            cache = self.ticket_cache[context.channel.id]
+            author = self.bot.get_user(cache["author"])
+            remote = self.bot.get_channel(cache["remote"])
             await author.send("Support team has closed your ticket.")
 
         del self.ticket_cache[remote.id]
