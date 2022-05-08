@@ -37,7 +37,7 @@ class Owner(commands.Cog):
         description = ""
         for cog in cogs:
             try:
-                await self.bot.reload_extension(f"cogs.{cog}")
+                await self.bot.reload_extension(f"{cog}")
                 description += f"<:bigger_yes_emoji:917747437400125470> {cog} - No Errors\n"
             except Exception as error_text:
                 description += f"<:bigger_no_emoji:917747437370736670> {cog} - {error_text}\n"
