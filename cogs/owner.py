@@ -9,7 +9,7 @@ import traceback
 import typing
 
 import discord
-import tweepy # type: ignore
+import tweepy
 from discord.ext import commands
 
 import utils
