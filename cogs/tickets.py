@@ -141,7 +141,7 @@ class Ticket(commands.Cog):
 
             if self.support_role not in message.author.roles:
                 return await message.reply(
-                    "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't staff."
+                    "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't a support team member."
                 )
 
             author = self.ticket_cache[message.channel.id]["author"]
