@@ -1,13 +1,14 @@
-import os
 import logging
-import discord
+import os
 import re
-import aiohttp
 import traceback
-import asyncpg
-from discord.ext import commands
-import dotenv
 import typing
+
+import aiohttp
+import asyncpg
+import discord
+import dotenv
+from discord.ext import commands
 
 dotenv.load_dotenv()
 
@@ -22,7 +23,10 @@ async def get_prefix(bot, message):
                 extras.append(prefix)
         else:
             db = bot.db
-            dbprefix = await db.fetchrow("SELECT prefix FROM PREFIXES WHERE is_dm = 0 AND id = $1", message.guild.id)
+            dbprefix = await db.fetchrow(
+                "SELECT prefix FROM PREFIXES WHERE is_dm = 0 AND id = $1",
+                message.guild.id,
+            )
             if dbprefix:
                 dbprefix = dbprefix.get("prefix")
             bot.prefix_cache[message.guild.id] = dbprefix
@@ -35,7 +39,9 @@ async def get_prefix(bot, message):
             extras.append(prefix)
     else:
         db = bot.db
-        dbprefix = await db.fetchrow("SELECT prefix FROM PREFIXES WHERE is_dm = 1 AND id = $1", message.author.id)
+        dbprefix = await db.fetchrow(
+            "SELECT prefix FROM PREFIXES WHERE is_dm = 1 AND id = $1", message.author.id
+        )
         if dbprefix:
             dbprefix = dbprefix.get("prefix")
         bot.prefix_cache[message.author.id] = dbprefix
@@ -91,18 +97,27 @@ class JDBot(commands.Bot):
 
     async def start(self, *args, **kwargs):
         self.session = aiohttp.ClientSession()
-        self.db = await asyncpg.create_pool(os.getenv("DB_key"), record_class=CustomRecordClass)
+        self.db = await asyncpg.create_pool(
+            os.getenv("DB_key"), record_class=CustomRecordClass
+        )
 
         # loads up some bot variables
 
-        self.testers = [u.get("user_id") for u in await self.db.fetch("SELECT * FROM testers_list;")]
+        self.testers = [
+            u.get("user_id") for u in await self.db.fetch("SELECT * FROM testers_list;")
+        ]
 
         # does the DB connection and then assigns it a tester list
 
-        self.blacklisted_users = dict(await self.db.fetch("SELECT * FROM BLACKLISTED_USERS;"))
+        self.blacklisted_users = dict(
+            await self.db.fetch("SELECT * FROM BLACKLISTED_USERS;")
+        )
         self.sus_users = dict(await self.db.fetch("SELECT * FROM SUS_USERS;"))
 
-        self.history = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
+        self.history = [
+            h.get("response")
+            for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")
+        ]
 
         await super().start(*args, **kwargs)
 
@@ -147,6 +162,10 @@ class JDBot(commands.Bot):
             except discord.errors.NotFound:
                 return None
 
+    async def try_channel(self, channel_id: int, /) -> discord.TextChannel:
+        channel: typing.Any = self.get_channel(channel_id)
+        return channel if channel is not None else await self.fetch_channel(channel_id)
+
     async def setup_hook(self) -> None:
         for filename in os.listdir("./cogs"):
             if filename.endswith(".py"):
@@ -182,7 +201,10 @@ async def check_command_access(ctx):
 
 @bot.check
 async def check_blacklist(ctx):
-    return not ctx.author.id in bot.blacklisted_users and not ctx.author.id in bot.sus_users
+    return (
+        not ctx.author.id in bot.blacklisted_users
+        and not ctx.author.id in bot.sus_users
+    )
 
 
 @bot.check

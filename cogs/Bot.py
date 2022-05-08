@@ -1,18 +1,19 @@
-from discord.ext import commands, tasks
-import discord
+import asyncio
+import contextlib
+import difflib
+import inspect
+import os
+import platform
 import random
 import time
-import asyncio
-import difflib
-import contextlib
-import platform
-import psutil
-import os
 import typing
-import inspect
+
+import discord
+import psutil
+from discord.ext import commands, tasks
+from discord.ext.commands.cooldowns import BucketType
 
 import utils
-from discord.ext.commands.cooldowns import BucketType
 
 
 class Bot(commands.Cog):

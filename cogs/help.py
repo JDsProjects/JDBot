@@ -1,7 +1,9 @@
-from discord.ext import commands
-import utils
 import itertools
+
 import discord
+from discord.ext import commands
+
+import utils
 
 
 class JDBotHelp(commands.MinimalHelpCommand):

@@ -1,12 +1,13 @@
 import collections
-import random
-import discord
-import sr_api
-import asyncdagpi
-import jeyyapi
-import os
-import aiohttp
 import io
+import os
+import random
+
+import aiohttp
+import asyncdagpi
+import discord
+import jeyyapi
+import sr_api
 
 
 async def guildinfo(ctx, guild):
