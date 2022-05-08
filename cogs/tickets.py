@@ -142,7 +142,7 @@ class Ticket(commands.Cog):
             author = self.bot.get_user(author)
             await author.send(f"`{message.author}:` {message.content}")
 
-        elif not message.guild and message.author.id in self.ticket_cache:
+        elif message.guild and message.author.id in self.ticket_cache:
             if self.support_role not in message.author.roles:
                 return await message.reply(
                     "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't staff."
