@@ -1,14 +1,16 @@
-import discord
-import sr_api
-import asuna_api
-import random
-import io
-import cairosvg
 import functools
-from discord.ext import commands
-import utils
+import io
+import random
+
+import asuna_api
+import cairosvg
+import discord
 import jeyyapi
+import sr_api
+from discord.ext import commands
 from jishaku.codeblocks import codeblock_converter
+
+import utils
 
 
 class Image(commands.Cog):
