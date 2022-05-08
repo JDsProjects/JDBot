@@ -31,7 +31,7 @@ class Owner(commands.Cog):
     @commands.command()
     async def reload(self, context: JDBotContext, *, cog_name: str = "all"):
         if cog_name == "all":
-            cogs = [cog for cog in self.bot.cogs]
+            cogs = [cog for cog in self.bot.extensions]
         else:
             cogs = [cog_name]
         description = ""
