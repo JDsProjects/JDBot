@@ -1,13 +1,11 @@
-import bisect
+from discord.ext import commands
+import discord
 import random
 import typing
+import bisect
 from difflib import SequenceMatcher
-
-import discord
-from discord.ext import commands
-from discord.ext.commands.cooldowns import BucketType
-
 import utils
+from discord.ext.commands.cooldowns import BucketType
 
 
 class Dice(commands.Cog):

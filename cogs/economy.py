@@ -1,10 +1,8 @@
-import random
-
 import discord
+import random
+import utils
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-
-import utils
 
 
 class Economy(commands.Cog):

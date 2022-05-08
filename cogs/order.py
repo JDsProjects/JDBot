@@ -1,17 +1,16 @@
 import os
-import random
-import time
-from difflib import SequenceMatcher
-
-import async_cse
-import cse
 import discord
-from aiogifs.giphy import AgeRating, GiphyClient
-from aiogifs.tenor import ContentFilter, TenorClient
+import time
+import async_cse
+import random
+import cse
 from discord.ext import commands
+from difflib import SequenceMatcher
 from discord.ext.commands.cooldowns import BucketType
-
 import utils
+
+from aiogifs.tenor import TenorClient, ContentFilter
+from aiogifs.giphy import GiphyClient, AgeRating
 
 
 class Order(commands.Cog):

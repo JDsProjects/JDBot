@@ -1,8 +1,7 @@
-import re
-
-import discord
-from better_profanity import profanity
 from discord.ext import commands
+import discord
+import re
+from better_profanity import profanity
 
 
 class Global(commands.Cog):

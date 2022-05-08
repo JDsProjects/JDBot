@@ -1,11 +1,9 @@
+from discord.ext import commands
+import discord
 import random
 import re
 import sys
 import traceback
-
-import discord
-from discord.ext import commands
-
 import utils
 
 

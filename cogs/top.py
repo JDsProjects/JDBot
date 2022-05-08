@@ -1,9 +1,8 @@
-import logging
+from discord.ext import commands, tasks
 import os
-
+import logging
 import discordlists
 import topgg
-from discord.ext import commands, tasks
 
 
 class DSLCount(commands.Cog):

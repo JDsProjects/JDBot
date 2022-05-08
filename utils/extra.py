@@ -1,12 +1,11 @@
+import discord
+import random
+import tabulate
 import io
 import os
-import pathlib
-import random
-import sys
-
 import black
-import discord
-import tabulate
+import pathlib
+import sys
 
 
 async def google_tts(bot, text):
