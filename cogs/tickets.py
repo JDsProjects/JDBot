@@ -138,15 +138,17 @@ class Ticket(commands.Cog):
             self.support_role = self.bot.get_guild(736422329399246990).get_role(855219483295875072)
 
         if message.guild and message.guild.id == 736422329399246990 and message.channel.id in self.ticket_cache:
-            author = self.ticket_cache[message.channel.id]["author"]
-            author = self.bot.get_user(author)
-            await author.send(f"`{message.author}:` {message.content}")
 
-        elif message.guild and message.author.id in self.ticket_cache:
             if self.support_role not in message.author.roles:
                 return await message.reply(
                     "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't staff."
                 )
+
+            author = self.ticket_cache[message.channel.id]["author"]
+            author = self.bot.get_user(author)
+            await author.send(f"`{message.author}:` {message.content}")
+
+        elif not message.guild and message.author.id in self.ticket_cache:
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
             await thread.send(f"`{message.author}:` {message.content}")
