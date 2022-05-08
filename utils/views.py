@@ -1,21 +1,20 @@
 from __future__ import annotations
 
-import discord
 import asyncio
 import random
-import mathjspy
-import typing
 import traceback
+import typing
+from typing import TYPE_CHECKING, Any, Callable, Optional, Sequence, Union
 
-from discord import Interaction, ButtonStyle, Embed, File
+import discord
+import mathjspy
+from discord import ButtonStyle, Embed, File, Interaction
 from discord.abc import Messageable
-from discord.utils import MISSING, maybe_coroutine
-from discord.ui import Button, TextInput, Modal, View
 from discord.ext import commands
-
 from discord.ext.commands.context import Context
-from typing import Callable, Optional, Any, Union, Sequence, TYPE_CHECKING
 from discord.flags import UserFlags
+from discord.ui import Button, Modal, TextInput, View
+from discord.utils import MISSING, maybe_coroutine
 
 if TYPE_CHECKING:
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
