@@ -1,9 +1,11 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Protocol, Any, TypedDict, Optional
+
+from typing import TYPE_CHECKING, Any, Optional, Protocol, TypedDict
 
 if TYPE_CHECKING:
-    from ..main import JDBot, JDBotContext
     from asyncpg import Pool
+
+    from ..main import JDBot, JDBotContext
 
     class RecordType(Protocol):
         def get(self, key: str) -> Any:
@@ -17,10 +19,10 @@ if TYPE_CHECKING:
 
 import datetime
 import time
+import traceback
 
 import discord
 from discord.ext import commands
-import traceback
 
 
 class Ticket(commands.Cog):
