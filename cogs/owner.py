@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import functools
 import importlib
 import os
@@ -7,17 +9,45 @@ import traceback
 import typing
 
 import discord
-import tweepy
+import tweepy # type: ignore
 from discord.ext import commands
 
 import utils
 
+if typing.TYPE_CHECKING:
+    from ..main import JDBot, JDBotContext
+
+def random_color():
+    return discord.Color.from_rgb(
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255)
+    )
 
 class Owner(commands.Cog):
     "Owner Only Commands"
 
     def __init__(self, bot):
-        self.bot = bot
+        self.bot: JDBot = bot
+
+    @commands.command()
+    async def reload(self, context: JDBotContext, *, cog_name: str = "all"):
+        if cog_name == "all":
+            cogs = [cog for cog in self.bot.cogs]
+        else:
+            cogs = [cog_name]
+        description = ""
+        for cog in cogs:
+            try:
+                self.bot.reload_extension(f"cogs.{cog}")
+                description += f"<:bigger_yes_emoji:917747437400125470> {cog} - No Errors\n"
+            except Exception as error_text:
+                description += f"<:bigger_no_emoji:917747437370736670> {cog} - {error_text}\n"
+                text = traceback.format_exc()
+                embed = discord.Embed(title = F"Error reloading cog `{cog}`", color = 0xFF0000, description = f"```py\n{text}```")
+                await context.send(embed = embed)
+        embed = discord.Embed(title = "Reload Status", color = random_color(), description = description)
+        await context.send(embed = embed)
 
     @commands.command(brief="a command to send mail")
     async def mail(self, ctx, *, user: utils.BetterUserconverter = None):
@@ -48,57 +78,6 @@ class Owner(commands.Cog):
                 await user.send(content="Message failed. sending", embed=embed_message)
                 embed_message.add_field(name="Sent To:", value=str(user))
             await self.bot.get_channel(855217084710912050).send(embed=embed_message)
-
-    @commands.command()
-    async def load(self, ctx, *, cog=None):
-        if cog:
-            try:
-                await self.bot.load_extension(cog)
-            except Exception as e:
-                await ctx.send(e)
-                traceback.print_exc()
-
-            await ctx.send("Loaded cog(see if there's any errors)")
-
-        if cog is None:
-            await ctx.send("you can't ask to load no cogs.")
-
-    @commands.command()
-    async def reload(self, ctx, *, cog=None):
-
-        cog = cog or "all"
-
-        if cog == "all":
-            for x in list(self.bot.extensions):
-                try:
-                    await self.bot.reload_extension(x)
-                except commands.errors.ExtensionError as e:
-                    await ctx.send(e)
-                    traceback.print_exc()
-
-            await ctx.send("done reloading all cogs(check for any errors)")
-
-        else:
-            try:
-                await self.bot.reload_extension(cog)
-
-            except commands.errors.ExtensionError as e:
-                await ctx.send(e)
-                traceback.print_exc()
-
-            await ctx.send("Cog reloaded :D (check for any errors)")
-
-    @commands.command()
-    async def unload(self, ctx, *, cog=None):
-        if cog:
-            try:
-                await self.bot.unload_extension(cog)
-            except commands.errors.ExtensionError as e:
-                await ctx.send(e)
-                traceback.print_exc()
-            await ctx.send("Cog should be unloaded just fine :D.(check any errors)")
-        if cog is None:
-            await ctx.send("you can't ask to reload no cogs")
 
     @commands.command()
     async def shutdown(self, ctx):
