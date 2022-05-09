@@ -1277,7 +1277,7 @@ class BotSettings(discord.ui.View):
             content="Alright Boss, I unlocked the commands, they will work with you all again.", ephemeral=True
         )
 
-    @discord.ui.button(label="Prefixless", style=discord.ButtonStyle.success, emoji="🔛", row=1)
+    @discord.ui.button(label="Prefixless", style=discord.ButtonStyle.success, emoji="<_:973270656860958730>", row=1)
     async def Prefixless(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="owner only blank prefixes are enabled", view=None)
@@ -1287,9 +1287,7 @@ class BotSettings(discord.ui.View):
             content="Alright Boss, I now made the bot prefixless(for owners only)", ephemeral=True
         )
 
-    @discord.ui.button(
-        label="Prefix", style=discord.ButtonStyle.danger, emoji="<:Toggle_Off:904381963828346930>", row=1
-    )
+    @discord.ui.button(label="Prefix", style=discord.ButtonStyle.danger, emoji="<:_:973270656969998376> ", row=1)
     async def prefix_back(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         await interaction.response.edit_message(content="Requiring everyone to use prefixes again", view=None)
