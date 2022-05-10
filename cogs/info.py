@@ -325,7 +325,7 @@ class DevTools(commands.Cog):
 
         await view.wait()
 
-        await ctx.trigger_typing()
+        await ctx.typing()
 
         results = await self.rtfm_lookup(url=view.value, args=args)
 
