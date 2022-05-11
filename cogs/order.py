@@ -94,12 +94,13 @@ class Order(commands.Cog):
 
         embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
 
+        view = utils.StopButtonView(ctx)
         embed.set_image(url=emoji_image.image_url)
         embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
         await msg.edit(
             content="Order has been logged for safety purposes(we want to make sure no unsafe search is sent)",
             embed=embed,
-            view=None,
+            view=view,
         )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)

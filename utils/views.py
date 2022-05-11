@@ -1220,6 +1220,31 @@ class BasicButtons(discord.ui.View):
         return True
 
 
+class StopButton(discord.ui.Button):
+    def __init__(self):
+        super().__init__(style=discord.ButtonStyle.danger, label="Stop", emoji="⏹️")
+
+    async def callback(self, interaction: discord.Interaction):
+        await interaction.response.send_message(content="I am deleting it for you", ephemeral=True)
+
+
+class StopButtonView(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+        self.add_item(StopButton())
+
+    async def interaction_check(self, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+
 class BasicShuffleQuestion(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
