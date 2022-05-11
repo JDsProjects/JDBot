@@ -1240,7 +1240,7 @@ class DeleteButtonView(discord.ui.View):
 
         owner_check = await interaction.client.is_owner(interaction.user)
 
-        if self.ctx.author.id != interaction.user.id or not owner_check:
+        if self.ctx.author.id != interaction.user.id and not owner_check:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
                 ephemeral=True,
