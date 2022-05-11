@@ -94,7 +94,7 @@ class Order(commands.Cog):
 
         embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
 
-        view = utils.StopButtonView(ctx)
+        view = utils.DeleteButtonView(ctx)
         view.message = msg
 
         embed.set_image(url=emoji_image.image_url)

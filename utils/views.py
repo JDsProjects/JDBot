@@ -1220,9 +1220,9 @@ class BasicButtons(discord.ui.View):
         return True
 
 
-class StopButton(discord.ui.Button):
+class DeleteButton(discord.ui.Button):
     def __init__(self):
-        super().__init__(style=discord.ButtonStyle.danger, label="Stop", emoji="⏹️")
+        super().__init__(style=discord.ButtonStyle.danger, label="Delete", emoji="<:trash:362024157015441408>")
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="I am deleting it for you", ephemeral=True)
@@ -1230,15 +1230,17 @@ class StopButton(discord.ui.Button):
             await self.view.message.delete()
 
 
-class StopButtonView(discord.ui.View):
+class DeleteButtonView(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.add_item(StopButton())
+        self.add_item(DeleteButton())
 
     async def interaction_check(self, interaction: discord.Interaction):
 
-        if self.ctx.author.id != interaction.user.id:
+        owner_check = await interaction.client.is_owner(interaction.user)
+
+        if self.ctx.author.id != interaction.user.id or not owner_check:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
                 ephemeral=True,
