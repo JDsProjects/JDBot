@@ -1226,6 +1226,8 @@ class StopButton(discord.ui.Button):
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="I am deleting it for you", ephemeral=True)
+        if self.view.message:
+            await self.view.message.delete()
 
 
 class StopButtonView(discord.ui.View):
