@@ -96,6 +96,7 @@ class Order(commands.Cog):
 
         view = utils.StopButtonView(ctx)
         view.message = msg
+
         embed.set_image(url=emoji_image.image_url)
         embed.set_footer(text=f"{ctx.author.id} \nCopyright: I don't know the copyright.")
         await msg.edit(
