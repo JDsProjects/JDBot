@@ -1239,17 +1239,17 @@ class DeleteButtonView(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction):
 
         owner_check = await interaction.client.is_owner(interaction.user)
-        print(f"1. {owner_check}")
-        print(f"2. {self.ctx.author.id != interaction.user.id}")
-        print(f"3. {self.ctx.author.id != interaction.user.id or owner_check}")
+        print("is owner:", owner_check)
+        print("is author:", interaction.user.id == self.ctx.author.id)
+        print("the check:", (owner_check or interaction.user.id == self.ctx.author.id))
+        if (owner_check or interaction.user.id == self.ctx.author.id):
+            return True
 
-        if self.ctx.author.id != interaction.user.id or owner_check:
-            return await interaction.response.send_message(
-                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
-                ephemeral=True,
+        await interaction.response.send_message(
+            content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+            ephemeral=True
             )
-
-        return True
+        return False
 
 
 class BasicShuffleQuestion(discord.ui.View):
