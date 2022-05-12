@@ -1239,9 +1239,7 @@ class DeleteButtonView(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction):
 
         owner_check = await interaction.client.is_owner(interaction.user)
-        print("is owner:", owner_check)
-        print("is author:", interaction.user.id == self.ctx.author.id)
-        print("the check:", (owner_check or interaction.user.id == self.ctx.author.id))
+
         if owner_check or interaction.user.id == self.ctx.author.id:
             return True
 
