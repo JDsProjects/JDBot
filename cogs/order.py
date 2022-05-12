@@ -178,10 +178,13 @@ class Order(commands.Cog):
 
         embed.set_footer(text=f"{ctx.author.id}")
 
+        view = utils.DeleteButtonView(ctx)
+        view.message = msg
+
         await msg.edit(
             content="Tenor has been logged for safety purposes(we want to make sure no unsafe search is sent)",
             embed=embed,
-            view=None,
+            view=view,
         )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
@@ -253,10 +256,12 @@ class Order(commands.Cog):
         embed.add_field(name="Powered by:", value="GIPHY")
         embed.set_image(url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
 
+        view = utils.DeleteButtonView(ctx)
+        view.message = msg
         await msg.edit(
             content="Giphy has been logged for safety purposes(we want to make sure no unsafe search is sent)",
             embed=embed,
-            view=None,
+            view=view,
         )
 
         await self.bot.get_channel(855217084710912050).send(embed=embed)
