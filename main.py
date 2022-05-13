@@ -94,7 +94,7 @@ class JDBot(commands.Bot):
 
     async def start(self, *args: Any, **kwargs: Any) -> None:
         self.session = aiohttp.ClientSession()
-        self.db = await asyncpg.create_pool(os.getenv("DB_key"), record_class=CustomRecordClass) # need to type fix
+        self.db = await asyncpg.create_pool(os.getenv("DB_key"), record_class=CustomRecordClass)  # need to type fix
         # loads up some bot variables
 
         self.testers = [u.get("user_id") for u in await self.db.fetch("SELECT * FROM testers_list;")]
