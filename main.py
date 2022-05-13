@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import logging
 import os
 import re
 import traceback
-import typing
+from typing import Any, Optional
 
 import aiohttp
 import asyncpg
@@ -13,7 +15,7 @@ from discord.ext import commands
 dotenv.load_dotenv()
 
 
-async def get_prefix(bot, message):
+async def get_prefix(bot: JDBot, message: discord.Message):
     extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te."]
 
     if message.guild:
@@ -55,7 +57,7 @@ async def get_prefix(bot, message):
 
 
 class JDBotContext(commands.Context):
-    async def send(self, *args, **kwargs):
+    async def send(self, *args: Any, **kwargs: Any) -> discord.Message:
         msg = await super().send(*args, **kwargs)
         view = kwargs.get("view")
         if view is not None:
@@ -63,7 +65,7 @@ class JDBotContext(commands.Context):
 
         return msg
 
-    async def reply(self, *args, **kwargs):
+    async def reply(self, *args: Any, **kwargs: Any) -> discord.Message:
         msg = await super().reply(*args, **kwargs)
 
         view = kwargs.get("view")
@@ -74,45 +76,44 @@ class JDBotContext(commands.Context):
 
 
 class CustomRecordClass(asyncpg.Record):
-    def __getattr__(self, name: str) -> typing.Any:
+    def __getattr__(self, name: str) -> Any:
         if name in self.keys():
             return self[name]
         return super().__getattr__(name)
 
 
 class JDBot(commands.Bot):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.special_access = {}
+        self.special_access: dict[int, str] = {}
         self.messages = {}
-        self.suspended = False
-        self.prefixless = False
-        self.prefix_cache = {}
+        self.suspended: bool = False
+        self.prefixless: bool = False
         # used for testing purposes and to make the bot prefixless for owners only
+        self.prefix_cache: dict[int, str] = {}
 
-    async def start(self, *args, **kwargs):
+    async def start(self, *args: Any, **kwargs: Any) -> None:
         self.session = aiohttp.ClientSession()
-        self.db = await asyncpg.create_pool(os.getenv("DB_key"), record_class=CustomRecordClass)
-
+        self.db = await asyncpg.create_pool(os.getenv("DB_key"), record_class=CustomRecordClass) # need to type fix
         # loads up some bot variables
 
         self.testers = [u.get("user_id") for u in await self.db.fetch("SELECT * FROM testers_list;")]
 
         # does the DB connection and then assigns it a tester list
 
-        self.blacklisted_users = dict(await self.db.fetch("SELECT * FROM BLACKLISTED_USERS;"))
-        self.sus_users = dict(await self.db.fetch("SELECT * FROM SUS_USERS;"))
+        self.blacklisted_users: dict[int, str] = dict(await self.db.fetch("SELECT * FROM BLACKLISTED_USERS;"))
+        self.sus_users: dict[int, str] = dict(await self.db.fetch("SELECT * FROM SUS_USERS;"))
 
-        self.history = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
+        self.history: list[str] = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
 
         await super().start(*args, **kwargs)
 
-    async def close(self):
+    async def close(self) -> None:
         await self.session.close()
         await self.db.close()
         await super().close()
 
-    async def on_error(self, event, *args, **kwargs):
+    async def on_error(self, event, *args: Any, **kwargs: Any) -> None:
         more_information = os.sys.exc_info()
         error_wanted = traceback.format_exc()
         traceback.print_exc()
@@ -123,10 +124,10 @@ class JDBot(commands.Bot):
         # print(kwargs)
         # check about on_error with other repos of mine as well to update this.
 
-    async def get_context(self, message, *, cls=JDBotContext):
+    async def get_context(self, message, *, cls=JDBotContext) -> JDBotContext:
         return await super().get_context(message, cls=cls)
 
-    async def try_user(self, id: int, /):
+    async def try_user(self, id: int, /) -> Optional[discord.User]:
         maybe_user = self.get_user(id)
 
         if maybe_user is not None:
@@ -137,7 +138,7 @@ class JDBot(commands.Bot):
         except discord.errors.NotFound:
             return None
 
-    async def try_member(self, guild: discord.Guild, member_id: int, /):
+    async def try_member(self, guild: discord.Guild, member_id: int, /) -> Optional[discord.Member]:
         member = guild.get_member(member_id)
 
         if member:
@@ -171,7 +172,7 @@ bot.launch_time = discord.utils.utcnow()
 
 
 @bot.check
-async def check_command_access(ctx):
+async def check_command_access(ctx: JDBotContext):
     if ctx.command.name == bot.special_access.get(ctx.author.id):
         await ctx.reinvoke()
 
@@ -182,12 +183,12 @@ async def check_command_access(ctx):
 
 
 @bot.check
-async def check_blacklist(ctx):
+async def check_blacklist(ctx: JDBotContext):
     return not ctx.author.id in bot.blacklisted_users and not ctx.author.id in bot.sus_users
 
 
 @bot.check
-async def check_suspended(ctx):
+async def check_suspended(ctx: JDBotContext):
     return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author)
 
 
