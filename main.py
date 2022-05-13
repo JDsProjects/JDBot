@@ -57,7 +57,7 @@ async def get_prefix(bot: JDBot, message: discord.Message):
 
 
 class JDBotContext(commands.Context):
-    async def send(self, *args, **kwargs) -> discord.Message:
+    async def send(self, *args: Any, **kwargs: Any) -> discord.Message:
         msg = await super().send(*args, **kwargs)
         view = kwargs.get("view")
         if view is not None:
@@ -65,7 +65,7 @@ class JDBotContext(commands.Context):
 
         return msg
 
-    async def reply(self, *args: tuple[Any], **kwargs: dict[str, Any]) -> discord.Message:
+    async def reply(self, *args: Any, **kwargs: Any) -> discord.Message:
         msg = await super().reply(*args, **kwargs)
 
         view = kwargs.get("view")
@@ -83,7 +83,7 @@ class CustomRecordClass(asyncpg.Record):
 
 
 class JDBot(commands.Bot):
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.special_access: dict[int, str] = {}
         self.messages = {}
@@ -92,7 +92,7 @@ class JDBot(commands.Bot):
         # used for testing purposes and to make the bot prefixless for owners only
         self.prefix_cache: dict[int, str] = {}
 
-    async def start(self, *args, **kwargs) -> None:
+    async def start(self, *args: Any, **kwargs: Any) -> None:
         self.session = aiohttp.ClientSession()
         self.db = await asyncpg.create_pool(os.getenv("DB_key"), record_class=CustomRecordClass) # need to type fix
         # loads up some bot variables
@@ -113,7 +113,7 @@ class JDBot(commands.Bot):
         await self.db.close()
         await super().close()
 
-    async def on_error(self, event, *args, **kwargs) -> None:
+    async def on_error(self, event, *args: Any, **kwargs: Any) -> None:
         more_information = os.sys.exc_info()
         error_wanted = traceback.format_exc()
         traceback.print_exc()
@@ -183,12 +183,12 @@ async def check_command_access(ctx: JDBotContext):
 
 
 @bot.check
-async def check_blacklist(ctx):
+async def check_blacklist(ctx: JDBotContext):
     return not ctx.author.id in bot.blacklisted_users and not ctx.author.id in bot.sus_users
 
 
 @bot.check
-async def check_suspended(ctx):
+async def check_suspended(ctx: JDBotContext):
     return not ctx.bot.suspended or await ctx.bot.is_owner(ctx.author)
 
 
