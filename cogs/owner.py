@@ -48,6 +48,24 @@ class Owner(commands.Cog):
                 await context.send(embed=embed)
         embed = discord.Embed(title="Reload Status", color=random_color(), description=description)
         await context.send(embed=embed)
+    
+    @commands.command()
+    async def load(self, context: JDBotContext, *, cog_name: str):
+        try:
+            await self.bot.load_extension(cog_name)
+            return await context.send(f"Loaded cog `{cog_name}` successfully.")
+        except:
+            t = traceback.format_exc()
+            return await context.send(f"Error loading cog `{cog_name}`.```py\n{t}```")
+    
+    @commands.command()
+    async def unload(self, context: JDBotContext, *, cog_name: str):
+        try:
+            await self.bot.unload_extension(cog_name)
+            return await context.send(f"Unloaded cog `{cog_name}` successfully.")
+        except:
+            t = traceback.format_exc()
+            return await context.send(f"Error unloading cog `{cog_name}`.```py\n{t}```")
 
     @commands.command(brief="a command to send mail")
     async def mail(self, ctx, *, user: utils.BetterUserconverter = None):
