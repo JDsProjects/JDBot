@@ -689,7 +689,7 @@ class Bot(commands.Cog):
 
         embed = discord.Embed(
             color=14352639,
-            description=f"```dartmern#7563 \nDutchy#6127 \LeoCx1000#9999 \nMiddlle#8801 \nShadi#9492 \nSoheab_#6240```",
+            description=f"```dartmern#7563 \nDutchy#6127 \nLeoCx1000#9999 \nMiddlle#8801 \nShadi#9492 \nSoheab_#6240```",
         )
         embed.set_author(name=f"{self.bot.user} Bot Credits:", icon_url=self.bot.user.display_avatar.url)
         embed.set_footer(
