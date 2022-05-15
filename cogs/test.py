@@ -130,7 +130,7 @@ class Test(commands.Cog):
     @commands.command()
     async def afk(self, ctx, *, reason: typing.Optional[str] = None):
 
-        if ctx.author.id not in self.afk:
+        if ctx.author.id in self.afk:
             return await ctx.send("You can't afk if you are already afk")
 
         afk_user = await self.bot.fetchrow("SELECT * FROM AFK WHERE user_id = $1", ctx.author.id)
