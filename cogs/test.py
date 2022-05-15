@@ -20,6 +20,7 @@ class Test(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.pool = self.bot.db
         self.afk = {}
 
     async def cog_load(self):
