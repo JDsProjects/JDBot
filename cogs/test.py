@@ -119,11 +119,11 @@ class Test(commands.Cog):
     # spyco data table in my sql database
 
     @commands.command()
-    async def afk(self, ctx, *, args: typing.Optional[str] = None):
-        if not args:
-            return await ctx.send("You need to specify a reason for being AFK.")
+    async def afk(self, ctx, *, reason: typing.Optional[str] = None):
 
-        await ctx.send(f"You are now AFK for {args}. (still wip)")
+        reason = reason or "Unknown"
+
+        await ctx.send(f"You are now AFK for {reason}. (still wip)")
         # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
 
     @commands.command(brief="a test of a new paginator :)")
