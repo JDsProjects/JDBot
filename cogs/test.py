@@ -27,7 +27,12 @@ class Test(commands.Cog):
         pool = self.pool
 
         records = await pool.fetch("SELECT * FROM AFK")
-        self.afk = dict(records)
+        self.afk = {record.user_id: {"reason": record.text, "time": record.added_time} for record in records}
+
+        # for record in records:
+        # user_id = int(record.user_id)
+        # self.afk[user_id] = record
+        # suggested by blanket
 
     @commands.command(brief="this command will error by sending no content")
     async def te(self, ctx):
