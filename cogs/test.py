@@ -126,7 +126,8 @@ class Test(commands.Cog):
 
         reason = profanity.censor(reason, censor_char="#")
 
-        await ctx.send(f"You are now AFK for {reason}. (still wip)")
+        await ctx.send(f"You are now AFK for {reason}.")
+        await ctx.send("Btw it's work in progress")
         # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
 
     @commands.command(brief="a test of a new paginator :)")
