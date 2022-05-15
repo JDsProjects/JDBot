@@ -20,6 +20,13 @@ class Test(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.afk = {}
+
+    async def cog_load(self):
+        pool = self.pool
+
+        records = await pool.fetch("SELECT * FROM AFK")
+        self.afk = dict(records)
 
     @commands.command(brief="this command will error by sending no content")
     async def te(self, ctx):
@@ -122,12 +129,21 @@ class Test(commands.Cog):
     @commands.command()
     async def afk(self, ctx, *, reason: typing.Optional[str] = None):
 
+        if ctx.author.id not in self.afk:
+            return await ctx.send("You can't afk if you are already afk")
+
+        afk_user = await self.bot.fetchrow("SELECT * FROM AFK WHERE user_id = $1", ctx.author.id)
+
+        if afk_user:
+            return await ctx.send("You are already afk")
+
         reason = reason or "Unknown"
 
         reason = profanity.censor(reason, censor_char="#")
 
         await ctx.send(f"You are now AFK for {reason}.")
-        await ctx.send("Btw it's work in progress")
+
+        await self.bot.db.execute("INSERT INTO AFK VALUES($1)", ctx.author.id, ctx.message.created_at, reason)
         # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
 
     @commands.command(brief="a test of a new paginator :)")
