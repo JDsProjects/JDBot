@@ -8,6 +8,7 @@ import typing
 
 import discord
 import tweepy
+from better_profanity import profanity
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 
@@ -122,6 +123,8 @@ class Test(commands.Cog):
     async def afk(self, ctx, *, reason: typing.Optional[str] = None):
 
         reason = reason or "Unknown"
+
+        reason = profanity.censor(reason, censor_char="#")
 
         await ctx.send(f"You are now AFK for {reason}. (still wip)")
         # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
