@@ -133,7 +133,7 @@ class Test(commands.Cog):
         if ctx.author.id in self.afk:
             return await ctx.send("You can't afk if you are already afk")
 
-        afk_user = await self.bot.fetchrow("SELECT * FROM AFK WHERE user_id = $1", ctx.author.id)
+        afk_user = await self.bot.db.fetchrow("SELECT * FROM AFK WHERE user_id = $1", ctx.author.id)
 
         if afk_user:
             return await ctx.send("You are already afk")
