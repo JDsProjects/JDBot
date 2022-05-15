@@ -144,7 +144,7 @@ class Test(commands.Cog):
 
         await ctx.send(f"You are now AFK for {reason}.")
 
-        await self.bot.db.execute("INSERT INTO AFK VALUES($1)", ctx.author.id, ctx.message.created_at, reason)
+        await self.bot.db.execute("INSERT INTO AFK VALUES($1, $2, $3)", ctx.author.id, ctx.message.created_at, reason)
         # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
 
     @commands.command(brief="a test of a new paginator :)")
