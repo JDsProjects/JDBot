@@ -194,6 +194,7 @@ class Test(commands.Cog):
             )
 
             del self.afk[message.author.id]
+            await self.bot.db.execute("DELETE FROM AFK WHERE user_id = $1", message.author.id)
 
 
 class Slash(commands.Cog):
