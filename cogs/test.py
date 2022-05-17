@@ -144,6 +144,8 @@ class Test(commands.Cog):
 
         embed = discord.Embed(title="You Are Now Afk", color=15428885)
         embed.add_field(name="Reason:", value=f"{reason}", inline=False)
+        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
+
         await ctx.send(
             content=f"{ctx.author.mention} is now afk", embed=embed, allowed_mentions=discord.AllowedMentions.none()
         )
