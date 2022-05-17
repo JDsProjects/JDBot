@@ -27,12 +27,7 @@ class Test(commands.Cog):
         pool = self.pool
 
         records = await pool.fetch("SELECT * FROM AFK")
-        self.afk = {record.user_id: {"reason": record.text, "time": record.added_time} for record in records}
-
-        # for record in records:
-        # user_id = int(record.user_id)
-        # self.afk[user_id] = record
-        # suggested by blanket
+        self.afk = {record.user_id: record for record in records}
 
     @commands.command(brief="this command will error by sending no content")
     async def te(self, ctx):
@@ -149,7 +144,14 @@ class Test(commands.Cog):
 
         await ctx.send(f"You are now AFK for {reason}.")
 
-        await self.bot.db.execute("INSERT INTO AFK VALUES($1, $2, $3)", ctx.author.id, ctx.message.created_at, reason)
+        # await self.bot.db.execute("INSERT INTO AFK VALUES($1, $2, $3)", ctx.author.id, ctx.message.created_at, reason)
+        # chai gave me a new method which is below
+        data = await self.bot.db.fetchrow(
+            "INSERT INTO AFK VALUES($1, $2, $3) RETURNING *", ctx.author.id, ctx.message.created_at, reason
+        )
+
+        self.afk[ctx.author.id] = data
+
         # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
 
     @commands.command(brief="a test of a new paginator :)")
