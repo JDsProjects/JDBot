@@ -142,7 +142,7 @@ class Test(commands.Cog):
 
         reason = profanity.censor(reason, censor_char="#")
 
-        embed = discord.Embed(title="Going AFK:", color=15428885)
+        embed = discord.Embed(title="Going AFK", color=15428885)
         embed.add_field(name="Reason:", value=f"{reason}", inline=False)
         await ctx.send(
             content=f"{ctx.author.mention} is now afk", embed=embed, allowed_mentions=discord.AllowedMentions.none()
@@ -192,7 +192,9 @@ class Test(commands.Cog):
 
             timestamp = discord.utils.format_dt(data.added_time, style="R")
 
-            embed = discord.Embed(title="AFK", description=f"Reason : **{data.text}**\nAfk Since : {timestamp}")
+            embed = discord.Embed(
+                title="AFK", description=f"Reason : **{data.text}**\nAfk Since : {timestamp}", color=15428885
+            )
             await message.channel.send(
                 f"Welcome Back {message.author.mention} welcome back",
                 embed=embed,
