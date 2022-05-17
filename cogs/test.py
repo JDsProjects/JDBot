@@ -181,6 +181,18 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # Note this is not like todo, todo is for small things, notes is for big things
 
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author.id in self.afk:
+            data = self.afk[message.author.id]
+
+            timestamp = discord.utils.format_dt(data.added_time, style="R")
+
+            await message.channel.send(
+                f"Welcome Back {message.author.mention} you went away with {data.reason} for  {timestamp}",
+                allowed_mentions=discord.AllowedMentions.none(),
+            )
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
