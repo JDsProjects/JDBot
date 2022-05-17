@@ -142,7 +142,9 @@ class Test(commands.Cog):
 
         reason = profanity.censor(reason, censor_char="#")
 
-        await ctx.send(f"You are now AFK for {reason}.")
+        embed = discord.Embed(title="Going AFK:", color=15428885)
+        embed.add_field(name="Reason:", value=f"{reason}", inline=False)
+        await ctx.send(content=f"{ctx.author.mention} you are now afk", embed=embed)
 
         # await self.bot.db.execute("INSERT INTO AFK VALUES($1, $2, $3)", ctx.author.id, ctx.message.created_at, reason)
         # chai gave me a new method which is below
