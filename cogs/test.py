@@ -211,15 +211,25 @@ class Test(commands.Cog):
             del self.afk[message.author.id]
             await self.bot.db.execute("DELETE FROM AFK WHERE user_id = $1", message.author.id)
 
-        people = [mention for mention in message.mentions if mention.id in self.afk]
-        for person in people:
-            data = self.afk[person.id]
+        afk = list(filter(lambda u: u.id in self.afk, message.mentions))
 
-            timestamp = discord.utils.format_dt(data.added_time, style="R")
-            await message.channel.send(
-                f"Sorry {person} is afk right now \nReason: {data.text} \nAfk Since: {timestamp}",
-                allowed_mentions=discord.AllowedMentions.none(),
+        if not afk:
+            return
+
+        if len(afk) > 1:
+            message = "Sorry, several people you mentioned are afk\n\n"
+            message += "\n".join(
+                f'{u.mention} - {self.afk[u.id].text} (since {discord.utils.format_dt(self.afk[u.id].added_time, style="R")})'
+                for u in afk
             )
+
+        else:
+            u = afk[0]
+            data = self.afk[u.id]
+            timestamp = discord.utils.format_dt(data.added_time, style="R")
+            message = f"Sorry {u.mention} is afk right now \nReason: {data.text} \nAfk Since: {timestamp}"
+
+        await message.channel.send(message, allowed_mentions=discord.AllowedMentions.none())
 
 
 class Slash(commands.Cog):
