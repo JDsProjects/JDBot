@@ -189,7 +189,7 @@ class Test(commands.Cog):
             timestamp = discord.utils.format_dt(data.added_time, style="R")
 
             await message.channel.send(
-                f"Welcome Back {message.author.mention} you went away with {data.reason} for  {timestamp}",
+                f"Welcome Back {message.author.mention} you went away with {data.text} for {timestamp}",
                 allowed_mentions=discord.AllowedMentions.none(),
             )
 
