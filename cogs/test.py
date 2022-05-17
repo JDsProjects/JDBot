@@ -189,6 +189,9 @@ class Test(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+
+        if message.author.bot:
+            return
         if message.author.id in self.afk:
             data = self.afk[message.author.id]
 
@@ -214,7 +217,7 @@ class Test(commands.Cog):
 
             user = await self.bot.try_user(data.user_id)
             timestamp = discord.utils.format_dt(data.added_time, style="R")
-            await message.channel.send(f"Sorry {user} is afk right now \nReason:{data.text} \nAfk Since:{timestamp}")
+            await message.channel.send(f"Sorry {user} is afk right now \nReason: {data.text} \nAfk Since: {timestamp}")
 
 
 class Slash(commands.Cog):
