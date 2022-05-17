@@ -196,7 +196,7 @@ class Test(commands.Cog):
                 title="AFK", description=f"Reason : **{data.text}**\nAfk Since : {timestamp}", color=15428885
             )
             await message.channel.send(
-                f"Welcome Back {message.author.mention}!",
+                f"Welcome Back {message.author.mention}",
                 embed=embed,
                 allowed_mentions=discord.AllowedMentions.none(),
             )
