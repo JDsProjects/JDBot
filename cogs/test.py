@@ -188,8 +188,10 @@ class Test(commands.Cog):
 
             timestamp = discord.utils.format_dt(data.added_time, style="R")
 
+            embed = discord.Embed(title="Afk:", description=f"Reason : {data.text}\nTimestamp : {timestamp}")
             await message.channel.send(
                 f"Welcome Back {message.author.mention} you went away with Reason: **{data.text}** for {timestamp}",
+                embed=embed,
                 allowed_mentions=discord.AllowedMentions.none(),
             )
 
