@@ -208,15 +208,13 @@ class Test(commands.Cog):
             del self.afk[message.author.id]
             await self.bot.db.execute("DELETE FROM AFK WHERE user_id = $1", message.author.id)
 
-            people = [mention for mention in message.raw_mentions if mention in self.afk]
-            for person in people:
-                data = self.afk[person]
+        people = [mention for mention in message.raw_mentions if mention in self.afk]
+        for person in people:
+            data = self.afk[person]
 
-                user = await self.bot.try_user(data.user_id)
-                timestamp = discord.utils.format_dt(data.added_time, style="R")
-                await message.channel.send(
-                    f"Sorry {user} is afk right now \nReason:{data.text} \nAfk Since:{timestamp}"
-                )
+            user = await self.bot.try_user(data.user_id)
+            timestamp = discord.utils.format_dt(data.added_time, style="R")
+            await message.channel.send(f"Sorry {user} is afk right now \nReason:{data.text} \nAfk Since:{timestamp}")
 
 
 class Slash(commands.Cog):
