@@ -406,7 +406,7 @@ class Owner(commands.Cog):
 
             if not user.id in self.bot.testers:
                 self.bot.testers.append(user.id)
-                await ctx.send(f"added tester known as {user}")
+                await ctx.send(f"Added tester known as {user}")
 
             else:
                 return await ctx.send(f"{user} is in the testers list already!")
