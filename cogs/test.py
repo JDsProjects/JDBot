@@ -144,7 +144,9 @@ class Test(commands.Cog):
 
         embed = discord.Embed(title="Going AFK:", color=15428885)
         embed.add_field(name="Reason:", value=f"{reason}", inline=False)
-        await ctx.send(content=f"{ctx.author.mention} you are now afk", embed=embed)
+        await ctx.send(
+            content=f"{ctx.author.mention} is now afk", embed=embed, allowed_mentions=discord.AllowedMentions.none()
+        )
 
         # await self.bot.db.execute("INSERT INTO AFK VALUES($1, $2, $3)", ctx.author.id, ctx.message.created_at, reason)
         # chai gave me a new method which is below
