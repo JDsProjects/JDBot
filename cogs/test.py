@@ -144,6 +144,7 @@ class Test(commands.Cog):
 
         embed = discord.Embed(title="You Are Now Afk", color=15428885)
         embed.add_field(name="Reason:", value=f"{reason}", inline=False)
+        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
 
         await ctx.send(
             content=f"{ctx.author.mention} is now afk", embed=embed, allowed_mentions=discord.AllowedMentions.none()
@@ -196,6 +197,7 @@ class Test(commands.Cog):
             embed = discord.Embed(
                 title="AFK", description=f"Reason : **{data.text}**\nAfk Since : {timestamp}", color=15428885
             )
+            embed.set_author(name=f"{message.author}", icon_url=message.author.display_avatar.url)
 
             await message.channel.send(
                 f"Welcome Back {message.author.mention}",
