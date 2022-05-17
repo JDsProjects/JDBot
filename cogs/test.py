@@ -193,6 +193,8 @@ class Test(commands.Cog):
                 allowed_mentions=discord.AllowedMentions.none(),
             )
 
+            del self.afk[message.author.id]
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
