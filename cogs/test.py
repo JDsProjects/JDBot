@@ -217,8 +217,8 @@ class Test(commands.Cog):
             return
 
         if len(afk) > 1:
-            message = "Sorry, several people you mentioned are afk\n\n"
-            message += "\n".join(
+            msg = "Sorry, several people you mentioned are afk\n\n"
+            msg += "\n".join(
                 f'{u.mention} - {self.afk[u.id].text} (since {discord.utils.format_dt(self.afk[u.id].added_time, style="R")})'
                 for u in afk
             )
@@ -227,9 +227,9 @@ class Test(commands.Cog):
             u = afk[0]
             data = self.afk[u.id]
             timestamp = discord.utils.format_dt(data.added_time, style="R")
-            message = f"Sorry {u.mention} is afk right now \nReason: {data.text} \nAfk Since: {timestamp}"
+            msg = f"Sorry {u.mention} is afk right now \nReason: {data.text} \nAfk Since: {timestamp}"
 
-        await message.channel.send(message, allowed_mentions=discord.AllowedMentions.none())
+        await message.channel.send(msg, allowed_mentions=discord.AllowedMentions.none())
 
 
 class Slash(commands.Cog):
