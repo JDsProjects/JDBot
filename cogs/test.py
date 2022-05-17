@@ -142,7 +142,7 @@ class Test(commands.Cog):
 
         reason = profanity.censor(reason, censor_char="#")
 
-        embed = discord.Embed(title="Going AFK", color=15428885)
+        embed = discord.Embed(title="You Are Now Afk", color=15428885)
         embed.add_field(name="Reason:", value=f"{reason}", inline=False)
         await ctx.send(
             content=f"{ctx.author.mention} is now afk", embed=embed, allowed_mentions=discord.AllowedMentions.none()
