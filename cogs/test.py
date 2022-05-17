@@ -194,7 +194,7 @@ class Test(commands.Cog):
 
             embed = discord.Embed(title="AFK", description=f"Reason : **{data.text}**\nAfk Since : {timestamp}")
             await message.channel.send(
-                f"Welcome Back {message.author.mention} you went away with Reason: **{data.text}** for {timestamp}",
+                f"Welcome Back {message.author.mention} welcome back",
                 embed=embed,
                 allowed_mentions=discord.AllowedMentions.none(),
             )
