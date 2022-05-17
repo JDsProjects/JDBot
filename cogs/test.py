@@ -197,7 +197,7 @@ class Test(commands.Cog):
             embed = discord.Embed(
                 title="AFK", description=f"Reason : **{data.text}**\nAfk Since : {timestamp}", color=15428885
             )
-            embed.footer(text=f"{message.author}", icon_url=message.author.display_avatar.url)
+            embed.set_footer(text=f"{message.author}", icon_url=message.author.display_avatar.url)
 
             await message.channel.send(
                 f"Welcome Back {message.author.mention}",
