@@ -303,9 +303,14 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Tells bot if it should invalidate token.")
     async def token_snipper(self, ctx):
-        await ctx.send(
-            "Please Pick the Buttons below(it tells the bot if it should invalidate any discord tokens sent into chat):"
+
+        embed = discord.Embed(
+            title="Token Snipper Tool",
+            description="It tells the bot if it should invalidate any discord tokens sent into chat",
+            color=random.randint(0, 16777215),
         )
+        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
+        await ctx.send("Please Pick the Buttons below to pick:", embed=embed)
 
     async def rtfm_lookup(self, url=None, *, args=None):
 
