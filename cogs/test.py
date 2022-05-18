@@ -103,22 +103,6 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # look at the JDJG Bot orginal
 
-    @commands.command(brief="scans statuses to see if there is any bad ones.")
-    async def scan_status(self, ctx):
-        await ctx.send("will scan statuses in a guild to see if there is a bad one.")
-
-    @commands.command(brief="sets logs for a guild", name="logging")
-    async def _logging(self, ctx):
-        await ctx.send("logging wip.")
-
-    # look at global_chat stuff for global_chat features, rank for well rank, add an update system too, add cc_ over. nick too, as well as kick and ban, ofc unban and other guild ban moderation stuff. Port over emoji_check but public and make that do it's best to upload less than 256 kB, try to and ofc an os emulation mode, as well as update mode, and nick.
-
-    # Unrelated to Urban:
-    # https://discordpy.readthedocs.io/en/master/api.html?highlight=interaction#discord.InteractionResponse.send_message
-    # https://discordpy.readthedocs.io/en/latest/api.html#discord.Guild.query_members
-
-    # spyco data table in my sql database
-
     @commands.command(brief="a test of a new paginator :)")
     async def test_pagination(self, ctx):
         buttons = {
