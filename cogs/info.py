@@ -16,6 +16,7 @@ from difflib import SequenceMatcher
 import async_tio
 import discord
 import emoji
+import github
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
@@ -273,6 +274,13 @@ class DevTools(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+
+    async def cog_load(self):
+        github_token = os.environ.get("github_token")
+        self.github = await github.GHClient(username="JDJGBot", token=github_token)
+
+    async def cog_unload(self):
+        await self.github.close()
 
     async def rtfm_lookup(self, url=None, *, args=None):
 
