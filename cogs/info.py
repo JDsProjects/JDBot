@@ -303,7 +303,9 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Tells bot if it should invalidate any discord tokens sent into chat.")
     async def token_snipper(self, ctx):
-        await ctx.send("WIP")
+        await ctx.send(
+            "Please Pick the Buttons below(it tells the bot if it should invalidate any discord tokens sent into chat):"
+        )
 
     async def rtfm_lookup(self, url=None, *, args=None):
 
