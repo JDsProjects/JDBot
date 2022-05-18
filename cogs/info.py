@@ -308,6 +308,7 @@ class DevTools(commands.Cog):
             title="Token Snipper Tool",
             description="It tells the bot if it should invalidate any discord tokens sent into chat",
             color=random.randint(0, 16777215),
+            timestamp=ctx.message.created_at,
         )
         embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
         await ctx.send("Please Pick the Buttons below to pick:", embed=embed)
