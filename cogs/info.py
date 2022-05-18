@@ -296,7 +296,7 @@ class DevTools(commands.Cog):
             )
 
             await message.channel.send(
-                f"{message.author.mention} Token detected, invalidated in process. Gist: {gist.url}"
+                f"{message.author.mention} Token detected, invalidated in process.\nGist: {gist.url}"
             )
 
     async def rtfm_lookup(self, url=None, *, args=None):
