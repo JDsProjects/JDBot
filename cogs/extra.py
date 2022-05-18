@@ -1161,6 +1161,39 @@ class Extra(commands.Cog):
         game = button_games.BetaAkinator()
         await game.start(ctx, timeout=120, delete_button=True)
 
+    @commands.command()
+    async def afk(self, ctx, *, reason: typing.Optional[str] = None):
+
+        if ctx.author.id in self.afk:
+            return await ctx.send("You can't afk if you are already afk")
+
+        afk_user = await self.bot.db.fetchrow("SELECT * FROM AFK WHERE user_id = $1", ctx.author.id)
+
+        if afk_user:
+            return await ctx.send("You are already afk")
+
+        reason = reason or "Unknown"
+
+        reason = profanity.censor(reason, censor_char="#")
+
+        embed = discord.Embed(title="You Are Now Afk", color=15428885)
+        embed.add_field(name="Reason:", value=f"{reason}", inline=False)
+        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
+
+        await ctx.send(
+            content=f"{ctx.author.mention} is now afk", embed=embed, allowed_mentions=discord.AllowedMentions.none()
+        )
+
+        # await self.bot.db.execute("INSERT INTO AFK VALUES($1, $2, $3)", ctx.author.id, ctx.message.created_at, reason)
+        # chai gave me a new method which is below
+        data = await self.bot.db.fetchrow(
+            "INSERT INTO AFK VALUES($1, $2, $3) RETURNING *", ctx.author.id, ctx.message.created_at, reason
+        )
+
+        self.afk[ctx.author.id] = data
+
+        # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
+
 
 async def setup(bot):
     await bot.add_cog(Extra(bot))
