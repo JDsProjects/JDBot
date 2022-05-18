@@ -1169,7 +1169,7 @@ class Extra(commands.Cog):
         afk_user = await self.bot.db.fetchrow("SELECT * FROM AFK WHERE user_id = $1", ctx.author.id)
 
         if afk_user:
-            return await ctx.send("You are already afk")
+            return
 
         reason = reason or "Unknown"
 
