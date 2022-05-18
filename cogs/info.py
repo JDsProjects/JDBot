@@ -290,13 +290,13 @@ class DevTools(commands.Cog):
         match = re.findall(self.TOKEN_RE, message.content)
         if match:
             gist = await self.github.create_gist(
-                files=[github.File(fp="\n".join([m.group for m in match.group()]), filename="token.txt")],
+                files=[github.File(fp="\n".join([m for m in match]), filename="token.txt")],
                 description="Token Detected, invalidated in process",
                 public=True,
             )
 
             await message.channel.send(
-                f"{message.author.mention} Token detected, invalidated in process. Gist: {gist.html_url}"
+                f"{message.author.mention} Token detected, invalidated in process. Gist: {gist.url}"
             )
 
     async def rtfm_lookup(self, url=None, *, args=None):
