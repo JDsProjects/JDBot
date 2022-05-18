@@ -20,14 +20,6 @@ class Test(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.pool = self.bot.db
-        self.afk = {}
-
-    async def cog_load(self):
-        pool = self.pool
-
-        records = await pool.fetch("SELECT * FROM AFK")
-        self.afk = {record.user_id: record for record in records}
 
     @commands.command(brief="this command will error by sending no content")
     async def te(self, ctx):
@@ -127,39 +119,6 @@ class Test(commands.Cog):
 
     # spyco data table in my sql database
 
-    @commands.command()
-    async def afk(self, ctx, *, reason: typing.Optional[str] = None):
-
-        if ctx.author.id in self.afk:
-            return await ctx.send("You can't afk if you are already afk")
-
-        afk_user = await self.bot.db.fetchrow("SELECT * FROM AFK WHERE user_id = $1", ctx.author.id)
-
-        if afk_user:
-            return await ctx.send("You are already afk")
-
-        reason = reason or "Unknown"
-
-        reason = profanity.censor(reason, censor_char="#")
-
-        embed = discord.Embed(title="You Are Now Afk", color=15428885)
-        embed.add_field(name="Reason:", value=f"{reason}", inline=False)
-        embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.display_avatar.url)
-
-        await ctx.send(
-            content=f"{ctx.author.mention} is now afk", embed=embed, allowed_mentions=discord.AllowedMentions.none()
-        )
-
-        # await self.bot.db.execute("INSERT INTO AFK VALUES($1, $2, $3)", ctx.author.id, ctx.message.created_at, reason)
-        # chai gave me a new method which is below
-        data = await self.bot.db.fetchrow(
-            "INSERT INTO AFK VALUES($1, $2, $3) RETURNING *", ctx.author.id, ctx.message.created_at, reason
-        )
-
-        self.afk[ctx.author.id] = data
-
-        # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
-
     @commands.command(brief="a test of a new paginator :)")
     async def test_pagination(self, ctx):
         buttons = {
@@ -186,50 +145,6 @@ class Test(commands.Cog):
     async def notes(self, ctx):
         await ctx.send("WIP")
         # Note this is not like todo, todo is for small things, notes is for big things
-
-    @commands.Cog.listener()
-    async def on_message(self, message):
-
-        if message.author.bot:
-            return
-        if message.author.id in self.afk:
-            data = self.afk[message.author.id]
-
-            timestamp = discord.utils.format_dt(data.added_time, style="R")
-
-            embed = discord.Embed(
-                title="AFK", description=f"Reason : **{data.text}**\nAfk Since : {timestamp}", color=15428885
-            )
-            embed.set_author(name=f"{message.author}", icon_url=message.author.display_avatar.url)
-
-            await message.channel.send(
-                f"Welcome Back {message.author.mention}",
-                embed=embed,
-                allowed_mentions=discord.AllowedMentions.none(),
-            )
-
-            del self.afk[message.author.id]
-            await self.bot.db.execute("DELETE FROM AFK WHERE user_id = $1", message.author.id)
-
-        afk = list(filter(lambda u: u.id in self.afk, message.mentions))
-
-        if not afk:
-            return
-
-        if len(afk) > 1:
-            msg = "Sorry, several people you mentioned are afk\n\n"
-            msg += "\n".join(
-                f'{u.mention} - {self.afk[u.id].text} (since {discord.utils.format_dt(self.afk[u.id].added_time, style="R")})'
-                for u in afk
-            )
-
-        else:
-            u = afk[0]
-            data = self.afk[u.id]
-            timestamp = discord.utils.format_dt(data.added_time, style="R")
-            msg = f"Sorry {u.mention} is afk right now \nReason: {data.text} \nAfk Since: {timestamp}"
-
-        await message.channel.send(msg, allowed_mentions=discord.AllowedMentions.none())
 
 
 class Slash(commands.Cog):
