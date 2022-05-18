@@ -275,12 +275,29 @@ class DevTools(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+        self.TOKEN_RE = re.compile(r"[a-zA-Z0-9_-]{23,28}\.[a-zA-Z0-9_-]{6,7}\.[a-zA-Z0-9_-]{26}\w{1}")
+
     async def cog_load(self):
         github_token = os.environ.get("github_token")
         self.github = await github.GHClient(username="JDJGBot", token=github_token)
 
     async def cog_unload(self):
         await self.github.close()
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+
+        match = re.findall(self.TOKEN_RE, message.content)
+        if match:
+            gist = await self.github.create_gist(
+                files=[github.File(fp="\n".join([m.group for m in match.group()]), filename="token.txt")],
+                description="Token Detected, invalidated in process",
+                public=True,
+            )
+
+            await message.channel.send(
+                f"{message.author.mention} Token detected, invalidated in process. Gist: {gist.url}"
+            )
 
     async def rtfm_lookup(self, url=None, *, args=None):
 
