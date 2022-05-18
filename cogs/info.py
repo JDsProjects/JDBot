@@ -287,6 +287,8 @@ class DevTools(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
+        return
+
         match = re.findall(self.TOKEN_RE, message.content)
         if match:
             gist = await self.github.create_gist(
