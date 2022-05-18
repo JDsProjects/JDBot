@@ -301,9 +301,7 @@ class DevTools(commands.Cog):
                 f"{message.author.mention} Token detected, invalidated in process.\nGist: <{gist.url}>"
             )
 
-    @commands.command(
-        help="Allows you to get bot watch for token being sent and invalidates them by sending them to gist so discord sees it and invalidates automatically."
-    )
+    @commands.command("Tells bot if it should invalidate any discord tokens sent into chat.")
     async def token_snipper(self, ctx):
         await ctx.send("WIP")
 
