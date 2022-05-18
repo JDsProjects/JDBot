@@ -301,6 +301,10 @@ class DevTools(commands.Cog):
                 f"{message.author.mention} Token detected, invalidated in process.\nGist: <{gist.url}>"
             )
 
+    @commands.command(brief="Allows you to change invalidating your discord token")
+    async def token_snipper(self, ctx):
+        await ctx.send("WIP")
+
     async def rtfm_lookup(self, url=None, *, args=None):
 
         if not args:
