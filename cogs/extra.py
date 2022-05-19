@@ -1178,15 +1178,11 @@ class Extra(commands.Cog):
             content=f"{ctx.author.mention} is now afk", embed=embed, allowed_mentions=discord.AllowedMentions.none()
         )
 
-        # await self.bot.db.execute("INSERT INTO AFK VALUES($1, $2, $3)", ctx.author.id, ctx.message.created_at, reason)
-        # chai gave me a new method which is below
         data = await self.bot.db.fetchrow(
             "INSERT INTO AFK VALUES($1, $2, $3) RETURNING *", ctx.author.id, ctx.message.created_at, reason
         )
 
         self.afk[ctx.author.id] = data
-
-        # going to be like other afk bots, however this will censor the afk message if contains bad words and will link the orginal message if I can.
 
     @commands.Cog.listener()
     async def on_message(self, message):
