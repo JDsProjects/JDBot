@@ -66,8 +66,10 @@ class Test(commands.Cog):
             return await ctx.send("You can only get 30 tweets at a time.")
 
         try:
-            pass
-
+            self.bot.tweepy_client
+            # time to do things later
+            # https://docs.tweepy.org/en/latest/asyncclient.html#tweepy.asynchronous.AsyncClient.get_user
+            # https://docs.tweepy.org/en/latest/asyncclient.html#tweepy.asynchronous.AsyncClient.get_users_tweets
             # tweets = twitter_api.user_timeline(screen_name=username, count=amount, tweet_mode="extended")
             # tweepy_fetch_user = twitter_api.get_user(username)
 
