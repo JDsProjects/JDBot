@@ -277,9 +277,12 @@ class DevTools(commands.Cog):
 
         self.TOKEN_RE = re.compile(r"[a-zA-Z0-9_-]{23,28}\.[a-zA-Z0-9_-]{6,7}\.[a-zA-Z0-9_-]{26}\w{1}")
 
+        self.pool = self.bot.db
+
     async def cog_load(self):
         github_token = os.environ.get("github_token")
         self.github = await github.GHClient(username="JDJGBot", token=github_token)
+        self.rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
 
     async def cog_unload(self):
         await self.github.close()
@@ -359,10 +362,7 @@ class DevTools(commands.Cog):
     )
     async def rtfm(self, ctx, *, args=None):
 
-        rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
-        # cache soon
-
-        view = utils.RtfmChoice(ctx, rtfm_dictionary, timeout=15.0)
+        view = utils.RtfmChoice(ctx, self.rtfm_dictionary, timeout=15.0)
 
         await ctx.send(content="Please Pick a library you want to parse", view=view)
 
@@ -396,7 +396,7 @@ class DevTools(commands.Cog):
     @commands.command(brief="a command to view the rtfm DB")
     async def rtfm_view(self, ctx):
 
-        rtfm_dictionary = dict(await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY"))
+        rtfm_dictionary = dict(self.rtfm_dictionary)
 
         pag = commands.Paginator(prefix="", suffix="")
         for g in rtfm_dictionary:
