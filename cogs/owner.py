@@ -473,7 +473,7 @@ class Owner(commands.Cog):
                 access_token_secret=access_secret,
             )
 
-            post = tweet_client.create_tweet(text=args, user_auth=True)
+            post = await tweet_client.create_tweet(text=args, user_auth=True)
 
         except Exception as e:
             traceback.print_exc()
