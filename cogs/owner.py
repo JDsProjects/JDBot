@@ -445,9 +445,35 @@ class Owner(commands.Cog):
         if not args:
             return await ctx.send("you can't send nothing to twitter.")
 
+        consumer_key = os.getenv("tweet_key")
+        consumer_secret = os.getenv("tweet_secret")
+
+        # auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+
+        access_token = os.getenv("tweet_access")
+        access_secret = os.getenv("tweet_token")
+
+        # auth.set_access_token(access_token, access_secret)
+
+        # auth = tweepy.OAuth2AppHandler(consumer_key, consumer_secret)
+
+        access_token = os.getenv("tweet_access")
+        access_secret = os.getenv("tweet_token")
+        bearer_token = os.getenv("tweet_bearer")
+
         try:
-            tweet_time = functools.partial(self.tweepy_post, args)
-            post = await self.bot.loop.run_in_executor(None, tweet_time)
+            # tweet_time = functools.partial(self.tweepy_post, args)
+            # post = await self.bot.loop.run_in_executor(None, tweet_time)
+
+            tweet_client = tweepy.asynchronous.AsyncClient(
+                bearer_token,
+                consumer_key=consumer_key,
+                consumer_secret=consumer_secret,
+                access_token=access_token,
+                access_token_secret=access_secret,
+            )
+
+            post = tweet_client.create_tweet(text=args, user_auth=True)
 
         except Exception as e:
             traceback.print_exc()
