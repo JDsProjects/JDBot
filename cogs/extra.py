@@ -424,6 +424,7 @@ class Extra(commands.Cog):
             "The save editor used: https://coderpatsy.bitbucket.io/cookies/v10466/editor.html \n Warning may be a bit cursed. (because of the grandmas having madness at this level.) \n To be Used with https://orteil.dashnet.org/cookieclicker/",
             file=discord.File(s, filename="cookie_save.txt"),
         )
+        s.close()
 
     @commands.command()
     async def call_text(self, ctx, *, args=None):
