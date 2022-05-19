@@ -323,7 +323,7 @@ class DevTools(commands.Cog):
 
         else:
 
-            # replace the url and grabbing when frostii ports rtfm to senarc.
+            # local rtfm
             res = await self.bot.session.get(
                 "https://repi.openrobot.xyz/search_docs",
                 params={"query": args, "documentation": url},
@@ -360,6 +360,7 @@ class DevTools(commands.Cog):
     async def rtfm(self, ctx, *, args=None):
 
         rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
+        # cache soon
 
         view = utils.RtfmChoice(ctx, rtfm_dictionary, timeout=15.0)
 
