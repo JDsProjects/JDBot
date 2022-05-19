@@ -6,7 +6,7 @@ discordlists.py >= 1.1.1
 emoji >= 1.2.0
 alexflipnote.py >= 2.4.0
 asyncpraw >= 7.3.1
-tweepy @ git+https://github.com/tweepy/tweepy
+tweepy[async] @ git+https://github.com/tweepy/tweepy
 topggpy >= 1.1.0
 CairoSVG >= 2.5.2
 python-cse @ git+https://github.com/JDJGInc/python-cse
