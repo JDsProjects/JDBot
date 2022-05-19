@@ -10,8 +10,8 @@ import aiohttp
 import asyncpg
 import discord
 import dotenv
-from tweepy.asynchronous import AsyncClient
 from discord.ext import commands
+from tweepy.asynchronous import AsyncClient
 
 dotenv.load_dotenv()
 

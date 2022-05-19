@@ -6,7 +6,6 @@ import traceback
 import typing
 
 import discord
-import tweepy
 from better_profanity import profanity
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
@@ -66,7 +65,7 @@ class Test(commands.Cog):
             return await ctx.send("You can only get 30 tweets at a time.")
 
         try:
-            self.bot.tweepy_client
+            self.bot.tweet_client
             # time to do things later
             # https://docs.tweepy.org/en/latest/asyncclient.html#tweepy.asynchronous.AsyncClient.get_user
             # https://docs.tweepy.org/en/latest/asyncclient.html#tweepy.asynchronous.AsyncClient.get_users_tweets
