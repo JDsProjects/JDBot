@@ -10,6 +10,7 @@ import aiohttp
 import asyncpg
 import discord
 import dotenv
+import tweepy
 from discord.ext import commands
 
 dotenv.load_dotenv()
@@ -105,6 +106,21 @@ class JDBot(commands.Bot):
         self.sus_users: dict[int, str] = dict(await self.db.fetch("SELECT * FROM SUS_USERS;"))
 
         self.history: list[str] = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
+
+        consumer_key = os.getenv("tweet_key")
+        consumer_secret = os.getenv("tweet_secret")
+
+        access_token = os.getenv("tweet_access")
+        access_secret = os.getenv("tweet_token")
+        bearer_token = os.getenv("tweet_bearer")
+
+        self.tweet_client = tweepy.asynchronous.AsyncClient(
+            bearer_token,
+            consumer_key=consumer_key,
+            consumer_secret=consumer_secret,
+            access_token=access_token,
+            access_token_secret=access_secret,
+        )
 
         await super().start(*args, **kwargs)
 

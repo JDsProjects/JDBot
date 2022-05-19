@@ -428,15 +428,7 @@ class Owner(commands.Cog):
 
         try:
 
-            tweet_client = tweepy.asynchronous.AsyncClient(
-                bearer_token,
-                consumer_key=consumer_key,
-                consumer_secret=consumer_secret,
-                access_token=access_token,
-                access_token_secret=access_secret,
-            )
-
-            post = await tweet_client.create_tweet(text=args, user_auth=True)
+            post = await self.bot.tweet_client.create_tweet(text=args, user_auth=True)
 
         except Exception as e:
             traceback.print_exc()

@@ -65,21 +65,8 @@ class Test(commands.Cog):
         if amount > 30:
             return await ctx.send("You can only get 30 tweets at a time.")
 
-        consumer_key = os.getenv("tweet_key")
-        consumer_secret = os.getenv("tweet_secret")
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-        bearer_token = os.getenv("tweet_bearer")
-
         try:
-            tweet_client = tweepy.asynchronous.AsyncClient(
-                bearer_token,
-                consumer_key=consumer_key,
-                consumer_secret=consumer_secret,
-                access_token=access_token,
-                access_token_secret=access_secret,
-            )
+            pass
 
             # tweets = twitter_api.user_timeline(screen_name=username, count=amount, tweet_mode="extended")
             # tweepy_fetch_user = twitter_api.get_user(username)
