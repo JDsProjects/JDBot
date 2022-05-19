@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import functools
 import importlib
 import os
 import random
@@ -411,34 +410,6 @@ class Owner(commands.Cog):
             else:
                 return await ctx.send(f"{user} is in the testers list already!")
 
-    def tweepy_post(self, post_text=None):
-
-        consumer_key = os.getenv("tweet_key")
-        consumer_secret = os.getenv("tweet_secret")
-
-        # auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-
-        # auth.set_access_token(access_token, access_secret)
-
-        # auth = tweepy.OAuth2AppHandler(consumer_key, consumer_secret)
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-        bearer_token = os.getenv("tweet_bearer")
-
-        client = tweepy.Client(
-            bearer_token,
-            consumer_key=consumer_key,
-            consumer_secret=consumer_secret,
-            access_token=access_token,
-            access_token_secret=access_secret,
-        )
-
-        return client.create_tweet(text=post_text, user_auth=True)
-
     @commands.command(brief="sends tweet to JDBot Twitter", aliases=["tweet_send"])
     async def send_tweet(self, ctx, *, args=None):
 
@@ -448,22 +419,14 @@ class Owner(commands.Cog):
         consumer_key = os.getenv("tweet_key")
         consumer_secret = os.getenv("tweet_secret")
 
-        # auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-
         access_token = os.getenv("tweet_access")
         access_secret = os.getenv("tweet_token")
-
-        # auth.set_access_token(access_token, access_secret)
-
-        # auth = tweepy.OAuth2AppHandler(consumer_key, consumer_secret)
 
         access_token = os.getenv("tweet_access")
         access_secret = os.getenv("tweet_token")
         bearer_token = os.getenv("tweet_bearer")
 
         try:
-            # tweet_time = functools.partial(self.tweepy_post, args)
-            # post = await self.bot.loop.run_in_executor(None, tweet_time)
 
             tweet_client = tweepy.asynchronous.AsyncClient(
                 bearer_token,
