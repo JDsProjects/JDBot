@@ -1,5 +1,4 @@
 import collections
-import functools
 import itertools
 import os
 import random
