@@ -15,7 +15,8 @@ import discord
 from better_profanity import profanity
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-from discord_games import button_games
+
+# from discord_games import button_games
 
 import utils
 
@@ -1154,11 +1155,11 @@ class Extra(commands.Cog):
             else:
                 return await ctx.send("Cancelled.")
 
-    @commands.command(aliases=["aki"], brief="akinator game made by Tom the Bomb")
-    async def akinator(self, ctx):
+    # @commands.command(aliases=["aki"], brief="akinator game made by Tom the Bomb")
+    # async def akinator(self, ctx):
 
-        game = button_games.BetaAkinator()
-        await game.start(ctx, timeout=120, delete_button=True)
+    # game = button_games.BetaAkinator()
+    # await game.start(ctx, timeout=120, delete_button=True)
 
     @commands.command()
     async def afk(self, ctx, *, reason: typing.Optional[str] = None):
