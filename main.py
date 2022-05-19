@@ -10,7 +10,7 @@ import aiohttp
 import asyncpg
 import discord
 import dotenv
-import tweepy
+from tweepy.asynchronous import AsyncClient
 from discord.ext import commands
 
 dotenv.load_dotenv()
@@ -114,7 +114,7 @@ class JDBot(commands.Bot):
         access_secret = os.getenv("tweet_token")
         bearer_token = os.getenv("tweet_bearer")
 
-        self.tweet_client = tweepy.asynchronous.AsyncClient(
+        self.tweet_client = AsyncClient(
             bearer_token,
             consumer_key=consumer_key,
             consumer_secret=consumer_secret,
