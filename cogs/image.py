@@ -470,7 +470,6 @@ class Image(commands.Cog):
         buffer = io.BytesIO(converted_bytes)
         buffer.seek(0)
         file = discord.File(buffer, filename="converted.png")
-        buffer.close()
         return file
 
     @commands.command(brief="Converts svg images to png images")
