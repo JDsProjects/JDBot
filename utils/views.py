@@ -1343,6 +1343,12 @@ class BotSettings(discord.ui.View):
         return True
 
 
+class TokenInvalidatorSettings(discord.ui.View):
+    def __init__(self, ctx, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+
+
 # A Nitro Button Class(not actual nitro)
 
 
