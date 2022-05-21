@@ -1348,6 +1348,26 @@ class TokenInvalidatorSettings(discord.ui.View):
         super().__init__(**kwargs)
         self.ctx = ctx
 
+    @discord.ui.button(label="DM On", style=discord.ButtonStyle.success, emoji="📩", row=0)
+    async def dm_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
+
+        await interaction.response.edit_message(content="DM Invalidation On", view=None)
+
+    @discord.ui.button(label="Global On", style=discord.ButtonStyle.success, emoji="<:_:411642484528119810>", row=0)
+    async def global_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
+
+        await interaction.response.edit_message(content="Global Token Invalidator", view=None)
+
+    @discord.ui.button(label="Guild On", style=discord.ButtonStyle.success, emoji="<a:_:803876680166408192> ", row=0)
+    async def guild_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
+
+        await interaction.response.edit_message(content="Global Token Invalidator", view=None)
+
+    @discord.ui.button(label="Channel On", style=discord.ButtonStyle.success, emoji="<a:_:803876680166408192> ", row=0)
+    async def channel_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
+
+        await interaction.response.edit_message(content="Global Token Invalidator", view=None)
+
 
 # A Nitro Button Class(not actual nitro)
 
