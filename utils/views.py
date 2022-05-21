@@ -1368,6 +1368,16 @@ class TokenInvalidatorSettings(discord.ui.View):
 
         await interaction.response.edit_message(content="Channel Token Invalidator", view=None, embed=None)
 
+    async def interaction_check(self, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
 
 # A Nitro Button Class(not actual nitro)
 
