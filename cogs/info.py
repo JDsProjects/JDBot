@@ -317,7 +317,8 @@ class DevTools(commands.Cog):
         embed.set_image(url="https://i.imgur.com/WPExfNr.gif")
         embed.set_footer(text="This snipper snipes tokens she sees in chat.")
 
-        await ctx.send("Please pick the buttons below to pick.", embed=embed)
+        view = utils.TokenInvalidatorSetting(ctx)
+        await ctx.send("Please pick the buttons below to pick.", embed=embed, view=view)
 
     async def rtfm_lookup(self, url=None, *, args=None):
 
