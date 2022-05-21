@@ -1378,6 +1378,12 @@ class TokenInvalidatorSettings(discord.ui.View):
 
         return True
 
+    async def on_timeout(self):
+        for item in self.children:
+            item.disabled = True
+
+        await self.view.message.edit(content="May want to start from the top", view=self)
+
 
 # A Nitro Button Class(not actual nitro)
 
