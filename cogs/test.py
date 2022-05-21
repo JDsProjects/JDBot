@@ -65,7 +65,7 @@ class Test(commands.Cog):
             return await ctx.send("You can only get 30 tweets at a time.")
 
         try:
-            username = await self.bot.tweet_client.get_user(username)
+            username = await self.bot.tweet_client.get_user(username=username)
 
         except Exception as e:
             traceback.print_exc()
