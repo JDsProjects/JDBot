@@ -67,7 +67,7 @@ class Test(commands.Cog):
         try:
             username = await self.bot.tweet_client.get_user(username)
 
-        except:
+        except Exception as e:
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
