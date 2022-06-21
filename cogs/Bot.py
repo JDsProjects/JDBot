@@ -696,6 +696,8 @@ class Bot(commands.Cog):
             text="Credits are done in abc order. \nPlease don't randomly contact them unless they allow you to."
         )
         await ctx.send(embed=embed)
+        # will go by user ids soon that are hardcoded or in a database.
+        # will be cool, right?
 
 
 async def setup(bot):
