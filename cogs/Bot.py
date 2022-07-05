@@ -696,8 +696,19 @@ class Bot(commands.Cog):
             text="Credits are done in abc order. \nPlease don't randomly contact them unless they allow you to."
         )
         await ctx.send(embed=embed)
-        # will go by user ids soon that are hardcoded or in a database.
-        # will be cool, right?
+
+        to_credit = [
+            525843819850104842,
+            171539705043615744,
+            349373972103561218,
+            540142383270985738,
+            717822288375971900,
+            705074519756505138,
+            150665783268212746,
+        ]
+        users = sorted([(await self.bot.try_user(uid)) or f"Unknown User#0000 ({uid})" for uid in to_credit])
+        embed.description = "\n".join(users)
+        await ctx.send(embed=embed)
 
 
 async def setup(bot):
