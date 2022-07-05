@@ -706,7 +706,7 @@ class Bot(commands.Cog):
             705074519756505138,
             150665783268212746,
         ]
-        users = sorted([(await self.bot.try_user(uid)) or f"Unknown User#0000 ({uid})" for uid in to_credit])
+        users = sorted([(f"{await self.bot.try_user(uid)}") or f"Unknown User#0000 ({uid})" for uid in to_credit])
         embed.description = "\n".join(users)
         await ctx.send(embed=embed)
 
