@@ -105,7 +105,7 @@ class Order(commands.Cog):
             view=view,
         )
 
-        await self.bot.get_channel(855217084710912050).send(embed=embed)
+        await self.bot.get_channel(996864357885542481).send(embed=embed)
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="searches from tenor to find the closest image.")
@@ -187,7 +187,7 @@ class Order(commands.Cog):
             view=view,
         )
 
-        await self.bot.get_channel(855217084710912050).send(embed=embed)
+        await self.bot.get_channel(996864357885542481).send(embed=embed)
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="looks up an item from giphy.")
@@ -264,7 +264,7 @@ class Order(commands.Cog):
             view=view,
         )
 
-        await self.bot.get_channel(855217084710912050).send(embed=embed)
+        await self.bot.get_channel(996864357885542481).send(embed=embed)
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="can search a search result from google with safe search!")

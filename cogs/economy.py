@@ -141,7 +141,7 @@ class Economy(commands.Cog):
                 embed=embed,
             )
 
-        await self.bot.get_channel(855217084710912050).send(
+        await self.bot.get_channel(996864357885542481).send(
             content=f"Backup of {ctx.author}'s Economy Data!", embed=embed
         )
 

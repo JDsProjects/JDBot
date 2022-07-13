@@ -121,7 +121,7 @@ class Info(commands.Cog):
             )
 
             jdjg = await self.bot.try_user(168422909482762240)
-            await self.bot.get_channel(855217084710912050).send(
+            await self.bot.get_channel(996864357885542481).send(
                 f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites"
             )
 
