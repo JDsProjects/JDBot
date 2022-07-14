@@ -470,7 +470,7 @@ class Bot(commands.Cog):
         )
         embed.set_footer(text=f"User ID: {ctx.author.id}")
 
-        shadi = await self.bot.try_user(717822288375971900)
+        shadi = await self.bot.try_user(705074519756505138)
         jdjg = await self.bot.try_user(168422909482762240)
 
         await jdjg.send(embed=embed)
@@ -695,7 +695,6 @@ class Bot(commands.Cog):
             171539705043615744,
             349373972103561218,
             540142383270985738,
-            717822288375971900,
             705074519756505138,
             150665783268212746,
         ]
