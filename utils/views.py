@@ -1270,8 +1270,8 @@ class GuildInfoSelects(discord.ui.Select):
 
         if choice == "weirdcount":
             embed.add_field(
-                name="Special Count:",
-                value=f"**Channel Count**: {len(guild.channels)} \n**Role Count**: {len(guild.roles)}",
+                name="Channel/Role Count::",
+                value=f"**Channels**: {len(guild.channels)} \n**Roles**: {len(guild.roles)}",
             )
 
         if choice == "bot_or_human":
@@ -1280,8 +1280,8 @@ class GuildInfoSelects(discord.ui.Select):
             humans = [m for m in guild.members if not m.bot]
 
             embed.add_field(
-                name="Member info:",
-                value=f"Member Count : {guild.member_count}\nUsers : {len(humans)} \nBots : {len(bots)} ",
+                name="Member Info:",
+                value=f"**Total** : {guild.member_count}\n**Users** : {len(humans)} \n**Bots** : {len(bots)} ",
             )
 
         await interaction.response.edit_message(embed=embed)
