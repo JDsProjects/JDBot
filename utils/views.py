@@ -1198,6 +1198,12 @@ class GuildInfoSelects(discord.ui.Select):
                 emoji="👑",
             ),
             discord.SelectOption(
+                label="Icon",
+                description="Show's the guild's icon",
+                emoji="🖼️",
+                value="icon",
+            ),
+            discord.SelectOption(
                 label="Close",
                 description="Closes the Select",
                 value="close",
@@ -1243,6 +1249,15 @@ class GuildInfoSelects(discord.ui.Select):
             embed.add_field(name="Owner:", value=f"**Name**: {guild.owner} \n**ID**: {guild.owner_id}")
 
         embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+
+        if choice == "icon":
+
+            embed = discord.Embed(color=random.randint(0, 16777215))
+            embed.set_author(
+                name=f"{guild}'s avatar:", icon_url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png"
+            )
+            embed.set_image(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+            embed.set_footer(text=f"Requested by {self.ctx.author}")
 
         await interaction.response.edit_message(embed=embed)
 

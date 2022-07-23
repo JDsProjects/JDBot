@@ -531,15 +531,6 @@ class DevTools(commands.Cog):
 
         await ctx.send(f"Invite with slash commands and the bot scope or only with a bot scope:", view=view)
 
-    @commands.command(brief="gets you a guild's icon", aliases=["guild_icon"])
-    async def server_icon(self, ctx, *, guild: typing.Optional[discord.Guild] = None):
-        guild = guild or ctx.guild
-
-        if not guild:
-            return await ctx.send("no guild to get the icon of.")
-
-        await ctx.send(f"{guild.icon.url if guild.icon else 'No Url for This Guild, I am sorry dude :('}")
-
     @commands.command(brief="some old fooz command..")
     async def fooz(self, ctx, *, args=None):
         if not args:
