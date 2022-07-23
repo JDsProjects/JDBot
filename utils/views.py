@@ -1196,7 +1196,7 @@ class GuildInfoSelects(discord.ui.Select):
                 label="Owner Info",
                 description="Shows owner's info",
                 value="owner",
-                emoji="👑",
+                emoji="<:_:585789630800986114>",
             ),
             discord.SelectOption(
                 label="Icon",
