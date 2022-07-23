@@ -1288,7 +1288,7 @@ class GuildInfoSelects(discord.ui.Select):
             humans = [m for m in guild.members if not m.bot]
 
             embed.add_field(
-                name="Member Info:",
+                name="Member Count:",
                 value=f"**Total** : {guild.member_count}\n**Users** : {len(humans)} \n**Bots** : {len(bots)} ",
             )
 
@@ -1301,7 +1301,7 @@ class GuildInfoSelects(discord.ui.Select):
             offline_users = base_status[discord.Status.offline]
 
             embed.add_field(
-                name="Member Presences:",
+                name="Members:",
                 value=f"**Online** : {online_users} \n**DND** : {dnd_users} \n**Idle** : {idle_users} \n**Offline** : {offline_users}",
             )
 
