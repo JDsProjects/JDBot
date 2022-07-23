@@ -1270,7 +1270,7 @@ class GuildInfoSelects(discord.ui.Select):
 
         if choice == "weirdcount":
             embed.add_field(
-                name="Channel/Role Count::",
+                name="Channel/Role Count:",
                 value=f"**Channels**: {len(guild.channels)} \n**Roles**: {len(guild.roles)}",
             )
 
