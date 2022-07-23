@@ -54,7 +54,7 @@ class Info(commands.Cog):
             view = utils.GuildInfoView(ctx, guild)
 
             await ctx.send(
-                "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
+                "Get More Information of the guild you selected",
                 embed=embed,
                 view=view,
             )
