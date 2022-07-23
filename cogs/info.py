@@ -283,6 +283,7 @@ class DevTools(commands.Cog):
         github_token = os.environ.get("github_token")
         self.github = await github.GHClient(username="JDJGBot", token=github_token)
         self.rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
+        self.tio = async_tio.Tio(session=self.bot.session)
 
     async def cog_unload(self):
         await self.github.close()
@@ -730,17 +731,18 @@ class DevTools(commands.Cog):
     async def console(self, ctx, *, code: codeblock_converter = None):
 
         if not code:
+            ctx.command.reset_cooldown(ctx)
             return await ctx.send("You need to give me some code to use, otherwise I can not determine what it is.")
 
         if not code.language:
+            ctx.command.reset_cooldown(ctx)
             return await ctx.send("You Must provide a language to use")
 
         if not code.content:
+            ctx.command.reset_cooldown(ctx)
             return await ctx.send("No code provided")
 
-        tio = await async_tio.Tio(session=self.bot.session)
-
-        output = await tio.execute(f"{code.content}", language=f"{code.language}")
+        output = await self.tio.execute(f"{code.content}", language=f"{code.language}")
 
         text_returned = (
             f"```{code.language}\n{output}```"
