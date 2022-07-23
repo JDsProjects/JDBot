@@ -1196,6 +1196,13 @@ class GuildInfoSelects(discord.ui.Select):
                 value="close",
                 emoji="❌",
             ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
+            discord.SelectOption(
+                label="Owner Info",
+                description="Shows owner's info",
+                value="owner",
+                emoji="👑",
+            ),
         ]
 
         super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
@@ -1218,6 +1225,22 @@ class GuildInfoSelects(discord.ui.Select):
         if choice == "close":
             self.view.remove_item(self)
             return await interaction.response.edit_message(view=self.view, embed=None)
+
+        if choice == "misc":
+
+            # guild type maybe?
+            # Type: {} \n
+            # placed if maybe used, likely no though.
+
+            embed.add_field(
+                name="User Info 2:",
+                value=f"**Server Creation:**: {discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
+                inline=False,
+            )
+
+        if choice == "owner":
+
+            embed.add_field(name="Owner:", value=f"**Name**: {guild.owner} \n**ID**: {guild.owner_id}")
 
         embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 

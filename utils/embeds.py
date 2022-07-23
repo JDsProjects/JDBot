@@ -23,13 +23,6 @@ async def guildinfo(ctx, guild):
     idle_users = base_status[discord.Status.idle]
     offline_users = base_status[discord.Status.offline]
 
-    embed.add_field(
-        name="Server Creation:",
-        value=f"{discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
-    )
-
-    embed.add_field(name="Server Owner Info:", value=f"Owner : {guild.owner} \nOwner ID : {guild.owner_id}")
-
     bots = [m for m in guild.members if m.bot]
     humans = [m for m in guild.members if not m.bot]
 
