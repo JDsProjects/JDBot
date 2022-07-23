@@ -16,13 +16,6 @@ async def guildinfo(ctx, guild):
     animated_emojis = sum(e.animated for e in guild.emojis)
     usable_emojis = sum(e.available for e in guild.emojis)
 
-    base_status = collections.Counter([x.status for x in guild.members])
-
-    online_users = base_status[discord.Status.online]
-    dnd_users = base_status[discord.Status.dnd]
-    idle_users = base_status[discord.Status.idle]
-    offline_users = base_status[discord.Status.offline]
-
     embed.add_field(
         name="Emojis Info:",
         value=f"Limit : {guild.emoji_limit}\nStatic : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}",
@@ -33,11 +26,6 @@ async def guildinfo(ctx, guild):
     embed.add_field(name="Max File Size:", value=f"{guild.filesize_limit/1000000} MB")
     embed.add_field(name="Shard ID:", value=guild.shard_id)
     embed.add_field(name="Animated Icon", value=f"{animated_value}")
-
-    embed.add_field(
-        name="User Presences Info:",
-        value=f"Online Users: {online_users} \nDND Users: {dnd_users} \nIdle Users : {idle_users} \nOffline Users : {offline_users}",
-    )
 
 
 async def roleinfo(ctx, role):

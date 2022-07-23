@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import collections
 import random
 import traceback
 import typing
@@ -1212,6 +1213,7 @@ class GuildInfoSelects(discord.ui.Select):
                 value="bot_or_human",
                 emoji="<:members:917747437429473321>",
             ),
+            discord.SelectOption(label="statuses", description="Users' Prescences", emoji="🖼️", value="statuses"),
             discord.SelectOption(
                 label="Close",
                 description="Closes the Select",
@@ -1282,6 +1284,19 @@ class GuildInfoSelects(discord.ui.Select):
             embed.add_field(
                 name="Member Info:",
                 value=f"**Total** : {guild.member_count}\n**Users** : {len(humans)} \n**Bots** : {len(bots)} ",
+            )
+
+        if choice == "statuses":
+
+            base_status = collections.Counter([x.status for x in guild.members])
+            online_users = base_status[discord.Status.online]
+            dnd_users = base_status[discord.Status.dnd]
+            idle_users = base_status[discord.Status.idle]
+            offline_users = base_status[discord.Status.offline]
+
+            embed.add_field(
+                name="Member Presences:",
+                value=f"**Online** : {online_users} \n**DND** : {dnd_users} \n**Idle** : {idle_users} \n**Offline** : {offline_users}",
             )
 
         await interaction.response.edit_message(embed=embed)
