@@ -23,10 +23,6 @@ async def guildinfo(ctx, guild):
     idle_users = base_status[discord.Status.idle]
     offline_users = base_status[discord.Status.offline]
 
-    embed = discord.Embed(title="Guild Info:", color=random.randint(0, 16777215))
-    embed.add_field(name="Server Name:", value=guild.name)
-    embed.add_field(name="Server ID:", value=guild.id)
-
     embed.add_field(
         name="Server Creation:",
         value=f"{discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
@@ -45,8 +41,6 @@ async def guildinfo(ctx, guild):
     embed.add_field(name="Channel Count:", value=len(guild.channels))
     embed.add_field(name="Role Count:", value=len(guild.roles))
 
-    embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
-
     embed.add_field(
         name="Emojis Info:",
         value=f"Limit : {guild.emoji_limit}\nStatic : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}",
@@ -62,8 +56,6 @@ async def guildinfo(ctx, guild):
         name="User Presences Info:",
         value=f"Online Users: {online_users} \nDND Users: {dnd_users} \nIdle Users : {idle_users} \nOffline Users : {offline_users}",
     )
-
-    await ctx.send(embed=embed)
 
 
 async def roleinfo(ctx, role):
