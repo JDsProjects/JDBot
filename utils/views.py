@@ -1230,7 +1230,7 @@ class GuildInfoSelects(discord.ui.Select):
 
         if choice == "close":
             self.view.remove_item(self)
-            return await interaction.response.edit_message(view=self.view, embed=None)
+            return await interaction.response.edit_message(content="Select Completed", view=self.view, embed=None)
 
         if choice == "misc":
 
