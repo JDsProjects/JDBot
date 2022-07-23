@@ -1190,18 +1190,18 @@ class GuildInfoSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Close",
-                description="Closes the Select",
-                value="close",
-                emoji="❌",
-            ),
             discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(
                 label="Owner Info",
                 description="Shows owner's info",
                 value="owner",
                 emoji="👑",
+            ),
+            discord.SelectOption(
+                label="Close",
+                description="Closes the Select",
+                value="close",
+                emoji="❌",
             ),
         ]
 
@@ -1233,7 +1233,7 @@ class GuildInfoSelects(discord.ui.Select):
             # placed if maybe used, likely no though.
 
             embed.add_field(
-                name="User Info 2:",
+                name="Guild Info 2:",
                 value=f"**Server Creation:**: {discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
                 inline=False,
             )
