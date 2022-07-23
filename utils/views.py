@@ -1190,6 +1190,12 @@ class GuildInfoSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
+            discord.SelectOption(
+                label="Close",
+                description="Closes the Select",
+                value="close",
+                emoji="❌",
+            ),
         ]
 
         super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
@@ -1208,6 +1214,10 @@ class GuildInfoSelects(discord.ui.Select):
                 value=f"**Server Name**: {guild} \n**ID**: {guild.id}",
                 inline=False,
             )
+
+        if choice == "close":
+            self.view.remove_item(self)
+            return await interaction.response.edit_message(view=self.view, embed=None)
 
         embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 
