@@ -48,6 +48,10 @@ class Info(commands.Cog):
 
         if guild:
             await utils.guildinfo(ctx, guild)
+            embed = discord.Embed(title=f"{guild}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
+            embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
+
+            # new stuff here soon.
 
     @commands.command(
         aliases=["user_info", "user-info", "ui", "whois"],

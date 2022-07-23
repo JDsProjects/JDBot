@@ -26,6 +26,7 @@ async def guildinfo(ctx, guild):
     embed = discord.Embed(title="Guild Info:", color=random.randint(0, 16777215))
     embed.add_field(name="Server Name:", value=guild.name)
     embed.add_field(name="Server ID:", value=guild.id)
+
     embed.add_field(
         name="Server Creation:",
         value=f"{discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
