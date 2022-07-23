@@ -23,14 +23,6 @@ async def guildinfo(ctx, guild):
     idle_users = base_status[discord.Status.idle]
     offline_users = base_status[discord.Status.offline]
 
-    bots = [m for m in guild.members if m.bot]
-    humans = [m for m in guild.members if not m.bot]
-
-    embed.add_field(
-        name="Member info",
-        value=f"Member Count : {guild.member_count}\nUsers : {len(humans)} \nBots : {len(bots)} ",
-    )
-
     embed.add_field(
         name="Emojis Info:",
         value=f"Limit : {guild.emoji_limit}\nStatic : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}",

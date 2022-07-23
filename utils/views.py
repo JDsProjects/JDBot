@@ -1207,6 +1207,12 @@ class GuildInfoSelects(discord.ui.Select):
                 label="Role/Channel Count", description="Show's Channel and Role Count", emoji="🖼️", value="weirdcount"
             ),
             discord.SelectOption(
+                label="Member Info",
+                description="Shows the Bot/Human Count",
+                value="bot_or_human",
+                emoji="<:members:917747437429473321>",
+            ),
+            discord.SelectOption(
                 label="Close",
                 description="Closes the Select",
                 value="close",
@@ -1266,6 +1272,16 @@ class GuildInfoSelects(discord.ui.Select):
             embed.add_field(
                 name="Special Count:",
                 value=f"**Channel Count**: {len(guild.channels)} \n**Role Count**: {len(guild.roles)}",
+            )
+
+        if choice == "bot_or_human":
+
+            bots = [m for m in guild.members if m.bot]
+            humans = [m for m in guild.members if not m.bot]
+
+            embed.add_field(
+                name="Member info:",
+                value=f"Member Count : {guild.member_count}\nUsers : {len(humans)} \nBots : {len(bots)} ",
             )
 
         await interaction.response.edit_message(embed=embed)
