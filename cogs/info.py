@@ -44,7 +44,7 @@ class Info(commands.Cog):
         guild = guild or ctx.guild
 
         if guild is None:
-            await ctx.send("Guild wanted has not been found")
+            await ctx.send("Could not find the guild you were looking for.")
 
         if guild:
 
