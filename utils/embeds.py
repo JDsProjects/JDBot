@@ -12,15 +12,6 @@ import sr_api
 
 async def guildinfo(ctx, guild):
 
-    static_emojis = sum(not e.animated for e in guild.emojis)
-    animated_emojis = sum(e.animated for e in guild.emojis)
-    usable_emojis = sum(e.available for e in guild.emojis)
-
-    embed.add_field(
-        name="Emojis Info:",
-        value=f"Limit : {guild.emoji_limit}\nStatic : {static_emojis} \nAnimated : {animated_emojis} \nTotal : {len(guild.emojis)}/{guild.emoji_limit*2} \nUsable : {usable_emojis}",
-    )
-
     animated_value = guild.icon.is_animated() if guild.icon else False
 
     embed.add_field(name="Max File Size:", value=f"{guild.filesize_limit/1000000} MB")

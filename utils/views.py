@@ -1213,6 +1213,12 @@ class GuildInfoSelects(discord.ui.Select):
                 value="bot_or_human",
                 emoji="<:members:917747437429473321>",
             ),
+            discord.SelectOption(
+                label="Emoji Data",
+                description="Gives Emoji Stats",
+                value="emoji_data",
+                emoji="📜",
+            ),
             discord.SelectOption(label="Statuses", description="Users' Presences", emoji="🖼️", value="statuses"),
             discord.SelectOption(
                 label="Close",
@@ -1297,6 +1303,17 @@ class GuildInfoSelects(discord.ui.Select):
             embed.add_field(
                 name="Member Presences:",
                 value=f"**Online** : {online_users} \n**DND** : {dnd_users} \n**Idle** : {idle_users} \n**Offline** : {offline_users}",
+            )
+
+        if choice == "emoji_data":
+
+            static_emojis = sum(not e.animated for e in guild.emojis)
+            animated_emojis = sum(e.animated for e in guild.emojis)
+            usable_emojis = sum(e.available for e in guild.emojis)
+
+            embed.add_field(
+                name="Emoji Data:",
+                value=f"**Limit** : {guild.emoji_limit}\n**Static** : {static_emojis} \n**Animated** : {animated_emojis} \n**Total** : {len(guild.emojis)}/{guild.emoji_limit*2} \n**Usable** : {usable_emojis}",
             )
 
         await interaction.response.edit_message(embed=embed)
