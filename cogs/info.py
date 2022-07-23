@@ -47,11 +47,17 @@ class Info(commands.Cog):
             await ctx.send("Guild wanted has not been found")
 
         if guild:
-            await utils.guildinfo(ctx, guild)
+
             embed = discord.Embed(title=f"{guild}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
             embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 
-            # new stuff here soon.
+            view = utils.GuildInfoView(ctx, guild)
+
+            await ctx.send(
+                "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
+                embed=embed,
+                view=view,
+            )
 
     @commands.command(
         aliases=["user_info", "user-info", "ui", "whois"],
