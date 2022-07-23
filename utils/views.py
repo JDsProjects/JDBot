@@ -1213,7 +1213,7 @@ class GuildInfoSelects(discord.ui.Select):
                 value="bot_or_human",
                 emoji="<:members:917747437429473321>",
             ),
-            discord.SelectOption(label="statuses", description="Users' Prescences", emoji="🖼️", value="statuses"),
+            discord.SelectOption(label="Statuses", description="Users' Presences", emoji="🖼️", value="statuses"),
             discord.SelectOption(
                 label="Close",
                 description="Closes the Select",
