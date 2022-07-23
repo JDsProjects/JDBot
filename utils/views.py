@@ -1212,12 +1212,12 @@ class GuildInfoSelects(discord.ui.Select):
         choice = self.values[0]
         guild = self.view.guild
 
-        embed = discord.Embed(title="Guild Info:", color=random.randint(0, 16777215))
+        embed = discord.Embed(title=f"{guild}", color=random.randint(0, 16777215))
 
         if choice == "basic":
 
             embed.add_field(
-                name="Guild Info: ",
+                name="Guild Info:",
                 value=f"**Server Name**: {guild} \n**ID**: {guild.id}",
                 inline=False,
             )
@@ -1234,7 +1234,7 @@ class GuildInfoSelects(discord.ui.Select):
 
             embed.add_field(
                 name="Guild Info 2:",
-                value=f"**Server Creation:**: {discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
+                value=f"**Server Creation**: {discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
                 inline=False,
             )
 
