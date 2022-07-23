@@ -1220,6 +1220,7 @@ class GuildInfoSelects(discord.ui.Select):
                 emoji="📜",
             ),
             discord.SelectOption(label="Statuses", description="Users' Presences", emoji="🖼️", value="statuses"),
+            discord.SelectOption(label="Extra", description="Shows leftover data", value="extra", emoji="📝"),
             discord.SelectOption(
                 label="Close",
                 description="Closes the Select",
@@ -1314,6 +1315,14 @@ class GuildInfoSelects(discord.ui.Select):
             embed.add_field(
                 name="Emoji Data:",
                 value=f"**Limit** : {guild.emoji_limit}\n**Static** : {static_emojis} \n**Animated** : {animated_emojis} \n**Total** : {len(guild.emojis)}/{guild.emoji_limit*2} \n**Usable** : {usable_emojis}",
+            )
+
+        if choice == "extra":
+
+            animated_value = guild.icon.is_animated() if guild.icon else False
+            embed.add_field(
+                name="Extra Info:",
+                value=f"**Animated Icon**: {animated_value} \n**Max File Size**: {guild.filesize_limit/1000000} MB \n**Shard ID**: {guild.shard_id}",
             )
 
         await interaction.response.edit_message(embed=embed)

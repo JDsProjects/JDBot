@@ -10,15 +10,6 @@ import jeyyapi
 import sr_api
 
 
-async def guildinfo(ctx, guild):
-
-    animated_value = guild.icon.is_animated() if guild.icon else False
-
-    embed.add_field(name="Max File Size:", value=f"{guild.filesize_limit/1000000} MB")
-    embed.add_field(name="Shard ID:", value=guild.shard_id)
-    embed.add_field(name="Animated Icon", value=f"{animated_value}")
-
-
 async def roleinfo(ctx, role):
     role_members = collections.Counter([u.bot for u in role.members])
     role_bots = role_members[True]
