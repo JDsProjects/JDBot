@@ -1254,7 +1254,7 @@ class GuildInfoSelects(discord.ui.Select):
 
             embed = discord.Embed(color=random.randint(0, 16777215))
             embed.set_author(
-                name=f"{guild}'s avatar:", icon_url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png"
+                name=f"{guild}'s icon:", icon_url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png"
             )
             embed.set_image(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
             embed.set_footer(text=f"Requested by {self.ctx.author}")
