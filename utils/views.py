@@ -1204,6 +1204,9 @@ class GuildInfoSelects(discord.ui.Select):
                 value="icon",
             ),
             discord.SelectOption(
+                label="Role/Channel Count", description="Show's Channel and Role Count", emoji="🖼️", value="weirdcount"
+            ),
+            discord.SelectOption(
                 label="Close",
                 description="Closes the Select",
                 value="close",
@@ -1258,6 +1261,12 @@ class GuildInfoSelects(discord.ui.Select):
             )
             embed.set_image(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
             embed.set_footer(text=f"Requested by {self.ctx.author}")
+
+        if choice == "weirdcount":
+            embed.add_field(
+                name="Channel/Role Count:",
+                value=f"**Channel Count**: {len(guild.channels)} \n**Role Count**: {len(guild.roles)}",
+            )
 
         await interaction.response.edit_message(embed=embed)
 
