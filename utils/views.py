@@ -1234,7 +1234,7 @@ class GuildInfoSelects(discord.ui.Select):
 
             embed.add_field(
                 name="Guild Info 2:",
-                value=f"**Server Creation**: {discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
+                value=f"**Server Creation**: \n{discord.utils.format_dt(guild.created_at, style = 'd')}\n{discord.utils.format_dt(guild.created_at, style = 'T')}",
                 inline=False,
             )
 
