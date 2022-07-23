@@ -1184,6 +1184,18 @@ class OwnerInfoSuper(discord.ui.View):
         return True
 
 
+class GuildInfoSelects(discord.ui.Select):
+    def __init__(self, ctx, **kwargs):
+        self.ctx = ctx
+
+
+class GuildInfoView(discord.ui.View):
+    def __init__(self, ctx, guild, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+        self.guild = guild
+
+
 # The Basic Buttons Class.
 
 
