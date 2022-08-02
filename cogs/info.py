@@ -274,6 +274,7 @@ class Info(commands.Cog):
 
         if role:
             await utils.roleinfo(ctx, role)
+            # backend and how it works will be updated soon
 
         if not role:
             await ctx.send(f"The role you wanted was not found.")
@@ -339,6 +340,7 @@ class DevTools(commands.Cog):
         else:
 
             # local rtfm
+            # will need to be updated soon
             res = await self.bot.session.get(
                 "https://repi.openrobot.xyz/search_docs",
                 params={"query": args, "documentation": url},
