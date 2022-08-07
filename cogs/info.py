@@ -11,7 +11,7 @@ import secrets
 import textwrap
 import typing
 import unicodedata
-from difflib import SequenceMatcher
+from difflib import SequenceMatcher, get_close_matches
 
 import async_tio
 import discord
@@ -341,13 +341,16 @@ class DevTools(commands.Cog):
 
             # local rtfm
             # will need to be updated soon
-            res = await self.bot.session.get(
-                "https://repi.openrobot.xyz/search_docs",
-                params={"query": args, "documentation": url},
-                headers={"Authorization": os.environ["frostiweeb_api"]},
-            )
+            # res = await self.bot.session.get(
+            # "https://repi.openrobot.xyz/search_docs",
+            # params={"query": args, "documentation": url},
+            # headers={"Authorization": os.environ["frostiweeb_api"]},
+            # )
 
-            results = await res.json()
+            # results = await res.json()
+
+            unfiltered_results = utils.results(self.bot, url)
+            results = get_close_matches(args, unfiltered_results, n=3, cutoff=0.6)
 
             if not results:
                 return f"Could not find anything with {args}."
