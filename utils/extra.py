@@ -3,6 +3,7 @@ import os
 import pathlib
 import random
 import sys
+import zlib
 
 import black
 import discord
@@ -211,3 +212,24 @@ def linecount():
                 ls += 1
 
     return f"Files: {fc}\nLines: {ls:,}\nClasses: {cl}\nFunctions: {fn}\nCoroutines: {cr}\nComments: {cm:,}\nImports: {im:,}"
+
+
+async def rtfm(bot, url):
+
+    # wip
+    response = await bot.session.get(f"{url}objects.inv")
+
+    content = await response.read()
+
+    lines = content.split(b"\n")
+
+    first_10_lines = lines[:10]
+
+    first_10_lines = [n for n in first_10_lines if not n.startswith(b"#")]
+
+    lines = first_10_lines + lines[10:]
+    joined_lines = b"\n".join(lines)
+    full_data = zlib.decompress(joined_lines)
+    normal_data = full_data.decode()
+    new_list = normal_data.split("\n")
+    return new_list
