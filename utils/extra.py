@@ -247,6 +247,7 @@ async def rtfm(bot, url):
         except:
             continue
 
-    short_url = short_url.replace("$", name)
-    results.append(RtfmObject(name, url + short_url))
+        short_url = short_url.replace("$", name)
+        results.append(RtfmObject(name, url + short_url))
+
     return results
