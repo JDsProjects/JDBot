@@ -349,7 +349,7 @@ class DevTools(commands.Cog):
 
             # results = await res.json()
 
-            unfiltered_results = utils.rtfm(self.bot, url)
+            unfiltered_results = await utils.rtfm(self.bot, url)
             results = get_close_matches(args, unfiltered_results, n=3, cutoff=0.6)
 
             if not results:
