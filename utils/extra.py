@@ -4,6 +4,7 @@ import pathlib
 import random
 import sys
 import zlib
+from typing import NamedTuple
 
 import black
 import discord
@@ -214,11 +215,16 @@ def linecount():
     return f"Files: {fc}\nLines: {ls:,}\nClasses: {cl}\nFunctions: {fn}\nCoroutines: {cr}\nComments: {cm:,}\nImports: {im:,}"
 
 
+# will require a better name and variables down below
+class RtfmObject(NamedTuple):
+    name: str
+    url: str
+
+
 async def rtfm(bot, url):
 
     # wip
     response = await bot.session.get(f"{url}objects.inv")
-
     content = await response.read()
 
     lines = content.split(b"\n")
@@ -232,4 +238,15 @@ async def rtfm(bot, url):
     full_data = zlib.decompress(joined_lines)
     normal_data = full_data.decode()
     new_list = normal_data.split("\n")
-    return new_list
+
+    results = []
+    for x in new_list:
+        try:
+            name, *_, short_url, _ = x.split(" ")
+
+        except:
+            continue
+
+    short_url = short_url.replace("$", name)
+    results.append(RtfmObject(name, url + short_url))
+    return results
