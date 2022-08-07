@@ -293,7 +293,7 @@ class DevTools(commands.Cog):
     async def cog_load(self):
         github_token = os.environ.get("github_token")
         self.github = await github.GHClient(username="JDJGBot", token=github_token)
-        self.rtfm_dictionary = await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY")
+        self.rtfm_dictionary = sorted(await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY"))
         self.tio = async_tio.Tio(session=self.bot.session)
 
     async def cog_unload(self):
