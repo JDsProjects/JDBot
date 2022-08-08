@@ -356,8 +356,6 @@ class DevTools(commands.Cog):
             results = get_close_matches(args, list(unfiltered_results_dict), n=10, cutoff=0.6)
             # this still needs to be fixed.
 
-            print(results)
-
             if not results:
                 return f"Could not find anything with {args}."
 
@@ -374,6 +372,8 @@ class DevTools(commands.Cog):
             embed = discord.Embed(color=random.randint(0, 16777215))
 
             results = dict(itertools.islice(results.items(), 10))
+            print("\n".join(f"[`{result}`]({results.get(result)})" for result in results))
+
             embed.description = "\n".join(f"[`{result}`]({results.get(result)})" for result in results)
 
             reference = utils.reference(ctx.message)
