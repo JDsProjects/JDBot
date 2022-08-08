@@ -362,7 +362,6 @@ class DevTools(commands.Cog):
             else:
                 results = [r for r in unfiltered_results if r in results]
 
-                print(results)
                 return results
 
     async def rtfm_send(self, ctx, results):
