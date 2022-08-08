@@ -244,6 +244,14 @@ async def rtfm(bot, url):
         try:
             name, type, _, fragment, *label = x.split(" ")
 
+            text = " ".join(label)
+
+            if text != "-":
+                label = text
+
+            else:
+                label = None
+
         except:
             continue
 
