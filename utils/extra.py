@@ -220,6 +220,9 @@ class RtfmObject(NamedTuple):
     name: str
     url: str
 
+    def __str__(self) -> str:
+        return self.name
+
 
 async def rtfm(bot, url):
 
