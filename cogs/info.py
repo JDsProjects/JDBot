@@ -371,8 +371,7 @@ class DevTools(commands.Cog):
         else:
             embed = discord.Embed(color=random.randint(0, 16777215))
 
-            results = dict(itertools.islice(results.items(), 10))
-            print("\n".join(f"[`{result}`]({results.get(result)})" for result in results))
+            # results = dict(itertools.islice(results.items(), 10))
 
             embed.description = "\n".join(f"[`{result}`]({results.get(result)})" for result in results)
 
