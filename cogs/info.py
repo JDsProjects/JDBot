@@ -360,7 +360,7 @@ class DevTools(commands.Cog):
                 return f"Could not find anything with {args}."
 
             else:
-                results = [r for r in unfiltered_results_dict if r in results]
+                results = [r for r in unfiltered_results if r in results]
                 return results
 
     async def rtfm_send(self, ctx, results):
