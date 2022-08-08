@@ -358,7 +358,7 @@ class DevTools(commands.Cog):
                 return f"Could not find anything with {args}."
 
             else:
-                results = [{r: unfiltered_results[r]} for r in results if r in unfiltered_results]
+                results = dict([r for r in results if r in unfiltered_results])
                 return results
 
     async def rtfm_send(self, ctx, results):
