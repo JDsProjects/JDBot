@@ -349,9 +349,11 @@ class DevTools(commands.Cog):
 
             # results = await res.json()
 
-            unfiltered_results = dict(await utils.rtfm(self.bot, url))
+            unfiltered_results = await utils.rtfm(self.bot, url)
 
-            results = get_close_matches(args, list(unfiltered_results), n=10, cutoff=0.6)
+            unfiltered_results_dict = dict(unfiltered_results)
+
+            results = get_close_matches(args, list(unfiltered_results_dict), n=10, cutoff=0.6)
             # this still needs to be fixed.
 
             if not results:
@@ -359,7 +361,6 @@ class DevTools(commands.Cog):
 
             else:
                 results = [r for r in results if r in unfiltered_results]
-                print(results)
                 return results
 
     async def rtfm_send(self, ctx, results):
