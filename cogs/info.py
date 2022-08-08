@@ -349,15 +349,16 @@ class DevTools(commands.Cog):
 
             # results = await res.json()
 
-            unfiltered_results = await utils.rtfm(self.bot, url)
+            unfiltered_results = dict(await utils.rtfm(self.bot, url))
 
-            results = get_close_matches(args, unfiltered_results, n=10, cutoff=0.6)
+            results = get_close_matches(args, list(unfiltered_results), n=10, cutoff=0.6)
             # this still needs to be fixed.
 
             if not results:
                 return f"Could not find anything with {args}."
 
             else:
+                results = [r for r in results if r in unfiltered_results]
                 return results
 
     async def rtfm_send(self, ctx, results):
@@ -368,7 +369,7 @@ class DevTools(commands.Cog):
         else:
             embed = discord.Embed(color=random.randint(0, 16777215))
 
-            # results = dict(itertools.islice(results.items(), 10))
+            results = dict(itertools.islice(results.items(), 10))
             embed.description = "\n".join(f"[`{result}`]({results.get(result)})" for result in results)
 
             reference = utils.reference(ctx.message)
