@@ -248,6 +248,6 @@ async def rtfm(bot, url):
             continue
 
         fragment = fragment.replace("$", name)
-        results.append(RtfmObject(label, url + fragment))
+        results.append(RtfmObject(name, url + fragment))
 
     return results
