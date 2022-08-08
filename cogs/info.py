@@ -360,7 +360,7 @@ class DevTools(commands.Cog):
                 return f"Could not find anything with {args}."
 
             else:
-                results = [r for r in unfiltered_results if r in results]
+                results = [unfiltered_results_dict[r] for r in results]
 
                 return results
 
