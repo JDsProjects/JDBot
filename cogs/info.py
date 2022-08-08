@@ -349,18 +349,16 @@ class DevTools(commands.Cog):
 
             # results = await res.json()
 
-            unfiltered_results = await utils.rtfm(self.bot, url)
+            unfiltered_results = dict(await utils.rtfm(self.bot, url))
 
-            unfiltered_results_dict = dict(unfiltered_results)
-
-            results = get_close_matches(args, list(unfiltered_results_dict), n=10, cutoff=0.6)
+            results = get_close_matches(args, list(unfiltered_results), n=10, cutoff=0.6)
             # this still needs to be fixed.
 
             if not results:
                 return f"Could not find anything with {args}."
 
             else:
-                results = [unfiltered_results_dict[r] for r in results]
+                results = [utils.RtfmObject(r, unfiltered_results[r]) for r in results]
 
                 return results
 
