@@ -356,11 +356,13 @@ class DevTools(commands.Cog):
             results = get_close_matches(args, list(unfiltered_results_dict), n=10, cutoff=0.6)
             # this still needs to be fixed.
 
+            print(results)
+
             if not results:
                 return f"Could not find anything with {args}."
 
             else:
-                results = [r for r in results if r in unfiltered_results]
+                results = dict([r for r in results if r in unfiltered_results])
                 return results
 
     async def rtfm_send(self, ctx, results):
