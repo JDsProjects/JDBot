@@ -370,7 +370,7 @@ class DevTools(commands.Cog):
         else:
             embed = discord.Embed(color=random.randint(0, 16777215))
 
-            embed.description = "\n".join(f"[`{result}`]({result.link})" for result in results)
+            embed.description = "\n".join(f"[`{result}`]({result.url})" for result in results)
 
             reference = utils.reference(ctx.message)
             await ctx.send(embed=embed, reference=reference)
