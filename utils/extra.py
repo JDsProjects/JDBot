@@ -242,12 +242,12 @@ async def rtfm(bot, url):
     results = []
     for x in new_list:
         try:
-            name, *_, short_url, _ = x.split(" ")
+            name, type, _, fragment, *label = x.split(" ")
 
         except:
             continue
 
         short_url = short_url.replace("$", name)
-        results.append(RtfmObject(name, url + short_url))
+        results.append(RtfmObject(label, url + short_url))
 
     return results
