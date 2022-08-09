@@ -124,6 +124,8 @@ class Test(commands.Cog):
     async def tags(self, ctx):
         await ctx.send("WIP")
 
+        # more tag stuff soon just got to figure out my queries
+
     @commands.command()
     async def reminders(self, ctx):
         await ctx.send("WIP")
