@@ -498,7 +498,7 @@ class Bot(commands.Cog):
             content=f"Current Prefix: {ctx.prefix}", embed=embed, allowed_mentions=discord.AllowedMentions.none()
         )
 
-    @commands.command(brief="Gives the bot's uptime")
+    @commands.command(brief="Gives the bot's uptime", aliases=["up"])
     async def uptime(self, ctx):
         delta_uptime = discord.utils.utcnow() - self.bot.launch_time
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
