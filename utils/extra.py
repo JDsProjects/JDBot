@@ -116,7 +116,7 @@ def random_history(data, number) -> list[typing.Any]:
     return random.sample(data, number)
 
 
-def groupby(iterable: list, number: int) -> list[int]:
+def groupby(iterable: list, number: int) -> list[typing.Any]:
     resp = []
     while True:
         resp.append(iterable[:number])
