@@ -26,6 +26,8 @@ from discord.ext import commands
 
 
 class Ticket(commands.Cog):
+    "Ticket Stuff"
+
     def __init__(self, bot: JDBot):
         self.bot = bot
         self.pool: Pool = self.bot.db
