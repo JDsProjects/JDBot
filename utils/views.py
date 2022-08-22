@@ -528,10 +528,16 @@ class RtfmEmbed(Paginator):
         return embed
 
 
+class HelpEmbed(discord.Embed):
+    def __init__(self, ctx, *args, **kwargs):
+        super().__init__(title=f"{ctx.bot.user.name} Help Menu", *args, **kwargs)
+        self.set_author(name=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
+
+
 class SendHelp(Paginator):
     async def format_page(self, item):
-        emby = discord.Embed(description=item, color=15428885)
-        return emby
+        emby = HelpEmbed(self.ctx, description=item, color=15428885)
+        return emby        return emby
 
 
 class charinfoMenu(Paginator):
