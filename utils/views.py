@@ -530,8 +530,8 @@ class RtfmEmbed(Paginator):
 
 class HelpEmbed(discord.Embed):
     def __init__(self, ctx, *args, **kwargs):
-        super().__init__(title=f"{ctx.bot.user.name} Help Menu", *args, **kwargs)
-        self.set_author(name=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
+        super().__init__(title=f"{ctx.bot.user} Help Menu", *args, **kwargs)
+        self.set_author(name=f"Requested by {ctx.author}", icon_url=ctx.author.display_avatar)
 
 
 class SendHelp(Paginator):
