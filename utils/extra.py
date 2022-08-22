@@ -1,17 +1,20 @@
+from __future__ import annotations
+
 import io
 import os
 import pathlib
 import random
 import sys
 import zlib
-from typing import NamedTuple
+import typing
+
 
 import black
 import discord
 import tabulate
 
 
-async def google_tts(bot, text):
+async def google_tts(bot, text) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
@@ -26,7 +29,7 @@ async def google_tts(bot, text):
     return file
 
 
-async def latin_google_tts(bot, text):
+async def latin_google_tts(bot, text) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
@@ -41,7 +44,7 @@ async def latin_google_tts(bot, text):
     return file
 
 
-def reference(message):
+def reference(message: discord.Message) -> typing.Optional[discord.MessageReference]:
 
     reference = message.reference
     if reference and isinstance(reference.resolved, discord.Message):
@@ -50,11 +53,11 @@ def reference(message):
     return None
 
 
-def bit_generator():
+def bit_generator() -> str:
     return hex(random.randint(0, 255))[2:]
 
 
-def cc_generate():
+def cc_generate() -> str:
     return f"""
  8107EC20 {bit_generator()}{bit_generator()} 
  8107EC22 {bit_generator()}00
@@ -82,8 +85,7 @@ def cc_generate():
  8107ECA2 {bit_generator()}00""".upper()
 
 
-async def post(bot, code):
-
+async def post(bot, code) -> typing.Optional[str]:
     paste_body = {
         "title": "JDBot Paste",
         "content": code,
@@ -93,28 +95,28 @@ async def post(bot, code):
         "embed_colour": "#FFFFFF",
     }
 
-    response = await bot.session.post(
+    async with await bot.session.post(
         "https://api.senarc.org/paste",
         json=paste_body,
         headers={"accept": "application/json", "Content-Type": "application/json"},
-    )
-    response = await response.json()
-    return response.get("url")
+    ) as response:
+        data = await response.json()
+        return data.get("url")
 
 
-async def get_paste(bot, paste_id):
-    response = await bot.session.get(
+async def get_paste(bot, paste_id) -> typing.Optional[str]:
+    async with bot.session.get(
         f"https://api.senarc.org/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
-    )
-    response = await response.json()
-    return response.get("content")
+    ) as response:
+        data = await response.json()
+        return data.get("content")
 
 
-def random_history(data, number):
+def random_history(data, number) -> list[typing.Any]:
     return random.sample(data, number)
 
 
-def groupby(iterable: list, number: int):
+def groupby(iterable: list, number: int) -> list[int]:
     resp = []
     while True:
         resp.append(iterable[:number])
@@ -124,7 +126,7 @@ def groupby(iterable: list, number: int):
     return resp
 
 
-def npm_create_embed(data: dict):
+def npm_create_embed(data: dict) -> discord.Embed:
     e = discord.Embed(title=f"Package information for **{data.get('name')}**")
     e.add_field(
         name="**Latest Version:**", value=f"```py\n{data.get('latest_version', 'None Provided')}```", inline=False
@@ -156,7 +158,7 @@ def npm_create_embed(data: dict):
     return e
 
 
-def get_required_npm(data):
+def get_required_npm(data) -> dict[str, str]:
     latest = data["dist-tags"]["latest"]
     next = data["dist-tags"].get("next")
     version_data = data["versions"][latest]
@@ -179,15 +181,15 @@ def get_required_npm(data):
     }
 
 
-def formatter(code, boolean):
+def formatter(code, boolean) -> str:
     src = code
-    mode = black.Mode(line_length=120) if boolean else black.Mode()
+    mode = black.Mode(line_length=120) if boolean else black.Mode() # type: ignore
     dst = black.format_str(src, mode=mode)
-    black.dump_to_file = lambda *args, **kwargs: None
+    black.dump_to_file = lambda *args, **kwargs: None # type: ignore
     return dst
 
 
-def linecount():
+def linecount() -> str:
     prefix = sys.prefix.replace("\\", "/")
     to_ignore = (str(prefix.split("/")[-1]), "src") if str(prefix) != str(sys.base_prefix) else "src"
 
@@ -216,7 +218,7 @@ def linecount():
 
 
 # will require a better name and variables down below
-class RtfmObject(NamedTuple):
+class RtfmObject(typing.NamedTuple):
     name: str
     url: str
 
@@ -224,41 +226,34 @@ class RtfmObject(NamedTuple):
         return self.name
 
 
-async def rtfm(bot, url):
-
+async def rtfm(bot, url) -> list[RtfmObject]:
     # wip
-    response = await bot.session.get(f"{url}objects.inv")
-    content = await response.read()
+    async with bot.session.get(f"{url}objects.inv") as response:
+        content: bytes = await response.read()
+        lines: list[bytes] = content.split(b"\n")
+        
+        cleared_out = [n for n in lines[:10] if not n.startswith(b"#")]
 
-    lines = content.split(b"\n")
+        lines = cleared_out + lines[10:]
+        data = b"\n".join(lines)
+        
+        data = zlib.decompress(data)
+        data = data.decode()
+        data = data.split("\n")
 
-    first_10_lines = lines[:10]
+        results = []
+        for x in data:
+            try:
+                name, type, _, fragment, *label = x.split(" ")
+                text = " ".join(label)
 
-    first_10_lines = [n for n in first_10_lines if not n.startswith(b"#")]
+                if text != "-":
+                    label = text
+                else:
+                    label = name
+            except:
+                continue
 
-    lines = first_10_lines + lines[10:]
-    joined_lines = b"\n".join(lines)
-    full_data = zlib.decompress(joined_lines)
-    normal_data = full_data.decode()
-    new_list = normal_data.split("\n")
-
-    results = []
-    for x in new_list:
-        try:
-            name, type, _, fragment, *label = x.split(" ")
-
-            text = " ".join(label)
-
-            if text != "-":
-                label = text
-
-            else:
-                label = name
-
-        except:
-            continue
-
-        fragment = fragment.replace("$", name)
-        results.append(RtfmObject(label, url + fragment))
-
+            fragment = fragment.replace("$", name)
+            results.append(RtfmObject(label, url + fragment))
     return results
