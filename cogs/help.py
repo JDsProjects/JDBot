@@ -5,10 +5,11 @@ from discord.ext import commands
 
 import utils
 
+from typing import Any
 
 class JDBotHelp(commands.MinimalHelpCommand):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, **options: Any):
+        super().__init__(**options)
         self.help_reminder = "**Remember:** To get the commands in a category you need to **Capitlize the first letter.** So to get help in the Bot category you would do `{p}help Bot` instead of `{p}help bot` or `{p}Bot`"
 
     async def send_pages(self):
