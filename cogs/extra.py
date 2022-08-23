@@ -384,18 +384,21 @@ class Extra(commands.Cog):
         alex_api = alexflipnote.Client(os.environ["alex_apikey"], session=self.bot.session)
         url = await alex_api.birb()
         await ctx.send(url)
+        # Key doesn't seem to be needed (do a local aiohttp thing rather having alexflipnote thing installed).
 
     @commands.command(aliases=["bark", "dogs"])
     async def dog(self, ctx):
         alex_api = alexflipnote.Client(os.environ["alex_apikey"], session=self.bot.session)
         url = await alex_api.dogs()
         await ctx.send(url)
+        # Key doesn't seem to be needed (do a local aiohttp thing rather having alexflipnote thing installed).
 
     @commands.command(aliases=["meow", "cats"])
     async def cat(self, ctx):
         alex_api = alexflipnote.Client(os.environ["alex_apikey"], session=self.bot.session)
         url = await alex_api.cats()
         await ctx.send(url)
+        # Key doesn't seem to be needed (do a local aiohttp thing rather having alexflipnote thing installed).
 
     @commands.command(aliases=["joke"])
     async def jokeapi(self, ctx):
