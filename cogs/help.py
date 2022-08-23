@@ -7,6 +7,10 @@ import utils
 
 
 class JDBotHelp(commands.MinimalHelpCommand):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.help_reminder = "**Remember:** To get the commands in a category you need to **Capitlize the first letter.** So to get help in the Bot category you would do `{p}help Bot` instead of `{p}help bot` or `{p}Bot`"
+
     async def send_pages(self):
         menu = utils.SendHelp(self.paginator.pages, ctx=self.context, delete_after=True)
 
@@ -17,8 +21,8 @@ class JDBotHelp(commands.MinimalHelpCommand):
         bot = ctx.bot
 
         if bot.description:
-            self.paginator.add_line(bot.description.format(p=ctx.clean_prefix), empty=True)
-
+            self.paginator.add_line(bot.description, empty=True)
+        self.paginator.add_line(self.help_reminder.format(p=ctx.clean_prefix), empty=True)
         note = self.get_opening_note()
 
         if note:
@@ -103,8 +107,8 @@ class JDBotHelp(commands.MinimalHelpCommand):
     async def send_cog_help(self, cog, /):
         bot = self.context.bot
         if bot.description:
-            self.paginator.add_line(bot.description.format(p=self.context.clean_prefix), empty=True)
-
+            self.paginator.add_line(bot.description, empty=True)
+        self.paginator.add_line(self.help_reminder.format(p=self.context.clean_prefix), empty=True)
         note = self.get_opening_note()
         if note:
             self.paginator.add_line(note, empty=True)
