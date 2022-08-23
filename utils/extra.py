@@ -110,10 +110,6 @@ async def get_paste(bot, paste_id):
     return response.get("content")
 
 
-def random_history(data, number):
-    return random.sample(data, number)
-
-
 def groupby(iterable: list, number: int):
     resp = []
     while True:
