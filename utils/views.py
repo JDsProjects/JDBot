@@ -537,7 +537,7 @@ class HelpEmbed(discord.Embed):
 class SendHelp(Paginator):
     async def format_page(self, item):
         emby = HelpEmbed(self.ctx, description=item, color=15428885)
-        return emby        return emby
+        return emby
 
 
 class charinfoMenu(Paginator):
