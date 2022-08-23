@@ -86,7 +86,7 @@ class Extra(commands.Cog):
             )
             number = 1
 
-        response = utils.random_history(self.bot.history, number)
+        response = random.sample(self.bot.history, number)
 
         pag = commands.Paginator(prefix="", suffix="")
         for x in response:
