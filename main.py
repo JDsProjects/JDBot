@@ -176,15 +176,12 @@ class JDBot(commands.Bot):
 
 intents = discord.Intents.all()
 
-description = "**Remember:** To get the commands in a category you need to **Capitlize the first letter.** So to get help in the Bot category you would do `{p}help Bot` instead of `{p}help bot` or `{p}Bot`"
-
 bot = JDBot(
     command_prefix=(get_prefix),
     intents=intents,
     chunk_guilds_at_startup=False,
     strip_after_prefix=True,
     allowed_mentions=discord.AllowedMentions(everyone=False, roles=False),
-    description=description,
 )
 
 bot.launch_time = discord.utils.utcnow()
