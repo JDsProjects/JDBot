@@ -7,6 +7,7 @@ import utils
 
 from typing import Any
 
+
 class JDBotHelp(commands.MinimalHelpCommand):
     def __init__(self, **options: Any):
         super().__init__(**options)
