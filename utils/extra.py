@@ -118,6 +118,7 @@ async def get_paste(bot: JDBot, paste_id: str) -> Optional[str]:
 
 RHT = TypeVar("RHT")
 
+
 def random_history(data: list[RHT], number) -> list[RHT]:
     return random.sample(data, number)
 
