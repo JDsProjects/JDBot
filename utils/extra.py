@@ -6,7 +6,7 @@ import pathlib
 import random
 import sys
 import zlib
-import typing
+from typing import Optional, NamedTuple, TypeVar, TYPE_CHECKING, Any
 
 
 import black
@@ -14,7 +14,11 @@ import discord
 import tabulate
 
 
-async def google_tts(bot, text) -> discord.File:
+if TYPE_CHECKING:
+    from ..main import JDBot
+
+
+async def google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
@@ -29,7 +33,7 @@ async def google_tts(bot, text) -> discord.File:
     return file
 
 
-async def latin_google_tts(bot, text) -> discord.File:
+async def latin_google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
@@ -44,7 +48,7 @@ async def latin_google_tts(bot, text) -> discord.File:
     return file
 
 
-def reference(message: discord.Message) -> typing.Optional[discord.MessageReference]:
+def reference(message: discord.Message) -> Optional[discord.MessageReference]:
 
     reference = message.reference
     if reference and isinstance(reference.resolved, discord.Message):
@@ -85,7 +89,7 @@ def cc_generate() -> str:
  8107ECA2 {bit_generator()}00""".upper()
 
 
-async def post(bot, code) -> typing.Optional[str]:
+async def post(bot: JDBot, code: str) -> Optional[str]:
     paste_body = {
         "title": "JDBot Paste",
         "content": code,
@@ -104,7 +108,7 @@ async def post(bot, code) -> typing.Optional[str]:
         return data.get("url")
 
 
-async def get_paste(bot, paste_id) -> typing.Optional[str]:
+async def get_paste(bot: JDBot, paste_id: str) -> Optional[str]:
     async with bot.session.get(
         f"https://api.senarc.org/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
     ) as response:
@@ -112,11 +116,15 @@ async def get_paste(bot, paste_id) -> typing.Optional[str]:
         return data.get("content")
 
 
-def random_history(data, number) -> list[typing.Any]:
+RHT = TypeVar("RHT")
+
+def random_history(data: list[RHT], number) -> list[RHT]:
     return random.sample(data, number)
 
 
-def groupby(iterable: list, number: int) -> list[typing.Any]:
+GBT = TypeVar("GBT")
+
+def groupby(iterable: list[GBT], number: int) -> list[list[GBT]]:
     resp = []
     while True:
         resp.append(iterable[:number])
@@ -126,7 +134,7 @@ def groupby(iterable: list, number: int) -> list[typing.Any]:
     return resp
 
 
-def npm_create_embed(data: dict) -> discord.Embed:
+def npm_create_embed(data: dict[str, str]) -> discord.Embed:
     e = discord.Embed(title=f"Package information for **{data.get('name')}**")
     e.add_field(
         name="**Latest Version:**", value=f"```py\n{data.get('latest_version', 'None Provided')}```", inline=False
@@ -158,7 +166,7 @@ def npm_create_embed(data: dict) -> discord.Embed:
     return e
 
 
-def get_required_npm(data) -> dict[str, str]:
+def get_required_npm(data: dict[str, Any]) -> dict[str, str]:
     latest = data["dist-tags"]["latest"]
     next = data["dist-tags"].get("next")
     version_data = data["versions"][latest]
@@ -181,7 +189,7 @@ def get_required_npm(data) -> dict[str, str]:
     }
 
 
-def formatter(code, boolean) -> str:
+def formatter(code: str, boolean: bool) -> str:
     src = code
     mode = black.Mode(line_length=120) if boolean else black.Mode() # type: ignore
     dst = black.format_str(src, mode=mode)
@@ -218,7 +226,7 @@ def linecount() -> str:
 
 
 # will require a better name and variables down below
-class RtfmObject(typing.NamedTuple):
+class RtfmObject(NamedTuple):
     name: str
     url: str
 
@@ -226,7 +234,7 @@ class RtfmObject(typing.NamedTuple):
         return self.name
 
 
-async def rtfm(bot, url) -> list[RtfmObject]:
+async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
     # wip
     async with bot.session.get(f"{url}objects.inv") as response:
         content: bytes = await response.read()
@@ -251,7 +259,7 @@ async def rtfm(bot, url) -> list[RtfmObject]:
                     label = text
                 else:
                     label = name
-            except:
+            except ValueError:
                 continue
 
             fragment = fragment.replace("$", name)
