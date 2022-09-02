@@ -175,6 +175,9 @@ class CommandFinder(commands.Cog):
             elif matches:
                 await interaction.followup.send(f"Did you mean... `{matches[0]}`?", ephemeral=True)
 
+        elif context.command and context.valid:
+            await interaction.followup.send(f"Found `{context.command.name}`", ephemeral=True)
+
         else:
             await interaction.followup.send("This message isn't a command, sorry.", ephemeral=True)
 
