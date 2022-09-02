@@ -159,7 +159,7 @@ class CommandFinder(commands.Cog):
 
     async def find_command(self, interaction: discord.Interaction, message: discord.Message) -> None:
         context = await self.bot.get_context(message)
-        await interaction.response.defer(ephmeral=True)
+        await interaction.response.defer(ephemeral=True)
 
         if (context.valid) == False and context.prefix != None and context.command is None and context.prefix != "":
             args = context.invoked_with
