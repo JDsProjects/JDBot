@@ -170,13 +170,13 @@ class CommandFinder(commands.Cog):
             matches = difflib.get_close_matches(args, command_names)
 
             if not matches:
-                await interaction.response.followup.send(f"Nothing, sorry.", ephemeral=True)
+                await interaction.followup.send(f"Nothing, sorry.", ephemeral=True)
 
             elif matches:
-                await interaction.response.followup.send(f"Did you mean... `{matches[0]}`?", ephemeral=True)
+                await interaction.followup.send(f"Did you mean... `{matches[0]}`?", ephemeral=True)
 
         else:
-            await interaction.response.followup.send("Message isn't a command, sorry.", ephemeral=True)
+            await interaction.followup.send("Message isn't a command, sorry.", ephemeral=True)
 
 
 async def setup(bot):
