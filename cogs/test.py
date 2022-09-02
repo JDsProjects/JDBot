@@ -1,4 +1,5 @@
 import collections
+import difflib
 import itertools
 import os
 import random
@@ -181,6 +182,44 @@ class Slash(commands.Cog):
         self.bot = bot
 
 
+class CommandFinder(commands.Cog):
+    def __init__(self, bot: commands.Bot) -> None:
+        self.bot = bot
+        self.ctx_menu = discord.app_commands.ContextMenu(
+            name="Find Nearest Command",
+            callback=self.find_command,
+        )
+        self.bot.tree.add_command(self.ctx_menu)
+
+    async def cog_unload(self) -> None:
+        self.bot.tree.remove_command(self.ctx_menu.name, type=self.ctx_menu.type)
+
+    async def find_command(self, interaction: discord.Interaction, message: discord.Message) -> None:
+        context = await self.bot.get_context(message)
+        await interaction.response.defer(ephemeral=True)
+
+        if (context.valid) == False and context.prefix != None and context.command is None and context.prefix != "":
+            args = context.invoked_with
+
+            all_commands = list(self.bot.walk_commands())
+            command_names = [f"{x}" for x in await utils.filter_commands(context, all_commands)]
+
+            matches = difflib.get_close_matches(args, command_names)
+
+            if not matches:
+                await interaction.followup.send(f"I found nothing, sorry.", ephemeral=True)
+
+            elif matches:
+                await interaction.followup.send(f"Did you mean... `{matches[0]}`?", ephemeral=True)
+
+        elif context.command and context.valid:
+            await interaction.followup.send(f"Found `{context.command.name}`", ephemeral=True)
+
+        else:
+            await interaction.followup.send("This message isn't a command, sorry.", ephemeral=True)
+
+
 async def setup(bot):
     await bot.add_cog(Test(bot))
     await bot.add_cog(Slash(bot))
+    await bot.add_cog(CommandFinder(bot))
