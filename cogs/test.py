@@ -73,7 +73,7 @@ class Test(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        if username is None:
+        if username.data is None:
             return await ctx.send("Couldn't find that user.")
 
         username_id = username.data.id
