@@ -92,9 +92,6 @@ class Test(commands.Cog):
 
         tweet_list = tweets.data
 
-        for x in tweet_list:
-            print(x.get("possibly_senstive"))
-
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
     @commands.command(brief="add emoji to your guild lol")
