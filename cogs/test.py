@@ -91,7 +91,9 @@ class Test(commands.Cog):
         # print(tweets)
 
         tweet_list = tweets.data
-        print(tweet_list)
+
+        for x in tweet_list:
+            print(x)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
