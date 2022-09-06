@@ -102,6 +102,13 @@ class Test(commands.Cog):
 
         print(filtered_tweets)
 
+        embeds = []
+
+        for tweet in filtered_tweets:
+            print(tweet)
+
+        # speacil tool for pagination(with normal, empherall, and dm)
+
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
     @commands.command(brief="add emoji to your guild lol")
