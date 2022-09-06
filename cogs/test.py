@@ -81,7 +81,9 @@ class Test(commands.Cog):
             await ctx.send("not yet")
             # time to do things later
 
-            tweets = await self.bot.tweet_client.get_users_tweets(username_id, max_results=amount, user_auth=True)
+            tweets = await self.bot.tweet_client.get_users_tweets(
+                username_id, max_results=amount, user_auth=True, tweet_fields=["possibly_sensitive"]
+            )
             # not sure if I have everything i need but i need to see what data it can give me
 
         except Exception as e:
@@ -91,6 +93,10 @@ class Test(commands.Cog):
         # print(tweets)
 
         tweet_list = tweets.data
+
+        for x in tweet_list:
+
+            print(x.possibly_sensitive)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
