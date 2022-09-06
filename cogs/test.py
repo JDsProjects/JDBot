@@ -88,7 +88,10 @@ class Test(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        print(tweets)
+        # print(tweets)
+
+        tweet_list = tweets.data
+        print(tweet_list)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
