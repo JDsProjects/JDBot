@@ -73,9 +73,7 @@ class Test(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        username_id = username.data.get("id")
-        if username_id is None:
-            return await ctx.send("No username id found :/")
+        username_id = username.data.id
 
         try:
             await ctx.send("not yet")
