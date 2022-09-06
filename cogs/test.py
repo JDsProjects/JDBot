@@ -100,8 +100,6 @@ class Test(commands.Cog):
 
         filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweet_list))
 
-        print(filtered_tweets)
-
         embeds = []
 
         for tweet in filtered_tweets:
@@ -118,7 +116,8 @@ class Test(commands.Cog):
 
             embeds.append(embed)
 
-        await ctx.send(embeds=embeds[0:4])
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        await menu.send()
 
         # speacil tool for pagination(with normal, empherall, and dm)
 
