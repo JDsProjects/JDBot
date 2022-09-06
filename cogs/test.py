@@ -81,7 +81,7 @@ class Test(commands.Cog):
             await ctx.send("not yet")
             # time to do things later
 
-            tweets = await self.bot.tweet_client.get_users_tweets(username_id, amount=amount, user_auth=True)
+            tweets = await self.bot.tweet_client.get_users_tweets(username_id, max_results=amount, user_auth=True)
             # not sure if I have everything i need but i need to see what data it can give me
 
         except Exception as e:
