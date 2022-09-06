@@ -73,18 +73,22 @@ class Test(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        print(username)
+        username_id = username.data.get("id")
+        if username_id is None:
+            return await ctx.send("No username id found :/")
 
         try:
             await ctx.send("not yet")
             # time to do things later
-            # https://docs.tweepy.org/en/latest/asyncclient.html#tweepy.asynchronous.AsyncClient.get_users_tweets
-            # tweets = twitter_api.user_timeline(screen_name=username, count=amount, tweet_mode="extended")
-            # tweepy_fetch_user = twitter_api.get_user(username)
+
+            tweets = await self.bot.tweet_client.get_users_tweets(username_id, amount=amount, user_auth=True)
+            # not sure if I have everything i need but i need to see what data it can give me
 
         except Exception as e:
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
+
+        print(tweets)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
