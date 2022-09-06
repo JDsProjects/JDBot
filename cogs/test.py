@@ -111,7 +111,7 @@ class Test(commands.Cog):
             embed = discord.Embed(title=f"Users Requested {amount} tweet)", description=f"{tweet.text}")
             embeds.append(embed)
 
-            await ctx.send(embeds=embeds[0:4])
+        await ctx.send(embeds=embeds[0:4])
 
         # speacil tool for pagination(with normal, empherall, and dm)
 
