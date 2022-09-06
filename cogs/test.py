@@ -79,7 +79,7 @@ class Test(commands.Cog):
         username_id = username.data.id
         profile_url = username.data.url
 
-        image = username.profile_image_url
+        image = username.data.profile_image_url
 
         try:
             await ctx.send("work in progress")
