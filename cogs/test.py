@@ -94,9 +94,9 @@ class Test(commands.Cog):
 
         tweet_list = tweets.data
 
-        for x in tweet_list:
+        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweet_list))
 
-            print(x.possibly_sensitive)
+        print(filtered_tweets)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
