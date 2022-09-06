@@ -77,7 +77,7 @@ class Test(commands.Cog):
             return await ctx.send("Couldn't find that user.")
 
         username_id = username.data.id
-        username_url = username.data.url
+        profile_url = username.data.url
 
         image = username.profile_image_url
 
@@ -111,7 +111,7 @@ class Test(commands.Cog):
             embed = discord.Embed(title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2)
             embed.set_author(icon_url=image)
             embed.set_footer(text=f"Requested by {ctx.author}\nJDJG does not own any of the content of the tweets")
-            embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
+            embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png", url=profile_url)
 
             # I don't know how to manage the twitter attachments, it may be nsfwish as well
 
