@@ -77,9 +77,12 @@ class Test(commands.Cog):
             return await ctx.send("Couldn't find that user.")
 
         username_id = username.data.id
+        username_url = username.data.url
+
+        # maybe also grab the profile_image_url ?
 
         try:
-            await ctx.send("not yet")
+            await ctx.send("work in progress")
             # time to do things later
 
             tweets = await self.bot.tweet_client.get_users_tweets(
