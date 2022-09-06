@@ -111,7 +111,8 @@ class Test(commands.Cog):
             embed = discord.Embed(title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2)
             embed.set_author(icon_url=image)
             embed.set_footer(text=f"Requested by {ctx.author}\nJDJG does not own any of the content of the tweets")
-            embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png", url=profile_url)
+            # embed.add_field(name="{username}'s Profile", value=profile_url)
+            embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
 
             # I don't know how to manage the twitter attachments, it may be nsfwish as well
 
