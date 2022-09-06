@@ -56,7 +56,7 @@ class Test(commands.Cog):
         await ctx.send("WIP")
 
     @commands.command(brief="gets tweets from a username")
-    async def tweet(self, ctx, amount: typing.Optional[int] = None, username=None):
+    async def get_tweet(self, ctx, amount: typing.Optional[int] = None, username=None):
 
         amount = amount or 10
 
