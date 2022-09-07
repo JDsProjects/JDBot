@@ -77,7 +77,8 @@ class Test(commands.Cog):
             return await ctx.send("Couldn't find that user.")
 
         username_id = username.data.id
-        profile_url = f"https://www.tweet.com/{username_id}"
+        profile_url = f"https://twitter.com/i/user/{username_id}"
+        # appreantly this works
 
         image = username.data.profile_image_url
 
