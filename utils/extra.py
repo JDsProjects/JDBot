@@ -16,6 +16,7 @@ import tabulate
 
 if TYPE_CHECKING:
     from ..main import JDBot
+    GBT = TypeVar("GBT")
 
 
 async def google_tts(bot: JDBot, text: str) -> discord.File:
@@ -49,7 +50,6 @@ async def latin_google_tts(bot: JDBot, text: str) -> discord.File:
 
 
 def reference(message: discord.Message) -> Optional[discord.MessageReference]:
-
     reference = message.reference
     if reference and isinstance(reference.resolved, discord.Message):
         return reference.resolved.to_reference()
@@ -102,9 +102,10 @@ async def post(bot: JDBot, code: str) -> Optional[str]:
     async with await bot.session.post(
         "https://api.senarc.org/paste",
         json=paste_body,
-        headers={"accept": "application/json", "Content-Type": "application/json"},
+        headers={"accept": "application/json",
+                "Content-Type": "application/json"},
     ) as response:
-        data = await response.json()
+        data: dict[str, str] = await response.json()
         return data.get("url")
 
 
@@ -112,35 +113,22 @@ async def get_paste(bot: JDBot, paste_id: str) -> Optional[str]:
     async with bot.session.get(
         f"https://api.senarc.org/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
     ) as response:
-        data = await response.json()
+        data: dict[str, str] = await response.json()
         return data.get("content")
 
 
-RHT = TypeVar("RHT")
+def groupby(iterable: list[GBT], count: int) -> list[list[GBT]]:
+    return [iterable[i:i + count] for i in range(0, len(iterable), count)]
 
 
-def random_history(data: list[RHT], number) -> list[RHT]:
-    return random.sample(data, number)
-
-
-GBT = TypeVar("GBT")
-
-def groupby(iterable: list[GBT], number: int) -> list[list[GBT]]:
-    resp = []
-    while True:
-        resp.append(iterable[:number])
-        iterable = iterable[number:]
-        if not iterable:
-            break
-    return resp
-
-
-def npm_create_embed(data: dict[str, str]) -> discord.Embed:
+# TODO: Do proper typing here instead of "Any".
+def npm_create_embed(data: dict[str, Any]) -> discord.Embed:
     e = discord.Embed(title=f"Package information for **{data.get('name')}**")
     e.add_field(
         name="**Latest Version:**", value=f"```py\n{data.get('latest_version', 'None Provided')}```", inline=False
     )
-    e.add_field(name="**Description:**", value=f"```py\n{data.get('description', 'None Provided')}```", inline=False)
+    e.add_field(name="**Description:**",
+                value=f"```py\n{data.get('description', 'None Provided')}```", inline=False)
     formatted_author = ""
 
     if isinstance(data.get("authors"), list):
@@ -150,8 +138,10 @@ def npm_create_embed(data: dict[str, str]) -> discord.Embed:
     else:
         formatted_author += f"Email: {data['authors'].get('email', 'None Provided')}\n{data['authors']['name']}"
 
-    e.add_field(name="**Author:**", value=f"```yaml\n{formatted_author}```", inline=False)
-    e.add_field(name="**License:**", value=f"```\n{data.get('license', 'None Provided')}```", inline=False)
+    e.add_field(name="**Author:**",
+                value=f"```yaml\n{formatted_author}```", inline=False)
+    e.add_field(name="**License:**",
+                value=f"```\n{data.get('license', 'None Provided')}```", inline=False)
     dependencies = []
     for lib, min_version in data.get("dependencies", {}).items():
         dependencies.append([lib, min_version])
@@ -162,11 +152,13 @@ def npm_create_embed(data: dict[str, str]) -> discord.Embed:
         inline=False,
     )
     if data.get("next_version", "None Provided"):
-        e.add_field(name="**Upcoming Version:**", value=f"```py\n{data.get('next_version', 'None Provided')}```")
+        e.add_field(name="**Upcoming Version:**",
+                    value=f"```py\n{data.get('next_version', 'None Provided')}```")
 
     return e
 
 
+# Same TODO as above.
 def get_required_npm(data: dict[str, Any]) -> dict[str, str]:
     latest = data["dist-tags"]["latest"]
     next = data["dist-tags"].get("next")
@@ -179,6 +171,7 @@ def get_required_npm(data: dict[str, Any]) -> dict[str, str]:
     dependencies = {}
     for lib, ver in _dependencies.items():
         dependencies[lib] = ver.strip("^")
+    
     return {
         "latest_version": latest,
         "next_version": next,
@@ -200,7 +193,8 @@ def formatter(code: str, boolean: bool) -> str:
 
 def linecount() -> str:
     prefix = sys.prefix.replace("\\", "/")
-    to_ignore = (str(prefix.split("/")[-1]), "src") if str(prefix) != str(sys.base_prefix) else "src"
+    to_ignore = (str(prefix.split(
+        "/")[-1]), "src") if str(prefix) != str(sys.base_prefix) else "src"
 
     p = pathlib.Path("./")
     im = cm = cr = fn = cl = ls = fc = 0
@@ -240,20 +234,17 @@ async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
     async with bot.session.get(f"{url}objects.inv") as response:
         content: bytes = await response.read()
         lines: list[bytes] = content.split(b"\n")
-        
+
         cleared_out = [n for n in lines[:10] if not n.startswith(b"#")]
 
-        lines = cleared_out + lines[10:]
-        data = b"\n".join(lines)
-        
+        data = b"\n".join(cleared_out + lines[10:])
         data = zlib.decompress(data)
-        data = data.decode()
-        data = data.split("\n")
+        data = (data.decode()).split("\n")
 
         results = []
         for x in data:
             try:
-                name, type, _, fragment, *label = x.split(" ")
+                name, __, _, fragment, *label = x.split(" ")
                 text = " ".join(label)
 
                 if text != "-":
