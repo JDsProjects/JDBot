@@ -1,11 +1,10 @@
 import itertools
+from typing import Any
 
 import discord
 from discord.ext import commands
 
 import utils
-
-from typing import Any
 
 
 class JDBotHelp(commands.MinimalHelpCommand):

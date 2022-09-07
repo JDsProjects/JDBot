@@ -600,6 +600,14 @@ class GoogleEmbed(Paginator):
         return embed
 
 
+class ScanStatusEmbed(Paginator):
+    async def format_page(self, item):
+        ctx = self.ctx
+        embed = discord.Embed(title="Status Scan Complete!", description=item, color=15428885)
+        embed.set_author(name=f"Requested by {ctx.author}", icon_url=ctx.author.display_avatar)
+        return embed
+
+
 def guild_join(guilds):
     return "\n".join(map(str, guilds))
 

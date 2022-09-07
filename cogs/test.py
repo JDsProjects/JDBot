@@ -1,9 +1,11 @@
 import collections
+import difflib
 import itertools
 import os
 import random
 import traceback
 import typing
+import re
 
 import discord
 from better_profanity import profanity
@@ -54,7 +56,7 @@ class Test(commands.Cog):
         await ctx.send("WIP")
 
     @commands.command(brief="gets tweets from a username")
-    async def tweet(self, ctx, amount: typing.Optional[int] = None, username=None):
+    async def get_tweet(self, ctx, amount: typing.Optional[int] = None, username=None):
 
         amount = amount or 10
 
@@ -65,24 +67,60 @@ class Test(commands.Cog):
             return await ctx.send("You can only get 30 tweets at a time.")
 
         try:
-            username = await self.bot.tweet_client.get_user(username=username)
+            username = await self.bot.tweet_client.get_user(username=username, user_fields=["profile_image_url"])
 
         except Exception as e:
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        print(username)
+        if username.data is None:
+            return await ctx.send("Couldn't find that user.")
+
+        username_id = username.data.id
+        profile_url = f"https://twitter.com/i/user/{username_id}"
+        # appreantly this works
+
+        image = username.data.profile_image_url
 
         try:
-            await ctx.send("not yet")
+            await ctx.send("work in progress")
             # time to do things later
-            # https://docs.tweepy.org/en/latest/asyncclient.html#tweepy.asynchronous.AsyncClient.get_users_tweets
-            # tweets = twitter_api.user_timeline(screen_name=username, count=amount, tweet_mode="extended")
-            # tweepy_fetch_user = twitter_api.get_user(username)
+
+            tweets = await self.bot.tweet_client.get_users_tweets(
+                username_id, max_results=amount, user_auth=True, tweet_fields=["possibly_sensitive"]
+            )
+            # not sure if I have everything i need but i need to see what data it can give me
 
         except Exception as e:
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
+
+        # print(tweets)
+
+        tweet_list = tweets.data
+
+        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweet_list))
+
+        embeds = []
+
+        for tweet in filtered_tweets:
+
+            tweet_url = f"https://twitter.com/twitter/statuses/{tweet.id}"
+
+            embed = discord.Embed(title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2)
+            embed.set_author(name=f"{username.data}", icon_url=image, url=profile_url)
+            embed.set_footer(text=f"Requested by {ctx.author}\nJDJG does not own any of the content of the tweets")
+
+            embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
+
+            # I don't know how to manage the twitter attachments, it may be nsfwish as well
+
+            embeds.append(embed)
+
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        await menu.send()
+
+        # speacil tool for pagination(with normal, empherall, and dm)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
@@ -91,9 +129,45 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # look at the JDJG Bot orginal
 
-    @commands.command(brief="scans statuses to see if there is any bad ones.")
+    @commands.command(brief="scans statuses/activities to see if there is any bad ones.")
+    @commands.has_permissions(manage_messages=True)
     async def scan_status(self, ctx):
-        await ctx.send("will scan statuses in a guild to see if there is a bad one.")
+        def scan(word):
+            if profanity.contains_profanity(word):
+                return {"type": "Profanity"}
+            regex = re.compile(r"(?:https?://)?discord(?:(?:app)?\.com/invite|\.gg)/?[a-zA-Z0-9]+/?")
+            if re.search(regex, word):
+                return {"type": "Server Invite"}
+
+            regex = re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+            if re.search(regex, word):
+                return {"type": "External Link"}
+            else:
+                return None
+
+        pages = []
+        i = 0
+        fi = 1
+        count = [mem.activity for mem in ctx.guild.members if mem.activity is not None]
+        count = len([scan(act.name) for act in count if scan(act.name) is not None])
+        chunck = "**Total Members With A Bad Status: {}**\n\n".format(count)
+        for member in ctx.guild.members:
+            act = member.activity
+            if act is not None:
+                sc = scan(act.name)
+                if sc is not None:
+                    chunck += f"{fi}) **{member}** ({member.mention}) - **Reason**: {sc['type']}\n"
+                    if i == 10:
+                        pages.append(chunck)
+                        chunck = "**Total Members With A Bad Status: {}**\n\n".format(count)
+                        i = 0
+                    i += 1
+                    fi += 1
+
+        pages.append(chunck)
+
+        menu = utils.ScanStatusEmbed(pages, ctx=ctx, delete_after=True)
+        await menu.send()
 
     @commands.command(brief="sets logs for a guild", name="logging")
     async def _logging(self, ctx):
@@ -144,6 +218,44 @@ class Slash(commands.Cog):
         self.bot = bot
 
 
+class CommandFinder(commands.Cog):
+    def __init__(self, bot: commands.Bot) -> None:
+        self.bot = bot
+        self.ctx_menu = discord.app_commands.ContextMenu(
+            name="Find Nearest Command",
+            callback=self.find_command,
+        )
+        self.bot.tree.add_command(self.ctx_menu)
+
+    async def cog_unload(self) -> None:
+        self.bot.tree.remove_command(self.ctx_menu.name, type=self.ctx_menu.type)
+
+    async def find_command(self, interaction: discord.Interaction, message: discord.Message) -> None:
+        context = await self.bot.get_context(message)
+        await interaction.response.defer(ephemeral=True)
+
+        if (context.valid) == False and context.prefix != None and context.command is None and context.prefix != "":
+            args = context.invoked_with
+
+            all_commands = list(self.bot.walk_commands())
+            command_names = [f"{x}" for x in await utils.filter_commands(context, all_commands)]
+
+            matches = difflib.get_close_matches(args, command_names)
+
+            if not matches:
+                await interaction.followup.send(f"I found nothing, sorry.", ephemeral=True)
+
+            elif matches:
+                await interaction.followup.send(f"Did you mean... `{matches[0]}`?", ephemeral=True)
+
+        elif context.command and context.valid:
+            await interaction.followup.send(f"Found `{context.command.name}`", ephemeral=True)
+
+        else:
+            await interaction.followup.send("This message isn't a command, sorry.", ephemeral=True)
+
+
 async def setup(bot):
     await bot.add_cog(Test(bot))
     await bot.add_cog(Slash(bot))
+    await bot.add_cog(CommandFinder(bot))

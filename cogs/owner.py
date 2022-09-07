@@ -410,7 +410,7 @@ class Owner(commands.Cog):
             else:
                 return await ctx.send(f"{user} is in the testers list already!")
 
-    @commands.command(brief="sends tweet to JDBot Twitter", aliases=["tweet_send"])
+    @commands.command(brief="sends tweet to JDBot Twitter", aliases=["tweet_send", "tweet"])
     async def send_tweet(self, ctx, *, args=None):
 
         if not args:
