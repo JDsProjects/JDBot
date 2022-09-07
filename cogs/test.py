@@ -67,7 +67,7 @@ class Test(commands.Cog):
             return await ctx.send("You can only get 30 tweets at a time.")
 
         try:
-            username = await self.bot.tweet_client.get_user(username=username)
+            username = await self.bot.tweet_client.get_user(username=username, user_fields=["profile_image_url"])
 
         except Exception as e:
             traceback.print_exc()
@@ -77,7 +77,7 @@ class Test(commands.Cog):
             return await ctx.send("Couldn't find that user.")
 
         username_id = username.data.id
-        profile_url = username.data.url
+        profile_url = f"https://www.tweet.com/{username_id}"
 
         image = username.data.profile_image_url
 
