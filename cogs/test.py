@@ -199,6 +199,7 @@ class Test(commands.Cog):
         await ctx.send("WIP")
 
         # more tag stuff soon just got to figure out my queries
+        # some of this should just be tag stuff (as in a group, tags should just be the list type)
 
     @commands.command()
     async def reminders(self, ctx):
