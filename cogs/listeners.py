@@ -73,7 +73,7 @@ class Events(commands.Cog):
 
             embed_message = discord.Embed(
                 title=f" {test.prefix}{test.invoked_with}",
-                description=f"{discord.utils.format_dt(message.created_at, style = 'd')}{discord.utils.format_dt(message.created_at, style = 'T')}",
+                description=f"{discord.utils.format_dt(message.created_at, style = 'd')} {discord.utils.format_dt(message.created_at, style = 'T')}",
                 color=random.randint(0, 16777215),
             )
 
