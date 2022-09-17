@@ -32,7 +32,7 @@ class Events(commands.Cog):
         embed.add_field(name="Member Count:", value=f"{guild.member_count}")
         embed.add_field(name="Amount of Channels:", value=f"{len(channels)}")
         embed.add_field(name="Amount of Roles:", value=f"{len(roles)}")
-        await self.bot.get_channel(996864357885542481).send(embed=embed)
+        await self.bot.support_webhook.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
@@ -57,7 +57,7 @@ class Events(commands.Cog):
             pass
         embed.add_field(name="Amount of Channels:", value=f"{len(channels)}")
         embed.add_field(name="Amount of Roles:", value=f"{len(roles)}")
-        await self.bot.get_channel(996864357885542481).send(embed=embed)
+        await self.bot.support_webhook.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_ready(self):
