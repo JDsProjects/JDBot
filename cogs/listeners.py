@@ -82,7 +82,8 @@ class Events(commands.Cog):
             )
             embed_message.set_footer(text=f"{message.author.id}")
             embed_message.set_thumbnail(url="https://i.imgur.com/bW6ergl.png")
-            await self.bot.get_channel(996864357885542481).send(embed=embed_message)
+            await self.bot.support_webhook.send(embed=embed_message)
+
         if re.fullmatch(rf"<@!?{self.bot.user.id}>", message.content) and not test.valid and not test.author.bot:
 
             prefixes = await self.bot.get_prefix(message)

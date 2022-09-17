@@ -3,9 +3,9 @@ import difflib
 import itertools
 import os
 import random
+import re
 import traceback
 import typing
-import re
 
 import discord
 from better_profanity import profanity

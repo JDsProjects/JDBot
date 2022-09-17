@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import functools
 import logging
 import os
 import re
@@ -172,6 +173,11 @@ class JDBot(commands.Bot):
                     await self.load_extension(f"cogs.{filename[:-3]}")
                 except commands.errors.ExtensionError:
                     traceback.print_exc()
+
+    @functools.cached_property
+    def support_webhook(self) -> discord.Webhook:
+        webhook_url = os.environ["SUPPORT_WEBHOOK"]
+        return discord.Webhook.from_url(webhook_url, session=self.session)
 
 
 intents = discord.Intents.all()
