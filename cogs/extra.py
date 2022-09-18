@@ -1,5 +1,6 @@
 import asyncio
 import contextlib
+import functools
 import math
 import os
 import random
@@ -431,13 +432,21 @@ class Extra(commands.Cog):
     @commands.command()
     async def call_text(self, ctx, *, args=None):
 
-        alex_api = alexflipnote.Client(os.environ["alex_apikey"], session=self.bot.session)
+        if len(args) > 500:
+            return await ctx.send("Please try again with shorter text.")
 
         args = args or "You called No one :("
-        # image = await alex_api.calling(text=args)
-        # url = await utils.cdn_upload(ctx.bot, await image.read())
+
+        conversion = functools.partial(utils.call_text, args)
+        file = await self.bot.loop.run_in_executor(None, conversion)
+        image = file.fp
+
+        url = await utils.cdn_upload(ctx.bot, image)
+
         url = "Something will be made to replace the orginal image soon or we will host the public open sourced code"
-        await ctx.send(url)
+        await ctx.send(url, file=file)
+
+        # embed and move to image cog soon
 
     @commands.command(brief="allows you to quote a user, without pings")
     async def quote(self, ctx, *, message=None):
