@@ -443,7 +443,7 @@ class Extra(commands.Cog):
         message = await ctx.send(file=file)
 
         image = await message.attachments[0].read()
-        url = await utils.cdn_upload(ctx.bot, image.read())
+        url = await utils.cdn_upload(ctx.bot, image)
 
         await message.edit(content=url)
         # embed and move to image cog soon
