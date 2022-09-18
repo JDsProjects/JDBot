@@ -439,12 +439,13 @@ class Extra(commands.Cog):
 
         conversion = functools.partial(utils.call_text, args)
         file = await self.bot.loop.run_in_executor(None, conversion)
-        image = file.fp
 
+        message = await ctx.send(file=file)
+
+        image = await message.attachments[0].read()
         url = await utils.cdn_upload(ctx.bot, image.read())
 
-        await ctx.send(url, file=file)
-
+        await message.edit(content=url)
         # embed and move to image cog soon
 
     @commands.command(brief="allows you to quote a user, without pings")
