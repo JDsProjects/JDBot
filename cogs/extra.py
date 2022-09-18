@@ -443,7 +443,6 @@ class Extra(commands.Cog):
 
         url = await utils.cdn_upload(ctx.bot, image)
 
-        url = "Something will be made to replace the orginal image soon or we will host the public open sourced code"
         await ctx.send(url, file=file)
 
         # embed and move to image cog soon
