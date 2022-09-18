@@ -440,9 +440,8 @@ class Extra(commands.Cog):
         conversion = functools.partial(utils.call_text, args)
         file = await self.bot.loop.run_in_executor(None, conversion)
         image = file.fp
-        image.seek(0)
 
-        url = await utils.cdn_upload(ctx.bot, image)
+        url = await utils.cdn_upload(ctx.bot, image.read())
 
         await ctx.send(url, file=file)
 
