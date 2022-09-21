@@ -445,8 +445,11 @@ class Extra(commands.Cog):
         image = await message.attachments[0].read()
         url = await utils.cdn_upload(ctx.bot, image)
 
-        await message.edit(content=url)
-        # embed and move to image cog soon
+        embed = discord.Embed(title=f"Called Text", color=random.randint(0, 16777215), url=url)
+        embed.set_image(url="attachment://test.png")
+        embed.set_footer(text=f"{ctx.author}")
+
+        await message.edit(embed=embed)
 
     @commands.command(brief="allows you to quote a user, without pings")
     async def quote(self, ctx, *, message=None):
