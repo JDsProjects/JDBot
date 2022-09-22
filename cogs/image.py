@@ -1,3 +1,4 @@
+import asyncio
 import functools
 import io
 import random
@@ -495,6 +496,25 @@ class Image(commands.Cog):
 
         if not code and not ctx.message.attachments:
             await ctx.send("you need svg attachments")
+
+    @commands.command()
+    async def call_text(self, ctx, *, args=None):
+
+        if len(args) > 500:
+            return await ctx.send("Please try again with shorter text.")
+
+        args = args or "You called No one :("
+
+        image = await asyncio.to_thread(utils.call_text, args)
+
+        url = await utils.cdn_upload(ctx.bot, image)
+        image.close()
+
+        embed = discord.Embed(title=f"Called Text", color=random.randint(0, 16777215), url=url)
+        embed.set_image(url=url)
+        embed.set_footer(text=f"Requested by {ctx.author}")
+
+        await ctx.send(embed=embed)
 
     @commands.command(brief="uses dagpi to make an image of you in jail")
     async def jail(self, ctx, *, Member: utils.BetterMemberConverter = None):

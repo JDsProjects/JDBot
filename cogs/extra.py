@@ -429,25 +429,6 @@ class Extra(commands.Cog):
             file=discord.File(s, filename="cookie_save.txt"),
         )
 
-    @commands.command()
-    async def call_text(self, ctx, *, args=None):
-
-        if len(args) > 500:
-            return await ctx.send("Please try again with shorter text.")
-
-        args = args or "You called No one :("
-
-        image = await asyncio.to_thread(utils.call_text, args)
-
-        url = await utils.cdn_upload(ctx.bot, image)
-        image.close()
-
-        embed = discord.Embed(title=f"Called Text", color=random.randint(0, 16777215), url=url)
-        embed.set_image(url=url)
-        embed.set_footer(text=f"Requested by {ctx.author}")
-
-        await ctx.send(embed=embed)
-
     @commands.command(brief="allows you to quote a user, without pings")
     async def quote(self, ctx, *, message=None):
 
