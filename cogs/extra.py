@@ -437,19 +437,16 @@ class Extra(commands.Cog):
 
         args = args or "You called No one :("
 
-        conversion = functools.partial(utils.call_text, args)
-        file = await self.bot.loop.run_in_executor(None, conversion)
+        image = await self.bot.loop.to_thread(utils.call_text, args)
 
-        message = await ctx.send(file=file)
-
-        image = await message.attachments[0].read()
         url = await utils.cdn_upload(ctx.bot, image)
+        image.close()
 
         embed = discord.Embed(title=f"Called Text", color=random.randint(0, 16777215), url=url)
-        embed.set_image(url="attachment://test.png")
-        embed.set_footer(text=f"{ctx.author}")
+        embed.set_image(url=url)
+        embed.set_footer(text=f"Requested by {ctx.author}")
 
-        await message.edit(embed=embed)
+        await ctx.send(embed=embed)
 
     @commands.command(brief="allows you to quote a user, without pings")
     async def quote(self, ctx, *, message=None):
