@@ -437,7 +437,7 @@ class Extra(commands.Cog):
 
         args = args or "You called No one :("
 
-        image = await self.bot.loop.to_thread(utils.call_text, args)
+        image = await asyncio.to_thread(utils.call_text, args)
 
         url = await utils.cdn_upload(ctx.bot, image)
         image.close()
