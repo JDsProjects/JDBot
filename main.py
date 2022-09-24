@@ -4,6 +4,7 @@ import functools
 import logging
 import os
 import re
+import sys
 import traceback
 from typing import Any, Optional
 
@@ -131,7 +132,7 @@ class JDBot(commands.Bot):
         await super().close()
 
     async def on_error(self, event, *args: Any, **kwargs: Any) -> None:
-        more_information = os.sys.exc_info()
+        more_information = sys.exc_info()
         error_wanted = traceback.format_exc()
         traceback.print_exc()
 
