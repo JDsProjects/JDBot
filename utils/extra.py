@@ -49,64 +49,32 @@ def reference(message):
 
     return None
 
+#: Address pairs used for RRGG, BB00 values.
+_addr_pairs = [
+    ('8107EC20', '8107EC22'),
+    ('8107EC28', '8107EC2A'),
+    ('8107EC38', '8107EC3A'),
+    ('8107EC40', '8107EC42'),
+    ('8107EC50', '8107EC52'),
+    ('8107EC58', '8107EC5A'),
+    ('8107EC68', '8107EC6A'),
+    ('8107EC70', '8107EC72'),
+    ('8107EC80', '8107EC82'),
+    ('8107EC88', '8107EC8A'),
+    ('8107EC98', '8107EC9A'),
+    ('8107ECA0', '8107ECA2'),
+]
 
-def cc_generate() -> str:
+def _colored_addr_pair(addr1: str, addr2: str) -> str:
+    r, g, b = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+    return f"{addr1} {r:02X}{g:02X}\n{addr2} {b:02X}00"
 
-    number = random.randint(0, 255)
-    # for loop stuff
 
-    addresses = [
-        "8107EC20",
-        "8107EC22",
-        "8107EC28",
-        "8107EC2A",
-        "8107EC38",
-        "8107EC3A",
-        "8107EC40",
-        "8107EC42",
-        "8107EC50",
-        "8107EC52",
-        "8107EC58",
-        "8107EC5A",
-        "8107EC68",
-        "8107EC6A",
-        "8107EC70",
-        "8107EC72",
-        "8107EC80",
-        "8107EC82",
-        "8107EC88",
-        "8107EC8A",
-        "8107EC98",
-        "8107EC9A",
-        "8107ECA0",
-        "8107ECA2",
-    ]
-
-    return f"""
-  {bit_generator()}{bit_generator()} 
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00
-  {bit_generator()}{bit_generator()}
-  {bit_generator()}00""".upper()
+def cc_generate():
+    return "\n".join(
+        _colored_addr_pair(*addrs)
+        for addrs in _addr_pairs
+    )
 
 
 async def post(bot, code):
