@@ -55,31 +55,58 @@ def cc_generate():
     number = random.randint(0, 255)
     # for loop stuff
 
+    addresses = [
+        "8107EC20",
+        "8107EC22",
+        "8107EC28",
+        "8107EC2A",
+        "8107EC38",
+        "8107EC3A",
+        "8107EC40",
+        "8107EC42",
+        "8107EC50",
+        "8107EC52",
+        "8107EC58",
+        "8107EC5A",
+        "8107EC68",
+        "8107EC6A",
+        "8107EC70",
+        "8107EC72",
+        "8107EC80",
+        "8107EC82",
+        "8107EC88",
+        "8107EC8A",
+        "8107EC98",
+        "8107EC9A",
+        "8107ECA0",
+        "8107ECA2",
+    ]
+
     return f"""
- 8107EC20 {bit_generator()}{bit_generator()} 
- 8107EC22 {bit_generator()}00
- 8107EC28 {bit_generator()}{bit_generator()}
- 8107EC2A {bit_generator()}00
- 8107EC38 {bit_generator()}{bit_generator()}
- 8107EC3A {bit_generator()}00
- 8107EC40 {bit_generator()}{bit_generator()}
- 8107EC42 {bit_generator()}00
- 8107EC50 {bit_generator()}{bit_generator()}
- 8107EC52 {bit_generator()}00
- 8107EC58 {bit_generator()}{bit_generator()}
- 8107EC5A {bit_generator()}00
- 8107EC68 {bit_generator()}{bit_generator()}
- 8107EC6A {bit_generator()}00
- 8107EC70 {bit_generator()}{bit_generator()}
- 8107EC72 {bit_generator()}00
- 8107EC80 {bit_generator()}{bit_generator()}
- 8107EC82 {bit_generator()}00
- 8107EC88 {bit_generator()}{bit_generator()}
- 8107EC8A {bit_generator()}00
- 8107EC98 {bit_generator()}{bit_generator()}
- 8107EC9A {bit_generator()}00
- 8107ECA0 {bit_generator()}{bit_generator()}
- 8107ECA2 {bit_generator()}00""".upper()
+  {bit_generator()}{bit_generator()} 
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00
+  {bit_generator()}{bit_generator()}
+  {bit_generator()}00""".upper()
 
 
 async def post(bot, code):
