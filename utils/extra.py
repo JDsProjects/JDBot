@@ -50,7 +50,7 @@ def reference(message):
     return None
 
 
-def cc_generate():
+def cc_generate() -> str:
 
     number = random.randint(0, 255)
     # for loop stuff
