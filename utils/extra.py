@@ -50,11 +50,11 @@ def reference(message):
     return None
 
 
-def bit_generator():
-    return hex(random.randint(0, 255))[2:]
-
-
 def cc_generate():
+
+    number = random.randint(0, 255)
+    # for loop stuff
+
     return f"""
  8107EC20 {bit_generator()}{bit_generator()} 
  8107EC22 {bit_generator()}00
