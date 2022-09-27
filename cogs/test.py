@@ -87,7 +87,7 @@ class Test(commands.Cog):
             # time to do things later
 
             tweets = await self.bot.tweet_client.get_users_tweets(
-                username_id, max_results=amount, user_auth=True, tweet_fields=["possibly_sensitive"]
+                username_id, max_results=amount, user_auth=True, tweet_fields=["possibly_sensitive", "attachments"]
             )
             # not sure if I have everything i need but i need to see what data it can give me
 
@@ -114,6 +114,9 @@ class Test(commands.Cog):
             embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
 
             # I don't know how to manage the twitter attachments, it may be nsfwish as well
+
+            print(tweet.attachments)
+            # figure stuff out.
 
             embeds.append(embed)
 
