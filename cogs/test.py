@@ -106,6 +106,8 @@ class Test(commands.Cog):
         if not tweet_list:
             return await ctx.send("Couldn't find any tweets.")
 
+        # not sure why this can be None but it can be
+
         filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweet_list))
 
         embeds = []
@@ -121,9 +123,7 @@ class Test(commands.Cog):
             embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
 
             # I don't know how to manage the twitter attachments, it may be nsfwish as well
-
-            print(tweet.attachments)
-            # figure stuff out.
+            # hopefully i have all i need to handle twitter's attachments
 
             embeds.append(embed)
 
