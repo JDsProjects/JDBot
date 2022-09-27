@@ -103,6 +103,9 @@ class Test(commands.Cog):
 
         tweet_list = tweets.data
 
+        if not tweet_list:
+            return await ctx.send("Couldn't find any tweets.")
+
         filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweet_list))
 
         embeds = []
