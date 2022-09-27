@@ -90,6 +90,7 @@ class Test(commands.Cog):
                 username_id,
                 max_results=amount,
                 user_auth=True,
+                expansions=["attachments.media_keys"],
                 tweet_fields=["possibly_sensitive", "attachments"],
                 media_fields=["media_key", "type", "url", "preview_image_url"],
             )
