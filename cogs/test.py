@@ -125,6 +125,7 @@ class Test(commands.Cog):
 
             # I don't know how to manage the twitter attachments, it may be nsfwish as well
             # hopefully i have all i need to handle twitter's attachments
+            print(tweet.attachments)
 
             embeds.append(embed)
 
