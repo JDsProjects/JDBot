@@ -500,6 +500,8 @@ class Image(commands.Cog):
     @commands.command()
     async def call_text(self, ctx, *, args=None):
 
+        args = args or "Test"
+
         if len(args) > 500:
             return await ctx.send("Please try again with shorter text.")
 
