@@ -428,6 +428,7 @@ class Extra(commands.Cog):
             "The save editor used: https://coderpatsy.bitbucket.io/cookies/v10466/editor.html \n Warning may be a bit cursed. (because of the grandmas having madness at this level.) \n To be Used with https://orteil.dashnet.org/cookieclicker/",
             file=discord.File(s, filename="cookie_save.txt"),
         )
+        # will be fixed soon
 
     @commands.command(brief="allows you to quote a user, without pings")
     async def quote(self, ctx, *, message=None):
