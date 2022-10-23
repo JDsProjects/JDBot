@@ -212,15 +212,15 @@ class Info(commands.Cog):
         await ctx.send(f"Username : {userNearest} \nDisplay name : {user_nick} \nNickname: {nearest_server_nick}")
 
     @commands.command(help="gives info on default emoji and custom emojis", name="emoji")
-    async def emoji_info(self, ctx, *emojis: typing.Union[utils.EmojiConverter, str]):
-        if emojis:
-
-            print(emojis)
-            menu = utils.EmojiInfoEmbed(emojis, ctx=ctx, delete_after=True)
-            await menu.send()
-
-        if not emojis:
-            await ctx.send("Looks like there was no emojis.")
+    async def emoji_info(
+        self,
+        ctx: commands.Context,
+        *,
+        emojis: typing.Annotated[utils.EmojiConverter.CovertedEmojis, utils.EmojiConverter],
+    ):
+        print(emojis, emojis.all, emojis.valid_emojis, emojis.invalid_emojis)
+        menu = utils.EmojiInfoEmbed(emojis.all, ctx=ctx, delete_after=True)  # type: ignore
+        await menu.send()
 
     @commands.command(brief="gives info on emoji_id and emoji image.")
     async def emoji_id(

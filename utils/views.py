@@ -17,7 +17,10 @@ from discord.flags import UserFlags
 from discord.ui import Button, Modal, TextInput, View
 from discord.utils import MISSING, maybe_coroutine
 
+
 if TYPE_CHECKING:
+    from .emoji import CustomEmoji
+
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
@@ -448,29 +451,43 @@ class Paginator(View):
 
 
 class EmojiInfoEmbed(Paginator):
-    async def format_page(self, item):
+    async def format_page(self, item: typing.Union[str, CustomEmoji]) -> discord.Embed:
+        DEFAULT_COLOUR = random.randint(0, 16777215)
 
-        embed = discord.Embed(color=random.randint(0, 16777215))
-        # start of all embeds
+        invalid_emoji_embed = discord.Embed(
+            title="Invalid Emoji",
+            description=f"The following input could not be resolved to a valid emoji: `{item}`",
+            colour=DEFAULT_COLOUR,
+        )
+        # bail early if the emoji is invalid
+        if isinstance(item, str):
+            return invalid_emoji_embed
 
-        embed.set_image(url=item.url)
-        # only if valid emoji
+        emoji_type = "Custom Emoji" if not item.unicode else "Default Emoji"
+        emoji_url = item.url if not item.unicode else f"http://www.fileformat.info/info/unicode/char/{item.id})"
+        field_name = "Emoji Info" if not item.unicode else "Unicode Info"
 
-        if item.is_unicode:
+        main_embed = discord.Embed(
+            title=f'Emoji Info for "{item.emoji}" ({emoji_type})',
+            colour=DEFAULT_COLOUR,
+        )
+        main_embed.set_image(url=item.url)
 
-            embed.title = "Default Emote:"
-            # embed.url = f"http://www.fileformat.info/info/unicode/char/{digit}"
-
-            # embed.add_field(name="Name:", value=f"{emoji_name}")
-            # embed.add_field(name="Unicode:", value=unicode)
-            # embed.add_field(        name="unicode url", value=f"[site](http://www.fileformat.info/info/unicode/char/{digit})")
-            # embed.set_footer(text=f"click the title for more unicode data")
-
+        global_text = (f"**Name:** {item.name}", f"**ID:** {item.id}", f"**URL:** [click here]({emoji_url})")
+        if item.unicode:
+            global_text += (f"**Code:** {item.unicode}",)
         else:
-            embed.title = f"Custom Emoji: **{item.name}**"
-            embed.set_footer(text=f"Emoji ID:{item.id}")
+            global_text += (
+                f"**Created:** {item.created_at}",
+                f"**Animated:** {item.animated}",
+            )
 
-        return embed
+        main_embed.add_field(
+            name=field_name,
+            value="\n".join(global_text),
+        )
+
+        return main_embed
 
 
 class MutualGuildsEmbed(Paginator):
