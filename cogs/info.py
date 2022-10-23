@@ -215,6 +215,7 @@ class Info(commands.Cog):
     async def emoji_info(self, ctx, *emojis: typing.Union[utils.EmojiConverter, str]):
         if emojis:
 
+            print(emojis)
             menu = utils.EmojiInfoEmbed(emojis, ctx=ctx, delete_after=True)
             await menu.send()
 
