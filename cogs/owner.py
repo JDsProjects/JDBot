@@ -443,7 +443,7 @@ class Owner(commands.Cog):
     @commands.command(brief="A command to view the cdn's images")
     async def cdn_view(self, ctx):
 
-        images = await self.bot.db.fetch("SELECT * FROM my_images")
+        images = await self.bot.db.fetch("SELECT name FROM my_images")
 
         if not images:
             return await ctx.send("None Found")
