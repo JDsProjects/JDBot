@@ -108,7 +108,7 @@ class CustomEmoji(PartialEmoji):
 
 
 class EmojiConverter(Converter[Any]):
-    class CovertedEmojis:
+    class ConvertedEmojis:
         def __init__(self, input: str, invalid_emojis: List[str], valid_emojis: List[CustomEmoji]) -> None:
             self.input: str = input
             self.invalid_emojis: List[str] = invalid_emojis
@@ -119,6 +119,23 @@ class EmojiConverter(Converter[Any]):
             return self.valid_emojis + self.invalid_emojis
 
     def _parse_line(self, line: str, /) -> List[Union[str, CustomEmoji]]:
+        def try_unicode(text: str) -> bool:
+            try:
+                digit = f"{ord(str(text)):x}"
+                unicode = f"\\U{digit:>08}"
+            except TypeError:
+                return False
+            else:
+                return True
+
+        def try_discord_emoji(text: str) -> bool:
+            try:
+                CustomEmoji.from_str(text)
+            except Exception:
+                return False
+            else:
+                return True
+
         emojis = []
         for i, chunk in enumerate(EMOJI_REGEX.split(line)):
             if not chunk:
@@ -127,10 +144,14 @@ class EmojiConverter(Converter[Any]):
             if not i % 2:
                 emoji = chunk
 
-            if len(chunk) > 18:  # This is guaranteed to be a Discord emoji
-                emoji = CustomEmoji.as_emoji(chunk)
-            else:
+            emoji = chunk
+            if len(chunk) > 18 or try_discord_emoji(chunk):
+                if try_discord_emoji(chunk):
+                    emoji = CustomEmoji.as_emoji(chunk)
+            elif try_unicode(chunk):
                 emoji = CustomEmoji.as_unicode(chunk)
+            else:
+                emoji = chunk
 
             emojis.append(emoji)
 
@@ -158,4 +179,4 @@ class EmojiConverter(Converter[Any]):
         if not valid_emojis:
             raise InvalidEmojis(argument, invalid_emojis)
 
-        return self.CovertedEmojis(argument, invalid_emojis, valid_emojis)
+        return self.ConvertedEmojis(argument, invalid_emojis, valid_emojis)

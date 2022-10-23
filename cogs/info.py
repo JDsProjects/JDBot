@@ -216,7 +216,7 @@ class Info(commands.Cog):
         self,
         ctx: commands.Context,
         *,
-        emojis: typing.Annotated[utils.EmojiConverter.CovertedEmojis, utils.EmojiConverter],
+        emojis: typing.Annotated[utils.EmojiConverter.ConvertedEmojis, utils.EmojiConverter],
     ):
         print(emojis, emojis.all, emojis.valid_emojis, emojis.invalid_emojis)
         menu = utils.EmojiInfoEmbed(emojis.all, ctx=ctx, delete_after=True)  # type: ignore
