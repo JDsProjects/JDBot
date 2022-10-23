@@ -440,6 +440,16 @@ class Owner(commands.Cog):
 
         await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{twitter_id}")
 
+    @commands.command(brief="A command to view the cdn's images")
+    async def cdn_view(self, ctx):
+
+        images = await self.bot.db.fetch("SELECT * FROM my_images")
+
+        if not images:
+            return await ctx.send("None Found")
+
+        await ctx.send(f"https://cdn.jdjgbot.com/image/{images[0].file_id}")
+
     @commands.command(
         brief="chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)"
     )
