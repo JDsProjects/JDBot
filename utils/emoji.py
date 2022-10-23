@@ -121,9 +121,8 @@ class EmojiConverter(Converter[Any]):
     def _parse_line(self, line: str, /) -> List[Union[str, CustomEmoji]]:
         def try_unicode(text: str) -> bool:
             try:
-                digit = f"{ord(str(text)):x}"
-                unicode = f"\\U{digit:>08}"
-            except TypeError:
+                CustomEmoji.as_unicode(text)
+            except Exception:
                 return False
             else:
                 return True
