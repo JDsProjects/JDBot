@@ -17,7 +17,6 @@ from discord.flags import UserFlags
 from discord.ui import Button, Modal, TextInput, View
 from discord.utils import MISSING, maybe_coroutine
 
-
 if TYPE_CHECKING:
     from .emoji import CustomEmoji
 

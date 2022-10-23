@@ -1,20 +1,20 @@
 """ CREDITS: https://github.com/jay3332/pilmoji"""
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any, ClassVar, Dict, Final, List, Literal, Optional, Pattern, Tuple, Union
 
-from re import compile as re_compile, escape as re_escape
+from re import compile as re_compile
+from re import escape as re_escape
+from typing import (TYPE_CHECKING, Any, ClassVar, Dict, Final, List, Literal,
+                    Optional, Pattern, Tuple, Union)
 from urllib.parse import quote_plus
 
+from discord import PartialEmoji
+from discord.ext.commands import BadArgument, Context, Converter
 from emoji import unicode_codes
 
-from discord import PartialEmoji
-from discord.ext.commands import Converter, BadArgument, Context
-
 if TYPE_CHECKING:
-    from typing_extensions import Self
-
     from discord.ext.commands import Context
+    from typing_extensions import Self
 
     ValidStyles = Literal[
         "apple",
