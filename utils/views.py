@@ -433,7 +433,7 @@ class Paginator(View):
                 self.message = maybe_message
                 return self.message
             else:
-                self.message = await self.interaction.original_message()  # type: ignore
+                self.message = await self.interaction.original_response()  # type: ignore
                 return self.message
 
         elif self.ctx is not MISSING:
