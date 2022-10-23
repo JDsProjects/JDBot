@@ -1585,6 +1585,8 @@ class nitroButtons(discord.ui.View):
         await interaction.response.send_message(content="Oh no it was a fake", ephemeral=True)
         await asyncio.sleep(2)
 
+        # message = await interaction.original_response()
+
         await interaction.edit_original_response(content="Prepare to get rickrolled...(it's a good song anyway)")
         await asyncio.sleep(2)
 
