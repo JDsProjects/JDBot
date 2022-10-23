@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from re import compile as re_compile
 from re import escape as re_escape
-from typing import (TYPE_CHECKING, Annotated, Any, ClassVar, Dict, Final, List,
-                    Literal, Optional, Pattern)
+from typing import TYPE_CHECKING, Annotated, Any, ClassVar, Dict, Final, List, Literal, Optional, Pattern
 from urllib.parse import quote_plus
 
 from discord import Intents, PartialEmoji
