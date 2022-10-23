@@ -538,7 +538,7 @@ class Image(commands.Cog):
             url = (Member.display_avatar.with_format("png")).url
             embeds.append(await utils.jail_converter(url, ctx))
 
-        menu = utils.Paginator(embeds, ctx=ctx, disable_after=True)
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
         await menu.send()
 
     @commands.command(brief="inverts any valid image with jeyyapi")

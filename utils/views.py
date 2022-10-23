@@ -742,7 +742,7 @@ class UserInfoButton(discord.ui.Button):
 
         pages = pag.pages or ["None"]
 
-        menu = MutualGuildsEmbed(pages, ctx=self.view.ctx, disable_after=True)
+        menu = MutualGuildsEmbed(pages, ctx=self.view.ctx, delete_after=True)
 
         for child in self.view.children:
             if isinstance(child, (discord.Button, discord.ui.Button)):
