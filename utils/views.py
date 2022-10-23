@@ -475,7 +475,15 @@ class EmojiInfoEmbed(Paginator):
 
         global_text = (f"**Name:** {item.name}", f"**ID:** {item.id}", f"**URL:** [click here]({emoji_url})")
         if item.unicode:
-            global_text += (f"**Code:** {item.unicode}",)
+            # provide different styles because why not
+            # twitter == twemoji
+            styles = [
+                f"[{style}]({item.with_style(style).url})"
+                for style in ("twitter", "whatsapp", "apple", "google", "samsung")
+            ]
+            styles_text = "Styles: see how this emoji looks on different platforms: " + " | ".join(styles)
+            global_text += (f"**Code:** {item.unicode}", styles_text)
+
         else:
             global_text += (
                 f"**Created:** {item.created_at}",
