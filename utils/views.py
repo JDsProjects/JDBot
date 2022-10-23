@@ -450,7 +450,9 @@ class Paginator(View):
 class EmojiInfoEmbed(Paginator):
     async def format_page(self, item):
 
-        embed = discord.Embedcolor = random.randint(0, 16777215)
+        embed = discord.Embed(color=random.randint(0, 16777215))
+        # start of all embeds
+
         embed.set_image(url=item.url)
         # only if valid emoji
 
