@@ -1585,10 +1585,9 @@ class nitroButtons(discord.ui.View):
         await interaction.response.send_message(content="Oh no it was a fake", ephemeral=True)
         await asyncio.sleep(2)
 
-        try:
-            message = await interaction.original_response()
+        message = await interaction.original_response()
 
-        except:
+        if not message:
 
             message = await interaction.followup.send(
                 content="You closed the message, so I can't edit it.", ephemeral=True
