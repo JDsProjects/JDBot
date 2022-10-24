@@ -1585,10 +1585,16 @@ class nitroButtons(discord.ui.View):
         await interaction.response.send_message(content="Oh no it was a fake", ephemeral=True)
         await asyncio.sleep(2)
 
-        await interaction.edit_original_response(content="Prepare to get rickrolled...(it's a good song anyway)")
+        message = await interaction.original_response()
+
+        # message = await interaction.followup.send(
+        # content="You closed the message, so I can't edit it.", ephemeral=True
+        # )
+
+        await message.edit(content="Prepare to get rickrolled...(it's a good song anyway)")
         await asyncio.sleep(2)
 
-        await interaction.edit_original_response(content="https://i.imgur.com/NQinKJB.gif")
+        await message.edit(content="https://i.imgur.com/NQinKJB.gif")
 
         button.disabled = True
         button.style = discord.ButtonStyle.secondary
