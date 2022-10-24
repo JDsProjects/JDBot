@@ -93,7 +93,7 @@ class CustomEmoji(PartialEmoji):
         if not self.unicode:
             raise TypeError("Cannot set style for non-unicode emoji")
 
-        return self.__class__(name=self.name, animated=self.animated, id=self.id, emoji=self.emoji, style=style)
+        return self.__class__(name=self.name, animated=self.animated, id=self.id, emoji=self.emoji, style=style, unicode=self.unicode)
 
     async def is_valid(self) -> bool:
         try:
