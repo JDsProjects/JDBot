@@ -141,7 +141,7 @@ class EmojiConverter(Converter[Any]):
             else:
                 try:
                     emoji = CustomEmoji.as_unicode(chunk)
-                except ValueError:
+                except (TypeError, ValueError):
                     texts.append(chunk)
                     continue
 
