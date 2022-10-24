@@ -1,13 +1,15 @@
 """ CREDITS: https://github.com/jay3332/pilmoji"""
 
 from __future__ import annotations
+from typing import TYPE_CHECKING, Any, ClassVar, Dict, Final, List, Literal, Optional, Pattern, Tuple, Union
 
 from re import compile as re_compile
 from re import escape as re_escape
-from typing import TYPE_CHECKING, Any, ClassVar, Dict, Final, List, Literal, Optional, Pattern, Tuple, Union
+import unicodedata
 from urllib.parse import quote_plus
 
 from discord import PartialEmoji
+from discord.asset import AssetMixin
 from discord.ext.commands import BadArgument, Context, Converter
 from emoji import unicode_codes
 
@@ -69,11 +71,6 @@ class CustomEmoji(PartialEmoji):
         self._style: Optional[ValidStyles] = style
         self.unicode: Optional[str] = unicode
 
-    def is_unicode_emoji(self) -> bool:
-        if self.unicode:
-            return False
-        return super().is_unicode_emoji()
-
     @property
     def url(self) -> str:
         if self.unicode:
@@ -84,7 +81,7 @@ class CustomEmoji(PartialEmoji):
     def as_unicode(cls, item: str, style: Optional[ValidStyles] = None) -> Self:
         digit = f"{ord(str(item)):x}"
         unicode = f"\\U{digit:>08}"
-        name = item.replace(":", "")
+        name = unicodedata.name(item, item.replace(":", ""))
         return cls(emoji=item, name=name, id=digit, animated=False, style=style, unicode=unicode)  # type: ignore
 
     @classmethod
@@ -106,11 +103,21 @@ class CustomEmoji(PartialEmoji):
         else:
             return True
 
+    async def read(self) -> bytes:
+        return await AssetMixin.read(self)
+
 
 class EmojiConverter(Converter[Any]):
     class ConvertedEmojis:
-        def __init__(self, input: str, invalid_emojis: List[str], valid_emojis: List[CustomEmoji]) -> None:
-            self.input: str = input
+        def __init__(
+            self,
+            original_input: str,
+            parsed_output: List[Tuple[List[str], List[CustomEmoji]]],
+            invalid_emojis: List[str],
+            valid_emojis: List[CustomEmoji],
+        ) -> None:
+            self.original_input: str = original_input
+            self.parsed_output: List[Tuple[List[str], List[CustomEmoji]]] = parsed_output
             self.invalid_emojis: List[str] = invalid_emojis
             self.valid_emojis: List[CustomEmoji] = valid_emojis
 
@@ -118,57 +125,45 @@ class EmojiConverter(Converter[Any]):
         def all(self) -> List[Union[str, CustomEmoji]]:
             return self.valid_emojis + self.invalid_emojis
 
-    def _parse_line(self, line: str, /) -> List[Union[str, CustomEmoji]]:
-        def try_unicode(text: str) -> bool:
-            try:
-                CustomEmoji.as_unicode(text)
-            except Exception:
-                return False
-            else:
-                return True
-
-        def try_discord_emoji(text: str) -> bool:
-            try:
-                CustomEmoji.from_str(text)
-            except Exception:
-                return False
-            else:
-                return True
-
-        emojis = []
+    def _parse_line(self, line: str, /) -> Tuple[List[str], List[CustomEmoji]]:
+        texts: List[str] = []
+        emojis: List[CustomEmoji] = []
         for i, chunk in enumerate(EMOJI_REGEX.split(line)):
             if not chunk:
                 continue
 
             if not i % 2:
-                emoji = chunk
+                texts.append(chunk)
+                continue
 
-            emoji = chunk
-            if len(chunk) > 18 or try_discord_emoji(chunk):
-                if try_discord_emoji(chunk):
-                    emoji = CustomEmoji.as_emoji(chunk)
-            elif try_unicode(chunk):
-                emoji = CustomEmoji.as_unicode(chunk)
+            if len(chunk) > 18:
+                emoji = CustomEmoji.as_emoji(chunk)
             else:
-                emoji = chunk
+                try:
+                    emoji = CustomEmoji.as_unicode(chunk)
+                except ValueError:
+                    texts.append(chunk)
+                    continue
 
+            if not emoji:
+                texts.append(chunk)
+                continue
             emojis.append(emoji)
 
-        return emojis
+        return texts, emojis
 
-    def parse_emojis(self, text: str, /) -> List[List[Union[str, CustomEmoji]]]:
+    def parse_emojis(self, text: str, /) -> List[Tuple[List[str], List[CustomEmoji]]]:
         return [self._parse_line(line) for line in text.splitlines()]
 
     async def convert(self, ctx: Context, argument: str):
         valid_emojis = []
         invalid_emojis = []
-        emojis: List[List[Union[str, CustomEmoji]]] = self.parse_emojis(argument.strip())
-        for line in emojis:
+        parsed_output = self.parse_emojis(argument.strip())
+        for (texts, line) in parsed_output:
+            for text in texts:
+                if text.strip():
+                    invalid_emojis.append(text.strip())
             for emoji in line:
-                if not isinstance(emoji, CustomEmoji):
-                    invalid_emojis.append(emoji)
-                    continue
-
                 emoji._state = ctx.bot._connection  # type: ignore
                 if await emoji.is_valid():
                     valid_emojis.append(emoji)
@@ -178,4 +173,4 @@ class EmojiConverter(Converter[Any]):
         if not valid_emojis:
             raise InvalidEmojis(argument, invalid_emojis)
 
-        return self.ConvertedEmojis(argument, invalid_emojis, valid_emojis)
+        return self.ConvertedEmojis(argument, parsed_output, invalid_emojis, valid_emojis)
