@@ -1587,11 +1587,9 @@ class nitroButtons(discord.ui.View):
 
         message = await interaction.original_response()
 
-        if not message:
-
-            message = await interaction.followup.send(
-                content="You closed the message, so I can't edit it.", ephemeral=True
-            )
+        # message = await interaction.followup.send(
+        # content="You closed the message, so I can't edit it.", ephemeral=True
+        # )
 
         await message.edit(content="Prepare to get rickrolled...(it's a good song anyway)")
         await asyncio.sleep(2)
