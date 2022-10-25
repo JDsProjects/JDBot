@@ -450,6 +450,8 @@ class Owner(commands.Cog):
 
         await ctx.send(f"https://cdn.jdjgbot.com/image/{images[0].name}.gif?opengraph_pass=true")
 
+        # I don't have much information about this but I may just make a small menu with format_page for this
+
     @commands.command(
         brief="chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)"
     )
