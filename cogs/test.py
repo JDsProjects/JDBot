@@ -91,7 +91,7 @@ class Test(commands.Cog):
                 max_results=amount,
                 user_auth=True,
                 expansions=["attachments.media_keys"],
-                tweet_fields=["possibly_sensitive", "attachments"],
+                tweet_fields=["possibly_sensitive", "attachments", "created_at"],
                 media_fields=["media_key", "type", "url", "preview_image_url"],
             )
             # not sure if I have everything i need but i need to see what data it can give me
@@ -117,7 +117,9 @@ class Test(commands.Cog):
 
             tweet_url = f"https://twitter.com/twitter/statuses/{tweet.id}"
 
-            embed = discord.Embed(title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2)
+            embed = discord.Embed(
+                title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2, timestamp=tweet.created_at
+            )
             embed.set_author(name=f"{username.data}", icon_url=image, url=profile_url)
             embed.set_footer(text=f"Requested by {ctx.author}\nJDJG does not own any of the content of the tweets")
 
