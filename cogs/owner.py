@@ -416,16 +416,6 @@ class Owner(commands.Cog):
         if not args:
             return await ctx.send("you can't send nothing to twitter.")
 
-        consumer_key = os.getenv("tweet_key")
-        consumer_secret = os.getenv("tweet_secret")
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-        bearer_token = os.getenv("tweet_bearer")
-
         try:
 
             post = await self.bot.tweet_client.create_tweet(text=args, user_auth=True)
