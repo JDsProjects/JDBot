@@ -157,9 +157,13 @@ class Test(commands.Cog):
             response = f"Go Go Gadget {text}"
 
         embed = discord.Embed(title="Inspector Gadget is here!", description=response, color=13420741)
+        embed.set_image(url="attachment://gadget.png")
+
         # may need a better color that is a inspector gadget color
 
-        await ctx.send(embed=embed)
+        file = discord.File("assets/gadget.png")
+
+        await ctx.send(embed=embed, file=file)
 
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(self, ctx):
