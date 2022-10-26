@@ -95,7 +95,7 @@ class Test(commands.Cog):
                 media_fields=["media_key", "type", "url", "preview_image_url"],
             )
             # not sure if I have everything i need but i need to see what data it can give me
-            # tweet_fields may take entities in the future
+            # tweet_fields may take entities in the future(entities are only needed for video urls and gifs)
 
         except Exception as e:
             traceback.print_exc()
