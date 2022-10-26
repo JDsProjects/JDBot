@@ -141,8 +141,25 @@ class Test(commands.Cog):
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
     @commands.command(brief="adds a text to Go Go Gadget or Wowzers Username")
-    async def gadget(self, ctx):
-        await ctx.send("WIP")
+    async def gadget(self, ctx, *, text=None):
+
+        if not text:
+            return await ctx.send("You need to give text for me to process")
+
+        if profanity.contains_profanity(text):
+
+            response = f"Wowsers! {ctx.author} your gadget is really inapporiate"
+
+            if profanity.contains_profanity(response):
+                response = f"Wowzers! Your name is really inapporiate"
+
+        else:
+            response = f"Go Go Gadget {text}"
+
+        embed = discord.Embed(title="Inspector Gadget is here!", description=response, color=13420741)
+        # may need a better color that is a inspector gadget color
+
+        await ctx.send(embed=embed)
 
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(self, ctx):
