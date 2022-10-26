@@ -161,7 +161,7 @@ class Test(commands.Cog):
 
         # may need a better color that is a inspector gadget color
 
-        file = discord.File("assets/gadget.png")
+        file = discord.File("assets/images/gadget.png")
 
         await ctx.send(embed=embed, file=file)
 
