@@ -144,6 +144,10 @@ class Test(commands.Cog):
     async def gadget(self, ctx):
         await ctx.send("WIP")
 
+    @commands.command(brief="gets an image to have sam laugh at")
+    async def laugh(self, ctx):
+        await ctx.send("WIP")
+
     @commands.command(brief="add emoji to your guild lol")
     async def emoji_add(self, ctx):
         await ctx.send("WIP")
