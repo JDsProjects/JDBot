@@ -140,6 +140,10 @@ class Test(commands.Cog):
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
+    @commands.command(brief="adds a text to Go Go Gadget or Wowzers Username")
+    async def gadget(self, ctx):
+        await ctx.send("WIP")
+
     @commands.command(brief="add emoji to your guild lol")
     async def emoji_add(self, ctx):
         await ctx.send("WIP")
