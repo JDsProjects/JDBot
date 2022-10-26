@@ -148,10 +148,10 @@ class Test(commands.Cog):
 
         if profanity.contains_profanity(text):
 
-            response = f"Wowsers! {ctx.author} your gadget is really inapporiate"
+            response = f"Wowsers! \n{ctx.author} your gadget is really inapporiate"
 
             if profanity.contains_profanity(response):
-                response = f"Wowzers! Your name is really inapporiate"
+                response = f"Wowzers! \nYour name is really inapporiate"
 
         else:
             response = f"Go Go Gadget {text}"
