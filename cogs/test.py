@@ -114,6 +114,10 @@ class Test(commands.Cog):
 
         embeds = []
 
+        media = tweets.includes["media"]
+        # Twitter likes to make things complicated, so this include the full media object here,
+        # while the tweet only has the media key
+
         for tweet in filtered_tweets:
 
             tweet_url = f"https://twitter.com/twitter/statuses/{tweet.id}"
