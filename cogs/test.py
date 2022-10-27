@@ -166,7 +166,7 @@ class Test(commands.Cog):
 
         # unknown on actual size limit, but 140 should work as a placeholder
 
-        embed = discord.Embed(title="Inspector Gadget is here!", description=response, color=13420741)
+        embed = discord.Embed(title="Inspector Gadget is here!", color=13420741)
         embed.set_image(url="attachment://gadget.png")
         embed.set_footer(text=f"Requested by {ctx.author}")
 
