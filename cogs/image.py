@@ -489,7 +489,7 @@ class Image(commands.Cog):
         if code:
             try:
 
-                file = await asyncio.to_thread(self.convert_svg, await a.read())
+                file = await asyncio.to_thread(self.convert_svg, await code.content)
                 await ctx.send(file=file)
 
             except Exception as e:
