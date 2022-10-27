@@ -480,6 +480,7 @@ class Image(commands.Cog):
                 try:
                     convert_time = functools.partial(self.convert_svg, await a.read())
                     file = await self.bot.loop.run_in_executor(None, convert_time)
+                    # convert to the new asyncio method
                     await ctx.send(file=file)
 
                 except Exception as e:
