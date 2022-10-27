@@ -1,3 +1,4 @@
+import asyncio
 import collections
 import difflib
 import itertools
@@ -162,10 +163,13 @@ class Test(commands.Cog):
 
         embed = discord.Embed(title="Inspector Gadget is here!", description=response, color=13420741)
         embed.set_image(url="attachment://gadget.png")
+        embed.set_footer(text=f"Requested by {ctx.author}")
 
         # may need a better color that is a inspector gadget color
 
-        file = discord.File("assets/images/gadget.png")
+        image = await asyncio.to_thread(utils.gadget, response)
+        file = discord.File(image, filename="gadget.png")
+        image.close()
 
         await ctx.send(embed=embed, file=file)
 
