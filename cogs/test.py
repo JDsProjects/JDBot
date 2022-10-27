@@ -161,8 +161,10 @@ class Test(commands.Cog):
         else:
             response = f"Go Go Gadget {text}"
 
-        if len(response) > 500:
+        if len(response) > 140:
             response = "Wowzers! \nYour name is too long"
+
+        # unknown on actual size limit, but 140 should work as a placeholder
 
         embed = discord.Embed(title="Inspector Gadget is here!", description=response, color=13420741)
         embed.set_image(url="attachment://gadget.png")
