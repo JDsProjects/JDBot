@@ -26,7 +26,7 @@ def call_text(text) -> BytesIO:
 
 def gadget(text) -> BytesIO:
 
-    text = textwrap.fill(text, 33)
+    text = textwrap.fill(text, 30)
     f = BytesIO()
 
     with Image.new("RGBA", (600, 800), "white") as canv:
