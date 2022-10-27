@@ -279,7 +279,7 @@ class Owner(commands.Cog):
     async def aioinput_test(self, ctx, *, args=None):
         args = args or "Test"
 
-        result = await self.bot.loop.run_in_executor(None, input, (f"{args}:"))
+        result = await asyncio.to_thread(input, (f"{args}:"))
         await ctx.send(f"Result of the input was {result}")
 
     @commands.command(brief="a powerful owner tool to reload local files that aren't reloadable.")
