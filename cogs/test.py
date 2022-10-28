@@ -35,7 +35,7 @@ class Test(commands.Cog):
         return ctx.author.id in self.bot.testers
 
     async def cog_command_error(self, ctx, error):
-        if isinstance(error, commands.CheckFailure) and ctx.author.id in self.bot.testers:
+        if isinstance(error, commands.CheckFailure):
             return await ctx.send("You are not a tester \nyou can apply with ``te*apply_tester``")
 
     @commands.command(
