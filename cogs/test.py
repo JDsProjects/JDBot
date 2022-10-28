@@ -36,7 +36,7 @@ class Test(commands.Cog):
 
     async def cog_command_error(self, ctx, error):
         if isinstance(error, commands.CheckFailure) and not ctx.author.id in self.bot.testers:
-            return await ctx.send("You are not a tester you can apply with ``te*apply_tester``")
+            return await ctx.send("You are not a tester \nyou can apply with ``te*apply_tester``")
 
     @commands.command(
         brief="a command to email you(work in progress)",
