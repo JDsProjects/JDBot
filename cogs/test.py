@@ -34,10 +34,6 @@ class Test(commands.Cog):
     async def cog_check(self, ctx):
         return ctx.author.id in self.bot.testers
 
-    async def cog_command_error(self, ctx, error):
-        if isinstance(error, commands.CheckFailure):
-            return await ctx.send("You are not a tester \nyou can apply with ``te*apply_tester``")
-
     @commands.command(
         brief="a command to email you(work in progress)",
         help="This command will email your email, it will automatically delete in guilds, but not in DMs(as it's not necessary",
