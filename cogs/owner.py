@@ -434,12 +434,14 @@ class Owner(commands.Cog):
     @commands.command(brief="A command to view the cdn's images")
     async def cdn_view(self, ctx):
 
-        images = await self.bot.db.fetch("SELECT name FROM my_images")
-
-        if not images:
+        if not self.bot.images:
             return await ctx.send("None Found")
 
-        await ctx.send(f"https://cdn.jdjgbot.com/image/{images[0].name}.gif?opengraph_pass=true")
+        menu = utils.cdnViewer(self.bot.images, ctx=ctx, delete_after=True)
+
+        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+
+        await ctx.send("Pick the way you want the list of images to be sent to you", view=view)
 
         # I don't have much information about this but I may just make a small menu with format_page for this
 
