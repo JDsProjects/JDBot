@@ -506,8 +506,8 @@ class MutualGuildsEmbed(Paginator):
 
 class cdnViewer(Paginator):
     def format_page(self, item):
-        embed = discord.Embed(title="CDN Viewer", description=item, color=random.randint(0, 16777215))
-        embed.set_image(f"https://cdn.jdjgbot.com/image/{item.name}.gif?opengraph_pass=true")
+        embed = discord.Embed(title="CDN Viewer", description=f"Image ID: {item}", color=random.randint(0, 16777215))
+        embed.set_image(f"https://cdn.jdjgbot.com/image/{item}.gif?opengraph_pass=true")
 
         return embed
 
