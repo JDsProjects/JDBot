@@ -108,7 +108,7 @@ class JDBot(commands.Bot):
         self.sus_users: dict[int, str] = dict(await self.db.fetch("SELECT * FROM SUS_USERS;"))
 
         self.history: list[str] = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
-        self.images: list[str] = (image.name for image in self.db.fetch("SELECT name FROM my_images"))
+        self.images: list[str] = [image.name for image in self.db.fetch("SELECT name FROM my_images")]
 
         consumer_key = os.getenv("tweet_key")
         consumer_secret = os.getenv("tweet_secret")
