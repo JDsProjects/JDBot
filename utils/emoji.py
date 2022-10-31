@@ -79,10 +79,10 @@ class CustomEmoji(PartialEmoji):
 
     @classmethod
     def as_unicode(cls, item: str, style: Optional[ValidStyles] = None) -> Self:
-        digit = f"{ord(str(item)):x}"
-        unicode = f"\\U{digit:>08}"
+        unicode = (item.encode("unicode-escape")).decode()
+        _id = unicode[5:]
         name = unicodedata.name(item, item.replace(":", ""))
-        return cls(emoji=item, name=name, id=digit, animated=False, style=style, unicode=unicode)  # type: ignore
+        return cls(emoji=item, name=name, id=_id, animated=False, style=style, unicode=unicode)  # type: ignore
 
     @classmethod
     def as_emoji(cls, emoji: str) -> Self:
