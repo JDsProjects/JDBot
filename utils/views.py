@@ -463,7 +463,7 @@ class EmojiInfoEmbed(Paginator):
             return invalid_emoji_embed
 
         emoji_type = "Custom Emoji" if not item.unicode else "Default Emoji"
-        emoji_url = item.url if not item.unicode else f"http://www.fileformat.info/info/unicode/char/{item.id})"
+        emoji_url = item.url if not item.unicode else f"https://emojiterra.com/{item.name.lower().replace(' ', '-')}/"
         field_name = "Emoji Info" if not item.unicode else "Unicode Info"
 
         main_embed = discord.Embed(

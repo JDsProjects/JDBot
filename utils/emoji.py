@@ -1,11 +1,12 @@
 """ CREDITS: https://github.com/jay3332/pilmoji"""
 
 from __future__ import annotations
+from typing import TYPE_CHECKING, Any, ClassVar, Dict, Final, List, Literal, Optional, Pattern, Tuple, Union
 
 import unicodedata
 from re import compile as re_compile
 from re import escape as re_escape
-from typing import TYPE_CHECKING, Any, ClassVar, Dict, Final, List, Literal, Optional, Pattern, Tuple, Union
+import unicodedata
 from urllib.parse import quote_plus
 
 from discord import PartialEmoji
@@ -79,10 +80,10 @@ class CustomEmoji(PartialEmoji):
 
     @classmethod
     def as_unicode(cls, item: str, style: Optional[ValidStyles] = None) -> Self:
-        digit = f"{ord(str(item)):x}"
-        unicode = f"\\U{digit:>08}"
+        unicode = (item.encode("unicode-escape")).decode()
+        _id = unicode[5:]
         name = unicodedata.name(item, item.replace(":", ""))
-        return cls(emoji=item, name=name, id=digit, animated=False, style=style, unicode=unicode)  # type: ignore
+        return cls(emoji=item, name=name, id=_id, animated=False, style=style, unicode=unicode)  # type: ignore
 
     @classmethod
     def as_emoji(cls, emoji: str) -> Self:
