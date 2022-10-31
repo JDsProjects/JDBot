@@ -447,9 +447,8 @@ class DevTools(commands.Cog):
         if modal.value2 is True:
             await message.edit(content="Speacil Formatting at 120 lines it is.")
 
-        code_conversion = functools.partial(utils.formatter, code.content, bool(modal.value2))
         try:
-            code = await self.bot.loop.run_in_executor(None, code_conversion)
+            code = await asyncio.to_thread(utils.formatter, code.content, bool(modal.value2))
 
         except Exception as e:
             return await message.edit(content=f"Error Ocurred with {e}")

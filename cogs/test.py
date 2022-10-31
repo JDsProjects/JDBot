@@ -1,3 +1,4 @@
+import asyncio
 import collections
 import difflib
 import itertools
@@ -91,10 +92,11 @@ class Test(commands.Cog):
                 max_results=amount,
                 user_auth=True,
                 expansions=["attachments.media_keys"],
-                tweet_fields=["possibly_sensitive", "attachments"],
+                tweet_fields=["possibly_sensitive", "attachments", "created_at"],
                 media_fields=["media_key", "type", "url", "preview_image_url"],
             )
             # not sure if I have everything i need but i need to see what data it can give me
+            # tweet_fields may take entities in the future(entities are only needed for video urls and gifs)
 
         except Exception as e:
             traceback.print_exc()
@@ -113,11 +115,17 @@ class Test(commands.Cog):
 
         embeds = []
 
+        media = tweets.includes["media"]
+        # Twitter likes to make things complicated, so this include the full media object here,
+        # while the tweet only has the media key
+
         for tweet in filtered_tweets:
 
             tweet_url = f"https://twitter.com/twitter/statuses/{tweet.id}"
 
-            embed = discord.Embed(title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2)
+            embed = discord.Embed(
+                title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2, timestamp=tweet.created_at
+            )
             embed.set_author(name=f"{username.data}", icon_url=image, url=profile_url)
             embed.set_footer(text=f"Requested by {ctx.author}\nJDJG does not own any of the content of the tweets")
 
@@ -136,6 +144,43 @@ class Test(commands.Cog):
         # speacil tool for pagination(with normal, empherall, and dm)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
+
+    @commands.command(brief="adds a text to Go Go Gadget or Wowzers Username")
+    async def gadget(self, ctx, *, text=None):
+
+        if not text:
+            return await ctx.send("You need to give text for me to process")
+
+        if profanity.contains_profanity(text):
+
+            response = f"Wowsers! \n{ctx.author} your gadget is really inapporiate"
+
+            if profanity.contains_profanity(response):
+                response = f"Wowzers! \nYour name is really inapporiate"
+
+        else:
+            response = f"Go Go Gadget {text}"
+
+        if len(response) > 140:
+            response = "Wowzers! \nYour name is too long"
+
+        # unknown on actual size limit, but 140 should work as a placeholder
+
+        embed = discord.Embed(title="Inspector Gadget is here!", color=13420741)
+        embed.set_image(url="attachment://gadget.png")
+        embed.set_footer(text=f"Requested by {ctx.author}")
+
+        # may need a better color that is a inspector gadget color
+
+        image = await asyncio.to_thread(utils.gadget, response)
+        file = discord.File(image, filename="gadget.png")
+        image.close()
+
+        await ctx.send(embed=embed, file=file)
+
+    @commands.command(brief="gets an image to have sam laugh at")
+    async def laugh(self, ctx):
+        await ctx.send("WIP")
 
     @commands.command(brief="add emoji to your guild lol")
     async def emoji_add(self, ctx):

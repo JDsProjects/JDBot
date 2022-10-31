@@ -3,6 +3,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, Final, List, Literal, Optional, Pattern, Tuple, Union
 
+import unicodedata
 from re import compile as re_compile
 from re import escape as re_escape
 import unicodedata
@@ -93,7 +94,9 @@ class CustomEmoji(PartialEmoji):
         if not self.unicode:
             raise TypeError("Cannot set style for non-unicode emoji")
 
-        return self.__class__(name=self.name, animated=self.animated, id=self.id, emoji=self.emoji, style=style)
+        return self.__class__(
+            name=self.name, animated=self.animated, id=self.id, emoji=self.emoji, style=style, unicode=self.unicode
+        )
 
     async def is_valid(self) -> bool:
         try:
@@ -141,7 +144,7 @@ class EmojiConverter(Converter[Any]):
             else:
                 try:
                     emoji = CustomEmoji.as_unicode(chunk)
-                except ValueError:
+                except (TypeError, ValueError):
                     texts.append(chunk)
                     continue
 

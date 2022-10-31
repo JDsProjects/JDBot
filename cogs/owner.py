@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import importlib
 import os
 import random
@@ -279,7 +280,7 @@ class Owner(commands.Cog):
     async def aioinput_test(self, ctx, *, args=None):
         args = args or "Test"
 
-        result = await self.bot.loop.run_in_executor(None, input, (f"{args}:"))
+        result = await asyncio.to_thread(input, (f"{args}:"))
         await ctx.send(f"Result of the input was {result}")
 
     @commands.command(brief="a powerful owner tool to reload local files that aren't reloadable.")
@@ -416,16 +417,6 @@ class Owner(commands.Cog):
         if not args:
             return await ctx.send("you can't send nothing to twitter.")
 
-        consumer_key = os.getenv("tweet_key")
-        consumer_secret = os.getenv("tweet_secret")
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-        bearer_token = os.getenv("tweet_bearer")
-
         try:
 
             post = await self.bot.tweet_client.create_tweet(text=args, user_auth=True)
@@ -443,12 +434,16 @@ class Owner(commands.Cog):
     @commands.command(brief="A command to view the cdn's images")
     async def cdn_view(self, ctx):
 
-        images = await self.bot.db.fetch("SELECT name FROM my_images")
-
-        if not images:
+        if not self.bot.images:
             return await ctx.send("None Found")
 
-        await ctx.send(f"https://cdn.jdjgbot.com/image/{images[0].name}.gif?opengraph_pass=true")
+        menu = utils.cdnViewer(self.bot.images, ctx=ctx, delete_after=True)
+
+        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+
+        await ctx.send("Pick the way you want the list of images to be sent to you", view=view)
+
+        # I don't have much information about this but I may just make a small menu with format_page for this
 
     @commands.command(
         brief="chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)"

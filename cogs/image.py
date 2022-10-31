@@ -478,8 +478,9 @@ class Image(commands.Cog):
         if ctx.message.attachments:
             for a in ctx.message.attachments:
                 try:
-                    convert_time = functools.partial(self.convert_svg, await a.read())
-                    file = await self.bot.loop.run_in_executor(None, convert_time)
+
+                    file = await asyncio.to_thread(self.convert_svg, await a.read())
+
                     await ctx.send(file=file)
 
                 except Exception as e:
@@ -487,8 +488,8 @@ class Image(commands.Cog):
 
         if code:
             try:
-                convert_time = functools.partial(self.convert_svg, code.content)
-                file = await self.bot.loop.run_in_executor(None, convert_time)
+
+                file = await asyncio.to_thread(self.convert_svg, code.content)
                 await ctx.send(file=file)
 
             except Exception as e:
