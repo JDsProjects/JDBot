@@ -87,7 +87,7 @@ class Test(commands.Cog):
             await ctx.send("work in progress")
             # time to do things later
 
-            tweets = await self.bot.tweet_client.get_users_tweets(
+            response = await self.bot.tweet_client.get_users_tweets(
                 username_id,
                 max_results=amount,
                 user_auth=True,
@@ -104,18 +104,18 @@ class Test(commands.Cog):
 
         # print(tweets)
 
-        tweet_list = tweets.data
+        tweets = response.data
 
-        if not tweet_list:
+        if not tweets:
             return await ctx.send("Couldn't find any tweets.")
 
         # not sure why this can be None but it can be
 
-        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweet_list))
+        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweets))
 
         embeds = []
 
-        media = tweets.includes["media"]
+        media = response.includes["media"]
         # Twitter likes to make things complicated, so this include the full media object here,
         # while the tweet only has the media key
 
