@@ -102,22 +102,16 @@ class Test(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        # print(tweets)
+        wrapped_tweets = TweetWrapper(tweets)
 
-        tweets = response.data
-
-        if not tweets:
+        if not wrapped_tweets.tweets:
             return await ctx.send("Couldn't find any tweets.")
 
         # not sure why this can be None but it can be
 
-        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweets))
+        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, wrapped_tweets.tweets))
 
         embeds = []
-
-        media = response.includes["media"]
-        # Twitter likes to make things complicated, so this include the full media object here,
-        # while the tweet only has the media key
 
         for tweet in filtered_tweets:
 
@@ -131,10 +125,7 @@ class Test(commands.Cog):
 
             embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
 
-            # I don't know how to manage the twitter attachments, it may be nsfwish as well
-            # hopefully i have all i need to handle twitter's attachments
-            print(tweet.attachments)
-            # work in progress
+            print(tweet.media)
 
             embeds.append(embed)
 
