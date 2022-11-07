@@ -37,7 +37,7 @@ class TweetWrapper:
 
         ret: List[Tuple[TweepyTweet, List[Media]]] = []
         if not all(isinstance(x, TweepyTweet) for x in data):
-            raise TypeError("data must be a list of TweepyTweet")
+            return []
 
         media = includes["media"]
         if not media:

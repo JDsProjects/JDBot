@@ -104,7 +104,7 @@ class Test(commands.Cog):
 
         wrapped_tweets = TweetWrapper(tweets)
 
-        if not wrapped_tweets.tweets:
+        if not tweets:
             return await ctx.send("Couldn't find any tweets.")
 
         # not sure why this can be None but it can be
