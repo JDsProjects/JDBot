@@ -1,12 +1,14 @@
-from __future__ import annotations
-
+from collections import namedtuple
 from typing import Any, List, Optional, Tuple
 
-from tweepy import Media, Response
+from tweepy import Media
+from tweepy import Response as TweepyResponse
 from tweepy import Tweet as TweepyTweet
 
+Response = namedtuple("Response", ["data", "meta", "includes", "errors", "tweets"])
 
-class TweetWrapper(Response):
+
+class TweetWrapper:
     class Tweet(TweepyTweet):
         def __init__(self, data: Any, media: List[Media]) -> None:
             super().__init__(data)
@@ -16,29 +18,32 @@ class TweetWrapper(Response):
         def media(self) -> List[Media]:
             return self._media
 
-    def __init__(self, original_response: Response) -> None:
-        self.tweets = self._unwrap_tweets_media()
-        super().__init__(
-            data=self.data,
-            includes=original_response.includes,
+    def __new__(cls, original_response: TweepyResponse):
+        tweets = cls._unwrap_tweets_media(data=original_response.data, includes=original_response.includes)
+        return Response(
+            data=tweets,
             meta=original_response.meta,
+            includes=original_response.includes,
             errors=original_response.errors,
+            tweets=tweets,
         )
 
-    def __construct_custom_tweet(self, original_tweet: TweepyTweet, media: Optional[List[Media]] = None) -> Tweet:
-        return self.Tweet(original_tweet.data, media or [])
+    @staticmethod
+    def _unwrap_tweets_media(data: Any, includes: Any) -> List[Tweet]:
+        def __construct_custom_tweet(
+            original_tweet: TweepyTweet, media: Optional[List[Media]] = None
+        ) -> TweetWrapper.Tweet:
+            return TweetWrapper.Tweet(original_tweet.data, media or [])
 
-    def _unwrap_tweets_media(self) -> List[Tweet]:
         ret: List[Tuple[TweepyTweet, List[Media]]] = []
-        data = self.data
-        if not hasattr(data, "tweets"):
-            return []
+        if not all(isinstance(x, TweepyTweet) for x in data):
+            raise TypeError("data must be a list of TweepyTweet")
 
-        media = self.includes["media"]
+        media = includes["media"]
         if not media:
-            return [self.__construct_custom_tweet(x) for x in data.tweets]
+            return [__construct_custom_tweet(x) for x in data.tweets]
 
-        for tweet in data.tweets:
+        for tweet in data:
             if tweet.attachments:
                 media_keys = tweet.attachments["media_keys"]
                 if not media_keys:
@@ -48,4 +53,4 @@ class TweetWrapper(Response):
                     media_objects = [m for m in media if key == m.media_key]
                     ret.append((tweet, media_objects))
 
-        return [self.__construct_custom_tweet(tweet, medias) for tweet, medias in ret]
+        return [__construct_custom_tweet(tweet, medias) for tweet, medias in ret]
