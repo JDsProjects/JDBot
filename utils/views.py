@@ -776,7 +776,7 @@ class TweetHandler(discord.ui.View):
 
         self.clear_items()
         await self.message.edit(content="Sending Tweets here", view=self)
-        await asyncio.sleep(5)
+        await asyncio.sleep(2)
         await self.message.delete()
 
         await self.menu.send(interaction=interaction, ephemeral=False)
