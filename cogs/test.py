@@ -175,8 +175,7 @@ class Test(commands.Cog):
     async def attachment(
         self,
         ctx,
-        *,
-        attachments: typing.Optional[typing.Union[discord.Attachment, discord.PartialEmoji, discord.User]] = None,
+        *attachments: typing.Union[discord.Attachment, discord.PartialEmoji, discord.User],
     ):
 
         if not attachments:
