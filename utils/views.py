@@ -449,6 +449,20 @@ class Paginator(View):
 # thank you so much Soheab for allowing me to use this paginator you made and putting in the work to do this :D (That's his github name so...)
 
 
+class TweetEmbed(Paginator):
+    async def format_page(self, item) -> discord.Embed:
+
+        tweet_url = f"https://twitter.com/twitter/statuses/{item}.id"
+
+        embed = discord.Embed(
+            title=f"Tweet!", description=f"{item.text}", url=tweet_url, color=0x1DA1F2, timestamp=item.created_at
+        )
+        embed.set_author(name=f"{self.username.data}", icon_url=self.image, url=self.profile_url)
+        embed.set_footer(text=f"Requested by {self.ctx.author}\nJDJG does not own any of the content of the tweets")
+
+        embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
+
+
 class EmojiInfoEmbed(Paginator):
     async def format_page(self, item: typing.Union[str, CustomEmoji]) -> discord.Embed:
         DEFAULT_COLOUR = random.randint(0, 16777215)

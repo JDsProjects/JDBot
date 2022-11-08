@@ -113,24 +113,12 @@ class Test(commands.Cog):
 
         filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, wrapped_tweets))
 
-        embeds = []
+        menu = utils.TweetEmbed(filtered_tweets, ctx=ctx, delete_after=True)
 
-        for tweet in filtered_tweets:
+        menu.username = username
+        menu.profile_url = profile_url
+        menu.image = image
 
-            tweet_url = f"https://twitter.com/twitter/statuses/{tweet.id}"
-
-            embed = discord.Embed(
-                title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2, timestamp=tweet.created_at
-            )
-            embed.set_author(name=f"{username.data}", icon_url=image, url=profile_url)
-            embed.set_footer(text=f"Requested by {ctx.author}\nJDJG does not own any of the content of the tweets")
-
-            embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
-
-            embeds.append(embed)
-            print(tweet.media)
-
-        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
         await menu.send()
 
         # speacil tool for pagination(with normal, empherall, and dm)
