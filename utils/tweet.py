@@ -44,14 +44,12 @@ class TweetWrapper:
             return [__construct_custom_tweet(x) for x in data]
 
         for tweet in data:
-            if tweet.attachments:
-                media_keys = tweet.attachments["media_keys"]
-                if not media_keys:
-                    ret.append((tweet, []))
-                    continue
-
+            if media_keys := tweet.attachments.get("media_keys", []):
                 for key in media_keys:
                     media_objects = [m for m in media if key == m.media_key]
                     ret.append((tweet, media_objects))
+            else:
+                ret.append((tweet, []))
+                    
 
         return [__construct_custom_tweet(tweet, medias) for tweet, medias in ret]
