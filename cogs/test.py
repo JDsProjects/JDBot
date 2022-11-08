@@ -119,6 +119,9 @@ class Test(commands.Cog):
         menu.profile_url = profile_url
         menu.image = image
 
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
+
         view = utils.TweetHandler(ctx, menu, ctx.author.dm_channel)
 
         await ctx.send("Pick the Way Tweets are sent to you please", view=view)
