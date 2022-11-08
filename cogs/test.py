@@ -119,9 +119,9 @@ class Test(commands.Cog):
         menu.profile_url = profile_url
         menu.image = image
 
-        await menu.send()
+        view = utils.TweetHandler(ctx, menu, ctx.author.dm_channel)
 
-        # speacil tool for pagination(with normal, empherall, and dm)
+        await ctx.send("Pick the Way Tweets are sent to you please", view=view)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 

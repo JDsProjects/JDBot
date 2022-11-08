@@ -764,6 +764,56 @@ class dm_or_ephemeral(discord.ui.View):
         return True
 
 
+class TweetHandler(discord.ui.View):
+    def __init__(self, ctx, menu=None, channel: discord.DMChannel = None, **kwargs):
+        super().__init__(**kwargs)
+        self.ctx = ctx
+        self.channel = channel
+        self.menu = menu
+
+    @discord.ui.button(label="Normal(guild)", style=discord.ButtonStyle.success, emoji="📄")
+    async def NormalMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
+
+        self.clear_items()
+        await self.message.edit(content="Sending Tweets here", view=self)
+        await asyncio.sleep(5)
+        await self.message.delete()
+
+        await self.menu.send(interaction=interaction, ephemeral=False)
+
+    @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
+    async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
+
+        self.clear_items()
+        await self.message.edit(content="ephemerally sending Tweets", view=self)
+
+        await self.menu.send(interaction=interaction, ephemeral=True)
+
+    @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
+    async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
+
+        self.clear_items()
+        await self.message.edit(content="Dming Tweets", view=self)
+
+        await self.menu.send(send_to=self.channel)
+
+    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
+    async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
+
+        self.clear_items()
+        await self.message.edit(content=f"I will not send you the tweets", view=self)
+
+    async def interaction_check(self, interaction: discord.Interaction):
+
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+
 class UserInfoButton(discord.ui.Button):
     def __init__(self, style, label: str, emoji, custom_id: str):
         super().__init__(style=style, label=label, emoji=emoji, custom_id=custom_id)
