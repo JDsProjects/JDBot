@@ -175,7 +175,7 @@ class Test(commands.Cog):
     async def attachment(
         self,
         ctx,
-        *attachments: typing.Union[discord.PartialEmoji, discord.User],
+        *attachments: typing.Union[discord.PartialEmoji, discord.User, discord.Attachment],
     ):
 
         # add attachments to the list
