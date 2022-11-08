@@ -127,9 +127,8 @@ class Test(commands.Cog):
 
             embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
 
-            print(tweet.media)
-
             embeds.append(embed)
+            print(tweet.media)
 
         menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
         await menu.send()
