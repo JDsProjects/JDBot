@@ -452,7 +452,7 @@ class Paginator(View):
 class TweetEmbed(Paginator):
     async def format_page(self, item) -> discord.Embed:
 
-        tweet_url = f"https://twitter.com/twitter/statuses/{item}.id"
+        tweet_url = f"https://twitter.com/twitter/statuses/{item.id}"
 
         embed = discord.Embed(
             title=f"Tweet!", description=f"{item.text}", url=tweet_url, color=0x1DA1F2, timestamp=item.created_at
