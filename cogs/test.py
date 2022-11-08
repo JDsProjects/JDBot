@@ -171,6 +171,21 @@ class Test(commands.Cog):
 
         await ctx.send(embed=embed, file=file)
 
+    @commands.command(brief="checks attachment stuff")
+    async def attachment(
+        self,
+        ctx,
+        *,
+        attachments: typing.Optional[typing.Union[discord.Attachment, discord.PartialEmoji, discord.User]] = None,
+    ):
+
+        if not attachments:
+
+            return await ctx.send("Eventually grab the user's avatar")
+
+        for x in attachments:
+            print(x)
+
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(self, ctx):
         await ctx.send("WIP")
