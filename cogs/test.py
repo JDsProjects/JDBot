@@ -102,14 +102,16 @@ class Test(commands.Cog):
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        wrapped_tweets = TweetWrapper(tweets)
+        wrapped_response = utils.TweetWrapper(response)
 
-        if not tweets:
+        wrapped_tweets = wrapped_response.tweets
+
+        if not wrapped_tweets:
             return await ctx.send("Couldn't find any tweets.")
 
         # not sure why this can be None but it can be
 
-        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, wrapped_tweets.tweets))
+        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, wrapped_tweets))
 
         embeds = []
 
