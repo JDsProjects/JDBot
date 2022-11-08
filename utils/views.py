@@ -1328,6 +1328,8 @@ class GuildInfoSelects(discord.ui.Select):
                 value=f"**Total** : {guild.member_count}\n**Users** : {len(humans)} \n**Bots** : {len(bots)} ",
             )
 
+            # {var:,} for comma handling soon
+
         if choice == "statuses":
 
             base_status = collections.Counter([x.status for x in guild.members])
