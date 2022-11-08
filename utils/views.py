@@ -462,6 +462,8 @@ class TweetEmbed(Paginator):
 
         embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
 
+        return embed
+
 
 class EmojiInfoEmbed(Paginator):
     async def format_page(self, item: typing.Union[str, CustomEmoji]) -> discord.Embed:
