@@ -50,6 +50,5 @@ class TweetWrapper:
                     ret.append((tweet, media_objects))
             else:
                 ret.append((tweet, []))
-                    
 
         return [__construct_custom_tweet(tweet, medias) for tweet, medias in ret]
