@@ -84,7 +84,6 @@ class Test(commands.Cog):
         image = username.data.profile_image_url
 
         try:
-            await ctx.send("work in progress")
             # time to do things later
 
             response = await self.bot.tweet_client.get_users_tweets(
