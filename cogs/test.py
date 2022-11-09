@@ -164,7 +164,7 @@ class Test(commands.Cog):
     async def attachment(
         self,
         ctx,
-        *attachments: typing.Union[discord.Attachment, discord.PartialEmoji, discord.Member, discord.User, str],
+        *attachments: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
     ):
 
         # add attachments to the list
@@ -177,8 +177,6 @@ class Test(commands.Cog):
             return await ctx.send("Eventually grab the user's avatar")
 
         filtered_attachments = list(filter(lambda a: not isinstance(a, str), attachments))
-
-        print(filtered_attachments)
 
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(self, ctx):
