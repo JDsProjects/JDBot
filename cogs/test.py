@@ -174,7 +174,7 @@ class Test(commands.Cog):
 
         if not attachments:
 
-            return await ctx.send("Eventually grab the user's avatar")
+            attachments.append(ctx.author)
 
         filtered_attachments = list(filter(lambda a: not isinstance(a, str), attachments))
 
