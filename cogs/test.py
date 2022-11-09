@@ -169,14 +169,16 @@ class Test(commands.Cog):
 
         # add attachments to the list
 
+        attachments = list(attachments)
+        attachments.extend(ctx.message.attachments)
+
         if not attachments:
 
             return await ctx.send("Eventually grab the user's avatar")
 
-        print(attachments)
+        filtered_attachments = list(filter(lambda a: not isinstance(a, str), attachments))
 
-        for x in attachments:
-            print(x)
+        print(filtered_attachments)
 
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(self, ctx):
