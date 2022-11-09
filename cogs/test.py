@@ -175,6 +175,8 @@ class Test(commands.Cog):
 
             return await ctx.send("Eventually grab the user's avatar")
 
+        print(attachments)
+
         for x in attachments:
             print(x)
 
