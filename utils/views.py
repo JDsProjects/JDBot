@@ -773,15 +773,12 @@ class TweetHandler(discord.ui.View):
 
     @discord.ui.button(label="Normal", style=discord.ButtonStyle.success, emoji="📄")
     async def NormalMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
-
-        self.clear_items()
-        await self.message.edit(content="Sending Tweets here", view=self)
-        await asyncio.sleep(2)
-        await self.message.delete()
-
+        
         self.menu.message = interaction.message
-        kwargs = await self.menu.get_kwargs_from_page(0)
+        page = self.menu.get_page(0)
+        kwargs = await self.menu.get_kwargs_from_page(page)
         await self.menu._edit_message(interaction, **kwargs)
+
 
     @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
