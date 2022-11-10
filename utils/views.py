@@ -732,7 +732,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.channel = channel
         self.menu = menu
 
-    @discord.ui.button(label="Ephemeral Message", style=discord.ButtonStyle.success, emoji="🕵️")
+    @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -740,7 +740,7 @@ class dm_or_ephemeral(discord.ui.View):
 
         await self.menu.send(interaction=interaction, ephemeral=True)
 
-    @discord.ui.button(label="Direct Message", style=discord.ButtonStyle.success, emoji="📥")
+    @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -748,7 +748,7 @@ class dm_or_ephemeral(discord.ui.View):
 
         await self.menu.send(send_to=self.channel)
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -1094,11 +1094,11 @@ class UserInfoSuper(discord.ui.View):
         self.ctx = ctx
         self.user = user
 
-        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral Message", "🕵️", custom_id="0"))
+        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral", "🕵️", custom_id="0"))
         self.add_item(
-            UserInfoButton(label="Direct Message", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
+            UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
         )
-        self.add_item(UserInfoButton(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+        self.add_item(UserInfoButton(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
         self.add_item((UserInfoSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -1267,11 +1267,11 @@ class OwnerInfoSuper(discord.ui.View):
         self.user = user
         self.support_guild = support_guild
 
-        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral Message", "🕵️", custom_id="0"))
+        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral", "🕵️", custom_id="0"))
         self.add_item(
-            UserInfoButton(label="Direct Message", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
+            UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
         )
-        self.add_item(UserInfoButton(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+        self.add_item(UserInfoButton(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
         self.add_item((OwnerSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
