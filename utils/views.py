@@ -771,7 +771,7 @@ class TweetHandler(discord.ui.View):
         self.channel = channel
         self.menu = menu
 
-    @discord.ui.button(label="Normal Message", style=discord.ButtonStyle.success, emoji="📄")
+    @discord.ui.button(label="Normal", style=discord.ButtonStyle.success, emoji="📄")
     async def NormalMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -779,9 +779,13 @@ class TweetHandler(discord.ui.View):
         await asyncio.sleep(2)
         await self.message.delete()
 
-        await self.menu.send(interaction=interaction, ephemeral=False)
+        self.menu.message = interaction.message
+        kwargs = await self.menu.get_kwargs_from_page(0)
+        await self.menu._edit_message(interaction, **kwargs)
 
-    @discord.ui.button(label="Ephemeral Message", style=discord.ButtonStyle.success, emoji="🕵️")
+
+
+    @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -789,7 +793,7 @@ class TweetHandler(discord.ui.View):
 
         await self.menu.send(interaction=interaction, ephemeral=True)
 
-    @discord.ui.button(label="Direct Message", style=discord.ButtonStyle.success, emoji="📥")
+    @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -797,7 +801,7 @@ class TweetHandler(discord.ui.View):
 
         await self.menu.send(send_to=self.channel)
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
