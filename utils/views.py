@@ -306,6 +306,7 @@ class Paginator(View):
         if interaction is not MISSING:
             self.interaction = interaction
 
+        kwargs["attachments"] = kwargs.pop("files", [])
         if self.interaction is not MISSING:
             respond = self.interaction.response.edit_message  # type: ignore
             if self.interaction.response.is_done():  # type: ignore
