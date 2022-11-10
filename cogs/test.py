@@ -123,7 +123,7 @@ class Test(commands.Cog):
 
         view = utils.TweetHandler(ctx, menu, ctx.author.dm_channel)
 
-        await ctx.send("Pick the Way Tweets are sent to you please", view=view)
+        await ctx.send("Please pick a way tweets are sent to you\nMethods are below:", view=view)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
