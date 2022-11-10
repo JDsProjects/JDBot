@@ -773,12 +773,11 @@ class TweetHandler(discord.ui.View):
 
     @discord.ui.button(label="Normal", style=discord.ButtonStyle.success, emoji="📄")
     async def NormalMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
-        
+
         self.menu.message = interaction.message
         page = self.menu.get_page(0)
         kwargs = await self.menu.get_kwargs_from_page(page)
         await self.menu._edit_message(interaction, **kwargs)
-
 
     @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
