@@ -1095,9 +1095,7 @@ class UserInfoSuper(discord.ui.View):
         self.user = user
 
         self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral", "🕵️", custom_id="0"))
-        self.add_item(
-            UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
-        )
+        self.add_item(UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1"))
         self.add_item(UserInfoButton(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
         self.add_item((UserInfoSuperSelects(ctx)))
 
@@ -1268,9 +1266,7 @@ class OwnerInfoSuper(discord.ui.View):
         self.support_guild = support_guild
 
         self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral", "🕵️", custom_id="0"))
-        self.add_item(
-            UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
-        )
+        self.add_item(UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1"))
         self.add_item(UserInfoButton(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
         self.add_item((OwnerSuperSelects(ctx)))
 
