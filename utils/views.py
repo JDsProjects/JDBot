@@ -783,8 +783,6 @@ class TweetHandler(discord.ui.View):
         kwargs = await self.menu.get_kwargs_from_page(0)
         await self.menu._edit_message(interaction, **kwargs)
 
-
-
     @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
