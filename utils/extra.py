@@ -88,7 +88,7 @@ async def post(bot, code):
     }
 
     response = await bot.session.post(
-        "https://api.senarc.org/paste",
+        "https://api.senarc.online/paste",
         json=paste_body,
         headers={"accept": "application/json", "Content-Type": "application/json"},
     )
@@ -98,7 +98,7 @@ async def post(bot, code):
 
 async def get_paste(bot, paste_id):
     response = await bot.session.get(
-        f"https://api.senarc.org/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
+        f"https://api.senarc.online/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
     )
     response = await response.json()
     return response.get("content")
