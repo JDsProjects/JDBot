@@ -389,7 +389,7 @@ class Image(commands.Cog):
 
     @commands.command(help="gives a random objection", aliases=["obj", "ob", "object"])
     async def objection(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/objection")
+        r = await self.bot.session.get("https://api.senarc.online/misc/objection")
         res = await r.json()
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{ctx.author} yelled OBJECTION!", icon_url=(ctx.author.display_avatar.url))
@@ -399,7 +399,7 @@ class Image(commands.Cog):
 
     @commands.command(help="gives the truth about opinions(may offend)", aliases=["opinion"])
     async def opinional(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/opinional")
+        r = await self.bot.session.get("https://api.senarc.online/misc/opinional")
         res = await r.json()
         embed = discord.Embed(title="Truth about opinions(may offend some people):", color=random.randint(0, 16777215))
         embed.set_image(url=res["url"])
