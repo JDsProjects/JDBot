@@ -875,14 +875,15 @@ def profile_converter(
         UserFlags.verified_bot: "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
         UserFlags.verified_bot_developer: "<:verifiedbotdev:853277205264859156>",
         UserFlags.discord_certified_moderator: "<:certifiedmod:853274382339670046>",
+        UserFlags.active_developer: "",
         "bot": "<:bot:848395737138069514>",
     }
 
     status_emojis = {
-        discord.Status.online: "<:online:715050614379249744>",
-        discord.Status.dnd: "<:dnd:715050614429712394>",
-        discord.Status.idle: "<:idle:715050614291431475>",
-        discord.Status.offline: "<:offline:715050614366928906>",
+        discord.Status.online: "<:_:596576749790429200> ",
+        discord.Status.dnd: "<_:596576774364856321>",
+        discord.Status.idle: "<:_:596576773488115722>",
+        discord.Status.offline: "<:_:596576752013279242>",
     }
 
     devices_emojis = {
