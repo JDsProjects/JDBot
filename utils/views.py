@@ -862,28 +862,28 @@ def profile_converter(
 ):
 
     badges_emoji = {
-        UserFlags.staff: "<:DiscordStaff:859400539221917698>",
-        UserFlags.partner: "<:partner:848402357863710762>",
-        UserFlags.hypesquad: "<:hypesquad:314068430854684672>",
-        UserFlags.bug_hunter: "<:bughunter:585765206769139723>",
-        UserFlags.hypesquad_bravery: "<:bravery:585763004218343426>",
-        UserFlags.hypesquad_brilliance: "<:brilliance:585763004495298575>",
-        UserFlags.hypesquad_balance: "<:balance:585763004574859273>",
-        UserFlags.early_supporter: "<:supporter:585763690868113455> ",
+        UserFlags.staff: "<:discord_staff:1040719569116999680>",
+        UserFlags.partner: "<:discord_partner:1040723650162212985>",
+        UserFlags.hypesquad: "<:hypesquad:1040720248158040154>",
+        UserFlags.bug_hunter: "<:bug_hunter:1040719548128702544> ",
+        UserFlags.hypesquad_bravery: "<:bravery:917747437450457128>",
+        UserFlags.hypesquad_brilliance: "<:brilliance:917747437509177384>",
+        UserFlags.hypesquad_balance: "<:balance:917747437412704366>",
+        UserFlags.early_supporter: "<:early_supporter:1040720490676895846>",
         "system": "<:verifiedsystem1:848399959539843082><:verifiedsystem2:848399959241261088>",
-        UserFlags.bug_hunter_level_2: "<:goldbughunter:853274684337946648>",
+        UserFlags.bug_hunter_level_2: "<:bug_hunter_2:1040721850520571914>",
         UserFlags.verified_bot: "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
-        UserFlags.verified_bot_developer: "<:verifiedbotdev:853277205264859156>",
-        UserFlags.discord_certified_moderator: "<:certifiedmod:853274382339670046>",
-        UserFlags.active_developer: "❓",
+        UserFlags.verified_bot_developer: "<:early_developer:1040719588385624074>",
+        UserFlags.discord_certified_moderator: "<:certified_moderator:1040719606102380687",
+        UserFlags.active_developer: "<:active_dev:1040717993895800853>",
         "bot": "<:bot:848395737138069514>",
     }
 
     status_emojis = {
-        discord.Status.online: "<:_:596576749790429200>",
-        discord.Status.dnd: "<:_:596576774364856321>",
-        discord.Status.idle: "<:_:596576773488115722>",
-        discord.Status.offline: "<:_:596576752013279242>",
+        discord.Status.online: "<:online:917747437882458122>",
+        discord.Status.dnd: "<:do_not_disturb:917747437756633088>",
+        discord.Status.idle: "<:away:917747437479821332>",
+        discord.Status.offline: "<:offline:917747437815349258>",
     }
 
     devices_emojis = {
@@ -891,7 +891,7 @@ def profile_converter(
             discord.Status.online: "<:onlinemobile:715050614429712384>",
             discord.Status.dnd: "<:dndmobile:715050614047899741>",
             discord.Status.idle: "<:idlemobile:715050614278717500>",
-            discord.Status.offline: "<:mobile_offline:917752338532425739> ",
+            discord.Status.offline: "<:mobile_offline:917752338532425739>",
         },
         "desktop": {
             discord.Status.online: "<:desktop_online:917755694852235265>",
