@@ -875,7 +875,7 @@ def profile_converter(
         UserFlags.bug_hunter_level_2: "<:bug_hunter_2:1040721850520571914>",
         UserFlags.verified_bot: "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
         UserFlags.verified_bot_developer: "<:early_developer:1040719588385624074>",
-        UserFlags.discord_certified_moderator: "<:certified_moderator:1040719606102380687",
+        UserFlags.discord_certified_moderator: "<:certified_moderator:1040719606102380687>",
         UserFlags.bot_http_interactions: "<:bot_http_interactions:1040746049821757522>",
         UserFlags.spammer: "⚠️",
         UserFlags.active_developer: "<:active_dev:1040717993895800853>",
