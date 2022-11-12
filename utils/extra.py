@@ -6,12 +6,11 @@ import pathlib
 import random
 import sys
 import zlib
-from typing import NamedTuple, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 import black
 import discord
 import tabulate
-
 
 if TYPE_CHECKING:
     from ..main import JDBot

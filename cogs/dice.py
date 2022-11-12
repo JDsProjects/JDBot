@@ -3,8 +3,8 @@ import random
 import typing
 from difflib import SequenceMatcher
 
-from better_profanity import profanity
 import discord
+from better_profanity import profanity
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 
