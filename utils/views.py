@@ -891,9 +891,9 @@ def profile_converter(
 
     devices_emojis = {
         "mobile": {
-            discord.Status.online: "<:onlinemobile:715050614429712384>",
-            discord.Status.dnd: "<:dndmobile:715050614047899741>",
-            discord.Status.idle: "<:idlemobile:715050614278717500>",
+            discord.Status.online: "<:mobile_online:917753163417813053>",
+            discord.Status.dnd: "<:mobile_dnd:917753135672459276>",
+            discord.Status.idle: "<:mobile_away:917753135672459275>",
             discord.Status.offline: "<:mobile_offline:917752338532425739>",
         },
         "desktop": {
