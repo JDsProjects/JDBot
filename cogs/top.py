@@ -30,9 +30,11 @@ class DSLCount(commands.Cog):
         except Exception as e:
             self.logger.exception("Failed to post server count\n{}: {}".format(type(e).__name__, e))
 
-    def cog_unload(self):
+    async def cog_unload(self):
+
         self.update_stats.stop()
-        self.api.stop()
+        await self.api.session.close()
+        # let's see
 
         # not sure if doing self.api is okay, but it should be.
 
