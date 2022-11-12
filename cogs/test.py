@@ -160,23 +160,50 @@ class Test(commands.Cog):
 
         await ctx.send(embed=embed, file=file)
 
+    def test(self, image):
+
+        import io
+
+        f = io.BytesIO(image)
+        f.seek(0)
+
+        return f
+
     @commands.command(brief="checks attachment stuff")
     async def attachment(
         self,
         ctx,
-        *attachments: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
+        *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
     ):
 
-        # add attachments to the list
+        assets = list(assets)
+        attachments = ctx.message.attachments
 
-        attachments = list(attachments)
-        attachments.extend(ctx.message.attachments)
+        if not attachments or assets:
 
-        if not attachments:
+            assets.append(ctx.author)
 
-            attachments.append(ctx.author)
+        images = []
 
-        filtered_attachments = list(filter(lambda a: not isinstance(a, str), attachments))
+        for attachment in attachments:
+            if attachment.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
+                images.append(attachment)
+
+        for asset in assets:
+            if isinstance(asset, discord.PartialEmoji):
+                images.append(asset)
+
+            if isinstance(asset, (discord.User, discord.Member)):
+                avatar = asset.display_avatar
+                images.append(avatar)
+
+        images = images[:10]
+        files = [asyncio.to_thread(self.test, await image.read()) for image in images]
+        done, pending = await asyncio.wait(files)
+
+        files = [discord.File(file.value, "image.png") for file in done]
+
+        await ctx.send(files=files)
 
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(self, ctx):
