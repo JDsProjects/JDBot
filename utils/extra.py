@@ -1,17 +1,23 @@
+from __future__ import annotations
+
 import io
 import os
 import pathlib
 import random
 import sys
 import zlib
-from typing import NamedTuple
+from typing import NamedTuple, TYPE_CHECKING, Any
 
 import black
 import discord
 import tabulate
 
 
-async def google_tts(bot, text):
+if TYPE_CHECKING:
+    from ..main import JDBot
+
+
+async def google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
@@ -22,11 +28,10 @@ async def google_tts(bot, text):
         ).read()
     )
     mp3_fp.seek(0)
-    file = discord.File(mp3_fp, "tts.mp3")
-    return file
+    return discord.File(mp3_fp, "tts.mp3")
 
 
-async def latin_google_tts(bot, text):
+async def latin_google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
@@ -37,12 +42,10 @@ async def latin_google_tts(bot, text):
         ).read()
     )
     mp3_fp.seek(0)
-    file = discord.File(mp3_fp, "latin_tts.mp3")
-    return file
+    return discord.File(mp3_fp, "latin_tts.mp3")
 
 
-def reference(message):
-
+def reference(message) -> discord.MessageReference | None:
     reference = message.reference
     if reference and isinstance(reference.resolved, discord.Message):
         return reference.resolved.to_reference()
@@ -72,12 +75,11 @@ def _colored_addr_pair(addr1: str, addr2: str) -> str:
     return f"{addr1} {r:02X}{g:02X}\n{addr2} {b:02X}00"
 
 
-def cc_generate():
+def cc_generate() -> str:
     return "\n".join(_colored_addr_pair(*addrs) for addrs in _addr_pairs)
 
 
-async def post(bot, code):
-
+async def post(bot: JDBot, code: str) -> str:
     paste_body = {
         "title": "JDBot Paste",
         "content": code,
@@ -87,34 +89,28 @@ async def post(bot, code):
         "embed_colour": "#FFFFFF",
     }
 
-    response = await bot.session.post(
+    async with await bot.session.post(
         "https://api.senarc.online/paste",
         json=paste_body,
         headers={"accept": "application/json", "Content-Type": "application/json"},
-    )
-    response = await response.json()
-    return response.get("url")
+    ) as response:
+        json: dict = await response.json()
+        return json.get("url")
 
 
-async def get_paste(bot, paste_id):
-    response = await bot.session.get(
+async def get_paste(bot: JDBot, paste_id: str):
+    async with await bot.session.get(
         f"https://api.senarc.online/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
-    )
-    response = await response.json()
-    return response.get("content")
+    ) as response:
+        json: dict = await response.json()
+        return json.get("content")
 
 
-def groupby(iterable: list, number: int):
-    resp = []
-    while True:
-        resp.append(iterable[:number])
-        iterable = iterable[number:]
-        if not iterable:
-            break
-    return resp
+def groupby(iterable: list[Any], count: int) -> list[list[Any]]:
+    return [iterable[i : i + count] for i in range(0, len(iterable), count)]
 
 
-def npm_create_embed(data: dict):
+def npm_create_embed(data: dict) -> discord.Embed:
     e = discord.Embed(title=f"Package information for **{data.get('name')}**")
     e.add_field(
         name="**Latest Version:**", value=f"```py\n{data.get('latest_version', 'None Provided')}```", inline=False
@@ -146,7 +142,7 @@ def npm_create_embed(data: dict):
     return e
 
 
-def get_required_npm(data):
+def get_required_npm(data) -> dict:
     latest = data["dist-tags"]["latest"]
     next = data["dist-tags"].get("next")
     version_data = data["versions"][latest]
@@ -177,7 +173,7 @@ def formatter(code, boolean):
     return dst
 
 
-def linecount():
+def linecount() -> str:
     prefix = sys.prefix.replace("\\", "/")
     to_ignore = (str(prefix.split("/")[-1]), "src") if str(prefix) != str(sys.base_prefix) else "src"
 
@@ -214,16 +210,13 @@ class RtfmObject(NamedTuple):
         return self.name
 
 
-async def rtfm(bot, url):
+async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
 
     # wip
-    response = await bot.session.get(f"{url}objects.inv")
-    content = await response.read()
-
-    lines = content.split(b"\n")
+    async with await bot.session.get(f"{url}objects.inv") as response:
+        lines = (await response.read()).split(b"\n")
 
     first_10_lines = lines[:10]
-
     first_10_lines = [n for n in first_10_lines if not n.startswith(b"#")]
 
     lines = first_10_lines + lines[10:]
