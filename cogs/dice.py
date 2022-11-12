@@ -134,7 +134,7 @@ class Dice(commands.Cog):
 
         text = random.choice(ramsay_responses)
 
-        if not commands.is_nsfw(ctx.channel):
+        if not isinstance(ctx.channel, discord.DMChannel) and not ctx.channel.nsfw or isinstance(ctx.channel, discord.DMChannel):
             text = profanity.censor(text, censor_char="#")
 
         if args is None:
