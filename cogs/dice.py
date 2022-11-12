@@ -134,7 +134,7 @@ class Dice(commands.Cog):
 
         text = random.choice(ramsay_responses)
 
-        if not ctx.channel.nsfw:
+        if not commands.is_nsfw(ctx.channel):
             text = profanity.censor(text, censor_char="#")
 
         if args is None:
