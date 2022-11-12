@@ -179,7 +179,7 @@ class Test(commands.Cog):
         assets = list(assets)
         attachments = ctx.message.attachments
 
-        if not attachments or assets:
+        if not attachments or not assets:
 
             assets.append(ctx.author)
 
