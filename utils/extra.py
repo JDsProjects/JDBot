@@ -16,6 +16,7 @@ import tabulate
 if TYPE_CHECKING:
     from ..main import JDBot
 
+
 async def google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
@@ -89,9 +90,9 @@ async def post(bot: JDBot, code: str) -> str:
     }
 
     async with await bot.session.post(
-        "https://api.senarc.online/paste", 
-        json=paste_body, 
-        headers = {"accept": "application/json", "Content-Type": "application/json"}
+        "https://api.senarc.online/paste",
+        json=paste_body,
+        headers={"accept": "application/json", "Content-Type": "application/json"},
     ) as response:
         json: dict = await response.json()
         return json.get("url")
@@ -99,15 +100,14 @@ async def post(bot: JDBot, code: str) -> str:
 
 async def get_paste(bot: JDBot, paste_id: str):
     async with await bot.session.get(
-        f"https://api.senarc.online/bin/{paste_id}", 
-        headers={"accept": "application/json", "headless": "true"}
+        f"https://api.senarc.online/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
     ) as response:
         json: dict = await response.json()
         return json.get("content")
 
 
 def groupby(iterable: list[Any], count: int) -> list[list[Any]]:
-    return [iterable[i:i + count] for i in range(0, len(iterable), count)]
+    return [iterable[i : i + count] for i in range(0, len(iterable), count)]
 
 
 def npm_create_embed(data: dict) -> discord.Embed:
