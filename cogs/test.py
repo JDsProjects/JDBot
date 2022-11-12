@@ -199,7 +199,7 @@ class Test(commands.Cog):
 
         images = images[:10]
         files = [asyncio.to_thread(self.test, await image.read()) for image in images]
-        done, pending = await asyncio.wait(files)
+        done, _ = await asyncio.wait(files)
 
         files = [discord.File(file.value, "image.png") for file in done]
 
