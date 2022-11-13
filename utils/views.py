@@ -764,6 +764,9 @@ class dm_or_ephemeral(discord.ui.View):
 
         return True
 
+    async def on_timeout(self):
+        await self.message.edit(content="You took too long to respond, so I cancelled the paginator", view=None)
+
 
 class TweetHandler(discord.ui.View):
     def __init__(self, ctx, menu=None, channel: discord.DMChannel = None, **kwargs):
@@ -811,6 +814,9 @@ class TweetHandler(discord.ui.View):
             )
 
         return True
+
+    async def on_timeout(self):
+        await self.message.edit(content="You took too long to respond, so I cancelled the paginator", view=None)
 
 
 class UserInfoButton(discord.ui.Button):
