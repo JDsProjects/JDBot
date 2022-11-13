@@ -14,14 +14,14 @@ sr-api = {git = "https://github.com/iDutchy/sr_api"}
 emoji = "^1.2.0"
 "alexflipnote.py" = "^2.4.0"
 asyncpraw = "^7.3.1"
-tweepy = {git = "https://github.com/tweepy/tweepy.git", extras=["async"]}
+tweepy = {git = "https://github.com/tweepy/tweepy.git", extras=["async"], branch="master"}
 topggpy = "^1.1.0"
 CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 async-cleverbot = {git = "https://github.com/crrapi/async-cleverbot"}
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
 better-profanity = "^0.7.0"
-"discord.py" = {git = "https://github.com/Rapptz/discord.py.git", extras = ["voice", "speed"]}
+"discord.py" = {git = "https://github.com/Rapptz/discord.py.git", extras = ["voice", "speed"], branch="master"}
 async-tio = "^1.1.0"
 jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi", branch = "main"}
 tabulate = "^0.8.9"
