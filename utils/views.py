@@ -867,8 +867,8 @@ class UserInfoButton(discord.ui.Button):
 
 
 def profile_converter(
-    _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile"],
-    _enum: typing.Union[discord.Status, discord.UserFlags, str],
+    _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile", "activity"],
+    _enum: typing.Union[discord.Status, discord.UserFlags, discord.BaseActivity, str],
 ):
 
     badges_emoji = {
@@ -920,7 +920,15 @@ def profile_converter(
         },
     }
 
-    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis}
+    activity_emojis = {
+        discord.Activity: "🏃",
+        discord.Streaming: "<:streaming:917747437920219156>",
+        discord.Spotify: "<:spotify:1041484515748618343>",
+        discord.Game: "🎮",
+        discord.CustomActivity: "🎨",
+    }
+
+    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis, "activity": activity_emojis}
     is_devices = False
     if _type in ("mobile", "desktop", "web"):
         is_devices = True
@@ -961,13 +969,8 @@ def badge_collect(user):
 
 def activity_collect(user):
 
-    {
-        discord.Activity: "🏃",
-        discord.Streaming: "<:streaming:917747437920219156>",
-        discord.Spotify: "<:spotify:1041484515748618343>",
-        discord.Game: "🎮",
-        discord.CustomActivity: "🎨",
-    }
+    activies = [profile_converter("activies", activity) for activity in user.activites()] if user.activies else []
+    return activies
 
 
 class UserInfoSuperSelects(discord.ui.Select):
@@ -1049,6 +1052,10 @@ class UserInfoSuperSelects(discord.ui.Select):
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
         )
 
+        join_activities = (
+            "\n | ".join(f"**{name}**" for name in activities) if activities else "**Activity**: \nUnknown"
+        )
+
         if choice == "basic":
             embed.add_field(
                 name="User Info: ",
@@ -1085,7 +1092,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             embed.add_field(name=f"{join_statuses}", value="\u2800", inline=False)
 
         if choice == "activities":
-            embed.add_field(name="", value="\u2800", inline=False)
+            embed.add_field(name="f{join_activities}", value="\u2800", inline=False)
 
         if choice == "guildinfo":
             embed.add_field(
