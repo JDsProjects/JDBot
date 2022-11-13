@@ -959,6 +959,17 @@ def badge_collect(user):
     return badges
 
 
+def activity_collect(user):
+
+    {
+        discord.Activity: "🏃",
+        discord.Streaming: "<:streaming:917747437920219156>",
+        discord.Spotify: "<:spotify:1041484515748618343>",
+        discord.Game: "🎮",
+        discord.CustomActivity: "🎨",
+    }
+
+
 class UserInfoSuperSelects(discord.ui.Select):
     def __init__(self, ctx, **kwargs):
         self.ctx = ctx
@@ -977,6 +988,9 @@ class UserInfoSuperSelects(discord.ui.Select):
             ),
             discord.SelectOption(
                 label="status", description="Shows user's current status.", emoji="🖼️", value="status"
+            ),
+            discord.SelectOption(
+                label="Activies", description="Shows user's current Activies.", emoji="🏃", value="activities"
             ),
             discord.SelectOption(
                 label="Guild Info",
@@ -1009,6 +1023,7 @@ class UserInfoSuperSelects(discord.ui.Select):
         embed.set_image(url=user.display_avatar.url)
 
         statuses = []
+        activities = []
 
         if isinstance(user, discord.Member):
             nickname = user.nick
@@ -1016,6 +1031,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             highest_role = user.top_role
 
             statuses = status_collect(user)
+            activities = activity_collect(user)
 
         else:
 
@@ -1027,6 +1043,7 @@ class UserInfoSuperSelects(discord.ui.Select):
 
             if member:
                 statuses = status_collect(member)
+                activities = activity_collect(user)
 
         join_statuses = (
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
@@ -1066,6 +1083,9 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         if choice == "status":
             embed.add_field(name=f"{join_statuses}", value="\u2800", inline=False)
+
+        if choice == "activities":
+            embed.add_field(name="", value="\u2800", inline=False)
 
         if choice == "guildinfo":
             embed.add_field(
