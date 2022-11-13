@@ -969,8 +969,8 @@ def badge_collect(user):
 
 def activity_collect(user):
 
-    activies = [profile_converter("activies", activity) for activity in user.activites()] if user.activies else []
-    return activies
+    activities = [profile_converter("activities", activity) for activity in user.activities] if user.activities else []
+    return activities
 
 
 class UserInfoSuperSelects(discord.ui.Select):
