@@ -1046,7 +1046,7 @@ class UserInfoSuperSelects(discord.ui.Select):
 
             if member:
                 statuses = status_collect(member)
-                activities = activity_collect(user)
+                activities = activity_collect(member)
 
         join_statuses = (
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
