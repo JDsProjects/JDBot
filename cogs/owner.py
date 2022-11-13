@@ -174,10 +174,11 @@ class Owner(commands.Cog):
         user = user or ctx.author
         pag = commands.Paginator(prefix="", suffix="")
 
-        guilds = user.mutual_guilds
-
         if isinstance(user, discord.ClientUser):
             guilds = self.bot.guilds
+
+        else:
+            guilds = user.mutual_guilds
 
         for g in guilds:
             pag.add_line(f"{g}")
