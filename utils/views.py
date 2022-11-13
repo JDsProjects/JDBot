@@ -2181,7 +2181,7 @@ class CalcButton(discord.ui.Button):
     def __init__(
         self, label: str, row: int, execution_function=default_execution_function, style=discord.ButtonStyle.blurple
     ):
-        super().__init__(label=label, row=row, style=style)
+        super().__init__(label=f"{label}", row=row, style=style)
         self.__func = execution_function
 
     async def callback(self, interaction: discord.Interaction):
