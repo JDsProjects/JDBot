@@ -1092,7 +1092,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             embed.add_field(name=f"{join_statuses}", value="\u2800", inline=False)
 
         if choice == "activities":
-            embed.add_field(name="f{join_activities}", value="\u2800", inline=False)
+            embed.add_field(name=f"{join_activities}", value="\u2800", inline=False)
 
         if choice == "guildinfo":
             embed.add_field(
