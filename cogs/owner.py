@@ -174,7 +174,12 @@ class Owner(commands.Cog):
         user = user or ctx.author
         pag = commands.Paginator(prefix="", suffix="")
 
-        for g in user.mutual_guilds:
+        guilds = user.mutual_guilds
+
+        if isinstance(user, discord.ClientUser):
+            guilds = self.bot.guilds
+
+        for g in guilds:
             pag.add_line(f"{g}")
 
         pages = pag.pages or ["No shared servers"]

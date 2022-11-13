@@ -690,6 +690,10 @@ def guild_join(guilds):
 
 
 def grab_mutualguilds(ctx, user):
+
+    if isinstance(user, discord.ClientUser):
+        return ctx.author.mutual_guilds
+
     mutual_guilds = set(ctx.author.mutual_guilds)
     mutual_guilds2 = set(user.mutual_guilds)
 
