@@ -993,7 +993,7 @@ class UserInfoSuperSelects(discord.ui.Select):
                 label="status", description="Shows user's current status.", emoji="🖼️", value="status"
             ),
             discord.SelectOption(
-                label="Activies", description="Shows user's current Activies.", emoji="🏃", value="activities"
+                label="Activities", description="Shows user's current Activities.", emoji="🏃", value="activities"
             ),
             discord.SelectOption(
                 label="Guild Info",
