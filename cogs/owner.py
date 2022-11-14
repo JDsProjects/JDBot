@@ -226,6 +226,9 @@ class Owner(commands.Cog):
 
         menu = utils.SusUsersEmbed(sus_users, ctx=ctx, delete_after=True)
 
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
+
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
         await ctx.send("Pick the way you want sus_users to be sent to you", view=view)
@@ -234,6 +237,9 @@ class Owner(commands.Cog):
     async def testers(self, ctx):
 
         menu = utils.TestersEmbed(self.bot.testers, ctx=ctx, delete_after=True)
+
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
@@ -445,6 +451,9 @@ class Owner(commands.Cog):
 
         menu = utils.cdnViewer(self.bot.images, ctx=ctx, delete_after=True)
 
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
+
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
         await ctx.send("Pick the way you want the list of images to be sent to you", view=view)
@@ -623,6 +632,9 @@ class Owner(commands.Cog):
             return await ctx.send("None is blacklisted :D")
 
         menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx=ctx, delete_after=True)
+
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
