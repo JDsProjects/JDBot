@@ -868,7 +868,7 @@ class UserInfoButton(discord.ui.Button):
 
 def profile_converter(
     _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile", "activity"],
-    _enum: typing.Union[discord.Status, discord.UserFlags, discord.BaseActivity, str],
+    _enum: typing.Union[discord.Status, discord.UserFlags, discord.Activity, str],
 ):
 
     badges_emoji = {
