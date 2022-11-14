@@ -1058,7 +1058,7 @@ class UserInfoSuperSelects(discord.ui.Select):
         )
 
         join_activities = (
-             " \n| ".join(f"**{name}**" for name in activities) if activities else "**Activity**: \nUnknown"
+            " \n| ".join(f"**{name}**" for name in activities) if activities else "**Activity**: \nUnknown"
         )
 
         if choice == "basic":
