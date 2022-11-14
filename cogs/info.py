@@ -74,6 +74,8 @@ class Info(commands.Cog):
 
         view = utils.UserInfoSuper(ctx, user)
 
+        await ctx.send("Please Note this is being upgraded to a cooler version(it is a bit broken right now)")
+
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
             embed=embed,
