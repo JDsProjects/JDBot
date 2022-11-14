@@ -969,7 +969,7 @@ def badge_collect(user):
 
 def activity_collect(user):
 
-    activities = [profile_converter("activities", activity) for activity in user.activities] if user.activities else []
+    activities = [profile_converter("activity", activity) for activity in user.activities] if user.activities else []
     return activities
 
 
