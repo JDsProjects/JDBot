@@ -868,7 +868,7 @@ class UserInfoButton(discord.ui.Button):
 
 def profile_converter(
     _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile", "activity"],
-    _enum: typing.Union[discord.Status, discord.UserFlags, discord.Activity, str],
+    _enum: typing.Union[discord.Status, discord.UserFlags, discord.ActivityType, str],
 ):
 
     badges_emoji = {
@@ -921,11 +921,14 @@ def profile_converter(
     }
 
     activity_emojis = {
-        discord.Activity: "🏃",
-        discord.Streaming: "<:streaming:917747437920219156>",
+        discord.ActivityType.unknown: "❓",
+        discord.ActivityType.playing: "🎮",
+        discord.ActivityType.streaming: "<:streaming:917747437920219156>",
+        discord.ActivityType.listening: "🎧",
+        discord.ActivityType.watching: "📺",
         discord.Spotify: "<:spotify:1041484515748618343>",
-        discord.Game: "🎮",
-        discord.CustomActivity: "🎨",
+        discord.ActivityType.competing: "🏃",
+        discord.ActivityType.custom: "🎨",
     }
 
     dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis, "activity": activity_emojis}
@@ -969,7 +972,9 @@ def badge_collect(user):
 
 def activity_collect(user):
 
-    activities = [profile_converter("activity", activity) for activity in user.activities] if user.activities else []
+    activities = (
+        [profile_converter("activity", activity.type) for activity in user.activities] if user.activities else []
+    )
     return activities
 
 
