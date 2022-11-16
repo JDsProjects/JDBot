@@ -4,6 +4,7 @@ import functools
 import math
 import os
 import random
+import re
 import time
 import typing
 
@@ -1094,6 +1095,9 @@ class Extra(commands.Cog):
 
     @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
     async def setprefix(self, ctx, *, prefix: str = None):
+
+        #I have to add regex to prevent mentioning as a prefix lol(as this encouarges spam
+
         db = self.bot.db
         if ctx.guild:
             if not ctx.author.guild_permissions.administrator and not ctx.author.id in self.bot.owner_ids:
@@ -1115,6 +1119,12 @@ class Extra(commands.Cog):
 
         cache = self.bot.prefix_cache
         if prefix:
+
+            is_mentionable = re.search(r"<(@|#|@&)!?([0-9]+)>", prefix)
+
+            if is_mentionable:
+                return await ctx.send("We don't allow mentions as it leads to spam")
+            
             view = utils.BasicButtons(ctx)
             msg = await ctx.send("Are you sure you want to add prefix ?", view=view)
             await view.wait()
