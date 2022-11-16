@@ -1096,7 +1096,7 @@ class Extra(commands.Cog):
     @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
     async def setprefix(self, ctx, *, prefix: str = None):
 
-        #I have to add regex to prevent mentioning as a prefix lol(as this encouarges spam
+        # I have to add regex to prevent mentioning as a prefix lol(as this encouarges spam
 
         db = self.bot.db
         if ctx.guild:
@@ -1124,7 +1124,7 @@ class Extra(commands.Cog):
 
             if is_mentionable:
                 return await ctx.send("We don't allow mentions as it leads to spam")
-            
+
             view = utils.BasicButtons(ctx)
             msg = await ctx.send("Are you sure you want to add prefix ?", view=view)
             await view.wait()
