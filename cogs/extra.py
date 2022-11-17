@@ -1119,11 +1119,11 @@ class Extra(commands.Cog):
 
         cache = self.bot.prefix_cache
         if prefix:
-            is_mentionable = re.search(r'<(?:@|#|@&)!?(?P<user_id>[0-9]{15,23})>|@(?:here|everyone)', prefix)
+            is_mentionable = re.search(r"<(?:@|#|@&)!?(?P<user_id>[0-9]{15,23})>|@(?:here|everyone)", prefix)
 
             if is_mentionable:
                 return await ctx.send("We don't allow mentions as it leads to spam")
-            
+
             view = utils.BasicButtons(ctx)
             msg = await ctx.send("Are you sure you want to add prefix ?", view=view)
             await view.wait()
