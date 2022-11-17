@@ -5,7 +5,7 @@ import collections
 import random
 import traceback
 import typing
-from typing import TYPE_CHECKING, Any, Callable, Optional, Sequence, Union, Type
+from typing import TYPE_CHECKING, Any, Callable, Optional, Sequence, Union
 
 import discord
 import mathjspy
