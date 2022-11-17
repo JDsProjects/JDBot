@@ -181,14 +181,14 @@ class Bot(commands.Cog):
     )
     async def stats(self, ctx):
         embed = discord.Embed(title="Bot stats", color=random.randint(0, 16777215))
-        embed.add_field(name="Guild count", value=len(self.bot.guilds))
-        embed.add_field(name="User Count:", value=len(self.bot.users))
-        embed.add_field(name="True Command Count:", value=f"{len(list(self.bot.walk_commands()))}")
-        embed.add_field(name="Command Count:", value=f"{len(self.bot.commands)}")
+        embed.add_field(name="Guild count", value=f"{len(self.bot.guilds):,}")
+        embed.add_field(name="User Count:", value=f"{len(self.bot.users):,}")
+        embed.add_field(name="True Command Count:", value=f"{len(list(self.bot.walk_commands())):,}")
+        embed.add_field(name="Command Count:", value=f"{len(self.bot.commands):,}")
         embed.add_field(
-            name="Usable Command Count:", value=f"{len(await utils.filter_commands(ctx, self.bot.commands))}"
+            name="Usable Command Count:", value=f"{len(await utils.filter_commands(ctx, self.bot.commands)):,}"
         )
-        embed.add_field(name="Approximate Member Count:", value=f"{sum(g.member_count for g in self.bot.guilds)}")
+        embed.add_field(name="Approximate Member Count:", value=f"{sum(g.member_count for g in self.bot.guilds):,}")
         embed.set_footer(
             text=f"if you at all don't get what this means, you can ask our support team, if you do understand you can ask for clarification"
         )
