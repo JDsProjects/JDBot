@@ -941,7 +941,7 @@ def profile_converter(
     if not emoji and _type == "activity" and isinstance(_type, discord.Spotify):
         emoji = dict_to_use.get(_type.__class__)
     if not emoji:
-        raise ValueError(f"Could not find any emoji matching the input values:\n{_type=}\n{_enum}")
+        raise ValueError(f"Could not find any emoji matching the input values:\n{_type=}\n{_enum=}")
     return emoji
 
 
