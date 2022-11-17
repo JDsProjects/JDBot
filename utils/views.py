@@ -868,7 +868,9 @@ class UserInfoButton(discord.ui.Button):
 
 def profile_converter(
     _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile", "activity"],
-    _enum: typing.Union[discord.Status, discord.UserFlags, discord.Activity, discord.BaseActivity, discord.Spotify, str],
+    _enum: typing.Union[
+        discord.Status, discord.UserFlags, discord.Activity, discord.BaseActivity, discord.Spotify, str
+    ],
 ):
 
     badges_emoji = {
@@ -940,7 +942,7 @@ def profile_converter(
     if _type == "activity":
         _enum = _type.type if not isinstance(_type, discord.Spotify) else _type.__class__
 
-    emoji = dict_to_use.get(_enum)        
+    emoji = dict_to_use.get(_enum)
     if not emoji:
         raise ValueError(f"Could not find any emoji matching the input values:\n{_type=}\n{_enum=}")
     return emoji
@@ -975,9 +977,7 @@ def badge_collect(user):
 
 def activity_collect(user):
 
-    activities = (
-        [profile_converter("activity", activity) for activity in user.activities] if user.activities else []
-    )
+    activities = [profile_converter("activity", activity) for activity in user.activities] if user.activities else []
     return activities
 
 
