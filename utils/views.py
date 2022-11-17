@@ -940,7 +940,7 @@ def profile_converter(
 
     dict_to_use = dc.get(_type) if not is_devices else dc["devices"][_type]
     if _type == "activity":
-        _enum = _type.type if not isinstance(_type, discord.Spotify) else _type.__class__
+        _enum = _enum.type if not isinstance(_enum, discord.Spotify) else _enum.__class__
 
     emoji = dict_to_use.get(_enum)
     if not emoji:
