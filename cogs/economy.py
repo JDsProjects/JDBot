@@ -141,9 +141,7 @@ class Economy(commands.Cog):
                 embed=embed,
             )
 
-        await self.bot.support_webhook.send(
-            content=f"Backup of {ctx.author}'s Economy Data!", embed=embed
-        )
+        await self.bot.support_webhook.send(content=f"Backup of {ctx.author}'s Economy Data!", embed=embed)
 
         await self.bot.db.execute("DELETE FROM economy WHERE user_id = $1", ctx.author.id)
 
