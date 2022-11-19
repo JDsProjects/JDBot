@@ -134,7 +134,7 @@ class Bot(commands.Cog):
         info = await self.bot.application_info()
         owner_id = info.team.owner_id if info.team else info.owner.id
 
-        support_guild = self.bot.get_guild(995422814230302821)
+        support_guild = self.bot.get_guild(1019027330779332660)
 
         owner = await self.bot.try_member(support_guild, owner_id) or await self.bot.try_user(owner_id)
 
