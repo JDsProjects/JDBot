@@ -577,7 +577,7 @@ class Bot(commands.Cog):
         embed.set_footer(text=f"{ctx.author.id} \nSupport Mode: Channel")
         embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
 
-        await self.bot.get_channel(996864357885542481).send(
+        await self.bot.support_webhook.send(
             content="someone needs help! Remeber to delete when done with support.", embed=embed
         )
 
@@ -665,7 +665,7 @@ class Bot(commands.Cog):
             embed.set_image(url=f"{emoji.url}")
             embed.set_footer(text=f"ID: {emoji.id}")
 
-            await self.bot.get_channel(996864357885542481).send(embed=embed)
+            await self.bot.support_webhook.send(embed=embed)
 
     @commands.command(brief="gives you info if someone is a tester of the bot or not")
     async def is_tester(self, ctx, *, user: typing.Optional[discord.User] = None):

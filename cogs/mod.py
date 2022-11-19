@@ -42,7 +42,7 @@ class Moderation(commands.Cog):
             embed.set_footer(
                 text=f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}"
             )
-            await self.bot.get_channel(996864357885542481).send(embed=embed)
+            await self.bot.support_webhook.send(embed=embed)
 
             if ctx.author.dm_channel is None:
                 await ctx.author.create_dm()

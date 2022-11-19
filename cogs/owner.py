@@ -95,7 +95,7 @@ class Owner(commands.Cog):
                 user = ctx.author
                 await user.send(content="Message failed. sending", embed=embed_message)
                 embed_message.add_field(name="Sent To:", value=str(user))
-            await self.bot.get_channel(996864357885542481).send(embed=embed_message)
+            await self.bot.support_webhook.send(embed=embed_message)
 
     @commands.command()
     async def shutdown(self, ctx):
