@@ -32,7 +32,7 @@ class Test(commands.Cog):
         await ctx.send("WIP will make this soon..")
 
     async def cog_check(self, ctx):
-        return await ctx.bot.is_owner(ctx.author)
+        return ctx.author.id in self.bot.testers
 
     @commands.command(
         brief="a command to email you(work in progress)",
