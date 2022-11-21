@@ -92,7 +92,7 @@ class Test(commands.Cog):
                 user_auth=True,
                 expansions=["attachments.media_keys"],
                 tweet_fields=["possibly_sensitive", "attachments", "created_at"],
-                media_fields=["media_key", "type", "url", "preview_image_url"],
+                media_fields=["media_key", "type", "url", "preview_image_url", "variants"],
             )
             # not sure if I have everything i need but i need to see what data it can give me
             # tweet_fields may take entities in the future(entities are only needed for video urls and gifs)
@@ -112,18 +112,21 @@ class Test(commands.Cog):
 
         filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, wrapped_tweets))
 
-        menu = utils.TweetEmbed(filtered_tweets, ctx=ctx, delete_after=True)
-
-        menu.username = username
-        menu.profile_url = profile_url
-        menu.image = image
+        menu = utils.TweetsPaginator(
+            ctx=ctx,
+            delete_after=True,
+            tweets=filtered_tweets,  # type: ignore
+            author_icon=image,
+            author_url=profile_url,
+            author_name=username.data,
+        )
 
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
-        view = utils.TweetHandler(ctx, menu, ctx.author.dm_channel)
+        view = utils.TweetsDestinationHandler(ctx=ctx, pagintor=menu)
 
-        await ctx.send("Please pick a way tweets are sent to you\nMethods are below:", view=view)
+        view.message = await ctx.send("Please pick a way tweets are sent to you\nMethods are below:", view=view)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
