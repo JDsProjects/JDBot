@@ -114,6 +114,7 @@ class Test(commands.Cog):
 
         menu = utils.TweetsPaginator(
             ctx=ctx,
+            delete_after=True,
             tweets=filtered_tweets,  # type: ignore
             author_icon=image,
             author_url=profile_url,
