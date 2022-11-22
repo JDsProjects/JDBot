@@ -822,7 +822,6 @@ class TweetsPaginator(Paginator):
         async def callback(self, interaction: Interaction) -> None:
             pag = Paginator(
                 ctx=self.view.ctx,
-                interaction=interaction,
                 pages=self.medias,  # type: ignore
                 delete_after=self.view._should_delete_after,
                 always_show_stop_button=True,
