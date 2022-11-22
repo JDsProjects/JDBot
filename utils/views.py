@@ -815,7 +815,7 @@ class TweetsPaginator(Paginator):
         view: "TweetsPaginator"
 
         def __init__(self) -> None:
-            super().__init__(label="Show mages")
+            super().__init__(label="Show Images")
             self.position: int = 4
             self.medias: list[Media] = []
 
