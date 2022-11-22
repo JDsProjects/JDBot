@@ -18,9 +18,10 @@ from discord.ui import Button, Modal, TextInput, View
 from discord.utils import MISSING, maybe_coroutine
 
 if TYPE_CHECKING:
-    from .tweet import TweepyTweet
     from tweepy import Media
+
     from .emoji import CustomEmoji
+    from .tweet import TweepyTweet
 
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 

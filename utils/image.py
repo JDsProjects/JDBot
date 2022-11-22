@@ -2,7 +2,7 @@ import textwrap
 from io import BytesIO
 
 import discord
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 35)
 # should be able to place it here
@@ -39,6 +39,19 @@ def gadget(text) -> BytesIO:
             draw.text((5, 5), text, font=font, fill="black")
 
             canv.save(f, "PNG")
+
+    f.seek(0)
+    return f
+
+
+def invert(image) -> BytesIO:
+
+    wrapped_image = BytesIO(image)
+    f = BytesIO()
+    with Image.open(wrapped_image) as image:
+        image = image.convert("RGB")
+        new_image = ImageOps.invert(image)
+        new_image.save(f, "PNG")
 
     f.seek(0)
     return f
