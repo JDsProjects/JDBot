@@ -7,7 +7,7 @@ from discord.ext import commands, tasks
 
 
 class DSLCount(commands.Cog):
-    "Speacil Manager for publishing guild count and user count."
+    "Special Manager for publishing guild count and user count."
 
     def __init__(self, bot):
         self.bot = bot
@@ -31,7 +31,6 @@ class DSLCount(commands.Cog):
             self.logger.exception("Failed to post server count\n{}: {}".format(type(e).__name__, e))
 
     async def cog_unload(self):
-
         self.update_stats.stop()
         await self.api.session.close()
         # let's see
