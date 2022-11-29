@@ -405,9 +405,9 @@ class DevTools(commands.Cog):
     ) -> None:
         """Looks up docs for a library with optionally a query."""
         if query is None or query == "No Results Found":
-            return await interaction.response.send_message(f"Alright Let's see {library}")
+            return await interaction.response.send_message(f"Alright Let's see \n{library}")
 
-        await interaction.response.send_message(f"Alright Let's see {library}{query}")
+        await interaction.response.send_message(f"Alright Let's see \n{library}{query}")
 
     @rtfm_slash.autocomplete("library")
     async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
@@ -432,7 +432,7 @@ class DevTools(commands.Cog):
             return [Choice(name="No results found", value="No Results Found")]
 
         to_slice_link = len(url)
-        all_choices: list[Choice] = [Choice(name=name, value=link[to_slice_link:]) for name, link in results]
+        all_choices: list[Choice] = [Choice(name=name, value=name) for name in results]
         startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
         if not current:
             return all_choices[:25]
