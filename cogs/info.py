@@ -412,7 +412,7 @@ class DevTools(commands.Cog):
     @rtfm_slash.autocomplete("library")
     async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
 
-        libraries = self.rtfm_dictionary
+        libraries = dict(self.rtfm_dictionary)
 
         all_choices: list[Choice] = [Choice(name=name, value=link) for name, link in libraries.items()]
         startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
