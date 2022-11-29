@@ -10,7 +10,6 @@ import typing
 
 import alexflipnote
 import asuna_api
-import async_cleverbot
 import asyncpraw
 import chardet
 import discord
@@ -40,7 +39,7 @@ class Extra(commands.Cog):
             username=os.getenv("reddit_username"),
         )
 
-        self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
+        #self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
         # self.sr_api = sr_api.Client(session=self.bot.session)
 
         pool = self.pool
@@ -572,6 +571,9 @@ class Extra(commands.Cog):
     async def cleverbot(self, ctx):
 
         view = utils.ChatBotView(ctx)
+
+        return await ctx.send("out of commission right now.")
+
         view.ask = self.cleverbot.ask
         # view.ask2 = self.sr_api.chatbot
         await ctx.reply(
