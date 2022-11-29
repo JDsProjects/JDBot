@@ -17,6 +17,7 @@ import async_tio
 import discord
 import emoji
 import github
+from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
@@ -396,6 +397,51 @@ class DevTools(commands.Cog):
         results = await self.rtfm_lookup(url=view.value, args=args)
 
         await self.rtfm_send(ctx, results)
+
+
+    @app_commands.command(description="looks up docs", name="rtfm")
+    async def rtfm_slash(self, interaction: discord.Interaction, library: str, query: typing.Optional[str] = None) -> None:
+        """Looks up docs for a library with optionally a query."""
+        if query is None or query == "No Results Found":
+            return await interaction.response.send_message(f"Alright Let's see {library}")
+
+        await interaction.response.send_message(f"Alright Let's see {library}{query}")
+
+    @rtfm.autocomplete("library")
+    async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
+        
+        libraries = self.rtfm_dictionary
+
+        all_choices: list[Choice] = [Choice(name=name, value=link) for name, link in libraries.items()]
+        startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
+        if not (current and startswith):
+            return all_choices[0:25]
+
+        return startswith
+
+    @rtfm.autocomplete("query")
+    async def rtfm_query_autocomplete(self, interaction: Interaction, current: str) -> list[Choice]:
+        url = interaction.namespace.library or list(self.rtfm_dictionary.values())[0]
+
+        
+        results = await utils.rtfm_lookup(url=current, args=current)
+
+        if not results:
+            return [Choice(name="No results found", value="No Results Found")]
+
+        to_slice_link = len(url)
+        all_choices: list[Choice] = [Choice(name=name, value=link[to_slice_link:]) for name, link in results]
+        startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
+        if not current:
+            return all_choices[:25]
+
+        return startswith[:25]
+
+    @rtfm.error
+    async def rtfm_error(self, interaction: Interaction, error) -> None:
+        await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
+        print(error)
+        print(interaction.command)
 
     def charinfo_converter(self, string):
         digit = f"{ord(string):x}"
