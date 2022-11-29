@@ -423,7 +423,7 @@ class DevTools(commands.Cog):
 
     @rtfm_slash.autocomplete("query")
     async def rtfm_query_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
-        url = interaction.namespace.library or list(self.rtfm_dictionary.values())[0]
+        url = interaction.namespace.library or list(dict(self.rtfm_dictionary).values())[0]
 
         unfiltered_results = dict(await utils.rtfm(self.bot, url))
         results = get_close_matches(current, list(unfiltered_results), n=10, cutoff=0.6)
