@@ -344,16 +344,6 @@ class DevTools(commands.Cog):
 
         else:
 
-            # local rtfm
-            # will need to be updated soon
-            # res = await self.bot.session.get(
-            # "https://repi.openrobot.xyz/search_docs",
-            # params={"query": args, "documentation": url},
-            # headers={"Authorization": os.environ["frostiweeb_api"]},
-            # )
-
-            # results = await res.json()
-
             unfiltered_results = dict(await utils.rtfm(self.bot, url))
 
             results = get_close_matches(args, list(unfiltered_results), n=10, cutoff=0.6)
