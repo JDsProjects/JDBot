@@ -409,7 +409,7 @@ class DevTools(commands.Cog):
 
         await interaction.response.send_message(f"Alright Let's see {library}{query}")
 
-    @rtfm.autocomplete("library")
+    @rtfm_slash.autocomplete("library")
     async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
 
         libraries = self.rtfm_dictionary
@@ -421,11 +421,12 @@ class DevTools(commands.Cog):
 
         return startswith
 
-    @rtfm.autocomplete("query")
+    @rtfm_slash.autocomplete("query")
     async def rtfm_query_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
         url = interaction.namespace.library or list(self.rtfm_dictionary.values())[0]
 
-        results = await utils.rtfm_lookup(url=current, args=current)
+        unfiltered_results = dict(await utils.rtfm(self.bot, url))
+        results = get_close_matches(current, list(unfiltered_results), n=10, cutoff=0.6)
 
         if not results:
             return [Choice(name="No results found", value="No Results Found")]
@@ -438,7 +439,7 @@ class DevTools(commands.Cog):
 
         return startswith[:25]
 
-    @rtfm.error
+    @rtfm_slash.error
     async def rtfm_error(self, interaction: discord.Interaction, error) -> None:
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(error)
