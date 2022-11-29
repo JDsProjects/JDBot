@@ -39,7 +39,7 @@ class Extra(commands.Cog):
             username=os.getenv("reddit_username"),
         )
 
-        #self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
+        # self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
         # self.sr_api = sr_api.Client(session=self.bot.session)
 
         pool = self.pool
