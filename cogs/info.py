@@ -407,7 +407,7 @@ class DevTools(commands.Cog):
         if query is None or query == "No Results Found":
             return await interaction.response.send_message(f"Alright Let's see \n{library}")
 
-        await interaction.response.send_message(f"Alright Let's see \n{library}{query}")
+        await interaction.response.send_message(f"Alright Let's see \n{query}")
 
     @rtfm_slash.autocomplete("library")
     async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
@@ -431,8 +431,10 @@ class DevTools(commands.Cog):
         if not results:
             return [Choice(name="No results found", value="No Results Found")]
 
+        results = [utils.RtfmObject(r, unfiltered_results[r]) for r in results]
+
         to_slice_link = len(url)
-        all_choices: list[Choice] = [Choice(name=name, value=name) for name in results]
+        all_choices: list[Choice] = [Choice(name=result.name, value=result.url) for result in results]
         startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
         if not current:
             return all_choices[:25]
