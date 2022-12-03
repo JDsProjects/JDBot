@@ -94,8 +94,6 @@ class Info(commands.Cog):
 
         #  new stuff soon
 
-        # new stuff soon
-
     @commands.command(brief="uploads your emojis into a Senarc Bin link")
     async def look_at(self, ctx):
         if isinstance(ctx.message.channel, discord.TextChannel):
