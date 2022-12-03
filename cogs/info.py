@@ -92,7 +92,7 @@ class Info(commands.Cog):
             user = user or interaction.user
             await interaction.response.send_message(f"Hello {user}!")
 
-            #new stuff soon
+            # new stuff soon
 
     @commands.command(brief="uploads your emojis into a Senarc Bin link")
     async def look_at(self, ctx):
