@@ -208,6 +208,8 @@ class Test(commands.Cog):
 
         await ctx.send(files=files)
 
+        # use a copy of this soon with my own invert version
+
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(self, ctx):
         await ctx.send("WIP")
