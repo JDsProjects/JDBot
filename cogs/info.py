@@ -84,6 +84,14 @@ class Info(commands.Cog):
             view=view,
         )
 
+        @app_commands.command(name="userinfo", description="Get info about a user")
+        async def userinfo_slash(
+            self, interaction: discord.Interaction, user: typing.Optional[typing.Union[discord.Member, discord.User]]
+        ):
+
+            user = user or interaction.user
+            await interaction.response.send_message(f"Hello {user}!")
+
     @commands.command(brief="uploads your emojis into a Senarc Bin link")
     async def look_at(self, ctx):
         if isinstance(ctx.message.channel, discord.TextChannel):
