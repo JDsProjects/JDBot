@@ -86,7 +86,7 @@ class Info(commands.Cog):
 
     @app_commands.command(description="Get info about a user", name="userinfo")
     async def userinfo_slash(
-        self, interaction: discord.Interaction, user: typing.Optional[typing.Union[discord.Member, discord.User]]
+        self, interaction: discord.Interaction, user: typing.Optional[typing.Union[discord.Member, discord.User]] = None
     ):
 
         user = user or interaction.user
