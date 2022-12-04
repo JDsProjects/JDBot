@@ -18,6 +18,8 @@ if TYPE_CHECKING:
 
 
 import datetime
+import functools
+import os
 import time
 import traceback
 
@@ -126,6 +128,11 @@ class Ticket(commands.Cog):
             await context.send(error)
             traceback.print_exc()
 
+    @functools.cached_property
+    def thread_webhook(self) -> discord.Webhook:
+        webhook_url = os.environ["thread_webhook"]
+        return discord.Webhook.from_url(webhook_url, session=self.bot.session)
+
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         if message.author.bot:
@@ -160,7 +167,8 @@ class Ticket(commands.Cog):
         elif not message.guild and message.author.id in self.ticket_cache:
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
-            await thread.send(f"`{message.author}:` {message.content}")
+
+            await self.thread_webhook.send(f"`{message.author}:` {message.content}", thread=thread)
 
 
 async def setup(bot: JDBot):
