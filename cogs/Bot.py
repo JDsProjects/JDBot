@@ -573,7 +573,7 @@ class Bot(commands.Cog):
         embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
 
         await self.bot.support_webhook.send(
-            content="someone needs help! Remeber to delete when done with support.", embed=embed
+            content="@168422909482762240> \nsomeone needs help! Remeber to delete when done with support.", embed=embed
         )
 
         await ctx.send("successfully sent to the support channel!")
