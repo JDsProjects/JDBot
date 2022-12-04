@@ -210,6 +210,42 @@ class Test(commands.Cog):
 
         # use a copy of this soon with my own invert version
 
+    @commands.command(brief="invert images")
+    async def invert3(
+        self,
+        ctx,
+        *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
+    ):
+
+        assets = list(assets)
+        attachments = ctx.message.attachments
+
+        if not attachments or not assets:
+
+            assets.append(ctx.author)
+
+        images = []
+
+        for attachment in attachments:
+            if attachment.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
+                images.append(attachment)
+
+        for asset in assets:
+            if isinstance(asset, discord.PartialEmoji):
+                images.append(asset)
+
+            if isinstance(asset, (discord.User, discord.Member)):
+                avatar = asset.display_avatar
+                images.append(avatar)
+
+        images = images[:10]
+        files = [asyncio.to_thread(utils.invert, await image.read()) for image in images]
+        done, _ = await asyncio.wait(files)
+
+        files = [file.result() for file in done]
+
+        await ctx.send(files=files)
+
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(self, ctx):
         await ctx.send("WIP")
