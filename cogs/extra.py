@@ -4,12 +4,12 @@ import functools
 import math
 import os
 import random
+import re
 import time
 import typing
 
 import alexflipnote
 import asuna_api
-import async_cleverbot
 import asyncpraw
 import chardet
 import discord
@@ -39,7 +39,7 @@ class Extra(commands.Cog):
             username=os.getenv("reddit_username"),
         )
 
-        self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
+        # self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
         # self.sr_api = sr_api.Client(session=self.bot.session)
 
         pool = self.pool
@@ -158,7 +158,7 @@ class Extra(commands.Cog):
 
     @commands.command(help="Gives advice from Senarc api.", aliases=["ad"])
     async def advice(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/advice")
+        r = await self.bot.session.get("https://api.senarc.online/misc/advice")
         res = await r.json()
         embed = discord.Embed(title="Here is some advice for you!", color=random.randint(0, 16777215))
         embed.add_field(name=f"{res['text']}", value="Hopefully this helped!")
@@ -170,7 +170,7 @@ class Extra(commands.Cog):
 
     @commands.command(help="gives random compliment")
     async def compliment(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/compliment")
+        r = await self.bot.session.get("https://api.senarc.online/misc/compliment")
         res = await r.json()
         embed = discord.Embed(title="Here is a compliment:", color=random.randint(0, 16777215))
         embed.add_field(name=f"{res['text']}", value="Hopefully this helped your day!")
@@ -179,7 +179,7 @@ class Extra(commands.Cog):
 
     @commands.command(help="gives an insult")
     async def insult(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/insult")
+        r = await self.bot.session.get("https://api.senarc.online/misc/insult")
         res = await r.json()
         embed = discord.Embed(title="Here is a insult:", color=random.randint(0, 16777215))
         embed.add_field(name=f"{res['text']}", value="Hopefully this Helped?")
@@ -188,7 +188,7 @@ class Extra(commands.Cog):
 
     @commands.command(help="gives response to slur")
     async def noslur(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/noslur")
+        r = await self.bot.session.get("https://api.senarc.online/misc/noslur")
         res = await r.json()
         embed = discord.Embed(title="Don't Swear", color=random.randint(0, 16777215))
         embed.add_field(name=f"{res['text']}", value="WHY MUST YOU SWEAR?")
@@ -197,7 +197,7 @@ class Extra(commands.Cog):
 
     @commands.command(help="gives random message", aliases=["rm"])
     async def random_message(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/randomMessage")
+        r = await self.bot.session.get("https://api.senarc.online/misc/randomMessage")
         res = await r.json()
         embed = discord.Embed(title="Random Message:", color=random.randint(0, 16777215))
         embed.add_field(name="Here:", value=res["text"])
@@ -428,6 +428,7 @@ class Extra(commands.Cog):
             "The save editor used: https://coderpatsy.bitbucket.io/cookies/v10466/editor.html \n Warning may be a bit cursed. (because of the grandmas having madness at this level.) \n To be Used with https://orteil.dashnet.org/cookieclicker/",
             file=discord.File(s, filename="cookie_save.txt"),
         )
+        # will be fixed soon
 
     @commands.command(brief="allows you to quote a user, without pings")
     async def quote(self, ctx, *, message=None):
@@ -570,6 +571,9 @@ class Extra(commands.Cog):
     async def cleverbot(self, ctx):
 
         view = utils.ChatBotView(ctx)
+
+        return await ctx.send("out of commission right now.")
+
         view.ask = self.cleverbot.ask
         # view.ask2 = self.sr_api.chatbot
         await ctx.reply(
@@ -1093,6 +1097,9 @@ class Extra(commands.Cog):
 
     @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
     async def setprefix(self, ctx, *, prefix: str = None):
+
+        # I have to add regex to prevent mentioning as a prefix lol(as this encouarges spam
+
         db = self.bot.db
         if ctx.guild:
             if not ctx.author.guild_permissions.administrator and not ctx.author.id in self.bot.owner_ids:
@@ -1114,6 +1121,11 @@ class Extra(commands.Cog):
 
         cache = self.bot.prefix_cache
         if prefix:
+            is_mentionable = re.search(r"<(?:@|#|@&)!?(?P<user_id>[0-9]{15,23})>|@(?:here|everyone)", prefix)
+
+            if is_mentionable:
+                return await ctx.send("We don't allow mentions as it leads to spam")
+
             view = utils.BasicButtons(ctx)
             msg = await ctx.send("Are you sure you want to add prefix ?", view=view)
             await view.wait()

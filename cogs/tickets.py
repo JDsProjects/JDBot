@@ -18,6 +18,8 @@ if TYPE_CHECKING:
 
 
 import datetime
+import functools
+import os
 import time
 import traceback
 
@@ -95,8 +97,8 @@ class Ticket(commands.Cog):
     @commands.dm_only()
     async def create_ticket(self, context: JDBotContext, *, starter_message: Optional[str] = None):
         if not self.main_channel:
-            self.main_channel = self.bot.get_channel(996930071359148162)
-            self.support_role = self.bot.get_guild(995422814230302821).get_role(855219483295875072)
+            self.main_channel = self.bot.get_channel(1042608798709334066)
+            self.support_role = self.bot.get_guild(1019027330779332660).get_role(1042608916233736192)
 
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket while a ticket is not responded.")
@@ -112,6 +114,8 @@ class Ticket(commands.Cog):
             starter_message = "Hello i need help, i Haven't provided a reason quite yet."
             # place holder for now will use modals later
 
+        # use webhook for later
+
         await thread_channel.send(f"`{context.author}:` {starter_message}")
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
         await ticket_channel.send("<@168422909482762240> New support ticket.")
@@ -126,14 +130,19 @@ class Ticket(commands.Cog):
             await context.send(error)
             traceback.print_exc()
 
+    @functools.cached_property
+    def thread_webhook(self) -> discord.Webhook:
+        webhook_url = os.environ["thread_webhook"]
+        return discord.Webhook.from_url(webhook_url, session=self.bot.session)
+
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
 
         if not self.main_channel:
-            self.main_channel = self.bot.get_channel(996930071359148162)
-            self.support_role = self.bot.get_guild(995422814230302821).get_role(996929816525811863)
+            self.main_channel = self.bot.get_channel(1042608798709334066)
+            self.support_role = self.bot.get_guild(1019027330779332660).get_role(1042608916233736192)
 
         context = await self.bot.get_context(message)
 
@@ -146,7 +155,7 @@ class Ticket(commands.Cog):
 
         # edit later idk
 
-        if message.guild and message.guild.id == 995422814230302821 and message.channel.id in self.ticket_cache:
+        if message.guild and message.guild.id == 1019027330779332660 and message.channel.id in self.ticket_cache:
 
             if self.support_role not in message.author.roles:
                 return await message.reply(
@@ -160,7 +169,8 @@ class Ticket(commands.Cog):
         elif not message.guild and message.author.id in self.ticket_cache:
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
-            await thread.send(f"`{message.author}:` {message.content}")
+
+            await self.thread_webhook.send(f"`{message.author}:` {message.content}", thread=thread)
 
 
 async def setup(bot: JDBot):

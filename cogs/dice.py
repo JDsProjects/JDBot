@@ -4,6 +4,7 @@ import typing
 from difflib import SequenceMatcher
 
 import discord
+from better_profanity import profanity
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 
@@ -131,11 +132,20 @@ class Dice(commands.Cog):
             "Move It, Grandpa",
         ]
 
+        text = random.choice(ramsay_responses)
+
+        if (
+            not isinstance(ctx.channel, discord.DMChannel)
+            and not ctx.channel.nsfw
+            or isinstance(ctx.channel, discord.DMChannel)
+        ):
+            text = profanity.censor(text, censor_char="#")
+
         if args is None:
-            await ctx.send(content=f"{ctx.author}, {random.choice(ramsay_responses)}")
+            await ctx.send(content=f"{ctx.author}, {text}")
 
         if args:
-            await ctx.send(random.choice(ramsay_responses))
+            await ctx.send(text)
 
     @commands.command(
         brief="a command meant to flip coins", help="commands to flip coins, etc.", aliases=["coinflip", "cf"]

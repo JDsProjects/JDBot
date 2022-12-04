@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import importlib
 import os
 import random
@@ -94,7 +95,7 @@ class Owner(commands.Cog):
                 user = ctx.author
                 await user.send(content="Message failed. sending", embed=embed_message)
                 embed_message.add_field(name="Sent To:", value=str(user))
-            await self.bot.get_channel(996864357885542481).send(embed=embed_message)
+            await self.bot.support_webhook.send(embed=embed_message)
 
     @commands.command()
     async def shutdown(self, ctx):
@@ -140,7 +141,7 @@ class Owner(commands.Cog):
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
-        menu = utils.ServersEmbed(pag.pages, ctx=ctx, disable_after=True)
+        menu = utils.ServersEmbed(pag.pages, ctx=ctx, delete_after=True)
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
@@ -173,7 +174,13 @@ class Owner(commands.Cog):
         user = user or ctx.author
         pag = commands.Paginator(prefix="", suffix="")
 
-        for g in user.mutual_guilds:
+        if isinstance(user, discord.ClientUser):
+            guilds = self.bot.guilds
+
+        else:
+            guilds = user.mutual_guilds
+
+        for g in guilds:
             pag.add_line(f"{g}")
 
         pages = pag.pages or ["No shared servers"]
@@ -181,7 +188,7 @@ class Owner(commands.Cog):
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
-        menu = utils.MutualGuildsEmbed(pages, ctx=ctx, disable_after=True)
+        menu = utils.MutualGuildsEmbed(pages, ctx=ctx, delete_after=True)
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
@@ -217,7 +224,10 @@ class Owner(commands.Cog):
     async def sus_users(self, ctx):
         sus_users = list(self.bot.sus_users)
 
-        menu = utils.SusUsersEmbed(sus_users, ctx=ctx, disable_after=True)
+        menu = utils.SusUsersEmbed(sus_users, ctx=ctx, delete_after=True)
+
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
@@ -226,7 +236,10 @@ class Owner(commands.Cog):
     @commands.command(brief="a command listed all the commands")
     async def testers(self, ctx):
 
-        menu = utils.TestersEmbed(self.bot.testers, ctx=ctx, disable_after=True)
+        menu = utils.TestersEmbed(self.bot.testers, ctx=ctx, delete_after=True)
+
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
@@ -279,7 +292,7 @@ class Owner(commands.Cog):
     async def aioinput_test(self, ctx, *, args=None):
         args = args or "Test"
 
-        result = await self.bot.loop.run_in_executor(None, input, (f"{args}:"))
+        result = await asyncio.to_thread(input, (f"{args}:"))
         await ctx.send(f"Result of the input was {result}")
 
     @commands.command(brief="a powerful owner tool to reload local files that aren't reloadable.")
@@ -416,16 +429,6 @@ class Owner(commands.Cog):
         if not args:
             return await ctx.send("you can't send nothing to twitter.")
 
-        consumer_key = os.getenv("tweet_key")
-        consumer_secret = os.getenv("tweet_secret")
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-        bearer_token = os.getenv("tweet_bearer")
-
         try:
 
             post = await self.bot.tweet_client.create_tweet(text=args, user_auth=True)
@@ -439,6 +442,23 @@ class Owner(commands.Cog):
             return await ctx.send("no id found :/")
 
         await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{twitter_id}")
+
+    @commands.command(brief="A command to view the cdn's images")
+    async def cdn_view(self, ctx):
+
+        if not self.bot.images:
+            return await ctx.send("None Found")
+
+        menu = utils.cdnViewer(self.bot.images, ctx=ctx, delete_after=True)
+
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
+
+        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+
+        await ctx.send("Pick the way you want the list of images to be sent to you", view=view)
+
+        # I don't have much information about this but I may just make a small menu with format_page for this
 
     @commands.command(
         brief="chunks a guild for the purpose of testing purpose(it's owner only to be used in testing guilds only)"
@@ -482,7 +502,7 @@ class Owner(commands.Cog):
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
-        menu = utils.ServersEmbed(pag.pages, ctx=ctx, disable_after=True)
+        menu = utils.ServersEmbed(pag.pages, ctx=ctx, delete_after=True)
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 
@@ -611,7 +631,10 @@ class Owner(commands.Cog):
         if not blacklisted_users:
             return await ctx.send("None is blacklisted :D")
 
-        menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx=ctx, disable_after=True)
+        menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx=ctx, delete_after=True)
+
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
 
         view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
 

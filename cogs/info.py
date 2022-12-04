@@ -17,6 +17,8 @@ import async_tio
 import discord
 import emoji
 import github
+from discord import app_commands
+from discord.app_commands import Choice
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
@@ -74,11 +76,23 @@ class Info(commands.Cog):
 
         view = utils.UserInfoSuper(ctx, user)
 
+        await ctx.send("Please Note this is being upgraded to a cooler version(it is a bit broken right now)")
+
         await ctx.send(
             "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
             embed=embed,
             view=view,
         )
+
+    @app_commands.command(description="Get info about a user", name="userinfo")
+    async def userinfo_slash(
+        self, interaction: discord.Interaction, user: typing.Optional[typing.Union[discord.Member, discord.User]] = None
+    ):
+
+        user = user or interaction.user
+        await interaction.response.send_message(f"Hello {user}!")
+
+        #  new stuff soon
 
     @commands.command(brief="uploads your emojis into a Senarc Bin link")
     async def look_at(self, ctx):
@@ -131,7 +145,7 @@ class Info(commands.Cog):
             )
 
             jdjg = await self.bot.try_user(168422909482762240)
-            await self.bot.get_channel(996864357885542481).send(
+            await self.bot.support_webhook.send(
                 f"{jdjg.mention}.\n{ctx.author} causes a ratelimit issue with {len(invites)} invites"
             )
 
@@ -212,14 +226,15 @@ class Info(commands.Cog):
         await ctx.send(f"Username : {userNearest} \nDisplay name : {user_nick} \nNickname: {nearest_server_nick}")
 
     @commands.command(help="gives info on default emoji and custom emojis", name="emoji")
-    async def emoji_info(self, ctx, *emojis: typing.Union[utils.EmojiConverter, str]):
-        if emojis:
-
-            menu = utils.EmojiInfoEmbed(emojis, ctx=ctx, delete_after=True)
-            await menu.send()
-
-        if not emojis:
-            await ctx.send("Looks like there was no emojis.")
+    async def emoji_info(
+        self,
+        ctx: commands.Context,
+        *,
+        emojis: typing.Annotated[utils.EmojiConverter.ConvertedEmojis, utils.EmojiConverter],
+    ):
+        print(emojis, emojis.all, emojis.valid_emojis, emojis.invalid_emojis)
+        menu = utils.EmojiInfoEmbed(emojis.all, ctx=ctx, delete_after=True)  # type: ignore
+        await menu.send()
 
     @commands.command(brief="gives info on emoji_id and emoji image.")
     async def emoji_id(
@@ -339,16 +354,6 @@ class DevTools(commands.Cog):
 
         else:
 
-            # local rtfm
-            # will need to be updated soon
-            # res = await self.bot.session.get(
-            # "https://repi.openrobot.xyz/search_docs",
-            # params={"query": args, "documentation": url},
-            # headers={"Authorization": os.environ["frostiweeb_api"]},
-            # )
-
-            # results = await res.json()
-
             unfiltered_results = dict(await utils.rtfm(self.bot, url))
 
             results = get_close_matches(args, list(unfiltered_results), n=10, cutoff=0.6)
@@ -393,6 +398,54 @@ class DevTools(commands.Cog):
         results = await self.rtfm_lookup(url=view.value, args=args)
 
         await self.rtfm_send(ctx, results)
+
+    @app_commands.command(description="looks up docs", name="rtfm")
+    async def rtfm_slash(
+        self, interaction: discord.Interaction, library: str, query: typing.Optional[str] = None
+    ) -> None:
+        """Looks up docs for a library with optionally a query."""
+        if query is None or query == "No Results Found":
+            return await interaction.response.send_message(f"Alright Let's see \n{library}")
+
+        await interaction.response.send_message(f"Alright Let's see \n{query}")
+
+    @rtfm_slash.autocomplete("library")
+    async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
+
+        libraries = dict(self.rtfm_dictionary)
+
+        all_choices: list[Choice] = [Choice(name=name, value=link) for name, link in libraries.items()]
+        startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
+        if not (current and startswith):
+            return all_choices[0:25]
+
+        return startswith
+
+    @rtfm_slash.autocomplete("query")
+    async def rtfm_query_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
+        url = interaction.namespace.library or list(dict(self.rtfm_dictionary).values())[0]
+
+        unfiltered_results = dict(await utils.rtfm(self.bot, url))
+        results = get_close_matches(current, list(unfiltered_results), n=10, cutoff=0.6)
+
+        if not results:
+            return [Choice(name="No results found", value="No Results Found")]
+
+        results = [utils.RtfmObject(r, unfiltered_results[r]) for r in results]
+
+        to_slice_link = len(url)
+        all_choices: list[Choice] = [Choice(name=result.name, value=result.url) for result in results]
+        startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
+        if not current:
+            return all_choices[:25]
+
+        return startswith[:25]
+
+    @rtfm_slash.error
+    async def rtfm_error(self, interaction: discord.Interaction, error) -> None:
+        await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
+        print(error)
+        print(interaction.command)
 
     def charinfo_converter(self, string):
         digit = f"{ord(string):x}"
@@ -446,9 +499,8 @@ class DevTools(commands.Cog):
         if modal.value2 is True:
             await message.edit(content="Speacil Formatting at 120 lines it is.")
 
-        code_conversion = functools.partial(utils.formatter, code.content, bool(modal.value2))
         try:
-            code = await self.bot.loop.run_in_executor(None, code_conversion)
+            code = await asyncio.to_thread(utils.formatter, code.content, bool(modal.value2))
 
         except Exception as e:
             return await message.edit(content=f"Error Ocurred with {e}")

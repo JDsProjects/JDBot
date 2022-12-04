@@ -18,6 +18,11 @@ from discord.ui import Button, Modal, TextInput, View
 from discord.utils import MISSING, maybe_coroutine
 
 if TYPE_CHECKING:
+    from tweepy import Media
+
+    from .emoji import CustomEmoji
+    from .tweet import TweepyTweet
+
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
@@ -304,6 +309,7 @@ class Paginator(View):
         if interaction is not MISSING:
             self.interaction = interaction
 
+        kwargs["attachments"] = kwargs.pop("files", [])
         if self.interaction is not MISSING:
             respond = self.interaction.response.edit_message  # type: ignore
             if self.interaction.response.is_done():  # type: ignore
@@ -433,7 +439,7 @@ class Paginator(View):
                 self.message = maybe_message
                 return self.message
             else:
-                self.message = await self.interaction.original_message()  # type: ignore
+                self.message = await self.interaction.original_response()  # type: ignore
                 return self.message
 
         elif self.ctx is not MISSING:
@@ -447,9 +453,65 @@ class Paginator(View):
 # thank you so much Soheab for allowing me to use this paginator you made and putting in the work to do this :D (That's his github name so...)
 
 
+class EmojiInfoEmbed(Paginator):
+    async def format_page(self, item: typing.Union[str, CustomEmoji]) -> discord.Embed:
+        DEFAULT_COLOUR = random.randint(0, 16777215)
+
+        invalid_emoji_embed = discord.Embed(
+            title="Invalid Emoji",
+            description=f"The following input could not be resolved to a valid emoji: `{item}`",
+            colour=DEFAULT_COLOUR,
+        )
+        # bail early if the emoji is invalid
+        if isinstance(item, str):
+            return invalid_emoji_embed
+
+        emoji_type = "Custom Emoji" if not item.unicode else "Default Emoji"
+        emoji_url = item.url if not item.unicode else f"https://emojiterra.com/{item.name.lower().replace(' ', '-')}/"
+        field_name = "Emoji Info" if not item.unicode else "Unicode Info"
+
+        main_embed = discord.Embed(
+            title=f'Emoji Info for "{item.emoji}" ({emoji_type})',
+            colour=DEFAULT_COLOUR,
+        )
+        main_embed.set_image(url=item.url)
+
+        global_text = (f"**Name:** {item.name}", f"**ID:** {item.id}", f"**URL:** [click here]({emoji_url})")
+        if item.unicode:
+            # provide different styles because why not
+            # twitter == twemoji
+            styles = [
+                f"[{style}]({item.with_style(style).url})"
+                for style in ("twitter", "whatsapp", "apple", "google", "samsung")
+            ]
+            styles_text = "Styles: see how this emoji looks on different platforms: " + " | ".join(styles)
+            global_text += (f"**Code:** {item.unicode}", styles_text)
+
+        else:
+            global_text += (
+                f"**Created:** {item.created_at}",
+                f"**Animated:** {item.animated}",
+            )
+
+        main_embed.add_field(
+            name=field_name,
+            value="\n".join(global_text),
+        )
+
+        return main_embed
+
+
 class MutualGuildsEmbed(Paginator):
     def format_page(self, item):
         embed = discord.Embed(title="Mutual Servers:", description=item, color=random.randint(0, 16777215))
+
+        return embed
+
+
+class cdnViewer(Paginator):
+    def format_page(self, item):
+        embed = discord.Embed(title="CDN Viewer", description=f"Image ID: {item}", color=random.randint(0, 16777215))
+        embed.set_image(url=f"https://cdn.jdjgbot.com/image/{item}.gif?opengraph_pass=true")
 
         return embed
 
@@ -553,10 +615,12 @@ class InviteInfoEmbed(Paginator):
                 image = item.guild.icon.url if item.guild.icon else "https://i.imgur.com/3ZUrjUP.png"
                 guild = item.guild
                 guild_id = item.guild.id
+
             if item.guild is None:
                 guild = "Group Chat"
                 image = "https://i.imgur.com/pQS3jkI.png"
                 guild_id = "Unknown"
+
             embed = discord.Embed(title=f"Invite for {guild}:", color=random.randint(0, 16777215))
             embed.set_author(name="Discord Invite Details:", icon_url=(image))
             embed.add_field(name="Inviter:", value=f"{item.inviter}")
@@ -613,6 +677,10 @@ def guild_join(guilds):
 
 
 def grab_mutualguilds(ctx, user):
+
+    if isinstance(user, discord.ClientUser):
+        return ctx.author.mutual_guilds
+
     mutual_guilds = set(ctx.author.mutual_guilds)
     mutual_guilds2 = set(user.mutual_guilds)
 
@@ -635,45 +703,6 @@ class ScanGlobalEmbed(Paginator):
         return embed
 
 
-class EmojiInfoEmbed(Paginator):
-    async def format_page(self, item):
-        if isinstance(item, discord.PartialEmoji):
-            if item.is_unicode_emoji():
-                digit = f"{ord(str(item)):x}"
-                unicode = f"\\U{digit:>08}"
-                emoji_name = item.name.replace(":", "")
-                # emoji_url = await emoji_to_url(f"{item}", session = self.ctx.bot.session)
-                # wip
-                emoji_url = "https://i.imgur.com/3ZUrjUP.png"
-                embed = discord.Embed(
-                    title="Default Emote:",
-                    url=f"http://www.fileformat.info/info/unicode/char/{digit}",
-                    color=random.randint(0, 16777215),
-                )
-                embed.add_field(name="Name:", value=f"{emoji_name}")
-                embed.add_field(name="Unicode:", value=unicode)
-                embed.add_field(
-                    name="unicode url", value=f"[site](http://www.fileformat.info/info/unicode/char/{digit})"
-                )
-                embed.set_image(url=emoji_url)
-                embed.set_footer(text=f"click the title for more unicode data")
-                return embed
-
-            else:
-                embed = discord.Embed(title=f"Custom Emoji: **{item.name}**", color=random.randint(0, 16777215))
-                embed.set_image(url=item.url)
-                embed.set_footer(text=f"Emoji ID:{item.id}")
-                return embed
-
-        else:
-            embed = discord.Embed(
-                title="Failed grabbing emoji:",
-                description=f"Discord couldn't fetch the emoji with regex: {item}",
-                color=random.randint(0, 16777215),
-            )
-            return embed
-
-
 class TodoEmbed(Paginator):
     def format_page(self, item):
         embed = discord.Embed(
@@ -694,7 +723,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.channel = channel
         self.menu = menu
 
-    @discord.ui.button(label="Secret Message(Ephemeral)", style=discord.ButtonStyle.success, emoji="🕵️")
+    @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -702,7 +731,7 @@ class dm_or_ephemeral(discord.ui.View):
 
         await self.menu.send(interaction=interaction, ephemeral=True)
 
-    @discord.ui.button(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥")
+    @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -710,7 +739,7 @@ class dm_or_ephemeral(discord.ui.View):
 
         await self.menu.send(send_to=self.channel)
 
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
 
         self.clear_items()
@@ -725,6 +754,123 @@ class dm_or_ephemeral(discord.ui.View):
             )
 
         return True
+
+    async def on_timeout(self):
+        await self.message.edit(content="You took too long to respond, so I cancelled the paginator", view=None)
+
+
+class TweetsDestinationHandler(discord.ui.View):
+    message: discord.Message
+
+    def __init__(
+        self,
+        *,
+        ctx: Context,
+        pagintor: TweetsPaginator,
+    ):
+        super().__init__()
+        self.ctx: Context = ctx
+        self.pagintor: TweetsPaginator = pagintor
+
+    @discord.ui.button(label="Normal", style=discord.ButtonStyle.success, emoji="📄")
+    async def normal_message(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.pagintor.message = interaction.message  # type: ignore
+        first_page = self.pagintor.get_page(0)
+        kwargs = await self.pagintor.get_kwargs_from_page(first_page)
+        await self.pagintor._edit_message(interaction, **kwargs)
+
+    @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
+    async def ephemeral_message(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.edit_message(content="ephemerally sending Tweets", view=None)
+        await self.pagintor.send(interaction=interaction, ephemeral=True)
+
+    @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
+    async def dm_message(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.edit_message(content="Dming Tweets", view=None)
+        await self.pagintor.send(send_to=self.ctx.author)
+
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
+    async def cancel_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.edit_message(content="I will not send you the tweets", view=None)
+
+    async def interaction_check(self, interaction: discord.Interaction):
+        if self.ctx.author.id != interaction.user.id:
+            return await interaction.response.send_message(
+                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
+                ephemeral=True,
+            )
+
+        return True
+
+    async def on_timeout(self):
+        try:
+            await self.message.edit(content="You took too long to respond, so I cancelled the paginator", view=None)
+        except discord.NotFound:
+            pass
+
+
+class TweetsPaginator(Paginator):
+    class ShowImagesButton(Button):
+
+        view: "TweetsPaginator"
+
+        def __init__(self) -> None:
+            super().__init__(label="Show Images")
+            self.position: int = 4
+            self.medias: list[Media] = []
+
+        async def callback(self, interaction: Interaction) -> None:
+            pag = Paginator(
+                ctx=self.view.ctx,
+                pages=self.medias,  # type: ignore
+                delete_after=self.view._should_delete_after,
+                always_show_stop_button=True,
+            )
+            pag.format_page = self.view.media_page_formater  # type: ignore
+            await pag.send()
+
+    def __init__(
+        self,
+        *,
+        ctx: commands.Context,
+        tweets: TweepyTweet,
+        delete_after: bool = False,
+        author_name: str,
+        author_url: str,
+        author_icon: str,
+        **kwargs,
+    ):
+        self.media_button = self.ShowImagesButton()
+        super().__init__(ctx=ctx, pages=tweets, delete_after=delete_after, **kwargs)  # type: ignore
+        self.add_item(self.media_button)
+        self.author_name: str = author_name
+        self.author_url: str = author_url
+        self.author_icon: str = author_icon
+        self._update_buttons_state()
+
+    def media_page_formater(self, media: Media) -> Embed:
+        embed = discord.Embed(title=f"Images", description=f"url: {media.url}", color=0x1DA1F2)
+        embed.set_image(url=media.url)
+        return embed
+
+    def format_page(self, item: TweepyTweet) -> discord.Embed:
+        tweet_url = f"https://twitter.com/twitter/statuses/{item.id}"
+
+        embed = discord.Embed(
+            title=f"Tweet!", description=f"{item.text}", url=tweet_url, color=0x1DA1F2, timestamp=item.created_at
+        )
+        embed.set_author(name=self.author_name, url=self.author_url, icon_url=self.author_icon)
+        embed.set_footer(text=f"Requested by {self.ctx.author}\nJDJG does not own any of the content of the tweets")
+
+        embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
+
+        return embed
+
+    def _update_buttons_state(self) -> None:
+        current_page = self.get_page(self.current_page)
+        self.media_button.medias = [x for x in current_page.media if x.url]  # type: ignore
+        self.media_button.disabled = not self.media_button.medias  # type: ignore
+        super()._update_buttons_state()
 
 
 class UserInfoButton(discord.ui.Button):
@@ -742,7 +888,7 @@ class UserInfoButton(discord.ui.Button):
 
         pages = pag.pages or ["None"]
 
-        menu = MutualGuildsEmbed(pages, ctx=self.view.ctx, disable_after=True)
+        menu = MutualGuildsEmbed(pages, ctx=self.view.ctx, delete_after=True)
 
         for child in self.view.children:
             if isinstance(child, (discord.Button, discord.ui.Button)):
@@ -771,40 +917,46 @@ class UserInfoButton(discord.ui.Button):
 
 
 def profile_converter(
-    _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile"],
-    _enum: typing.Union[discord.Status, discord.UserFlags, str],
+    _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile", "activity"],
+    _enum: typing.Union[
+        discord.Status, discord.UserFlags, discord.Activity, discord.BaseActivity, discord.Spotify, str
+    ],
 ):
 
     badges_emoji = {
-        UserFlags.staff: "<:DiscordStaff:859400539221917698>",
-        UserFlags.partner: "<:partner:848402357863710762>",
-        UserFlags.hypesquad: "<:hypesquad:314068430854684672>",
-        UserFlags.bug_hunter: "<:bughunter:585765206769139723>",
-        UserFlags.hypesquad_bravery: "<:bravery:585763004218343426>",
-        UserFlags.hypesquad_brilliance: "<:brilliance:585763004495298575>",
-        UserFlags.hypesquad_balance: "<:balance:585763004574859273>",
-        UserFlags.early_supporter: "<:supporter:585763690868113455> ",
+        UserFlags.staff: "<:discord_staff:1040719569116999680>",
+        UserFlags.partner: "<:discord_partner:1040723650162212985>",
+        UserFlags.hypesquad: "<:hypesquad:1040720248158040154>",
+        UserFlags.bug_hunter: "<:bug_hunter:1040719548128702544>",
+        UserFlags.hypesquad_bravery: "<:bravery:917747437450457128>",
+        UserFlags.hypesquad_brilliance: "<:brilliance:917747437509177384>",
+        UserFlags.hypesquad_balance: "<:balance:917747437412704366>",
+        UserFlags.early_supporter: "<:early_supporter:1040720490676895846>",
+        UserFlags.team_user: "🤖",
         "system": "<:verifiedsystem1:848399959539843082><:verifiedsystem2:848399959241261088>",
-        UserFlags.bug_hunter_level_2: "<:goldbughunter:853274684337946648>",
+        UserFlags.bug_hunter_level_2: "<:bug_hunter_2:1040721850520571914>",
         UserFlags.verified_bot: "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
-        UserFlags.verified_bot_developer: "<:verifiedbotdev:853277205264859156>",
-        UserFlags.discord_certified_moderator: "<:certifiedmod:853274382339670046>",
+        UserFlags.verified_bot_developer: "<:early_developer:1040719588385624074>",
+        UserFlags.discord_certified_moderator: "<:certified_moderator:1040719606102380687>",
+        UserFlags.bot_http_interactions: "<:bot_http_interactions:1040746049821757522>",
+        UserFlags.spammer: "⚠️",
+        UserFlags.active_developer: "<:active_dev:1040717993895800853>",
         "bot": "<:bot:848395737138069514>",
     }
 
     status_emojis = {
-        discord.Status.online: "<:online:715050614379249744>",
-        discord.Status.dnd: "<:dnd:715050614429712394>",
-        discord.Status.idle: "<:idle:715050614291431475>",
-        discord.Status.offline: "<:offline:715050614366928906>",
+        discord.Status.online: "<:online:917747437882458122>",
+        discord.Status.dnd: "<:do_not_disturb:917747437756633088>",
+        discord.Status.idle: "<:away:917747437479821332>",
+        discord.Status.offline: "<:offline:917747437815349258>",
     }
 
     devices_emojis = {
         "mobile": {
-            discord.Status.online: "<:onlinemobile:715050614429712384>",
-            discord.Status.dnd: "<:dndmobile:715050614047899741>",
-            discord.Status.idle: "<:idlemobile:715050614278717500>",
-            discord.Status.offline: "<:mobile_offline:917752338532425739> ",
+            discord.Status.online: "<:mobile_online:917753163417813053>",
+            discord.Status.dnd: "<:mobile_dnd:917753135672459276>",
+            discord.Status.idle: "<:mobile_away:917753135672459275>",
+            discord.Status.offline: "<:mobile_offline:917752338532425739>",
         },
         "desktop": {
             discord.Status.online: "<:desktop_online:917755694852235265>",
@@ -820,15 +972,29 @@ def profile_converter(
         },
     }
 
-    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis}
+    activity_emojis = {
+        discord.ActivityType.unknown: "❓",
+        discord.ActivityType.playing: "🎮",
+        discord.ActivityType.streaming: "<:streaming:917747437920219156>",
+        discord.ActivityType.listening: "🎧",
+        discord.ActivityType.watching: "📺",
+        discord.Spotify: "<:spotify:1041484515748618343>",
+        discord.ActivityType.competing: "🏃",
+        discord.ActivityType.custom: "🎨",
+    }
+
+    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis, "activity": activity_emojis}
     is_devices = False
     if _type in ("mobile", "desktop", "web"):
         is_devices = True
 
     dict_to_use = dc.get(_type) if not is_devices else dc["devices"][_type]
+    if _type == "activity":
+        _enum = _enum.type if not isinstance(_enum, discord.Spotify) else _enum.__class__
+
     emoji = dict_to_use.get(_enum)
     if not emoji:
-        emoji = status_emojis[_enum]
+        raise ValueError(f"Could not find any emoji matching the input values:\n{_type=}\n{_enum=}")
     return emoji
 
 
@@ -859,6 +1025,12 @@ def badge_collect(user):
     return badges
 
 
+def activity_collect(user):
+
+    activities = [profile_converter("activity", activity) for activity in user.activities] if user.activities else []
+    return activities
+
+
 class UserInfoSuperSelects(discord.ui.Select):
     def __init__(self, ctx, **kwargs):
         self.ctx = ctx
@@ -877,6 +1049,9 @@ class UserInfoSuperSelects(discord.ui.Select):
             ),
             discord.SelectOption(
                 label="status", description="Shows user's current status.", emoji="🖼️", value="status"
+            ),
+            discord.SelectOption(
+                label="Activities", description="Shows user's current Activities.", emoji="🏃", value="activities"
             ),
             discord.SelectOption(
                 label="Guild Info",
@@ -909,6 +1084,7 @@ class UserInfoSuperSelects(discord.ui.Select):
         embed.set_image(url=user.display_avatar.url)
 
         statuses = []
+        activities = []
 
         if isinstance(user, discord.Member):
             nickname = user.nick
@@ -916,6 +1092,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             highest_role = user.top_role
 
             statuses = status_collect(user)
+            activities = activity_collect(user)
 
         else:
 
@@ -927,9 +1104,14 @@ class UserInfoSuperSelects(discord.ui.Select):
 
             if member:
                 statuses = status_collect(member)
+                activities = activity_collect(member)
 
         join_statuses = (
             " \n| ".join(f"**{name}**: {value}" for name, value in statuses) if statuses else "**Status**: \nUnknown"
+        )
+
+        join_activities = (
+            " \n| ".join(f"**{name}**" for name in activities) if activities else "**Activity**: \nUnknown"
         )
 
         if choice == "basic":
@@ -966,6 +1148,9 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         if choice == "status":
             embed.add_field(name=f"{join_statuses}", value="\u2800", inline=False)
+
+        if choice == "activities":
+            embed.add_field(name=f"{join_activities}", value="\u2800", inline=False)
 
         if choice == "guildinfo":
             embed.add_field(
@@ -1008,11 +1193,9 @@ class UserInfoSuper(discord.ui.View):
         self.ctx = ctx
         self.user = user
 
-        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Secret Message(Ephemeral)", "🕵️", custom_id="0"))
-        self.add_item(
-            UserInfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
-        )
-        self.add_item(UserInfoButton(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral", "🕵️", custom_id="0"))
+        self.add_item(UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1"))
+        self.add_item(UserInfoButton(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
         self.add_item((UserInfoSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -1181,11 +1364,9 @@ class OwnerInfoSuper(discord.ui.View):
         self.user = user
         self.support_guild = support_guild
 
-        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Secret Message(Ephemeral)", "🕵️", custom_id="0"))
-        self.add_item(
-            UserInfoButton(label="Secret Message(DM)", style=discord.ButtonStyle.success, emoji="📥", custom_id="1")
-        )
-        self.add_item(UserInfoButton(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+        self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral", "🕵️", custom_id="0"))
+        self.add_item(UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1"))
+        self.add_item(UserInfoButton(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
         self.add_item((OwnerSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -1306,6 +1487,8 @@ class GuildInfoSelects(discord.ui.Select):
                 name="Member Count:",
                 value=f"**Total** : {guild.member_count}\n**Users** : {len(humans)} \n**Bots** : {len(bots)} ",
             )
+
+            # {var:,} for comma handling soon
 
         if choice == "statuses":
 
@@ -1572,10 +1755,16 @@ class nitroButtons(discord.ui.View):
         await interaction.response.send_message(content="Oh no it was a fake", ephemeral=True)
         await asyncio.sleep(2)
 
-        await interaction.edit_original_response(content="Prepare to get rickrolled...(it's a good song anyway)")
+        message = await interaction.original_response()
+
+        # message = await interaction.followup.send(
+        # content="You closed the message, so I can't edit it.", ephemeral=True
+        # )
+
+        await message.edit(content="Prepare to get rickrolled...(it's a good song anyway)")
         await asyncio.sleep(2)
 
-        await interaction.edit_original_response(content="https://i.imgur.com/NQinKJB.gif")
+        await message.edit(content="https://i.imgur.com/NQinKJB.gif")
 
         button.disabled = True
         button.style = discord.ButtonStyle.secondary
@@ -2087,7 +2276,7 @@ class CalcButton(discord.ui.Button):
     def __init__(
         self, label: str, row: int, execution_function=default_execution_function, style=discord.ButtonStyle.blurple
     ):
-        super().__init__(label=label, row=row, style=style)
+        super().__init__(label=f"{label}", row=row, style=style)
         self.__func = execution_function
 
     async def callback(self, interaction: discord.Interaction):

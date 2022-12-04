@@ -389,7 +389,7 @@ class Image(commands.Cog):
 
     @commands.command(help="gives a random objection", aliases=["obj", "ob", "object"])
     async def objection(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/objection")
+        r = await self.bot.session.get("https://api.senarc.online/misc/objection")
         res = await r.json()
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{ctx.author} yelled OBJECTION!", icon_url=(ctx.author.display_avatar.url))
@@ -399,7 +399,7 @@ class Image(commands.Cog):
 
     @commands.command(help="gives the truth about opinions(may offend)", aliases=["opinion"])
     async def opinional(self, ctx):
-        r = await self.bot.session.get("https://api.senarc.org/misc/opinional")
+        r = await self.bot.session.get("https://api.senarc.online/misc/opinional")
         res = await r.json()
         embed = discord.Embed(title="Truth about opinions(may offend some people):", color=random.randint(0, 16777215))
         embed.set_image(url=res["url"])
@@ -478,8 +478,9 @@ class Image(commands.Cog):
         if ctx.message.attachments:
             for a in ctx.message.attachments:
                 try:
-                    convert_time = functools.partial(self.convert_svg, await a.read())
-                    file = await self.bot.loop.run_in_executor(None, convert_time)
+
+                    file = await asyncio.to_thread(self.convert_svg, await a.read())
+
                     await ctx.send(file=file)
 
                 except Exception as e:
@@ -487,8 +488,8 @@ class Image(commands.Cog):
 
         if code:
             try:
-                convert_time = functools.partial(self.convert_svg, code.content)
-                file = await self.bot.loop.run_in_executor(None, convert_time)
+
+                file = await asyncio.to_thread(self.convert_svg, code.content)
                 await ctx.send(file=file)
 
             except Exception as e:
@@ -499,6 +500,8 @@ class Image(commands.Cog):
 
     @commands.command()
     async def call_text(self, ctx, *, args=None):
+
+        args = args or "Test"
 
         if len(args) > 500:
             return await ctx.send("Please try again with shorter text.")
@@ -536,7 +539,7 @@ class Image(commands.Cog):
             url = (Member.display_avatar.with_format("png")).url
             embeds.append(await utils.jail_converter(url, ctx))
 
-        menu = utils.Paginator(embeds, ctx=ctx, disable_after=True)
+        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
         await menu.send()
 
     @commands.command(brief="inverts any valid image with jeyyapi")

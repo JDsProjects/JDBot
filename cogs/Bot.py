@@ -134,7 +134,7 @@ class Bot(commands.Cog):
         info = await self.bot.application_info()
         owner_id = info.team.owner_id if info.team else info.owner.id
 
-        support_guild = self.bot.get_guild(995422814230302821)
+        support_guild = self.bot.get_guild(1019027330779332660)
 
         owner = await self.bot.try_member(support_guild, owner_id) or await self.bot.try_user(owner_id)
 
@@ -181,14 +181,14 @@ class Bot(commands.Cog):
     )
     async def stats(self, ctx):
         embed = discord.Embed(title="Bot stats", color=random.randint(0, 16777215))
-        embed.add_field(name="Guild count", value=len(self.bot.guilds))
-        embed.add_field(name="User Count:", value=len(self.bot.users))
-        embed.add_field(name="True Command Count:", value=f"{len(list(self.bot.walk_commands()))}")
-        embed.add_field(name="Command Count:", value=f"{len(self.bot.commands)}")
+        embed.add_field(name="Guild count", value=f"{len(self.bot.guilds):,}")
+        embed.add_field(name="User Count:", value=f"{len(self.bot.users):,}")
+        embed.add_field(name="True Command Count:", value=f"{len(list(self.bot.walk_commands())):,}")
+        embed.add_field(name="Command Count:", value=f"{len(self.bot.commands):,}")
         embed.add_field(
-            name="Usable Command Count:", value=f"{len(await utils.filter_commands(ctx, self.bot.commands))}"
+            name="Usable Command Count:", value=f"{len(await utils.filter_commands(ctx, self.bot.commands)):,}"
         )
-        embed.add_field(name="Approximate Member Count:", value=f"{sum(g.member_count for g in self.bot.guilds)}")
+        embed.add_field(name="Approximate Member Count:", value=f"{sum(g.member_count for g in self.bot.guilds):,}")
         embed.set_footer(
             text=f"if you at all don't get what this means, you can ask our support team, if you do understand you can ask for clarification"
         )
@@ -577,7 +577,7 @@ class Bot(commands.Cog):
         embed.set_footer(text=f"{ctx.author.id} \nSupport Mode: Channel")
         embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
 
-        await self.bot.get_channel(996864357885542481).send(
+        await self.bot.support_webhook.send(
             content="someone needs help! Remeber to delete when done with support.", embed=embed
         )
 
@@ -665,7 +665,7 @@ class Bot(commands.Cog):
             embed.set_image(url=f"{emoji.url}")
             embed.set_footer(text=f"ID: {emoji.id}")
 
-            await self.bot.get_channel(996864357885542481).send(embed=embed)
+            await self.bot.support_webhook.send(embed=embed)
 
     @commands.command(brief="gives you info if someone is a tester of the bot or not")
     async def is_tester(self, ctx, *, user: typing.Optional[discord.User] = None):

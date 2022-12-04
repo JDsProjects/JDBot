@@ -1,3 +1,4 @@
+import asyncio
 import collections
 import difflib
 import itertools
@@ -83,58 +84,177 @@ class Test(commands.Cog):
         image = username.data.profile_image_url
 
         try:
-            await ctx.send("work in progress")
             # time to do things later
 
-            tweets = await self.bot.tweet_client.get_users_tweets(
+            response = await self.bot.tweet_client.get_users_tweets(
                 username_id,
                 max_results=amount,
                 user_auth=True,
                 expansions=["attachments.media_keys"],
-                tweet_fields=["possibly_sensitive", "attachments"],
-                media_fields=["media_key", "type", "url", "preview_image_url"],
+                tweet_fields=["possibly_sensitive", "attachments", "created_at"],
+                media_fields=["media_key", "type", "url", "preview_image_url", "variants"],
             )
             # not sure if I have everything i need but i need to see what data it can give me
+            # tweet_fields may take entities in the future(entities are only needed for video urls and gifs)
 
         except Exception as e:
             traceback.print_exc()
             return await ctx.send(f"Exception occured at {e}")
 
-        # print(tweets)
+        wrapped_response = utils.TweetWrapper(response)
 
-        tweet_list = tweets.data
+        wrapped_tweets = wrapped_response.tweets
 
-        if not tweet_list:
+        if not wrapped_tweets:
             return await ctx.send("Couldn't find any tweets.")
 
         # not sure why this can be None but it can be
 
-        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, tweet_list))
+        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, wrapped_tweets))
 
-        embeds = []
+        menu = utils.TweetsPaginator(
+            ctx=ctx,
+            delete_after=True,
+            tweets=filtered_tweets,  # type: ignore
+            author_icon=image,
+            author_url=profile_url,
+            author_name=username.data,
+        )
 
-        for tweet in filtered_tweets:
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
 
-            tweet_url = f"https://twitter.com/twitter/statuses/{tweet.id}"
+        view = utils.TweetsDestinationHandler(ctx=ctx, pagintor=menu)
 
-            embed = discord.Embed(title=f"Tweet!", description=f"{tweet.text}", url=tweet_url, color=0x1DA1F2)
-            embed.set_author(name=f"{username.data}", icon_url=image, url=profile_url)
-            embed.set_footer(text=f"Requested by {ctx.author}\nJDJG does not own any of the content of the tweets")
-
-            embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
-
-            # I don't know how to manage the twitter attachments, it may be nsfwish as well
-            # hopefully i have all i need to handle twitter's attachments
-            print(tweet.attachments)
-
-            embeds.append(embed)
-
-        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
-        await menu.send()
-
-        # speacil tool for pagination(with normal, empherall, and dm)
+        view.message = await ctx.send("Please pick a way tweets are sent to you\nMethods are below:", view=view)
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
+
+    @commands.command(brief="adds a text to Go Go Gadget or Wowzers Username")
+    async def gadget(self, ctx, *, text=None):
+
+        if not text:
+            return await ctx.send("You need to give text for me to process")
+
+        if profanity.contains_profanity(text):
+
+            response = f"Wowsers! \n{ctx.author} your gadget is really inapporiate"
+
+            if profanity.contains_profanity(response):
+                response = f"Wowzers! \nYour name is really inapporiate"
+
+        else:
+            response = f"Go Go Gadget {text}"
+
+        if len(response) > 140:
+            response = "Wowzers! \nYour name is too long"
+
+        # unknown on actual size limit, but 140 should work as a placeholder
+
+        embed = discord.Embed(title="Inspector Gadget is here!", color=13420741)
+        embed.set_image(url="attachment://gadget.png")
+        embed.set_footer(text=f"Requested by {ctx.author}")
+
+        # may need a better color that is a inspector gadget color
+
+        image = await asyncio.to_thread(utils.gadget, response)
+        file = discord.File(image, filename="gadget.png")
+        image.close()
+
+        await ctx.send(embed=embed, file=file)
+
+    def test(self, image):
+
+        import io
+
+        f = io.BytesIO(image)
+        f.seek(0)
+
+        return f
+
+    @commands.command(brief="checks attachment stuff")
+    async def attachment(
+        self,
+        ctx,
+        *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
+    ):
+
+        assets = list(assets)
+        attachments = ctx.message.attachments
+
+        if not attachments and not assets:
+
+            assets.append(ctx.author)
+
+        images = []
+
+        for attachment in attachments:
+            if attachment.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
+                images.append(attachment)
+
+        for asset in assets:
+            if isinstance(asset, discord.PartialEmoji):
+                images.append(asset)
+
+            if isinstance(asset, (discord.User, discord.Member)):
+                avatar = asset.display_avatar
+                images.append(avatar)
+
+        if not images:
+            images.append(ctx.author.display_avatar)
+
+        images = images[:10]
+        files = [asyncio.to_thread(self.test, await image.read()) for image in images]
+        done, _ = await asyncio.wait(files)
+
+        files = [discord.File(file.result(), "image.png") for file in done]
+
+        await ctx.send(files=files)
+
+        # use a copy of this soon with my own invert version
+
+    @commands.command(brief="invert images")
+    async def invert3(
+        self,
+        ctx,
+        *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
+    ):
+
+        assets = list(assets)
+        attachments = ctx.message.attachments
+
+        if not attachments and not assets:
+
+            assets.append(ctx.author)
+
+        images = []
+
+        for attachment in attachments:
+            if attachment.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
+                images.append(attachment)
+
+        for asset in assets:
+            if isinstance(asset, discord.PartialEmoji):
+                images.append(asset)
+
+            if isinstance(asset, (discord.User, discord.Member)):
+                avatar = asset.display_avatar
+                images.append(avatar)
+
+        if not images:
+            images.append(ctx.author.display_avatar)
+
+        images = images[:10]
+        files = [asyncio.to_thread(utils.invert, await image.read()) for image in images]
+        done, _ = await asyncio.wait(files)
+
+        files = [file.result() for file in done]
+
+        await ctx.send(files=files)
+
+    @commands.command(brief="gets an image to have sam laugh at")
+    async def laugh(self, ctx):
+        await ctx.send("WIP")
 
     @commands.command(brief="add emoji to your guild lol")
     async def emoji_add(self, ctx):
