@@ -469,7 +469,7 @@ class Bot(commands.Cog):
         embed.set_footer(text=f"User ID: {ctx.author.id}")
 
         await self.bot.support_webhook.send("@168422909482762240> Someone is trying to apply for testing", embed=embed)
-       
+
         await ctx.send(
             "the application went through to JDJG, please make your DMs open to JDJG so we can talk to you. Don't send it again."
         )
@@ -553,7 +553,9 @@ class Bot(commands.Cog):
 
         jdjg = await self.bot.try_user(168422909482762240)
 
-        await self.bot.support_webhook.send("@168422909482762240> \nsomeone needs help! Remeber to delete when done with support.", embed=embed)
+        await self.bot.support_webhook.send(
+            "@168422909482762240> \nsomeone needs help! Remeber to delete when done with support.", embed=embed
+        )
 
         await ctx.send(f"successfully sent to {jdjg}")
 
