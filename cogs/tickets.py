@@ -102,7 +102,7 @@ class Ticket(commands.Cog):
             "DELETE FROM TICKETS WHERE author_id = $1 AND remote_id = $2", context.author.id, remote.id
         )
 
-        await remote.edit(archived=True, reason = "Thread closed")
+        await remote.edit(archived=True, reason="Thread closed")
 
     @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
