@@ -170,7 +170,12 @@ class Ticket(commands.Cog):
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
 
-            await self.thread_webhook.send(f"`{message.author}:` {message.content}", thread=thread)
+            await self.thread_webhook.send(
+                message.content,
+                thread=thread,
+                username=str(message.author),
+                avatar_url=message.author.display_avatar.url,
+            )
 
 
 async def setup(bot: JDBot):
