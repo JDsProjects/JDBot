@@ -36,6 +36,7 @@ class Ticket(commands.Cog):
         self.ticket_cache: dict[int, TicketCacheData] = {}
         self.main_channel: discord.TextChannel = None  # filled in create_ticket
         self.support_role: discord.Role = None  # filled in create_ticket
+        self.support_guild: discord.Guild = None  # filled in create_ticket
 
     async def cog_load(self):
         pool = self.pool
@@ -77,15 +78,23 @@ class Ticket(commands.Cog):
                 return await context.send("You did not create any tickets.")
             remote = self.ticket_cache[context.author.id]["remote"]
             remote = self.bot.get_channel(remote)
-            await remote.send("The user closed the ticket.")
+
+            await self.thread_webhook.send("The user closed the ticket.", thread=remote, username="Ticket Manager")
 
         else:
             if not context.channel.id in self.ticket_cache:
-                return await context.send("This is not ticket channel.")
+                return await context.send("This is not a ticket channel.")
             cache = self.ticket_cache[context.channel.id]
             author = self.bot.get_user(cache["author"])
             remote = self.bot.get_channel(cache["remote"])
             await author.send("Support team has closed your ticket.")
+
+        try:
+            member = await remote.fetch_member(context.author.id)
+            await remote.remove_user(member)
+
+        except:
+            await context.send("Removing you from the ticket channel failed.")
 
         del self.ticket_cache[remote.id]
         del self.ticket_cache[context.author.id]
@@ -93,20 +102,24 @@ class Ticket(commands.Cog):
             "DELETE FROM TICKETS WHERE author_id = $1 AND remote_id = $2", context.author.id, remote.id
         )
 
+        await remote.edit(archived=True, reason = "Thread closed")
+
     @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
     async def create_ticket(self, context: JDBotContext, *, starter_message: Optional[str] = None):
         if not self.main_channel:
             self.main_channel = self.bot.get_channel(1042608798709334066)
             self.support_role = self.bot.get_guild(1019027330779332660).get_role(1042608916233736192)
+            self.support_guild = self.bot.get_guild(1019027330779332660)
 
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket while a ticket is not responded.")
         ticket_channel = self.main_channel
         thread_channel = await ticket_channel.create_thread(
             name=f"User {context.author} - {context.author.id}",
-            type=discord.ChannelType.public_thread,
+            type=discord.ChannelType.private_thread,
             reason="Support Request",
+            invitable=False,
         )
         await self.handle_ticket_db_side(context.author.id, thread_channel.id)
 
@@ -121,6 +134,16 @@ class Ticket(commands.Cog):
             avatar_url=context.author.display_avatar.url,
         )
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
+
+        guild = self.support_guild
+
+        member = guild.get_member(context.author.id)
+
+        if member:
+            await thread_channel.add_user(member)
+
+            await context.send(f"You have been added to {thread_channel.mention}")
+
         await self.thread_webhook.send("<@168422909482762240> New support ticket.")
 
     @create_ticket.error
@@ -146,6 +169,7 @@ class Ticket(commands.Cog):
         if not self.main_channel:
             self.main_channel = self.bot.get_channel(1042608798709334066)
             self.support_role = self.bot.get_guild(1019027330779332660).get_role(1042608916233736192)
+            self.support_guild = self.bot.get_guild(1019027330779332660)
 
         context = await self.bot.get_context(message)
 
@@ -160,14 +184,20 @@ class Ticket(commands.Cog):
 
         if message.guild and message.guild.id == 1019027330779332660 and message.channel.id in self.ticket_cache:
 
-            if self.support_role not in message.author.roles:
+            author = self.ticket_cache[message.channel.id]["author"]
+            author = self.bot.get_user(author)
+
+            if self.support_role not in message.author.roles and author != message.author:
                 return await message.reply(
                     "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't a support team member."
                 )
 
-            author = self.ticket_cache[message.channel.id]["author"]
-            author = self.bot.get_user(author)
+            if message.author == author:
+                return
+                # don't need to respond then
+
             await author.send(f"`{message.author}:` {message.content}")
+            # respond normally if they aren't in the thread.
 
         elif not message.guild and message.author.id in self.ticket_cache:
             thread = self.ticket_cache[message.author.id]["remote"]
