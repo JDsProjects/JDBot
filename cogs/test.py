@@ -201,7 +201,7 @@ class Test(commands.Cog):
                 images.append(avatar)
 
         if not images:
-            images.append(ctx.author.diplay_avatar)
+            images.append(ctx.author.display_avatar)
 
         images = images[:10]
         files = [asyncio.to_thread(self.test, await image.read()) for image in images]
@@ -240,6 +240,9 @@ class Test(commands.Cog):
             if isinstance(asset, (discord.User, discord.Member)):
                 avatar = asset.display_avatar
                 images.append(avatar)
+
+        if not images:
+            images.append(ctx.author.display_avatar)
 
         images = images[:10]
         files = [asyncio.to_thread(utils.invert, await image.read()) for image in images]
