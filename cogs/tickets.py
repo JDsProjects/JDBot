@@ -102,7 +102,7 @@ class Ticket(commands.Cog):
             "DELETE FROM TICKETS WHERE author_id = $1 AND remote_id = $2", context.author.id, remote.id
         )
 
-        await remote.edit(archived=True, reason = "Thread closed")
+        await remote.edit(archived=True, reason="Thread closed")
 
     @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
@@ -127,12 +127,15 @@ class Ticket(commands.Cog):
             starter_message = "Hello i need help, i Haven't provided a reason quite yet."
             # place holder for now will use modals later
 
-        await self.thread_webhook.send(
+        message = await self.thread_webhook.send(
             f"{starter_message}",
             thread=thread_channel,
             username=f"{context.author}",
             avatar_url=context.author.display_avatar.url,
         )
+
+        await message.pin(reason="Makes it easier to find the starter message.")
+
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
 
         guild = self.support_guild
