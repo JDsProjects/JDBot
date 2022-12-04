@@ -132,7 +132,10 @@ class Ticket(commands.Cog):
             thread=thread_channel,
             username=f"{context.author}",
             avatar_url=context.author.display_avatar.url,
+            wait=True,
         )
+
+        # a bit longer but should work well
 
         await message.pin(reason="Makes it easier to find the starter message.")
 
