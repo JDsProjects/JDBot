@@ -142,16 +142,13 @@ class Moderation(commands.Cog):
         await modal.wait()
 
         if modal.value:
-            jdjg = await self.bot.try_user(168422909482762240)
-            if jdjg.dm_channel is None:
-                await jdjg.create_dm()
 
             embed = discord.Embed(color=random.randint(0, 16777215))
-            embed.set_author(name=f"Report by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
+            embed.set_author(name=f"Report by {ctx.author}", icon_url=ctx.author.display_avatar.url)
             embed.add_field(name="Details:", value=modal.value)
             embed.add_field(name="User Reported:", value=f"{user}")
             embed.set_footer(text=f"Reporter's ID is {ctx.author.id}")
-            await jdjg.send(embed=embed)
+            await self.bot.support_webhook.send("<@168422909482762240> Report", embed=embed)
             await message.edit(content="report sent to JDJG", embed=embed)
 
         if modal.value is None:
