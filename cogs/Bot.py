@@ -438,7 +438,7 @@ class Bot(commands.Cog):
 
                     embed.set_footer(text=f"Guild: {ctx.guild} \nGuild ID: {ctx.guild.id}")
 
-                    await self.bot.support_webhook.send("@168422909482762240> Someone needs your help", embed=embed)
+                    await self.bot.support_webhook.send("<@168422909482762240> Someone needs your help", embed=embed)
 
             if isinstance(ctx.channel, discord.DMChannel):
                 await asyncio.sleep(1)
@@ -468,7 +468,7 @@ class Bot(commands.Cog):
         )
         embed.set_footer(text=f"User ID: {ctx.author.id}")
 
-        await self.bot.support_webhook.send("@168422909482762240> Someone is trying to apply for testing", embed=embed)
+        await self.bot.support_webhook.send("<@168422909482762240> Someone is trying to apply for testing", embed=embed)
 
         await ctx.send(
             "the application went through to JDJG, please make your DMs open to JDJG so we can talk to you. Don't send it again."
@@ -526,7 +526,7 @@ class Bot(commands.Cog):
         embed.set_footer(text=f"User ID: {ctx.author.id}")
         embed.set_image(url=ctx.author.display_avatar.url)
 
-        await self.bot.support_webhook.send(f"@168422909482762240> New suggestion from {ctx.author}", embed=embed)
+        await self.bot.support_webhook.send(f"<@168422909482762240> New suggestion from {ctx.author}", embed=embed)
 
         await ctx.send(
             "Sent suggestion to JDJG! You agree to being Dmed about this suggestion or somehow contacted(it makes some things easier lol)"
@@ -554,7 +554,7 @@ class Bot(commands.Cog):
         jdjg = await self.bot.try_user(168422909482762240)
 
         await self.bot.support_webhook.send(
-            "@168422909482762240> \nsomeone needs help! Remeber to delete when done with support.", embed=embed
+            "<@168422909482762240> \nsomeone needs help! Remeber to delete when done with support.", embed=embed
         )
 
         await ctx.send(f"successfully sent to {jdjg}")
@@ -573,7 +573,7 @@ class Bot(commands.Cog):
         embed.set_thumbnail(url="https://i.imgur.com/lcND9Z2.png")
 
         await self.bot.support_webhook.send(
-            content="@168422909482762240> \nsomeone needs help! Remeber to delete when done with support.", embed=embed
+            content="<@168422909482762240> \nsomeone needs help! Remeber to delete when done with support.", embed=embed
         )
 
         await ctx.send("successfully sent to the support channel!")
