@@ -171,7 +171,7 @@ class Ticket(commands.Cog):
             thread = self.bot.get_channel(thread)
 
             await self.thread_webhook.send(
-                message.content, thread=thread, username=str(message.author), avatar_url=str(message.author.avatar)
+                message.content, thread=thread, username=str(message.author), avatar_url=message.author.display_avatar
             )
 
 
