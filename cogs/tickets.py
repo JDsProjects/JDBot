@@ -114,11 +114,14 @@ class Ticket(commands.Cog):
             starter_message = "Hello i need help, i Haven't provided a reason quite yet."
             # place holder for now will use modals later
 
-        # use webhook for later
-
-        await thread_channel.send(f"`{context.author}:` {starter_message}")
+        await self.thread_webhook.send(
+            f"{starter_message}",
+            thread=thread_channel,
+            username=f"{context.author}",
+            avatar_url=context.author.display_avatar.url,
+        )
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
-        await ticket_channel.send("<@168422909482762240> New support ticket.")
+        await self.thread_webhook.send("<@168422909482762240> New support ticket.")
 
     @create_ticket.error
     async def create_ticker_error(self, context: JDBotContext, exception: Exception):
@@ -171,9 +174,9 @@ class Ticket(commands.Cog):
             thread = self.bot.get_channel(thread)
 
             await self.thread_webhook.send(
-                message.content,
+                f"{message.content}",
                 thread=thread,
-                username=str(message.author),
+                username=f"{message.author}",
                 avatar_url=message.author.display_avatar.url,
             )
 
