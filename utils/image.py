@@ -2,7 +2,7 @@ import textwrap
 from io import BytesIO
 
 import discord
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageSequence
 
 font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 35)
 # should be able to place it here
@@ -48,10 +48,25 @@ def invert(image) -> BytesIO:
 
     wrapped_image = BytesIO(image)
     f = BytesIO()
-    with Image.open(wrapped_image) as image:
-        image = image.convert("RGB")
-        new_image = ImageOps.invert(image)
-        new_image.save(f, "PNG")
 
-    f.seek(0)
-    return f
+    frames = []
+    durations = []
+
+    with Image.open(wrapped_image) as img:
+        for frame in ImageSequence.Iterator(img):
+            durations.append(frame.info.get("duration", 50))
+            frame = frame.convert("RGB")
+            inverted = ImageOps.invert(frame)
+            frames.append(inverted)
+
+    if len(frames) < 2:
+        frames[0].save(f, format="PNG")
+        f.seek(0)
+        file = discord.File(f, "inv.png")
+
+    else:
+        frames[0].save(f, format="GIF", append_images=frames[1:], save_all=True, duration=durations, disposal=2)
+        f.seek(0)
+        file = discord.File(f, "inv.gif")
+
+    return file
