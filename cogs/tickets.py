@@ -156,7 +156,7 @@ class Ticket(commands.Cog):
                         "Ticket Support is coming soon. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493"
                     )
 
-        # edit later idk
+        # edit later idk -> add check so that way if there's a thread channel and update the message.
 
         if message.guild and message.guild.id == 1019027330779332660 and message.channel.id in self.ticket_cache:
 
