@@ -53,10 +53,8 @@ Explanations for developers about the env values:
 Want A webhook github of this?
 You can just DM me on Discord, and I will hook up your webhook to my github, so you will get updates too :D
 
-If you Host your own instance, and call it your own orginal code.
-I will take it down.
-You Have Been Warned.
-Now, if you got permission from me first, then you are fine but It must be done in a public way, I have the right to revoke this.
+| :bangbang: | If you host your OWN instance of JDBot and proceed to call it your "own original code" I will take it down, you have been warned. If you have permission from me first, you're fine but it MUST be done in a PUBLIC way, I may revoke this at anytime.|
+| :--------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-Thank You,
+Thank you,
 JDJG
