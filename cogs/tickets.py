@@ -190,6 +190,9 @@ class Ticket(commands.Cog):
                             "run ``te*help Ticket`` to learn more. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493"
                         )
 
+                    else:
+                        await message.add_reaction("<:bigger_yes_emoji:917747437400125470>")
+
         if message.guild and message.guild.id == 1019027330779332660 and message.channel.id in self.ticket_cache:
 
             author = self.ticket_cache[message.channel.id]["author"]
@@ -210,8 +213,6 @@ class Ticket(commands.Cog):
         elif not message.guild and message.author.id in self.ticket_cache:
             thread = self.ticket_cache[message.author.id]["remote"]
             thread = self.bot.get_channel(thread)
-
-            await message.add_reaction("<:bigger_yes_emoji:917747437400125470>")
 
             await self.thread_webhook.send(
                 f"{message.content}",
