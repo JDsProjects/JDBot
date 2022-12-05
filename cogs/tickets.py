@@ -193,33 +193,39 @@ class Ticket(commands.Cog):
                     else:
                         await message.add_reaction("<:bigger_yes_emoji:917747437400125470>")
 
-        if message.guild and message.guild.id == 1019027330779332660 and message.channel.id in self.ticket_cache:
+        if context.prefix is None or self.bot.user.mentioned_in(message):
+            if message.author.id != self.bot.user.id and context.valid is False:
+                if (
+                    message.guild
+                    and message.guild.id == 1019027330779332660
+                    and message.channel.id in self.ticket_cache
+                ):
 
-            author = self.ticket_cache[message.channel.id]["author"]
-            author = self.bot.get_user(author)
+                    author = self.ticket_cache[message.channel.id]["author"]
+                    author = self.bot.get_user(author)
 
-            if self.support_role not in message.author.roles and author != message.author:
-                return await message.reply(
-                    "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't a support team member."
-                )
+                    if self.support_role not in message.author.roles and author != message.author:
+                        return await message.reply(
+                            "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't a support team member."
+                        )
 
-            if message.author == author:
-                return
-                # don't need to respond then
+                    if message.author == author:
+                        return
+                        # don't need to respond then
 
-            await author.send(f"`{message.author}:` {message.content}")
-            # respond normally if they aren't in the thread.
+                    await author.send(f"`{message.author}:` {message.content}")
+                    # respond normally if they aren't in the thread.
 
-        elif not message.guild and message.author.id in self.ticket_cache:
-            thread = self.ticket_cache[message.author.id]["remote"]
-            thread = self.bot.get_channel(thread)
+                elif not message.guild and message.author.id in self.ticket_cache:
+                    thread = self.ticket_cache[message.author.id]["remote"]
+                    thread = self.bot.get_channel(thread)
 
-            await self.thread_webhook.send(
-                f"{message.content}",
-                thread=thread,
-                username=f"{message.author}",
-                avatar_url=message.author.display_avatar.url,
-            )
+                    await self.thread_webhook.send(
+                        f"{message.content}",
+                        thread=thread,
+                        username=f"{message.author}",
+                        avatar_url=message.author.display_avatar.url,
+                    )
 
 
 async def setup(bot: JDBot):
