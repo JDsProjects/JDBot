@@ -87,7 +87,7 @@ class Ticket(commands.Cog):
             cache = self.ticket_cache[context.channel.id]
             author = self.bot.get_user(cache["author"])
             remote = self.bot.get_channel(cache["remote"])
-            await author.send("Support team has closed your ticket.")
+            await author.send("The Support Team has closed your ticket.")
 
         try:
             member = await remote.fetch_member(context.author.id)
@@ -104,7 +104,7 @@ class Ticket(commands.Cog):
 
         await remote.edit(archived=True, reason="Thread closed")
 
-    @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
+    @commands.command(brief="Creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
     async def create_ticket(self, context: JDBotContext, *, starter_message: Optional[str] = None):
         if not self.main_channel:
@@ -113,7 +113,7 @@ class Ticket(commands.Cog):
             self.support_guild = self.bot.get_guild(1019027330779332660)
 
         if context.author.id in self.ticket_cache:
-            return await context.send("You cannot create another ticket while a ticket is not responded.")
+            return await context.send("You cannot create another ticket whilst another ticket is unresponded to.")
         ticket_channel = self.main_channel
         thread_channel = await ticket_channel.create_thread(
             name=f"User {context.author} - {context.author.id}",
@@ -124,8 +124,8 @@ class Ticket(commands.Cog):
         await self.handle_ticket_db_side(context.author.id, thread_channel.id)
 
         if not starter_message:
-            starter_message = "Hello i need help, i Haven't provided a reason quite yet."
-            # place holder for now will use modals later
+            starter_message = "This user requested help, but without a reason."
+            # placeholder for now will use modals later
 
         message = await self.thread_webhook.send(
             f"{starter_message}",
