@@ -87,7 +87,7 @@ class Ticket(commands.Cog):
             cache = self.ticket_cache[context.channel.id]
             author = self.bot.get_user(cache["author"])
             remote = self.bot.get_channel(cache["remote"])
-            await author.send("Support team has closed your ticket.")
+            await author.send("The Support Team has closed your ticket.")
 
         try:
             member = await remote.fetch_member(context.author.id)
@@ -104,7 +104,7 @@ class Ticket(commands.Cog):
 
         await remote.edit(archived=True, reason="Thread closed")
 
-    @commands.command(brief="creates a ticket for support", aliases=["ticket_make", "ticket"])
+    @commands.command(brief="Creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
     async def create_ticket(self, context: JDBotContext, *, starter_message: Optional[str] = None):
         if not self.main_channel:
@@ -113,7 +113,7 @@ class Ticket(commands.Cog):
             self.support_guild = self.bot.get_guild(1019027330779332660)
 
         if context.author.id in self.ticket_cache:
-            return await context.send("You cannot create another ticket while a ticket is not responded.")
+            return await context.send("You cannot create another ticket while your other ticket hasn't been responded to.")
         ticket_channel = self.main_channel
         thread_channel = await ticket_channel.create_thread(
             name=f"User {context.author} - {context.author.id}",
@@ -124,7 +124,7 @@ class Ticket(commands.Cog):
         await self.handle_ticket_db_side(context.author.id, thread_channel.id)
 
         if not starter_message:
-            starter_message = "Hello i need help, i Haven't provided a reason quite yet."
+            starter_message = "This user requested help, but without a reason. Odd..."
             # place holder for now will use modals later
 
         message = await self.thread_webhook.send(
@@ -141,7 +141,7 @@ class Ticket(commands.Cog):
 
         await message.pin(reason="Makes it easier to find the starter message.")
 
-        await context.send("Created, now you can keep sending messages here to send it to remote channel.")
+        await context.send("Created, now you can keep sending messages here to send it to remote channel.\nIf you see a checkmark reaction, that means your message was received!")
 
         guild = self.support_guild
 
@@ -184,9 +184,7 @@ class Ticket(commands.Cog):
         if isinstance(message.channel, discord.DMChannel):
             if context.prefix is None or self.bot.user.mentioned_in(message):
                 if message.author.id != self.bot.user.id and context.valid is False:
-                    await message.channel.send(
-                        "Ticket Support is coming soon. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493"
-                    )
+                    await message.add_reaction('\N{WHITE HEAVY CHECK MARK}')
 
         # edit later idk -> add check so that way if there's a thread channel and update the message.
 
