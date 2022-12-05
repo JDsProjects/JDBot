@@ -195,6 +195,7 @@ class Ticket(commands.Cog):
 
         if context.prefix is None or self.bot.user.mentioned_in(message):
             if message.author.id != self.bot.user.id and context.valid is False:
+
                 if (
                     message.guild
                     and message.guild.id == 1019027330779332660
@@ -209,7 +210,7 @@ class Ticket(commands.Cog):
                             "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't a support team member."
                         )
 
-                    if message.author == author:
+                    if message.author == author and not self.support_role not in message.author.roles:
                         return
                         # don't need to respond then
 
