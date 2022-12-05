@@ -137,7 +137,7 @@ class Ticket(commands.Cog):
 
         # a bit longer but should work well
 
-        await message.pin(reason="Makes it easier to find the starter message.")
+        # await message.pin(reason="Makes it easier to find the starter message.")
 
         await context.send("Created, now you can keep sending messages here to send it to remote channel.")
 
