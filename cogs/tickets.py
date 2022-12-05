@@ -150,7 +150,7 @@ class Ticket(commands.Cog):
 
             await context.send(f"You have been added to {thread_channel.mention}")
 
-        await self.thread_webhook.send("<@168422909482762240> New support ticket \n{thread_channel.mention}.")
+        await self.thread_webhook.send(f"<@168422909482762240> New support ticket \n{thread_channel.mention}.")
 
     @create_ticket.error
     async def create_ticker_error(self, context: JDBotContext, exception: Exception):
