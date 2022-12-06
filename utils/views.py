@@ -26,32 +26,17 @@ if TYPE_CHECKING:
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
-def default_check(
-    interaction_author_id: int,
-    /,
-    *,
-    interaction: Interaction = MISSING,
-    ctx: Context = MISSING,
-    id_of_view_author: int = MISSING,
-) -> bool:
-    view_author_id = None
-    if id_of_view_author is not MISSING:
-        view_author_id = id_of_view_author
-    elif interaction is not MISSING:
-        view_author_id = interaction.user.id
-    elif ctx is not MISSING:
-        view_author_id = ctx.author.id
+def default_check(view: Paginator, interaction_user_id: int, view_author_id: int) -> bool:
+    cxint = view._context_or_interaction
+    bot = (cxint.bot if isinstance(cxint, commands.Context) else cxint.client) if cxint else None
 
-    if not view_author_id:
-        return True
+    bot_owners: list[int] = []
+    if bot:
+        bot_owners.extend(getattr(bot, "owner_ids", []))
+        if owner_id := getattr(bot, "owner_id", None):
+            bot_owners.append(owner_id)
 
-    client = interaction.client if interaction is not MISSING else ctx.bot  # type: ignore
-
-    TO_CHECK = {view_author_id}.union(set(getattr(client, "owner_ids", set())))
-    if getattr(client, "owner_id", None):
-        TO_CHECK.union({client.owner_id})  # type: ignore
-
-    return interaction_author_id in TO_CHECK
+    return interaction_user_id in bot_owners + [view_author_id]
 
 
 class ChooseNumber(Modal):
@@ -289,6 +274,26 @@ class Paginator(View):
                 button.style = ButtonStyle.secondary
 
     @property
+    def _context_or_interaction(self) -> Optional[Union[Context, Interaction]]:
+        if self.ctx is not MISSING:
+            return self.ctx
+        elif self.interaction is not MISSING:
+            return self.interaction
+        else:
+            return None
+
+    @property
+    def view_author(self) -> Optional[Union[discord.Member, discord.User, int]]:
+        if self.ctx is not MISSING:
+            return self.ctx.author
+        elif self.interaction is not MISSING:
+            return self.interaction.user
+        elif self.author_id is not MISSING:
+            return self.author_id
+        else:
+            return None
+
+    @property
     def current_page(self) -> int:
         return self._current_page
 
@@ -310,20 +315,21 @@ class Paginator(View):
 
     async def interaction_check(self, interaction: Interaction):
         # Allow everyone if interaction.user or ctx or author_id is None.
-        if self.author_id is MISSING and self.ctx is MISSING and self.interaction is MISSING:
+        if not self.view_author:
             return True
 
-        is_allowed = await maybe_coroutine(
-            self.check, interaction.user.id, interaction=self.interaction, ctx=self.ctx, id_of_view_author=self.author_id  # type: ignore
-        )
+        author_id = self.view_author.id if not isinstance(self.view_author, int) else self.view_author
+        is_allowed = await maybe_coroutine(self.check, self, interaction.user.id, author_id)
+        if not is_allowed:
+            await interaction.response.send_message(f"This paginator can only be controlled by <@{author_id}> and my owner(s), sorry!", ephemeral=True)
+            return False
+
         return is_allowed
 
     async def _edit_message(self, interaction: Interaction = MISSING, /, **kwargs: Any) -> None:
-        if interaction is not MISSING:
-            self.interaction = interaction
-
         kwargs["attachments"] = kwargs.pop("files", [])
         if self.interaction is not MISSING:
+            self.interaction = interaction
             respond = self.interaction.response.edit_message  # type: ignore
             if self.interaction.response.is_done():  # type: ignore
                 respond = self.message.edit if self.message else _interaction.message.edit  # type: ignore
