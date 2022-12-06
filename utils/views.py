@@ -26,10 +26,10 @@ if TYPE_CHECKING:
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
-def default_check(interaction_author_id: int, /, *, interaction: Interaction = MISSING, ctx: Context = MISSING, view_author_id: int = MISSING) -> bool:    
+def default_check(interaction_author_id: int, /, *, interaction: Interaction = MISSING, ctx: Context = MISSING, id_of_view_author: int = MISSING) -> bool:    
     view_author_id = None
-    if author_id is not MISSING:
-        view_author_id = view_author_id
+    if id_of_view_author is not MISSING:
+        view_author_id = id_of_view_author
     elif interaction is not MISSING:
         view_author_id = interaction.user.id
     elif ctx is not MISSING:
@@ -307,7 +307,7 @@ class Paginator(View):
             return True
 
         is_allowed = await maybe_coroutine(
-            self.check, interaction.user.id, interaction=self.interaction, ctx=self.ctx, view_author_id=self.author_id  # type: ignore
+            self.check, interaction.user.id, interaction=self.interaction, ctx=self.ctx, id_of_view_author=self.author_id  # type: ignore
         )
         return is_allowed
 
