@@ -321,7 +321,9 @@ class Paginator(View):
         author_id = self.view_author.id if not isinstance(self.view_author, int) else self.view_author
         is_allowed = await maybe_coroutine(self.check, self, interaction.user.id, author_id)
         if not is_allowed:
-            await interaction.response.send_message(f"This paginator can only be controlled by <@{author_id}> and my owner(s), sorry!", ephemeral=True)
+            await interaction.response.send_message(
+                f"This paginator can only be controlled by <@{author_id}> and my owner(s), sorry!", ephemeral=True
+            )
             return False
 
         return is_allowed
