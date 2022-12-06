@@ -73,22 +73,6 @@ class Ticket(commands.Cog):
 
     @commands.command(brief="Closes support ticket.")
     async def close(self, context: JDBotContext):
-        if not context.guild:
-            if context.author.id not in self.ticket_cache:
-                return await context.send("You did not create any tickets.")
-            remote = self.ticket_cache[context.author.id]["remote"]
-            remote = self.bot.get_channel(remote)
-
-            await self.thread_webhook.send("The user closed the ticket.", thread=remote, username="Ticket Manager")
-
-        else:
-            if not context.channel.id in self.ticket_cache:
-                return await context.send("This is not a ticket channel.")
-            cache = self.ticket_cache[context.channel.id]
-            author = self.bot.get_user(cache["author"])
-            remote = self.bot.get_channel(cache["remote"])
-            await author.send("The Support Team has closed your ticket.")
-
         try:
             member = await remote.fetch_member(context.author.id)
             await remote.remove_user(member)
@@ -103,6 +87,22 @@ class Ticket(commands.Cog):
         )
 
         await remote.edit(archived=True, reason="Thread closed")
+        if not context.guild:
+            if context.author.id not in self.ticket_cache:
+                return await context.send("You did not create any tickets.")
+            remote = self.ticket_cache[context.author.id]["remote"]
+            remote = self.bot.get_channel(remote)
+            await context.send("Your ticket was sucessfully closed!")
+            await self.thread_webhook.send("The user closed the ticket.", thread=remote, username="Ticket Manager")
+
+        else:
+            if not context.channel.id in self.ticket_cache:
+                return await context.send("This is not a ticket channel.")
+            cache = self.ticket_cache[context.channel.id]
+            author = self.bot.get_user(cache["author"])
+            remote = self.bot.get_channel(cache["remote"])
+            await context.send("Your ticket was sucessfully closed!")
+            await author.send("The Support Team has closed your ticket.")
 
     @commands.command(brief="Creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
@@ -210,7 +210,7 @@ class Ticket(commands.Cog):
                             "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't a support team member."
                         )
 
-                    if message.author == author and not self.support_role not in message.author.roles:
+                    if message.author == author and not self.support_role in message.author.roles:
                         return
                         # don't need to respond then
 
