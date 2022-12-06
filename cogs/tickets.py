@@ -73,20 +73,7 @@ class Ticket(commands.Cog):
 
     @commands.command(brief="Closes support ticket.")
     async def close(self, context: JDBotContext):
-        try:
-            member = await remote.fetch_member(context.author.id)
-            await remote.remove_user(member)
 
-        except:
-            await context.send("Removing you from the ticket channel failed.")
-
-        del self.ticket_cache[remote.id]
-        del self.ticket_cache[context.author.id]
-        await self.pool.execute(
-            "DELETE FROM TICKETS WHERE author_id = $1 AND remote_id = $2", context.author.id, remote.id
-        )
-
-        await remote.edit(archived=True, reason="Thread closed")
         if not context.guild:
             if context.author.id not in self.ticket_cache:
                 return await context.send("You did not create any tickets.")
@@ -101,8 +88,26 @@ class Ticket(commands.Cog):
             cache = self.ticket_cache[context.channel.id]
             author = self.bot.get_user(cache["author"])
             remote = self.bot.get_channel(cache["remote"])
-            await context.send("Your ticket was sucessfully closed!")
+            await context.send("The ticket was sucessfully closed!")
             await author.send("The Support Team has closed your ticket.")
+
+        # add a couple more checks here to see if the author is the one who ran it.
+        # with general checks about requiring the author to run it or the support team.
+
+        try:
+            member = await remote.fetch_member(context.author.id)
+            await remote.remove_user(member)
+
+        except:
+            await context.send("Removing you from the ticket channel failed.")
+
+        del self.ticket_cache[remote.id]
+        del self.ticket_cache[context.author.id]
+        await self.pool.execute(
+            "DELETE FROM TICKETS WHERE author_id = $1 AND remote_id = $2", context.author.id, remote.id
+        )
+
+        await remote.edit(archived=True, reason="Thread closed")
 
     @commands.command(brief="Creates a ticket for support", aliases=["ticket_make", "ticket"])
     @commands.dm_only()
