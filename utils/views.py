@@ -26,17 +26,25 @@ if TYPE_CHECKING:
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
-def default_check(author_id: int, /, *, interaction: Interaction = MISSING, ctx: Context = MISSING) -> bool:
-    if interaction is MISSING and ctx is MISSING:
+def default_check(interaction_author_id: int, /, *, interaction: Interaction = MISSING, ctx: Context = MISSING, view_author_id: int = MISSING) -> bool:    
+    view_author_id = None
+    if author_id is not MISSING:
+        view_author_id = view_author_id
+    elif interaction is not MISSING:
+        view_author_id = interaction.user.id
+    elif ctx is not MISSING:
+        view_author_id = ctx.author.id
+    
+    if not view_author_id:
         return True
 
     client = interaction.client if interaction is not MISSING else ctx.bot  # type: ignore
-    author = interaction.user if interaction is not MISSING else ctx.author  # type: ignore
-    TO_CHECK = {author.id}.union(set(getattr(client, "owner_ids", set())))
+
+    TO_CHECK = {view_author_id}.union(set(getattr(client, "owner_ids", set())))
     if getattr(client, "owner_id", None):
         TO_CHECK.union({client.owner_id})  # type: ignore
 
-    return author_id in TO_CHECK
+    return interaction_author_id in TO_CHECK
 
 
 class ChooseNumber(Modal):
@@ -111,8 +119,6 @@ class PaginatorButton(Button["Paginator"]):
         return modal.value
 
     async def callback(self, interaction: Interaction) -> None:
-        self.view.interaction = interaction
-
         if self.custom_id == "stop_button":
             await self.view.stop()
             return
@@ -301,7 +307,7 @@ class Paginator(View):
             return True
 
         is_allowed = await maybe_coroutine(
-            self.check, interaction.user.id, interaction=interaction, ctx=self.ctx  # type: ignore
+            self.check, interaction.user.id, interaction=self.interaction, ctx=self.ctx, view_author_id=self.author_id  # type: ignore
         )
         return is_allowed
 
