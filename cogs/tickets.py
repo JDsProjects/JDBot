@@ -210,7 +210,7 @@ class Ticket(commands.Cog):
                             "<a:yangsmh:800522615235805204> Sorry you can't use this as you aren't a support team member."
                         )
 
-                    if message.author == author and not self.support_role not in message.author.roles:
+                    if message.author == author and not self.support_role in message.author.roles:
                         return
                         # don't need to respond then
 
