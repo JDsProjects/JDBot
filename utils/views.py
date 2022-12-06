@@ -26,7 +26,14 @@ if TYPE_CHECKING:
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
-def default_check(interaction_author_id: int, /, *, interaction: Interaction = MISSING, ctx: Context = MISSING, id_of_view_author: int = MISSING) -> bool:    
+def default_check(
+    interaction_author_id: int,
+    /,
+    *,
+    interaction: Interaction = MISSING,
+    ctx: Context = MISSING,
+    id_of_view_author: int = MISSING,
+) -> bool:
     view_author_id = None
     if id_of_view_author is not MISSING:
         view_author_id = id_of_view_author
@@ -34,7 +41,7 @@ def default_check(interaction_author_id: int, /, *, interaction: Interaction = M
         view_author_id = interaction.user.id
     elif ctx is not MISSING:
         view_author_id = ctx.author.id
-    
+
     if not view_author_id:
         return True
 
