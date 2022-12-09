@@ -169,7 +169,7 @@ class Owner(commands.Cog):
         if args is None:
             await ctx.send("You sadly can't use it like that.")
 
-        #not sure if it is valuable or not.
+        # not sure if it is valuable or not.
 
     @commands.command(brief="Commands to see what guilds a person is in.")
     async def mutualguilds(self, ctx, *, user: utils.BetterUserconverter = None):
