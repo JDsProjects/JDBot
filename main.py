@@ -3,6 +3,7 @@ from __future__ import annotations
 import functools
 import logging
 import os
+import pathlib
 import re
 import sys
 import traceback
@@ -16,7 +17,6 @@ from discord.ext import commands
 from tweepy.asynchronous import AsyncClient
 
 dotenv.load_dotenv()
-
 
 async def get_prefix(bot: JDBot, message: discord.Message):
     extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te."]
@@ -83,7 +83,6 @@ class CustomRecordClass(asyncpg.Record):
         if name in self.keys():
             return self[name]
         return super().__getattr__(name)
-
 
 class JDBot(commands.Bot):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -169,12 +168,23 @@ class JDBot(commands.Bot):
                 return None
 
     async def setup_hook(self) -> None:
-        for filename in os.listdir("./cogs"):
-            if filename.endswith(".py"):
-                try:
-                    await self.load_extension(f"cogs.{filename[:-3]}")
-                except commands.errors.ExtensionError:
-                    traceback.print_exc()
+
+        this_file = pathlib.Path(__file__)
+        this_directory = this_file.parent
+        cog_directory = this_directory / "cogs"
+
+        # cog.exists()
+        # should probaly error if this path doesn't exist
+        # not needed though
+        
+        files = cog_directory.glob("*.py")
+        cogs = [f"cogs.{filename.stem}" for filename in files]
+
+        for cog in cogs:
+            try:
+                await self.load_extension(f"{cog}")
+            except commands.errors.ExtensionError:
+                traceback.print_exc()
 
     @functools.cached_property
     def support_webhook(self) -> discord.Webhook:
