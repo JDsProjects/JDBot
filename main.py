@@ -3,7 +3,6 @@ from __future__ import annotations
 import functools
 import logging
 import os
-import pathlib
 import re
 import sys
 import traceback
@@ -16,7 +15,10 @@ import dotenv
 from discord.ext import commands
 from tweepy.asynchronous import AsyncClient
 
+from cogs import EXTENSIONS
+
 dotenv.load_dotenv()
+
 
 async def get_prefix(bot: JDBot, message: discord.Message):
     extras = ["test*", "te*", "t*", "jdbot.", "jd.", "test.", "te."]
@@ -83,6 +85,7 @@ class CustomRecordClass(asyncpg.Record):
         if name in self.keys():
             return self[name]
         return super().__getattr__(name)
+
 
 class JDBot(commands.Bot):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -169,18 +172,7 @@ class JDBot(commands.Bot):
 
     async def setup_hook(self) -> None:
 
-        this_file = pathlib.Path(__file__)
-        this_directory = this_file.parent
-        cog_directory = this_directory / "cogs"
-
-        # cog.exists()
-        # should probaly error if this path doesn't exist
-        # not needed though
-        
-        files = cog_directory.glob("*.py")
-        cogs = [f"cogs.{filename.stem}" for filename in files]
-
-        for cog in cogs:
+        for cog in EXTENSIONS:
             try:
                 await self.load_extension(f"{cog}")
             except commands.errors.ExtensionError:
