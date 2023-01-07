@@ -499,9 +499,13 @@ class Bot(commands.Cog):
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
 
+        date_uptime = discord.utils.format_dt(self.bot.launch_time, style = 'd')
+        time_uptime = discord.utils.format_dt(self.bot.launch_time, style = 'T')
+        rel_uptime = discord.utils.format_dt(self.bot.launch_time, style = 'R')
+
         embed = discord.Embed(
-            title=f"Up Since:\n{discord.utils.format_dt(self.bot.launch_time, style = 'd')}\n{discord.utils.format_dt(self.bot.launch_time, style = 'T')}",
-            description=f"Days: {days}d, \nHours: {hours}h, \nMinutes: {minutes}m, \nSeconds: {seconds}s",
+            title=f"Up Since:\n{date_uptime}\n{time_uptime}",
+            description=f"{rel_uptime}\n Days: {days}d, \nHours: {hours}h, \nMinutes: {minutes}m, \nSeconds: {seconds}s",
             color=random.randint(0, 16777215),
         )
 
