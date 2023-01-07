@@ -499,9 +499,9 @@ class Bot(commands.Cog):
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
 
-        date_uptime = discord.utils.format_dt(self.bot.launch_time, style = 'd')
-        time_uptime = discord.utils.format_dt(self.bot.launch_time, style = 'T')
-        rel_uptime = discord.utils.format_dt(self.bot.launch_time, style = 'R')
+        date_uptime = discord.utils.format_dt(self.bot.launch_time, style="d")
+        time_uptime = discord.utils.format_dt(self.bot.launch_time, style="T")
+        rel_uptime = discord.utils.format_dt(self.bot.launch_time, style="R")
 
         embed = discord.Embed(
             title=f"Up Since:\n{date_uptime}\n{time_uptime}",
