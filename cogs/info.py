@@ -93,7 +93,7 @@ class Info(commands.Cog):
 
         if isinstance(user, discord.Member):
 
-            user = user.guild.get_member(user)
+            user = user.guild.get_member(user.id)
 
         ctx = await self.bot.get_context(interaction)
 
