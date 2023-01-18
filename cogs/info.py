@@ -90,9 +90,20 @@ class Info(commands.Cog):
     ):
 
         user = user or interaction.user
-        await interaction.response.send_message(f"Hello {user}!")
 
-        #  new stuff soon
+        ctx = bot.get_context(interaction)
+
+        embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
+
+        embed.set_image(url=user.display_avatar.url)
+
+        view = utils.UserInfoSuper(ctx, user)
+
+        await ctx.send(
+            "Pick a way for Mutual Guilds to be sent to you or not if you really don't the mutualguilds",
+            embed=embed,
+            view=view,
+        )
 
     @commands.command(brief="uploads your emojis into a Senarc Bin link")
     async def look_at(self, ctx):
