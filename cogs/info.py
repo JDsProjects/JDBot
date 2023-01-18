@@ -91,7 +91,7 @@ class Info(commands.Cog):
 
         user = user or interaction.user
 
-        ctx = bot.get_context(interaction)
+        ctx = self.bot.get_context(interaction)
 
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
 
