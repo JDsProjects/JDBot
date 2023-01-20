@@ -73,7 +73,7 @@ def invert(image) -> discord.File:
 
 
 ASSET_SIZE = 220
-ALTERNATIVE_ASSET_Size = 300
+ASSET_SIZE2 = 300
 OFFSET = 10
 
 
@@ -101,6 +101,37 @@ def laugh(raw_asset: bytes) -> BytesIO:
                 frames[0].save(buff, format="GIF", save_all=True, append_images=frames[1:], loop=0)
             else:
                 laugh_frame(template, asset).save(buff, format="PNG")
+
+    gif = "gif" if gif else "png"
+
+    buff.seek(0)
+    return buff, gif
+
+
+def laugh_frame2(LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
+
+    base = LAUGH_IMAGE.copy()
+    asset = asset.resize((ASSET_SIZE2, ASSET_SIZE2), Image.BICUBIC)
+    base.paste(asset, (OFFSET, base.height - (ASSET_SIZE2 - OFFSET)), asset)
+    return base
+
+
+def laugh2(raw_asset: bytes) -> BytesIO:
+    buff = BytesIO()
+
+    with Image.open("assets/images/laugh2.png").convert("RGBA") as template:
+        with Image.open(BytesIO(raw_asset)) as asset:
+            gif = False
+            if gif := asset.is_animated:
+                frames = []
+                for frame in ImageSequence.Iterator(asset):
+                    new_frame = laugh_frame2(template, frame.convert("RGBA"))
+                    new_frame.info["duration"] = frame.info.get("duration", 0)
+                    frames.append(new_frame)
+
+                frames[0].save(buff, format="GIF", save_all=True, append_images=frames[1:], loop=0)
+            else:
+                laugh_frame2(template, asset).save(buff, format="PNG")
 
     gif = "gif" if gif else "png"
 
