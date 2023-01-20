@@ -75,7 +75,6 @@ def invert(image) -> discord.File:
 ASSET_SIZE = 220
 OFFSET = 10
 
-
 def laugh_frame(LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
 
     base = LAUGH_IMAGE.copy()
