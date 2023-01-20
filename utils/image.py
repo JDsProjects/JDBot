@@ -112,7 +112,8 @@ def laugh_frame2(LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
 
     base = LAUGH_IMAGE.copy()
     asset = asset.resize((ASSET_SIZE2, ASSET_SIZE2), Image.BICUBIC)
-    base.paste(asset, (OFFSET, base.height - (ASSET_SIZE2 - OFFSET)), asset)
+    base.paste(asset, (OFFSET, base.height - (ASSET_SIZE2 + OFFSET)), asset)
+    base.paste(LAUGH_IMAGE, (0, 0), LAUGH_IMAGE)
     return base
 
 
