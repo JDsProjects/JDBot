@@ -76,30 +76,30 @@ ASSET_SIZE = 220
 OFFSET = 10
 
 
+def laugh_frame(LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
 
-def laugh_frame(asset: Image.Image) -> Image.Image:
-    with Image.open("laugh.png").convert("RGBA") as LAUGH_IMAGE:
-        base = LAUGH_IMAGE.copy()
-        asset = asset.resize((ASSET_SIZE, ASSET_SIZE), Image.BICUBIC)
-        base.paste(asset, (OFFSET, base.height - (ASSET_SIZE - OFFSET)), asset)
+    base = LAUGH_IMAGE.copy()
+    asset = asset.resize((ASSET_SIZE, ASSET_SIZE), Image.BICUBIC)
+    base.paste(asset, (OFFSET, base.height - (ASSET_SIZE - OFFSET)), asset)
     return base
 
 
 def laugh(raw_asset: bytes) -> BytesIO:
     buff = BytesIO()
 
-    with Image.open(BytesIO(raw_asset)) as asset:
-        gif = False
-        if gif := asset.is_animated:
-            frames = []
-            for frame in ImageSequence.Iterator(asset):
-                new_frame = laugh_frame(frame.convert("RGBA"))
-                new_frame.info["duration"] = frame.info.get("duration", 0)
-                frames.append(new_frame)
+    with Image.open("assets/images/laugh.png").convert("RGBA") as template:
+        with Image.open(BytesIO(raw_asset)) as asset:
+            gif = False
+            if gif := asset.is_animated:
+                frames = []
+                for frame in ImageSequence.Iterator(template, asset):
+                    new_frame = laugh_frame(frame.convert("RGBA"))
+                    new_frame.info["duration"] = frame.info.get("duration", 0)
+                    frames.append(new_frame)
 
-            frames[0].save(buff, format="GIF", save_all=True, append_images=frames[1:], loop=0)
-        else:
-            laugh_frame(asset).save(buff, format="PNG")
+                frames[0].save(buff, format="GIF", save_all=True, append_images=frames[1:], loop=0)
+            else:
+                laugh_frame(template, asset).save(buff, format="PNG")
 
     gif = "gif" if gif else "png"
 
