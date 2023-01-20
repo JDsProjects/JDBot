@@ -289,6 +289,7 @@ class Test(commands.Cog):
         done, _ = await asyncio.wait(files)
 
         files = [file.result() for file in done]
+        files = [discord.File(image, f"laugh.{image_type}") for image, image_type in files]
 
         await ctx.send(files=files)
 

@@ -72,9 +72,9 @@ def invert(image) -> discord.File:
     return file
 
 
-
 ASSET_SIZE = 220
 OFFSET = 10
+
 
 def laugh_frame(asset: Image.Image) -> Image.Image:
     with Image.open("laugh.png").convert("RGBA") as LAUGH_IMAGE:
@@ -88,7 +88,8 @@ def laugh(raw_asset: bytes) -> BytesIO:
     buff = BytesIO()
 
     with Image.open(BytesIO(raw_asset)) as asset:
-        if asset.is_animated:
+        gif = False
+        if gif := asset.is_animated:
             frames = []
             for frame in ImageSequence.Iterator(asset):
                 new_frame = laugh_frame(frame.convert("RGBA"))
@@ -99,5 +100,7 @@ def laugh(raw_asset: bytes) -> BytesIO:
         else:
             laugh_frame(asset).save(buff, format="PNG")
 
+    gif = "gif" if gif else "png"
+
     buff.seek(0)
-    return buff
+    return buff, gif
