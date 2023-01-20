@@ -73,6 +73,7 @@ def invert(image) -> discord.File:
 
 
 ASSET_SIZE = 220
+ALTERNATIVE_ASSET_Size = 300
 OFFSET = 10
 
 
