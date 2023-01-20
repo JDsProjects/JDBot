@@ -252,6 +252,7 @@ class Test(commands.Cog):
 
         await ctx.send(files=files)
 
+    @commands.cooldown(1, 15, BucketType.user)
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(
         self,
