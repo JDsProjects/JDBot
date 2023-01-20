@@ -108,9 +108,9 @@ def laugh(raw_asset: bytes) -> BytesIO:
     return buff, gif
 
 
-def laugh_frame2(LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
+def laugh_frame2(BASE, LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
 
-    base = LAUGH_IMAGE.copy()
+    base = BASE.copy()
     asset = asset.resize((ASSET_SIZE2, ASSET_SIZE2), Image.BICUBIC)
     base.paste(asset, (OFFSET, base.height - (ASSET_SIZE2 + OFFSET)), asset)
     base.paste(LAUGH_IMAGE, (0, 0), LAUGH_IMAGE)
@@ -121,18 +121,19 @@ def laugh2(raw_asset: bytes) -> BytesIO:
     buff = BytesIO()
 
     with Image.open("assets/images/laugh2.png").convert("RGBA") as template:
-        with Image.open(BytesIO(raw_asset)) as asset:
-            gif = False
-            if gif := asset.is_animated:
-                frames = []
-                for frame in ImageSequence.Iterator(asset):
-                    new_frame = laugh_frame2(template, frame.convert("RGBA"))
-                    new_frame.info["duration"] = frame.info.get("duration", 0)
-                    frames.append(new_frame)
+        with Image.new("RGBA", (template.width, template.height), "white") as canvas:
+            with Image.open(BytesIO(raw_asset)) as asset:
+                gif = False
+                if gif := asset.is_animated:
+                    frames = []
+                    for frame in ImageSequence.Iterator(asset):
+                        new_frame = laugh_frame2(canvas, template, frame.convert("RGBA"))
+                        new_frame.info["duration"] = frame.info.get("duration", 0)
+                        frames.append(new_frame)
 
-                frames[0].save(buff, format="GIF", save_all=True, append_images=frames[1:], loop=0)
-            else:
-                laugh_frame2(template, asset).save(buff, format="PNG")
+                    frames[0].save(buff, format="GIF", save_all=True, append_images=frames[1:], loop=0)
+                else:
+                    laugh_frame2(canvas, template, asset).save(buff, format="PNG")
 
     gif = "gif" if gif else "png"
 
