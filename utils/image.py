@@ -72,45 +72,32 @@ def invert(image) -> discord.File:
     return file
 
 
-size = 220
-corner_offset = 10
+
+ASSET_SIZE = 220
+OFFSET = 10
+
+def laugh_frame(asset: Image.Image) -> Image.Image:
+    with Image.open("laugh.png").convert("RGBA") as LAUGH_IMAGE:
+        base = LAUGH_IMAGE.copy()
+        asset = asset.resize((ASSET_SIZE, ASSET_SIZE), Image.BICUBIC)
+        base.paste(asset, (OFFSET, base.height - (ASSET_SIZE - OFFSET)), asset)
+    return base
 
 
-def laugh(asset) -> discord.File:
+def laugh(raw_asset: bytes) -> BytesIO:
+    buff = BytesIO()
 
-    f = BytesIO()
+    with Image.open(BytesIO(raw_asset)) as asset:
+        if asset.is_animated:
+            frames = []
+            for frame in ImageSequence.Iterator(asset):
+                new_frame = laugh_frame(frame.convert("RGBA"))
+                new_frame.info["duration"] = frame.info.get("duration", 0)
+                frames.append(new_frame)
 
-    wrapped_image = BytesIO(asset)
+            frames[0].save(buff, format="GIF", save_all=True, append_images=frames[1:], loop=0)
+        else:
+            laugh_frame(asset).save(buff, format="PNG")
 
-    frames = []
-    durations = []
-
-    with Image.open("assets/images/laugh.png") as image:
-
-        with Image.new("RGBA", (image.width, image.height), "white") as canv:
-            with Image.open(wrapped_image) as custom_image:
-
-                loop = custom_image.info.get("loop", 0)
-
-                if loop > 0:
-                    print("loop isn't 0, but we will make sure it loops properly")
-
-                for frame in ImageSequence.Iterator(custom_image):
-                    durations.append(frame.info.get("duration", 50))
-
-                    resized = frame.resize((size, size))
-                    canv.paste(image, (0, 0))
-                    canv.paste(resized, (corner_offset, canv.size[1] - (size + corner_offset)))
-                    frames.append(canv.copy())
-
-    if not custom_image.is_animated:
-        frames[0].save(f, format="PNG")
-        f.seek(0)
-        file = discord.File(f, "laugh.png")
-
-    else:
-        frames[0].save(f, format="GIF", append_images=frames[1:], save_all=True, duration=durations, disposal=2, loop=0)
-        f.seek(0)
-        file = discord.File(f, "laugh.gif")
-
-    return file
+    buff.seek(0)
+    return buff
