@@ -72,9 +72,9 @@ def invert(image) -> discord.File:
     return file
 
 
-
 ASSET_SIZE = 220
 OFFSET = 10
+
 
 def laugh_frame(asset: Image.Image) -> Image.Image:
     with Image.open("laugh.png").convert("RGBA") as LAUGH_IMAGE:
