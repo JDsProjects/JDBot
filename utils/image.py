@@ -92,8 +92,8 @@ def laugh(raw_asset: bytes) -> BytesIO:
             gif = False
             if gif := asset.is_animated:
                 frames = []
-                for frame in ImageSequence.Iterator(template, asset):
-                    new_frame = laugh_frame(frame.convert("RGBA"))
+                for frame in ImageSequence.Iterator(asset):
+                    new_frame = laugh_frame(template, frame.convert("RGBA"))
                     new_frame.info["duration"] = frame.info.get("duration", 0)
                     frames.append(new_frame)
 
