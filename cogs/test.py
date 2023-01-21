@@ -291,10 +291,10 @@ class Test(commands.Cog):
         epic = None
 
         if flag:
-            epic = utils.laugh2
+            epic = utils.laugh
 
         else:
-            epic = utils.laugh
+            epic = utils.laugh2
 
         files = [asyncio.to_thread(epic, await image.read()) for image in images]
         done, _ = await asyncio.wait(files)
