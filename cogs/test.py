@@ -257,7 +257,9 @@ class Test(commands.Cog):
     async def laugh(
         self,
         ctx,
-        *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
+        assets: commands.Greedy[discord.PartialEmoji, discord.Member, discord.User, str],
+        *,
+        flag: typing.Optional[typing.Literal["--style 2"]],
     ):
 
         assets = list(assets)
@@ -285,7 +287,16 @@ class Test(commands.Cog):
             images.append(ctx.author.display_avatar)
 
         images = images[:10]
-        files = [asyncio.to_thread(utils.laugh, await image.read()) for image in images]
+
+        epic = None
+
+        if flag:
+            epic = utils.laugh2
+
+        else:
+            epic = utils.laugh
+
+        files = [asyncio.to_thread(epic, await image.read()) for image in images]
         done, _ = await asyncio.wait(files)
 
         files = [file.result() for file in done]
