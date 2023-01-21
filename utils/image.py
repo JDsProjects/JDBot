@@ -1,4 +1,5 @@
 import textwrap
+import typing
 from io import BytesIO
 
 import discord
@@ -97,7 +98,7 @@ def laugh_frame(LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
     return base
 
 
-def laugh(raw_asset: bytes) -> BytesIO:
+def laugh(raw_asset: bytes) -> tuple[BytesIO, typing.Literal["gif", "png"]]:
     buff = BytesIO()
 
     with Image.open("assets/images/laugh.png").convert("RGBA") as template:
@@ -131,7 +132,7 @@ def laugh_frame2(BASE, LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Im
     return base
 
 
-def laugh2(raw_asset: bytes) -> BytesIO:
+def laugh2(raw_asset: bytes) -> tuple[BytesIO, typing.Literal["gif", "png"]]:
     buff = BytesIO()
 
     with Image.open("assets/images/laugh2.png").convert("RGBA") as template:
