@@ -44,7 +44,7 @@ def gadget(text) -> BytesIO:
     return f
 
 
-def invert(image) -> discord.File:
+def invert(image) -> BytesIO:
 
     wrapped_image = BytesIO(image)
     f = BytesIO()
@@ -55,9 +55,15 @@ def invert(image) -> discord.File:
     with Image.open(wrapped_image) as img:
         for frame in ImageSequence.Iterator(img):
             durations.append(frame.info.get("duration", 50))
-            frame = frame.convert("RGB")
-            inverted = ImageOps.invert(frame)
-            frames.append(inverted)
+
+            with Image.new("RGBA", frame.size) as canv:
+                og_image = frame.convert("RGBA")
+                image = og_image.convert("RGB")
+                new_image = ImageOps.invert(image)
+                new_image = new_image.convert("RGBA")
+                canv.paste(new_image, mask=og_image)
+
+            frames.append(canv)
 
     if len(frames) < 2:
         frames[0].save(f, format="PNG")
@@ -65,7 +71,7 @@ def invert(image) -> discord.File:
         file = discord.File(f, "inv.png")
 
     else:
-        frames[0].save(f, format="GIF", append_images=frames[1:], save_all=True, duration=durations, disposal=2)
+        frames[0].save(f, format="GIF", append_images=frames[1:], save_all=True, duration=durations, disposal=2, loop=0)
         f.seek(0)
         file = discord.File(f, "inv.gif")
 
