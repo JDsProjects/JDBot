@@ -44,7 +44,7 @@ def gadget(text) -> BytesIO:
     return f
 
 
-def invert(image) -> BytesIO:
+def invert(image) -> discord.File:
 
     wrapped_image = BytesIO(image)
     f = BytesIO()
