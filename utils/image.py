@@ -102,8 +102,8 @@ def laugh(raw_asset: bytes) -> BytesIO:
 
     with Image.open("assets/images/laugh.png").convert("RGBA") as template:
         with Image.open(BytesIO(raw_asset)) as asset:
-            gif = False
-            if gif := getattr(asset, "is_animated", False):
+            gif = getattr(asset, "is_animated", False)
+            if gif:
                 frames = []
                 for frame in ImageSequence.Iterator(asset):
                     new_frame = laugh_frame(template, frame.convert("RGBA"))
@@ -137,8 +137,8 @@ def laugh2(raw_asset: bytes) -> BytesIO:
     with Image.open("assets/images/laugh2.png").convert("RGBA") as template:
         with Image.new("RGBA", (template.width, template.height), "white") as canvas:
             with Image.open(BytesIO(raw_asset)) as asset:
-                gif = False
-                if gif := getattr(asset, "is_animated", False):
+                gif = getattr(asset, "is_animated", False)
+                if gif:
                     frames = []
                     for frame in ImageSequence.Iterator(asset):
                         new_frame = laugh_frame2(canvas, template, frame.convert("RGBA"))
