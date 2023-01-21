@@ -90,6 +90,8 @@ OFFSET = 10
 def laugh_frame(LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
 
     base = LAUGH_IMAGE.copy()
+    base = base.convert("RGBA")
+    asset = asset.convert("RGBA")
     asset = asset.resize((ASSET_SIZE, ASSET_SIZE), Image.BICUBIC)
     base.paste(asset, (OFFSET, base.height - (ASSET_SIZE - OFFSET)), asset)
     return base
@@ -121,6 +123,8 @@ def laugh(raw_asset: bytes) -> BytesIO:
 def laugh_frame2(BASE, LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
 
     base = BASE.copy()
+    base = base.convert("RGBA")
+    asset = asset.convert("RGBA")
     asset = asset.resize((ASSET_SIZE2, ASSET_SIZE2), Image.BICUBIC)
     base.paste(asset, (OFFSET, base.height - (ASSET_SIZE2 + OFFSET)), asset)
     base.paste(LAUGH_IMAGE, (0, 0), LAUGH_IMAGE)
