@@ -257,7 +257,7 @@ class Test(commands.Cog):
     async def laugh(
         self,
         ctx,
-        assets: commands.Greedy[typing.Union[discord.PartialEmoji, discord.Member, discord.User, str]],
+        assets: commands.Greedy[typing.Union[discord.PartialEmoji, discord.Member, discord.User]],
         *,
         flag: typing.Optional[typing.Literal["--style 2"]],
     ):
