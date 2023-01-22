@@ -309,7 +309,7 @@ class Image(commands.Cog):
 
     @commands.command(brief="Gives you a random waifu image.")
     async def waifu2(self, ctx):
-        r = await self.bot.session.get("https://api.waifu.im/random/?is_nsfw=false&many=false&full=false")
+        r = await self.bot.session.get("https://api.waifu.im/search/?is_nsfw=false&many=false&full=false")
         res = await r.json()
         image = res["images"][0]
         embed = discord.Embed(
