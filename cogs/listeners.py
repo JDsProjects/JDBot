@@ -132,7 +132,10 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_edit(self, before, after):
-        await self.bot.process_commands(after)
+
+        if before.content != after.content:
+
+            await self.bot.process_commands(after)
 
 
 async def setup(bot):
