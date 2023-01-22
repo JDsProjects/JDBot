@@ -500,6 +500,25 @@ class Image(commands.Cog):
         view = utils.AceView(ctx, self.jeyy_client)
         await ctx.send(content="Please Pick a side to represent:", view=view)
 
+    @commands.command("half inverts using jeyy's api")
+    async def half_invert(
+        self,
+        ctx,
+        *assets: utils.image_union2,
+    ):
+
+        images = await utils.asset_converter(ctx, assets)
+
+        jeyy_client = self.jeyy_client
+
+        files = [jeyy_client.half_invert(image) for image in images]
+        done, _ = await asyncio.wait(files)
+
+        files = [file.result() for file in done]
+        files = [discord.File(image) for image in files]
+
+        await ctx.send(files=files)
+
 
 async def setup(bot):
     await bot.add_cog(Image(bot))

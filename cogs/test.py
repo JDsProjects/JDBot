@@ -234,17 +234,6 @@ class Test(commands.Cog):
 
         await ctx.send(files=files)
 
-    @commands.command("half inverts using jeyy's api")
-    async def half_invert(
-        self,
-        ctx,
-        *assets: utils.image_union2,
-    ):
-
-        images = await utils.asset_converter(ctx, assets)
-
-        # the actual asyncio.wait stuff will come here soon enough
-
     @commands.command(help="takes a .png attachment or your avatar and makes a triggered version.")
     async def triggered(self, ctx, *assets: utils.image_union2):
 
