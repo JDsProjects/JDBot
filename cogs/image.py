@@ -500,7 +500,7 @@ class Image(commands.Cog):
         view = utils.AceView(ctx, self.jeyy_client)
         await ctx.send(content="Please Pick a side to represent:", view=view)
 
-    @commands.command("half inverts using jeyy's api")
+    @commands.command(brief="half inverts an image using jeyy's api")
     async def half_invert(
         self,
         ctx,
