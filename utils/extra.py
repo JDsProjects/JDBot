@@ -244,3 +244,32 @@ async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
         results.append(RtfmObject(label, url + fragment))
 
     return results
+
+
+async def asset_converter(ctx, assets):
+
+    assets = list(assets)
+    attachments = ctx.message.attachments
+
+    if not attachments and not assets:
+
+        assets.append(ctx.author)
+
+    images = []
+
+    for attachment in attachments:
+        if attachment.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
+            images.append(attachment)
+
+    for asset in assets:
+        if isinstance(asset, discord.PartialEmoji):
+            images.append(asset)
+
+        if isinstance(asset, (discord.User, discord.Member)):
+            avatar = asset.display_avatar
+            images.append(avatar)
+
+        if not images:
+            images.append(ctx.author.display_avatar)
+
+    return images[:10]

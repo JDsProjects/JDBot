@@ -179,31 +179,8 @@ class Test(commands.Cog):
         *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
     ):
 
-        assets = list(assets)
-        attachments = ctx.message.attachments
+        images = await utils.asset_converter(assets, images)
 
-        if not attachments and not assets:
-
-            assets.append(ctx.author)
-
-        images = []
-
-        for attachment in attachments:
-            if attachment.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
-                images.append(attachment)
-
-        for asset in assets:
-            if isinstance(asset, discord.PartialEmoji):
-                images.append(asset)
-
-            if isinstance(asset, (discord.User, discord.Member)):
-                avatar = asset.display_avatar
-                images.append(avatar)
-
-        if not images:
-            images.append(ctx.author.display_avatar)
-
-        images = images[:10]
         files = [asyncio.to_thread(self.test, await image.read()) for image in images]
         done, _ = await asyncio.wait(files)
 
@@ -220,31 +197,8 @@ class Test(commands.Cog):
         *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
     ):
 
-        assets = list(assets)
-        attachments = ctx.message.attachments
+        images = await utils.asset_converter(assets, images)
 
-        if not attachments and not assets:
-
-            assets.append(ctx.author)
-
-        images = []
-
-        for attachment in attachments:
-            if attachment.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
-                images.append(attachment)
-
-        for asset in assets:
-            if isinstance(asset, discord.PartialEmoji):
-                images.append(asset)
-
-            if isinstance(asset, (discord.User, discord.Member)):
-                avatar = asset.display_avatar
-                images.append(avatar)
-
-        if not images:
-            images.append(ctx.author.display_avatar)
-
-        images = images[:10]
         files = [asyncio.to_thread(utils.invert, await image.read()) for image in images]
         done, _ = await asyncio.wait(files)
 
@@ -262,31 +216,7 @@ class Test(commands.Cog):
         flag: typing.Optional[typing.Literal["--style 2"]],
     ):
 
-        assets = list(assets)
-        attachments = ctx.message.attachments
-
-        if not attachments and not assets:
-
-            assets.append(ctx.author)
-
-        images = []
-
-        for attachment in attachments:
-            if attachment.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
-                images.append(attachment)
-
-        for asset in assets:
-            if isinstance(asset, discord.PartialEmoji):
-                images.append(asset)
-
-            if isinstance(asset, (discord.User, discord.Member)):
-                avatar = asset.display_avatar
-                images.append(avatar)
-
-        if not images:
-            images.append(ctx.author.display_avatar)
-
-        images = images[:10]
+        images = await utils.asset_converter(assets, images)
 
         epic = None
 
@@ -303,6 +233,14 @@ class Test(commands.Cog):
         files = [discord.File(image, f"laugh.{image_type}") for image, image_type in files]
 
         await ctx.send(files=files)
+
+    @commands.command("half inverts using jeyy's api")
+    async def half_invert(
+        self,
+        ctx,
+        *assets: commands.Greedy[typing.Union[discord.PartialEmoji, discord.Member, discord.User]],
+    ):
+        await ctx.send("WIP")
 
     @commands.command(brief="add emoji to your guild lol")
     async def emoji_add(self, ctx):
