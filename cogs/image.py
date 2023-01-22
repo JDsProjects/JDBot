@@ -419,29 +419,6 @@ class Image(commands.Cog):
         embed.set_footer(text="his milk is delicious")
         await ctx.send(embed=embed)
 
-    @commands.command(help="inverts any valid image within the sr_api")
-    async def invert2(self, ctx, *, Member: utils.BetterMemberConverter = None):
-        Member = Member or ctx.author
-        y = 0
-        embeds = []
-
-        if ctx.message.attachments:
-            for a in ctx.message.attachments:
-                if a.filename.endswith(".png") or a.filename.endswith(".jpg"):
-                    url = a.url
-                    embeds.append(await utils.invert_converter(url, ctx))
-                    y += 1
-
-                if not a.filename.endswith(".png") or not a.filename.endswith(".jpg"):
-                    pass
-
-        if not ctx.message.attachments or y == 0:
-            url = (Member.display_avatar.with_format("png")).url
-            embeds.append(await utils.invert_converter(url, ctx))
-
-        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
-        await menu.send()
-
     @commands.command(help="Headpat generator :D")
     async def headpat(self, ctx, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
