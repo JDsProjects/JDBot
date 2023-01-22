@@ -179,7 +179,7 @@ class Test(commands.Cog):
         *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
     ):
 
-        images = await utils.asset_converter(assets, images)
+        images = await utils.asset_converter(ctx, assets)
 
         files = [asyncio.to_thread(self.test, await image.read()) for image in images]
         done, _ = await asyncio.wait(files)
@@ -197,7 +197,7 @@ class Test(commands.Cog):
         *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
     ):
 
-        images = await utils.asset_converter(assets, images)
+        images = await utils.asset_converter(ctx, assets)
 
         files = [asyncio.to_thread(utils.invert, await image.read()) for image in images]
         done, _ = await asyncio.wait(files)
@@ -216,7 +216,7 @@ class Test(commands.Cog):
         flag: typing.Optional[typing.Literal["--style 2"]],
     ):
 
-        images = await utils.asset_converter(assets, images)
+        images = await utils.asset_converter(ctx, assets)
 
         epic = None
 
