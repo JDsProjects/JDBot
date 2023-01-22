@@ -183,3 +183,7 @@ class WebhookConverter(commands.Converter):
             raise commands.BadArgument("Webhook not found.")
         else:
             return check
+
+
+image_union = typing.Union[discord.PartialEmoji, discord.Member, discord.User]
+image_union2 = typing.Union[image_union, str]

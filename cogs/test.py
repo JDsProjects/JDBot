@@ -176,7 +176,7 @@ class Test(commands.Cog):
     async def attachment(
         self,
         ctx,
-        *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
+        *assets: utils.image_union2,
     ):
 
         images = await utils.asset_converter(ctx, assets)
@@ -194,7 +194,7 @@ class Test(commands.Cog):
     async def invert3(
         self,
         ctx,
-        *assets: typing.Union[discord.PartialEmoji, discord.Member, discord.User, str],
+        *assets: utils.image_union2,
     ):
 
         images = await utils.asset_converter(ctx, assets)
@@ -211,7 +211,7 @@ class Test(commands.Cog):
     async def laugh(
         self,
         ctx,
-        assets: commands.Greedy[typing.Union[discord.PartialEmoji, discord.Member, discord.User]],
+        assets: commands.Greedy[utils.image_union],
         *,
         flag: typing.Optional[typing.Literal["--style 2"]],
     ):
@@ -238,7 +238,7 @@ class Test(commands.Cog):
     async def half_invert(
         self,
         ctx,
-        *assets: commands.Greedy[typing.Union[discord.PartialEmoji, discord.Member, discord.User]],
+        *assets: utils.image_union2,
     ):
         await ctx.send("WIP")
 
