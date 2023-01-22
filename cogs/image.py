@@ -515,7 +515,7 @@ class Image(commands.Cog):
         done, _ = await asyncio.wait(files)
 
         files = [file.result() for file in done]
-        files = [discord.File(image) for image in files]
+        files = [discord.File(image, "half_inverted.gif") for image in files]
 
         await ctx.send(files=files)
 
