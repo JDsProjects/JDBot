@@ -44,7 +44,7 @@ class Image(commands.Cog):
         url = await self.asuna.get_gif("slap")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} slapped you! Ow...", icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} slapped you! Ow...", icon_url=person.display_avatar.url)
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
 
@@ -64,9 +64,8 @@ class Image(commands.Cog):
     async def fox2(self, ctx):
         url = await self.asuna.get_gif("wholesome_foxes")
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(
-            name=f"{ctx.author} requested a wholesome fox picture", icon_url=(ctx.author.display_avatar.url)
-        )
+        embed.set_author(name=f"{ctx.author} requested a wholesome fox picture", icon_url=ctx.author.display_avatar.url)
+
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
         await ctx.send(embed=embed)
@@ -86,7 +85,7 @@ class Image(commands.Cog):
         url = await self.asuna.get_gif("pat")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} patted you! *pat pat pat*", icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} patted you! *pat pat pat*", icon_url=person.display_avatar.url)
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
 
@@ -147,7 +146,7 @@ class Image(commands.Cog):
         image = await self.sr_client.get_gif("hug")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} hugged you! Awwww...", icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} hugged you! Awwww...", icon_url=person.display_avatar.url)
         embed.set_image(url=image.url)
         embed.set_footer(text="powered by some random api")
 
@@ -211,7 +210,7 @@ class Image(commands.Cog):
         url = await self.asuna.get_gif("hug")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} super hugged you!", icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} super hugged you!", icon_url=person.display_avatar.url)
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
 
@@ -245,7 +244,7 @@ class Image(commands.Cog):
         url = await self.asuna.get_gif("kiss")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} kissed you", icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} kissed you", icon_url=person.display_avatar.url)
         embed.set_image(url=url.url)
         embed.set_footer(text="Why did I make this command? powered using the asuna.ga api")
 
@@ -267,7 +266,7 @@ class Image(commands.Cog):
         url = await self.asuna.get_gif("neko")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{ctx.author} requested a neko picture", icon_url=(ctx.author.display_avatar.url))
+        embed.set_author(name=f"{ctx.author} requested a neko picture", icon_url=ctx.author.display_avatar.url)
         embed.set_image(url=url.url)
         embed.set_footer(text="powered using the asuna.ga api")
         await ctx.send(embed=embed)
@@ -289,7 +288,7 @@ class Image(commands.Cog):
         image = await self.sr_client.get_gif("wink")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} winked at you", icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} winked at you", icon_url=person.display_avatar.url)
         embed.set_image(url=image.url)
         embed.set_footer(text="powered by some random api")
 
@@ -376,7 +375,7 @@ class Image(commands.Cog):
         r = await self.bot.session.get("https://api.senarc.online/misc/objection")
         res = await r.json()
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{ctx.author} yelled OBJECTION!", icon_url=(ctx.author.display_avatar.url))
+        embed.set_author(name=f"{ctx.author} yelled OBJECTION!", icon_url=ctx.author.display_avatar.url)
         embed.set_image(url=res["url"])
         embed.set_footer(text="Powered By Senarc Api!")
         await ctx.send(embed=embed)
