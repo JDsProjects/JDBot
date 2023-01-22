@@ -269,7 +269,7 @@ async def asset_converter(ctx, assets):
             avatar = asset.display_avatar
             images.append(avatar)
 
-        if not images:
-            images.append(ctx.author.display_avatar)
+    if not images:
+        images.append(ctx.author.display_avatar)
 
     return images[:10]
