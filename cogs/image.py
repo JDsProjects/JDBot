@@ -27,7 +27,7 @@ class Image(commands.Cog):
         self.jeyy_client = jeyyapi.JeyyAPIClient(session=self.bot.session)
         self.sr_client = sr_api.Client(session=self.bot.session)
         self.dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=self.bot.session)
-        self.asuna_api.Client(session=self.bot.session)
+        self.asuna = asuna_api.Client(session=self.bot.session)
 
     @commands.command(brief="a command to slap someone", help="this sends a slap gif to the target user")
     async def slap(self, ctx, *, Member: utils.BetterMemberConverter = None):
