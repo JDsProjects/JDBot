@@ -245,6 +245,15 @@ class Test(commands.Cog):
 
         # the actual asyncio.wait stuff will come here soon enough
 
+    @commands.command(help="takes a .png attachment or your avatar and makes a triggered version.")
+    async def triggered(self, ctx, *assets: utils.image_union2):
+
+        await ctx.send("Wip right now")
+        # menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        # await menu.send()
+
+        # will be updating the old one soon
+
     @commands.command(brief="add emoji to your guild lol")
     async def emoji_add(self, ctx):
         await ctx.send("WIP")

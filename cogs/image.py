@@ -162,13 +162,6 @@ class Image(commands.Cog):
             except discord.Forbidden:
                 await ctx.author.send("Failed DM'ing them...")
 
-    @commands.command(help="takes a .png attachment or your avatar and makes a triggered version.")
-    async def triggered(self, ctx, *assets: utils.image_union2):
-
-        await ctx.send("Wip right now")
-        # menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
-        # await menu.send()
-
     @commands.command(
         brief="uses our headpat program to pat you", help="a command that uses jeyyapi to make a headpat of you."
     )
