@@ -1,9 +1,11 @@
 import asyncio
 import functools
 import io
+import os
 import random
 
 import asuna_api
+import asyncdagpi
 import cairosvg
 import discord
 import jeyyapi
@@ -20,6 +22,13 @@ class Image(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    async def cog_load(self):
+
+        self.jeyy_client = jeyyapi.JeyyAPIClient(session=self.bot.session)
+        self.sr_client = sr_api.Client(session=self.bot.session)
+        self.dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=self.bot.session)
+        self.asuna_api.Client(session=self.bot.session)
+
     @commands.command(brief="a command to slap someone", help="this sends a slap gif to the target user")
     async def slap(self, ctx, *, Member: utils.BetterMemberConverter = None):
         Member = Member or ctx.author
@@ -32,8 +41,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        asuna = asuna_api.Client(session=self.bot.session)
-        url = await asuna.get_gif("slap")
+        url = await self.asuna.get_gif("slap")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} slapped you! Ow...", icon_url=(person.display_avatar.url))
@@ -54,8 +62,7 @@ class Image(commands.Cog):
 
     @commands.command(brief="a command to look up foxes", help="this known as wholesome fox to the asuna api")
     async def fox2(self, ctx):
-        asuna = asuna_api.Client(session=self.bot.session)
-        url = await asuna.get_gif("wholesome_foxes")
+        url = await self.asuna.get_gif("wholesome_foxes")
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(
             name=f"{ctx.author} requested a wholesome fox picture", icon_url=(ctx.author.display_avatar.url)
@@ -76,8 +83,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        asuna = asuna_api.Client(session=self.bot.session)
-        url = await asuna.get_gif("pat")
+        url = await self.asuna.get_gif("pat")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} patted you! *pat pat pat*", icon_url=(person.display_avatar.url))
@@ -108,10 +114,9 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        sr_client = sr_api.Client(session=self.bot.session)
-        image = await sr_client.get_gif("pat")
+        image = await self.sr_client.get_gif("pat")
         embed = discord.Embed(color=random.randint(0, 16777215))
-        embed.set_author(name=f"{person} patted you", icon_url=(person.display_avatar.url))
+        embed.set_author(name=f"{person} patted you", icon_url=person.display_avatar.url)
         embed.set_image(url=image.url)
         embed.set_footer(text="powered by some random api")
 
@@ -139,8 +144,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        sr_client = sr_api.Client(session=self.bot.session)
-        image = await sr_client.get_gif("hug")
+        image = await self.sr_client.get_gif("hug")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} hugged you! Awwww...", icon_url=(person.display_avatar.url))
@@ -160,27 +164,11 @@ class Image(commands.Cog):
                 await ctx.author.send("Failed DM'ing them...")
 
     @commands.command(help="takes a .png attachment or your avatar and makes a triggered version.")
-    async def triggered(self, ctx, *, Member: utils.BetterMemberConverter = None):
-        Member = Member or ctx.author
-        y = 0
-        embeds = []
+    async def triggered(self, ctx, *assets: utils.image_union2):
 
-        if ctx.message.attachments:
-            for a in ctx.message.attachments:
-                if a.filename.endswith(".png"):
-                    url = a.url
-                    embeds.append(await utils.triggered_converter(url, ctx))
-
-                    y += 1
-                if not a.filename.endswith(".png"):
-                    pass
-
-        if not ctx.message.attachments or y == 0:
-            url = (Member.display_avatar.with_format("png")).url
-            embeds.append(await utils.triggered_converter(url, ctx))
-
-        menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
-        await menu.send()
+        await ctx.send("Wip right now")
+        # menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
+        # await menu.send()
 
     @commands.command(
         brief="uses our headpat program to pat you", help="a command that uses jeyyapi to make a headpat of you."
@@ -220,8 +208,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        asuna = asuna_api.Client(session=self.bot.session)
-        url = await asuna.get_gif("hug")
+        url = await self.asuna.get_gif("hug")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} super hugged you!", icon_url=(person.display_avatar.url))
@@ -255,8 +242,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        asuna = asuna_api.Client(session=self.bot.session)
-        url = await asuna.get_gif("kiss")
+        url = await self.asuna.get_gif("kiss")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} kissed you", icon_url=(person.display_avatar.url))
@@ -277,8 +263,8 @@ class Image(commands.Cog):
 
     @commands.command(brief="a command to get a neko", help="using the asuna.ga api you will get these images")
     async def neko(self, ctx):
-        asuna = asuna_api.Client(session=self.bot.session)
-        url = await asuna.get_gif("neko")
+
+        url = await self.asuna.get_gif("neko")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{ctx.author} requested a neko picture", icon_url=(ctx.author.display_avatar.url))
@@ -300,8 +286,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        sr_client = sr_api.Client(session=self.bot.session)
-        image = await sr_client.get_gif("wink")
+        image = await self.sr_client.get_gif("wink")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} winked at you", icon_url=(person.display_avatar.url))
@@ -367,8 +352,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        sr_client = sr_api.Client(session=self.bot.session)
-        image = await sr_client.get_gif("face-palm")
+        image = await self.sr_client.get_gif("face-palm")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{target} you made {person} facepalm", icon_url=person.display_avatar.url)
@@ -521,8 +505,7 @@ class Image(commands.Cog):
 
     @commands.command(brief="Generates ace attronetry gifs")
     async def ace(self, ctx):
-        jeyy_client = jeyyapi.JeyyAPIClient(session=self.bot.session)
-        view = utils.AceView(ctx, jeyy_client)
+        view = utils.AceView(ctx, self.jeyy_client)
         await ctx.send(content="Please Pick a side to represent:", view=view)
 
 
