@@ -1069,7 +1069,7 @@ class UserInfoSuperSelects(discord.ui.Select):
                 value="avatar",
             ),
             discord.SelectOption(
-                label="status", description="Shows user's current status.", emoji="🖼️", value="status"
+                label="Status", description="Shows user's current status.", emoji="🖼️", value="status"
             ),
             discord.SelectOption(
                 label="Activities", description="Shows user's current Activities.", emoji="🏃", value="activities"
@@ -1247,7 +1247,7 @@ class OwnerSuperSelects(discord.ui.Select):
                 value="avatar",
             ),
             discord.SelectOption(
-                label="status", description="Shows Owner's current status.", emoji="🖼️", value="status"
+                label="Status", description="Shows Owner's current status.", emoji="🖼️", value="status"
             ),
             discord.SelectOption(
                 label="Guild Info",

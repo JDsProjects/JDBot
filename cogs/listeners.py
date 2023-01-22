@@ -134,7 +134,6 @@ class Events(commands.Cog):
     async def on_message_edit(self, before, after):
 
         if before.content != after.content:
-
             await self.bot.process_commands(after)
 
 
