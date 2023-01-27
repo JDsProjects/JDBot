@@ -522,8 +522,7 @@ class Owner(commands.Cog):
     )
     async def servers3(self, ctx):
 
-        guilds = [guild for guild in bot.guilds if bot_or_human(guild)]  
-
+        guilds = [guild for guild in bot.guilds if bot_or_human(guild)]
 
     @commands.command(brief="changes money of people(for moderation of economy)")
     async def money(self, ctx, user: typing.Optional[discord.User] = None, *, number: typing.Optional[int] = None):
