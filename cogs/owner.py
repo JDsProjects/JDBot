@@ -138,12 +138,8 @@ class Owner(commands.Cog):
                 f"[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}"
             )
 
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
         menu = utils.ServersEmbed(pag.pages, ctx=ctx, delete_after=True)
-
-        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+        view = utils.dm_or_ephemeral(ctx, menu)
 
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
@@ -187,12 +183,8 @@ class Owner(commands.Cog):
 
         pages = pag.pages or ["No shared servers"]
 
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
         menu = utils.MutualGuildsEmbed(pages, ctx=ctx, delete_after=True)
-
-        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+        view = utils.dm_or_ephemeral(ctx, menu)
 
         await ctx.send("Pick the way you want Mutual Guilds to be sent to you", view=view)
 
@@ -227,11 +219,7 @@ class Owner(commands.Cog):
         sus_users = list(self.bot.sus_users)
 
         menu = utils.SusUsersEmbed(sus_users, ctx=ctx, delete_after=True)
-
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
-        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+        view = utils.dm_or_ephemeral(ctx, menu)
 
         await ctx.send("Pick the way you want sus_users to be sent to you", view=view)
 
@@ -239,11 +227,7 @@ class Owner(commands.Cog):
     async def testers(self, ctx):
 
         menu = utils.TestersEmbed(self.bot.testers, ctx=ctx, delete_after=True)
-
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
-        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+        view = utils.dm_or_ephemeral(ctx, menu)
 
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
@@ -452,11 +436,7 @@ class Owner(commands.Cog):
             return await ctx.send("None Found")
 
         menu = utils.cdnViewer(self.bot.images, ctx=ctx, delete_after=True)
-
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
-        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+        view = utils.dm_or_ephemeral(ctx, menu)
 
         await ctx.send("Pick the way you want the list of images to be sent to you", view=view)
 
@@ -501,12 +481,8 @@ class Owner(commands.Cog):
                 f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n"
             )
 
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
         menu = utils.ServersEmbed(pag.pages, ctx=ctx, delete_after=True)
-
-        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+        view = utils.dm_or_ephemeral(ctx, menu)
 
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
@@ -530,12 +506,8 @@ class Owner(commands.Cog):
                 f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n"
             )
 
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
         menu = utils.ServersEmbed(pag.pages, ctx=ctx, delete_after=True)
-
-        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+        view = utils.dm_or_ephemeral(ctx, menu)
 
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
@@ -663,11 +635,7 @@ class Owner(commands.Cog):
             return await ctx.send("None is blacklisted :D")
 
         menu = utils.BlacklistedUsersEmbed(blacklisted_users, ctx=ctx, delete_after=True)
-
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
-        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+        view = utils.dm_or_ephemeral(ctx, menu)
 
         await ctx.send("Pick the way you want blacklisted users to be sent to you", view=view)
 

@@ -738,10 +738,9 @@ class TodoEmbed(Paginator):
 
 
 class dm_or_ephemeral(discord.ui.View):
-    def __init__(self, ctx, menu=None, channel: discord.DMChannel = None, **kwargs):
+    def __init__(self, ctx, menu=None, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.channel = channel
         self.menu = menu
 
     @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
@@ -758,7 +757,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.clear_items()
         await self.message.edit(content="Well be Dming you the paginator to view this info", view=self)
 
-        await self.menu.send(send_to=self.channel)
+        await self.menu.send(send_to=self.ctx.author)
 
     @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
