@@ -494,7 +494,7 @@ class Owner(commands.Cog):
     )
     async def servers3(self, ctx):
 
-        guilds = [guild for guild in bot.guilds if self.bot_or_human(guild)]
+        guilds = [guild for guild in self.bot.guilds if self.bot_or_human(guild)]
 
         pag = commands.Paginator(prefix="", suffix="")
         for g in guilds:
