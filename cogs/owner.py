@@ -539,7 +539,6 @@ class Owner(commands.Cog):
 
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
-
     @commands.command(brief="changes money of people(for moderation of economy)")
     async def money(self, ctx, user: typing.Optional[discord.User] = None, *, number: typing.Optional[int] = None):
 
