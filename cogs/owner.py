@@ -510,6 +510,21 @@ class Owner(commands.Cog):
 
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
+    def bot_or_human(guild):
+        bots = [m for m in guild.members if m.bot]
+        humans = [m for m in guild.members if not m.bot]
+
+        return len(bots) > len(humans)
+
+    @commands.command(
+        brief="a command to give a list of servers(owner only)",
+        help="Gives a list of guilds(Bot Owners only) but with suspicious guilds only.",
+    )
+    async def servers3(self, ctx):
+
+        guilds = [guild for guild in bot.guilds if bot_or_human(guild)]  
+
+
     @commands.command(brief="changes money of people(for moderation of economy)")
     async def money(self, ctx, user: typing.Optional[discord.User] = None, *, number: typing.Optional[int] = None):
 
