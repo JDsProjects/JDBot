@@ -522,7 +522,23 @@ class Owner(commands.Cog):
     )
     async def servers3(self, ctx):
 
-        guilds = [guild for guild in bot.guilds if bot_or_human(guild)]
+        guilds = [guild for guild in bot.guilds if self.bot_or_human(guild)]
+
+        pag = commands.Paginator(prefix="", suffix="")
+        for g in guilds:
+            pag.add_line(
+                f"{discord.utils.format_dt(g.me.joined_at, style = 'd')} {discord.utils.format_dt(g.me.joined_at, style = 'T')} \n[{len(g.members)}/{g.member_count}] **{g.name}** (`{g.id}`) | {(g.system_channel or g.text_channels[0]).mention}\n"
+            )
+
+        if ctx.author.dm_channel is None:
+            await ctx.author.create_dm()
+
+        menu = utils.ServersEmbed(pag.pages, ctx=ctx, delete_after=True)
+
+        view = utils.dm_or_ephemeral(ctx, menu, ctx.author.dm_channel)
+
+        await ctx.send("Pick the way you want servers to be sent to you", view=view)
+
 
     @commands.command(brief="changes money of people(for moderation of economy)")
     async def money(self, ctx, user: typing.Optional[discord.User] = None, *, number: typing.Optional[int] = None):
