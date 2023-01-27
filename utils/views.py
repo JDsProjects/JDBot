@@ -926,10 +926,7 @@ class UserInfoButton(discord.ui.Button):
                 content=f"Well be Dming you the paginator to view this info", view=self.view
             )
 
-            if self.view.ctx.author.dm_channel is None:
-                await self.view.ctx.author.create_dm()
-
-            await menu.send(send_to=self.view.ctx.author.dm_channel)
+            await menu.send(send_to=self.view.ctx.author)
 
         if self.custom_id == "2":
 

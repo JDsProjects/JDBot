@@ -72,9 +72,6 @@ class Webhook(commands.Cog):
 
                 await webhook.send(embed=embed)
 
-                if ctx.author.dm_channel is None:
-                    await ctx.author.create_dm()
-
                 try:
                     await ctx.author.send("Webhook url coming up")
                     await ctx.author.send(webhook.url)

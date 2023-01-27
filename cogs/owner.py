@@ -87,8 +87,7 @@ class Owner(commands.Cog):
             embed_message.set_author(name=f"Mail from: {ctx.author}", icon_url=(ctx.author.display_avatar.url))
             embed_message.set_footer(text=f"{ctx.author.id}")
             embed_message.set_thumbnail(url="https://i.imgur.com/1XvDnqC.png")
-            if user.dm_channel is None:
-                await user.create_dm()
+
             try:
                 await user.send(embed=embed_message)
             except:
@@ -331,10 +330,7 @@ class Owner(commands.Cog):
 
         menu = utils.ErrorEmbed(pages, ctx=ctx, delete_after=True)
 
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
-        await menu.send(send_to=ctx.author.dm_channel)
+        await menu.send(send_to=ctx.author)
 
         paste = await utils.post(self.bot, code=values)
         # max paste size is 400,000(find easiest to upload and to render then use textwrap in asyncio to handle it.)
@@ -535,10 +531,8 @@ class Owner(commands.Cog):
         channel = channel or ctx.channel
 
         if isinstance(channel, discord.User):
-            if channel.dm_channel is None:
-                await channel.create_dm()
 
-            channel = channel.dm_channel
+            channel = ctx.author
 
             view = utils.BasicButtons(ctx)
             await ctx.send(f"Are you sure you want to send it to {channel} ?", view=view)

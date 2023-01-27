@@ -52,8 +52,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-            if target.dm_channel is None:
-                await target.create_dm()
 
             try:
                 await target.send(content=target.mention, embed=embed)
@@ -93,8 +91,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-            if target.dm_channel is None:
-                await target.create_dm()
 
             try:
                 await target.send(content=target.mention, embed=embed)
@@ -123,8 +119,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-            if target.dm_channel is None:
-                await target.create_dm()
 
             try:
                 await target.send(content=target.mention, embed=embed)
@@ -154,8 +148,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-            if target.dm_channel is None:
-                await target.create_dm()
 
             try:
                 await target.send(content=target.mention, embed=embed)
@@ -211,8 +203,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-            if target.dm_channel is None:
-                await target.create_dm()
 
             try:
                 await target.send(content=target.mention, embed=embed)
@@ -245,8 +235,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-            if target.dm_channel is None:
-                await target.create_dm()
 
             try:
                 await target.send(content=target.mention, embed=embed)
@@ -289,8 +277,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-            if target.dm_channel is None:
-                await target.create_dm()
 
             try:
                 await target.send(content=target.mention, embed=embed)
@@ -355,8 +341,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-            if target.dm_channel is None:
-                await target.create_dm()
 
             try:
                 await target.send(content=target.mention, embed=embed)

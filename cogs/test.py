@@ -121,9 +121,6 @@ class Test(commands.Cog):
             author_name=username.data,
         )
 
-        if ctx.author.dm_channel is None:
-            await ctx.author.create_dm()
-
         view = utils.TweetsDestinationHandler(ctx=ctx, pagintor=menu)
 
         view.message = await ctx.send("Please pick a way tweets are sent to you\nMethods are below:", view=view)

@@ -369,9 +369,6 @@ class Extra(commands.Cog):
             for x in [708167737381486614, 168422909482762240]:
                 apply_user = await self.bot.try_user(x)
 
-            if apply_user.dm_channel is None:
-                await apply_user.create_dm()
-
             embed_message = discord.Embed(
                 title=args, color=random.randint(0, 16777215), timestamp=(ctx.message.created_at)
             )

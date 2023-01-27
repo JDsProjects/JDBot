@@ -30,9 +30,6 @@ class Moderation(commands.Cog):
             embed.set_image(url="https://i.imgur.com/jDLcaYc.gif")
             embed.set_footer(text=f"ID: {ctx.author.id}")
 
-            if Member.dm_channel is None:
-                await Member.create_dm()
-
             try:
                 await Member.send(embed=embed)
 
@@ -43,9 +40,6 @@ class Moderation(commands.Cog):
                 text=f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}"
             )
             await self.bot.support_webhook.send(embed=embed)
-
-            if ctx.author.dm_channel is None:
-                await ctx.author.create_dm()
 
             try:
                 await ctx.author.send(content=f"Why did you warn {Member}?")
