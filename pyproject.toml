@@ -23,7 +23,7 @@ better-profanity = "^0.7.0"
 "discord.py" = {git = "https://github.com/Rapptz/discord.py.git", extras = ["voice", "speed"], branch="master"}
 async-tio = "^1.1.0"
 jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi", branch = "main"}
-tabulate = "^0.8.9"
+tabulate = ">= 0.8.9"
 asyncpg = "^0.25.0"
 psutil = "^5.8.0"
 black = "^21.12b0"
