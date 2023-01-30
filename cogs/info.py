@@ -379,7 +379,7 @@ class DevTools(commands.Cog):
                 return f"Could not find anything with {args}."
 
             else:
-                results = [utils.RtfmObject(r, unfiltered_results[r]) for r in results]
+                results = [utils.RtfmObject(r[0], unfiltered_results[r[0]]) for r in results]
 
                 return results
 
