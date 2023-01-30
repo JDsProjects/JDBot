@@ -22,6 +22,7 @@ from discord.app_commands import Choice
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
+from rapidfuzz import fuzz, process
 
 import utils
 
@@ -371,7 +372,7 @@ class DevTools(commands.Cog):
 
             unfiltered_results = dict(await utils.rtfm(self.bot, url))
 
-            results = get_close_matches(args, list(unfiltered_results), n=10, cutoff=0.6)
+            results = process.extract(args, list(unfiltered_results), scorer=fuzz.WRatio, limit=10, score_cutoff=0.6)
             # this still needs to be fixed.
 
             if not results:
