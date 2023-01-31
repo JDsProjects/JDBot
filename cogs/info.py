@@ -444,10 +444,12 @@ class DevTools(commands.Cog):
         unfiltered_results = dict(await utils.rtfm(self.bot, url))
         results = get_close_matches(current, list(unfiltered_results), n=10, cutoff=0.6)
 
+        results = process.extract(current, list(unfiltered_results), scorer=fuzz.WRatio, limit=10, score_cutoff=0.6)
+
         if not results:
             return [Choice(name="No results found", value="No Results Found")]
 
-        results = [utils.RtfmObject(r, unfiltered_results[r]) for r in results]
+        results = [utils.RtfmObject(r[0], unfiltered_results[r[0]]) for r in results]
 
         to_slice_link = len(url)
         all_choices: list[Choice] = [Choice(name=result.name, value=result.url) for result in results]
