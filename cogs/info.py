@@ -445,6 +445,8 @@ class DevTools(commands.Cog):
 
         results = process.extract(current, list(unfiltered_results), scorer=fuzz.WRatio, limit=10, score_cutoff=0.6)
 
+        print(results)
+
         if not results:
             return [Choice(name="No results found", value="No Results Found")]
 
