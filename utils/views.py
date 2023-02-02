@@ -551,7 +551,6 @@ class PrefixesEmbed(Paginator):
 
 class LeaderboardEmbed(Paginator):
     async def format_page(self, item):
-
         emby = discord.Embed(title="Leaderboard", color=15428885)
         emby.set_author(
             name=f"Leaderboard Requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
@@ -600,7 +599,6 @@ class BlacklistedUsersEmbed(Paginator):
 
 class ErrorEmbed(Paginator):
     async def format_page(self, item):
-
         item = discord.utils.escape_markdown(item, as_needed=False, ignore_links=True)
         return discord.Embed(title="Error", description=item, color=random.randint(0, 16777215))
 
@@ -631,7 +629,6 @@ class charinfoMenu(Paginator):
 class InviteInfoEmbed(Paginator):
     async def format_page(self, item):
         if isinstance(item, discord.Invite):
-
             if item.guild:
                 image = item.guild.icon.url if item.guild.icon else "https://i.imgur.com/3ZUrjUP.png"
                 guild = item.guild
@@ -668,7 +665,6 @@ class InviteInfoEmbed(Paginator):
 
 class GoogleEmbed(Paginator):
     async def format_page(self, item):
-
         embed = discord.Embed(
             title="Gooogle Search",
             description=f"[{item.title}]({item.link}) \n{item.snippet}",
@@ -698,7 +694,6 @@ def guild_join(guilds):
 
 
 def grab_mutualguilds(ctx, user):
-
     if isinstance(user, discord.ClientUser):
         return ctx.author.mutual_guilds
 
@@ -745,7 +740,6 @@ class dm_or_ephemeral(discord.ui.View):
 
     @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         self.clear_items()
         await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
 
@@ -753,7 +747,6 @@ class dm_or_ephemeral(discord.ui.View):
 
     @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         self.clear_items()
         await self.message.edit(content="Well be Dming you the paginator to view this info", view=self)
 
@@ -761,12 +754,10 @@ class dm_or_ephemeral(discord.ui.View):
 
     @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         self.clear_items()
         await self.message.edit(content=f"not sending the paginator to you", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
@@ -831,7 +822,6 @@ class TweetsDestinationHandler(discord.ui.View):
 
 class TweetsPaginator(Paginator):
     class ShowImagesButton(Button):
-
         view: "TweetsPaginator"
 
         def __init__(self) -> None:
@@ -898,7 +888,6 @@ class UserInfoButton(discord.ui.Button):
         super().__init__(style=style, label=label, emoji=emoji, custom_id=custom_id)
 
     async def callback(self, interaction: discord.Interaction):
-
         guilds_list = grab_mutualguilds(self.view.ctx, self.view.user)
 
         pag = commands.Paginator(prefix="", suffix="")
@@ -915,13 +904,11 @@ class UserInfoButton(discord.ui.Button):
                 self.view.remove_item(child)
 
         if self.custom_id == "0":
-
             await self.view.message.edit(content="Will be sending you the information, ephemerally", view=self.view)
 
             await menu.send(interaction=interaction, ephemeral=True)
 
         if self.custom_id == "1":
-
             await interaction.response.edit_message(
                 content=f"Well be Dming you the paginator to view this info", view=self.view
             )
@@ -929,7 +916,6 @@ class UserInfoButton(discord.ui.Button):
             await menu.send(send_to=self.view.ctx.author)
 
         if self.custom_id == "2":
-
             await interaction.response.edit_message(content=f"not sending the paginator to you", view=self.view)
 
 
@@ -939,7 +925,6 @@ def profile_converter(
         discord.Status, discord.UserFlags, discord.Activity, discord.BaseActivity, discord.Spotify, str
     ],
 ):
-
     badges_emoji = {
         UserFlags.staff: "<:discord_staff:1040719569116999680>",
         UserFlags.partner: "<:discord_partner:1040723650162212985>",
@@ -1016,7 +1001,6 @@ def profile_converter(
 
 
 def status_collect(user):
-
     statuses = []
 
     for name, status in (
@@ -1031,7 +1015,6 @@ def status_collect(user):
 
 
 def badge_collect(user):
-
     badges = [profile_converter("badges", f) for f in user.public_flags.all()] if user.public_flags else []
     if user.bot:
         badges.append(profile_converter("badges", "bot"))
@@ -1043,7 +1026,6 @@ def badge_collect(user):
 
 
 def activity_collect(user):
-
     activities = [profile_converter("activity", activity) for activity in user.activities] if user.activities else []
     return activities
 
@@ -1112,7 +1094,6 @@ class UserInfoSuperSelects(discord.ui.Select):
             activities = activity_collect(user)
 
         else:
-
             nickname = "None Found"
             joined_guild = "N/A"
             highest_role = "None Found"
@@ -1139,7 +1120,6 @@ class UserInfoSuperSelects(discord.ui.Select):
             )
 
         if choice == "badges":
-
             badges = badge_collect(user)
             join_badges: str = "\u0020".join(badges) if badges else "N/A"
 
@@ -1177,9 +1157,7 @@ class UserInfoSuperSelects(discord.ui.Select):
             )
 
         if choice == "banner":
-
             if self.banner is None and not self.banner_fetched:
-
                 try:
                     user_banner = await interaction.client.fetch_user(user.id)
 
@@ -1216,7 +1194,6 @@ class UserInfoSuper(discord.ui.View):
         self.add_item((UserInfoSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
@@ -1268,7 +1245,6 @@ class OwnerSuperSelects(discord.ui.Select):
         super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction):
-
         choice = self.values[0]
 
         user = self.view.user
@@ -1283,7 +1259,6 @@ class OwnerSuperSelects(discord.ui.Select):
             statuses = status_collect(user)
 
         else:
-
             nickname = "None Found"
             joined_guild = "N/A"
             highest_role = "None Found"
@@ -1310,7 +1285,6 @@ class OwnerSuperSelects(discord.ui.Select):
             )
 
         if choice == "badges":
-
             badges = badge_collect(user)
             join_badges: str = "\u0020".join(badges) if badges else "N/A"
 
@@ -1345,9 +1319,7 @@ class OwnerSuperSelects(discord.ui.Select):
             )
 
         if choice == "banner":
-
             if self.banner is None and not self.banner_fetched:
-
                 try:
                     user_banner = await interaction.client.fetch_user(user.id)
 
@@ -1387,7 +1359,6 @@ class OwnerInfoSuper(discord.ui.View):
         self.add_item((OwnerSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
@@ -1444,14 +1415,12 @@ class GuildInfoSelects(discord.ui.Select):
         super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction):
-
         choice = self.values[0]
         guild = self.view.guild
 
         embed = discord.Embed(title=f"{guild}", color=random.randint(0, 16777215))
 
         if choice == "basic":
-
             embed.add_field(
                 name="Guild Info:",
                 value=f"**Server Name**: {guild} \n**ID**: {guild.id}",
@@ -1463,7 +1432,6 @@ class GuildInfoSelects(discord.ui.Select):
             return await interaction.response.edit_message(content="Select Completed", view=self.view, embed=None)
 
         if choice == "misc":
-
             # guild type maybe?
             # Type: {} \n
             # placed if maybe used, likely no though.
@@ -1475,13 +1443,11 @@ class GuildInfoSelects(discord.ui.Select):
             )
 
         if choice == "owner":
-
             embed.add_field(name="Owner:", value=f"**Name**: {guild.owner} \n**ID**: {guild.owner_id}")
 
         embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 
         if choice == "icon":
-
             embed = discord.Embed(color=random.randint(0, 16777215))
             embed.set_author(
                 name=f"{guild}'s icon:", icon_url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png"
@@ -1496,7 +1462,6 @@ class GuildInfoSelects(discord.ui.Select):
             )
 
         if choice == "bot_or_human":
-
             bots = [m for m in guild.members if m.bot]
             humans = [m for m in guild.members if not m.bot]
 
@@ -1508,7 +1473,6 @@ class GuildInfoSelects(discord.ui.Select):
             # {var:,} for comma handling soon
 
         if choice == "statuses":
-
             base_status = collections.Counter([x.status for x in guild.members])
             online_users = base_status[discord.Status.online]
             dnd_users = base_status[discord.Status.dnd]
@@ -1521,7 +1485,6 @@ class GuildInfoSelects(discord.ui.Select):
             )
 
         if choice == "emoji_data":
-
             static_emojis = sum(not e.animated for e in guild.emojis)
             animated_emojis = sum(e.animated for e in guild.emojis)
             usable_emojis = sum(e.available for e in guild.emojis)
@@ -1532,7 +1495,6 @@ class GuildInfoSelects(discord.ui.Select):
             )
 
         if choice == "extra":
-
             animated_value = guild.icon.is_animated() if guild.icon else False
             embed.add_field(
                 name="Extra Info:",
@@ -1551,7 +1513,6 @@ class GuildInfoView(discord.ui.View):
         self.add_item((GuildInfoSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
@@ -1572,7 +1533,6 @@ class BasicButtons(discord.ui.View):
 
     @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅")
     async def accept(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         self.clear_items()
         await interaction.response.edit_message(view=self)
         self.value = True
@@ -1580,14 +1540,12 @@ class BasicButtons(discord.ui.View):
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         self.clear_items()
         await interaction.response.edit_message(view=self)
         self.value = False
         self.stop()
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
@@ -1614,7 +1572,6 @@ class DeleteButtonView(discord.ui.View):
         self.add_item(DeleteButton())
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         owner_check = await interaction.client.is_owner(interaction.user)
 
         if owner_check or interaction.user.id == self.ctx.author.id:
@@ -1635,7 +1592,6 @@ class BasicShuffleQuestion(discord.ui.View):
 
     @discord.ui.button(label="Closest", style=discord.ButtonStyle.success, emoji="🔍")
     async def closest(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         self.clear_items()
         await interaction.response.edit_message(view=self)
         self.value = False
@@ -1643,14 +1599,12 @@ class BasicShuffleQuestion(discord.ui.View):
 
     @discord.ui.button(label="shuffle", style=discord.ButtonStyle.danger, emoji="🔀")
     async def shuffle(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         self.clear_items()
         await interaction.response.edit_message(view=self)
         self.value = True
         self.stop()
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
@@ -1667,7 +1621,6 @@ class BotSettings(discord.ui.View):
 
     @discord.ui.button(label="Suspend", style=discord.ButtonStyle.danger, emoji="🔒", row=0)
     async def suspend(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(
             content="Alright Suspending the bot(check the confirmation you will get).", view=None
         )
@@ -1676,7 +1629,6 @@ class BotSettings(discord.ui.View):
 
     @discord.ui.button(label="Unsuspend", style=discord.ButtonStyle.success, emoji="🔓", row=0)
     async def unsuspend(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="Unsuspended the bot :)", view=None)
         interaction.client.suspended = False
 
@@ -1686,7 +1638,6 @@ class BotSettings(discord.ui.View):
 
     @discord.ui.button(label="Prefixless", style=discord.ButtonStyle.success, emoji="<_:973270656860958730>", row=1)
     async def Prefixless(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="owner only blank prefixes are enabled", view=None)
         interaction.client.prefixless = True
 
@@ -1696,7 +1647,6 @@ class BotSettings(discord.ui.View):
 
     @discord.ui.button(label="Prefix", style=discord.ButtonStyle.danger, emoji="<:_:973270656969998376> ", row=1)
     async def prefix_back(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="Requiring everyone to use prefixes again", view=None)
         interaction.client.prefixless = False
 
@@ -1706,11 +1656,9 @@ class BotSettings(discord.ui.View):
 
     @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="✖️", row=2)
     async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="Canceling, this boss.", view=None)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
@@ -1727,26 +1675,21 @@ class TokenInvalidatorSettings(discord.ui.View):
 
     @discord.ui.button(label="DM ☑️", style=discord.ButtonStyle.success, emoji="📩", row=0)
     async def dm_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="DM Invalidation On", view=None, embed=None)
 
     @discord.ui.button(label="Global ☑️", style=discord.ButtonStyle.success, emoji="<:_:411642484528119810>", row=0)
     async def global_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="Global Token Invalidator", view=None, embed=None)
 
     @discord.ui.button(label="Guild ☑️", style=discord.ButtonStyle.success, emoji="<a:_:803876680166408192> ", row=0)
     async def guild_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="Guild Token Invalidator", view=None, embed=None)
 
     @discord.ui.button(label="Channel ☑️", style=discord.ButtonStyle.success, emoji="<a:_:803876680166408192> ", row=0)
     async def channel_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="Channel Token Invalidator", view=None, embed=None)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
@@ -1768,7 +1711,6 @@ class TokenInvalidatorSettings(discord.ui.View):
 class nitroButtons(discord.ui.View):
     @discord.ui.button(label=f'{"Claim":⠀^37}', custom_id="fun (nitro)", style=discord.ButtonStyle.success)
     async def nitroButton(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.send_message(content="Oh no it was a fake", ephemeral=True)
         await asyncio.sleep(2)
 
@@ -1819,7 +1761,6 @@ class ReRun(discord.ui.View):
 
     @discord.ui.button(label="Rerun", style=discord.ButtonStyle.success, emoji="🔁")
     async def rerun(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(view=None)
         self.view.message = await interaction.followup.send(
             content=self.view.content, embed=self.view.embed, ephemeral=True, view=self.view, wait=True
@@ -1827,7 +1768,6 @@ class ReRun(discord.ui.View):
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
     async def exit(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(view=None)
 
     async def on_timeout(self):
@@ -1837,7 +1777,6 @@ class ReRun(discord.ui.View):
         await self.view.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
@@ -1963,7 +1902,6 @@ class RpsGame(discord.ui.View):
         )
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
@@ -2020,7 +1958,6 @@ class CoinFlip(discord.ui.View):
         await self.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
@@ -2081,7 +2018,6 @@ class GuessingGame(discord.ui.View):
         await self.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't play this game, {self.ctx.author.mention} is the user playing this game.",
@@ -2096,7 +2032,6 @@ class GuessingGame(discord.ui.View):
 
 class RtfmSelects(discord.ui.Select):
     def __init__(self, options):
-
         super().__init__(placeholder="Chose a library to lookup from.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
@@ -2118,7 +2053,6 @@ class RtfmChoice(discord.ui.View):
         )
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.",
@@ -2136,7 +2070,6 @@ class RtfmChoice(discord.ui.View):
 
 class JobSelects(discord.ui.Select):
     def __init__(self, options):
-
         super().__init__(placeholder="Chose a Job to do.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
@@ -2156,7 +2089,6 @@ class JobChoice(discord.ui.View):
         self.add_item(JobSelects([discord.SelectOption(label=o["job_name"], emoji="🧑‍💼") for o in jobs]))
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.",
@@ -2174,7 +2106,6 @@ class JobChoice(discord.ui.View):
 
 class SubRedditSelects(discord.ui.Select):
     def __init__(self, options):
-
         super().__init__(placeholder="Chose a Subreddit.", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
@@ -2198,7 +2129,6 @@ class SubredditChoice(discord.ui.View):
         )
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Select, {self.ctx.author.mention} is the author of this message.",
@@ -2364,7 +2294,6 @@ class CodeBlockView(discord.ui.View):
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
@@ -2382,7 +2311,6 @@ class CodeBlockView(discord.ui.View):
 
     @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅", custom_id="accept")
     async def accept(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         for i in self.children:
             if i.custom_id == "accept" or i.custom_id == "Deny":
                 i.disabled = True
@@ -2392,7 +2320,6 @@ class CodeBlockView(discord.ui.View):
 
     @discord.ui.button(label="Deny", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="Deny")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         for i in self.children:
             if i.custom_id == "accept" or i.custom_id == "Deny":
                 i.disabled = True
@@ -2438,7 +2365,6 @@ class MailView(discord.ui.View):
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
@@ -2525,7 +2451,6 @@ class ChatBotView(discord.ui.View):
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
@@ -2556,7 +2481,6 @@ class ChatBotView(discord.ui.View):
 
     @discord.ui.button(label="Close", style=discord.ButtonStyle.success, emoji="✖️")
     async def Close(self, interaction: discord.Interaction, button: discord.ui.Button):
-
         await interaction.response.edit_message(content="Closing ChatBot", view=None)
 
 
@@ -2587,7 +2511,6 @@ class ReportView(discord.ui.View):
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
@@ -2641,7 +2564,6 @@ class AddBotView(discord.ui.View):
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",
@@ -2709,7 +2631,6 @@ class AceView(discord.ui.View):
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
-
         if self.ctx.author.id != interaction.user.id:
             return await interaction.response.send_message(
                 content=f"You Can't Use that Button, {self.ctx.author.mention} is the author of this message.",

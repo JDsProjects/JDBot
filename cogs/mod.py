@@ -24,7 +24,6 @@ class Moderation(commands.Cog):
         # soon
 
         if warn_useable:
-
             embed = discord.Embed(color=random.randint(0, 16777215))
             embed.set_author(name=f"You have been warned by {ctx.author}", icon_url=("https://i.imgur.com/vkleJ9a.png"))
             embed.set_image(url="https://i.imgur.com/jDLcaYc.gif")
@@ -59,7 +58,6 @@ class Moderation(commands.Cog):
     )
     async def scan_guild(self, ctx):
         if isinstance(ctx.channel, discord.TextChannel):
-
             sus_users = dict(await self.bot.db.fetch("SELECT * FROM SUS_USERS;"))
             count = 0
 
@@ -84,7 +82,6 @@ class Moderation(commands.Cog):
     @commands.cooldown(1, 90, BucketType.user)
     @commands.command(brief="scan globally per guild")
     async def scan_global(self, ctx):
-
         sus_users = dict(await self.bot.db.fetch("SELECT * FROM SUS_USERS;"))
 
         ss_users = [await self.bot.try_user(u) for u in sus_users if not None]
@@ -103,7 +100,6 @@ class Moderation(commands.Cog):
 
     @commands.command(brief="gives stats about the sus users")
     async def ss_stats(self, ctx):
-
         sus_users = dict(await self.bot.db.fetch("SELECT * FROM SUS_USERS;"))
         await ctx.send(content=f"Total sus user count: {len(sus_users)}")
 
@@ -124,7 +120,6 @@ class Moderation(commands.Cog):
         help="a way to report a user, who might appear in the sus list. also please provide ids and reasons"
     )
     async def report(self, ctx, *, user: utils.BetterUserconverter = None):
-
         if not user:
             await ctx.send("Please Pick a user to report like this.")
             return await ctx.send_help(ctx.command)
@@ -136,7 +131,6 @@ class Moderation(commands.Cog):
         await modal.wait()
 
         if modal.value:
-
             embed = discord.Embed(color=random.randint(0, 16777215))
             embed.set_author(name=f"Report by {ctx.author}", icon_url=ctx.author.display_avatar.url)
             embed.add_field(name="Details:", value=modal.value)
@@ -150,7 +144,6 @@ class Moderation(commands.Cog):
 
     @commands.command(brief="cleat amount/purge messages above to 100 msgs each", aliases=["purge"])
     async def clear(self, ctx, *, amount: typing.Optional[int] = None):
-
         if not amount:
             return await ctx.send("you didn't give an amount to use to clear.")
 
@@ -174,7 +167,6 @@ class Moderation(commands.Cog):
 
     @commands.command(brief="Unarchives thread channel")
     async def unlock_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
-
         channel = channel or ctx.channel
 
         if isinstance(channel, discord.Thread):
@@ -197,7 +189,6 @@ class Moderation(commands.Cog):
 
     @commands.command(brief="Unarchives thread channel")
     async def archive_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
-
         channel = channel or ctx.channel
 
         if isinstance(channel, discord.Thread):
@@ -220,7 +211,6 @@ class Moderation(commands.Cog):
 
     @commands.command(brief="locks the thread channel")
     async def lock_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
-
         channel = channel or ctx.channel
 
         if isinstance(channel, discord.Thread):
@@ -243,7 +233,6 @@ class Moderation(commands.Cog):
 
     @commands.command(brief="unlocks the thread channel")
     async def unlock_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
-
         channel = channel or ctx.channel
 
         if isinstance(channel, discord.Thread):

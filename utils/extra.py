@@ -210,7 +210,6 @@ class RtfmObject(NamedTuple):
 
 
 async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
-
     # wip
     async with await bot.session.get(f"{url}objects.inv") as response:
         lines = (await response.read()).split(b"\n")
@@ -247,12 +246,10 @@ async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
 
 
 async def asset_converter(ctx, assets):
-
     assets = list(assets)
     attachments = ctx.message.attachments
 
     if not attachments and not assets:
-
         assets.append(ctx.author)
 
     images = []

@@ -106,7 +106,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="Changes Bot Status(Owner Only)")
     async def status(self, ctx, *, args=None):
-
         await self.bot.change_presence(
             status=discord.Status.do_not_disturb,
             activity=discord.Activity(type=discord.ActivityType.watching, name=args),
@@ -130,7 +129,6 @@ class Owner(commands.Cog):
         brief="a command to give a list of servers(owner only)", help="Gives a list of guilds(Bot Owners only)"
     )
     async def servers(self, ctx):
-
         pag = commands.Paginator(prefix="", suffix="")
         for g in self.bot.guilds:
             pag.add_line(
@@ -207,7 +205,6 @@ class Owner(commands.Cog):
             await ctx.send("You can't have a none user.")
 
         if user:
-
             await self.bot.db.execute("DELETE FROM sus_users WHERE user_id = $1", user.id)
             if user.id in self.bot.sus_users:
                 del self.bot.sus_users[user.id]
@@ -224,7 +221,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="a command listed all the commands")
     async def testers(self, ctx):
-
         menu = utils.TestersEmbed(self.bot.testers, ctx=ctx, delete_after=True)
         view = utils.dm_or_ephemeral(ctx, menu)
 
@@ -302,7 +298,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="backs up a channel and then sends it into a file or Senarc Bin")
     async def channel_backup(self, ctx):
-
         messages = [message async for message in ctx.channel.history(limit=None, oldest_first=True)]
 
         new_line = "\n"
@@ -380,7 +375,6 @@ class Owner(commands.Cog):
             await ctx.send("You can't have a non existent user.")
 
         if user:
-
             await self.bot.db.execute("DELETE FROM testers_list WHERE user_id = ($1)", user.id)
 
             if not user.id in self.bot.testers:
@@ -407,12 +401,10 @@ class Owner(commands.Cog):
 
     @commands.command(brief="sends tweet to JDBot Twitter", aliases=["tweet_send", "tweet"])
     async def send_tweet(self, ctx, *, args=None):
-
         if not args:
             return await ctx.send("you can't send nothing to twitter.")
 
         try:
-
             post = await self.bot.tweet_client.create_tweet(text=args, user_auth=True)
 
         except Exception as e:
@@ -427,7 +419,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="A command to view the cdn's images")
     async def cdn_view(self, ctx):
-
         if not self.bot.images:
             return await ctx.send("None Found")
 
@@ -468,7 +459,6 @@ class Owner(commands.Cog):
         help="Gives a list of guilds(Bot Owners only) but with join dates updated.",
     )
     async def servers2(self, ctx):
-
         sorted_guilds = sorted(self.bot.guilds, key=lambda guild: guild.me.joined_at)
 
         pag = commands.Paginator(prefix="", suffix="")
@@ -493,7 +483,6 @@ class Owner(commands.Cog):
         help="Gives a list of guilds(Bot Owners only) but with suspicious guilds only.",
     )
     async def servers3(self, ctx):
-
         guilds = [guild for guild in self.bot.guilds if self.bot_or_human(guild)]
 
         pag = commands.Paginator(prefix="", suffix="")
@@ -509,7 +498,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="changes money of people(for moderation of economy)")
     async def money(self, ctx, user: typing.Optional[discord.User] = None, *, number: typing.Optional[int] = None):
-
         user = user or ctx.author
         number = number or 100
 
@@ -527,11 +515,9 @@ class Owner(commands.Cog):
         *,
         args=None,
     ):
-
         channel = channel or ctx.channel
 
         if isinstance(channel, discord.User):
-
             channel = ctx.author
 
             view = utils.BasicButtons(ctx)
@@ -554,9 +540,7 @@ class Owner(commands.Cog):
         bot_member = channel.me if isinstance(channel, discord.DMChannel) else channel.guild.me
 
         if channel.permissions_for(bot_member).send_messages:
-
             if isinstance(bot_member, discord.Member):
-
                 author_member = await self.bot.try_member(bot_member.guild, ctx.author.id)
 
                 channel = channel if author_member else ctx.channel
@@ -574,7 +558,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="manages a couple of bot settings")
     async def owner_settings(self, ctx):
-
         view = utils.BotSettings(ctx)
 
         embed = discord.Embed(
@@ -610,12 +593,10 @@ class Owner(commands.Cog):
 
     @commands.command(brief="a command to blacklist users with a reason")
     async def unblacklist(self, ctx, *, user: utils.BetterUserconverter = None):
-
         if user is None:
             await ctx.send("You can't have a none user.")
 
         if user:
-
             await self.bot.db.execute("DELETE FROM BLACKLISTED_USERS WHERE user_id = $1", user.id)
             if user.id in self.bot.blacklisted_users:
                 del self.bot.blacklisted_users[user.id]
@@ -635,7 +616,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="adds a job for economy")
     async def addjob(self, ctx, amount: typing.Optional[int] = None, *, job=None):
-
         if not job:
             return await ctx.send("Please make sure to add a job in.")
 
@@ -660,7 +640,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="adds subreddit to the subreddit database")
     async def add_reddit(self, ctx, *, reddit=None):
-
         if not reddit:
             return await ctx.send("Please make sure to add a reddit in.")
 
@@ -675,7 +654,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="Removes subreddit from database")
     async def remove_reddit(self, ctx, *, reddit=None):
-
         if reddit is None:
             return await ctx.send("You can't remove None")
 

@@ -161,7 +161,7 @@ class EmojiConverter(Converter[Any]):
         valid_emojis = []
         invalid_emojis = []
         parsed_output = self.parse_emojis(argument.strip())
-        for (texts, line) in parsed_output:
+        for texts, line in parsed_output:
             for text in texts:
                 if text.strip():
                     invalid_emojis.append(text.strip())

@@ -70,7 +70,6 @@ class Events(commands.Cog):
         test = await self.bot.get_context(message)
 
         if (test.valid) == False and test.prefix != None and test.command is None and test.prefix != "":
-
             embed_message = discord.Embed(
                 title=f" {test.prefix}{test.invoked_with}",
                 description=f"{discord.utils.format_dt(message.created_at, style = 'd')} {discord.utils.format_dt(message.created_at, style = 'T')}",
@@ -85,7 +84,6 @@ class Events(commands.Cog):
             await self.bot.support_webhook.send(embed=embed_message)
 
         if re.fullmatch(rf"<@!?{self.bot.user.id}>", message.content) and not test.valid and not test.author.bot:
-
             prefixes = await self.bot.get_prefix(message)
             pag = commands.Paginator(prefix="", suffix="")
             for p in prefixes:
@@ -96,7 +94,6 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-
         if hasattr(ctx.command, "on_error"):
             print("command has error handler lol")
             return
@@ -132,7 +129,6 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_edit(self, before, after):
-
         if before.content != after.content:
             await self.bot.process_commands(after)
 

@@ -84,7 +84,6 @@ class EmojiBasic:
 
 class ColorConverter(commands.Converter):
     async def convert(self, ctx, argument):
-
         try:
             color = await commands.ColourConverter().convert(ctx, argument)
 
@@ -92,7 +91,6 @@ class ColorConverter(commands.Converter):
             color = None
 
         if not color and not argument.isdigit():
-
             argument = list(s for s in argument.split(" ") if s)
 
         if color and argument.isdigit():
@@ -106,7 +104,6 @@ class ColorConverter(commands.Converter):
             color = discord.Colour(argument)
 
         if isinstance(argument, list):
-
             argument = sorted(filter(lambda x: x.isdigit(), argument))
 
             argument = [int(n) for n in argument][:3]

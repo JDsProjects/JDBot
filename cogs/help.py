@@ -49,7 +49,6 @@ class JDBotHelp(commands.MinimalHelpCommand):
         await self.send_pages()
 
     def add_command_formatting(self, command):
-
         if command.description:
             self.paginator.add_line(command.description.format(p=self.context.clean_prefix), empty=True)
 

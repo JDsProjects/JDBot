@@ -130,7 +130,6 @@ class Bot(commands.Cog):
 
     @commands.command(brief="gives you who the owner is.")
     async def owner(self, ctx):
-
         info = await self.bot.application_info()
         owner_id = info.team.owner_id if info.team else info.owner.id
 
@@ -232,7 +231,6 @@ class Bot(commands.Cog):
         filename = module.replace(".", "/") + ".py"
 
         if not check_path:
-
             if module.startswith("jishaku"):
                 github_url = "https://github.com/Gorialis/jishaku"
                 branch = "master"
@@ -335,7 +333,6 @@ class Bot(commands.Cog):
 
     @commands.command(brief="Sends you an invite to the official Bot support guild", aliases=["guild_invite"])
     async def support_invite(self, ctx):
-
         view = discord.ui.View()
         view.add_item(
             discord.ui.Button(
@@ -368,7 +365,6 @@ class Bot(commands.Cog):
             await ctx.send("Please provide an arg.")
 
         if command:
-
             all_commands = list(self.bot.walk_commands())
 
             command_names = [f"{x}" for x in await utils.filter_commands(ctx, all_commands)]
@@ -388,7 +384,6 @@ class Bot(commands.Cog):
         brief="a command to automatically summon by creating an invite and having jdjg look at something if it's there something wrong"
     )
     async def jdjgsummon(self, ctx):
-
         view = utils.BasicButtons(ctx)
         msg = await ctx.send(
             "React with \N{WHITE HEAVY CHECK MARK} if you want me to be summoned if not use \N{CROSS MARK}. \nPlease don't use jdjgsummon to suggest something use suggest to suggest something, alright? If you want to contact me directly, you can find my tag using owner(please don't use jdjgsummon for suggest stuff thanks)",
@@ -407,7 +402,6 @@ class Bot(commands.Cog):
             await msg.delete()
 
             if isinstance(ctx.channel, discord.threads.Thread):
-
                 channel = self.bot.get_channel(ctx.channel.parent_id)
 
                 ctx.channel = channel if channel else ctx.channel
@@ -538,12 +532,10 @@ class Bot(commands.Cog):
 
     @commands.group(name="support", invoke_without_command=True)
     async def support(self, ctx):
-
         await ctx.send_help(ctx.command)
 
     @support.command(brief="a command that Dms support help to JDJG", name="dm")
     async def support_dm(self, ctx, *, args=None):
-
         if not args:
             return await ctx.send("You need a reason why you want support.")
 
@@ -565,7 +557,6 @@ class Bot(commands.Cog):
 
     @support.command(brief="a command that sends support help to our log channel", name="channel")
     async def support_channel(self, ctx, *, args=None):
-
         if not args:
             return await ctx.send("You didn't give a reason that you need support")
 
@@ -590,7 +581,6 @@ class Bot(commands.Cog):
 
     @commands.command(brief="Gives Information about JDBot")
     async def about(self, ctx):
-
         embed = discord.Embed(
             title="About Bot",
             description="Here you can view bot and author information",
@@ -638,7 +628,6 @@ class Bot(commands.Cog):
         brief="sends a emoji to me to review(a.k.a reviewed in the review channel, you will be Dmed if you failed or not)"
     )
     async def emoji_save(self, ctx, *, emoji: typing.Optional[discord.PartialEmoji] = None):
-
         if not emoji:
             await ctx.send("That's not a valid emoji or isn't a custom emoji")
             ctx.command.reset_cooldown(ctx)
@@ -688,7 +677,6 @@ class Bot(commands.Cog):
 
     @commands.command(brief="bot contribution credits")
     async def credits(self, ctx):
-
         to_credit = [
             525843819850104842,
             171539705043615744,

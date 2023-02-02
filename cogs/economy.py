@@ -16,7 +16,6 @@ class Economy(commands.Cog):
     @commands.cooldown(1, 20, BucketType.user)
     @commands.command(brief="you can pick a job and then work it in this work command")
     async def work(self, ctx):
-
         jobs = await self.bot.db.fetch("SELECT * FROM jobs")
 
         view = utils.JobChoice(ctx, jobs, timeout=15.0)
@@ -41,7 +40,6 @@ class Economy(commands.Cog):
         aliases=["bal"],
     )
     async def balance(self, ctx, *, member: utils.BetterMemberConverter = None):
-
         member = member or ctx.author
 
         economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", member.id)
@@ -87,7 +85,6 @@ class Economy(commands.Cog):
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="a leaderboard command goes from highest to lowest", aliases=["lb"])
     async def leaderboard(self, ctx):
-
         data = await self.bot.db.fetch("SELECT * FROM economy ORDER BY wallet + BANK DESC")
 
         ndata = []
@@ -104,7 +101,6 @@ class Economy(commands.Cog):
 
     @commands.command(brief="Removes You From Economy")
     async def leave_economy(self, ctx):
-
         economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", ctx.author.id)
 
         if not economy:
@@ -123,7 +119,6 @@ class Economy(commands.Cog):
             return await msg.edit(content="Not removing you from the database")
 
         if view.value:
-
             wallet = economy.get("wallet")
             bank = economy.get("bank")
 

@@ -10,12 +10,10 @@ font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 35)
 
 
 def call_text(text) -> BytesIO:
-
     text = textwrap.fill(text, 33)
     f = BytesIO()
 
     with Image.open("assets/images/calling_template.jpg") as image:
-
         draw = ImageDraw.Draw(image)
         draw.text((5, 5), text, font=font, fill="black")
 
@@ -38,7 +36,6 @@ def gadget(text: str) -> BytesIO:
     text = wrap_text(text.upper())
     f = BytesIO()
     with Image.open("assets/images/gadget.png") as image:
-
         with Image.new("RGBA", (600, 800), "white") as canv:
             draw = ImageDraw.Draw(canv)
             image = image.resize((600, 600))
@@ -71,7 +68,6 @@ def gadget(text: str) -> BytesIO:
 
 
 def invert(image) -> discord.File:
-
     wrapped_image = BytesIO(image)
     f = BytesIO()
 
@@ -110,7 +106,6 @@ OFFSET = 10
 
 
 def laugh_frame(LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
-
     base = LAUGH_IMAGE.copy()
     base = base.convert("RGBA")
     asset = asset.convert("RGBA")
@@ -143,7 +138,6 @@ def laugh(raw_asset: bytes) -> tuple[BytesIO, typing.Literal["gif", "png"]]:
 
 
 def laugh_frame2(BASE, LAUGH_IMAGE: Image.Image, asset: Image.Image) -> Image.Image:
-
     base = BASE.copy()
     base = base.convert("RGBA")
     asset = asset.convert("RGBA")

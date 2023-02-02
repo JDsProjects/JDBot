@@ -73,7 +73,6 @@ class Ticket(commands.Cog):
 
     @commands.command(brief="Closes support ticket.")
     async def close(self, context: JDBotContext):
-
         if not context.guild:
             if context.author.id not in self.ticket_cache:
                 return await context.send("You did not create any tickets.")
@@ -189,7 +188,6 @@ class Ticket(commands.Cog):
         if isinstance(message.channel, discord.DMChannel):
             if context.prefix is None or self.bot.user.mentioned_in(message):
                 if message.author.id != self.bot.user.id and context.valid is False:
-
                     if not message.author.id in self.ticket_cache:
                         await message.channel.send(
                             "run ``te*help Ticket`` to learn more. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493"
@@ -200,13 +198,11 @@ class Ticket(commands.Cog):
 
         if context.prefix is None or self.bot.user.mentioned_in(message):
             if message.author.id != self.bot.user.id and context.valid is False:
-
                 if (
                     message.guild
                     and message.guild.id == 1019027330779332660
                     and message.channel.id in self.ticket_cache
                 ):
-
                     author = self.ticket_cache[message.channel.id]["author"]
                     author = self.bot.get_user(author)
 

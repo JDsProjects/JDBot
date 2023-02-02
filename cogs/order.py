@@ -21,7 +21,6 @@ class Order(commands.Cog):
         self.bot = bot
 
     async def cog_load(self):
-
         tenor_key = os.environ["tenor_key"]
         giphy_key = os.environ["giphy_token"]
 
@@ -110,7 +109,6 @@ class Order(commands.Cog):
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="searches from tenor to find the closest image.")
     async def tenor(self, ctx, *, args=None):
-
         if not args:
             await ctx.send("You can't search for nothing")
             return ctx.command.reset_cooldown(ctx)
@@ -192,7 +190,6 @@ class Order(commands.Cog):
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="looks up an item from giphy.")
     async def giphy(self, ctx, *, args=None):
-
         if not args:
             await ctx.send("That doesn't have any value.")
             return ctx.command.reset_cooldown(ctx)
@@ -269,7 +266,6 @@ class Order(commands.Cog):
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="can search a search result from google with safe search!")
     async def google(self, ctx, *, args=None):
-
         if not args:
             return await ctx.send("You can't search for nothing, as well you need a thing to lokup.")
 
@@ -288,7 +284,6 @@ class Order(commands.Cog):
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="sends a gif of someone dancing to disco (animated)")
     async def disco(self, ctx):
-
         safesearch_type = ContentFilter.high()
 
         results = await self.tenor_client.search("disco", content_filter=safesearch_type, limit=10)
@@ -329,7 +324,6 @@ class Order(commands.Cog):
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(brief="sends a gif of someone dancing to all but disco(animated)")
     async def dance(self, ctx):
-
         safesearch_type = ContentFilter.high()
 
         results = await self.tenor_client.search("dance", content_filter=safesearch_type, limit=10)

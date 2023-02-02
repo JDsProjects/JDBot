@@ -78,7 +78,6 @@ async def triggered_converter(url, ctx):
 
 
 async def headpat_converter(url, ctx):
-
     embed = discord.Embed(color=random.randint(0, 16777215))
 
     try:
@@ -117,7 +116,6 @@ def clear_permission(ctx):
 
 
 async def invert_converter(url, ctx):
-
     embed = discord.Embed(color=random.randint(0, 16777215))
 
     # embed.set_author(name=f"Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
@@ -146,7 +144,6 @@ async def headpat_converter2(url, ctx):
 
 
 async def invert_converter2(url, ctx):
-
     embed = discord.Embed(color=random.randint(0, 16777215))
 
     # embed.set_author(name=f"Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))

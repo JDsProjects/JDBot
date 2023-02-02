@@ -52,7 +52,6 @@ class Extra(commands.Cog):
         help="using the official minecraft api, looking up minecraft information has never been easier(tis only gives minecraft account history relating to name changes)",
     )
     async def mchistory(self, ctx, *, args=None):
-
         if args is None:
             await ctx.send("Please pick a minecraft user.")
 
@@ -64,7 +63,6 @@ class Extra(commands.Cog):
             embed.add_field(name="Orginal Name:", value=minecraft_info.name)
 
             for y, x in enumerate(minecraft_info.from_dict):
-
                 if y > 0:
                     embed.add_field(
                         name=f"Username:\n{x.name}",
@@ -103,7 +101,6 @@ class Extra(commands.Cog):
     @commands.command(brief="reverses text")
     async def reverse(self, ctx, *, args=None):
         if args:
-
             reversed = args[::-1]
 
             await ctx.send(content=f"{reversed}", allowed_mentions=discord.AllowedMentions.none())
@@ -137,7 +134,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="Gets a cat based on http status code", aliases=["http"])
     async def http_cat(self, ctx, args: typing.Optional[int] = None):
-
         if args is None:
             code = "404"
         if args:
@@ -208,7 +204,6 @@ class Extra(commands.Cog):
         help="a command to talk to Google TTS", brief="using the power of the asyncgtts module you can now do tts"
     )
     async def tts(self, ctx, *, args=None):
-
         files = []
         if args:
             files.append(await utils.google_tts(self.bot, args))
@@ -217,7 +212,6 @@ class Extra(commands.Cog):
             for a in ctx.message.attachments:
                 file = await a.read()
                 if file:
-
                     encoding = chardet.detect(file)["encoding"]
                     if encoding:
                         text = file.decode(encoding)
@@ -249,11 +243,9 @@ class Extra(commands.Cog):
     @commands.command(brief="Uses google translate to make text to latin in a voice mode :D", aliases=["latin_tts"])
     async def tts_latin(self, ctx, *, args=None):
         if not args:
-
             await ctx.send("you can't have No text to say")
 
         else:
-
             time_before = time.perf_counter()
             file = await utils.latin_google_tts(self.bot, args)
             time_after = time.perf_counter()
@@ -306,7 +298,6 @@ class Extra(commands.Cog):
     async def say2(
         self, ctx, channel: typing.Optional[typing.Union[discord.TextChannel, discord.Thread]] = None, *, args=None
     ):
-
         channel = channel or ctx.channel
 
         args = args or "You didn't give us any text to use."
@@ -315,9 +306,7 @@ class Extra(commands.Cog):
         bot_member = channel.me if isinstance(channel, discord.DMChannel) else channel.guild.me
 
         if channel.permissions_for(bot_member).send_messages:
-
             if isinstance(bot_member, discord.Member):
-
                 author_member = await self.bot.try_member(bot_member.guild, ctx.author.id)
 
                 channel = channel if author_member else ctx.channel
@@ -429,7 +418,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="allows you to quote a user, without pings")
     async def quote(self, ctx, *, message=None):
-
         message = message or "Empty Message :("
 
         await ctx.send(f"> {message} \n -{ctx.message.author}", allowed_mentions=discord.AllowedMentions.none())
@@ -454,7 +442,6 @@ class Extra(commands.Cog):
         brief="cleansup bot message's history in a channel if need be.(Doesn't cleanup other people's message history)"
     )
     async def cleanup(self, ctx, *, amount: typing.Optional[int] = None):
-
         if isinstance(ctx.channel, discord.DMChannel):
             return await ctx.send(
                 "doesn't work in DMS, due to discord limitations about builking deletes messages(if we could we would)"
@@ -512,7 +499,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="takes two numbers and does a cool command")
     async def radical(self, ctx, *numbers: typing.Union[int, str]):
-
         if not numbers:
             return await ctx.send("sorry boss you didn't give us any numbers to use.")
 
@@ -539,7 +525,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="takes two numbers and does a cool command")
     async def power(self, ctx, *numbers: typing.Union[int, str]):
-
         if not numbers:
             return await ctx.send("sorry boss you didn't give us any numbers to use.")
 
@@ -566,7 +551,6 @@ class Extra(commands.Cog):
     @commands.max_concurrency(number=1, per=BucketType.user, wait=False)
     @commands.command(brief="a way to talk to cleverbot", aliases=["chatbot"])
     async def cleverbot(self, ctx):
-
         view = utils.ChatBotView(ctx)
 
         return await ctx.send("out of commission right now.")
@@ -580,7 +564,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="a command to create a voice channel")
     async def voice_create(self, ctx, *, args=None):
-
         if isinstance(ctx.channel, discord.DMChannel):
             return await ctx.send("you can't make a voice channel in a DM")
 
@@ -605,7 +588,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="a command to create a text channel")
     async def channel_create(self, ctx, *, args=None):
-
         if isinstance(ctx.channel, discord.DMChannel):
             return await ctx.send("you can't make a text channel in a DM")
 
@@ -636,7 +618,6 @@ class Extra(commands.Cog):
 
     @commands.command(bried="tells you the current time with discord's speacil time converter", name="time")
     async def _time(self, ctx):
-
         embed = discord.Embed(
             title="Current Time :",
             description=f"{discord.utils.format_dt(ctx.message.created_at, style = 'd')}{discord.utils.format_dt(ctx.message.created_at, style = 'T')}",
@@ -648,7 +629,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="takes three values lol")
     async def arithmetic(self, ctx, *numbers: typing.Union[int, str]):
-
         if not numbers:
             return await ctx.send("sorry boss you didn't give us any numbers to use.")
 
@@ -663,7 +643,6 @@ class Extra(commands.Cog):
             )
 
         elif len(numbers) > 2:
-
             orginal = numbers[0]
             number_each_time = numbers[1]
             times_ran = numbers[-1]
@@ -741,7 +720,6 @@ class Extra(commands.Cog):
         aliases=["generate_color_code", "generate_colorcode", "g_cc", "cc_generator"],
     )
     async def generate_cc(self, ctx):
-
         embed = discord.Embed(description=f"```{utils.cc_generate()}```", color=random.randint(0, 16777215))
 
         embed.set_author(name=f"{ctx.author} Generated A Random CC:", icon_url=ctx.author.display_avatar.url)
@@ -757,7 +735,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="based on pog bot's nitro command")
     async def nitro(self, ctx):
-
         embed = discord.Embed(
             title="You've been gifted a subscription!",
             description="You've been gifted Nitro for **1 month!**\nExpires in **24 hours**",
@@ -785,7 +762,6 @@ class Extra(commands.Cog):
             ]
         ] = None,
     ):
-
         channel = channel or ctx.channel
         print(type(channel))
 
@@ -813,7 +789,6 @@ class Extra(commands.Cog):
         brief="Shows the meaning of word using the urban dictionary.", aliases=["dict", "dictionary", "meaning"]
     )
     async def urban(self, ctx, *, search: commands.clean_content = None):
-
         if search is None:
             return await ctx.send(f"Specify what you need to be searched in the urban dictionary.")
 
@@ -876,7 +851,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="looks up stuff from reddit")
     async def reddit(self, ctx):
-
         subreddits = await self.bot.db.fetch("SELECT * FROM SUBREDDITS")
 
         view = utils.SubredditChoice(ctx, subreddits, timeout=15.0)
@@ -893,16 +867,13 @@ class Extra(commands.Cog):
 
     @commands.group(brief="list of commands of plans of stuff to do in the future", invoke_without_command=True)
     async def todo(self, ctx):
-
         await ctx.send_help(ctx.command)
 
     @todo.command(brief="lists stuff in todo")
     async def list(self, ctx):
-
         values = await self.bot.db.fetch("SELECT * FROM todo WHERE user_id = $1 ORDER BY added_time ASC", ctx.author.id)
 
         if not values:
-
             embed = discord.Embed(
                 description="No items in your Todo List", color=1246983, timestamp=ctx.message.created_at
             )
@@ -923,7 +894,6 @@ class Extra(commands.Cog):
 
     @todo.command(brief="adds items to todo")
     async def add(self, ctx, *, text: commands.clean_content = None):
-
         if not text:
             return await ctx.send("Please tell me what to add")
 
@@ -954,7 +924,6 @@ class Extra(commands.Cog):
 
     @todo.command(brief="edits items in todo")
     async def edit(self, ctx, number: typing.Optional[int] = None, *, text=None):
-
         if not number:
             return await ctx.send("Looks like you didn't input a valid number starting from one.")
 
@@ -964,7 +933,6 @@ class Extra(commands.Cog):
             return await ctx.send("I have no text to work with.")
 
         if not values:
-
             return await ctx.send("You can't edit anything as you lack items.")
 
         if number < 1:
@@ -991,7 +959,6 @@ class Extra(commands.Cog):
             return await msg.edit(content="Not editing your item from todo.")
 
         if view.value:
-
             value = await self.bot.db.fetchrow(
                 "SELECT * FROM todo WHERE user_id = $1 AND TEXT = $2", ctx.author.id, text
             )
@@ -1018,14 +985,12 @@ class Extra(commands.Cog):
 
     @todo.command(brief="removes items in todo")
     async def remove(self, ctx, *, number: typing.Optional[int] = None):
-
         if not number:
             return await ctx.send("Looks like you didn't input a valid number starting from one.")
 
         values = await self.bot.db.fetch("SELECT * FROM todo WHERE user_id = $1 ORDER BY added_time ASC", ctx.author.id)
 
         if not values:
-
             return await ctx.send("Good News, you don't need to remove anything as you lack items.")
 
         if number < 1:
@@ -1052,7 +1017,6 @@ class Extra(commands.Cog):
             return await msg.edit(content="Not remove your item from todo.")
 
         if view.value:
-
             await self.bot.db.execute(
                 "DELETE FROM todo WHERE user_id = $1 and ADDED_TIME = $2", ctx.author.id, todo["added_time"]
             )
@@ -1061,7 +1025,6 @@ class Extra(commands.Cog):
 
     @todo.command(brief="removes all your items in todo")
     async def clear(self, ctx):
-
         values = await self.bot.db.fetch("SELECT * FROM todo WHERE user_id = $1 ORDER BY added_time ASC", ctx.author.id)
 
         if not values:
@@ -1083,7 +1046,6 @@ class Extra(commands.Cog):
             )
 
         if view.value:
-
             await self.bot.db.execute("DELETE FROM todo WHERE user_id = $1", ctx.author.id)
             await msg.edit(content=f"We Removed **{len(values)}** values")
 
@@ -1094,7 +1056,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="make a unique prefix for this guild(other prefixes still work)")
     async def setprefix(self, ctx, *, prefix: str = None):
-
         # I have to add regex to prevent mentioning as a prefix lol(as this encouarges spam
 
         db = self.bot.db
@@ -1158,13 +1119,11 @@ class Extra(commands.Cog):
 
     @commands.command(aliases=["aki"], brief="akinator game made by Tom the Bomb")
     async def akinator(self, ctx):
-
         game = button_games.BetaAkinator()
         await game.start(ctx, timeout=120, delete_button=True)
 
     @commands.command()
     async def afk(self, ctx, *, reason: typing.Optional[str] = None):
-
         if ctx.author.id in self.afk:
             return
 
@@ -1188,7 +1147,6 @@ class Extra(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-
         if message.author.bot:
             return
         if message.author.id in self.afk:

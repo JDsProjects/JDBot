@@ -38,7 +38,6 @@ class Dice(commands.Cog):
 
     @commands.command(brief="A command to roll random dnd dice.", aliases=["roll"])
     async def diceroll(self, ctx, *, number: typing.Optional[int] = None):
-
         number = number or 6
 
         await self.generate_embed(ctx, int(number))
@@ -49,7 +48,6 @@ class Dice(commands.Cog):
         aliases=["e_spin", "emoji_spin"],
     )
     async def emoji_spinner(self, ctx):
-
         emoji_choosen = random.choice(self.bot.emojis)
 
         if emoji_choosen.available is False:
@@ -187,7 +185,6 @@ class Dice(commands.Cog):
 
     @commands.command(brief="sees how compatitable something is(two things)")
     async def works(self, ctx, *args: commands.clean_content):
-
         if len(args) < 2:
             return await ctx.send(
                 "you didn't give me enough objects to checks the status of two items and make sure to have two objects."

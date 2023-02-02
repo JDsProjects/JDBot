@@ -171,7 +171,6 @@ class JDBot(commands.Bot):
                 return None
 
     async def setup_hook(self) -> None:
-
         for cog in EXTENSIONS:
             try:
                 await self.load_extension(f"{cog}")

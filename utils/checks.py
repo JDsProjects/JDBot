@@ -17,7 +17,6 @@ def Membercheck(ctx):
 
 def warn_permission(ctx, Member):
     if isinstance(ctx.channel, discord.TextChannel):
-
         return (
             ctx.author.guild_permissions.manage_messages
             and ctx.author.top_role > Member.top_role

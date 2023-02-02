@@ -19,7 +19,6 @@ class Global(commands.Cog):
         brief="makes a global chat example message from your message", aliases=["test_gc", "generate_message"]
     )
     async def test_global(self, ctx, *, args=None):
-
         args = args or "Test Content"
 
         for x in re.findall(r"<@!?([0-9]{15,20})>", args):

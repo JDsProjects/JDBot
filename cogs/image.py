@@ -23,7 +23,6 @@ class Image(commands.Cog):
         self.bot = bot
 
     async def cog_load(self):
-
         self.jeyy_client = jeyyapi.JeyyAPIClient(session=self.bot.session)
         self.sr_client = sr_api.Client(session=self.bot.session)
         self.dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=self.bot.session)
@@ -52,7 +51,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             try:
                 await target.send(content=target.mention, embed=embed)
             except discord.Forbidden:
@@ -91,7 +89,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             try:
                 await target.send(content=target.mention, embed=embed)
             except discord.Forbidden:
@@ -119,7 +116,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             try:
                 await target.send(content=target.mention, embed=embed)
             except discord.Forbidden:
@@ -148,7 +144,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             try:
                 await target.send(content=target.mention, embed=embed)
             except discord.Forbidden:
@@ -203,7 +198,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             try:
                 await target.send(content=target.mention, embed=embed)
             except discord.Forbidden:
@@ -235,7 +229,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             try:
                 await target.send(content=target.mention, embed=embed)
             except discord.Forbidden:
@@ -243,7 +236,6 @@ class Image(commands.Cog):
 
     @commands.command(brief="a command to get a neko", help="using the asuna.ga api you will get these images")
     async def neko(self, ctx):
-
         url = await self.asuna.get_gif("neko")
 
         embed = discord.Embed(color=random.randint(0, 16777215))
@@ -277,7 +269,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             try:
                 await target.send(content=target.mention, embed=embed)
             except discord.Forbidden:
@@ -341,7 +332,6 @@ class Image(commands.Cog):
             await ctx.send(content=target.mention, embed=embed)
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             try:
                 await target.send(content=target.mention, embed=embed)
             except discord.Forbidden:
@@ -415,7 +405,6 @@ class Image(commands.Cog):
         if ctx.message.attachments:
             for a in ctx.message.attachments:
                 try:
-
                     file = await asyncio.to_thread(self.convert_svg, await a.read())
 
                     await ctx.send(file=file)
@@ -425,7 +414,6 @@ class Image(commands.Cog):
 
         if code:
             try:
-
                 file = await asyncio.to_thread(self.convert_svg, code.content)
                 await ctx.send(file=file)
 
@@ -437,7 +425,6 @@ class Image(commands.Cog):
 
     @commands.command()
     async def call_text(self, ctx, *, args=None):
-
         args = args or "Test"
 
         if len(args) > 500:
@@ -490,7 +477,6 @@ class Image(commands.Cog):
         ctx,
         *assets: utils.image_union2,
     ):
-
         images = await utils.asset_converter(ctx, assets)
 
         jeyy_client = self.jeyy_client

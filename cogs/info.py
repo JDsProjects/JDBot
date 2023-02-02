@@ -50,7 +50,6 @@ class Info(commands.Cog):
             await ctx.send("Could not find the guild you were looking for.")
 
         if guild:
-
             embed = discord.Embed(title=f"{guild}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
             embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 
@@ -68,7 +67,6 @@ class Info(commands.Cog):
         help="this can work with mentions, ids, usernames, and even full names.",
     )
     async def userinfo(self, ctx, *, user: utils.BetterUserconverter = None):
-
         user = user or ctx.author
 
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
@@ -89,11 +87,9 @@ class Info(commands.Cog):
     async def userinfo_slash(
         self, interaction: discord.Interaction, user: typing.Optional[typing.Union[discord.Member, discord.User]] = None
     ):
-
         user = user or interaction.user
 
         if isinstance(user, discord.Member):
-
             user = await self.bot.try_member(user.guild, user.id)
 
         ctx = await self.bot.get_context(interaction)
@@ -148,7 +144,6 @@ class Info(commands.Cog):
     @commands.command(help="fetch invite details")
     async def fetch_invite(self, ctx, *invites: typing.Union[discord.Invite, str]):
         if invites:
-
             menu = utils.InviteInfoEmbed(invites, ctx=ctx, delete_after=True)
             await menu.send()
         if not invites:
@@ -167,7 +162,6 @@ class Info(commands.Cog):
 
     @commands.command(brief="gives info about a file")
     async def file(self, ctx):
-
         if not ctx.message.attachments:
             await ctx.send(ctx.message.attachments)
             await ctx.send("no file submitted")
@@ -236,7 +230,6 @@ class Info(commands.Cog):
             nearest_server_nick = sorted(member_list, key=lambda x: SequenceMatcher(None, x.nick, args).ratio())[-1]
 
         if isinstance(ctx.channel, discord.DMChannel):
-
             nearest_server_nick = "You unfortunately don't get the last value(a nickname) as it's a DM."
 
         await ctx.send(f"Username : {userNearest} \nDisplay name : {user_nick} \nNickname: {nearest_server_nick}")
@@ -259,7 +252,6 @@ class Info(commands.Cog):
         *,
         emoji: typing.Optional[typing.Union[discord.PartialEmoji, discord.Message, utils.EmojiBasic]] = None,
     ):
-
         if isinstance(emoji, discord.Message):
             emoji_message = emoji.content
             emoji = None
@@ -302,7 +294,6 @@ class Info(commands.Cog):
 
     @commands.command(brief="gives info about a role.", aliases=["roleinfo"])
     async def role_info(self, ctx, *, role: typing.Optional[discord.Role] = None):
-
         if role:
             await utils.roleinfo(ctx, role)
             # backend and how it works will be updated soon
@@ -332,7 +323,6 @@ class DevTools(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-
         return
 
         match = re.findall(self.TOKEN_RE, message.content)
@@ -349,7 +339,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Tells bot if it should invalidate token.")
     async def token_snipper(self, ctx):
-
         embed = discord.Embed(
             title="Token Snipper Tool",
             description="It tells the bot if it should invalidate any discord tokens sent into chat",
@@ -364,12 +353,10 @@ class DevTools(commands.Cog):
         await ctx.send("Please pick the buttons below to pick.", embed=embed, view=view)
 
     async def rtfm_lookup(self, url=None, *, args=None):
-
         if not args:
             return url
 
         else:
-
             unfiltered_results = dict(await utils.rtfm(self.bot, url))
 
             results = process.extract(args, list(unfiltered_results), scorer=fuzz.WRatio, limit=10, score_cutoff=0.6)
@@ -384,7 +371,6 @@ class DevTools(commands.Cog):
                 return results
 
     async def rtfm_send(self, ctx, results):
-
         if isinstance(results, str):
             await ctx.send(results, allowed_mentions=discord.AllowedMentions.none())
 
@@ -402,7 +388,6 @@ class DevTools(commands.Cog):
         brief="a rtfm command that allows you to lookup at any library we support looking up(using selects)",
     )
     async def rtfm(self, ctx, *, args=None):
-
         view = utils.RtfmChoice(ctx, self.rtfm_dictionary, timeout=15.0)
 
         await ctx.send(content="Please Pick a library you want to parse", view=view)
@@ -427,7 +412,6 @@ class DevTools(commands.Cog):
 
     @rtfm_slash.autocomplete("library")
     async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
-
         libraries = dict(self.rtfm_dictionary)
 
         all_choices: list[Choice] = [Choice(name=name, value=link) for name, link in libraries.items()]
@@ -473,7 +457,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Gives you data about charinfo (based on R.danny's command)")
     async def charinfo(self, ctx, *, args=None):
-
         if not args:
             return await ctx.send("That doesn't help out all :(")
 
@@ -487,7 +470,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="a command to view the rtfm DB")
     async def rtfm_view(self, ctx):
-
         rtfm_dictionary = dict(self.rtfm_dictionary)
 
         pag = commands.Paginator(prefix="", suffix="")
@@ -499,7 +481,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="a command to autoformat your python code to pep8")
     async def pep8(self, ctx):
-
         modal = utils.CodeBlockView(ctx, timeout=180.0)
         message = await ctx.send(
             "Please Submit the Code Block\nDo you want to use black's line formatter at 120 (i.e. black - l120 .), or just use the default? (i.e black .):",
@@ -534,7 +515,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="grabs your pfp's image")
     async def pfp_grab(self, ctx):
-
         if_animated = ctx.author.display_avatar.is_animated()
 
         save_type = ".gif" if if_animated else ".png"
@@ -553,7 +533,6 @@ class DevTools(commands.Cog):
         if args:
             pypi_response = await self.bot.session.get(f"https://pypi.org/pypi/{args}/json")
             if pypi_response.ok:
-
                 pypi_response = await pypi_response.json()
 
                 pypi_data = pypi_response["info"]
@@ -620,7 +599,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="puts the message time as a timestamp")
     async def message_time(self, ctx):
-
         embed = discord.Embed(title="Message Time", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
         embed.set_footer(text=f"{ctx.message.id}")
 
@@ -628,7 +606,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="converts info about colors for you.", invoke_without_command=True)
     async def color(self, ctx, *, color: utils.ColorConverter = None):
-
         if not color:
             return await ctx.send("you need to give me a color to use.")
 
@@ -647,12 +624,10 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="a command that makes a fake user id based on the current time.")
     async def fake_user_id(self, ctx):
-
         await ctx.send(f"User id: {utils.generate_snowflake()}")
 
     @commands.command(brief="gives information on snowflakes")
     async def snowflake_info(self, ctx, *, snowflake: typing.Optional[utils.ObjectPlus] = None):
-
         if not snowflake:
             await ctx.send(
                 "you either returned nothing or an invalid snowflake now going to the current time for information."
@@ -683,7 +658,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Generates a fake token from the current time")
     async def fake_token(self, ctx):
-
         object = discord.Object(utils.generate_snowflake())
 
         first_encoded = base64.b64encode(f"{object.id}".encode())
@@ -709,7 +683,6 @@ class DevTools(commands.Cog):
     @commands.cooldown(1, 60, BucketType.user)
     @commands.command(brief="makes a request to add a bot to the test guild")
     async def addbot(self, ctx, *, user: typing.Optional[discord.User] = None):
-
         user = user or ctx.author
 
         if not user.bot:
@@ -727,7 +700,6 @@ class DevTools(commands.Cog):
         guild = self.bot.get_guild(438848185008390158)
         member = await self.bot.try_member(guild, ctx.author.id)
         if member is None:
-
             view = discord.ui.View()
             view.add_item(
                 discord.ui.Button(
@@ -769,7 +741,6 @@ class DevTools(commands.Cog):
         brief="a command that takes a url and sees if it's an image (requires embed permissions at the moment)."
     )
     async def image_check(self, ctx):
-
         await ctx.send(
             "Please wait for discord to edit your message, if it does error about not a valid image, please send a screenshot of your usage and the bot's message."
         )
@@ -786,7 +757,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Gives info on npm packages")
     async def npm(self, ctx, *, args=None):
-
         if args:
             npm_response = await self.bot.session.get(f"https://registry.npmjs.com/{args}")
 
@@ -809,7 +779,6 @@ class DevTools(commands.Cog):
         brief="runs some code in a sandbox(based on Soos's Run command)", aliases=["eval", "run", "sandbox"]
     )
     async def console(self, ctx, *, code: codeblock_converter = None):
-
         if not code:
             ctx.command.reset_cooldown(ctx)
             return await ctx.send("You need to give me some code to use, otherwise I can not determine what it is.")

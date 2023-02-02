@@ -58,7 +58,6 @@ class Test(commands.Cog):
 
     @commands.command(brief="gets tweets from a username")
     async def get_tweet(self, ctx, amount: typing.Optional[int] = None, username=None):
-
         amount = amount or 10
 
         if not username:
@@ -129,12 +128,10 @@ class Test(commands.Cog):
 
     @commands.command(brief="adds a text to Go Go Gadget or Wowzers Username")
     async def gadget(self, ctx, *, text=None):
-
         if not text:
             return await ctx.send("You need to give text for me to process")
 
         if profanity.contains_profanity(text):
-
             response = f"Wowsers! \n{ctx.author} your gadget is really inapporiate"
 
             if profanity.contains_profanity(response):
@@ -161,7 +158,6 @@ class Test(commands.Cog):
         await ctx.send(embed=embed, file=file)
 
     def test(self, image):
-
         import io
 
         f = io.BytesIO(image)
@@ -175,7 +171,6 @@ class Test(commands.Cog):
         ctx,
         *assets: utils.image_union2,
     ):
-
         images = await utils.asset_converter(ctx, assets)
 
         files = [asyncio.to_thread(self.test, await image.read()) for image in images]
@@ -193,7 +188,6 @@ class Test(commands.Cog):
         ctx,
         *assets: utils.image_union2,
     ):
-
         images = await utils.asset_converter(ctx, assets)
 
         files = [asyncio.to_thread(utils.invert, await image.read()) for image in images]
@@ -212,7 +206,6 @@ class Test(commands.Cog):
         *,
         flag: typing.Optional[typing.Literal["--style 2"]],
     ):
-
         images = await utils.asset_converter(ctx, assets)
 
         epic = None
@@ -233,7 +226,6 @@ class Test(commands.Cog):
 
     @commands.command(help="takes a .png attachment or your avatar and makes a triggered version.")
     async def triggered(self, ctx, *assets: utils.image_union2):
-
         await ctx.send("Wip right now")
         # menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
         # await menu.send()
