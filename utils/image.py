@@ -25,25 +25,46 @@ def call_text(text) -> BytesIO:
     return f
 
 
-def gadget(text) -> BytesIO:
+PADDING_PX = 10
 
-    text = textwrap.fill(text, 30)
+
+def wrap_text(text: str, max_linesize: int = 20):
+    text_size = len(text)
+    line_count = text_size // max_linesize or 1
+    return textwrap.fill(text, (text_size + 2) // line_count)
+
+
+def gadget(text: str) -> BytesIO:
+    text = wrap_text(text.upper())
     f = BytesIO()
     with Image.open("assets/images/gadget.png") as image:
 
         with Image.new("RGBA", (600, 800), "white") as canv:
             draw = ImageDraw.Draw(canv)
-            textsize = draw.textsize(text, font=font)
+            image = image.resize((600, 600))
 
-        with Image.new("RGBA", (600, 800), "white") as canv:
-            draw = ImageDraw.Draw(canv)
-            resized = image.resize((600, 600))
+            font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 1)
+            width, height = draw.textsize(text, font=font)
+            while width < (600 - (PADDING_PX * 4)):
+                font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", font.size + 1)
+                if font.size > 100:
+                    break
+                neww, newh = draw.textsize(text, font=font)
+                if width < (600 - (PADDING_PX * 2)):
+                    width = neww
+                    height = newh
+                    continue
+                break
 
-            canv.paste(resized, (0, 200))
-
-            draw.text((5, 5), text, font=font, fill="black")
-
-            canv.save(f, "PNG")
+            font_height = height + (PADDING_PX * 2)
+            with Image.new("RGBA", (600, font_height + image.height), "white") as new_canv:
+                new_draw = ImageDraw.Draw(new_canv)
+                x = (600 - PADDING_PX - width) / 2
+                y = PADDING_PX / 2
+                print(width, height, font_height, font.size, x, y)
+                new_draw.text((x, y), text, align="center", font=font, fill="black")
+                new_canv.paste(image, (0, font_height))
+                new_canv.save(f, "PNG")
 
     f.seek(0)
     return f
