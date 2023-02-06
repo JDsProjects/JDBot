@@ -47,9 +47,9 @@ async def roleinfo(ctx, role):
     await ctx.send(embed=embed)
 
 
-async def cdn_upload(bot, bytes):
+async def cdn_upload(bot, image_bytes):
     form = aiohttp.FormData()
-    form.add_field("file", bytes, content_type="application/octet-stream")
+    form.add_field("file", image_bytes, content_type="application/octet-stream")
     # debate about the content_type exists, but it seems to be fine, so I will leave for now.
     resp = await bot.session.post(
         "https://cdn.jdjgbot.com/upload", data=form, headers={"Authorization": os.environ["cdn_key"]}
