@@ -34,6 +34,7 @@ jishaku = {git = "https://github.com/Gorialis/jishaku"}
 github = {git = "https://github.com/VarMonke/Github-Api-Wrapper", branch = "main"}
 discord_games = {git = "https://github.com/Tom-the-Bomb/Discord-Games"}
 rapidfuzz = "^2.13.7"
+wand = "^0.6.11"
 
 [tool.poetry.dev-dependencies]
 
