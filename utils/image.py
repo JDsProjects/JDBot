@@ -4,7 +4,6 @@ from io import BytesIO
 
 import discord
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageSequence
-from wand.image import Image
 
 font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 35)
 # should be able to place it here
@@ -99,21 +98,6 @@ def invert(image) -> discord.File:
         file = discord.File(f, "inv.gif")
 
     return file
-
-
-def invert2(image) -> discord.File:
-    wrapped_image = BytesIO(image)
-
-    with Image(file=wrapped_image) as img:
-        img.iterator_first()
-        img.negate()
-
-        while img.iterator_next():
-            img.negate()
-
-        ext = "gif" if len(img.sequence) > 1 else "png"
-
-        return discord.File(BytesIO(img.make_blob(ext)), f"inverted.{ext}")
 
 
 ASSET_SIZE = 220

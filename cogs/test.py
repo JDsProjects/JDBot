@@ -183,7 +183,7 @@ class Test(commands.Cog):
         # use a copy of this soon with my own invert version
 
     @commands.command(brief="invert images")
-    async def invert(
+    async def invert3(
         self,
         ctx,
         *assets: utils.image_union2,
@@ -191,21 +191,6 @@ class Test(commands.Cog):
         images = await utils.asset_converter(ctx, assets)
 
         files = [asyncio.to_thread(utils.invert, await image.read()) for image in images]
-        done, _ = await asyncio.wait(files)
-
-        files = [file.result() for file in done]
-
-        await ctx.send(files=files)
-
-    @commands.command(brief="invert images using wand")
-    async def invert2(
-        self,
-        ctx,
-        *assets: utils.image_union2,
-    ):
-        images = await utils.asset_converter(ctx, assets)
-
-        files = [asyncio.to_thread(utils.invert2, await image.read()) for image in images]
         done, _ = await asyncio.wait(files)
 
         files = [file.result() for file in done]
