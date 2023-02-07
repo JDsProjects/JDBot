@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from jishaku.codeblocks import codeblock_converter
 from jishaku.cog import OPTIONAL_FEATURES, STANDARD_FEATURES
