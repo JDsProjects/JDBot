@@ -5,6 +5,7 @@ import itertools
 import os
 import random
 import re
+import time
 import traceback
 import typing
 
@@ -193,11 +194,14 @@ class Test(commands.Cog):
         images = await utils.asset_converter(ctx, assets)
 
         files = [asyncio.to_thread(utils.invert, await image.read()) for image in images]
+
+        time_before = time.perf_counter()
         done, _ = await asyncio.wait(files)
 
         files = [file.result() for file in done]
+        time_after = time.perf_counter()
 
-        await ctx.send(files=files)
+        await ctx.send(content=f"Invert ran in {int((time_after - time_before)*1000)} MS", files=files)
 
     @commands.command(brief="invert images using wand")
     async def invert2(
@@ -208,11 +212,14 @@ class Test(commands.Cog):
         images = await utils.asset_converter(ctx, assets)
 
         files = [asyncio.to_thread(utils.invert2, await image.read()) for image in images]
+
+        time_before = time.perf_counter()
         done, _ = await asyncio.wait(files)
 
         files = [file.result() for file in done]
+        time_after = time.perf_counter()
 
-        await ctx.send(files=files)
+        await ctx.send(content=f"Invert2 ran in {int((time_after - time_before)*1000)} MS", files=files)
 
     @commands.cooldown(1, 15, BucketType.user)
     @commands.command(brief="gets an image to have sam laugh at")
