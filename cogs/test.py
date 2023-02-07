@@ -143,6 +143,8 @@ class Test(commands.Cog):
         if len(response) > 140:
             response = "Wowzers! \nYour name is too long"
 
+            # doesn't check if it's from the actual user response or the name itself
+
         # unknown on actual size limit, but 140 should work as a placeholder
 
         embed = discord.Embed(title="Inspector Gadget is here!", color=13420741)
