@@ -17,7 +17,6 @@ class Jishaku(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
         arg_dict["_"] = self.last_result
 
         if ctx.message.reference and isinstance(ctx.message.reference.resolved, discord.Message):
-
             resolved_msg = ctx.message.reference.resolved
             arg_dict.update(r=resolved_msg, _r=resolved_msg)
 
