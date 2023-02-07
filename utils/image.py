@@ -4,7 +4,7 @@ from io import BytesIO
 
 import discord
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageSequence
-from wand.image import Image
+from wand.image import Image as WImage
 
 font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 35)
 # should be able to place it here
@@ -104,7 +104,7 @@ def invert(image) -> discord.File:
 def invert2(image) -> discord.File:
     wrapped_image = BytesIO(image)
 
-    with Image(file=wrapped_image) as img:
+    with WImage(file=wrapped_image) as img:
         img.iterator_first()
         img.negate()
 
