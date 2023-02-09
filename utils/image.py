@@ -77,7 +77,6 @@ def invert(image) -> discord.File:
 
     with Image.open(wrapped_image) as img:
         for frame in ImageSequence.Iterator(img):
-
             frame_durations.append(frame.info.get("duration", 50))
 
             with Image.new("RGBA", frame.size) as canv:
