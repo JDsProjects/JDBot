@@ -8,6 +8,7 @@ import random
 import time
 import typing
 
+from dateutil.relativedelta import relativedelta
 import discord
 import psutil
 from discord.ext import commands, tasks
@@ -488,10 +489,12 @@ class Bot(commands.Cog):
 
     @commands.command(brief="Gives the bot's uptime", aliases=["up"])
     async def uptime(self, ctx):
-        delta_uptime = discord.utils.utcnow() - self.bot.launch_time
+
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
+
+        delta = relativedelta(discord.utils.utcnow(), self.bot.launch_time)
 
         date_uptime = discord.utils.format_dt(self.bot.launch_time, style="d")
         time_uptime = discord.utils.format_dt(self.bot.launch_time, style="T")
@@ -499,7 +502,7 @@ class Bot(commands.Cog):
 
         embed = discord.Embed(
             title=f"Up Since:\n{date_uptime}\n{time_uptime}",
-            description=f"{rel_uptime}\n Days: {days}d, \nHours: {hours}h, \nMinutes: {minutes}m, \nSeconds: {seconds}s",
+            description=f"{rel_uptime}\n Years: {delta.years} Y \n Months: {delta.months}M \n Days: {delta.days}d, \nHours: {delta.hours}h, \nMinutes: {delta.minutes}m, \nSeconds: {delta.seconds}s",
             color=random.randint(0, 16777215),
         )
 
