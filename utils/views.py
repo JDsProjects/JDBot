@@ -1769,7 +1769,7 @@ class ReRun(discord.ui.View):
     @discord.ui.button(label="Replay", style=discord.ButtonStyle.success, emoji="🔂")
     async def replay(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(
-            content=self.view.content, embed=self.view.embed, ephemeral=True, view=self.view
+            content=self.view.content, embed=self.view.embed, view=self.view
         )
 
     @discord.ui.button(label="Exit", style=discord.ButtonStyle.success, emoji="🔒")
