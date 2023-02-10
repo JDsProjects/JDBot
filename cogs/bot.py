@@ -489,7 +489,6 @@ class Bot(commands.Cog):
 
     @commands.command(brief="Gives the bot's uptime", aliases=["up"])
     async def uptime(self, ctx):
-
         delta = relativedelta(discord.utils.utcnow(), self.bot.launch_time)
 
         date_uptime = discord.utils.format_dt(self.bot.launch_time, style="d")
