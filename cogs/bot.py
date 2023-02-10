@@ -489,7 +489,6 @@ class Bot(commands.Cog):
 
     @commands.command(brief="Gives the bot's uptime", aliases=["up"])
     async def uptime(self, ctx):
-
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
