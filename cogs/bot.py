@@ -8,9 +8,9 @@ import random
 import time
 import typing
 
-from dateutil.relativedelta import relativedelta
 import discord
 import psutil
+from dateutil.relativedelta import relativedelta
 from discord.ext import commands, tasks
 from discord.ext.commands.cooldowns import BucketType
 
