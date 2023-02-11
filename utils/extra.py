@@ -89,7 +89,7 @@ async def post(bot: JDBot, code: str) -> str:
     }
 
     async with await bot.session.post(
-        "https://api.senarc.online/paste",
+        "https://api.senarc.net/paste",
         json=paste_body,
         headers={"accept": "application/json", "Content-Type": "application/json"},
     ) as response:
@@ -99,7 +99,7 @@ async def post(bot: JDBot, code: str) -> str:
 
 async def get_paste(bot: JDBot, paste_id: str):
     async with await bot.session.get(
-        f"https://api.senarc.online/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
+        f"https://api.senarc.net/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
     ) as response:
         json: dict = await response.json()
         return json.get("content")
