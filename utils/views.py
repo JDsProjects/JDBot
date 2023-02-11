@@ -510,7 +510,7 @@ class EmojiInfoEmbed(Paginator):
 
         else:
             global_text += (
-                f"**Created:** {item.created_at}",
+                f"**Created:** {discord.utils.format_dt(item.created_at, 'R')}",
                 f"**Animated:** {item.animated}",
             )
 
