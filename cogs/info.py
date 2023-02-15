@@ -430,15 +430,13 @@ class DevTools(commands.Cog):
         all_choices = [Choice(name=result.name, value=result.url) for result in unfiltered_results]
 
         if not current:
-            return all_choices[:25]
+            return all_choices[0:25]
 
         filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t[0])
 
-        if not filtered_results:
-            startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
-            return startswith[:25]
-
         results = [Choice(name=result.name, value=result.url) for result in filtered_results]
+
+        print(results)
 
         return results[:25]
 
