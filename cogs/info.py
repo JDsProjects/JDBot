@@ -435,6 +435,9 @@ class DevTools(commands.Cog):
         filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t[0])
 
         results = [Choice(name=result.name, value=result.url) for result in filtered_results]
+
+        print(results)
+
         return results[:25]
 
     @rtfm_slash.error
