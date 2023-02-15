@@ -25,6 +25,7 @@ from jishaku.codeblocks import codeblock_converter
 from rapidfuzz import fuzz, process
 
 import utils
+from utils import fuzzy
 
 
 class Info(commands.Cog):
@@ -431,6 +432,11 @@ class DevTools(commands.Cog):
 
         if not current:
             return all_choices[0:25]
+
+        filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t[0])
+
+        results = [Choice(name=result.name, value=result.url) for result in filtered_results]
+        return results[:25]
 
     @rtfm_slash.error
     async def rtfm_error(self, interaction: discord.Interaction, error) -> None:
