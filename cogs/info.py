@@ -438,7 +438,8 @@ class DevTools(commands.Cog):
 
         print(results)
 
-        return results[:25]
+        return all_choices[:25]
+        # temp fix to get the list of results
 
     @rtfm_slash.error
     async def rtfm_error(self, interaction: discord.Interaction, error) -> None:
