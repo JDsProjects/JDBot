@@ -436,7 +436,7 @@ class DevTools(commands.Cog):
 
         results = [Choice(name=result.name, value=result.url) for result in filtered_results]
 
-        print(results)
+        print(results[0:25])
 
         return all_choices[:25]
         # temp fix to get the list of results
