@@ -423,26 +423,14 @@ class DevTools(commands.Cog):
 
     @rtfm_slash.autocomplete("query")
     async def rtfm_query_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
+
         url = interaction.namespace.library or list(dict(self.rtfm_dictionary).values())[0]
+        unfiltered_results = await utils.rtfm(self.bot, url)
 
-        unfiltered_results = dict(await utils.rtfm(self.bot, url))
+        all_choices = [Choice(name=result.name, value=result.url) for result in unfiltered_results]
 
-        results = process.extract(current, list(unfiltered_results), scorer=fuzz.WRatio, limit=10, score_cutoff=0.6)
-
-        print(results)
-
-        if not results:
-            return [Choice(name="No results found", value="No Results Found")]
-
-        results = [utils.RtfmObject(r[0], unfiltered_results[r[0]]) for r in results]
-
-        to_slice_link = len(url)
-        all_choices: list[Choice] = [Choice(name=result.name, value=result.url) for result in results]
-        startswith: list[Choice] = [choices for choices in all_choices if choices.name.startswith(current)]
         if not current:
-            return all_choices[:25]
-
-        return startswith[:25]
+            return all_choices[0:25]
 
     @rtfm_slash.error
     async def rtfm_error(self, interaction: discord.Interaction, error) -> None:
