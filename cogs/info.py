@@ -409,7 +409,7 @@ class DevTools(commands.Cog):
         if query is None or query == "No Results Found":
             return await interaction.response.send_message(f"Alright Let's see \n{library}")
 
-        await interaction.response.send_message(f"Alright Let's see \n{query}")
+        await interaction.response.send_message(f"Alright Let's see \n{library+query}")
 
     @rtfm_slash.autocomplete("library")
     async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
@@ -434,12 +434,9 @@ class DevTools(commands.Cog):
 
         filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t[0])
 
-        results = [Choice(name=result.name, value=result.url) for result in filtered_results]
+        results = [Choice(name=result.name, value=result.url.lstrip(url)) for result in filtered_results]
 
-        print(results[0:25])
-
-        return all_choices[:25]
-        # temp fix to get the list of results
+        return results[0:25]
 
     @rtfm_slash.error
     async def rtfm_error(self, interaction: discord.Interaction, error) -> None:
