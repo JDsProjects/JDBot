@@ -429,14 +429,14 @@ class DevTools(commands.Cog):
         url = interaction.namespace.library or list(dict(self.rtfm_dictionary).values())[0]
         unfiltered_results = await utils.rtfm(self.bot, url)
 
-        all_choices = [Choice(name=result.name, value=result.url.lstrip(url)) for result in unfiltered_results]
+        all_choices = [Choice(name=result.name, value=result.url.replace(url, "")) for result in unfiltered_results]
 
         if not current:
             return all_choices[:25]
 
         filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t[0])
 
-        results = [Choice(name=result.name, value=result.url.lstrip(url)) for result in filtered_results]
+        results = [Choice(name=result.name, value=result.url.replace(url, "")) for result in filtered_results]
 
         return results[0:25]
 
