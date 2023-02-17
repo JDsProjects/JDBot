@@ -22,15 +22,10 @@ class BetterMemberConverter(commands.Converter):
                 if ctx.guild:
                     test = discord.utils.get(ctx.guild.members, discriminator=tag.group(1))
                     user = test or ctx.author
-
-                if ctx.guild is None:
-                    user = await BetterUserconverter().convert(ctx, argument)
-                    user = user or ctx.author
-
         return user
 
 
-class BetterUserconverter(commands.Converter):
+class BetterUserConverter(commands.Converter):
     async def convert(self, ctx, argument):
         try:
             user = await commands.UserConverter().convert(ctx, argument)
@@ -57,8 +52,11 @@ class BetterUserconverter(commands.Converter):
             tag = re.match(r"#?(\d{4})", argument)
             if tag and not ctx.bot.users:
                 test = discord.utils.get(ctx.bot.users, discriminator=tag.group(1))
-                user = test or ctx.author
-        return user
+                user = test
+        return user or ctx.author
+
+
+Superconverter = typing.Union[BetterMemberConverter, BetterUserConverter]
 
 
 class EmojiBasic:
