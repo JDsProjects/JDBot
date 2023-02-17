@@ -411,6 +411,8 @@ class DevTools(commands.Cog):
 
         await interaction.response.send_message(f"Alright Let's see \n{library+query}")
 
+        print(query)
+
     @rtfm_slash.autocomplete("library")
     async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
         libraries = dict(self.rtfm_dictionary)
@@ -434,7 +436,7 @@ class DevTools(commands.Cog):
 
         filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t[0])
 
-        results = [Choice(name=result.name, value=result.url - url) for result in filtered_results]
+        results = [Choice(name=result.name, value=result.url.lstrip(url)) for result in filtered_results]
 
         return results[0:25]
 
