@@ -17,9 +17,9 @@ class BetterMemberConverter(commands.Converter):
             user = None
 
         if not user and ctx.guild:
-           role = None
+            role = None
 
-           with contextlib.suppress(commands.RoleNotFound, commands.NoPrivateMessage):
+            with contextlib.suppress(commands.RoleNotFound, commands.NoPrivateMessage):
                 role = await commands.RoleConverter().convert(ctx, argument)
 
                 if role:
