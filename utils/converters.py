@@ -16,6 +16,23 @@ class BetterMemberConverter(commands.Converter):
         except commands.MemberNotFound:
             user = None
 
+        if not user and ctx.guild:
+            try:
+                user = await commands.MemberConverter().convert(ctx, argument)
+            except commands.MemberNotFound:
+                user = None
+
+        if user is None:
+            role = None
+
+            with contextlib.suppress(commands.RoleNotFound, commands.NoPrivateMessage):
+                role = await commands.RoleConverter().convert(ctx, argument)
+
+            if role:
+                if role.is_bot_managed():
+                    user_id = role.tags.bot_id
+                    user = await ctx.bot.try_member(ctx.guild, user_id)
+
         if user is None:
             tag = re.match(r"#?(\d{4})", argument)
             if tag:
@@ -31,22 +48,6 @@ class BetterUserConverter(commands.Converter):
             user = await commands.UserConverter().convert(ctx, argument)
         except commands.UserNotFound:
             user = None
-        if not user and ctx.guild:
-            try:
-                user = await commands.MemberConverter().convert(ctx, argument)
-            except commands.MemberNotFound:
-                user = None
-
-        if user is None:
-            role = None
-
-            with contextlib.suppress(commands.RoleNotFound, commands.NoPrivateMessage):
-                role = await commands.RoleConverter().convert(ctx, argument)
-
-            if role:
-                if role.is_bot_managed():
-                    user = role.tags.bot_id
-                    user = await ctx.bot.try_user(user)
 
         if user is None:
             tag = re.match(r"#?(\d{4})", argument)
