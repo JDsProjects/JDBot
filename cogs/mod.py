@@ -16,7 +16,7 @@ class Moderation(commands.Cog):
 
     @commands.cooldown(1, 90, BucketType.user)
     @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
-    async def warn(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def warn(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         warn_useable = utils.warn_permission(ctx, Member)
@@ -119,7 +119,7 @@ class Moderation(commands.Cog):
     @commands.command(
         help="a way to report a user, who might appear in the sus list. also please provide ids and reasons"
     )
-    async def report(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def report(self, ctx, *, user: utils.SuperConverter = None):
         if not user:
             await ctx.send("Please Pick a user to report like this.")
             return await ctx.send_help(ctx.command)

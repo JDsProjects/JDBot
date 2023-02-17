@@ -29,7 +29,7 @@ class Image(commands.Cog):
         self.asuna = asuna_api.Client(session=self.bot.session)
 
     @commands.command(brief="a command to slap someone", help="this sends a slap gif to the target user")
-    async def slap(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def slap(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         if Member.id == ctx.author.id:
@@ -67,7 +67,7 @@ class Image(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(brief="another command to give you pat gifs", help="powered using the asuna api")
-    async def pat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def pat2(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         if Member.id == ctx.author.id:
@@ -95,7 +95,7 @@ class Image(commands.Cog):
                 await ctx.author.send("Failed DM'ing them...")
 
     @commands.command(brief="a command to give you pat gifs", help="using the sra api it gives you pat gifs")
-    async def pat(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def pat(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         if Member.id == ctx.author.id:
@@ -122,7 +122,7 @@ class Image(commands.Cog):
                 await ctx.author.send("Failed Dming them...")
 
     @commands.command(brief="a hug command to hug people", help="this the first command to hug.")
-    async def hug(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def hug(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         if Member.id == ctx.author.id:
@@ -152,7 +152,7 @@ class Image(commands.Cog):
     @commands.command(
         brief="uses our headpat program to pat you", help="a command that uses jeyyapi to make a headpat of you."
     )
-    async def headpat2(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def headpat2(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
         y = 0
         embeds = []
@@ -176,7 +176,7 @@ class Image(commands.Cog):
     @commands.command(
         brief="a hug command to hug people", help="this actually the second hug command and is quite powerful."
     )
-    async def hug2(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def hug2(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         if Member.id == ctx.author.id:
@@ -207,7 +207,7 @@ class Image(commands.Cog):
         brief="a kiss command",
         help="a command where you can target a user or pick yourself to get a kiss gif( I don't know why I have this)",
     )
-    async def kiss(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def kiss(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         if Member.id == ctx.author.id:
@@ -247,7 +247,7 @@ class Image(commands.Cog):
     @commands.command(
         brief="a command to send wink gifs", wink="you select a user to send it to and it will send it to you lol"
     )
-    async def wink(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def wink(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         if Member.id == ctx.author.id:
@@ -310,7 +310,7 @@ class Image(commands.Cog):
     @commands.command(
         brief="a command to send facepalm gifs", help="using some random api it sends you a facepalm gif lol"
     )
-    async def facepalm(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def facepalm(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
 
         if Member.id == ctx.author.id:
@@ -370,7 +370,7 @@ class Image(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(help="Headpat generator :D")
-    async def headpat(self, ctx, Member: utils.BetterMemberConverter = None):
+    async def headpat(self, ctx, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
         y = 0
         embeds = []
@@ -444,7 +444,7 @@ class Image(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(brief="uses dagpi to make an image of you in jail")
-    async def jail(self, ctx, *, Member: utils.BetterMemberConverter = None):
+    async def jail(self, ctx, *, Member: utils.SuperConverter = None):
         Member = Member or ctx.author
         y = 0
         embeds = []

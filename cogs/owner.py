@@ -68,7 +68,7 @@ class Owner(commands.Cog):
             return await context.send(f"Error unloading cog `{cog_name}`.```py\n{t}```")
 
     @commands.command(brief="a command to send mail")
-    async def mail(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def mail(self, ctx, *, user: utils.SuperConverter = None):
         if user is None:
             await ctx.reply("User not found, returning Letter")
             user = ctx.author
@@ -165,7 +165,7 @@ class Owner(commands.Cog):
         # not sure if it is valuable or not.
 
     @commands.command(brief="Commands to see what guilds a person is in.")
-    async def mutualguilds(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def mutualguilds(self, ctx, *, user: utils.SuperConverter = None):
         user = user or ctx.author
         pag = commands.Paginator(prefix="", suffix="")
 
@@ -186,7 +186,7 @@ class Owner(commands.Cog):
         await ctx.send("Pick the way you want Mutual Guilds to be sent to you", view=view)
 
     @commands.command(brief="A command to add sus_users with a reason")
-    async def addsus(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def addsus(self, ctx, *, user: utils.SuperConverter = None):
         if user is None:
             await ctx.send("can't have a user be none.")
 
@@ -200,7 +200,7 @@ class Owner(commands.Cog):
             await ctx.send("added sus users, succesfully")
 
     @commands.command(brief="a command to remove sus users.")
-    async def removesus(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def removesus(self, ctx, *, user: utils.SuperConverter = None):
         if user is None:
             await ctx.send("You can't have a none user.")
 
@@ -227,7 +227,7 @@ class Owner(commands.Cog):
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
     @commands.command(aliases=["bypass_command"])
-    async def command_bypass(self, ctx, user: utils.BetterUserconverter = None, *, command=None):
+    async def command_bypass(self, ctx, user: utils.SuperConverter = None, *, command=None):
         # make sure to swap to autoconverter if it gets added.
         user = user or ctx.author
         if command:
@@ -370,7 +370,7 @@ class Owner(commands.Cog):
             await ctx.send(url)
 
     @commands.command(brief="A command to remove testers")
-    async def remove_tester(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def remove_tester(self, ctx, *, user: utils.SuperConverter = None):
         if user is None:
             await ctx.send("You can't have a non existent user.")
 
@@ -385,7 +385,7 @@ class Owner(commands.Cog):
                 await ctx.send(f"Removed tester known as {user}")
 
     @commands.command(brief="A command to add testers")
-    async def add_tester(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def add_tester(self, ctx, *, user: utils.SuperConverter = None):
         if user is None:
             await ctx.send("You can't have a non existent user.")
 
@@ -577,7 +577,7 @@ class Owner(commands.Cog):
         )
 
     @commands.command(brief="A command to blacklist users with a reason")
-    async def blacklist(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def blacklist(self, ctx, *, user: utils.SuperConverter = None):
         if user is None:
             await ctx.send("can't have a user be none.")
 
@@ -592,7 +592,7 @@ class Owner(commands.Cog):
             await ctx.send(f"blacklisted {user}, succesfully")
 
     @commands.command(brief="a command to blacklist users with a reason")
-    async def unblacklist(self, ctx, *, user: utils.BetterUserconverter = None):
+    async def unblacklist(self, ctx, *, user: utils.SuperConverter = None):
         if user is None:
             await ctx.send("You can't have a none user.")
 

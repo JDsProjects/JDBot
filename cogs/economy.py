@@ -39,7 +39,7 @@ class Economy(commands.Cog):
         help="using the JDBot database you can see how much money you have",
         aliases=["bal"],
     )
-    async def balance(self, ctx, *, member: utils.BetterMemberConverter = None):
+    async def balance(self, ctx, *, member: utils.SuperConverter = None):
         member = member or ctx.author
 
         economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", member.id)

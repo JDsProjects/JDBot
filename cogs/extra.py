@@ -611,7 +611,7 @@ class Extra(commands.Cog):
         await ctx.send(f"join the channel at {channel.mention} \n Invite to join: {invite}")
 
     @commands.command(brief="makes a discord profile link")
-    async def profile_link(self, ctx, user: utils.BetterUserconverter = None):
+    async def profile_link(self, ctx, user: utils.SuperConverter = None):
         user = user or ctx.author
 
         await ctx.send(f"The profile for {user} is https://discord.com/users/{user.id}")

@@ -17,21 +17,15 @@ class BetterMemberConverter(commands.Converter):
             user = None
 
         if not user and ctx.guild:
-            try:
-                user = await commands.MemberConverter().convert(ctx, argument)
-            except commands.MemberNotFound:
-                user = None
+           role = None
 
-        if user is None:
-            role = None
-
-            with contextlib.suppress(commands.RoleNotFound, commands.NoPrivateMessage):
+           with contextlib.suppress(commands.RoleNotFound, commands.NoPrivateMessage):
                 role = await commands.RoleConverter().convert(ctx, argument)
 
-            if role:
-                if role.is_bot_managed():
-                    user_id = role.tags.bot_id
-                    user = await ctx.bot.try_member(ctx.guild, user_id)
+                if role:
+                    if role.is_bot_managed():
+                        user_id = role.tags.bot_id
+                        user = await ctx.bot.try_member(ctx.guild, user_id)
 
         if user is None:
             tag = re.match(r"#?(\d{4})", argument)
@@ -57,7 +51,7 @@ class BetterUserConverter(commands.Converter):
         return user or ctx.author
 
 
-Superconverter = typing.Union[BetterMemberConverter, BetterUserConverter]
+SuperConverter = typing.Union[BetterMemberConverter, BetterUserConverter]
 
 
 class EmojiBasic:
