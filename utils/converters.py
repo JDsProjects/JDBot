@@ -32,7 +32,7 @@ class BetterMemberConverter(commands.Converter):
             if tag:
                 if ctx.guild:
                     test = discord.utils.get(ctx.guild.members, discriminator=int(tag.group(1)))
-                    user = test or ctx.author
+                    user = test
         return user
 
 
