@@ -434,7 +434,7 @@ class DevTools(commands.Cog):
 
         filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t[0])
 
-        results = [Choice(name=result.name, value=result.url.lstrip(url)) for result in filtered_results]
+        results = [Choice(name=result.name, value=result.url.strip(url)) for result in filtered_results]
 
         return results[0:25]
 
