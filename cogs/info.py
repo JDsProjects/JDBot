@@ -358,10 +358,9 @@ class DevTools(commands.Cog):
             return url
 
         else:
-            unfiltered_results = dict(await utils.rtfm(self.bot, url))
+            unfiltered_results = await utils.rtfm(self.bot, url)
 
             results = fuzzy.finder(args, unfiltered_results, key=lambda t: t[0])
-            # this still needs to be fixed.
 
             if not results:
                 return f"Could not find anything with {args}."
