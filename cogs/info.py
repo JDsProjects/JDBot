@@ -365,7 +365,6 @@ class DevTools(commands.Cog):
                 return f"Could not find anything with {args}."
 
             else:
-
                 return results
 
     async def rtfm_send(self, ctx, results):
