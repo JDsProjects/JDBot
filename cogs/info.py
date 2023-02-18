@@ -22,7 +22,6 @@ from discord.app_commands import Choice
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from jishaku.codeblocks import codeblock_converter
-from rapidfuzz import fuzz, process
 
 import utils
 from utils import fuzzy
@@ -366,9 +365,6 @@ class DevTools(commands.Cog):
                 return f"Could not find anything with {args}."
 
             else:
-                # results = [utils.RtfmObject(r, unfiltered_results[r]) for r in results]
-
-                print(results)
 
                 return results
 
