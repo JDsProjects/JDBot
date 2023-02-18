@@ -360,14 +360,16 @@ class DevTools(commands.Cog):
         else:
             unfiltered_results = dict(await utils.rtfm(self.bot, url))
 
-            results = process.extract(args, list(unfiltered_results), scorer=fuzz.WRatio, limit=10, score_cutoff=0.6)
+            results = fuzzy.finder(args, unfiltered_results, key=lambda t: t[0])
             # this still needs to be fixed.
 
             if not results:
                 return f"Could not find anything with {args}."
 
             else:
-                results = [utils.RtfmObject(r[0], unfiltered_results[r[0]]) for r in results]
+                # results = [utils.RtfmObject(r, unfiltered_results[r]) for r in results]
+
+                print(results)
 
                 return results
 
@@ -377,6 +379,8 @@ class DevTools(commands.Cog):
 
         else:
             embed = discord.Embed(color=random.randint(0, 16777215))
+
+            results = results[:10]
 
             embed.description = "\n".join(f"[`{result}`]({result.url})" for result in results)
 
