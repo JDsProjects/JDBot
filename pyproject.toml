@@ -33,8 +33,9 @@ python-dotenv = "^0.19.2"
 jishaku = {git = "https://github.com/Gorialis/jishaku"}
 github = {git = "https://github.com/VarMonke/Github-Api-Wrapper", branch = "main"}
 discord_games = {git = "https://github.com/Tom-the-Bomb/Discord-Games"}
-rapidfuzz = "^2.13.7"
 wand = "^0.6.11"
+mystbin-py = "^5.1.0"
+python-dateutil = "^2.8.2"
 
 [tool.poetry.dev-dependencies]
 
