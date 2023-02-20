@@ -67,7 +67,6 @@ class Info(commands.Cog):
         help="this can work with mentions, ids, usernames, and even full names.",
     )
     async def userinfo(self, ctx, *, user: utils.SuperConverter = commands.Author):
-
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
 
         embed.set_image(url=user.display_avatar.url)
@@ -132,7 +131,6 @@ class Info(commands.Cog):
 
     @commands.command(brief="Gives you mention info don't abuse(doesn't mention tho)")
     async def mention(self, ctx, *, user: utils.SuperConverter = commands.Author):
-
         await ctx.send(
             f"Discord Mention: {user.mention} \nRaw Mention:  {discord.utils.escape_mentions(user.mention)}",
             allowed_mentions=discord.AllowedMentions.none(),
@@ -177,7 +175,6 @@ class Info(commands.Cog):
         aliases=["pfp", "av"],
     )
     async def avatar(self, ctx, *, user: utils.SuperConverter = commands.Author):
-
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
 
@@ -560,7 +557,6 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="make a quick bot invite with 0 perms")
     async def invite_bot(self, ctx, *, user: typing.Optional[discord.User] = commands.Author):
-
         if not user.bot:
             return await ctx.send("That's not a legit bot")
 
@@ -602,8 +598,7 @@ class DevTools(commands.Cog):
         await ctx.send(f"Hexadecimal: {color} \nValue : {color.value} \nRGB: {color.to_rgb()}")
 
     @commands.command(brief="a command that tells a user creation time.")
-    async def created_at(self, ctx, *, user: utils.SuperConverter =commands.Author):
-
+    async def created_at(self, ctx, *, user: utils.SuperConverter = commands.Author):
         creation_info = f"{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}"
 
         await ctx.send(
@@ -672,7 +667,6 @@ class DevTools(commands.Cog):
     @commands.cooldown(1, 60, BucketType.user)
     @commands.command(brief="makes a request to add a bot to the test guild")
     async def addbot(self, ctx, *, user: typing.Optional[discord.User] = commands.Author):
-
         if not user.bot:
             ctx.command.reset_cooldown(ctx)
             return await ctx.send("Please Use A **Bot** ID, not a **User** ID.")

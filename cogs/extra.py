@@ -612,7 +612,6 @@ class Extra(commands.Cog):
 
     @commands.command(brief="makes a discord profile link")
     async def profile_link(self, ctx, user: utils.SuperConverter = commands.Author):
-
         await ctx.send(f"The profile for {user} is https://discord.com/users/{user.id}")
 
     @commands.command(bried="tells you the current time with discord's speacil time converter", name="time")

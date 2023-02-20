@@ -655,8 +655,6 @@ class Bot(commands.Cog):
 
     @commands.command(brief="gives you info if someone is a tester of the bot or not")
     async def is_tester(self, ctx, *, user: typing.Optional[discord.User] = commands.Author):
-        
-        
         truth = user.id in self.bot.testers
 
         if user.bot:

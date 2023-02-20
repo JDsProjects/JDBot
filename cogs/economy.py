@@ -40,7 +40,6 @@ class Economy(commands.Cog):
         aliases=["bal"],
     )
     async def balance(self, ctx, *, member: utils.SuperConverter = commands.Author):
-
         economy = await self.bot.db.fetchrow("SELECT * FROM economy WHERE user_id = ($1)", member.id)
 
         if not economy:
