@@ -67,7 +67,6 @@ class Info(commands.Cog):
         help="this can work with mentions, ids, usernames, and even full names.",
     )
     async def userinfo(self, ctx, *, user: utils.SuperConverter = None):
-
         if not user:
             print("Got them bois")
 
