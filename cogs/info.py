@@ -66,8 +66,7 @@ class Info(commands.Cog):
         brief="a command that gives information on users",
         help="this can work with mentions, ids, usernames, and even full names.",
     )
-    async def userinfo(self, ctx, *, user: utils.SuperConverter = None):
-        user = user or ctx.author
+    async def userinfo(self, ctx, *, user: utils.SuperConverter = commands.Author):
 
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
 
@@ -132,8 +131,7 @@ class Info(commands.Cog):
         await ctx.send(ctx.channel.id)
 
     @commands.command(brief="Gives you mention info don't abuse(doesn't mention tho)")
-    async def mention(self, ctx, *, user: utils.SuperConverter = None):
-        user = user or ctx.author
+    async def mention(self, ctx, *, user: utils.SuperConverter = commands.Author):
 
         await ctx.send(
             f"Discord Mention: {user.mention} \nRaw Mention:  {discord.utils.escape_mentions(user.mention)}",
@@ -178,8 +176,7 @@ class Info(commands.Cog):
         help="using the userinfo technology it now powers avatar grabbing.",
         aliases=["pfp", "av"],
     )
-    async def avatar(self, ctx, *, user: utils.SuperConverter = None):
-        user = user or ctx.author
+    async def avatar(self, ctx, *, user: utils.SuperConverter = commands.Author):
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
@@ -562,8 +559,7 @@ class DevTools(commands.Cog):
             await ctx.send("Please look for a library to get the info of.")
 
     @commands.command(brief="make a quick bot invite with 0 perms")
-    async def invite_bot(self, ctx, *, user: typing.Optional[discord.User] = None):
-        user = user or ctx.author
+    async def invite_bot(self, ctx, *, user: typing.Optional[discord.User] = commands.Author):
 
         if not user.bot:
             return await ctx.send("That's not a legit bot")
@@ -606,8 +602,7 @@ class DevTools(commands.Cog):
         await ctx.send(f"Hexadecimal: {color} \nValue : {color.value} \nRGB: {color.to_rgb()}")
 
     @commands.command(brief="a command that tells a user creation time.")
-    async def created_at(self, ctx, *, user: utils.SuperConverter = None):
-        user = user or ctx.author
+    async def created_at(self, ctx, *, user: utils.SuperConverter =commands.Author):
 
         creation_info = f"{discord.utils.format_dt(user.created_at, style = 'd')}\n{discord.utils.format_dt(user.created_at, style = 'T')}"
 
@@ -676,8 +671,7 @@ class DevTools(commands.Cog):
 
     @commands.cooldown(1, 60, BucketType.user)
     @commands.command(brief="makes a request to add a bot to the test guild")
-    async def addbot(self, ctx, *, user: typing.Optional[discord.User] = None):
-        user = user or ctx.author
+    async def addbot(self, ctx, *, user: typing.Optional[discord.User] = commands.Author):
 
         if not user.bot:
             ctx.command.reset_cooldown(ctx)

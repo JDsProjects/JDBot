@@ -165,8 +165,8 @@ class Owner(commands.Cog):
         # not sure if it is valuable or not.
 
     @commands.command(brief="Commands to see what guilds a person is in.")
-    async def mutualguilds(self, ctx, *, user: utils.SuperConverter = None):
-        user = user or ctx.author
+    async def mutualguilds(self, ctx, *, user: utils.SuperConverter = commands.Author):
+
         pag = commands.Paginator(prefix="", suffix="")
 
         if isinstance(user, discord.ClientUser):
@@ -227,9 +227,10 @@ class Owner(commands.Cog):
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
     @commands.command(aliases=["bypass_command"])
-    async def command_bypass(self, ctx, user: utils.SuperConverter = None, *, command=None):
+    async def command_bypass(self, ctx, user: utils.SuperConverter = commands.Author, *, command=None):
         # make sure to swap to autoconverter if it gets added.
-        user = user or ctx.author
+        
+
         if command:
             command_wanted = self.bot.get_command(command)
             if command_wanted:
@@ -497,8 +498,8 @@ class Owner(commands.Cog):
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
     @commands.command(brief="changes money of people(for moderation of economy)")
-    async def money(self, ctx, user: typing.Optional[discord.User] = None, *, number: typing.Optional[int] = None):
-        user = user or ctx.author
+    async def money(self, ctx, user: typing.Optional[discord.User] = commands.Author, *, number: typing.Optional[int] = None):
+
         number = number or 100
 
         await self.bot.db.execute("UPDATE economy SET wallet = ($1) WHERE user_id = ($2)", number, user.id)

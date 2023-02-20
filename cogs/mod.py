@@ -16,8 +16,7 @@ class Moderation(commands.Cog):
 
     @commands.cooldown(1, 90, BucketType.user)
     @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
-    async def warn(self, ctx, *, Member: utils.SuperConverter = None):
-        Member = Member or ctx.author
+    async def warn(self, ctx, *, Member: utils.SuperConverter = commands.Author):
 
         warn_useable = utils.warn_permission(ctx, Member)
         # modal for a reason(basically the same button as well above)
@@ -104,8 +103,7 @@ class Moderation(commands.Cog):
         await ctx.send(content=f"Total sus user count: {len(sus_users)}")
 
     @commands.command(brief="gives you info if someone is a sus user or etc")
-    async def is_sus(self, ctx, *, user: typing.Optional[discord.User] = None):
-        user = user or ctx.author
+    async def is_sus(self, ctx, *, user: typing.Optional[discord.User] = commands.Author):
 
         result = await self.bot.db.fetchrow("SELECT * FROM SUS_USERS WHERE user_id = ($1);", user.id)
 
