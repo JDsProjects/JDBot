@@ -31,7 +31,7 @@ class BetterMemberConverter(commands.Converter):
             tag = re.match(r"#?(\d{4})", argument)
             if tag:
                 if ctx.guild:
-                    test = discord.utils.get(ctx.guild.members, discriminator=int(tag.group(1)))
+                    test = discord.utils.get(ctx.guild.members, discriminator=tag.group(1))
                     user = test
         return user
 
@@ -46,7 +46,7 @@ class BetterUserConverter(commands.Converter):
         if user is None:
             tag = re.match(r"#?(\d{4})", argument)
             if tag:
-                test = discord.utils.get(ctx.bot.users, discriminator=int(tag.group(1)))
+                test = discord.utils.get(ctx.bot.users, discriminator=tag.group(1))
                 user = test
         return user or ctx.author
 
