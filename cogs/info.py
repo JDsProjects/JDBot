@@ -66,7 +66,7 @@ class Info(commands.Cog):
         brief="a command that gives information on users",
         help="this can work with mentions, ids, usernames, and even full names.",
     )
-    async def userinfo(self, ctx, *, user: utils.SuperConverter):
+    async def userinfo(self, ctx, *, user: utils.SuperConverter = None):
         user = user or ctx.author
 
         embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
