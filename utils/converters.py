@@ -33,6 +33,10 @@ class BetterMemberConverter(commands.Converter):
                 if ctx.guild:
                     test = discord.utils.get(ctx.guild.members, discriminator=tag.group(1))
                     user = test
+
+        if user is None:
+            raise commands.MemberNotFound(argument)
+
         return user
 
 
