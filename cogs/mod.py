@@ -162,8 +162,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"An Error occured with {e}")
 
     @commands.command(brief="Unarchives thread channel")
-    async def unlock_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
-        channel = channel or ctx.channel
+    async def unlock_thread(self, ctx, channel: typing.Optional[discord.Thread] = commands.CurrentChannel):
 
         if isinstance(channel, discord.Thread):
             if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
@@ -184,8 +183,7 @@ class Moderation(commands.Cog):
             )
 
     @commands.command(brief="Unarchives thread channel")
-    async def archive_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
-        channel = channel or ctx.channel
+    async def archive_thread(self, ctx, channel: typing.Optional[discord.Thread] = commands.CurrentChannel):
 
         if isinstance(channel, discord.Thread):
             if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
@@ -206,8 +204,7 @@ class Moderation(commands.Cog):
             )
 
     @commands.command(brief="locks the thread channel")
-    async def lock_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
-        channel = channel or ctx.channel
+    async def lock_thread(self, ctx, channel: typing.Optional[discord.Thread] = commands.CurrentChannel):
 
         if isinstance(channel, discord.Thread):
             if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
@@ -228,8 +225,7 @@ class Moderation(commands.Cog):
             )
 
     @commands.command(brief="unlocks the thread channel")
-    async def unlock_thread(self, ctx, channel: typing.Optional[discord.Thread] = None):
-        channel = channel or ctx.channel
+    async def unlock_thread(self, ctx, channel: typing.Optional[discord.Thread] = commands.CurrentChannel):
 
         if isinstance(channel, discord.Thread):
             if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:

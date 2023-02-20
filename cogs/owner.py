@@ -511,11 +511,10 @@ class Owner(commands.Cog):
     async def say3(
         self,
         ctx,
-        channel: typing.Optional[typing.Union[discord.TextChannel, discord.Thread, discord.User]] = None,
+        channel: typing.Optional[typing.Union[discord.TextChannel, discord.Thread, discord.User]] = commands.CurrentChannel,
         *,
         args=None,
     ):
-        channel = channel or ctx.channel
 
         if isinstance(channel, discord.User):
             channel = ctx.author

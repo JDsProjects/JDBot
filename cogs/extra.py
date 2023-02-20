@@ -296,9 +296,8 @@ class Extra(commands.Cog):
 
     @commands.command(brief="does say but more powerful with the optional option of a channel to say in")
     async def say2(
-        self, ctx, channel: typing.Optional[typing.Union[discord.TextChannel, discord.Thread]] = None, *, args=None
+        self, ctx, channel: typing.Optional[typing.Union[discord.TextChannel, discord.Thread]] = commands.CurrentChannel, *, args=None
     ):
-        channel = channel or ctx.channel
 
         args = args or "You didn't give us any text to use."
         args = discord.utils.escape_markdown(args, as_needed=False, ignore_links=False)
@@ -758,9 +757,9 @@ class Extra(commands.Cog):
                 discord.User,
                 discord.Member,
             ]
-        ] = None,
+        ] = commands.CurrentChannel,
     ):
-        channel = channel or ctx.channel
+
         print(type(channel))
 
         messages = [message async for message in channel.history(limit=1, oldest_first=True)]
