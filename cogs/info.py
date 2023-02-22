@@ -403,8 +403,6 @@ class DevTools(commands.Cog):
 
         await interaction.response.send_message(f"Alright Let's see \n{library+query}")
 
-        print(query)
-
     @rtfm_slash.autocomplete("library")
     async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
         libraries = dict(self.rtfm_dictionary)
