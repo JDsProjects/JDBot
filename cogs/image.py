@@ -392,7 +392,7 @@ class Image(commands.Cog):
         svgs = []
 
         for attachment in attachments:
-            if attachment.content_type in ("image/svg+xml"):
+            if attachment.content_type in ("image/svg+xml", "image/svg+xml; charset=utf-8"):
                 svgs.append(attachment)
 
         return svgs
