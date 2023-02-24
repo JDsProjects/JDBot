@@ -416,7 +416,7 @@ class Image(commands.Cog):
 
         files = files + files2
 
-        done, _ = await asyncio.wait(files)
+        done = await asyncio.gather(*files, return_exceptions=False)
 
         print(done)
 
