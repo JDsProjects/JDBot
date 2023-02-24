@@ -411,7 +411,11 @@ class Image(commands.Cog):
         if not svgs:
             return await ctx.send("you need svg attachments")
 
-        files = [self.convert_svg(await svg.read()) for svg in svgs]
+        files = [self.convert_svg(await svg.read()) for svg in svgs if isinstance(svg, discord.Attachment)]
+        files2 = [self.convert_svg(svg.read()) for svg in svgs if isinstance(svg, io.BytesIO)]
+
+        files = files + files2
+
         done, _ = await asyncio.wait(files)
         files = [discord.File(file.result(), "converted.png") for file in done]
 
