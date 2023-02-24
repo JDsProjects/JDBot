@@ -402,8 +402,7 @@ class Image(commands.Cog):
         svgs = await self.svg_convert(ctx.message.attachments)
 
         if code:
-            svg_code = io.StringIO()
-            svg_code.write(code.content)
+            svg_code = io.BytesIO(code.content)
             svg_code.seek(0)
 
             svgs.append(svg_code)
