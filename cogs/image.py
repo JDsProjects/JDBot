@@ -392,10 +392,10 @@ class Image(commands.Cog):
         svgs = []
 
         for attachment in attachments:
-            if attachment.content_type in "image/svg+xml":
+            if attachment.content_type in ("image/svg+xml"):
                 svgs.append(attachment)
 
-        return
+        return svgs
 
     @commands.command(brief="Converts svg images to png images")
     async def svgconvert(self, ctx, *, code: codeblock_converter = None):
