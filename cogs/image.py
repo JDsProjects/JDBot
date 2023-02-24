@@ -417,6 +417,9 @@ class Image(commands.Cog):
         files = files + files2
 
         done, _ = await asyncio.wait(files)
+
+        print(done)
+
         files = [discord.File(file.result(), "converted.png") for file in done]
 
         await ctx.send(files=files)
