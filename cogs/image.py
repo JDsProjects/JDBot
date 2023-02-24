@@ -6,7 +6,6 @@ import random
 
 import asuna_api
 import asyncdagpi
-import cairosvg
 import discord
 import jeyyapi
 import mystbin
