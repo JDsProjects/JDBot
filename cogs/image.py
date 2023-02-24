@@ -430,7 +430,7 @@ class Image(commands.Cog):
         files = [discord.File(file, "converted.png") for file in done if isinstance(file, io.BytesIO)]
 
         if not files:
-            return await ctx.send(f"your files were not converted properly \nCheck {[paste]}")
+            return await ctx.send(f"your files were not converted properly \nCheck {paste}")
 
         await ctx.send(content=paste, files=files)
 
