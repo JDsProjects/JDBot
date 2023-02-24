@@ -16,7 +16,6 @@ emoji = "^1.2.0"
 asyncpraw = "^7.3.1"
 tweepy = {git = "https://github.com/tweepy/tweepy.git", extras=["async"], branch="master"}
 topggpy = "^1.1.0"
-CairoSVG = "^2.5.2"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
 better-profanity = "^0.7.0"
@@ -36,6 +35,7 @@ discord_games = {git = "https://github.com/Tom-the-Bomb/Discord-Games"}
 wand = "^0.6.11"
 mystbin-py = "^5.1.0"
 python-dateutil = "^2.8.2"
+pillow = "^9.4.0"
 
 [tool.poetry.dev-dependencies]
 
