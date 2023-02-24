@@ -389,7 +389,6 @@ class Image(commands.Cog):
         return io.BytesIO(stdout)
 
     async def svg_convert(self, attachments):
-
         svgs = []
 
         for attachment in attachments:
@@ -400,11 +399,9 @@ class Image(commands.Cog):
 
     @commands.command(brief="Converts svg images to png images")
     async def svgconvert(self, ctx, *, code: codeblock_converter = None):
-
         svgs = await self.svg_convert(ctx.message.attachments)
 
         if code:
-
             svg_code = io.StringIO(code.content)
             svgs.append(svg_code)
 
