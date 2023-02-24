@@ -375,35 +375,47 @@ class Image(commands.Cog):
         menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
         await menu.send()
 
-    def convert_svg(self, svg_image):
-        converted_bytes = cairosvg.svg2png(bytestring=svg_image, scale=6.0)
-        buffer = io.BytesIO(converted_bytes)
-        buffer.seek(0)
-        file = discord.File(buffer, filename="converted.png")
-        return file
+    async def convert_svg(self, blob):
+        rsvg = "rsvg-convert --width=250"
+        proc = await asyncio.create_subprocess_shell(
+            rsvg, stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await proc.communicate(blob)
+
+        if len(stderr) > 0:
+            error = stderr.decode()
+            raise Exception(error)
+
+        return io.BytesIO(stdout)
+
+    async def svg_convert(self, attachments):
+
+        svgs = []
+
+        for attachment in attachments:
+            if attachment.content_type in "image/svg+xml":
+                svgs.append(attachment)
+
+        return
 
     @commands.command(brief="Converts svg images to png images")
     async def svgconvert(self, ctx, *, code: codeblock_converter = None):
-        if ctx.message.attachments:
-            for a in ctx.message.attachments:
-                try:
-                    file = await asyncio.to_thread(self.convert_svg, await a.read())
 
-                    await ctx.send(file=file)
-
-                except Exception as e:
-                    await ctx.send(f"couldn't convert that :( due to error: {e}")
+        svgs = await self.svg_convert(ctx.message.attachments)
 
         if code:
-            try:
-                file = await asyncio.to_thread(self.convert_svg, code.content)
-                await ctx.send(file=file)
 
-            except Exception as e:
-                await ctx.send(f"couldn't convert that :( due to error: {e}")
+            svg_code = io.StringIO(code.content)
+            svgs.append(svg_code)
 
-        if not code and not ctx.message.attachments:
-            await ctx.send("you need svg attachments")
+        if not svgs:
+            return await ctx.send("you need svg attachments")
+
+        files = [self.convert_svg(svg.read()) for svg in svgs]
+        done, _ = await asyncio.wait(files)
+        files = [discord.File(file.result(), "converted.png") for file in done]
+
+        await ctx.send(files=files)
 
     @commands.command()
     async def call_text(self, ctx, *, args=None):
