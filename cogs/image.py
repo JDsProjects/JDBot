@@ -418,8 +418,6 @@ class Image(commands.Cog):
 
         done = await asyncio.gather(*files, return_exceptions=False)
 
-        print(done, type(done))
-
         files = [discord.File(file.result(), "converted.png") for file in done]
 
         await ctx.send(files=files)
