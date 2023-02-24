@@ -377,7 +377,7 @@ class Image(commands.Cog):
         await menu.send()
 
     async def convert_svg(self, blob):
-        rsvg = "rsvg-convert --width=250"
+        rsvg = "rsvg-convert --width=340 --height=340"
         proc = await asyncio.create_subprocess_shell(
             rsvg, stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
