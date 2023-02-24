@@ -9,6 +9,7 @@ import asyncdagpi
 import cairosvg
 import discord
 import jeyyapi
+import mystbin
 import sr_api
 from discord.ext import commands
 from jishaku.codeblocks import codeblock_converter
@@ -27,6 +28,7 @@ class Image(commands.Cog):
         self.sr_client = sr_api.Client(session=self.bot.session)
         self.dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=self.bot.session)
         self.asuna = asuna_api.Client(session=self.bot.session)
+        self.mystbin_client = mystbin.Client(session=self.bot.session)
 
     @commands.command(brief="a command to slap someone", help="this sends a slap gif to the target user")
     async def slap(self, ctx, *, Member: utils.SuperConverter = commands.Author):
@@ -384,7 +386,7 @@ class Image(commands.Cog):
 
         if len(stderr) > 0:
             error = stderr.decode()
-            raise Exception(error)
+            return error
 
         return io.BytesIO(stdout)
 
@@ -418,9 +420,19 @@ class Image(commands.Cog):
 
         done = await asyncio.gather(*files, return_exceptions=False)
 
-        files = [discord.File(file, "converted.png") for file in done]
+        errors = [mystbin.File(content=file, filename="svg_error.py") for file in done if isinstance(file, str)]
 
-        await ctx.send(files=files)
+        paste = "No Errors"
+        if errors:
+            grab = await self.mystbin_client.create_multifile_paste(files=errors)
+            paste = grab.url
+
+        files = [discord.File(file, "converted.png") for file in done if isinstance(file, io.BytesIO)]
+
+        if not files:
+            return await ctx.send(f"your files were not converted properly \nCheck {[paste]}")
+
+        await ctx.send(content=paste, files=files)
 
     @commands.command()
     async def call_text(self, ctx, *, args=None):
