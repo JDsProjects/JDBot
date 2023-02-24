@@ -16,27 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: config_type; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE public.config_type AS ENUM (
-    'guild',
-    'dm'
-);
-
-
---
--- Name: etype_enum; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE public.etype_enum AS ENUM (
-    'user',
-    'channel',
-    'guild'
-);
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
