@@ -904,7 +904,9 @@ class UserInfoButton(discord.ui.Button):
                 self.view.remove_item(child)
 
         if self.custom_id == "0":
-            await interaction.response.edit_message(content="Will be sending you the information, ephemerally", view=self.view)
+            await interaction.response.edit_message(
+                content="Will be sending you the information, ephemerally", view=self.view
+            )
 
             await menu.send(interaction=interaction, ephemeral=True)
 
