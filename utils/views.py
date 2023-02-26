@@ -330,11 +330,11 @@ class Paginator(View):
 
     async def _edit_message(self, interaction: Interaction = MISSING, /, **kwargs: Any) -> None:
         kwargs["attachments"] = kwargs.pop("files", [])
-        if self.interaction is not MISSING:
+        if interaction is not MISSING:
             self.interaction = interaction
             respond = self.interaction.response.edit_message  # type: ignore
             if self.interaction.response.is_done():  # type: ignore
-                respond = self.message.edit if self.message else _interaction.message.edit  # type: ignore
+                respond = self.message.edit if self.message else interaction.message.edit  # type: ignore
 
             await respond(**kwargs)
         else:
