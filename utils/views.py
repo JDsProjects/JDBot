@@ -741,21 +741,21 @@ class dm_or_ephemeral(discord.ui.View):
     @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
     async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.clear_items()
-        await self.message.edit(content="Will be sending you the information, ephemerally", view=self)
+        await interaction.response.edit_message(content="Will be sending you the information, ephemerally", view=self)
 
         await self.menu.send(interaction=interaction, ephemeral=True)
 
     @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.clear_items()
-        await self.message.edit(content="Well be Dming you the paginator to view this info", view=self)
+        await interaction.response.edit_message(content="Well be Dming you the paginator to view this info", view=self)
 
         await self.menu.send(send_to=self.ctx.author)
 
     @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.clear_items()
-        await self.message.edit(content=f"not sending the paginator to you", view=self)
+        await interaction.response.edit_message(content=f"not sending the paginator to you", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
         if self.ctx.author.id != interaction.user.id:
@@ -904,7 +904,7 @@ class UserInfoButton(discord.ui.Button):
                 self.view.remove_item(child)
 
         if self.custom_id == "0":
-            await self.view.message.edit(content="Will be sending you the information, ephemerally", view=self.view)
+            await interaction.response.edit_message(content="Will be sending you the information, ephemerally", view=self.view)
 
             await menu.send(interaction=interaction, ephemeral=True)
 
