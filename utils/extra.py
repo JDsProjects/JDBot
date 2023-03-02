@@ -8,6 +8,7 @@ import sys
 import zlib
 from typing import TYPE_CHECKING, Any, NamedTuple
 
+import aiohttp
 import black
 import discord
 import tabulate
