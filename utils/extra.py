@@ -268,7 +268,6 @@ async def asset_converter(ctx, assets):
             images.append(avatar)
 
         if isinstance(asset, aiohttp.ClientResponse):
-
             if asset.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
                 images.append(attachment)
 
