@@ -179,17 +179,18 @@ class WebhookConverter(commands.Converter):
             return check
 
 
-url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
+url_pattern = re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+
 
 class validUrlImageConverter(commands.Converter):
     async def convert(self, ctx, argument):
         if url_pattern.fullmatch(argument):
-          
-          resp = await bot.session.head(argument)
-          if resp.ok and resp.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
-            return await bot.session.get(argument)         
+            resp = await bot.session.head(argument)
+            if resp.ok and resp.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
+                return await bot.session.get(argument)
 
-        raise commands.BadArgument('Not a valid URL!')
+        raise commands.BadArgument("Not a valid URL!")
+
 
 image_union = typing.Union[discord.PartialEmoji, discord.Member, discord.User, validUrlImageConverter]
 image_union2 = typing.Union[image_union, str]
