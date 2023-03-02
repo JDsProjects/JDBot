@@ -185,9 +185,9 @@ url_pattern = re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0
 class validUrlImageConverter(commands.Converter):
     async def convert(self, ctx, argument):
         if url_pattern.fullmatch(argument):
-            resp = await bot.session.head(argument)
+            resp = await ctx.bot.session.head(argument)
             if resp.ok and resp.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
-                return await bot.session.get(argument)
+                return await ctx.bot.session.get(argument)
 
         raise commands.BadArgument("Not a valid URL!")
 
