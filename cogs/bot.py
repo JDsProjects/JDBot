@@ -63,11 +63,11 @@ class Bot(commands.Cog):
 
         embed = discord.Embed(title="Bot Ping Data", color=15428885, timestamp=ctx.message.created_at)
 
-        embed.add_field(name="Bot Latency:", value=f"{round((end - start)*1000)} MS", inline=False)
+        embed.add_field(name="Message Latency:", value=f"{round((end - start)*1000)} MS", inline=False)
 
-        embed.add_field(name="Websocket Response time:", value=f"{round(self.bot.latency*1000)} MS", inline=False)
+        embed.add_field(name="Websocket Latency:", value=f"{round(self.bot.latency*1000)} MS", inline=False)
 
-        embed.add_field(name="🐘|Psql Response time:", value=f"{round((psql_end - psql_start)*1000)} MS", inline=False)
+        embed.add_field(name="🐘| database Latency:", value=f"{round((psql_end - psql_start)*1000)} MS", inline=False)
 
         await message.edit(content=f"Pong", embed=embed)
 
