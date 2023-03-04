@@ -88,7 +88,7 @@ class Order(commands.Cog):
             timestamp=ctx.message.created_at,
         )
         embed.set_author(name=f"order for {ctx.author}:", icon_url=(ctx.author.display_avatar.url))
-        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
+        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}ms")
         embed.add_field(name="Powered by:", value="Google Images Api")
 
         embed.add_field(name="Image link:", value=f"[Image Link]({emoji_image.image_url})")
@@ -166,7 +166,7 @@ class Order(commands.Cog):
         )
 
         embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
-        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
+        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}ms")
         embed.add_field(name="Powered by:", value="Tenor")
 
         if gifNearest.gif:
@@ -249,7 +249,7 @@ class Order(commands.Cog):
 
         embed.set_author(name=f"order for {ctx.author}:", icon_url=ctx.author.display_avatar.url)
 
-        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}MS")
+        embed.add_field(name="Time Spent:", value=f"{int((time_after - time_before)*1000)}ms")
         embed.add_field(name="Powered by:", value="GIPHY")
         embed.set_image(url=f"https://media3.giphy.com/media/{gifNearest.id}/giphy.gif")
 

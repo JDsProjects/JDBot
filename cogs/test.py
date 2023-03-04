@@ -201,7 +201,7 @@ class Test(commands.Cog):
         files = [file.result() for file in done]
         time_after = time.perf_counter()
 
-        await ctx.send(content=f"Invert ran in {int((time_after - time_before)*1000)} MS", files=files)
+        await ctx.send(content=f"Invert ran in {int((time_after - time_before)*1000)} ms", files=files)
 
     @commands.command(brief="invert images using wand")
     async def invert2(
@@ -219,7 +219,7 @@ class Test(commands.Cog):
         files = [file.result() for file in done]
         time_after = time.perf_counter()
 
-        await ctx.send(content=f"Invert2 ran in {int((time_after - time_before)*1000)} MS", files=files)
+        await ctx.send(content=f"Invert2 ran in {int((time_after - time_before)*1000)} ms", files=files)
 
     @commands.cooldown(1, 15, BucketType.user)
     @commands.command(brief="gets an image to have sam laugh at")

@@ -238,7 +238,7 @@ class Extra(commands.Cog):
         file1 = await utils.google_tts(self.bot, args)
         time_after = time.perf_counter()
 
-        await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS", file=file1)
+        await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} ms", file=file1)
 
     @commands.command(brief="Uses google translate to make text to latin in a voice mode :D", aliases=["latin_tts"])
     async def tts_latin(self, ctx, *, args=None):
@@ -250,7 +250,7 @@ class Extra(commands.Cog):
             file = await utils.latin_google_tts(self.bot, args)
             time_after = time.perf_counter()
 
-            await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} MS", file=file)
+            await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} ms", file=file)
 
     @commands.command(
         help="learn about a secret custom xbox controller",
