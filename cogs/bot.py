@@ -61,6 +61,9 @@ class Bot(commands.Cog):
         await self.bot.db.fetch("SELECT 1")
         psql_end = time.perf_counter()
 
+        pings = [(end - start), self.bot.latency, (psql_end - psql_start)]
+        average_ping = sum(pings) / len(pings)
+
         embed = discord.Embed(title="Pong 🏓", color=15428885, timestamp=ctx.message.created_at)
 
         embed.add_field(name="📡 Message", value=f"{round((end - start)*1000)} ms")
@@ -68,6 +71,8 @@ class Bot(commands.Cog):
         embed.add_field(name="🔌 Websocket", value=f"{round(self.bot.latency*1000)} ms")
 
         embed.add_field(name="🐘 Database", value=f"{round((psql_end - psql_start)*1000)} ms")
+
+        embed.add_field(name="💻 Average", value=f"{round(average_ping)*1000} ms")
 
         await message.edit(embed=embed)
 
