@@ -72,7 +72,7 @@ class Bot(commands.Cog):
 
         embed.add_field(name="🐘 Database", value=f"{round((psql_end - psql_start)*1000)} ms")
 
-        embed.set_footer(text=f"💻 Average \n{round(average_ping)*1000} ms")
+        embed.set_footer(text=f"💻 Average \n{round((average_ping)*1000)} ms")
 
         await message.edit(embed=embed)
 
