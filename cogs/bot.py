@@ -61,15 +61,15 @@ class Bot(commands.Cog):
         await self.bot.db.fetch("SELECT 1")
         psql_end = time.perf_counter()
 
-        embed = discord.Embed(title="Bot Ping Data", color=15428885, timestamp=ctx.message.created_at)
+        embed = discord.Embed(title="Pong 🏓", color=15428885, timestamp=ctx.message.created_at)
 
-        embed.add_field(name="📡 | Message Latency", value=f"{round((end - start)*1000)} MS", inline=False)
+        embed.add_field(name="📡 Message Latency", value=f"{round((end - start)*1000)} ms", inline=False)
 
-        embed.add_field(name="🔌 | Websocket Latency", value=f"{round(self.bot.latency*1000)} MS", inline=False)
+        embed.add_field(name="🔌 Websocket Latency", value=f"{round(self.bot.latency*1000)} ms", inline=False)
 
-        embed.add_field(name="🐘 | Database Latency", value=f"{round((psql_end - psql_start)*1000)} MS", inline=False)
+        embed.add_field(name="🐘 Database Latency", value=f"{round((psql_end - psql_start)*1000)} ms", inline=False)
 
-        await message.edit(content=f"Pong", embed=embed)
+        await message.edit(embed=embed)
 
     @commands.command(brief="gives you an invite to invite the bot.", aliases=["inv"])
     async def invite(self, ctx):
