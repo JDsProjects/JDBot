@@ -63,11 +63,11 @@ class Bot(commands.Cog):
 
         embed = discord.Embed(title="Pong 🏓", color=15428885, timestamp=ctx.message.created_at)
 
-        embed.add_field(name="📡 Message Latency", value=f"{round((end - start)*1000)} ms", inline=False)
+        embed.add_field(name="📡 Message", value=f"{round((end - start)*1000)} ms", inline=False)
 
-        embed.add_field(name="🔌 Websocket Latency", value=f"{round(self.bot.latency*1000)} ms", inline=False)
+        embed.add_field(name="🔌 Websocket", value=f"{round(self.bot.latency*1000)} ms", inline=False)
 
-        embed.add_field(name="🐘 Database Latency", value=f"{round((psql_end - psql_start)*1000)} ms", inline=False)
+        embed.add_field(name="🐘 Database", value=f"{round((psql_end - psql_start)*1000)} ms", inline=False)
 
         await message.edit(embed=embed)
 
