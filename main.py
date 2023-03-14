@@ -14,6 +14,7 @@ import discord
 import dotenv
 from discord.ext import commands
 from tweepy.asynchronous import AsyncClient
+import somerandomapi
 
 from cogs import EXTENSIONS
 
@@ -126,6 +127,8 @@ class JDBot(commands.Bot):
             access_token=access_token,
             access_token_secret=access_secret,
         )
+
+        self.sr_client = somerandomapi.Client(self.session)
 
         await super().start(*args, **kwargs)
 
