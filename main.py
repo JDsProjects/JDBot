@@ -12,9 +12,9 @@ import aiohttp
 import asyncpg
 import discord
 import dotenv
+import somerandomapi
 from discord.ext import commands
 from tweepy.asynchronous import AsyncClient
-import somerandomapi
 
 from cogs import EXTENSIONS
 
