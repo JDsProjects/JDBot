@@ -24,7 +24,7 @@ class Image(commands.Cog):
 
     async def cog_load(self):
         self.jeyy_client = jeyyapi.JeyyAPIClient(session=self.bot.session)
-        self.sr_client = sr_api.Client(session=self.bot.session)
+        self.sr_client = self.bot.sr_client
         self.dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=self.bot.session)
         self.asuna = asuna_api.Client(session=self.bot.session)
         self.mystbin_client = mystbin.Client(session=self.bot.session)

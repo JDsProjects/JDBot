@@ -7,7 +7,7 @@ import aiohttp
 import asyncdagpi
 import discord
 import jeyyapi
-import sr_api
+import somerandomapi
 
 
 async def roleinfo(ctx, role):
@@ -65,8 +65,9 @@ async def cdn_upload(bot, image_bytes):
 
 
 async def triggered_converter(url, ctx):
-    sr_client = sr_api.Client(session=ctx.bot.session)
-    image = sr_client.filter(option="triggered", url=str(url))
+    
+    sr_client = ctx.bot.sr_client
+    image = await sr_client.overlay(str(url), somerandomapi.CanvasOverlay.triggered)
 
     url = await cdn_upload(ctx.bot, await image.read())
 
