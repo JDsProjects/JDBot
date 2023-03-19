@@ -14,6 +14,7 @@ class DSLCount(commands.Cog):
         self.token = os.environ["topgg_key"]
 
         self.api = discordlists.Client(self.bot)
+        self.api.session = self.bot.session
         self.api.set_auth("disforge.com", os.environ["disforge_key"])
         self.api.set_auth("discord-botlist.eu", os.environ["botlist_eu_key"])
         self.api.start_loop()
