@@ -9,7 +9,6 @@ python = ">= 3.10,<4.0.0"
 asuna-api = "^0.2.8"
 async-cse = "^0.3.0"
 asyncdagpi = "^3.3.2"
-sr-api = {git = "https://github.com/iDutchy/sr_api"}
 "discordlists.py" = "^1.1.1"
 emoji = "^1.2.0"
 "alexflipnote.py" = "^2.4.0"

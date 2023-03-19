@@ -800,25 +800,6 @@ aiohttp = ">=3.8.0,<4.0.0"
 docs = ["Sphinx (==6.1)", "enum-tools[sphinx] (>=0.9.0,<0.10.0)", "sphinx-autodoc-typehints (==1.22)", "sphinx-rtd-theme (>=1.2.0,<1.3.0)"]
 
 [[package]]
-name = "sr-api"
-version = "1.1.5"
-description = "An async wrapper for some-random-api"
-category = "main"
-optional = false
-python-versions = "*"
-develop = false
-
-[package.dependencies]
-aiohttp = "*"
-yarl = "*"
-
-[package.source]
-type = "git"
-url = "https://github.com/iDutchy/sr_api"
-reference = "HEAD"
-resolved_reference = "598357981652217cd7845b0cd61a336b5adcd5f2"
-
-[[package]]
 name = "tabulate"
 version = "0.9.0"
 description = "Pretty-print tabular data"
@@ -952,7 +933,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">= 3.10,<4.0.0"
-content-hash = "7fa345340ffb1728fe27a2517a240cec6bb496e1083c394caedcc2abd82d5534"
+content-hash = "2082972b9eb3756a6076cbab27ce815ea25ff5ee5e92fc1c404148630def64c7"
 
 [metadata.files]
 aiodns = [
@@ -1746,7 +1727,6 @@ somerandomapi-py = [
     {file = "somerandomapi.py-0.0.2-py3-none-any.whl", hash = "sha256:c9dc413c5b86552f012dd5ee4df600040ccabd15fad31ba10f19e62355a4e291"},
     {file = "somerandomapi.py-0.0.2.tar.gz", hash = "sha256:89651f48bafcff0a1ed12de5731e5312b56079aaa98dfc1f000c811a2c0c7a22"},
 ]
-sr-api = []
 tabulate = [
     {file = "tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f"},
     {file = "tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c"},
