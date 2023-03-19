@@ -128,8 +128,8 @@ class JDBot(commands.Bot):
             access_token_secret=access_secret,
         )
 
-        self.sr_client = somerandomapi.Client(self.session)
-        self.sr_client2 = somerandomapi.Client(self.session, key=os.env["sr_api"])
+        self.sr_client = somerandomapi.Client(session=self.session)
+        self.sr_client2 = somerandomapi.Client(os.env["sr_api"], session=self.session)
 
         await super().start(*args, **kwargs)
 
