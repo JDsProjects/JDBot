@@ -39,8 +39,7 @@ class Extra(commands.Cog):
             username=os.getenv("reddit_username"),
         )
 
-        # self.cleverbot = async_cleverbot.Cleverbot(os.environ["cleverbot_key"], session=self.bot.session)
-        # self.sr_api = sr_api.Client(session=self.bot.session)
+        self.sr_client = self.bot.sr_client
 
         pool = self.pool
 
@@ -558,7 +557,9 @@ class Extra(commands.Cog):
         return await ctx.send("out of commission right now.")
 
         view.ask = self.cleverbot.ask
+        # update to use the chatbot system Soheab made and also figure out how to use a rsap api or to run a free open ai chatbot for view.ask2.
         # view.ask2 = self.sr_api.chatbot
+        
         await ctx.reply(
             "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.)\nPlease Hit the buttons now to start the modal ",
             view=view,

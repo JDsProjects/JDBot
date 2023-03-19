@@ -9,7 +9,6 @@ import asyncdagpi
 import discord
 import jeyyapi
 import mystbin
-import sr_api
 from discord.ext import commands
 from jishaku.codeblocks import codeblock_converter
 
