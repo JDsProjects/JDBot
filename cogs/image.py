@@ -104,7 +104,7 @@ class Image(commands.Cog):
         image = await self.sr_client.animu.pat()
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} patted you", icon_url=person.display_avatar.url)
-        embed.set_image(url=image.url)
+        embed.set_image(url=image)
         embed.set_footer(text="powered by some random api")
 
         if isinstance(ctx.channel, discord.TextChannel):
@@ -130,7 +130,7 @@ class Image(commands.Cog):
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} hugged you! Awwww...", icon_url=person.display_avatar.url)
-        embed.set_image(url=image.url)
+        embed.set_image(url=image)
         embed.set_footer(text="powered by some random api")
 
         if isinstance(ctx.channel, discord.TextChannel):
@@ -248,7 +248,7 @@ class Image(commands.Cog):
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} winked at you", icon_url=person.display_avatar.url)
-        embed.set_image(url=image.url)
+        embed.set_image(url=image)
         embed.set_footer(text="powered by some random api")
 
         if isinstance(ctx.channel, discord.TextChannel):
@@ -309,7 +309,7 @@ class Image(commands.Cog):
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{target} you made {person} facepalm", icon_url=person.display_avatar.url)
-        embed.set_image(url=image.url)
+        embed.set_image(url=image)
         embed.set_footer(text="powered by some random api")
 
         if isinstance(ctx.channel, discord.TextChannel):
