@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import functools
 import logging
 import os
@@ -222,4 +223,5 @@ async def check_suspended(ctx: JDBotContext):
 
 logging.basicConfig(level=logging.INFO)
 
+asyncio.get_running_loop().set_debug(True)
 bot.run(os.environ["classic_token"])
