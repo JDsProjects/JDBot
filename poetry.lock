@@ -147,11 +147,14 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "async-lru"
-version = "1.0.3"
-description = "Simple lru_cache for asyncio"
+version = "2.0.2"
+description = "Simple LRU cache for asyncio"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.8"
+
+[package.dependencies]
+typing-extensions = ">=4.0.0"
 
 [[package]]
 name = "async-timeout"
@@ -385,7 +388,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7
 
 [[package]]
 name = "discord-games"
-version = "1.10.7"
+version = "1.11.4"
 description = "A library to help users easily implement games within their discord bot"
 category = "main"
 optional = false
@@ -408,7 +411,7 @@ resolved_reference = "1593b305894c9052b337a5967a5469da4287cbd8"
 
 [[package]]
 name = "discord.py"
-version = "2.3.0a4775+ga938b10e"
+version = "2.3.0a4789+g064cbd11"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
@@ -432,7 +435,7 @@ voice = ["PyNaCl (>=1.3.0,<1.6)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "879c8b9340f882b961db00de95977f3cf47c2305"
+resolved_reference = "064cbd11254e0862e4637093b969cf6cdb020608"
 
 [[package]]
 name = "discordlists-py"
@@ -623,7 +626,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "pathspec"
-version = "0.11.0"
+version = "0.11.1"
 description = "Utility library for gitignore style pattern matching of file paths."
 category = "main"
 optional = false
@@ -847,7 +850,7 @@ python-versions = ">= 3.6"
 
 [[package]]
 name = "tweepy"
-version = "4.12.1"
+version = "4.13.0"
 description = "Twitter library for Python"
 category = "main"
 optional = false
@@ -856,13 +859,13 @@ develop = false
 
 [package.dependencies]
 aiohttp = {version = ">=3.7.3,<4", optional = true, markers = "extra == \"async\""}
-async-lru = {version = ">=1.0.3,<2", optional = true, markers = "extra == \"async\""}
+async-lru = {version = ">=1.0.3,<3", optional = true, markers = "extra == \"async\""}
 oauthlib = ">=3.2.0,<4"
 requests = ">=2.27.0,<3"
 requests-oauthlib = ">=1.2.0,<2"
 
 [package.extras]
-async = ["aiohttp (>=3.7.3,<4)", "async-lru (>=1.0.3,<2)"]
+async = ["aiohttp (>=3.7.3,<4)", "async-lru (>=1.0.3,<3)"]
 dev = ["coverage (>=4.4.2)", "coveralls (>=2.1.0)", "tox (>=3.21.0)"]
 docs = ["myst-parser (==0.15.2)", "readthedocs-sphinx-search (==0.1.1)", "sphinx (==4.2.0)", "sphinx-hoverxref (==0.7b1)", "sphinx-tabs (==3.2.0)", "sphinx_rtd_theme (==1.0.0)"]
 socks = ["requests[socks] (>=2.27.0,<3)"]
@@ -872,7 +875,7 @@ test = ["vcrpy (>=1.10.3)"]
 type = "git"
 url = "https://github.com/tweepy/tweepy.git"
 reference = "master"
-resolved_reference = "d2a6b83f7da87d66204d0e334ff2d94c21ea7cbc"
+resolved_reference = "6fde20d61fd21b06408dedc38f542987cf91c1bc"
 
 [[package]]
 name = "typing-extensions"
@@ -1085,8 +1088,8 @@ async-generator = [
     {file = "async_generator-1.10.tar.gz", hash = "sha256:6ebb3d106c12920aaae42ccb6f787ef5eefdcdd166ea3d628fa8476abe712144"},
 ]
 async-lru = [
-    {file = "async-lru-1.0.3.tar.gz", hash = "sha256:c2cb9b2915eb14e6cf3e717154b40f715bf90e596d73623677affd0d1fbcd32a"},
-    {file = "async_lru-1.0.3-py3-none-any.whl", hash = "sha256:ea692c303feb6211ff260d230dae1583636f13e05c9ae616eada77855b7f415c"},
+    {file = "async-lru-2.0.2.tar.gz", hash = "sha256:3b87ec4f2460c52cc7916a0138cc606b584c75d1ef7d661853c95d1d3acb869a"},
+    {file = "async_lru-2.0.2-py3-none-any.whl", hash = "sha256:d7c2b873e9af5c5a1f0a87a6c145e7e0b4eb92342b7235dda9dd5b10e950d6e2"},
 ]
 async-timeout = [
     {file = "async-timeout-4.0.2.tar.gz", hash = "sha256:2163e1640ddb52b7a8c80d0a67a08587e5d245cc9c553a74a847056bc2976b15"},
@@ -1546,8 +1549,8 @@ orjson = [
     {file = "orjson-3.8.7.tar.gz", hash = "sha256:8460c8810652dba59c38c80d27c325b5092d189308d8d4f3e688dbd8d4f3b2dc"},
 ]
 pathspec = [
-    {file = "pathspec-0.11.0-py3-none-any.whl", hash = "sha256:3a66eb970cbac598f9e5ccb5b2cf58930cd8e3ed86d393d541eaf2d8b1705229"},
-    {file = "pathspec-0.11.0.tar.gz", hash = "sha256:64d338d4e0914e91c1792321e6907b5a593f1ab1851de7fc269557a21b30ebbc"},
+    {file = "pathspec-0.11.1-py3-none-any.whl", hash = "sha256:d8af70af76652554bd134c22b3e8a1cc46ed7d91edcdd721ef1a0c51a84a5293"},
+    {file = "pathspec-0.11.1.tar.gz", hash = "sha256:2798de800fa92780e33acca925945e9a19a133b715067cf165b8866c15a31687"},
 ]
 pillow = [
     {file = "Pillow-9.4.0-1-cp310-cp310-macosx_10_10_x86_64.whl", hash = "sha256:1b4b4e9dda4f4e4c4e6896f93e84a8f0bcca3b059de9ddf67dac3c334b1195e1"},
