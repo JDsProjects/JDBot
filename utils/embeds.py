@@ -65,7 +65,6 @@ async def cdn_upload(bot, image_bytes):
 
 
 async def triggered_converter(url, ctx):
-    
     sr_client = ctx.bot.sr_client
     image = await sr_client.overlay(str(url), somerandomapi.CanvasOverlay.triggered)
 
