@@ -559,7 +559,7 @@ class Extra(commands.Cog):
         view.ask = self.cleverbot.ask
         # update to use the chatbot system Soheab made and also figure out how to use a rsap api or to run a free open ai chatbot for view.ask2.
         # view.ask2 = self.sr_api.chatbot
-        
+
         await ctx.reply(
             "we firstly apoligize if chatbot offends you or hurts your feelings(like actually does so not as a joke or trying to cause drama thing.)\nPlease Hit the buttons now to start the modal ",
             view=view,
