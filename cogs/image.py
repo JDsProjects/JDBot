@@ -101,7 +101,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        image = await self.sr_client.get_gif("pat")
+        image = await self.sr_client.animu.pat
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} patted you", icon_url=person.display_avatar.url)
         embed.set_image(url=image.url)
@@ -126,7 +126,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        image = await self.sr_client.get_gif("hug")
+        image = await self.sr_client.animu.hug
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} hugged you! Awwww...", icon_url=person.display_avatar.url)
@@ -244,7 +244,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        image = await self.sr_client.get_gif("wink")
+        image = await self.sr_client.animu.wink
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{person} winked at you", icon_url=person.display_avatar.url)
@@ -305,7 +305,7 @@ class Image(commands.Cog):
             person = ctx.author
             target = Member
 
-        image = await self.sr_client.get_gif("face-palm")
+        image = await self.sr_client.animu.facepalm
 
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{target} you made {person} facepalm", icon_url=person.display_avatar.url)
