@@ -100,9 +100,8 @@ class JDBot(commands.Bot):
         self.prefix_cache: dict[int, str] = {}
 
     async def start(self, *args: Any, **kwargs: Any) -> None:
-        
         asyncio.get_running_loop().set_debug(True)
-        
+
         self.session = aiohttp.ClientSession()
         self.db = await asyncpg.create_pool(os.getenv("DB_key"), record_class=CustomRecordClass)  # need to type fix
         # loads up some bot variables
