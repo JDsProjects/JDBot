@@ -129,6 +129,7 @@ class JDBot(commands.Bot):
         )
 
         self.sr_client = somerandomapi.Client(self.session)
+        self.sr_client2 = somerandomapi.Client(self.session, key=os.env["sr_api"])
 
         await super().start(*args, **kwargs)
 
