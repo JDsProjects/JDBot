@@ -18,7 +18,7 @@ class DSLCount(commands.Cog):
         self.api.set_auth("discord-botlist.eu", os.environ["botlist_eu_key"])
         self.api.start_loop()
 
-        self.topgg = topgg.DBLClient(self.bot, self.token)
+        self.topgg = topgg.DBLClient(self.bot, self.token, session=self.bot.session)
         self.update_stats.start()
 
     @tasks.loop(minutes=5)
