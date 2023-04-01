@@ -126,7 +126,7 @@ class Extra(commands.Cog):
         comic = await self.bot.session.get(f"https://xkcd.com/{num}/info.0.json")
         data = await comic.json()
         title = data["title"]
-        embed = discord.Embed(title=f"Title: {title}", color=random.randint(0, 16777215))
+        embed = discord.Embed(title=f"{title}", color=random.randint(0, 16777215))
         embed.set_image(url=data["img"])
         embed.set_footer(text=f"Made on {data['month']}/{data['day']}/{data['year']}")
         await ctx.send(embed=embed)
