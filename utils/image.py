@@ -200,7 +200,6 @@ def crusty(raw_asset: bytes) -> discord.File:
     frame_durations = []
 
     with WImage(file=wrapped_image) as img:
-
         ext = "gif" if len(img.sequence) > 1 else "png"
 
         for frame in ImageSequence.Iterator(img):
