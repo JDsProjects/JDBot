@@ -196,11 +196,20 @@ def crusty(raw_asset: bytes) -> discord.File:
     wrapped_image = BytesIO(raw_asset)
     f = BytesIO()
 
+    frames = []
+    frame_durations = []
+
     with WImage(file=wrapped_image) as img:
-        img.compression = "jpeg2000"
-        img.resize(70, 70)
-        img.resize(4000, 4000)
-        img.save(f)
-        f.seek(0)
+        for frame in ImageSequence.Iterator(img):
+            frame_durations.append(frame.info.get("duration", 50))
+
+            frame.compression = "jpeg2000"
+            frame.resize(70, 70)
+            frame.resize(4000, 4000)
+
+            frames.append(frame)
+
+    img.save(f)
+    f.seek(0)
 
     return discord.File(f, "crusty.png")
