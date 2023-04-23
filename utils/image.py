@@ -202,15 +202,6 @@ def crusty(raw_asset: bytes) -> discord.File:
     with WImage(file=wrapped_image) as img:
         ext = "gif" if len(img.sequence) > 1 else "png"
 
-        for frame in ImageSequence.Iterator(img):
-            frame_durations.append(frame.info.get("duration", 50))
-
-            frame.compression = "jpeg2000"
-            frame.resize(70, 70)
-            frame.resize(4000, 4000)
-
-            frames.append(frame)
-
     img.save(f)
     f.seek(0)
 
