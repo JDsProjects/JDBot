@@ -208,8 +208,7 @@ def crusty(raw_asset: bytes) -> discord.File:
             img.resize(4000, 4000)
 
         ext = "gif" if len(img.sequence) > 1 else "png"
+        img.save(f)
 
-    img.save(f)
     f.seek(0)
-
     return discord.File(f, f"crusty.{ext}")
