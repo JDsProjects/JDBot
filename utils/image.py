@@ -190,3 +190,17 @@ def laugh2(raw_asset: bytes) -> tuple[BytesIO, typing.Literal["gif", "png"]]:
 
     buff.seek(0)
     return buff, gif
+
+
+def crusty(raw_asset: bytes) -> discord.File:
+    wrapped_image = BytesIO(raw_asset)
+    f = BytesIO()
+
+    with WImage(file=wrapped_image) as img:
+        img.compression = "jpeg2000"
+        img.resize(70, 70)
+        img.resize(4000, 4000)
+        img.save(f)
+        f.seek(0)
+
+    return discord.File(f, "crusty.png")
