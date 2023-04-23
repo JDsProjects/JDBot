@@ -221,6 +221,24 @@ class Test(commands.Cog):
 
         await ctx.send(content=f"Invert2 ran in {int((time_after - time_before)*1000)} ms", files=files)
 
+    @commands.command(brief="makes images look really crusty and old")
+    async def crust(
+        self,
+        ctx,
+        *assets: utils.image_union2,
+    ):
+        images = await utils.asset_converter(ctx, assets)
+
+        files = [asyncio.to_thread(utils.crusty, await image.read()) for image in images]
+
+        time_before = time.perf_counter()
+        done, _ = await asyncio.wait(files)
+
+        files = [file.result() for file in done]
+        time_after = time.perf_counter()
+
+        await ctx.send(content=f"crusty ran in {int((time_after - time_before)*1000)} ms", files=files)
+
     @commands.cooldown(1, 15, BucketType.user)
     @commands.command(brief="gets an image to have sam laugh at")
     async def laugh(
