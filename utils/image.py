@@ -193,7 +193,6 @@ def laugh2(raw_asset: bytes) -> tuple[BytesIO, typing.Literal["gif", "png"]]:
 
 
 def crusty(raw_assets: bytes) -> discord.File:
-
     f = BytesIO()
 
     with Image(blob=raw_assets) as img:
