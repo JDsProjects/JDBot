@@ -200,8 +200,8 @@ def crusty(raw_asset: bytes) -> discord.File:
         # img.iterator_first()
 
         img.compression = "jpeg2000"
-        img.resize(35, 35)
-        img.resize(2000, 2000)
+        img.resize(70, 70)
+        img.resize(4000, 4000)
 
         # while img.iterator_next():
         # img.compression = "jpeg2000"
