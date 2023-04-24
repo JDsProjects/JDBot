@@ -118,7 +118,9 @@ def invert2(image) -> discord.File:
 
         ext = "gif" if len(img.sequence) > 1 else "png"
 
-        return discord.File(BytesIO(img.make_blob(ext)), f"inverted.{ext}")
+        img.format = ext
+        data = BytesIO(img.make_blob())
+        return discord.File(data, f"inverted.{ext}")
 
 
 ASSET_SIZE = 220
