@@ -12,14 +12,11 @@ from typing import Any, Optional
 import aiohttp
 import asyncpg
 import discord
-import dotenv
 import somerandomapi
 from discord.ext import commands
 from tweepy.asynchronous import AsyncClient
 
 from cogs import EXTENSIONS
-
-dotenv.load_dotenv()
 
 
 async def get_prefix(bot: JDBot, message: discord.Message):
