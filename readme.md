@@ -58,5 +58,7 @@ I will take it down.
 You Have Been Warned.
 Now, if you got permission from me first, then you are fine but It must be done in a public way, I have the right to revoke this.
 
+Also, if need to run it on linux if you want to try it. If you want to host it, just ask a code help server
+
 Thank You,
 JDJG
