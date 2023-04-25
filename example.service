@@ -1,0 +1,16 @@
+[Unit]
+Description=Runs JDBot
+After=network-online.target
+StartLimitIntervalSec = 1day
+StartLimitBurst = 50
+
+[Service]
+ExecStart=/path/to/python -u main.py
+WorkingDirectory=/path/to/working/directory
+EnvironmentFile=/path/to/env/.env
+Restart=on-failure
+RestartSec=15
+
+
+[Install]
+WantedBy=default.target
