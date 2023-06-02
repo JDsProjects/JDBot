@@ -75,6 +75,16 @@ CREATE TABLE public.imoog (
 
 
 --
+-- Name: invalidation_config; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.invalidation_config (
+    entity_id bigint NOT NULL,
+    entity_type smallint NOT NULL
+);
+
+
+--
 -- Name: jobs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -190,6 +200,14 @@ ALTER TABLE ONLY public.economy
 
 ALTER TABLE ONLY public.global_link
     ADD CONSTRAINT global_link_pkey PRIMARY KEY (guild_id);
+
+
+--
+-- Name: invalidation_config invalidation_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invalidation_config
+    ADD CONSTRAINT invalidation_config_pkey PRIMARY KEY (entity_id, entity_type);
 
 
 --
