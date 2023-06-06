@@ -658,7 +658,7 @@ class InviteInfoEmbed(Paginator):
                 description=f"Discord couldnt fetch the invite with the code {item}.",
                 color=random.randint(0, 16777215),
             )
-            embed.set_footer(text="If this is a consistent problem please contact JDJG Inc. Official#3493")
+            embed.set_footer(text="If this is a consistent problem please contact JDJG Inc. Official#3493 (jdjg)")
 
         return embed
 
