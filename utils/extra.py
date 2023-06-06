@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import enum
 import io
 import os
 import pathlib
@@ -277,3 +278,10 @@ async def asset_converter(ctx, assets):
         images.append(ctx.author.display_avatar)
 
     return images[:10]
+
+
+class InvalidateType(enum.IntEnum):
+    everywhere = 0
+    guild = 1
+    dm = 2
+    channel = 3
