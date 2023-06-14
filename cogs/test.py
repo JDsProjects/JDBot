@@ -57,6 +57,76 @@ class Test(commands.Cog):
     async def set_wakeuptime(self, ctx):
         await ctx.send("WIP")
 
+    @commands.command(brief="gets tweets from a username")
+    async def get_tweet(self, ctx, amount: typing.Optional[int] = None, username=None):
+        amount = amount or 10
+
+        if not username:
+            return await ctx.send("You Need to pick a username.")
+
+        if amount > 30:
+            return await ctx.send("You can only get 30 tweets at a time.")
+
+        try:
+            username = await self.bot.tweet_client.get_user(username=username, user_fields=["profile_image_url"])
+
+        except Exception as e:
+            traceback.print_exc()
+            return await ctx.send(f"Exception occured at {e}")
+
+        if username.data is None:
+            return await ctx.send("Couldn't find that user.")
+
+        username_id = username.data.id
+        profile_url = f"https://twitter.com/i/user/{username_id}"
+        # appreantly this works
+
+        image = username.data.profile_image_url
+
+        try:
+            # time to do things later
+
+            response = await self.bot.tweet_client.get_users_tweets(
+                username_id,
+                max_results=amount,
+                user_auth=True,
+                expansions=["attachments.media_keys"],
+                tweet_fields=["possibly_sensitive", "attachments", "created_at"],
+                media_fields=["media_key", "type", "url", "preview_image_url", "variants"],
+            )
+            # not sure if I have everything i need but i need to see what data it can give me
+            # tweet_fields may take entities in the future(entities are only needed for video urls and gifs)
+
+        except Exception as e:
+            traceback.print_exc()
+            return await ctx.send(f"Exception occured at {e}")
+
+        wrapped_response = utils.TweetWrapper(response)
+
+        wrapped_tweets = wrapped_response.tweets
+
+        if not wrapped_tweets:
+            return await ctx.send("Couldn't find any tweets.")
+
+        # not sure why this can be None but it can be
+
+        filtered_tweets = list(filter(lambda t: t.possibly_sensitive == False, wrapped_tweets))
+
+        menu = utils.TweetsPaginator(
+            ctx=ctx,
+            delete_after=True,
+            tweets=filtered_tweets,  # type: ignore
+            author_icon=image,
+            author_url=profile_url,
+            author_name=username.data,
+        )
+
+        view = utils.TweetsDestinationHandler(ctx=ctx, pagintor=menu)
+
+        view.message = await ctx.send("Please pick a way tweets are sent to you\nMethods are below:", view=view)
+
+        # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
+
     @commands.command(brief="adds a text to Go Go Gadget or Wowzers Username")
     async def gadget(self, ctx, *, text=None):
         if not text:

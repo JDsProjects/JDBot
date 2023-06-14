@@ -9,6 +9,7 @@ import traceback
 import typing
 
 import discord
+import tweepy
 from discord.ext import commands
 
 import utils
@@ -396,6 +397,24 @@ class Owner(commands.Cog):
 
             else:
                 return await ctx.send(f"{user} is in the testers list already!")
+
+    @commands.command(brief="sends tweet to JDBot Twitter", aliases=["tweet_send", "tweet"])
+    async def send_tweet(self, ctx, *, args=None):
+        if not args:
+            return await ctx.send("you can't send nothing to twitter.")
+
+        try:
+            post = await self.bot.tweet_client.create_tweet(text=args, user_auth=True)
+
+        except Exception as e:
+            traceback.print_exc()
+            return await ctx.send(f"Exception occured at {e}")
+
+        twitter_id = post.data.get("id")
+        if twitter_id is None:
+            return await ctx.send("no id found :/")
+
+        await ctx.send(f"Url of sent tweet is: https://twitter.com/twitter/statuses/{twitter_id}")
 
     @commands.command(brief="A command to view the cdn's images")
     async def cdn_view(self, ctx):
