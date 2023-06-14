@@ -14,7 +14,6 @@ import asyncpg
 import discord
 import somerandomapi
 from discord.ext import commands
-from tweepy.asynchronous import AsyncClient
 
 from cogs import EXTENSIONS
 
@@ -112,21 +111,6 @@ class JDBot(commands.Bot):
 
         self.history: list[str] = [h.get("response") for h in await self.db.fetch("SELECT * FROM RANDOM_HISTORY")]
         self.images: list[str] = [image.identifier for image in await self.db.fetch("SELECT identifier FROM imoog")]
-
-        consumer_key = os.getenv("tweet_key")
-        consumer_secret = os.getenv("tweet_secret")
-
-        access_token = os.getenv("tweet_access")
-        access_secret = os.getenv("tweet_token")
-        bearer_token = os.getenv("tweet_bearer")
-
-        self.tweet_client = AsyncClient(
-            bearer_token,
-            consumer_key=consumer_key,
-            consumer_secret=consumer_secret,
-            access_token=access_token,
-            access_token_secret=access_secret,
-        )
 
         self.sr_client = somerandomapi.Client(os.environ["sr_api"], session=self.session)
 
