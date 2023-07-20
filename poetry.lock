@@ -387,7 +387,7 @@ resolved_reference = "1593b305894c9052b337a5967a5469da4287cbd8"
 
 [[package]]
 name = "discord.py"
-version = "2.4.0a4877+g270fa5f2e"
+version = "2.4.0a4883+gc69ce78ad"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
