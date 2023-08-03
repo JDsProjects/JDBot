@@ -40,7 +40,7 @@ resolved_reference = "730fdb7bca18842db93b71cf0c50b93f9cc3c31a"
 
 [[package]]
 name = "aiohttp"
-version = "3.8.1"
+version = "3.8.5"
 description = "Async http client/server framework (asyncio)"
 category = "main"
 optional = false
@@ -461,7 +461,7 @@ python-versions = ">=3.8.0"
 develop = false
 
 [package.dependencies]
-aiohttp = "3.8.1"
+aiohttp = "3.8.5"
 typing-extensions = "*"
 
 [package.source]
