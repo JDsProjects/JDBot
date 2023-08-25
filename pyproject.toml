@@ -2,7 +2,8 @@
 name = "jdbot"
 version = "0.1.0"
 description = ""
-authors = ["repl.it user <replituser@example.com>"]
+license = "MIT"
+authors = ["JDJG <jdjgbot@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = ">= 3.10,<4.0.0"
