@@ -104,7 +104,7 @@ class Ticket(commands.Cog):
         try:
             member = await remote.fetch_member(context.author.id)
             await remote.remove_user(member)
-            await member.remove_role()
+            await member.remove_role(role)
 
         except:
             await context.send("Removing you from the ticket channel failed.")
