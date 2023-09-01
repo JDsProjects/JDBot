@@ -37,7 +37,7 @@ class Ticket(commands.Cog):
         self.main_channel: discord.TextChannel = None  # filled in create_ticket
         self.support_role: discord.Role = None  # filled in create_ticket
         self.support_guild: discord.Guild = None  # filled in create_ticket
-        self.please_help: discord.Role = None #filled in create_ticket
+        self.please_help: discord.Role = None  # filled in create_ticket
 
     async def cog_load(self):
         pool = self.pool
@@ -93,7 +93,6 @@ class Ticket(commands.Cog):
 
         # add a couple more checks here to see if the author is the one who ran it.
         # with general checks about requiring the author to run it or the support team.
-
 
         if not self.support_guild:
             self.support_guild = self.bot.get_guild(1019027330779332660)
@@ -163,9 +162,7 @@ class Ticket(commands.Cog):
         member = guild.get_member(context.author.id)
 
         if member:
-
             support_receivers = self.please_help
-
 
             if not support_receivers in member.roles:
                 await member.add_role(support_receivers)
