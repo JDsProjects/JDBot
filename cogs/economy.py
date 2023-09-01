@@ -130,7 +130,7 @@ class Economy(commands.Cog):
             )
 
             await msg.edit(
-                content="removing you from the database for economy and archiving the economy data to our channel(so we can have you join back if you want, if you want it to fully removed, you can ask JDJG Inc. Official#3493 (jdjg), but once it's gone from the channel, it's gone for good) and in the guild right there...",
+                content="removing you from the database for economy and archiving the economy data to our channel(so we can have you join back if you want, if you want it to fully removed, you can ask jdjg, but once it's gone from the channel, it's gone for good) and in the guild right there...",
                 embed=embed,
             )
 

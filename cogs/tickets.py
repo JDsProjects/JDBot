@@ -205,7 +205,7 @@ class Ticket(commands.Cog):
                 if message.author.id != self.bot.user.id and context.valid is False:
                     if not message.author.id in self.ticket_cache:
                         await message.channel.send(
-                            "run ``te*help Ticket`` to learn more. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493 (jdjg)"
+                            "run ``te*help Ticket`` to learn more. For now Contact our Developers: silentserenity or jdjg"
                         )
 
                     else:

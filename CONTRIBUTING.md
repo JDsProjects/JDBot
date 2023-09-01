@@ -5,8 +5,9 @@ You must check the pull requests before you try to suggest something
 You may check Projects to see if there is something you can contribute.
 You should attempt to pick the coding style I have.
 You should also try to pick something I agree with.
-if you aren't sure you can join: JDJG Inc. Official#3493
-(alternative): jdjg
+if you aren't sure you can add me: jdjg
+(if this doesn't work update discord)
+
 Profile link:
 https://discord.com/users/168422909482762240
 
