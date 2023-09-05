@@ -51,6 +51,12 @@ Explanations for developers about the env values:
 
 [Bot and Developer Guild](https://discord.gg/hKn8qgCDzK)
 
+Main/Bot Support Guild is for general contact.
+
+if you need more explicit you can join bot headquarters:
+
+[Headquarters](https://discord.gg/MPNTtFH7pH)
+
 Want A webhook github of this?
 You can just DM me on Discord, and I will hook up your webhook to my github, so you will get updates too :D
 
