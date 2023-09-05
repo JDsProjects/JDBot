@@ -171,7 +171,7 @@ class Ticket(commands.Cog):
 
             await context.send(f"You have been added to {thread_channel.mention}")
 
-        await self.thread_webhook.send(f"<@168422909482762240> New support ticket \n{thread_channel.mention}.")
+        await self.contact_webhook.send(f"<@168422909482762240> New support ticket \n{thread_channel.mention}.")
 
     @create_ticket.error
     async def create_ticker_error(self, context: JDBotContext, exception: Exception):
@@ -186,6 +186,11 @@ class Ticket(commands.Cog):
     @functools.cached_property
     def thread_webhook(self) -> discord.Webhook:
         webhook_url = os.environ["thread_webhook"]
+        return discord.Webhook.from_url(webhook_url, session=self.bot.session)
+
+    @functools.cached_property
+    def contact_webhook(self) -> discord.Webhook:
+        webhook_url = os.environ["contact_webhook"]
         return discord.Webhook.from_url(webhook_url, session=self.bot.session)
 
     @commands.Cog.listener()
