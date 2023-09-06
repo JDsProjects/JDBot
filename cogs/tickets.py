@@ -165,7 +165,7 @@ class Ticket(commands.Cog):
             support_receivers = self.please_help
 
             if not support_receivers in member.roles:
-                await member.add_roles([support_receivers])
+                await member.add_roles(support_receivers)
 
             await thread_channel.add_user(member)
 
