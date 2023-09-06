@@ -103,7 +103,7 @@ class Ticket(commands.Cog):
         role = guild.get_role(1147198431811600444)
 
         try:
-            member = guild.fetch_member(context.author.id)
+            member = guild.get_member(context.author.id)
             await remote.remove_user(member)
             await member.remove_roles(role)
 
