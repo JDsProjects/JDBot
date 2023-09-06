@@ -109,6 +109,8 @@ class Ticket(commands.Cog):
 
         except:
             await context.send("Removing you from the ticket channel failed.")
+            traceback.print_exc()
+            
 
         del self.ticket_cache[remote.id]
         del self.ticket_cache[context.author.id]
