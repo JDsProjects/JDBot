@@ -105,7 +105,6 @@ class Ticket(commands.Cog):
         member = guild.get_member(context.author.id)
 
         if not member:
-
             try:
                 await remote.remove_user(member)
                 await member.remove_roles(role)
