@@ -102,14 +102,17 @@ class Ticket(commands.Cog):
 
         role = guild.get_role(1147198431811600444)
 
-        try:
-            member = guild.get_member(context.author.id)
-            await remote.remove_user(member)
-            await member.remove_roles(role)
+        member = guild.get_member(context.author.id)
 
-        except:
-            await context.send("Removing you from the ticket channel failed.")
-            traceback.print_exc()
+        if not member:
+
+            try:
+                await remote.remove_user(member)
+                await member.remove_roles(role)
+
+            except:
+                await context.send("Removing you from the ticket channel failed.")
+                traceback.print_exc()
 
         del self.ticket_cache[remote.id]
         del self.ticket_cache[context.author.id]
