@@ -190,7 +190,7 @@ class Ticket(commands.Cog):
 
     @functools.cached_property
     def contact_webhook(self) -> discord.Webhook:
-        webhook_url = os.environ["contact_webhook"]
+        webhook_url = os.environ["support_webhook"]
         return discord.Webhook.from_url(webhook_url, session=self.bot.session)
 
     @commands.Cog.listener()
