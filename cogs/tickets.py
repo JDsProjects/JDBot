@@ -88,6 +88,9 @@ class Ticket(commands.Cog):
             cache = self.ticket_cache[context.channel.id]
             author = self.bot.get_user(cache["author"])
             remote = self.bot.get_channel(cache["remote"])
+
+            # that should be fixed
+
             await context.send("The ticket was sucessfully closed!")
             await author.send("The Support Team has closed your ticket.")
 
