@@ -340,7 +340,7 @@ class Bot(commands.Cog):
             name="Who Gets this info:",
             value="Only us, and our DB provider MongoDB(but they are unlikely to use our data. Sus users do show up if they exist in the same guild though and the reason why.",
         )
-        embed.add_field(name="More Info:", value="Contact me at JDJG Inc. Official#3493 (jdjg)")
+        embed.add_field(name="More Info:", value="Contact me at jdjg")
         await ctx.send(embed=embed)
 
     @commands.command(brief="Sends you an invite to the official Bot support guild", aliases=["guild_invite"])
@@ -449,7 +449,7 @@ class Bot(commands.Cog):
             if isinstance(ctx.channel, discord.DMChannel):
                 await asyncio.sleep(1)
                 return await message.edit(
-                    content="This is meant for guilds not Dm channel if you want support in DM channel contact the owner, By DMS at JDJG Inc. Official#3493 or (jdjg)."
+                    content="This is meant for guilds not Dm channel if you want support in DM channel contact the owner, By DMS at jdjg."
                 )
 
         if view.value is False:
@@ -459,7 +459,7 @@ class Bot(commands.Cog):
     @commands.command(brief="this command tells you to how to report ex issues to owner")
     async def report_issue(self, ctx):
         await ctx.send(
-            "if you have an issue please join the support server, create a ticket,  or Dm the owner at JDJG Inc. Official#3493 (jdjg). Thanks :D!"
+            "if you have an issue please join the support server, create a ticket,  or Dm the owner at jdjg. Thanks :D!"
         )
 
     @commands.command(brief="apply for tester")
@@ -599,7 +599,7 @@ class Bot(commands.Cog):
 
         embed.add_field(
             name="Author Information",
-            value="```This Bot is made by JDJG Inc. Official#3493 (jdjg) (you can find out more about owners from the owner command).```",
+            value="```This Bot is made by jdjg (you can find out more about owners from the owner command).```",
             inline=False,
         )
 
@@ -617,7 +617,7 @@ class Bot(commands.Cog):
 
         embed.add_field(name="Servers", value=f"```{len(self.bot.guilds)}```")
 
-        embed.add_field(name="Contributers", value="```Shadi#9492 \nMiddlle#8801 \nDutchy#6127```")
+        embed.add_field(name="Contributers", value="```silentserenity \nMiddlle#8801 \nDutchy#6127```")
 
         embed.add_field(name="Sponsors", value="```No current sponsors :(```")
 
@@ -680,7 +680,7 @@ class Bot(commands.Cog):
     @commands.command(brief="bug about massive Test")
     async def test_bug(self, ctx):
         await ctx.send(
-            f"If you are a moderator please contact JDJG Inc. Official#3493 or jdjg, I made a mistake when doing the checks for just doing {self.bot.user.mention}, if you get a massive error or something wrong please contact me, thanks :D"
+            f"If you are a moderator please contact jdjg, I made a mistake when doing the checks for just doing {self.bot.user.mention}, if you get a massive error or something wrong please contact me, thanks :D"
         )
 
     @commands.command(brief="bot contribution credits")

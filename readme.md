@@ -26,13 +26,13 @@ This bot is meant to be having all of the features, an "all in one" bot.
 
 #### Any Questions about JDBot?
 
-DM `JDJG Inc. Official#3993`!
+DM `jdjg`!
 
 ##### Copyright concerns, including the use of this code
 
 This bot's source code is public so that the people can see how this bot works.
 If you were to fork the bot, DO give credit to @JDJGInc and use this responsibly.
-Also, if you want to copy the bot's code and run your own instance of JDBot, *do* DM `JDJG Inc. Official#3493` on Discord.
+Also, if you want to copy the bot's code and run your own instance of JDBot, *do* DM `jdjg` on Discord.
 (alternative): jdjg
 If you plan to copy anything please let me know on discord or in an issue(this helps keep track of those who use my code, and so I can help you if you need help, please make your own code though.)
 If you do copy any code make sure to make a good faith effort to change the code to your own style, that way it's not weird for word. I don't want you to copy every feature I have one for one, if you do want to do this, you can just host your own instance
@@ -50,6 +50,12 @@ Explanations for developers about the env values:
 [Main/Bot Support Guild](https://discord.gg/eVQH2ZRYpz)
 
 [Bot and Developer Guild](https://discord.gg/hKn8qgCDzK)
+
+Main/Bot Support Guild is for general contact.
+
+if you need more explicit you can join bot headquarters:
+
+[Headquarters](https://discord.gg/MPNTtFH7pH)
 
 Want A webhook github of this?
 You can just DM me on Discord, and I will hook up your webhook to my github, so you will get updates too :D

@@ -37,6 +37,7 @@ class Ticket(commands.Cog):
         self.main_channel: discord.TextChannel = None  # filled in create_ticket
         self.support_role: discord.Role = None  # filled in create_ticket
         self.support_guild: discord.Guild = None  # filled in create_ticket
+        self.please_help: discord.Role = None  # filled in create_ticket
 
     async def cog_load(self):
         pool = self.pool
@@ -87,18 +88,30 @@ class Ticket(commands.Cog):
             cache = self.ticket_cache[context.channel.id]
             author = self.bot.get_user(cache["author"])
             remote = self.bot.get_channel(cache["remote"])
+
             await context.send("The ticket was sucessfully closed!")
             await author.send("The Support Team has closed your ticket.")
 
         # add a couple more checks here to see if the author is the one who ran it.
         # with general checks about requiring the author to run it or the support team.
 
-        try:
-            member = await remote.fetch_member(context.author.id)
-            await remote.remove_user(member)
+        if not self.support_guild:
+            self.support_guild = self.bot.get_guild(1019027330779332660)
 
-        except:
-            await context.send("Removing you from the ticket channel failed.")
+        guild = self.support_guild
+
+        role = guild.get_role(1147198431811600444)
+
+        member = guild.get_member(context.author.id)
+
+        if member:
+            try:
+                await remote.remove_user(member)
+                await member.remove_roles(role)
+
+            except:
+                await context.send("Removing you from the ticket channel failed.")
+                traceback.print_exc()
 
         del self.ticket_cache[remote.id]
         del self.ticket_cache[context.author.id]
@@ -112,9 +125,10 @@ class Ticket(commands.Cog):
     @commands.dm_only()
     async def create_ticket(self, context: JDBotContext, *, starter_message: Optional[str] = None):
         if not self.main_channel:
-            self.main_channel = self.bot.get_channel(1042608798709334066)
+            self.main_channel = self.bot.get_channel(1147198182493794304)
             self.support_role = self.bot.get_guild(1019027330779332660).get_role(1042608916233736192)
             self.support_guild = self.bot.get_guild(1019027330779332660)
+            self.please_help = self.bot.get_guild(1019027330779332660).get_role(1147198431811600444)
 
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket whilst another ticket is unresponded to.")
@@ -152,11 +166,16 @@ class Ticket(commands.Cog):
         member = guild.get_member(context.author.id)
 
         if member:
+            support_receivers = self.please_help
+
+            if not support_receivers in member.roles:
+                await member.add_roles(support_receivers)
+
             await thread_channel.add_user(member)
 
             await context.send(f"You have been added to {thread_channel.mention}")
 
-        await self.thread_webhook.send(f"<@168422909482762240> New support ticket \n{thread_channel.mention}.")
+        await self.contact_webhook.send(f"<@168422909482762240> New support ticket \n{thread_channel.mention}.")
 
     @create_ticket.error
     async def create_ticker_error(self, context: JDBotContext, exception: Exception):
@@ -173,13 +192,18 @@ class Ticket(commands.Cog):
         webhook_url = os.environ["thread_webhook"]
         return discord.Webhook.from_url(webhook_url, session=self.bot.session)
 
+    @functools.cached_property
+    def contact_webhook(self) -> discord.Webhook:
+        webhook_url = os.environ["support_webhook"]
+        return discord.Webhook.from_url(webhook_url, session=self.bot.session)
+
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
 
         if not self.main_channel:
-            self.main_channel = self.bot.get_channel(1042608798709334066)
+            self.main_channel = self.bot.get_channel(1147198182493794304)
             self.support_role = self.bot.get_guild(1019027330779332660).get_role(1042608916233736192)
             self.support_guild = self.bot.get_guild(1019027330779332660)
 
@@ -190,7 +214,7 @@ class Ticket(commands.Cog):
                 if message.author.id != self.bot.user.id and context.valid is False:
                     if not message.author.id in self.ticket_cache:
                         await message.channel.send(
-                            "run ``te*help Ticket`` to learn more. For now Contact our Developers: Shadi#9492 or JDJG Inc. Official#3493 (jdjg)"
+                            "run ``te*help Ticket`` to learn more. For now Contact our Developers: silentserenity or jdjg"
                         )
 
                     else:

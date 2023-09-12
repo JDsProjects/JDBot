@@ -643,12 +643,12 @@ class DevTools(commands.Cog):
         object = discord.Object(utils.generate_snowflake())
 
         first_encoded = base64.b64encode(f"{object.id}".encode())
-        first_bit = first_encoded.decode()
+        first_bit = first_encoded.decode().rstrip("=")
 
         timestamp = int(object.created_at.timestamp() - 129384000)
         d = timestamp.to_bytes(4, "big")
         second_bit_encoded = base64.standard_b64encode(d)
-        second_bit = second_bit_encoded.decode().rstrip("==")
+        second_bit = second_bit_encoded.decode().rstrip("=")
 
         last_bit = secrets.token_urlsafe(20)
 
