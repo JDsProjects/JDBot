@@ -130,9 +130,9 @@ class Ticket(commands.Cog):
             self.main_channel = self.bot.get_channel(1147198182493794304)
             self.support_role = self.bot.get_guild(1019027330779332660).get_role(1042608916233736192)
             self.support_guild = self.bot.get_guild(1019027330779332660)
-            self.please_help = self.bot.get_guild(1019027330779332660).get_role(1147198431811600444)
-
-        print(self.please_help)
+        
+        
+        self.please_help = self.bot.get_guild(1019027330779332660).get_role(1147198431811600444)
 
         if context.author.id in self.ticket_cache:
             return await context.send("You cannot create another ticket whilst another ticket is unresponded to.")
