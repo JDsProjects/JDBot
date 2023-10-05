@@ -7,35 +7,35 @@ authors = ["JDJG <jdjgbot@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = ">= 3.10,<4.0.0"
-asuna-api = "^0.2.8"
-async-cse = "^0.3.0"
-asyncdagpi = "^3.3.2"
-"discordlists.py" = "^1.1.1"
-emoji = "^1.2.0"
-"alexflipnote.py" = "^2.4.0"
-asyncpraw = "^7.3.1"
+asuna-api = ">=0.2.8"
+async-cse = ">=0.3.0"
+asyncdagpi = ">=3.3.2"
+"discordlists.py" = ">=1.1.1"
+emoji = ">=1.2.0"
+"alexflipnote.py" = ">=2.4.0"
+asyncpraw = ">=7.3.1"
 tweepy = {git = "https://github.com/tweepy/tweepy.git", extras=["async"], branch="master"}
-topggpy = "^1.1.0"
+topggpy = ">=1.1.0"
 python-cse = {git = "https://github.com/JDJGInc/python-cse"}
 aiogifs = {git = "https://github.com/moanie/aiogifs.git", branch = "main"}
-better-profanity = "^0.7.0"
+better-profanity = ">=0.7.0"
 "discord.py" = {git = "https://github.com/Rapptz/discord.py.git", extras = ["voice", "speed"], branch="master"}
-async-tio = "^1.1.0"
+async-tio = ">=1.1.0"
 jeyyapi = {git = "https://github.com/JeyyGit/jeyyapi", branch = "main"}
 tabulate = ">= 0.8.9"
-asyncpg = "^0.25.0"
-psutil = "^5.8.0"
-black = "^21.12b0"
-mathjspy = "^0.0.9"
-chardet = "^3.0.4"
+asyncpg = ">=0.25.0"
+psutil = ">=5.8.0"
+black = ">=21.12b0"
+mathjspy = ">=0.0.9"
+chardet = ">=3.0.4"
 jishaku = {git = "https://github.com/Gorialis/jishaku"}
 github = {git = "https://github.com/VarMonke/Github-Api-Wrapper", branch = "main"}
 discord_games = {git = "https://github.com/Tom-the-Bomb/Discord-Games"}
-wand = "^0.6.11"
-mystbin-py = "^5.1.0"
-python-dateutil = "^2.8.2"
+wand = ">=0.6.11"
+mystbin-py = ">=5.1.0"
+python-dateutil = ">=2.8.2"
 pillow = ">=9.4.0"
-somerandomapi-py = "^0.0.2"
+somerandomapi-py = ">=0.0.2"
 
 [tool.poetry.dev-dependencies]
 
