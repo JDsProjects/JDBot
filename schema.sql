@@ -85,6 +85,16 @@ CREATE TABLE public.invalidation_config (
 
 
 --
+-- Name: invalidation_out; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.invalidation_out (
+    entity_id bigint NOT NULL,
+    entity_type smallint NOT NULL
+);
+
+
+--
 -- Name: jobs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -208,6 +218,14 @@ ALTER TABLE ONLY public.global_link
 
 ALTER TABLE ONLY public.invalidation_config
     ADD CONSTRAINT invalidation_config_pkey PRIMARY KEY (entity_id, entity_type);
+
+
+--
+-- Name: invalidation_out invalidation_out_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invalidation_out
+    ADD CONSTRAINT invalidation_out_pkey PRIMARY KEY (entity_id, entity_type);
 
 
 --
