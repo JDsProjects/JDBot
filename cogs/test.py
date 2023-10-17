@@ -286,11 +286,11 @@ class Test(commands.Cog):
             if profanity.contains_profanity(word):
                 return {"type": "Profanity"}
             regex = re.compile(r"(?:https?://)?discord(?:(?:app)?\.com/invite|\.gg)/?[a-zA-Z0-9]+/?")
-            if re.search(regex, word):
+            if regex.search(word):
                 return {"type": "Server Invite"}
 
             regex = re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-\_@\.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
-            if re.search(regex, word):
+            if regex.search(word):
                 return {"type": "External Link"}
             else:
                 return None

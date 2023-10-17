@@ -317,9 +317,11 @@ class DevTools(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        return
+        
+        if not message.guild or message.guild.id != 1019027330779332660:
+            return
 
-        match = re.findall(self.TOKEN_RE, message.content)
+        match = self.TOKEN_RE.findall(message.content)
         if match:
             gist = await self.github.create_gist(
                 files=[github.File(fp="\n".join([m for m in match]), filename="token.txt")],
