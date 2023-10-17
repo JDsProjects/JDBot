@@ -317,7 +317,6 @@ class DevTools(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        
         if not message.guild or message.guild.id != 1019027330779332660:
             return
 
