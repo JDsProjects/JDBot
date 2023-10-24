@@ -38,6 +38,9 @@ pillow = ">=9.4.0"
 somerandomapi-py = ">=0.0.2"
 discord-ext-paginators = { git = "https://github.com/Soheab/soheabs-paginators", branch = "main" }
 
+[tool.black]
+line-length = 120
+
 [tool.poetry.dev-dependencies]
 
 [build-system]
