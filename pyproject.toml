@@ -36,6 +36,7 @@ mystbin-py = ">=5.1.0"
 python-dateutil = ">=2.8.2"
 pillow = ">=9.4.0"
 somerandomapi-py = ">=0.0.2"
+discord-ext-paginators = { git = "https://github.com/Soheab/soheabs-paginators", branch = "main" }
 
 [tool.poetry.dev-dependencies]
 

@@ -5,17 +5,16 @@ import collections
 import random
 import traceback
 import typing
-from typing import TYPE_CHECKING, Any, Callable, Optional, Sequence, Union
+from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 
 import discord
 import mathjspy
-from discord import ButtonStyle, Embed, File, Interaction
-from discord.abc import Messageable
+from discord import ButtonStyle, Embed, Interaction
 from discord.ext import commands
+from discord.ext.paginators.button_paginator import ButtonPaginator, PaginatorButton
 from discord.ext.commands.context import Context
 from discord.flags import UserFlags
-from discord.ui import Button, Modal, TextInput, View
-from discord.utils import MISSING, maybe_coroutine
+from discord.ui import Button
 
 if TYPE_CHECKING:
     from tweepy import Media
@@ -23,151 +22,27 @@ if TYPE_CHECKING:
     from .emoji import CustomEmoji
     from .tweet import TweepyTweet
 
-    PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
-
-def default_check(view: Paginator, interaction_user_id: int, view_author_id: int) -> bool:
-    cxint = view._context_or_interaction
-    bot = (cxint.bot if isinstance(cxint, commands.Context) else cxint.client) if cxint else None
-
-    bot_owners: list[int] = []
-    if bot:
-        bot_owners.extend(getattr(bot, "owner_ids", []))
-        if owner_id := getattr(bot, "owner_id", None):
-            bot_owners.append(owner_id)
-
-    return interaction_user_id in bot_owners + [view_author_id]
-
-
-class ChooseNumber(Modal):
-    def __init__(self, current_page: int, total_pages: int, page_string: str, /):
-        super().__init__(
-            title="Which page would you like to go to?",
-            timeout=15,
-            custom_id="paginator:modal:choose_number",
-        )
-
-        self._current_page: int = current_page
-        self._total_pages: int = total_pages
-
-        self.value: Optional[int] = None  # filled in by on_submit
-
-        self.number_input = TextInput(
-            placeholder=f"Current: {page_string}",
-            label=f"Enter a page number between 1 and {total_pages}",
-            custom_id="paginator:choose_number",
-            max_length=len(str(total_pages)),
-            min_length=1,
-        )
-
-        self.add_item(self.number_input)
-
-    async def on_submit(self, interaction: Interaction) -> None:
-        assert isinstance(self.number_input.value, str)
-
-        if (
-            not self.number_input.value.isdigit()
-            or int(self.number_input.value) <= 0
-            or int(self.number_input.value) > self._total_pages
-        ):
-            await interaction.response.send_message(
-                f"Please enter a valid number between 1 and {self._total_pages}", ephemeral=True
-            )
-            self.stop()
-            return
-
-        number = int(self.number_input.value) - 1
-
-        if number == self._current_page:  # type: ignore
-            await interaction.response.send_message("That is the current page!", ephemeral=True)
-            self.stop()
-            return
-
-        self.value = number
-        await interaction.response.send_message(f"There is page {self.value + 1} for you <3", ephemeral=True)
-        self.stop()
-
-
-class PaginatorButton(Button["Paginator"]):
+class Paginator(ButtonPaginator):
     def __init__(
         self,
+        pages: list[Any],
         *,
-        emoji: Optional[str] = None,
-        label: Optional[str] = None,
-        custom_id: Optional[str] = None,
-        style: ButtonStyle = ButtonStyle.blurple,
-        row: Optional[int] = None,
-        disabled: bool = False,
-        position: int = MISSING,
-    ):
-        super().__init__(emoji=emoji, label=label, custom_id=custom_id, style=style, row=row, disabled=disabled)
-        self.position = position
-        self.view: Paginator
-
-    async def __handle_number_modal(self, interaction: Interaction) -> Optional[int]:
-        modal = ChooseNumber(self.view._current_page, self.view.max_pages, self.view.page_string)
-        await interaction.response.send_modal(modal)
-        await modal.wait()
-        return modal.value
-
-    async def callback(self, interaction: Interaction) -> None:
-        if self.custom_id == "stop_button":
-            await self.view.stop()
-            return
-
-        if self.custom_id == "right_button":
-            self.view._current_page += 1
-        elif self.custom_id == "left_button":
-            self.view._current_page -= 1
-        elif self.custom_id == "first_button":
-            self.view._current_page = 0
-        elif self.custom_id == "last_button":
-            self.view._current_page = self.view.max_pages - 1
-        elif self.custom_id == "page_indicator_button":
-            new_page = await self.__handle_number_modal(interaction)
-            if new_page is not None:
-                self.view._current_page = new_page
-            else:
-                return
-
-        self.view._update_buttons_state()
-        pages = self.view.get_page(self.view._current_page)
-        edit_kwargs = (await self.view.get_kwargs_from_page(pages)).copy()
-        edit_kwargs["attachments"] = edit_kwargs.pop("files")
-
-        await self.view._edit_message(interaction, **edit_kwargs)
-
-
-class Paginator(View):
-    FIRST: Optional[PaginatorButton] = None  # filled in __add_buttons
-    LEFT: Optional[PaginatorButton] = None  # filled in __add_buttons
-    RIGHT: Optional[PaginatorButton] = None  # filled in __add_buttons
-    LAST: Optional[PaginatorButton] = None  # filled in __add_buttons
-    STOP: Optional[PaginatorButton] = None  # filled in __add_buttons
-    PAGE_INDICATOR: Optional[PaginatorButton] = None  # filled in __add_buttons
-
-    def __init__(
-        self,
-        pages: Sequence[PossiblePage],
-        *,
-        ctx: Context = MISSING,
-        interaction: Interaction = MISSING,
-        author_id: int = MISSING,
-        per_page: int = 1,
-        buttons: dict = MISSING,
-        check: Callable = MISSING,
-        timeout: Union[int, float] = 180.0,
+        buttons: dict = {},
         always_show_stop_button: bool = False,
+        ctx: Optional[commands.Context] = None,
+        interaction: Optional[discord.Interaction] = None,
+        check: Optional[Callable] = None,
+        author_id: Optional[int] = None,
         delete_after: bool = False,
         disable_after: bool = False,
         clear_buttons_after: bool = False,
+        per_page: int = 1,
+        message: Optional[Any] = None,
+        timeout: Union[int, float] = 180.0,
     ) -> None:
-        """Initialize the Paginator."""
-        super().__init__(timeout=timeout)
-        if ctx is not MISSING and interaction is not MISSING:
-            raise ValueError("ctx and interaction cannot be used together")
-
-        DEFAULT_BUTTONS = {
+        # change some buttons...
+        custom_buttons = {
             "FIRST": PaginatorButton(emoji="⏮️", position=0, style=ButtonStyle.secondary),
             "LEFT": PaginatorButton(emoji="◀️", position=1, style=ButtonStyle.secondary),
             # "PAGE_INDICATOR": PaginatorButton(label="Page N/A / N/A", position=2, style=ButtonStyle.secondary),
@@ -176,302 +51,21 @@ class Paginator(View):
             "RIGHT": PaginatorButton(emoji="▶️", position=3, style=ButtonStyle.secondary),
             "LAST": PaginatorButton(emoji="⏭️", position=4, style=ButtonStyle.secondary),
         }
-
-        self._buttons: dict[str, PaginatorButton] = DEFAULT_BUTTONS.copy()
-        if buttons is not MISSING:
-            self._buttons.update(buttons)
-
-        self.timeout: Union[int, float] = timeout
-        # self._message: PossibleMessage = None  # type: ignore # this cannot be None # filled in .send()
-
-        self.ctx = ctx  # can be filled in .send()
-        self.interaction = interaction  # can be filled in .send() and when the paginator is used
-        self.author_id: int = author_id
-        self.check = check if check is not MISSING else default_check
-
-        self.pages: Sequence[PossiblePage] = pages
-        self.per_page: int = per_page
-
-        self._max_pages_passed: int = len(pages)
-        self._should_always_show_stop_button: bool = always_show_stop_button
-        self._should_delete_after: bool = delete_after
-        self._should_disable_after: bool = disable_after
-        self._should_clear_buttons_after: bool = clear_buttons_after
-
-        self._current_page: int = 0
-
-        if per_page > self._max_pages_passed or per_page < 1:
-            raise ValueError(  # nice try though
-                f"per_page ({per_page}) must be >= 1 or = len(pages) # >>> {self._max_pages_passed}"
-            )
-
-        total_pages, left_over = divmod(self._max_pages_passed, per_page)
-        if left_over:
-            total_pages += 1
-
-        self._max_pages = total_pages
-        self.__add_buttons()
-
-        self.__base_kwargs = {"content": None, "embeds": [], "files": [], "view": self}
-
-    def __reset_base_kwargs(self) -> None:
-        self.__base_kwargs = {"content": None, "embeds": [], "files": [], "view": self}
-
-    def __add_buttons(self) -> None:
-        if not self._max_pages > 1:
-            if self._should_always_show_stop_button:
-                if "STOP" not in self._buttons:
-                    raise ValueError("STOP button is required if always_show_stop_button is True.")
-
-                name = "STOP"
-                button = self._buttons[name]
-                button.custom_id = f"{name.lower()}_button"
-                setattr(self, name, button)
-                self.add_item(button)
-                return
-            else:
-                super().stop()
-            return
-
-        _buttons: dict[str, PaginatorButton] = {
-            name: button for name, button in self._buttons.items() if button is not None
-        }
-        sorted_buttons = sorted(_buttons.items(), key=lambda b: b[1].position if b[1].position is not MISSING else 0)
-        for name, button in sorted_buttons:
-            button.custom_id = f"{name.lower()}_button"
-            setattr(self, name, button)
-
-            if button.custom_id == "page_indicator_button":
-                button.label = self.page_string
-                if self._max_pages <= 2:
-                    button.disabled = True
-
-            if button.custom_id in ("first_button", "last_button") and self.max_pages <= 2:
-                continue
-
-            self.add_item(button)
-
-        self._update_buttons_state()
-
-    def _update_buttons_state(self) -> None:
-        button: PaginatorButton
-        for button in self.children:  # type: ignore
-            if button.custom_id in ("page_indicator_button", "stop_button"):
-                if button.custom_id == "page_indicator_button":
-                    button.label = self.page_string
-                else:
-                    button.style = ButtonStyle.red
-                continue
-
-            elif button.custom_id in ("right_button", "last_button"):
-                button.disabled = self._current_page >= self.max_pages - 1
-            elif button.custom_id in ("left_button", "first_button"):
-                button.disabled = self._current_page <= 0
-
-            if not button.disabled:
-                button.style = ButtonStyle.green
-            elif button.disabled:
-                button.style = ButtonStyle.secondary
-
-    @property
-    def _context_or_interaction(self) -> Optional[Union[Context, Interaction]]:
-        if self.ctx is not MISSING:
-            return self.ctx
-        elif self.interaction is not MISSING:
-            return self.interaction
-        else:
-            return None
-
-    @property
-    def view_author(self) -> Optional[Union[discord.Member, discord.User, int]]:
-        if self.ctx is not MISSING:
-            return self.ctx.author
-        elif self.interaction is not MISSING:
-            return self.interaction.user
-        elif self.author_id is not MISSING:
-            return self.author_id
-        else:
-            return None
-
-    @property
-    def current_page(self) -> int:
-        return self._current_page
-
-    @current_page.setter
-    def current_page(self, value: int) -> None:
-        self._current_page = value
-        self._update_buttons_state()
-
-    @property
-    def max_pages(self) -> int:
-        return self._max_pages
-
-    @property
-    def page_string(self) -> str:
-        return f"Page {self.current_page + 1} / {self.max_pages}"
-
-    async def on_timeout(self) -> None:
-        await self.stop()
-
-    async def interaction_check(self, interaction: Interaction):
-        # Allow everyone if interaction.user or ctx or author_id is None.
-        if not self.view_author:
-            return True
-
-        author_id = self.view_author.id if not isinstance(self.view_author, int) else self.view_author
-        is_allowed = await maybe_coroutine(self.check, self, interaction.user.id, author_id)
-        if not is_allowed:
-            await interaction.response.send_message(
-                f"This paginator can only be controlled by <@{author_id}> and my owner(s), sorry!", ephemeral=True
-            )
-            return False
-
-        return is_allowed
-
-    async def _edit_message(self, interaction: Interaction = MISSING, /, **kwargs: Any) -> None:
-        kwargs["attachments"] = kwargs.pop("files", [])
-        if interaction is not MISSING:
-            self.interaction = interaction
-            respond = self.interaction.response.edit_message  # type: ignore
-            if self.interaction.response.is_done():  # type: ignore
-                respond = self.message.edit if self.message else interaction.message.edit  # type: ignore
-
-            await respond(**kwargs)
-        else:
-            await self.message.edit(**kwargs)
-
-    async def stop(self) -> None:
-        self.__reset_base_kwargs()
-        super().stop()
-
-        if self._should_delete_after:
-            await self.message.delete()
-            return
-
-        if self._should_clear_buttons_after:
-            await self._edit_message(view=None)
-            return
-        elif self._should_disable_after:
-            for button in self.children:
-                button.disabled = True  # type: ignore
-
-            await self._edit_message(view=self)
-            return
-
-    def format_page(self, page: Union[PossiblePage, Sequence[PossiblePage]]) -> PossiblePage:
-        return page  # type: ignore
-
-    def get_page(self, page_number: int) -> Union[PossiblePage, Sequence[PossiblePage]]:
-        if page_number < 0 or page_number >= self.max_pages:
-            self._current_page = 0
-            return self.pages[self._current_page]
-
-        if self.per_page == 1:
-            return self.pages[page_number]
-        else:
-            base = page_number * self.per_page
-            return self.pages[base : base + self.per_page]
-
-    async def get_kwargs_from_page(
-        self,
-        page: Union[PossiblePage, Sequence[PossiblePage]],
-        send_kwargs: dict[str, Any] = {},
-        skip_formatting: bool = False,
-    ) -> dict[str, Any]:
-        if not skip_formatting:
-            self.__reset_base_kwargs()
-            page = await maybe_coroutine(self.format_page, page)
-
-        if send_kwargs:
-            for key, value in send_kwargs.items():
-                if key in ("embed", "file"):
-                    self.__base_kwargs[f"{key}s"] = value
-                elif key == "view":
-                    continue
-                else:
-                    self.__base_kwargs.update(send_kwargs)  # type: ignore
-
-        if self.per_page > 1 and isinstance(page, (list, tuple)):
-            raise ValueError("format_page must be used to format multiple pages.")
-
-        if isinstance(page, (list, tuple)):
-            _page: PossiblePage
-            for _page in page:  # type: ignore
-                await self.get_kwargs_from_page(_page, skip_formatting=True)  # type: ignore
-
-        if isinstance(page, str):
-            self.__base_kwargs["content"] = f"{page}\n\n{self.page_string}"
-        elif isinstance(page, dict):
-            self.__base_kwargs.update(page)  # type: ignore
-        elif isinstance(page, Embed):
-            # self.__base_kwargs["embeds"].append(page)
-            # set_footer_on = self.__base_kwargs["embeds"][-1]
-            # if not set_footer_on.footer.text or set_footer_on.footer.text == self.page_string:
-            if not page.footer.text:
-                page.set_footer(text=self.page_string)
-            else:
-                # set_footer_on.set_footer(text=f"{set_footer_on.footer.text} | {self.page_string}")
-                if not "|" in page.footer.text:
-                    page.set_footer(text=f"{page.footer.text} | {self.page_string}")
-            self.__base_kwargs["embeds"].append(page)
-
-        elif isinstance(page, File):
-            page.reset()
-            self.__base_kwargs["files"].append(page)
-
-            if not self.__base_kwargs["content"]:
-                self.__base_kwargs["content"] = self.page_string
-            else:
-                self.__base_kwargs["content"] += f"\n\n{self.page_string}"
-
-        return self.__base_kwargs
-
-    async def send(
-        self,
-        *,
-        ctx: Context = MISSING,
-        send_to: Messageable = MISSING,
-        interaction: Interaction = MISSING,
-        override_custom: bool = True,
-        **kwargs,
-    ):
-        if interaction is not MISSING and ctx is not MISSING:
-            raise ValueError("ctx and interaction cannot be used together")
-
-        page = self.get_page(self.current_page)
-        send_kwargs = await self.get_kwargs_from_page(page, send_kwargs=kwargs if override_custom else {})
-
-        self.interaction = self.interaction if interaction is MISSING else interaction  # type: ignore
-        self.ctx = self.ctx if ctx is MISSING else ctx  # type: ignore
-
-        if send_to is not MISSING:
-            self.message = await send_to.send(**send_kwargs)
-            return self.message
-
-        elif self.interaction is not MISSING:
-            respond = self.interaction.response.send_message  # type: ignore
-            if self.interaction.response.is_done():  # type: ignore
-                send_kwargs["wait"] = True  # type: ignore
-
-                respond = self.interaction.followup.send  # type: ignore
-
-            maybe_message = await respond(**send_kwargs)
-            if maybe_message:
-                self.message = maybe_message
-                return self.message
-            else:
-                self.message = await self.interaction.original_response()  # type: ignore
-                return self.message
-
-        elif self.ctx is not MISSING:
-            self.message = await self.ctx.send(**send_kwargs)  # type: ignore
-            return self.message
-
-        else:
-            raise ValueError("ctx or interaction or send_to must be provided")
-
-
-# thank you so much Soheab for allowing me to use this paginator you made and putting in the work to do this :D (That's his github name so...)
+        super().__init__(
+            pages=pages,
+            buttons=buttons or custom_buttons,  # type: ignore
+            always_show_stop_button=always_show_stop_button,
+            ctx=ctx,
+            interaction=interaction,
+            check=check,
+            author_id=author_id,
+            delete_after=delete_after,
+            disable_after=disable_after,
+            clear_buttons_after=clear_buttons_after,
+            per_page=per_page,
+            message=message,
+            timeout=timeout,
+        )
 
 
 class EmojiInfoEmbed(Paginator):
@@ -497,7 +91,11 @@ class EmojiInfoEmbed(Paginator):
         )
         main_embed.set_image(url=item.url)
 
-        global_text = (f"**Name:** {item.name}", f"**ID:** {item.id}", f"**URL:** [click here]({emoji_url})")
+        global_text = (
+            f"**Name:** {item.name}",
+            f"**ID:** {item.id}",
+            f"**URL:** [click here]({emoji_url})",
+        )
         if item.unicode:
             # provide different styles because why not
             # twitter == twemoji
@@ -531,7 +129,11 @@ class MutualGuildsEmbed(Paginator):
 
 class cdnViewer(Paginator):
     def format_page(self, item):
-        embed = discord.Embed(title="CDN Viewer", description=f"Image ID: {item}", color=random.randint(0, 16777215))
+        embed = discord.Embed(
+            title="CDN Viewer",
+            description=f"Image ID: {item}",
+            color=random.randint(0, 16777215),
+        )
         embed.set_image(url=f"https://cdn.senarc.net/image/{item}.gif?opengraph_pass=true")
 
         return embed
@@ -545,7 +147,11 @@ class ServersEmbed(Paginator):
 
 class PrefixesEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Usable Prefixes:", description=item, color=random.randint(0, 16777215))
+        embed = discord.Embed(
+            title="Usable Prefixes:",
+            description=item,
+            color=random.randint(0, 16777215),
+        )
         return embed
 
 
@@ -553,12 +159,15 @@ class LeaderboardEmbed(Paginator):
     async def format_page(self, item):
         emby = discord.Embed(title="Leaderboard", color=15428885)
         emby.set_author(
-            name=f"Leaderboard Requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
+            name=f"Leaderboard Requested by {self.ctx.author}",
+            icon_url=(self.ctx.author.display_avatar.url),
         )
 
         for i, b, w in item:
             emby.add_field(
-                name=f"**${i}:**", value=f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```", inline=False
+                name=f"**${i}:**",
+                value=f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```",
+                inline=False,
             )
 
         return emby
@@ -566,7 +175,11 @@ class LeaderboardEmbed(Paginator):
 
 class RandomHistoryEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Random History:", description=f"{item}", color=random.randint(0, 16777215))
+        embed = discord.Embed(
+            title="Random History:",
+            description=f"{item}",
+            color=random.randint(0, 16777215),
+        )
         embed.set_footer(text="Powered by Random quotes From: \nhttps://www.youtube.com/watch?v=xuCn8ux2gbs")
         return embed
 
@@ -581,18 +194,28 @@ class TestersEmbed(Paginator):
 
 class SusUsersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
+        embed = discord.Embed(
+            title="Users Deemed Suspicious by JDJG Inc. Official",
+            color=random.randint(0, 16777215),
+        )
         embed.add_field(
-            name=f"User ID : {item}", value=f"**Reason :** {self.ctx.bot.sus_users.get(item)}", inline=False
+            name=f"User ID : {item}",
+            value=f"**Reason :** {self.ctx.bot.sus_users.get(item)}",
+            inline=False,
         )
         return embed
 
 
 class BlacklistedUsersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Users Blacklisted by JDJG Inc. Official", color=random.randint(0, 16777215))
+        embed = discord.Embed(
+            title="Users Blacklisted by JDJG Inc. Official",
+            color=random.randint(0, 16777215),
+        )
         embed.add_field(
-            name=f"User ID : {item}", value=f"**Reason :** {self.ctx.bot.blacklisted_users.get(item)}", inline=False
+            name=f"User ID : {item}",
+            value=f"**Reason :** {self.ctx.bot.blacklisted_users.get(item)}",
+            inline=False,
         )
         return embed
 
@@ -714,7 +337,10 @@ class ScanGlobalEmbed(Paginator):
 
         embed.set_author(name=f"{item}", icon_url=item.display_avatar.url)
 
-        embed.add_field(name="Shared Guilds:", value=f"{guild_join(grab_mutualguilds(self.ctx, item))}")
+        embed.add_field(
+            name="Shared Guilds:",
+            value=f"{guild_join(grab_mutualguilds(self.ctx, item))}",
+        )
         embed.set_footer(text=f"Sus Reason : {await get_sus_reason(self.ctx, item)}")
         return embed
 
@@ -722,10 +348,15 @@ class ScanGlobalEmbed(Paginator):
 class TodoEmbed(Paginator):
     def format_page(self, item):
         embed = discord.Embed(
-            description=item, color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
+            description=item,
+            color=random.randint(0, 16777215),
+            timestamp=self.ctx.message.created_at,
         )
 
-        embed.set_author(name=f"Todo Requested By {self.ctx.author}:", icon_url=self.ctx.author.display_avatar.url)
+        embed.set_author(
+            name=f"Todo Requested By {self.ctx.author}:",
+            icon_url=self.ctx.author.display_avatar.url,
+        )
         return embed
 
 
@@ -767,7 +398,10 @@ class dm_or_ephemeral(discord.ui.View):
         return True
 
     async def on_timeout(self):
-        await self.message.edit(content="You took too long to respond, so I cancelled the paginator", view=None)
+        await self.message.edit(
+            content="You took too long to respond, so I cancelled the paginator",
+            view=None,
+        )
 
 
 class TweetsDestinationHandler(discord.ui.View):
@@ -815,7 +449,10 @@ class TweetsDestinationHandler(discord.ui.View):
 
     async def on_timeout(self):
         try:
-            await self.message.edit(content="You took too long to respond, so I cancelled the paginator", view=None)
+            await self.message.edit(
+                content="You took too long to respond, so I cancelled the paginator",
+                view=None,
+            )
         except discord.NotFound:
             pass
 
@@ -867,7 +504,11 @@ class TweetsPaginator(Paginator):
         tweet_url = f"https://twitter.com/twitter/statuses/{item.id}"
 
         embed = discord.Embed(
-            title=f"Tweet!", description=f"{item.text}", url=tweet_url, color=0x1DA1F2, timestamp=item.created_at
+            title=f"Tweet!",
+            description=f"{item.text}",
+            url=tweet_url,
+            color=0x1DA1F2,
+            timestamp=item.created_at,
         )
         embed.set_author(name=self.author_name, url=self.author_url, icon_url=self.author_icon)
         embed.set_footer(text=f"Requested by {self.ctx.author}\nJDJG does not own any of the content of the tweets")
@@ -905,14 +546,16 @@ class UserInfoButton(discord.ui.Button):
 
         if self.custom_id == "0":
             await interaction.response.edit_message(
-                content="Will be sending you the information, ephemerally", view=self.view
+                content="Will be sending you the information, ephemerally",
+                view=self.view,
             )
 
             await menu.send(interaction=interaction, ephemeral=True)
 
         if self.custom_id == "1":
             await interaction.response.edit_message(
-                content=f"Well be Dming you the paginator to view this info", view=self.view
+                content=f"Well be Dming you the paginator to view this info",
+                view=self.view,
             )
 
             await menu.send(send_to=self.view.ctx.author)
@@ -924,7 +567,12 @@ class UserInfoButton(discord.ui.Button):
 def profile_converter(
     _type: typing.Literal["badges", "mobile", "status", "web", "desktop", "mobile", "activity"],
     _enum: typing.Union[
-        discord.Status, discord.UserFlags, discord.Activity, discord.BaseActivity, discord.Spotify, str
+        discord.Status,
+        discord.UserFlags,
+        discord.Activity,
+        discord.BaseActivity,
+        discord.Spotify,
+        str,
     ],
 ):
     badges_emoji = {
@@ -987,7 +635,12 @@ def profile_converter(
         discord.ActivityType.custom: "🎨",
     }
 
-    dc = {"status": status_emojis, "badges": badges_emoji, "devices": devices_emojis, "activity": activity_emojis}
+    dc = {
+        "status": status_emojis,
+        "badges": badges_emoji,
+        "devices": devices_emojis,
+        "activity": activity_emojis,
+    }
     is_devices = False
     if _type in ("mobile", "desktop", "web"):
         is_devices = True
@@ -1040,8 +693,18 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
-            discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
+            discord.SelectOption(
+                label="Misc Info",
+                description="Shows even more simple info",
+                value="misc",
+                emoji="📝",
+            ),
+            discord.SelectOption(
+                label="Badges",
+                description="Show's the badges they have",
+                value="badges",
+                emoji="📛",
+            ),
             discord.SelectOption(
                 label="Avatar",
                 description="Shows user's profile picture in large thumbnail.",
@@ -1049,10 +712,16 @@ class UserInfoSuperSelects(discord.ui.Select):
                 value="avatar",
             ),
             discord.SelectOption(
-                label="Status", description="Shows user's current status.", emoji="🖼️", value="status"
+                label="Status",
+                description="Shows user's current status.",
+                emoji="🖼️",
+                value="status",
             ),
             discord.SelectOption(
-                label="Activities", description="Shows user's current Activities.", emoji="🏃", value="activities"
+                label="Activities",
+                description="Shows user's current Activities.",
+                emoji="🏃",
+                value="activities",
             ),
             discord.SelectOption(
                 label="Guild Info",
@@ -1074,14 +743,23 @@ class UserInfoSuperSelects(discord.ui.Select):
             ),
         ]
 
-        super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
+        super().__init__(
+            placeholder="What Info would you like to view?",
+            min_values=1,
+            max_values=1,
+            options=options,
+        )
 
     async def callback(self, interaction: discord.Interaction):
         choice = self.values[0]
 
         user = self.view.user
 
-        embed = discord.Embed(title=f"{user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at)
+        embed = discord.Embed(
+            title=f"{user}",
+            color=random.randint(0, 16777215),
+            timestamp=self.ctx.message.created_at,
+        )
         embed.set_image(url=user.display_avatar.url)
 
         statuses = []
@@ -1100,7 +778,10 @@ class UserInfoSuperSelects(discord.ui.Select):
             joined_guild = "N/A"
             highest_role = "None Found"
 
-            member = discord.utils.find(lambda member: member.id == user.id, interaction.client.get_all_members())
+            member = discord.utils.find(
+                lambda member: member.id == user.id,
+                interaction.client.get_all_members(),
+            )
 
             if member:
                 statuses = status_collect(member)
@@ -1191,8 +872,22 @@ class UserInfoSuper(discord.ui.View):
         self.user = user
 
         self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral", "🕵️", custom_id="0"))
-        self.add_item(UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1"))
-        self.add_item(UserInfoButton(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+        self.add_item(
+            UserInfoButton(
+                label="Direct",
+                style=discord.ButtonStyle.success,
+                emoji="📥",
+                custom_id="1",
+            )
+        )
+        self.add_item(
+            UserInfoButton(
+                label="Cancel",
+                style=discord.ButtonStyle.danger,
+                emoji="✖️",
+                custom_id="2",
+            )
+        )
         self.add_item((UserInfoSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -1213,8 +908,18 @@ class OwnerSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
-            discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
+            discord.SelectOption(
+                label="Misc Info",
+                description="Shows even more simple info",
+                value="misc",
+                emoji="📝",
+            ),
+            discord.SelectOption(
+                label="Badges",
+                description="Show's the badges they have",
+                value="badges",
+                emoji="📛",
+            ),
             discord.SelectOption(
                 label="Avatar",
                 description="Shows Owner's profile picture in large thumbnail.",
@@ -1222,7 +927,10 @@ class OwnerSuperSelects(discord.ui.Select):
                 value="avatar",
             ),
             discord.SelectOption(
-                label="Status", description="Shows Owner's current status.", emoji="🖼️", value="status"
+                label="Status",
+                description="Shows Owner's current status.",
+                emoji="🖼️",
+                value="status",
             ),
             discord.SelectOption(
                 label="Guild Info",
@@ -1244,7 +952,12 @@ class OwnerSuperSelects(discord.ui.Select):
             ),
         ]
 
-        super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
+        super().__init__(
+            placeholder="What Info would you like to view?",
+            min_values=1,
+            max_values=1,
+            options=options,
+        )
 
     async def callback(self, interaction):
         choice = self.values[0]
@@ -1265,7 +978,10 @@ class OwnerSuperSelects(discord.ui.Select):
             joined_guild = "N/A"
             highest_role = "None Found"
 
-            member = discord.utils.find(lambda member: member.id == user.id, interaction.client.get_all_members())
+            member = discord.utils.find(
+                lambda member: member.id == user.id,
+                interaction.client.get_all_members(),
+            )
             if member:
                 statuses = status_collect(member)
 
@@ -1274,7 +990,9 @@ class OwnerSuperSelects(discord.ui.Select):
         )
 
         embed = discord.Embed(
-            title=f"Bot Owner: {user}", color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
+            title=f"Bot Owner: {user}",
+            color=random.randint(0, 16777215),
+            timestamp=self.ctx.message.created_at,
         )
 
         embed.set_image(url=user.display_avatar.url)
@@ -1356,8 +1074,22 @@ class OwnerInfoSuper(discord.ui.View):
         self.support_guild = support_guild
 
         self.add_item(UserInfoButton(discord.ButtonStyle.success, "Ephemeral", "🕵️", custom_id="0"))
-        self.add_item(UserInfoButton(label="Direct", style=discord.ButtonStyle.success, emoji="📥", custom_id="1"))
-        self.add_item(UserInfoButton(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️", custom_id="2"))
+        self.add_item(
+            UserInfoButton(
+                label="Direct",
+                style=discord.ButtonStyle.success,
+                emoji="📥",
+                custom_id="1",
+            )
+        )
+        self.add_item(
+            UserInfoButton(
+                label="Cancel",
+                style=discord.ButtonStyle.danger,
+                emoji="✖️",
+                custom_id="2",
+            )
+        )
         self.add_item((OwnerSuperSelects(ctx)))
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -1376,7 +1108,12 @@ class GuildInfoSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
+            discord.SelectOption(
+                label="Misc Info",
+                description="Shows even more simple info",
+                value="misc",
+                emoji="📝",
+            ),
             discord.SelectOption(
                 label="Owner Info",
                 description="Shows owner's info",
@@ -1390,7 +1127,10 @@ class GuildInfoSelects(discord.ui.Select):
                 value="icon",
             ),
             discord.SelectOption(
-                label="Role/Channel Count", description="Show's Channel and Role Count", emoji="🖼️", value="weirdcount"
+                label="Role/Channel Count",
+                description="Show's Channel and Role Count",
+                emoji="🖼️",
+                value="weirdcount",
             ),
             discord.SelectOption(
                 label="Member Info",
@@ -1404,8 +1144,18 @@ class GuildInfoSelects(discord.ui.Select):
                 value="emoji_data",
                 emoji="📜",
             ),
-            discord.SelectOption(label="Statuses", description="Users' Presences", emoji="🖼️", value="statuses"),
-            discord.SelectOption(label="Extra", description="Shows leftover data", value="extra", emoji="📝"),
+            discord.SelectOption(
+                label="Statuses",
+                description="Users' Presences",
+                emoji="🖼️",
+                value="statuses",
+            ),
+            discord.SelectOption(
+                label="Extra",
+                description="Shows leftover data",
+                value="extra",
+                emoji="📝",
+            ),
             discord.SelectOption(
                 label="Close",
                 description="Closes the Select",
@@ -1414,7 +1164,12 @@ class GuildInfoSelects(discord.ui.Select):
             ),
         ]
 
-        super().__init__(placeholder="What Info would you like to view?", min_values=1, max_values=1, options=options)
+        super().__init__(
+            placeholder="What Info would you like to view?",
+            min_values=1,
+            max_values=1,
+            options=options,
+        )
 
     async def callback(self, interaction):
         choice = self.values[0]
@@ -1445,14 +1200,18 @@ class GuildInfoSelects(discord.ui.Select):
             )
 
         if choice == "owner":
-            embed.add_field(name="Owner:", value=f"**Name**: {guild.owner} \n**ID**: {guild.owner_id}")
+            embed.add_field(
+                name="Owner:",
+                value=f"**Name**: {guild.owner} \n**ID**: {guild.owner_id}",
+            )
 
         embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 
         if choice == "icon":
             embed = discord.Embed(color=random.randint(0, 16777215))
             embed.set_author(
-                name=f"{guild}'s icon:", icon_url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png"
+                name=f"{guild}'s icon:",
+                icon_url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png",
             )
             embed.set_image(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
             embed.set_footer(text=f"Requested by {self.ctx.author}")
@@ -1559,7 +1318,11 @@ class BasicButtons(discord.ui.View):
 
 class DeleteButton(discord.ui.Button):
     def __init__(self):
-        super().__init__(style=discord.ButtonStyle.danger, label="Delete", emoji="<:trash:362024157015441408>")
+        super().__init__(
+            style=discord.ButtonStyle.danger,
+            label="Delete",
+            emoji="<:trash:362024157015441408>",
+        )
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="I am deleting it for you", ephemeral=True)
@@ -1624,7 +1387,8 @@ class BotSettings(discord.ui.View):
     @discord.ui.button(label="Suspend", style=discord.ButtonStyle.danger, emoji="🔒", row=0)
     async def suspend(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(
-            content="Alright Suspending the bot(check the confirmation you will get).", view=None
+            content="Alright Suspending the bot(check the confirmation you will get).",
+            view=None,
         )
         interaction.client.suspended = True
         await interaction.followup.send(content="Alright Boss, I now locked the bot to owners only", ephemeral=True)
@@ -1635,25 +1399,38 @@ class BotSettings(discord.ui.View):
         interaction.client.suspended = False
 
         await interaction.followup.send(
-            content="Alright Boss, I unlocked the commands, they will work with you all again.", ephemeral=True
+            content="Alright Boss, I unlocked the commands, they will work with you all again.",
+            ephemeral=True,
         )
 
-    @discord.ui.button(label="Prefixless", style=discord.ButtonStyle.success, emoji="<_:973270656860958730>", row=1)
+    @discord.ui.button(
+        label="Prefixless",
+        style=discord.ButtonStyle.success,
+        emoji="<_:973270656860958730>",
+        row=1,
+    )
     async def Prefixless(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(content="owner only blank prefixes are enabled", view=None)
         interaction.client.prefixless = True
 
         await interaction.followup.send(
-            content="Alright Boss, I now made the bot prefixless(for owners only)", ephemeral=True
+            content="Alright Boss, I now made the bot prefixless(for owners only)",
+            ephemeral=True,
         )
 
-    @discord.ui.button(label="Prefix", style=discord.ButtonStyle.danger, emoji="<:_:973270656969998376> ", row=1)
+    @discord.ui.button(
+        label="Prefix",
+        style=discord.ButtonStyle.danger,
+        emoji="<:_:973270656969998376> ",
+        row=1,
+    )
     async def prefix_back(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(content="Requiring everyone to use prefixes again", view=None)
         interaction.client.prefixless = False
 
         await interaction.followup.send(
-            content="Alright Boss, I now made the bot require a prefix for everyone.", ephemeral=True
+            content="Alright Boss, I now made the bot require a prefix for everyone.",
+            ephemeral=True,
         )
 
     @discord.ui.button(label="Cancel the Command", style=discord.ButtonStyle.success, emoji="✖️", row=2)
@@ -1679,15 +1456,30 @@ class TokenInvalidatorSettings(discord.ui.View):
     async def dm_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(content="DM Invalidation On", view=None, embed=None)
 
-    @discord.ui.button(label="Global ☑️", style=discord.ButtonStyle.success, emoji="<:_:411642484528119810>", row=0)
+    @discord.ui.button(
+        label="Global ☑️",
+        style=discord.ButtonStyle.success,
+        emoji="<:_:411642484528119810>",
+        row=0,
+    )
     async def global_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(content="Global Token Invalidator", view=None, embed=None)
 
-    @discord.ui.button(label="Guild ☑️", style=discord.ButtonStyle.success, emoji="<a:_:803876680166408192> ", row=0)
+    @discord.ui.button(
+        label="Guild ☑️",
+        style=discord.ButtonStyle.success,
+        emoji="<a:_:803876680166408192> ",
+        row=0,
+    )
     async def guild_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(content="Guild Token Invalidator", view=None, embed=None)
 
-    @discord.ui.button(label="Channel ☑️", style=discord.ButtonStyle.success, emoji="<a:_:803876680166408192> ", row=0)
+    @discord.ui.button(
+        label="Channel ☑️",
+        style=discord.ButtonStyle.success,
+        emoji="<a:_:803876680166408192> ",
+        row=0,
+    )
     async def channel_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(content="Channel Token Invalidator", view=None, embed=None)
 
@@ -1711,7 +1503,11 @@ class TokenInvalidatorSettings(discord.ui.View):
 
 
 class nitroButtons(discord.ui.View):
-    @discord.ui.button(label=f'{"Claim":⠀^37}', custom_id="fun (nitro)", style=discord.ButtonStyle.success)
+    @discord.ui.button(
+        label=f'{"Claim":⠀^37}',
+        custom_id="fun (nitro)",
+        style=discord.ButtonStyle.success,
+    )
     async def nitroButton(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(content="Oh no it was a fake", ephemeral=True)
         await asyncio.sleep(2)
@@ -1765,7 +1561,11 @@ class ReRun(discord.ui.View):
     async def rerun(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(view=None)
         self.view.message = await interaction.followup.send(
-            content=self.view.content, embed=self.view.embed, ephemeral=True, view=self.view, wait=True
+            content=self.view.content,
+            embed=self.view.embed,
+            ephemeral=True,
+            view=self.view,
+            wait=True,
         )
 
     @discord.ui.button(label="Replay", style=discord.ButtonStyle.success, emoji="🔂")
@@ -1780,7 +1580,10 @@ class ReRun(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.view.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
+        await self.view.message.edit(
+            content="Looks it like it timed out.(may want to make an new game)",
+            view=self,
+        )
 
     async def interaction_check(self, interaction: discord.Interaction):
         if self.ctx.author.id != interaction.user.id:
@@ -1794,7 +1597,12 @@ class ReRun(discord.ui.View):
 
 class RpsGameButton(discord.ui.Button):
     def __init__(self, label: str, emoji, custom_id):
-        super().__init__(style=discord.ButtonStyle.success, label=label, custom_id=custom_id, emoji=emoji)
+        super().__init__(
+            style=discord.ButtonStyle.success,
+            label=label,
+            custom_id=custom_id,
+            emoji=emoji,
+        )
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
@@ -1808,7 +1616,11 @@ class RpsGameButton(discord.ui.Button):
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors"}
 
-        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
+        embed = discord.Embed(
+            title=f"RPS Game",
+            color=random.randint(0, 16777215),
+            timestamp=message.created_at,
+        )
 
         if choosen == deciding:
             text = "Tie!"
@@ -1843,7 +1655,12 @@ class RpsGameButton(discord.ui.Button):
 
 class RpsGameButtonGun(discord.ui.Button):
     def __init__(self, label: str, emoji, custom_id):
-        super().__init__(style=discord.ButtonStyle.success, label=label, custom_id=custom_id, emoji=emoji)
+        super().__init__(
+            style=discord.ButtonStyle.success,
+            label=label,
+            custom_id=custom_id,
+            emoji=emoji,
+        )
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.send_message(
@@ -1859,7 +1676,11 @@ class RpsGameButtonGun(discord.ui.Button):
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors", 4: "Gun"}
 
-        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
+        embed = discord.Embed(
+            title=f"RPS Game",
+            color=random.randint(0, 16777215),
+            timestamp=message.created_at,
+        )
 
         text = "You Won"
 
@@ -1904,7 +1725,8 @@ class RpsGame(discord.ui.View):
             item.disabled = True
 
         await self.message.edit(
-            content="You didn't respond fast enough, you lost.(Play again by running game again)", view=self
+            content="You didn't respond fast enough, you lost.(Play again by running game again)",
+            view=self,
         )
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -1934,7 +1756,10 @@ class CoinFlipButton(discord.ui.Button):
         value = random.choice(["Heads", "Tails"])
         win = choosen == value
 
-        url_dic = {"Heads": "https://i.imgur.com/C3tF8ud.png", "Tails": "https://i.imgur.com/tSmhWgg.png"}
+        url_dic = {
+            "Heads": "https://i.imgur.com/C3tF8ud.png",
+            "Tails": "https://i.imgur.com/tSmhWgg.png",
+        }
         embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
         embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
         embed.add_field(name=f"The Coin Flipped:", value=f"{value}")
@@ -1961,7 +1786,10 @@ class CoinFlip(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
+        await self.message.edit(
+            content="Looks it like it timed out.(may want to make an new game)",
+            view=self,
+        )
 
     async def interaction_check(self, interaction: discord.Interaction):
         if self.ctx.author.id != interaction.user.id:
@@ -2021,7 +1849,10 @@ class GuessingGame(discord.ui.View):
         for item in self.children:
             item.disabled = True
 
-        await self.message.edit(content="Looks it like it timed out.(may want to make an new game)", view=self)
+        await self.message.edit(
+            content="Looks it like it timed out.(may want to make an new game)",
+            view=self,
+        )
 
     async def interaction_check(self, interaction: discord.Interaction):
         if self.ctx.author.id != interaction.user.id:
@@ -2038,7 +1869,12 @@ class GuessingGame(discord.ui.View):
 
 class RtfmSelects(discord.ui.Select):
     def __init__(self, options):
-        super().__init__(placeholder="Chose a library to lookup from.", min_values=1, max_values=1, options=options)
+        super().__init__(
+            placeholder="Chose a library to lookup from.",
+            min_values=1,
+            max_values=1,
+            options=options,
+        )
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -2076,7 +1912,12 @@ class RtfmChoice(discord.ui.View):
 
 class JobSelects(discord.ui.Select):
     def __init__(self, options):
-        super().__init__(placeholder="Chose a Job to do.", min_values=1, max_values=1, options=options)
+        super().__init__(
+            placeholder="Chose a Job to do.",
+            min_values=1,
+            max_values=1,
+            options=options,
+        )
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -2112,7 +1953,12 @@ class JobChoice(discord.ui.View):
 
 class SubRedditSelects(discord.ui.Select):
     def __init__(self, options):
-        super().__init__(placeholder="Chose a Subreddit.", min_values=1, max_values=1, options=options)
+        super().__init__(
+            placeholder="Chose a Subreddit.",
+            min_values=1,
+            max_values=1,
+            options=options,
+        )
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -2227,7 +2073,11 @@ async def go_back(view, label, interaction: discord.Interaction):
 # These are Calculator Buttons
 class CalcButton(discord.ui.Button):
     def __init__(
-        self, label: str, row: int, execution_function=default_execution_function, style=discord.ButtonStyle.blurple
+        self,
+        label: str,
+        row: int,
+        execution_function=default_execution_function,
+        style=discord.ButtonStyle.blurple,
     ):
         super().__init__(label=f"{label}", row=row, style=style)
         self.__func = execution_function
@@ -2258,7 +2108,8 @@ class CalcView(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction):
         if interaction.user.id != self.ctx.author.id:
             await interaction.response.send_message(
-                f"This button can only be accessed by {self.ctx.author.name}.", ephemeral=True
+                f"This button can only be accessed by {self.ctx.author.name}.",
+                ephemeral=True,
             )
             return False
         else:
@@ -2267,14 +2118,19 @@ class CalcView(discord.ui.View):
     async def on_timeout(self):
         for i in self.children:
             i.disabled = True
-        await self.message.edit(content="If you want your calculator to work you need to make a new one.", view=self)
+        await self.message.edit(
+            content="If you want your calculator to work you need to make a new one.",
+            view=self,
+        )
         self.stop()
 
 
 # Modal Classes
 class CodeBlockModal(discord.ui.Modal, title="Pep8 Project Formatter:"):
     code = discord.ui.TextInput(
-        label="Code Block:", placeholder="Please Put your code here:", style=discord.TextStyle.paragraph
+        label="Code Block:",
+        placeholder="Please Put your code here:",
+        style=discord.TextStyle.paragraph,
     )
 
     def __init__(self, view, **kwargs):
@@ -2333,7 +2189,12 @@ class CodeBlockView(discord.ui.View):
         await interaction.response.edit_message(view=self)
         self.value2 = False
 
-    @discord.ui.button(label="Submit", style=discord.ButtonStyle.success, emoji="<:click:264897397337882624>", row=1)
+    @discord.ui.button(
+        label="Submit",
+        style=discord.ButtonStyle.success,
+        emoji="<:click:264897397337882624>",
+        row=1,
+    )
     async def Submit(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = CodeBlockModal(self, timeout=180.0)
         await interaction.response.send_modal(modal)
@@ -2346,7 +2207,9 @@ class CodeBlockView(discord.ui.View):
 
 class MailModal(discord.ui.Modal, title="Mail:"):
     message = discord.ui.TextInput(
-        label="Message:", placeholder="Please Put Your Message Here:", style=discord.TextStyle.paragraph
+        label="Message:",
+        placeholder="Please Put Your Message Here:",
+        style=discord.TextStyle.paragraph,
     )
 
     def __init__(self, view, **kwargs):
@@ -2414,7 +2277,8 @@ class ChatBotModal(discord.ui.Modal, title="ChatBot(Travitia API):"):
         await interaction.response.defer()
         args = self.args
         self.view.message = await interaction.followup.send(
-            "Message Received(you will receive your chatbot response in a moment", ephemeral=True
+            "Message Received(you will receive your chatbot response in a moment",
+            ephemeral=True,
         )
         response = await self.view.ask(args, self.view.ctx.author.id)
         await self.view.message.edit(content=f"{response}", view=self.view)
@@ -2440,7 +2304,8 @@ class ChatBotModal2(discord.ui.Modal, title="ChatBot (Some Random Api):"):
         await interaction.response.defer()
         args = self.args
         self.view.message = await interaction.followup.send(
-            "Message Received(you will receive your chatbot response in a moment", ephemeral=True
+            "Message Received(you will receive your chatbot response in a moment",
+            ephemeral=True,
         )
         # response = await self.view.ask2(args)
         # await self.view.message.edit(content=f"{response}", view=self.view)
@@ -2492,7 +2357,9 @@ class ChatBotView(discord.ui.View):
 
 class ReportModal(discord.ui.Modal, title="Report:"):
     report = discord.ui.TextInput(
-        label="Report Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
+        label="Report Reason:",
+        placeholder="Please Put Your Reason here:",
+        style=discord.TextStyle.paragraph,
     )
 
     def __init__(self, view, **kwargs):
@@ -2545,7 +2412,9 @@ class ReportView(discord.ui.View):
 
 class AddBotModal(discord.ui.Modal, title="Reason:"):
     reason = discord.ui.TextInput(
-        label="Addbot Reason:", placeholder="Please Put Your Reason here:", style=discord.TextStyle.paragraph
+        label="Addbot Reason:",
+        placeholder="Please Put Your Reason here:",
+        style=discord.TextStyle.paragraph,
     )
 
     def __init__(self, view, **kwargs):
@@ -2652,7 +2521,11 @@ class AceView(discord.ui.View):
         await self.message.edit(content="Looks like the view timed out try again", view=self)
         self.stop()
 
-    @discord.ui.button(label="Attorney", style=discord.ButtonStyle.success, emoji="<a:think:626236311539286016>")
+    @discord.ui.button(
+        label="Attorney",
+        style=discord.ButtonStyle.success,
+        emoji="<a:think:626236311539286016>",
+    )
     async def Attorney(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Attorney Text:", timeout=180.0)
         modal.side = button.label.lower()
@@ -2660,7 +2533,9 @@ class AceView(discord.ui.View):
         self.stop()
 
     @discord.ui.button(
-        label="Prosecutor", style=discord.ButtonStyle.danger, emoji="<a:edgeworthZoom:703531746699903046>"
+        label="Prosecutor",
+        style=discord.ButtonStyle.danger,
+        emoji="<a:edgeworthZoom:703531746699903046>",
     )
     async def Prosecutor(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = AceModal(self, title="Prosecutor Text:", timeout=180.0)
