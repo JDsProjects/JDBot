@@ -49,6 +49,9 @@ def gadget(text: str) -> BytesIO:
             width = right - left
             height = top - bottom
 
+            print(width)
+            print(height)
+
             while width < (600 - (PADDING_PX * 4)):
                 font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", font.size + 1)
                 if font.size > 100:
