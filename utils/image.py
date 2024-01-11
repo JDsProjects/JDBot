@@ -56,7 +56,7 @@ def gadget(text: str) -> BytesIO:
                     break
 
                 leftw, toph, rightw, bottomh = draw.multiline_textbbox((0, 0), text, font=font, font_size=font.size)
-                
+
                 neww = rightw - leftw
                 newh = toph - bottomh
 
