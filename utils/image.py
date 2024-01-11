@@ -42,12 +42,17 @@ def gadget(text: str) -> BytesIO:
             image = image.resize((600, 600))
 
             font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 1)
-            width, height = draw.textlength(text, font=font)
+            width = draw.textlength(text, font=font)
+
+            height = font.size * rows
+
             while width < (600 - (PADDING_PX * 4)):
                 font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", font.size + 1)
                 if font.size > 100:
                     break
-                neww, newh = draw.textlength(text, font=font)
+                neww = draw.textlength(text, font=font)
+                newh = font.size * rows 
+                
                 if width < (600 - (PADDING_PX * 2)):
                     width = neww
                     height = newh
