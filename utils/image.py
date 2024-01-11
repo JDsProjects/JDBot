@@ -51,8 +51,8 @@ def gadget(text: str) -> BytesIO:
                 if font.size > 100:
                     break
                 neww = draw.textlength(text, font=font)
-                newh = font.size * rows 
-                
+                newh = font.size * rows
+
                 if width < (600 - (PADDING_PX * 2)):
                     width = neww
                     height = newh
