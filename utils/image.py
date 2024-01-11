@@ -44,7 +44,7 @@ def gadget(text: str) -> BytesIO:
 
             font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 1)
 
-            left, top, right, bottom = draw.multiline_textbbox((0, 0), text, font=font, font_size=font.size)
+            left, bottom, right, top = draw.multiline_textbbox((0, 0), text, font=font, font_size=font.size)
 
             width = right - left
             height = top - bottom
@@ -57,7 +57,7 @@ def gadget(text: str) -> BytesIO:
                 if font.size > 100:
                     break
 
-                leftw, toph, rightw, bottomh = draw.multiline_textbbox((0, 0), text, font=font, font_size=font.size)
+                leftw, bottomh, rightw, toph = draw.multiline_textbbox((0, 0), text, font=font, font_size=font.size)
 
                 neww = rightw - leftw
                 newh = toph - bottomh
