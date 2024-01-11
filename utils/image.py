@@ -46,7 +46,7 @@ def gadget(text: str) -> BytesIO:
 
             left, top, right, bottom = draw.multiline_textbbox((0, 0), text, font=font, font_size=font.size)
 
-            width = right - left
+            width = left - right
             height = top - bottom
 
             print(width)
@@ -59,7 +59,7 @@ def gadget(text: str) -> BytesIO:
 
                 leftw, toph, rightw, bottomh = draw.multiline_textbbox((0, 0), text, font=font, font_size=font.size)
 
-                neww = rightw - leftw
+                neww = leftw - rightw
                 newh = toph - bottomh
 
                 if width < (600 - (PADDING_PX * 2)):
