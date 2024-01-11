@@ -35,6 +35,7 @@ def wrap_text(text: str, max_linesize: int = 20):
 
 def gadget(text: str) -> BytesIO:
     text = wrap_text(text.upper())
+
     f = BytesIO()
     with Image.open("assets/images/gadget.png") as image:
         with Image.new("RGBA", (600, 800), "white") as canv:
@@ -44,14 +45,14 @@ def gadget(text: str) -> BytesIO:
             font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 1)
             width = draw.textlength(text, font=font)
 
-            height = font.size * rows
+            height = font.size * len(text.splitlines())
 
             while width < (600 - (PADDING_PX * 4)):
                 font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", font.size + 1)
                 if font.size > 100:
                     break
                 neww = draw.textlength(text, font=font)
-                newh = font.size * rows
+                newh = font.size * len(text.splitlines())
 
                 if width < (600 - (PADDING_PX * 2)):
                     width = neww
