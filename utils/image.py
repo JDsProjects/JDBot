@@ -43,7 +43,6 @@ def gadget(text: str) -> BytesIO:
             image = image.resize((600, 600))
 
             font = ImageFont.truetype("assets/fonts/verdana_edited.ttf", 1)
-            width = draw.textlength(text, font=font)
 
             left, top, right, bottom = draw.multiline_textbbox((0, 0), text, font=font, font_size=font.size)
 
