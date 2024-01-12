@@ -362,9 +362,10 @@ class Test(commands.Cog):
         # Note this is not like todo, todo is for small things, notes is for big things
 
     @discord.app_commands.command(name="file_test")
-    async def file_test(self, interaction: discord.Interaction, file=discord.Attachment):
+    async def file_test(self, interaction: discord.Interaction, attachment=discord.Attachment):
+        
         await interaction.response.send_message("Test Time", ephemeral=True)
-        await interaction.followup.send("There you go", file=await file.to_file())
+        await interaction.followup.send("There you go", file=await attachment.to_file())
 
 
 class Slash(commands.Cog):
