@@ -1669,6 +1669,7 @@ class BotSettings(discord.ui.View):
 
         return True
 
+
 # A Nitro Button Class(not actual nitro)
 
 
