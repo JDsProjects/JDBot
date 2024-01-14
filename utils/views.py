@@ -1669,44 +1669,6 @@ class BotSettings(discord.ui.View):
 
         return True
 
-
-class TokenInvalidatorSettings(discord.ui.View):
-    def __init__(self, ctx, **kwargs):
-        super().__init__(**kwargs)
-        self.ctx = ctx
-
-    @discord.ui.button(label="DM ☑️", style=discord.ButtonStyle.success, emoji="📩", row=0)
-    async def dm_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content="DM Invalidation On", view=None, embed=None)
-
-    @discord.ui.button(label="Global ☑️", style=discord.ButtonStyle.success, emoji="<:_:411642484528119810>", row=0)
-    async def global_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content="Global Token Invalidator", view=None, embed=None)
-
-    @discord.ui.button(label="Guild ☑️", style=discord.ButtonStyle.success, emoji="<a:_:803876680166408192> ", row=0)
-    async def guild_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content="Guild Token Invalidator", view=None, embed=None)
-
-    @discord.ui.button(label="Channel ☑️", style=discord.ButtonStyle.success, emoji="<a:_:803876680166408192> ", row=0)
-    async def channel_switch(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content="Channel Token Invalidator", view=None, embed=None)
-
-    async def interaction_check(self, interaction: discord.Interaction):
-        if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(
-                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
-                ephemeral=True,
-            )
-
-        return True
-
-    async def on_timeout(self):
-        for item in self.children:
-            item.disabled = True
-
-        await self.view.message.edit(content="May want to start from the top", view=self)
-
-
 # A Nitro Button Class(not actual nitro)
 
 
