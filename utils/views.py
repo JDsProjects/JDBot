@@ -23,8 +23,6 @@ if TYPE_CHECKING:
     from .emoji import CustomEmoji
     from .tweet import TweepyTweet
 
-    PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
-
 
 class EmojiInfoEmbed(Paginator):
     async def format_page(self, item: typing.Union[str, CustomEmoji]) -> discord.Embed:
