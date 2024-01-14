@@ -23,6 +23,8 @@ if TYPE_CHECKING:
     from .emoji import CustomEmoji
     from .tweet import TweepyTweet
 
+    PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
+
 
 def default_check(view: Paginator, interaction_user_id: int, view_author_id: int) -> bool:
     cxint = view._context_or_interaction
