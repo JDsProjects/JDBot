@@ -312,6 +312,9 @@ class DevTools(commands.Cog):
         self.rtfm_dictionary = sorted(await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY"))
         self.tio = async_tio.Tio(session=self.bot.session)
 
+        self.invalidation_config = await self.bot.db.fetch("SELECT * FROM invalidation_config")
+        self.invalidation_opt_out = await self.bot.db.fetch("SELECT * FROM invalidation_out")
+
     async def cog_unload(self):
         await self.github.close()
 
