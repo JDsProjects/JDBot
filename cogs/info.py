@@ -315,6 +315,8 @@ class DevTools(commands.Cog):
         self.invalidation_config = await self.bot.db.fetch("SELECT * FROM invalidation_config")
         self.invalidation_opt_out = await self.bot.db.fetch("SELECT * FROM invalidation_out")
 
+        # pass InvalidateType to the objects for the entity_type.
+
     async def cog_unload(self):
         await self.github.close()
 
