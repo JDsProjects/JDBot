@@ -288,7 +288,7 @@ class Owner(commands.Cog):
                 traceback.print_exc()
                 return await ctx.send(e)
 
-            try:                
+            try:
                 valve = await asyncio.to_thread(importlib.reload, module)
 
             except Exception as e:
@@ -302,7 +302,7 @@ class Owner(commands.Cog):
                 try:
                     await self.bot.reload_extension(f"{cog}")
                     description += f"<:bigger_yes_emoji:917747437400125470> {cog} - No Errors\n"
-                    
+
                 except Exception as error_text:
                     description += f"<:bigger_no_emoji:917747437370736670> {cog} - {error_text}\n"
                     text = traceback.format_exc()
@@ -310,10 +310,12 @@ class Owner(commands.Cog):
                         title=f"Error reloading cog `{cog}`", color=0xFF0000, description=f"```py\n{text}```"
                     )
                     await context.send(embed=embed)
-                    
+
             embed = discord.Embed(title="Reload Status", color=random_color(), description=description)
 
-            await ctx.send(f"Sucessfully reloaded {value.__name__} \nMain Package: {value.__package__} \nOther Info:", embed=embed)
+            await ctx.send(
+                f"Sucessfully reloaded {value.__name__} \nMain Package: {value.__package__} \nOther Info:", embed=embed
+            )
 
     @commands.command(brief="backs up a channel and then sends it into a file or Senarc Bin")
     async def channel_backup(self, ctx):
