@@ -289,7 +289,7 @@ class Owner(commands.Cog):
                 return await ctx.send(e)
 
             try:
-                valve = await asyncio.to_thread(importlib.reload, module)
+                value = await asyncio.to_thread(importlib.reload, module)
 
             except Exception as e:
                 traceback.print_exc()
