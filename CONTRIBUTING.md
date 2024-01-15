@@ -22,8 +22,15 @@ You should use Pylance to make sure your code is clean and well
 Or you can use
 
 ```bash
+isort . && black -l120 .
+```
+
+if you don't want to install isort then 
+```bash
 black -l120 .
 ```
+
+is just fine then.
 
 formatted.
 I will make a way to check it in the future.
