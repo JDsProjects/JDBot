@@ -286,6 +286,7 @@ class InvalidateType(enum.IntEnum):
     dm = 2
     channel = 3
 
+
 class InvalidationObject:
     def __init__(self):
         print("wip")
