@@ -14,6 +14,7 @@ if TYPE_CHECKING:
     from .emoji import CustomEmoji
 
     from discord.ext import commands
+
     Context = commands.Context
 
 __all__ = (
@@ -50,6 +51,7 @@ DEFAULT_BUTTONS = {
     "LAST": button_paginator.PaginatorButton(emoji="⏭️", position=4, style=discord.ButtonStyle.secondary),
 }
 
+
 class Paginator(button_paginator.ButtonPaginator):
     def __init__(
         self,
@@ -60,7 +62,7 @@ class Paginator(button_paginator.ButtonPaginator):
         author_id: int | None = None,
         timeout: float | int = 180.0,
         always_show_stop_button: bool = False,
-        delete_after:bool = False,
+        delete_after: bool = False,
         disable_after: bool = False,
         clear_buttons_after: bool = False,
         per_page: int = 1,
@@ -87,7 +89,7 @@ class Paginator(button_paginator.ButtonPaginator):
             disable_after=disable_after,
             clear_buttons_after=clear_buttons_after,
             per_page=per_page,
-            **kwargs
+            **kwargs,
         )
 
     @property
@@ -110,13 +112,13 @@ class Paginator(button_paginator.ButtonPaginator):
         destination = destination or self.ctx or self.interaction
         if destination is None:
             raise TypeError("destination is None")
-        
+
         return await super().send(  # type: ignore
             destination,
             override_page_kwargs=override_page_kwargs,  # type: ignore
             edit_message=edit_message,
-            **send_kwargs
-        )  
+            **send_kwargs,
+        )
 
 
 class EmojiInfoEmbed(Paginator):
@@ -165,7 +167,8 @@ class EmojiInfoEmbed(Paginator):
         )
 
         return main_embed
-    
+
+
 class MutualGuildsEmbed(Paginator):
     def format_page(self, item: str) -> discord.Embed:
         embed = discord.Embed(title="Mutual Servers:", description=item, color=random.randint(0, 16777215))
@@ -197,7 +200,8 @@ class LeaderboardEmbed(Paginator):
         emby = discord.Embed(title="Leaderboard", color=15428885)
         if self.author:
             emby.set_author(
-                name=f"Leaderboard Requested by {self.author}", icon_url=self.author.display_avatar.url,
+                name=f"Leaderboard Requested by {self.author}",
+                icon_url=self.author.display_avatar.url,
             )
 
         for i, b, w in item:
@@ -328,7 +332,7 @@ class ScanStatusEmbed(Paginator):
 
 
 class ScanGlobalEmbed(Paginator):
-    async def format_page(self, item: discord.User | discord.Member ) -> discord.Embed:
+    async def format_page(self, item: discord.User | discord.Member) -> discord.Embed:
         embed = discord.Embed(color=random.randint(0, 16777215))
 
         embed.set_author(name=f"{item}", icon_url=item.display_avatar.url)

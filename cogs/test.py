@@ -334,6 +334,7 @@ class Test(commands.Cog):
     @commands.command(brief="a test of a new paginator :)")
     async def test_pagination(self, ctx):
         from discord.ext.paginators.button_paginator import ButtonPaginator, PaginatorButton
+
         buttons = {
             "STOP": PaginatorButton(emoji="<:stop:959853381885775902>", style=discord.ButtonStyle.secondary),
             "RIGHT": PaginatorButton(emoji="<:next:959851091506364486>", style=discord.ButtonStyle.secondary),
