@@ -1,14 +1,15 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 
 import asyncio
 import collections
 import random
 import traceback
 import typing
-from typing import TYPE_CHECKING
+
+import mathjspy
 
 import discord
-import mathjspy
 from discord.ext import commands
 
 from . import Paginator
