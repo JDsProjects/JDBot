@@ -1,19 +1,19 @@
 from __future__ import annotations
+
 import random
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Tuple, Type, TypeVar, Union
 
 import discord
 from discord.ext.paginators import button_paginator
-
 from tweepy.models import Media
 
-from .views import HelpEmbed, grab_mutualguilds, guild_join, get_sus_reason
 from .tweet import TweepyTweet
+from .views import HelpEmbed, get_sus_reason, grab_mutualguilds, guild_join
 
 if TYPE_CHECKING:
-    from .emoji import CustomEmoji
-
     from discord.ext import commands
+
+    from .emoji import CustomEmoji
 
     Context = commands.Context
 
