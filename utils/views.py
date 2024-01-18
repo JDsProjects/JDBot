@@ -1,477 +1,24 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 
 import asyncio
 import collections
 import random
 import traceback
 import typing
-from typing import TYPE_CHECKING, Any, Callable, Optional, Sequence, Union
+
+import mathjspy
 
 import discord
-import mathjspy
-from discord import ButtonStyle, Embed, File, Interaction
-from discord.abc import Messageable
 from discord.ext import commands
-from discord.ext.commands.context import Context
-from discord.flags import UserFlags
-from discord.ui import Button, Modal, TextInput, View
-from discord.utils import MISSING, maybe_coroutine
+
+from . import Paginator
 
 if TYPE_CHECKING:
     from tweepy import Media
 
     from .emoji import CustomEmoji
     from .tweet import TweepyTweet
-
-    PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
-
-
-def default_check(view: Paginator, interaction_user_id: int, view_author_id: int) -> bool:
-    cxint = view._context_or_interaction
-    bot = (cxint.bot if isinstance(cxint, commands.Context) else cxint.client) if cxint else None
-
-    bot_owners: list[int] = []
-    if bot:
-        bot_owners.extend(getattr(bot, "owner_ids", []))
-        if owner_id := getattr(bot, "owner_id", None):
-            bot_owners.append(owner_id)
-
-    return interaction_user_id in bot_owners + [view_author_id]
-
-
-class ChooseNumber(Modal):
-    def __init__(self, current_page: int, total_pages: int, page_string: str, /):
-        super().__init__(
-            title="Which page would you like to go to?",
-            timeout=15,
-            custom_id="paginator:modal:choose_number",
-        )
-
-        self._current_page: int = current_page
-        self._total_pages: int = total_pages
-
-        self.value: Optional[int] = None  # filled in by on_submit
-
-        self.number_input = TextInput(
-            placeholder=f"Current: {page_string}",
-            label=f"Enter a page number between 1 and {total_pages}",
-            custom_id="paginator:choose_number",
-            max_length=len(str(total_pages)),
-            min_length=1,
-        )
-
-        self.add_item(self.number_input)
-
-    async def on_submit(self, interaction: Interaction) -> None:
-        assert isinstance(self.number_input.value, str)
-
-        if (
-            not self.number_input.value.isdigit()
-            or int(self.number_input.value) <= 0
-            or int(self.number_input.value) > self._total_pages
-        ):
-            await interaction.response.send_message(
-                f"Please enter a valid number between 1 and {self._total_pages}", ephemeral=True
-            )
-            self.stop()
-            return
-
-        number = int(self.number_input.value) - 1
-
-        if number == self._current_page:  # type: ignore
-            await interaction.response.send_message("That is the current page!", ephemeral=True)
-            self.stop()
-            return
-
-        self.value = number
-        await interaction.response.send_message(f"There is page {self.value + 1} for you <3", ephemeral=True)
-        self.stop()
-
-
-class PaginatorButton(Button["Paginator"]):
-    def __init__(
-        self,
-        *,
-        emoji: Optional[str] = None,
-        label: Optional[str] = None,
-        custom_id: Optional[str] = None,
-        style: ButtonStyle = ButtonStyle.blurple,
-        row: Optional[int] = None,
-        disabled: bool = False,
-        position: int = MISSING,
-    ):
-        super().__init__(emoji=emoji, label=label, custom_id=custom_id, style=style, row=row, disabled=disabled)
-        self.position = position
-        self.view: Paginator
-
-    async def __handle_number_modal(self, interaction: Interaction) -> Optional[int]:
-        modal = ChooseNumber(self.view._current_page, self.view.max_pages, self.view.page_string)
-        await interaction.response.send_modal(modal)
-        await modal.wait()
-        return modal.value
-
-    async def callback(self, interaction: Interaction) -> None:
-        if self.custom_id == "stop_button":
-            await self.view.stop()
-            return
-
-        if self.custom_id == "right_button":
-            self.view._current_page += 1
-        elif self.custom_id == "left_button":
-            self.view._current_page -= 1
-        elif self.custom_id == "first_button":
-            self.view._current_page = 0
-        elif self.custom_id == "last_button":
-            self.view._current_page = self.view.max_pages - 1
-        elif self.custom_id == "page_indicator_button":
-            new_page = await self.__handle_number_modal(interaction)
-            if new_page is not None:
-                self.view._current_page = new_page
-            else:
-                return
-
-        self.view._update_buttons_state()
-        pages = self.view.get_page(self.view._current_page)
-        edit_kwargs = (await self.view.get_kwargs_from_page(pages)).copy()
-        edit_kwargs["attachments"] = edit_kwargs.pop("files")
-
-        await self.view._edit_message(interaction, **edit_kwargs)
-
-
-class Paginator(View):
-    FIRST: Optional[PaginatorButton] = None  # filled in __add_buttons
-    LEFT: Optional[PaginatorButton] = None  # filled in __add_buttons
-    RIGHT: Optional[PaginatorButton] = None  # filled in __add_buttons
-    LAST: Optional[PaginatorButton] = None  # filled in __add_buttons
-    STOP: Optional[PaginatorButton] = None  # filled in __add_buttons
-    PAGE_INDICATOR: Optional[PaginatorButton] = None  # filled in __add_buttons
-
-    def __init__(
-        self,
-        pages: Sequence[PossiblePage],
-        *,
-        ctx: Context = MISSING,
-        interaction: Interaction = MISSING,
-        author_id: int = MISSING,
-        per_page: int = 1,
-        buttons: dict = MISSING,
-        check: Callable = MISSING,
-        timeout: Union[int, float] = 180.0,
-        always_show_stop_button: bool = False,
-        delete_after: bool = False,
-        disable_after: bool = False,
-        clear_buttons_after: bool = False,
-    ) -> None:
-        """Initialize the Paginator."""
-        super().__init__(timeout=timeout)
-        if ctx is not MISSING and interaction is not MISSING:
-            raise ValueError("ctx and interaction cannot be used together")
-
-        DEFAULT_BUTTONS = {
-            "FIRST": PaginatorButton(emoji="⏮️", position=0, style=ButtonStyle.secondary),
-            "LEFT": PaginatorButton(emoji="◀️", position=1, style=ButtonStyle.secondary),
-            # "PAGE_INDICATOR": PaginatorButton(label="Page N/A / N/A", position=2, style=ButtonStyle.secondary),
-            "PAGE_INDICATOR": None,
-            "STOP": PaginatorButton(emoji="⏹️", position=2, style=ButtonStyle.danger),
-            "RIGHT": PaginatorButton(emoji="▶️", position=3, style=ButtonStyle.secondary),
-            "LAST": PaginatorButton(emoji="⏭️", position=4, style=ButtonStyle.secondary),
-        }
-
-        self._buttons: dict[str, PaginatorButton] = DEFAULT_BUTTONS.copy()
-        if buttons is not MISSING:
-            self._buttons.update(buttons)
-
-        self.timeout: Union[int, float] = timeout
-        # self._message: PossibleMessage = None  # type: ignore # this cannot be None # filled in .send()
-
-        self.ctx = ctx  # can be filled in .send()
-        self.interaction = interaction  # can be filled in .send() and when the paginator is used
-        self.author_id: int = author_id
-        self.check = check if check is not MISSING else default_check
-
-        self.pages: Sequence[PossiblePage] = pages
-        self.per_page: int = per_page
-
-        self._max_pages_passed: int = len(pages)
-        self._should_always_show_stop_button: bool = always_show_stop_button
-        self._should_delete_after: bool = delete_after
-        self._should_disable_after: bool = disable_after
-        self._should_clear_buttons_after: bool = clear_buttons_after
-
-        self._current_page: int = 0
-
-        if per_page > self._max_pages_passed or per_page < 1:
-            raise ValueError(  # nice try though
-                f"per_page ({per_page}) must be >= 1 or = len(pages) # >>> {self._max_pages_passed}"
-            )
-
-        total_pages, left_over = divmod(self._max_pages_passed, per_page)
-        if left_over:
-            total_pages += 1
-
-        self._max_pages = total_pages
-        self.__add_buttons()
-
-        self.__base_kwargs = {"content": None, "embeds": [], "files": [], "view": self}
-
-    def __reset_base_kwargs(self) -> None:
-        self.__base_kwargs = {"content": None, "embeds": [], "files": [], "view": self}
-
-    def __add_buttons(self) -> None:
-        if not self._max_pages > 1:
-            if self._should_always_show_stop_button:
-                if "STOP" not in self._buttons:
-                    raise ValueError("STOP button is required if always_show_stop_button is True.")
-
-                name = "STOP"
-                button = self._buttons[name]
-                button.custom_id = f"{name.lower()}_button"
-                setattr(self, name, button)
-                self.add_item(button)
-                return
-            else:
-                super().stop()
-            return
-
-        _buttons: dict[str, PaginatorButton] = {
-            name: button for name, button in self._buttons.items() if button is not None
-        }
-        sorted_buttons = sorted(_buttons.items(), key=lambda b: b[1].position if b[1].position is not MISSING else 0)
-        for name, button in sorted_buttons:
-            button.custom_id = f"{name.lower()}_button"
-            setattr(self, name, button)
-
-            if button.custom_id == "page_indicator_button":
-                button.label = self.page_string
-                if self._max_pages <= 2:
-                    button.disabled = True
-
-            if button.custom_id in ("first_button", "last_button") and self.max_pages <= 2:
-                continue
-
-            self.add_item(button)
-
-        self._update_buttons_state()
-
-    def _update_buttons_state(self) -> None:
-        button: PaginatorButton
-        for button in self.children:  # type: ignore
-            if button.custom_id in ("page_indicator_button", "stop_button"):
-                if button.custom_id == "page_indicator_button":
-                    button.label = self.page_string
-                else:
-                    button.style = ButtonStyle.red
-                continue
-
-            elif button.custom_id in ("right_button", "last_button"):
-                button.disabled = self._current_page >= self.max_pages - 1
-            elif button.custom_id in ("left_button", "first_button"):
-                button.disabled = self._current_page <= 0
-
-            if not button.disabled:
-                button.style = ButtonStyle.green
-            elif button.disabled:
-                button.style = ButtonStyle.secondary
-
-    @property
-    def _context_or_interaction(self) -> Optional[Union[Context, Interaction]]:
-        if self.ctx is not MISSING:
-            return self.ctx
-        elif self.interaction is not MISSING:
-            return self.interaction
-        else:
-            return None
-
-    @property
-    def view_author(self) -> Optional[Union[discord.Member, discord.User, int]]:
-        if self.ctx is not MISSING:
-            return self.ctx.author
-        elif self.interaction is not MISSING:
-            return self.interaction.user
-        elif self.author_id is not MISSING:
-            return self.author_id
-        else:
-            return None
-
-    @property
-    def current_page(self) -> int:
-        return self._current_page
-
-    @current_page.setter
-    def current_page(self, value: int) -> None:
-        self._current_page = value
-        self._update_buttons_state()
-
-    @property
-    def max_pages(self) -> int:
-        return self._max_pages
-
-    @property
-    def page_string(self) -> str:
-        return f"Page {self.current_page + 1} / {self.max_pages}"
-
-    async def on_timeout(self) -> None:
-        await self.stop()
-
-    async def interaction_check(self, interaction: Interaction):
-        # Allow everyone if interaction.user or ctx or author_id is None.
-        if not self.view_author:
-            return True
-
-        author_id = self.view_author.id if not isinstance(self.view_author, int) else self.view_author
-        is_allowed = await maybe_coroutine(self.check, self, interaction.user.id, author_id)
-        if not is_allowed:
-            await interaction.response.send_message(
-                f"This paginator can only be controlled by <@{author_id}> and my owner(s), sorry!", ephemeral=True
-            )
-            return False
-
-        return is_allowed
-
-    async def _edit_message(self, interaction: Interaction = MISSING, /, **kwargs: Any) -> None:
-        kwargs["attachments"] = kwargs.pop("files", [])
-        if interaction is not MISSING:
-            self.interaction = interaction
-            respond = self.interaction.response.edit_message  # type: ignore
-            if self.interaction.response.is_done():  # type: ignore
-                respond = self.message.edit if self.message else interaction.message.edit  # type: ignore
-
-            await respond(**kwargs)
-        else:
-            await self.message.edit(**kwargs)
-
-    async def stop(self) -> None:
-        self.__reset_base_kwargs()
-        super().stop()
-
-        if self._should_delete_after:
-            await self.message.delete()
-            return
-
-        if self._should_clear_buttons_after:
-            await self._edit_message(view=None)
-            return
-        elif self._should_disable_after:
-            for button in self.children:
-                button.disabled = True  # type: ignore
-
-            await self._edit_message(view=self)
-            return
-
-    def format_page(self, page: Union[PossiblePage, Sequence[PossiblePage]]) -> PossiblePage:
-        return page  # type: ignore
-
-    def get_page(self, page_number: int) -> Union[PossiblePage, Sequence[PossiblePage]]:
-        if page_number < 0 or page_number >= self.max_pages:
-            self._current_page = 0
-            return self.pages[self._current_page]
-
-        if self.per_page == 1:
-            return self.pages[page_number]
-        else:
-            base = page_number * self.per_page
-            return self.pages[base : base + self.per_page]
-
-    async def get_kwargs_from_page(
-        self,
-        page: Union[PossiblePage, Sequence[PossiblePage]],
-        send_kwargs: dict[str, Any] = {},
-        skip_formatting: bool = False,
-    ) -> dict[str, Any]:
-        if not skip_formatting:
-            self.__reset_base_kwargs()
-            page = await maybe_coroutine(self.format_page, page)
-
-        if send_kwargs:
-            for key, value in send_kwargs.items():
-                if key in ("embed", "file"):
-                    self.__base_kwargs[f"{key}s"] = value
-                elif key == "view":
-                    continue
-                else:
-                    self.__base_kwargs.update(send_kwargs)  # type: ignore
-
-        if self.per_page > 1 and isinstance(page, (list, tuple)):
-            raise ValueError("format_page must be used to format multiple pages.")
-
-        if isinstance(page, (list, tuple)):
-            _page: PossiblePage
-            for _page in page:  # type: ignore
-                await self.get_kwargs_from_page(_page, skip_formatting=True)  # type: ignore
-
-        if isinstance(page, str):
-            self.__base_kwargs["content"] = f"{page}\n\n{self.page_string}"
-        elif isinstance(page, dict):
-            self.__base_kwargs.update(page)  # type: ignore
-        elif isinstance(page, Embed):
-            # self.__base_kwargs["embeds"].append(page)
-            # set_footer_on = self.__base_kwargs["embeds"][-1]
-            # if not set_footer_on.footer.text or set_footer_on.footer.text == self.page_string:
-            if not page.footer.text:
-                page.set_footer(text=self.page_string)
-            else:
-                # set_footer_on.set_footer(text=f"{set_footer_on.footer.text} | {self.page_string}")
-                if not "|" in page.footer.text:
-                    page.set_footer(text=f"{page.footer.text} | {self.page_string}")
-            self.__base_kwargs["embeds"].append(page)
-
-        elif isinstance(page, File):
-            page.reset()
-            self.__base_kwargs["files"].append(page)
-
-            if not self.__base_kwargs["content"]:
-                self.__base_kwargs["content"] = self.page_string
-            else:
-                self.__base_kwargs["content"] += f"\n\n{self.page_string}"
-
-        return self.__base_kwargs
-
-    async def send(
-        self,
-        *,
-        ctx: Context = MISSING,
-        send_to: Messageable = MISSING,
-        interaction: Interaction = MISSING,
-        override_custom: bool = True,
-        **kwargs,
-    ):
-        if interaction is not MISSING and ctx is not MISSING:
-            raise ValueError("ctx and interaction cannot be used together")
-
-        page = self.get_page(self.current_page)
-        send_kwargs = await self.get_kwargs_from_page(page, send_kwargs=kwargs if override_custom else {})
-
-        self.interaction = self.interaction if interaction is MISSING else interaction  # type: ignore
-        self.ctx = self.ctx if ctx is MISSING else ctx  # type: ignore
-
-        if send_to is not MISSING:
-            self.message = await send_to.send(**send_kwargs)
-            return self.message
-
-        elif self.interaction is not MISSING:
-            respond = self.interaction.response.send_message  # type: ignore
-            if self.interaction.response.is_done():  # type: ignore
-                send_kwargs["wait"] = True  # type: ignore
-
-                respond = self.interaction.followup.send  # type: ignore
-
-            maybe_message = await respond(**send_kwargs)
-            if maybe_message:
-                self.message = maybe_message
-                return self.message
-            else:
-                self.message = await self.interaction.original_response()  # type: ignore
-                return self.message
-
-        elif self.ctx is not MISSING:
-            self.message = await self.ctx.send(**send_kwargs)  # type: ignore
-            return self.message
-
-        else:
-            raise ValueError("ctx or interaction or send_to must be provided")
-
-
-# thank you so much Soheab for allowing me to use this paginator you made and putting in the work to do this :D (That's his github name so...)
 
 
 class EmojiInfoEmbed(Paginator):
@@ -776,11 +323,11 @@ class TweetsDestinationHandler(discord.ui.View):
     def __init__(
         self,
         *,
-        ctx: Context,
+        ctx: commands.Context,
         pagintor: TweetsPaginator,
     ):
         super().__init__()
-        self.ctx: Context = ctx
+        self.ctx: commands.Context = ctx
         self.pagintor: TweetsPaginator = pagintor
 
     @discord.ui.button(label="Normal", style=discord.ButtonStyle.success, emoji="📄")
@@ -821,7 +368,7 @@ class TweetsDestinationHandler(discord.ui.View):
 
 
 class TweetsPaginator(Paginator):
-    class ShowImagesButton(Button):
+    class ShowImagesButton(discord.ui.Button):
         view: "TweetsPaginator"
 
         def __init__(self) -> None:
@@ -829,7 +376,7 @@ class TweetsPaginator(Paginator):
             self.position: int = 4
             self.medias: list[Media] = []
 
-        async def callback(self, interaction: Interaction) -> None:
+        async def callback(self, interaction: discord.Interaction) -> None:
             pag = Paginator(
                 ctx=self.view.ctx,
                 pages=self.medias,  # type: ignore
@@ -858,7 +405,7 @@ class TweetsPaginator(Paginator):
         self.author_icon: str = author_icon
         self._update_buttons_state()
 
-    def media_page_formater(self, media: Media) -> Embed:
+    def media_page_formater(self, media: Media) -> discord.Embed:
         embed = discord.Embed(title=f"Images", description=f"url: {media.url}", color=0x1DA1F2)
         embed.set_image(url=media.url)
         return embed
@@ -928,23 +475,23 @@ def profile_converter(
     ],
 ):
     badges_emoji = {
-        UserFlags.staff: "<:discord_staff:1040719569116999680>",
-        UserFlags.partner: "<:discord_partner:1040723650162212985>",
-        UserFlags.hypesquad: "<:hypesquad:1040720248158040154>",
-        UserFlags.bug_hunter: "<:bug_hunter:1040719548128702544>",
-        UserFlags.hypesquad_bravery: "<:bravery:917747437450457128>",
-        UserFlags.hypesquad_brilliance: "<:brilliance:917747437509177384>",
-        UserFlags.hypesquad_balance: "<:balance:917747437412704366>",
-        UserFlags.early_supporter: "<:early_supporter:1040720490676895846>",
-        UserFlags.team_user: "🤖",
+        discord.UserFlags.staff: "<:discord_staff:1040719569116999680>",
+        discord.UserFlags.partner: "<:discord_partner:1040723650162212985>",
+        discord.UserFlags.hypesquad: "<:hypesquad:1040720248158040154>",
+        discord.UserFlags.bug_hunter: "<:bug_hunter:1040719548128702544>",
+        discord.UserFlags.hypesquad_bravery: "<:bravery:917747437450457128>",
+        discord.UserFlags.hypesquad_brilliance: "<:brilliance:917747437509177384>",
+        discord.UserFlags.hypesquad_balance: "<:balance:917747437412704366>",
+        discord.UserFlags.early_supporter: "<:early_supporter:1040720490676895846>",
+        discord.UserFlags.team_user: "🤖",
         "system": "<:verifiedsystem1:848399959539843082><:verifiedsystem2:848399959241261088>",
-        UserFlags.bug_hunter_level_2: "<:bug_hunter_2:1040721850520571914>",
-        UserFlags.verified_bot: "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
-        UserFlags.verified_bot_developer: "<:early_developer:1040719588385624074>",
-        UserFlags.discord_certified_moderator: "<:certified_moderator:1040719606102380687>",
-        UserFlags.bot_http_interactions: "<:bot_http_interactions:1040746049821757522>",
-        UserFlags.spammer: "⚠️",
-        UserFlags.active_developer: "<:active_dev:1040717993895800853>",
+        discord.UserFlags.bug_hunter_level_2: "<:bug_hunter_2:1040721850520571914>",
+        discord.UserFlags.verified_bot: "<:verifiedbot1:848395737279496242><:verifiedbot2:848395736982749194>",
+        discord.UserFlags.verified_bot_developer: "<:early_developer:1040719588385624074>",
+        discord.UserFlags.discord_certified_moderator: "<:certified_moderator:1040719606102380687>",
+        discord.UserFlags.bot_http_interactions: "<:bot_http_interactions:1040746049821757522>",
+        discord.UserFlags.spammer: "⚠️",
+        discord.UserFlags.active_developer: "<:active_dev:1040717993895800853>",
         "bot": "<:bot:848395737138069514>",
     }
 
