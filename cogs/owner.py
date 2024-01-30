@@ -324,9 +324,11 @@ class Owner(commands.Cog):
         new_line = "\n"
 
         page = "\n".join(
-            f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {msg.content} {new_line}Attachments : {msg.attachments}"
-            if msg.content
-            else f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {new_line.join(f'{e.to_dict()}' for e in msg.embeds)} {new_line}Attachments : {msg.attachments}"
+            (
+                f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {msg.content} {new_line}Attachments : {msg.attachments}"
+                if msg.content
+                else f"{msg.author} ({('Bot' if msg.author.bot else 'User')}) : {new_line.join(f'{e.to_dict()}' for e in msg.embeds)} {new_line}Attachments : {msg.attachments}"
+            )
             for msg in messages
         )
 
