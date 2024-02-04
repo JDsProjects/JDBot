@@ -376,7 +376,7 @@ class Test(commands.Cog):
             f"temperature :\nCelsius : {temps.celsius} \nFahrenheit: {temps.fahrenheight}  \nKelvin : {temps.kelvin}"
         )
 
-    @convert_temperature.error()
+    @convert_temperature.error
     async def convert_temperature_error(self, interaction: discord.Interaction, error):
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(interaction.command)
