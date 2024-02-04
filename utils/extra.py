@@ -327,4 +327,4 @@ class Temperature(enum.Enum):
         c = round(c, 1)
         f = round(f, 1)
 
-        return TemperatureValues(k, c, f)
+        return TemperatureValues([k, c, f])
