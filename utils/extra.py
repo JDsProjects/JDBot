@@ -286,10 +286,28 @@ class InvalidateType(enum.IntEnum):
     dm = 2
     channel = 3
 
+class InvalidationConfig:
+    def __init__(self, entity_id : int, entity_type : InvalidateType):
+        self.entity_id = entity_id
+        self.entity_type = entity_type
 
-class InvalidationObject:
-    def __init__(self):
-        print("wip")
+    def is_global_invalidation(self) -> bool:
+        """Checks if the configuration is for global invalidation."""
+        return self.entity_type == InvalidateType.EVERYWHERE
+
+    def is_guild_invalidation(self) -> bool:
+        """Checks if the configuration is for guild-specific invalidation."""
+        return self.entity_type == InvalidateType.GUILD
+
+    def is_dm_invalidation(self) -> bool:
+        """Checks if the configuration is for DM channel invalidation."""
+        return self.entity_type == InvalidateType.DM
+
+    def is_channel_invalidation(self) -> bool:
+        """Checks if the configuration is for a specific channel's invalidation."""
+        return self.entity_type == InvalidateType.CHANNEL
+
+    
 
 
 class TemperatureReadings:
