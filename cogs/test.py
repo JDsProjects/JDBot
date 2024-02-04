@@ -370,7 +370,7 @@ class Test(commands.Cog):
         temperature: int,
     ):
 
-        temps = utils.Temperature.convert_to(temperature)
+        temps = utils.Temperature.convert_to(system, temperature)
 
         await interaction.response.send_message(
             f"temperature :\nCelsius : {temps.celsius} \nFahrenheit: {temps.fahrenheight}  \nKelvin : {temps.kelvin}"
