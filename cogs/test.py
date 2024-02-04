@@ -378,7 +378,7 @@ class Test(commands.Cog):
             k = c + 273.15
             f = (c * 1.8) + 32
 
-        if temp_sytem == "Fahrenheit":
+        if temp_system == "Fahrenheit":
 
             f = temperature
             c = (f - 32) * (0.56)
