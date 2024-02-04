@@ -367,7 +367,7 @@ class Test(commands.Cog):
         self,
         interaction: discord.Interaction,
         temp_system: typing.Literal["Celsius", "Fahrenheit", "Kelvin"],
-        tempature: int,
+        temperature: int,
     ):
 
         # make temperature system a better name and make it a numbered enum
@@ -388,7 +388,7 @@ class Test(commands.Cog):
             c = k - 273.15
             f = (c * 1.8) + 32
 
-        await interaction.response.send_message(f"Temperatures :\nCelsius : {c} \nFahrenheit: {f}  \nKelvin : {k}")
+        await interaction.response.send_message(f"temperature :\nCelsius : {c} \nFahrenheit: {f}  \nKelvin : {k}")
 
 
 class Slash(commands.Cog):
