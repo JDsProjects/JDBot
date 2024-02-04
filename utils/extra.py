@@ -291,38 +291,40 @@ class InvalidationObject:
     def __init__(self):
         print("wip")
 
-class TemperatureValues(TypedDict):
-        celsius: float
-        fahrenheight: float
-        kelvin: float
 
-    # could have a better name.
+class TemperatureValues(TypedDict):
+    celsius: float
+    fahrenheight: float
+    kelvin: float
+
+
+# could have a better name.
 
 
 class Temperature(enum.Enum):
-        celsius = "Celsius"
-        fahrenheight = "Fahrenheit"
-        kelvin = "Kelvin"
+    celsius = "Celsius"
+    fahrenheight = "Fahrenheit"
+    kelvin = "Kelvin"
 
-        def convert_to(self, value: float) -> float:
+    def convert_to(self, value: float) -> float:
 
-            if self is Temperature.celsius:
-                c = value
-                k = c + 273.15
-                f = (c * 1.8) + 32
+        if self is Temperature.celsius:
+            c = value
+            k = c + 273.15
+            f = (c * 1.8) + 32
 
-            if self == Temperature.fahrenheight:
-                f = value
-                c = (f * 0.56) + 32
-                k = c + 273.15
+        if self == Temperature.fahrenheight:
+            f = value
+            c = (f * 0.56) + 32
+            k = c + 273.15
 
-            if self == Temperature.kelvin:
-                k = value
-                c = k - 273.15
-                f = (c * 1.8) + 32
+        if self == Temperature.kelvin:
+            k = value
+            c = k - 273.15
+            f = (c * 1.8) + 32
 
-            k = round (k, 1)
-            c = round(c, 1)
-            f = round(f, 1)
+        k = round(k, 1)
+        c = round(c, 1)
+        f = round(f, 1)
 
-            return TemperatureValues(k, c, f)
+        return TemperatureValues(k, c, f)
