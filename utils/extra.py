@@ -309,7 +309,7 @@ class Temperature(enum.Enum):
     fahrenheight = "Fahrenheit"
     kelvin = "Kelvin"
 
-    def convert_to(system, value: float) -> float:
+    def convert_to(self, system, value: float) -> float:
 
         if system is self.celsius:
             c = value
