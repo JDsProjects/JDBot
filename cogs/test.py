@@ -11,9 +11,9 @@ import typing
 
 import discord
 from better_profanity import profanity
+from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-from discord import app_commands
 
 import utils
 
@@ -369,7 +369,6 @@ class Test(commands.Cog):
         temp_system: typing.Literal["Celsius", "Fahrenheit", "Kelvin"],
         temperature: int,
     ):
-
         # make temperature system a better name and make it a numbered enum
         # better variable names too
 
@@ -379,7 +378,6 @@ class Test(commands.Cog):
             f = (c * 1.8) + 32
 
         if temp_system == "Fahrenheit":
-
             f = temperature
             c = (f * 0.56) + 32
             k = c + 273.15
