@@ -309,19 +309,19 @@ class Temperature(enum.Enum):
     fahrenheight = "Fahrenheit"
     kelvin = "Kelvin"
 
-    def convert_to(self, value: float) -> float:
+    def convert_to(system, value: float) -> float:
 
-        if self is Temperature.celsius:
+        if system is self.celsius:
             c = value
             k = c + 273.15
             f = (c * 1.8) + 32
 
-        if self == Temperature.fahrenheight:
+        if system == self.fahrenheight:
             f = value
             c = (f * 0.56) + 32
             k = c + 273.15
 
-        if self == Temperature.kelvin:
+        if system == self.kelvin:
             k = value
             c = k - 273.15
             f = (c * 1.8) + 32
