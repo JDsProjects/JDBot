@@ -362,7 +362,12 @@ class Test(commands.Cog):
         # Note this is not like todo, todo is for small things, notes is for big things
 
     @discord.app_commands(description="Makes a command to convert temperature")
-    async def convert_temperature(self, interaction : discord.Interaction, temp_system : typing.Literal["Celsius", "Fahrenheit", "Kelvin"], tempature : int):
+    async def convert_temperature(
+        self,
+        interaction: discord.Interaction,
+        temp_system: typing.Literal["Celsius", "Fahrenheit", "Kelvin"],
+        tempature: int,
+    ):
 
         # make temperature system a better name and make it a numbered enum
 
@@ -371,11 +376,10 @@ class Test(commands.Cog):
             k = c + 273.15
             f = (c * 1.8) + 32
 
-
         if temp_sytem == "Fahrenheit":
-            
+
             f = temperature
-            c = (f -32 ) * (0.56)
+            c = (f - 32) * (0.56)
 
         if temp_system == "Kelvin":
             k = temperature
@@ -383,7 +387,6 @@ class Test(commands.Cog):
             f = (c * 1.8) + 32
 
         await interaction.response.send_message(f"Temperatures :\nCelsius : {c} \nFahrenheit: {f}  \nKelvin : {k}")
-
 
 
 class Slash(commands.Cog):
