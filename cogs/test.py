@@ -363,6 +363,11 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # Note this is not like todo, todo is for small things, notes is for big things
 
+    class TemperatureHandle(typing.TypedDict):
+        celsius : float
+        fahrenheight : float
+        kelvin : float
+
     class Temperature(enum.Enum):
         celsius = "Celsius" = "C"
         fahrenheight = "Fahrenheit" = "F"
@@ -385,20 +390,22 @@ class Test(commands.Cog):
                 c = k - 273.15
                 f = (c * 1.8) + 32
 
-            return (k, c, f)
+            return self.TemperatureHandle(k, c, f)
     
 
     @app_commands.command(description="Makes a command to convert temperature")
     async def convert_temperature(
         self,
         interaction: discord.Interaction,
-        system: Temperature,
+        system: self.Temperature,
         temperature: int,
     ):
     
-        temps = Temperature.convert_to(system, temperature)
+        temps = self.Temperature.convert_to(system, temperature)
 
-        await interaction.response.send_message(f"temperature :\nCelsius : {c} \nFahrenheit: {f}  \nKelvin : {k}")
+        # better name needed as well as TemperatureHandler
+
+        await interaction.response.send_message(f"temperature :\nCelsius : {temps.celsius} \nFahrenheit: {temps.fahrenheight}  \nKelvin : {temps.kelvin}")
 
 
 class Slash(commands.Cog):
