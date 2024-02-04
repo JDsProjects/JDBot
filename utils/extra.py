@@ -328,3 +328,5 @@ class Temperature(enum.Enum):
         f = round(f, 1)
 
         return TemperatureValues({"celsius": c, "fahrenheight": f, "kelvin": k})
+
+        # I do not get why this does not work.
