@@ -292,42 +292,31 @@ class InvalidationObject:
         print("wip")
 
 
-class TemperatureValues:
-
-    def __init__(self, celsius, fahrenheight, kelvin):
-
-        self.celsius: float
-        self.fahrenheight: float
-        self.kelvin: float
-
-
-# could have a better name for TemperatureValues.
-
+class TemperatureReadings:
+    def __init__(self, celsius: float, fahrenheit: float, kelvin: float):
+        self.celsius = celsius
+        self.fahrenheit = fahrenheit
+        self.kelvin = kelvin
 
 class Temperature(enum.Enum):
     celsius = "Celsius"
     fahrenheit = "Fahrenheit"
     kelvin = "Kelvin"
 
-    def convert_to(system, value: float) -> float:
-
-        if system is self.celsius:
+    def convert_to(self, value: float) -> TemperatureReadings:
+        if self == Temperature.celsius:
             c = value
             k = c + 273.15
             f = (c * 1.8) + 32
-
-        if system == self.fahrenheit:
+        
+        if self == Temperature.fahrenheit:
             f = value
             c = (f - 32) * 0.5556
             k = c + 273.15
 
-        if system == self.kelvin:
+        if self == Temperature.kelvin:
             k = value
             c = k - 273.15
             f = (c * 1.8) + 32
 
-        c = round(c, 1)
-        k = round(k, 1)
-        f = round(f, 1)
-
-        return TemperatureValues(round(c, 1), round(k, 1), round(f, 1))
+        return TemperatureReadings(round(c, 1), round(f, 1), round(k, 1))
