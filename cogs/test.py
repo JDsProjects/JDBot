@@ -362,7 +362,7 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # Note this is not like todo, todo is for small things, notes is for big things
 
-    @app_commands(description="Makes a command to convert temperature")
+    @app_commands.command(description="Makes a command to convert temperature")
     async def convert_temperature(
         self,
         interaction: discord.Interaction,
