@@ -1,5 +1,6 @@
 import asyncio
 import collections
+import enum
 import difflib
 import itertools
 import os
@@ -362,30 +363,40 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # Note this is not like todo, todo is for small things, notes is for big things
 
+    class Temperature(enum.Enum):
+        celsius = "Celsius" = "C"
+        fahrenheight = "Fahrenheit" = "F"
+        kelvin = "Kelvin" = "K"
+
+        def convert_to(self, system: Temperature, value: float) -> float:
+
+            if system == "C":
+                c = value
+                k = c + 273.15
+                f = (c * 1.8) + 32
+
+            if system == "F":
+                f = value
+                c = (f * 0.56) + 32
+                k = c + 273.15
+
+            if system == "K":
+                k = value
+                c = k - 273.15
+                f = (c * 1.8) + 32
+
+            return (k, c, f)
+    
+
     @app_commands.command(description="Makes a command to convert temperature")
     async def convert_temperature(
         self,
         interaction: discord.Interaction,
-        temp_system: typing.Literal["Celsius", "Fahrenheit", "Kelvin"],
+        system: Temperature,
         temperature: int,
     ):
-        # make temperature system a better name and make it a numbered enum
-        # better variable names too
-
-        if temp_system == "Celsius":
-            c = temperature
-            k = c + 273.15
-            f = (c * 1.8) + 32
-
-        if temp_system == "Fahrenheit":
-            f = temperature
-            c = (f * 0.56) + 32
-            k = c + 273.15
-
-        if temp_system == "Kelvin":
-            k = temperature
-            c = k - 273.15
-            f = (c * 1.8) + 32
+    
+        temps = Temperature.convert_to(system, temperature)
 
         await interaction.response.send_message(f"temperature :\nCelsius : {c} \nFahrenheit: {f}  \nKelvin : {k}")
 
