@@ -369,28 +369,28 @@ class Test(commands.Cog):
         kelvin : float
 
     class Temperature(enum.Enum):
-        celsius = "Celsius" = "C"
-        fahrenheight = "Fahrenheit" = "F"
-        kelvin = "Kelvin" = "K"
+        celsius = "Celsius"
+        fahrenheight = "Fahrenheit"
+        kelvin = "Kelvin"
 
-        def convert_to(self, system: Temperature, value: float) -> float:
+        def convert_to(self, value: float) -> float:
 
-            if system == "C":
+            if self is Temperature.celsius:
                 c = value
                 k = c + 273.15
                 f = (c * 1.8) + 32
 
-            if system == "F":
+            if self == Temperature.fahrenheight:
                 f = value
                 c = (f * 0.56) + 32
                 k = c + 273.15
 
-            if system == "K":
+            if self == Temperature.kelvin:
                 k = value
                 c = k - 273.15
                 f = (c * 1.8) + 32
 
-            return self.TemperatureHandle(k, c, f)
+            return TemperatureHandle(k, c, f)
     
 
     @app_commands.command(description="Makes a command to convert temperature")
