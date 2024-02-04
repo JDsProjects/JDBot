@@ -370,6 +370,7 @@ class Test(commands.Cog):
     ):
 
         # make temperature system a better name and make it a numbered enum
+        # better variable names too
 
         if temp_system == "Celsius":
             c = temperature
