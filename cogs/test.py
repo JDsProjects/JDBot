@@ -13,6 +13,7 @@ import discord
 from better_profanity import profanity
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
+from discord import app_commands
 
 import utils
 
@@ -361,7 +362,7 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # Note this is not like todo, todo is for small things, notes is for big things
 
-    @discord.app_commands(description="Makes a command to convert temperature")
+    @app_commands(description="Makes a command to convert temperature")
     async def convert_temperature(
         self,
         interaction: discord.Interaction,
