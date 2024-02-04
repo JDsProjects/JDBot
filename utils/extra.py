@@ -298,6 +298,7 @@ class TemperatureReadings:
         self.fahrenheit = fahrenheit
         self.kelvin = kelvin
 
+
 class Temperature(enum.Enum):
     celsius = "Celsius"
     fahrenheit = "Fahrenheit"
@@ -308,7 +309,7 @@ class Temperature(enum.Enum):
             c = value
             k = c + 273.15
             f = (c * 1.8) + 32
-        
+
         if self == Temperature.fahrenheit:
             f = value
             c = (f - 32) * 0.5556
