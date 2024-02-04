@@ -298,7 +298,7 @@ class TemperatureValues(TypedDict):
     kelvin: float
 
 
-# could have a better name.
+# could have a better name for TemperatureValues.
 
 
 class Temperature(enum.Enum):

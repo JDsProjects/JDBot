@@ -1,6 +1,5 @@
 import asyncio
 import collections
-import enum
 import difflib
 import itertools
 import os
