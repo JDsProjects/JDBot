@@ -292,10 +292,13 @@ class InvalidationObject:
         print("wip")
 
 
-class TemperatureValues(TypedDict):
-    celsius: float
-    fahrenheight: float
-    kelvin: float
+class TemperatureValues:
+
+    def __init__(self, celsius, fahrenheight, kelvin):
+
+        self.celsius: float
+        self.fahrenheight: float
+        self.kelvin: float
 
 
 # could have a better name for TemperatureValues.
@@ -323,10 +326,9 @@ class Temperature(enum.Enum):
             c = k - 273.15
             f = (c * 1.8) + 32
 
-        k = round(k, 1)
         c = round(c, 1)
+        k = round(k, 1)
         f = round(f, 1)
 
-        return TemperatureValues({"celsius": c, "fahrenheight": f, "kelvin": k})
+        return TemperatureValues(c, k, f)
 
-        # I do not get why this does not work.
