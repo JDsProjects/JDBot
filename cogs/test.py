@@ -369,7 +369,6 @@ class Test(commands.Cog):
         system: utils.Temperature,
         temperature: int,
     ):
-
         temps = utils.Temperature.convert_to(system, temperature)
 
         await interaction.response.send_message(
