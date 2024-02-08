@@ -58,7 +58,7 @@ async def cdn_upload(bot, image_bytes):
     returned_data = await resp.json()
 
     kind = filetype.guess(image_bytes)
-    kind = kind.extension if kind else "gif"
+    ext = kind.extension if kind else "gif"
 
     url = f"https://cdn.jdjgbot.com/image/{returned_data.get('keys')[0]}.{ext}?opengraph_pass=true"
     # I have to do this opengraph pass thing because the cdn is a bit weird and doesn't like it if I don't
