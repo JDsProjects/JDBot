@@ -311,9 +311,9 @@ class InvalidationConfig:
 
 
 class TemperatureReadings(collections.NamedTuple):
-        celsius: int
-        fahrenheit : int
-        kelvin : int
+    celsius: int
+    fahrenheit: int
+    kelvin: int
 
 
 class Temperature(enum.Enum):
