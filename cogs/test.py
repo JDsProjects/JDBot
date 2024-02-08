@@ -372,10 +372,10 @@ class Test(commands.Cog):
         temps = system.convert_to(temperature)
 
         embed = discord.Embed(title="Temperature:")
-        embed.add_field(name="Celsius:", value=f"{temps.celsius}")
-        embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit}")
-        embed.add_field(name="Kelvin:", value=f"{temps.kelvin}")
-        embed.set_footer(text=f"Choose: {system.value}")
+        embed.add_field(name="Celsius:", value=f"{temps.celsius}c")
+        embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit}f")
+        embed.add_field(name="Kelvin:", value=f"{temps.kelvin}k")
+        embed.set_footer(text=f"Chose: {system.value}")
 
         await interaction.response.send_message(embed=embed)
 
