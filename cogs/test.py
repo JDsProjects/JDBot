@@ -377,7 +377,6 @@ class Test(commands.Cog):
         embed.add_field(name="Kelvin:", value=f"{temps.kelvin}")
         embed.set_footer(text=f"Choose: {system}")
 
-
         await interaction.response.send_message(embed=embed)
 
     @convert_temperature.error
