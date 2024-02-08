@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 import enum
 import io
 import os
@@ -7,7 +8,7 @@ import pathlib
 import random
 import sys
 import zlib
-from typing import TYPE_CHECKING, Any, NamedTuple, TypedDict
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 import aiohttp
 import black
@@ -309,11 +310,10 @@ class InvalidationConfig:
         return self.entity_type == InvalidateType.CHANNEL
 
 
-class TemperatureReadings:
-    def __init__(self, celsius: float, fahrenheit: float, kelvin: float):
-        self.celsius = celsius
-        self.fahrenheit = fahrenheit
-        self.kelvin = kelvin
+class TemperatureReadings(collections.NamedTuple):
+        celsius: int
+        fahrenheit : int
+        kelvin : int
 
 
 class Temperature(enum.Enum):
@@ -322,19 +322,21 @@ class Temperature(enum.Enum):
     kelvin = "Kelvin"
 
     def convert_to(self, value: float) -> TemperatureReadings:
-        if self == Temperature.celsius:
-            c = value
-            k = c + 273.15
-            f = (c * 1.8) + 32
 
-        if self == Temperature.fahrenheit:
-            f = value
-            c = (f - 32) * 0.5556
-            k = c + 273.15
+        match self:
+            case Temperature.celsius:
+                c = value
+                k = c + 273.15
+                f = (c * 1.8) + 32
 
-        if self == Temperature.kelvin:
-            k = value
-            c = k - 273.15
-            f = (c * 1.8) + 32
+            case Temperature.fahrenheit:
+                f = value
+                c = (f - 32) * 0.5556
+                k = c + 273.15
+
+            case Temperature.kelvin:
+                k = value
+                c = k - 273.15
+                f = (c * 1.8) + 32
 
         return TemperatureReadings(round(c, 1), round(f, 1), round(k, 1))
