@@ -6,6 +6,7 @@ import random
 import aiohttp
 import asyncdagpi
 import discord
+import filetype
 import jeyyapi
 import somerandomapi
 
@@ -55,14 +56,17 @@ async def cdn_upload(bot, image_bytes):
         "https://cdn.jdjgbot.com/upload", data=form, headers={"Authorization": os.environ["cdn_key"]}
     )
     returned_data = await resp.json()
-    url = f"https://cdn.jdjgbot.com/image/{returned_data.get('keys')[0]}.gif?opengraph_pass=true"
+
+    kind = filetype.guess(image_bytes)
+    kind = kind.extension if kind else "gif"
+
+    url = f"https://cdn.jdjgbot.com/image/{returned_data.get('keys')[0]}.{ext}?opengraph_pass=true"
     # I have to do this opengraph pass thing because the cdn is a bit weird and doesn't like it if I don't
     # because opengraph is enabled, I have to do this.
 
     bot.images.append(returned_data.get("keys")[0])
 
     return url
-
 
 async def triggered_converter(url, ctx):
     sr_client = ctx.bot.sr_client

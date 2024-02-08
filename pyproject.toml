@@ -36,6 +36,7 @@ mystbin-py = ">=5.1.0"
 python-dateutil = ">=2.8.2"
 pillow = ">=9.4.0"
 somerandomapi-py = ">=0.0.2"
+filetype = "^1.2.0"
 
 [tool.black]
 line-length = 120
