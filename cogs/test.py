@@ -367,7 +367,7 @@ class Test(commands.Cog):
         self,
         interaction: discord.Interaction,
         system: utils.Temperature,
-        temperature: int,
+        temperature: float,
     ):
         temps = utils.Temperature.convert_to(system, temperature)
 
