@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import collections
 import enum
 import io
 import os
@@ -310,7 +309,7 @@ class InvalidationConfig:
         return self.entity_type == InvalidateType.CHANNEL
 
 
-class TemperatureReadings(collections.NamedTuple):
+class TemperatureReadings(typing.NamedTuple):
     celsius: int
     fahrenheit: int
     kelvin: int
