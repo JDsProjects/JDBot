@@ -369,13 +369,13 @@ class Test(commands.Cog):
         system: utils.Temperature,
         temperature: float,
     ):
-        temps = utils.Temperature.convert_to(system, temperature)
+        temps = system.convert_to(temperature)
 
         embed = discord.Embed(title="Temperature:")
         embed.add_field(name="Celsius:", value=f"{temps.celsius}")
         embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit}")
         embed.add_field(name="Kelvin:", value=f"{temps.kelvin}")
-        embed.set_footer(text=f"Choose: {system}")
+        embed.set_footer(text=f"Choose: {system.value}")
 
         await interaction.response.send_message(embed=embed)
 
