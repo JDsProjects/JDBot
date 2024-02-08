@@ -309,7 +309,7 @@ class InvalidationConfig:
         return self.entity_type == InvalidateType.CHANNEL
 
 
-class TemperatureReadings(typing.NamedTuple):
+class TemperatureReadings(NamedTuple):
     celsius: int
     fahrenheit: int
     kelvin: int
