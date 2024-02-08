@@ -375,7 +375,7 @@ class Test(commands.Cog):
         embed.add_field(name="Celsius:", value=f"{temps.celsius}")
         embed.add_field(name="Fahrenheit:", value=f"{temps.celsius}")
         embed.add_field(name="Kelvin:", value=f"{temps.kelvin}")
-        embed.set_footer(text=f"Choose: {system}")
+        embed.set_footer(text=f"Choose: {str(system)}")
 
         await interaction.response.send_message(embed=embed)
 
