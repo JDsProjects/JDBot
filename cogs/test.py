@@ -371,9 +371,14 @@ class Test(commands.Cog):
     ):
         temps = utils.Temperature.convert_to(system, temperature)
 
-        await interaction.response.send_message(
-            f"temperature :\nCelsius : {temps.celsius} \nFahrenheit: {temps.fahrenheit}  \nKelvin : {temps.kelvin}"
-        )
+        embed = discord.Embed(title="Temperature:")
+        embed.add_field(name="Celsius:", value=f"{temps.celsius}")
+        embed.add_field(name="Fahrenheit:", value=f"{temps.celsius}")
+        embed.add_field(name="Kelvin:", value=f"{temps.kelvin}")
+        embed.set_footer(text=f"Choose: {system}")
+
+
+        await interaction.response.send_message(embed=embed)
 
     @convert_temperature.error
     async def convert_temperature_error(self, interaction: discord.Interaction, error):
