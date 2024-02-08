@@ -373,7 +373,7 @@ class Test(commands.Cog):
 
         embed = discord.Embed(title="Temperature:")
         embed.add_field(name="Celsius:", value=f"{temps.celsius}")
-        embed.add_field(name="Fahrenheit:", value=f"{temps.celsius}")
+        embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit}")
         embed.add_field(name="Kelvin:", value=f"{temps.kelvin}")
         embed.set_footer(text=f"Choose: {str(system)}")
 
