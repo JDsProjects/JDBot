@@ -219,7 +219,7 @@ class Extra(commands.Cog):
 
                     if encoding is None:
                         await ctx.send(
-                            "it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439"
+                            "it looks like it couldn't decode this file, if this is an issue DM jdjg"
                         )
                 if not file:
                     await ctx.send("this doesn't contain any bytes.")
@@ -266,7 +266,7 @@ class Extra(commands.Cog):
         embed.add_field(name="Thumbsticks:", value="Electric Green")
         embed.add_field(name="ABXY:", value="Colors on Black")
         embed.add_field(name="View & Menu:", value="White on Black")
-        embed.add_field(name="Engraving(not suggested):", value="JDJG Inc.")
+        embed.add_field(name="Engraving(not suggested):", value="jdjg")
         embed.add_field(
             name="Disclaimer:",
             value="I do not work at microsoft,or suggest you buy this I just wanted a place to represent a controller that I designed a while back.",
@@ -333,7 +333,7 @@ class Extra(commands.Cog):
                         await ctx.send(content=f"Added text file to Senarc Bin: \n{paste}")
                     if encoding is None:
                         await ctx.send(
-                            "it looks like it couldn't decode this file, if this is an issue DM JDJG Inc. Official#3439 or it wasn't a text file."
+                            "it looks like it couldn't decode this file, if this is an issue DM jdjg or it wasn't a text file."
                         )
                 if not file:
                     await ctx.send("this doesn't contain any bytes.")

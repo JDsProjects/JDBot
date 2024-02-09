@@ -86,7 +86,7 @@ class TestersEmbed(Paginator):
 
 class SusUsersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Users Deemed Suspicious by JDJG Inc. Official", color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Users Deemed Suspicious by jdjg", color=random.randint(0, 16777215))
         embed.add_field(
             name=f"User ID : {item}", value=f"**Reason :** {self.ctx.bot.sus_users.get(item)}", inline=False
         )
@@ -95,7 +95,7 @@ class SusUsersEmbed(Paginator):
 
 class BlacklistedUsersEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Users Blacklisted by JDJG Inc. Official", color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Users Blacklisted by jdjg", color=random.randint(0, 16777215))
         embed.add_field(
             name=f"User ID : {item}", value=f"**Reason :** {self.ctx.bot.blacklisted_users.get(item)}", inline=False
         )
@@ -163,7 +163,7 @@ class InviteInfoEmbed(Paginator):
                 description=f"Discord couldnt fetch the invite with the code {item}.",
                 color=random.randint(0, 16777215),
             )
-            embed.set_footer(text="If this is a consistent problem please contact JDJG Inc. Official#3493 (jdjg)")
+            embed.set_footer(text="If this is a consistent problem please contact jdjg")
 
         return embed
 
