@@ -218,9 +218,7 @@ class Extra(commands.Cog):
                         files.append(await utils.google_tts(self.bot, text))
 
                     if encoding is None:
-                        await ctx.send(
-                            "it looks like it couldn't decode this file, if this is an issue DM jdjg"
-                        )
+                        await ctx.send("it looks like it couldn't decode this file, if this is an issue DM jdjg")
                 if not file:
                     await ctx.send("this doesn't contain any bytes.")
 
