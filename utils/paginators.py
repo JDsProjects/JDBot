@@ -7,14 +7,12 @@ from discord.ext import commands
 from discord.ext.commands.context import Context
 from discord.ext.paginators import button_paginator
 from discord.ui import Button
+from tweepy import Media
 
 from .emoji import CustomEmoji
+from .tweet import TweepyTweet
 
 if TYPE_CHECKING:
-    from tweepy import Media
-
-    from .tweet import TweepyTweet
-
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
 
