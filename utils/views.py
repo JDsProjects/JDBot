@@ -334,7 +334,9 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
+            discord.SelectOption(
+                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
+            ),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -342,9 +344,7 @@ class UserInfoSuperSelects(discord.ui.Select):
                 emoji="🖼️",
                 value="avatar",
             ),
-            discord.SelectOption(
-                label="Status", description="Shows user's current status.", emoji="🖼️", value="status"
-            ),
+            discord.SelectOption(label="Status", description="Shows user's current status.", emoji="🖼️", value="status"),
             discord.SelectOption(
                 label="Activities", description="Shows user's current Activities.", emoji="🏃", value="activities"
             ),
@@ -507,7 +507,9 @@ class OwnerSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
+            discord.SelectOption(
+                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
+            ),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -670,7 +672,9 @@ class GuildInfoSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
+            discord.SelectOption(
+                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
+            ),
             discord.SelectOption(
                 label="Owner Info",
                 description="Shows owner's info",
