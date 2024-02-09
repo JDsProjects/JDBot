@@ -41,6 +41,7 @@ discord-py-paginators = {git = "https://github.com/Soheab/discord-py-paginators"
 
 [tool.black]
 line-length = 120
+target-version = ["py310"]
 
 [tool.poetry.dev-dependencies]
 
