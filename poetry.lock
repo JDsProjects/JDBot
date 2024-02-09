@@ -411,6 +411,29 @@ reference = "master"
 resolved_reference = "8d3b56206b48f0215bcb5be0e94c18afe7277975"
 
 [[package]]
+name = "discord-py-paginators"
+version = "0.0.1"
+description = "Extension for discord.py that provides various paginators."
+category = "main"
+optional = false
+python-versions = ">=3.9"
+develop = false
+
+[package.dependencies]
+"discord.py" = ">=2.2.0,<3.0.0"
+
+[package.extras]
+dev = ["black", "pyright", "ruff", "typing_extensions"]
+docs = ["furo (>=2023.9.10,<2024.0.0)", "sphinx (>=7.0.0,<8.0.0)", "sphinx-autodoc-typehints (>=1.25.0,<2.0.0)", "sphinx-toolbox (>=3.5,<4.0)"]
+modalpaginator = ["discord-ext-modal-paginator"]
+
+[package.source]
+type = "git"
+url = "https://github.com/Soheab/discord-py-paginators"
+reference = "HEAD"
+resolved_reference = "5b2419746149d306878676637e0128bd13ea9d75"
+
+[[package]]
 name = "discordlists-py"
 version = "1.1.1"
 description = "A simple API wrapper for botblock.org providing server count posting to all bot lists and fetching botinformation from all."
@@ -913,7 +936,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">= 3.10,<4.0.0"
-content-hash = "0942d525a8401509c4b32cfd38b262beeb732714e3bd97dc93fb385ab361f44e"
+content-hash = "2c50f1780e62fc29744abe3a0f7efb2f78ebdeb2a46a0bdedb40b509faf6ada7"
 
 [metadata.files]
 aiodns = [
@@ -1395,6 +1418,7 @@ colorama = [
 ]
 discord_games = []
 "discord.py" = []
+discord-py-paginators = []
 discordlists-py = [
     {file = "discordlists.py-1.1.1-py3-none-any.whl", hash = "sha256:0211aecde3c3b3881239511aadc0c753f3cece423d8374d01fa815e958ca2537"},
     {file = "discordlists.py-1.1.1.tar.gz", hash = "sha256:f6d49c93c3eb1d5ffbaeddf663d3bfa80bb3073a4fc43787b832ea55de49113d"},
