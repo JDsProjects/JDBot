@@ -138,6 +138,7 @@ class EmojiInfoEmbed(Paginator):
 
         return main_embed
 
+
 class cdnViewer(Paginator):
     def format_page(self, item):
         embed = discord.Embed(title="CDN Viewer", description=f"Image ID: {item}", color=random.randint(0, 16777215))
@@ -297,6 +298,7 @@ class ScanStatusEmbed(Paginator):
         embed.set_author(name=f"Requested by {ctx.author}", icon_url=ctx.author.display_avatar)
         return embed
 
+
 class TodoEmbed(Paginator):
     def format_page(self, item):
         embed = discord.Embed(
@@ -305,5 +307,3 @@ class TodoEmbed(Paginator):
 
         embed.set_author(name=f"Todo Requested By {self.ctx.author}:", icon_url=self.ctx.author.display_avatar.url)
         return embed
-    
-

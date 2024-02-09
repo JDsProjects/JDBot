@@ -32,6 +32,7 @@ class MutualGuildsEmbed(Paginator):
 
         return embed
 
+
 def guild_join(guilds):
     return "\n".join(map(str, guilds))
 
@@ -60,6 +61,7 @@ class ScanGlobalEmbed(Paginator):
         embed.add_field(name="Shared Guilds:", value=f"{guild_join(grab_mutualguilds(self.ctx, item))}")
         embed.set_footer(text=f"Sus Reason : {await get_sus_reason(self.ctx, item)}")
         return embed
+
 
 # this is using the paginator above, which is why It's not underneath the BasicButtons.
 
