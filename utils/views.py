@@ -5,176 +5,12 @@ import collections
 import random
 import traceback
 import typing
-from typing import TYPE_CHECKING, Any, Sequence, Union
 
 import discord
-from discord import Embed, File, Interaction
 from discord.ext import commands
-from discord.ext.commands.context import Context
 from discord.flags import UserFlags
-from discord.ui import Button
 
-from .paginators import MutualGuildsEmbed, Paginator, grab_mutualguilds
-
-if TYPE_CHECKING:
-    from tweepy import Media
-
-    from .tweet import TweepyTweet
-
-    PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
-
-# this is using the paginator above, which is why It's not underneath the BasicButtons.
-
-
-class dm_or_ephemeral(discord.ui.View):
-    def __init__(self, ctx, menu=None, **kwargs):
-        super().__init__(**kwargs)
-        self.ctx = ctx
-        self.menu = menu
-
-    @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
-    async def secretMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.clear_items()
-        await interaction.response.edit_message(content="Will be sending you the information, ephemerally", view=self)
-
-        await self.menu.send(interaction=interaction, ephemeral=True)
-
-    @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
-    async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.clear_items()
-        await interaction.response.edit_message(content="Well be Dming you the paginator to view this info", view=self)
-
-        await self.menu.send(send_to=self.ctx.author)
-
-    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
-    async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.clear_items()
-        await interaction.response.edit_message(content=f"not sending the paginator to you", view=self)
-
-    async def interaction_check(self, interaction: discord.Interaction):
-        if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(
-                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
-                ephemeral=True,
-            )
-
-        return True
-
-    async def on_timeout(self):
-        await self.message.edit(content="You took too long to respond, so I cancelled the paginator", view=None)
-
-
-class TweetsDestinationHandler(discord.ui.View):
-    message: discord.Message
-
-    def __init__(
-        self,
-        *,
-        ctx: Context,
-        pagintor: TweetsPaginator,
-    ):
-        super().__init__()
-        self.ctx: Context = ctx
-        self.pagintor: TweetsPaginator = pagintor
-
-    @discord.ui.button(label="Normal", style=discord.ButtonStyle.success, emoji="📄")
-    async def normal_message(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.pagintor.message = interaction.message  # type: ignore
-        first_page = self.pagintor.get_page(0)
-        kwargs = await self.pagintor.get_kwargs_from_page(first_page)
-        await self.pagintor._edit_message(interaction, **kwargs)
-
-    @discord.ui.button(label="Ephemeral", style=discord.ButtonStyle.success, emoji="🕵️")
-    async def ephemeral_message(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content="ephemerally sending Tweets", view=None)
-        await self.pagintor.send(interaction=interaction, ephemeral=True)
-
-    @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
-    async def dm_message(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content="Dming Tweets", view=None)
-        await self.pagintor.send(send_to=self.ctx.author)
-
-    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
-    async def cancel_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content="I will not send you the tweets", view=None)
-
-    async def interaction_check(self, interaction: discord.Interaction):
-        if self.ctx.author.id != interaction.user.id:
-            return await interaction.response.send_message(
-                content=f"You Can't Use that button, {self.ctx.author.mention} is the author of this message.",
-                ephemeral=True,
-            )
-
-        return True
-
-    async def on_timeout(self):
-        try:
-            await self.message.edit(content="You took too long to respond, so I cancelled the paginator", view=None)
-        except discord.NotFound:
-            pass
-
-
-class TweetsPaginator(Paginator):
-    class ShowImagesButton(Button):
-        view: "TweetsPaginator"
-
-        def __init__(self) -> None:
-            super().__init__(label="Show Images")
-            self.position: int = 4
-            self.medias: list[Media] = []
-
-        async def callback(self, interaction: Interaction) -> None:
-            pag = Paginator(
-                ctx=self.view.ctx,
-                pages=self.medias,  # type: ignore
-                delete_after=self.view._should_delete_after,
-                always_show_stop_button=True,
-            )
-            pag.format_page = self.view.media_page_formater  # type: ignore
-            await pag.send()
-
-    def __init__(
-        self,
-        *,
-        ctx: commands.Context,
-        tweets: TweepyTweet,
-        delete_after: bool = False,
-        author_name: str,
-        author_url: str,
-        author_icon: str,
-        **kwargs,
-    ):
-        self.media_button = self.ShowImagesButton()
-        super().__init__(ctx=ctx, pages=tweets, delete_after=delete_after, **kwargs)  # type: ignore
-        self.add_item(self.media_button)
-        self.author_name: str = author_name
-        self.author_url: str = author_url
-        self.author_icon: str = author_icon
-        self._update_buttons_state()
-
-    def media_page_formater(self, media: Media) -> Embed:
-        embed = discord.Embed(title=f"Images", description=f"url: {media.url}", color=0x1DA1F2)
-        embed.set_image(url=media.url)
-        return embed
-
-    def format_page(self, item: TweepyTweet) -> discord.Embed:
-        tweet_url = f"https://twitter.com/twitter/statuses/{item.id}"
-
-        embed = discord.Embed(
-            title=f"Tweet!", description=f"{item.text}", url=tweet_url, color=0x1DA1F2, timestamp=item.created_at
-        )
-        embed.set_author(name=self.author_name, url=self.author_url, icon_url=self.author_icon)
-        embed.set_footer(text=f"Requested by {self.ctx.author}\nJDJG does not own any of the content of the tweets")
-
-        embed.set_thumbnail(url="https://i.imgur.com/zpLkfHo.png")
-
-        return embed
-
-    def _update_buttons_state(self) -> None:
-        current_page = self.get_page(self.current_page)
-        self.media_button.medias = [x for x in current_page.media if x.url]  # type: ignore
-        self.media_button.disabled = not self.media_button.medias  # type: ignore
-        super()._update_buttons_state()
+from .paginators import MutualGuildsEmbed, grab_mutualguilds
 
 
 class UserInfoButton(discord.ui.Button):
@@ -334,9 +170,7 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -344,7 +178,9 @@ class UserInfoSuperSelects(discord.ui.Select):
                 emoji="🖼️",
                 value="avatar",
             ),
-            discord.SelectOption(label="Status", description="Shows user's current status.", emoji="🖼️", value="status"),
+            discord.SelectOption(
+                label="Status", description="Shows user's current status.", emoji="🖼️", value="status"
+            ),
             discord.SelectOption(
                 label="Activities", description="Shows user's current Activities.", emoji="🏃", value="activities"
             ),
@@ -507,9 +343,7 @@ class OwnerSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -672,9 +506,7 @@ class GuildInfoSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(
                 label="Owner Info",
                 description="Shows owner's info",
