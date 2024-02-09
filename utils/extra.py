@@ -321,7 +321,6 @@ class Temperature(enum.Enum):
     kelvin = "Kelvin"
 
     def convert_to(self, value: float) -> TemperatureReadings:
-
         match self:
             case Temperature.celsius:
                 c = value

@@ -1,8 +1,12 @@
-from typing import Any, Sequence
+import random
+from typing import TYPE_CHECKING, Any, Optional, Sequence, Union
 
 import discord
 from discord.ext import commands
 from discord.ext.paginators import button_paginator
+
+if TYPE_CHECKING:
+    from .emoji import CustomEmoji
 
 
 DEFAULT_BUTTONS = {
@@ -82,3 +86,54 @@ class Paginator(button_paginator.ButtonPaginator):
             edit_message=edit_message,
             **send_kwargs,
         )
+
+
+# actual paginator methods
+
+
+class EmojiInfoEmbed(Paginator):
+    async def format_page(self, item: Union[str, CustomEmoji]) -> discord.Embed:
+        DEFAULT_COLOUR = random.randint(0, 16777215)
+
+        invalid_emoji_embed = discord.Embed(
+            title="Invalid Emoji",
+            description=f"The following input could not be resolved to a valid emoji: `{item}`",
+            colour=DEFAULT_COLOUR,
+        )
+        # bail early if the emoji is invalid
+        if isinstance(item, str):
+            return invalid_emoji_embed
+
+        emoji_type = "Custom Emoji" if not item.unicode else "Default Emoji"
+        emoji_url = item.url if not item.unicode else f"https://emojiterra.com/{item.name.lower().replace(' ', '-')}/"
+        field_name = "Emoji Info" if not item.unicode else "Unicode Info"
+
+        main_embed = discord.Embed(
+            title=f'Emoji Info for "{item.emoji}" ({emoji_type})',
+            colour=DEFAULT_COLOUR,
+        )
+        main_embed.set_image(url=item.url)
+
+        global_text = (f"**Name:** {item.name}", f"**ID:** {item.id}", f"**URL:** [click here]({emoji_url})")
+        if item.unicode:
+            # provide different styles because why not
+            # twitter == twemoji
+            styles = [
+                f"[{style}]({item.with_style(style).url})"
+                for style in ("twitter", "whatsapp", "apple", "google", "samsung")
+            ]
+            styles_text = "Styles: see how this emoji looks on different platforms: " + " | ".join(styles)
+            global_text += (f"**Code:** {item.unicode}", styles_text)
+
+        else:
+            global_text += (
+                f"**Created:** {discord.utils.format_dt(item.created_at, 'R')}",
+                f"**Animated:** {item.animated}",
+            )
+
+        main_embed.add_field(
+            name=field_name,
+            value="\n".join(global_text),
+        )
+
+        return main_embed

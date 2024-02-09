@@ -22,57 +22,9 @@ from .paginators import Paginator
 if TYPE_CHECKING:
     from tweepy import Media
 
-    from .emoji import CustomEmoji
     from .tweet import TweepyTweet
 
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
-
-class EmojiInfoEmbed(Paginator):
-    async def format_page(self, item: typing.Union[str, CustomEmoji]) -> discord.Embed:
-        DEFAULT_COLOUR = random.randint(0, 16777215)
-
-        invalid_emoji_embed = discord.Embed(
-            title="Invalid Emoji",
-            description=f"The following input could not be resolved to a valid emoji: `{item}`",
-            colour=DEFAULT_COLOUR,
-        )
-        # bail early if the emoji is invalid
-        if isinstance(item, str):
-            return invalid_emoji_embed
-
-        emoji_type = "Custom Emoji" if not item.unicode else "Default Emoji"
-        emoji_url = item.url if not item.unicode else f"https://emojiterra.com/{item.name.lower().replace(' ', '-')}/"
-        field_name = "Emoji Info" if not item.unicode else "Unicode Info"
-
-        main_embed = discord.Embed(
-            title=f'Emoji Info for "{item.emoji}" ({emoji_type})',
-            colour=DEFAULT_COLOUR,
-        )
-        main_embed.set_image(url=item.url)
-
-        global_text = (f"**Name:** {item.name}", f"**ID:** {item.id}", f"**URL:** [click here]({emoji_url})")
-        if item.unicode:
-            # provide different styles because why not
-            # twitter == twemoji
-            styles = [
-                f"[{style}]({item.with_style(style).url})"
-                for style in ("twitter", "whatsapp", "apple", "google", "samsung")
-            ]
-            styles_text = "Styles: see how this emoji looks on different platforms: " + " | ".join(styles)
-            global_text += (f"**Code:** {item.unicode}", styles_text)
-
-        else:
-            global_text += (
-                f"**Created:** {discord.utils.format_dt(item.created_at, 'R')}",
-                f"**Animated:** {item.animated}",
-            )
-
-        main_embed.add_field(
-            name=field_name,
-            value="\n".join(global_text),
-        )
-
-        return main_embed
 
 
 class MutualGuildsEmbed(Paginator):
@@ -593,9 +545,7 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -603,7 +553,9 @@ class UserInfoSuperSelects(discord.ui.Select):
                 emoji="🖼️",
                 value="avatar",
             ),
-            discord.SelectOption(label="Status", description="Shows user's current status.", emoji="🖼️", value="status"),
+            discord.SelectOption(
+                label="Status", description="Shows user's current status.", emoji="🖼️", value="status"
+            ),
             discord.SelectOption(
                 label="Activities", description="Shows user's current Activities.", emoji="🏃", value="activities"
             ),
@@ -766,9 +718,7 @@ class OwnerSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -931,9 +881,7 @@ class GuildInfoSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(
                 label="Owner Info",
                 description="Shows owner's info",
