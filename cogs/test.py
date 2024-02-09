@@ -14,7 +14,6 @@ from better_profanity import profanity
 from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-from discord.ext.paginators import button_paginator
 
 import utils
 
@@ -336,11 +335,11 @@ class Test(commands.Cog):
     @commands.command(brief="a test of a new paginator :)")
     async def test_pagination(self, ctx):
         buttons = {
-            "STOP": button_paginator(emoji="<:stop:959853381885775902>", style=discord.ButtonStyle.secondary),
-            "RIGHT": button_paginator(emoji="<:next:959851091506364486>", style=discord.ButtonStyle.secondary),
-            "LEFT": button_paginator(emoji="<:back:959851091284095017>", style=discord.ButtonStyle.secondary),
-            "LAST": button_paginator(emoji="<:last:959851091330220042>", style=discord.ButtonStyle.secondary),
-            "FIRST": button_paginator(emoji="<:start:959851091502190674>", style=discord.ButtonStyle.secondary),
+            "STOP": utils.PaginatorButton(emoji="<:stop:959853381885775902>", style=discord.ButtonStyle.secondary),
+            "RIGHT": utils.PaginatorButton(emoji="<:next:959851091506364486>", style=discord.ButtonStyle.secondary),
+            "LEFT": utils.PaginatorButton(emoji="<:back:959851091284095017>", style=discord.ButtonStyle.secondary),
+            "LAST": utils.PaginatorButton(emoji="<:last:959851091330220042>", style=discord.ButtonStyle.secondary),
+            "FIRST": utils.PaginatorButton(emoji="<:start:959851091502190674>", style=discord.ButtonStyle.secondary),
         }
         pages = [discord.Embed(title="eh")] * 10
         menu = utils.Paginator(pages, ctx=ctx, buttons=buttons, delete_after=True)

@@ -718,6 +718,7 @@ class DevTools(commands.Cog):
         embed.set_author(name=user.id, icon_url=user.display_avatar.with_format("png"))
 
         jdjg = self.bot.get_user(168422909482762240)
+        benitz = self.bot.get_user(529499034495483926)
 
         await self.bot.get_channel(852897595869233182).send(content=f"{jdjg.mention} {benitz.mention}", embed=embed)
         # placeholder
