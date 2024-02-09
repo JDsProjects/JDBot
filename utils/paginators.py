@@ -137,3 +137,173 @@ class EmojiInfoEmbed(Paginator):
         )
 
         return main_embed
+
+class cdnViewer(Paginator):
+    def format_page(self, item):
+        embed = discord.Embed(title="CDN Viewer", description=f"Image ID: {item}", color=random.randint(0, 16777215))
+        embed.set_image(url=f"https://cdn.jdjgbot.com/image/{item}.gif?opengraph_pass=true")
+
+        return embed
+
+
+class ServersEmbed(Paginator):
+    def format_page(self, item):
+        embed = discord.Embed(title="Servers:", description=item, color=random.randint(0, 16777215))
+        return embed
+
+
+class PrefixesEmbed(Paginator):
+    async def format_page(self, item):
+        embed = discord.Embed(title="Usable Prefixes:", description=item, color=random.randint(0, 16777215))
+        return embed
+
+
+class LeaderboardEmbed(Paginator):
+    async def format_page(self, item):
+        emby = discord.Embed(title="Leaderboard", color=15428885)
+        emby.set_author(
+            name=f"Leaderboard Requested by {self.ctx.author}", icon_url=(self.ctx.author.display_avatar.url)
+        )
+
+        for i, b, w in item:
+            emby.add_field(
+                name=f"**${i}:**", value=f"```yaml\nBank: ${b:,}\nWallet: ${w:,}\nTotal: ${b+w:,}```", inline=False
+            )
+
+        return emby
+
+
+class RandomHistoryEmbed(Paginator):
+    async def format_page(self, item):
+        embed = discord.Embed(title="Random History:", description=f"{item}", color=random.randint(0, 16777215))
+        embed.set_footer(text="Powered by Random quotes From: \nhttps://www.youtube.com/watch?v=xuCn8ux2gbs")
+        return embed
+
+
+class TestersEmbed(Paginator):
+    async def format_page(self, item):
+        embed = discord.Embed(title="Testing Users:", color=random.randint(0, 16777215))
+        embed.add_field(name="User ID:", value=f"{item}", inline=False)
+
+        return embed
+
+
+class SusUsersEmbed(Paginator):
+    async def format_page(self, item):
+        embed = discord.Embed(title="Users Deemed Suspicious by jdjg", color=random.randint(0, 16777215))
+        embed.add_field(
+            name=f"User ID : {item}", value=f"**Reason :** {self.ctx.bot.sus_users.get(item)}", inline=False
+        )
+        return embed
+
+
+class BlacklistedUsersEmbed(Paginator):
+    async def format_page(self, item):
+        embed = discord.Embed(title="Users Blacklisted by jdjg", color=random.randint(0, 16777215))
+        embed.add_field(
+            name=f"User ID : {item}", value=f"**Reason :** {self.ctx.bot.blacklisted_users.get(item)}", inline=False
+        )
+        return embed
+
+
+class ErrorEmbed(Paginator):
+    async def format_page(self, item):
+        item = discord.utils.escape_markdown(item, as_needed=False, ignore_links=True)
+        return discord.Embed(title="Error", description=item, color=random.randint(0, 16777215))
+
+
+class RtfmEmbed(Paginator):
+    async def format_page(self, item):
+        embed = discord.Embed(title="Packages:", description=item, color=random.randint(0, 16777215))
+        return embed
+
+
+class HelpEmbed(discord.Embed):
+    def __init__(self, ctx, *args, **kwargs):
+        super().__init__(title=f"{ctx.bot.user} Help Menu", *args, **kwargs)
+        self.set_author(name=f"Requested by {ctx.author}", icon_url=ctx.author.display_avatar)
+
+
+class SendHelp(Paginator):
+    async def format_page(self, item):
+        emby = HelpEmbed(self.ctx, description=item, color=15428885)
+        return emby
+
+
+class charinfoMenu(Paginator):
+    async def format_page(self, item):
+        return discord.Embed(description=item, color=random.randint(0, 16777215))
+
+
+class InviteInfoEmbed(Paginator):
+    async def format_page(self, item):
+        if isinstance(item, discord.Invite):
+            if item.guild:
+                image = item.guild.icon.url if item.guild.icon else "https://i.imgur.com/3ZUrjUP.png"
+                guild = item.guild
+                guild_id = item.guild.id
+
+            if item.guild is None:
+                guild = "Group Chat"
+                image = "https://i.imgur.com/pQS3jkI.png"
+                guild_id = "Unknown"
+
+            embed = discord.Embed(title=f"Invite for {guild}:", color=random.randint(0, 16777215))
+            embed.set_author(name="Discord Invite Details:", icon_url=(image))
+            embed.add_field(name="Inviter:", value=f"{item.inviter}")
+            embed.add_field(name="User Count:", value=f"{item.approximate_member_count}")
+            embed.add_field(name="Active User Count:", value=f"{item.approximate_presence_count}")
+
+            embed.add_field(
+                name="Invite Channel",
+                value=f"{item.channel}\nChannel Mention : {'None' if isinstance(item.channel, discord.Object) else item.channel.mention}",
+            )
+
+            embed.set_footer(text=f"ID: {guild_id}\nInvite Code: {item.code}\nInvite Url: {item.url}")
+
+        if isinstance(item, str):
+            embed = discord.Embed(
+                title="Failed grabbing the invite code:",
+                description=f"Discord couldnt fetch the invite with the code {item}.",
+                color=random.randint(0, 16777215),
+            )
+            embed.set_footer(text="If this is a consistent problem please contact jdjg")
+
+        return embed
+
+
+class GoogleEmbed(Paginator):
+    async def format_page(self, item):
+        embed = discord.Embed(
+            title="Gooogle Search",
+            description=f"[{item.title}]({item.link}) \n{item.snippet}",
+            color=random.randint(0, 16777215),
+        )
+
+        if item.image:
+            embed.set_image(url=item.image)
+
+        embed.set_footer(
+            text=f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D"
+        )
+
+        return embed
+
+
+class ScanStatusEmbed(Paginator):
+    async def format_page(self, item):
+        ctx = self.ctx
+        embed = discord.Embed(title="Status Scan Complete!", description=item, color=15428885)
+        embed.set_author(name=f"Requested by {ctx.author}", icon_url=ctx.author.display_avatar)
+        return embed
+
+class TodoEmbed(Paginator):
+    def format_page(self, item):
+        embed = discord.Embed(
+            description=item, color=random.randint(0, 16777215), timestamp=self.ctx.message.created_at
+        )
+
+        embed.set_author(name=f"Todo Requested By {self.ctx.author}:", icon_url=self.ctx.author.display_avatar.url)
+        return embed
+    
+
