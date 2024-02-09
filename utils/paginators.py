@@ -11,9 +11,10 @@ from discord.ext.paginators import button_paginator
 from discord.ui import Button
 
 if TYPE_CHECKING:
+    from tweepy import Media
+
     from .emoji import CustomEmoji
     from .tweet import TweepyTweet
-    from tweepy import Media
 
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
 
