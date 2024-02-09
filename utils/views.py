@@ -5,18 +5,16 @@ import collections
 import random
 import traceback
 import typing
-from typing import TYPE_CHECKING, Any, Callable, Optional, Sequence, Union
+from typing import TYPE_CHECKING, Any, Sequence, Union
 
 import discord
-from discord import ButtonStyle, Embed, File, Interaction
-from discord.abc import Messageable
+from discord import Embed, File, Interaction
 from discord.ext import commands
 from discord.ext.commands.context import Context
 from discord.flags import UserFlags
-from discord.ui import Button, Modal, TextInput, View
-from discord.utils import MISSING, maybe_coroutine
+from discord.ui import Button
 
-from .paginators import Paginator
+from .paginators import MutualGuildsEmbed, Paginator, grab_mutualguilds
 
 if TYPE_CHECKING:
     from tweepy import Media
@@ -24,44 +22,6 @@ if TYPE_CHECKING:
     from .tweet import TweepyTweet
 
     PossiblePage = Union[str, Embed, File, Sequence[Union[Embed, Any]], tuple[Union[File, Any], ...], dict[str, Any]]
-
-
-class MutualGuildsEmbed(Paginator):
-    def format_page(self, item):
-        embed = discord.Embed(title="Mutual Servers:", description=item, color=random.randint(0, 16777215))
-
-        return embed
-
-
-def guild_join(guilds):
-    return "\n".join(map(str, guilds))
-
-
-def grab_mutualguilds(ctx, user):
-    if isinstance(user, discord.ClientUser):
-        return ctx.author.mutual_guilds
-
-    mutual_guilds = set(ctx.author.mutual_guilds)
-    mutual_guilds2 = set(user.mutual_guilds)
-
-    return list(mutual_guilds.intersection(mutual_guilds2))
-
-
-async def get_sus_reason(ctx, user):
-    sus_users = dict(await ctx.bot.db.fetch("SELECT * FROM SUS_USERS;"))
-    return sus_users.get(user.id)
-
-
-class ScanGlobalEmbed(Paginator):
-    async def format_page(self, item):
-        embed = discord.Embed(color=random.randint(0, 16777215))
-
-        embed.set_author(name=f"{item}", icon_url=item.display_avatar.url)
-
-        embed.add_field(name="Shared Guilds:", value=f"{guild_join(grab_mutualguilds(self.ctx, item))}")
-        embed.set_footer(text=f"Sus Reason : {await get_sus_reason(self.ctx, item)}")
-        return embed
-
 
 # this is using the paginator above, which is why It's not underneath the BasicButtons.
 
@@ -374,9 +334,7 @@ class UserInfoSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -384,7 +342,9 @@ class UserInfoSuperSelects(discord.ui.Select):
                 emoji="🖼️",
                 value="avatar",
             ),
-            discord.SelectOption(label="Status", description="Shows user's current status.", emoji="🖼️", value="status"),
+            discord.SelectOption(
+                label="Status", description="Shows user's current status.", emoji="🖼️", value="status"
+            ),
             discord.SelectOption(
                 label="Activities", description="Shows user's current Activities.", emoji="🏃", value="activities"
             ),
@@ -547,9 +507,7 @@ class OwnerSuperSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(label="Badges", description="Show's the badges they have", value="badges", emoji="📛"),
             discord.SelectOption(
                 label="Avatar",
@@ -712,9 +670,7 @@ class GuildInfoSelects(discord.ui.Select):
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
-            discord.SelectOption(
-                label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"
-            ),
+            discord.SelectOption(label="Misc Info", description="Shows even more simple info", value="misc", emoji="📝"),
             discord.SelectOption(
                 label="Owner Info",
                 description="Shows owner's info",

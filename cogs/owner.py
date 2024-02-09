@@ -309,7 +309,7 @@ class Owner(commands.Cog):
                     embed = discord.Embed(
                         title=f"Error reloading cog `{cog}`", color=0xFF0000, description=f"```py\n{text}```"
                     )
-                    await context.send(embed=embed)
+                    await ctx.send(embed=embed)
 
             embed = discord.Embed(title="Reload Status", color=random_color(), description=description)
 

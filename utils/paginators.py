@@ -307,3 +307,40 @@ class TodoEmbed(Paginator):
 
         embed.set_author(name=f"Todo Requested By {self.ctx.author}:", icon_url=self.ctx.author.display_avatar.url)
         return embed
+
+
+class MutualGuildsEmbed(Paginator):
+    def format_page(self, item):
+        embed = discord.Embed(title="Mutual Servers:", description=item, color=random.randint(0, 16777215))
+
+        return embed
+
+
+def guild_join(guilds):
+    return "\n".join(map(str, guilds))
+
+
+def grab_mutualguilds(ctx, user):
+    if isinstance(user, discord.ClientUser):
+        return ctx.author.mutual_guilds
+
+    mutual_guilds = set(ctx.author.mutual_guilds)
+    mutual_guilds2 = set(user.mutual_guilds)
+
+    return list(mutual_guilds.intersection(mutual_guilds2))
+
+
+async def get_sus_reason(ctx, user):
+    sus_users = dict(await ctx.bot.db.fetch("SELECT * FROM SUS_USERS;"))
+    return sus_users.get(user.id)
+
+
+class ScanGlobalEmbed(Paginator):
+    async def format_page(self, item):
+        embed = discord.Embed(color=random.randint(0, 16777215))
+
+        embed.set_author(name=f"{item}", icon_url=item.display_avatar.url)
+
+        embed.add_field(name="Shared Guilds:", value=f"{guild_join(grab_mutualguilds(self.ctx, item))}")
+        embed.set_footer(text=f"Sus Reason : {await get_sus_reason(self.ctx, item)}")
+        return embed
