@@ -376,10 +376,10 @@ class Test(commands.Cog):
             color = 0x0000FF
 
         if temps.celsius > 20 and temps.celsis < 30:
-            color = 0xffa500
+            color = 0xFFA500
 
         if temps.celsius > 30:
-            color = 0xff0000
+            color = 0xFF0000
 
         embed = discord.Embed(title="Temperature:", color=color)
         embed.add_field(name="Celsius:", value=f"{temps.celsius:,} °C")
