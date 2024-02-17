@@ -375,7 +375,7 @@ class Test(commands.Cog):
         if temps.celsius < 20:
             color = 0x0000FF
 
-        if temps.celsius > 20 and temps.celsius <= 30:
+        if temps.celsius >= 20 and temps.celsius <= 30:
             color = 0xFFA500
 
         if temps.celsius > 30:
