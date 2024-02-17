@@ -313,7 +313,7 @@ class TemperatureReadings(NamedTuple):
     celsius: int
     fahrenheit: int
     kelvin: int
-    rankine : int
+    rankine: int
 
 
 class Temperature(enum.Enum):
