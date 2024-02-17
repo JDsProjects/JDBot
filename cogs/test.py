@@ -367,17 +367,26 @@ class Test(commands.Cog):
     async def convert_temperature(
         self,
         interaction: discord.Interaction,
-        system: utils.Temperature,
+        temp_system: utils.Temperature,
         temperature: float,
     ):
-        temps = system.convert_to(temperature)
+        temps = temp_system.convert_to(temperature)
 
-        embed = discord.Embed(title="Temperature:")
+        if temps.celsius < 20:
+            color = 0x0000FF
+
+        if temps.celsius > 20 and temps.celsis < 30:
+            color = 0xffa500
+
+        if temps.celsius > 30:
+            color = 0xff0000
+
+        embed = discord.Embed(title="Temperature:", color=color)
         embed.add_field(name="Celsius:", value=f"{temps.celsius:,} °C")
         embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit:,} °F")
         embed.add_field(name="Kelvin:", value=f"{temps.kelvin:,} °K")
         embed.add_field(name="Rankine:", value=f"{temps.rankine:,} °R")
-        embed.set_footer(text=f"Chose: {system.value}")
+        embed.set_footer(text=f"Chose: {temp_system.value}")
 
         await interaction.response.send_message(embed=embed)
 
