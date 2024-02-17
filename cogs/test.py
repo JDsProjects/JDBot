@@ -376,7 +376,7 @@ class Test(commands.Cog):
         embed.add_field(name="Celsius:", value=f"{temps.celsius:,} °C")
         embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit:,} °F")
         embed.add_field(name="Kelvin:", value=f"{temps.kelvin:,} °K")
-        embed.add_file(name="Rankine:", value=f"{temps.rankine:,} °R")
+        embed.add_field(name="Rankine:", value=f"{temps.rankine:,} °R")
         embed.set_footer(text=f"Chose: {system.value}")
 
         await interaction.response.send_message(embed=embed)
