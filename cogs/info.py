@@ -422,7 +422,7 @@ class DevTools(commands.Cog):
         if not (current and startswith):
             return all_choices[0:25]
 
-        return startswith
+        return startswith[0:25]
 
     @rtfm_slash.autocomplete("query")
     async def rtfm_query_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
