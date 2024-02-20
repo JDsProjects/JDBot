@@ -311,20 +311,6 @@ class InvalidationConfig:
             case InvalidateType.channel:
                 
                 return self.bot.get_channel(self.entity_id)
-            
-async def add_invalidation_record(bot: JDBot, entity_id : int, entity_type: InvalidateType):
-
-    if await bot.db.fetchrow("SELECT * FROM invalidation WHERE id = $1 AND type = $2", entity_id, entity_type):
-        return
-
-    await bot.db.execute("INSERT INTO invalidation (id, type) VALUES ($1, $2)", entity_id, entity_type)
-
-async def remove_invalidation_record(bot: JDBot, entity_id : int, entity_type: InvalidateType):
-    
-        if not await bot.db.fetchrow("SELECT * FROM invalidation WHERE id = $1 AND type = $2", entity_id, entity_type):
-            return
-    
-        await bot.db.execute("DELETE FROM invalidation WHERE id = $1 AND type = $2", entity_id, entity_type)
 
 class TemperatureReadings(NamedTuple):
     celsius: int
