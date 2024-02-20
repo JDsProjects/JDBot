@@ -312,8 +312,14 @@ class DevTools(commands.Cog):
         self.rtfm_dictionary = sorted(await self.bot.db.fetch("SELECT * FROM RTFM_DICTIONARY"))
         self.tio = async_tio.Tio(session=self.bot.session)
 
-        self.invalidation_config = await self.bot.db.fetch("SELECT * FROM invalidation_config")
-        self.invalidation_opt_out = await self.bot.db.fetch("SELECT * FROM invalidation_out")
+        self.invalidation_config = [
+            utils.InvalidateType(record.entity_id, record.entity_type, self.bot)
+            for record in await self.bot.db.fetch("SELECT * FROM invalidation_config")
+        ]
+        self.invalidation_opt_out = [
+            utils.InvalidateType(record.entity_id, record.entity_type, self.bot)
+            for record in await self.bot.db.fetch("SELECT * FROM invalidation_out")
+        ]
 
         # pass InvalidateType to the objects for the entity_type.
 

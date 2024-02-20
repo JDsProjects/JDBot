@@ -288,9 +288,10 @@ class InvalidateType(enum.IntEnum):
 
 
 class InvalidationConfig:
-    def __init__(self, entity_id: int, entity_type: InvalidateType, bot: JDBot):
+    def __init__(self, entity_id: int, entity_type: int, bot: JDBot):
         self.entity_id = entity_id
-        self.entity_type = entity_type
+        self.raw_entity_type = entity_type
+        self.entity_id = InvalidateType(entity_type)
         self.bot = bot
 
     @property
@@ -303,11 +304,10 @@ class InvalidationConfig:
                 return self.bot.get_guild(self.entity_id)
 
             case InvalidateType.dm:
-
                 return self.bot.get_channel(self.entity_id)
 
             case InvalidateType.channel:
-
+                
                 return self.bot.get_channel(self.entity_id)
 
 
