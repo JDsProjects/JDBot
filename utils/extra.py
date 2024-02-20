@@ -288,26 +288,43 @@ class InvalidateType(enum.IntEnum):
 
 
 class InvalidationConfig:
-    def __init__(self, entity_id: int, entity_type: InvalidateType):
+    def __init__(self, entity_id: int, entity_type: InvalidateType, bot: JDBot):
         self.entity_id = entity_id
         self.entity_type = entity_type
+        self.bot = bot
 
-    def is_global_invalidation(self) -> bool:
-        """Checks if the configuration is for global invalidation."""
-        return self.entity_type == InvalidateType.EVERYWHERE
+    @property
+    def entity(self):
+        match self.entity_type:
+            case InvalidateType.everywhere:
+                
+                return self.bot.get_user(self.entity_id)
 
-    def is_guild_invalidation(self) -> bool:
-        """Checks if the configuration is for guild-specific invalidation."""
-        return self.entity_type == InvalidateType.GUILD
+            case InvalidateType.guild:
+                
+                return self.bot.get_guild(self.entity_id)
 
-    def is_dm_invalidation(self) -> bool:
-        """Checks if the configuration is for DM channel invalidation."""
-        return self.entity_type == InvalidateType.DM
+            case InvalidateType.dm:
+                
+                return self.bot.get_channel(self.entity_id)
 
-    def is_channel_invalidation(self) -> bool:
-        """Checks if the configuration is for a specific channel's invalidation."""
-        return self.entity_type == InvalidateType.CHANNEL
+            case InvalidateType.channel:
+                
+                return self.bot.get_channel(self.entity_id)
+            
+async def add_invalidation_record(bot: JDBot, entity_id : int, entity_type: InvalidateType):
 
+    if await bot.db.fetchrow("SELECT * FROM invalidation WHERE id = $1 AND type = $2", entity_id, entity_type):
+        return
+
+    await bot.db.execute("INSERT INTO invalidation (id, type) VALUES ($1, $2)", entity_id, entity_type)
+
+async def remove_invalidation_record(bot: JDBot, entity_id : int, entity_type: InvalidateType):
+    
+        if not await bot.db.fetchrow("SELECT * FROM invalidation WHERE id = $1 AND type = $2", entity_id, entity_type):
+            return
+    
+        await bot.db.execute("DELETE FROM invalidation WHERE id = $1 AND type = $2", entity_id, entity_type)
 
 class TemperatureReadings(NamedTuple):
     celsius: int
