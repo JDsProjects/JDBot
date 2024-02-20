@@ -297,20 +297,21 @@ class InvalidationConfig:
     def entity(self):
         match self.entity_type:
             case InvalidateType.everywhere:
-                
+
                 return self.bot.get_user(self.entity_id)
 
             case InvalidateType.guild:
-                
+
                 return self.bot.get_guild(self.entity_id)
 
             case InvalidateType.dm:
-                
+
                 return self.bot.get_channel(self.entity_id)
 
             case InvalidateType.channel:
-                
+
                 return self.bot.get_channel(self.entity_id)
+
 
 class TemperatureReadings(NamedTuple):
     celsius: int
