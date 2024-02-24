@@ -687,10 +687,10 @@ class Owner(commands.Cog):
         await self.bot.db.execute("DELETE FROM SUBREDDITS WHERE name = $1", reddit)
         await ctx.send(f"Removed {reddit} from economy.")
 
-    @commands.command(brief="gets system uptime (dm only)", aliases=["system_up"])
+    @commands.command(brief="gets system uptime", aliases=["system_up"])
     async def system_uptime(self, ctx: commands.Context):
 
-        boot_time = datetime.datetime.fromtimestamp(psutil.boot_time(), tzinfo=datetime.timezone.utc)
+        boot_time = datetime.datetime.fromtimestamp(psutil.boot_time(), tz=datetime.timezone.utc)
         delta = relativedelta(discord.utils.utcnow(), boot_time)
 
         date_uptime = discord.utils.format_dt(boot_time, style="d")
@@ -704,6 +704,27 @@ class Owner(commands.Cog):
         )
 
         embed.set_author(name=f"{self.bot.user}'s system's Uptime:", icon_url=self.bot.user.display_avatar.url)
+
+        await ctx.send(embed=embed)
+
+    @commands.command(brief = "gets process uptime)", aliases=["process_up"])
+    async def process_uptime(self, ctx : commands.Context):
+
+        p = psutil.Process(os.getpid())
+        boot_time = datetime.datetime.fromtimestamp(p.create_time(),  tz=datetime.timezone.utc)
+        delta = relativedelta(discord.utils.utcnow(), boot_time)
+
+        date_uptime = discord.utils.format_dt(boot_time, style="d")
+        time_uptime = discord.utils.format_dt(boot_time, style="T")
+        rel_uptime = discord.utils.format_dt(boot_time, style="R")
+
+        embed = discord.Embed(
+            title=f"Up Since:\n{date_uptime}\n{time_uptime}",
+            description=f"{rel_uptime}\n Years: {delta.years} Y \n Months: {delta.months}M \n Days: {delta.days}d, \nHours: {delta.hours}h, \nMinutes: {delta.minutes}m, \nSeconds: {delta.seconds}s",
+            color=random.randint(0, 16777215),
+        )
+
+        embed.set_author(name=f"{self.bot.user}'s process' Uptime:", icon_url=self.bot.user.display_avatar.url)
 
         await ctx.send(embed=embed)
 
