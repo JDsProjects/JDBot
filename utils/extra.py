@@ -307,7 +307,6 @@ class InvalidationConfig:
                 return self.bot.get_channel(self.entity_id)
 
             case InvalidateType.channel:
-
                 return self.bot.get_channel(self.entity_id)
 
 

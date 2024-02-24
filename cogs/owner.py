@@ -10,10 +10,10 @@ import traceback
 import typing
 
 import discord
-import tweepy
 import psutil
-from discord.ext import commands
+import tweepy
 from dateutil.relativedelta import relativedelta
+from discord.ext import commands
 
 import utils
 
@@ -689,7 +689,6 @@ class Owner(commands.Cog):
 
     @commands.command(brief="gets system uptime", aliases=["system_up"])
     async def system_uptime(self, ctx: commands.Context):
-
         boot_time = datetime.datetime.fromtimestamp(psutil.boot_time(), tz=datetime.timezone.utc)
         delta = relativedelta(discord.utils.utcnow(), boot_time)
 
@@ -707,11 +706,10 @@ class Owner(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command(brief = "gets process uptime)", aliases=["process_up"])
-    async def process_uptime(self, ctx : commands.Context):
-
+    @commands.command(brief="gets process uptime)", aliases=["process_up"])
+    async def process_uptime(self, ctx: commands.Context):
         p = psutil.Process(os.getpid())
-        boot_time = datetime.datetime.fromtimestamp(p.create_time(),  tz=datetime.timezone.utc)
+        boot_time = datetime.datetime.fromtimestamp(p.create_time(), tz=datetime.timezone.utc)
         delta = relativedelta(discord.utils.utcnow(), boot_time)
 
         date_uptime = discord.utils.format_dt(boot_time, style="d")
