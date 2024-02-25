@@ -216,7 +216,7 @@ def crusty(raw_assets: bytes) -> discord.File:
             img.coalesce()
             img.iterator_reset()
 
-        for d in (35, 2000):
+        for d in (35, 500):
             img.resize(d, d)
 
         img.save(file=f)
