@@ -313,15 +313,13 @@ class DevTools(commands.Cog):
         self.tio = async_tio.Tio(session=self.bot.session)
 
         self.invalidation_config = [
-            utils.InvalidateType(record.entity_id, record.entity_type)
+            utils.InvalidationConfig(record.entity_id, record.entity_type)
             for record in await self.bot.db.fetch("SELECT * FROM invalidation_config")
         ]
         self.invalidation_opt_out = [
-            utils.InvalidateType(record.entity_id, record.entity_type)
+            utils.InvalidationConfig(record.entity_id, record.entity_type)
             for record in await self.bot.db.fetch("SELECT * FROM invalidation_out")
         ]
-
-        # pass InvalidateType to the objects for the entity_type.
 
     async def cog_unload(self):
         await self.github.close()
