@@ -330,10 +330,8 @@ class DevTools(commands.Cog):
     async def on_message(self, message):
         if not message.guild or message.guild.id != 1019027330779332660:
             return
-        
-        # filter based on entity_type
 
-        
+        # filter based on entity_type
 
         match = self.TOKEN_RE.findall(message.content)
         if match:
