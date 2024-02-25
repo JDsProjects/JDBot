@@ -431,7 +431,7 @@ modalpaginator = ["discord-ext-modal-paginator"]
 type = "git"
 url = "https://github.com/Soheab/discord-py-paginators"
 reference = "HEAD"
-resolved_reference = "78f4cffb38352698b0690aa3bde014544d116645"
+resolved_reference = "3a811d43618c4ae98aea6e8b1640d424aa7a2e3b"
 
 [[package]]
 name = "discordlists-py"
