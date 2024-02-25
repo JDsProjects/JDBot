@@ -324,12 +324,12 @@ class InvalidationConfig:
 async def add_invalidation_entity(entity_id: int, entity_type: InvalidateType, bot: JDBot, in_choosen=True):
     if in_choosen:
         await bot.db.execute(
-            "INSERT INTO invalidation_config (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type
+            "INSERT INTO invalidation_config (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type.value
         )
 
     if not in_choosen:
         await bot.db.execute(
-            "INSERT INTO invalidation_out (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type
+            "INSERT INTO invalidation_out (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type.value
         )
 
     # also return result from bot.db execute
@@ -339,12 +339,12 @@ async def add_invalidation_entity(entity_id: int, entity_type: InvalidateType, b
 async def verify_invalidation_entity(entity_id: int, entity_type: InvalidateType, bot: JDBot, in_choosen=True):
     if in_choosen:
         return await bot.db.fetchrow(
-            "SELECT * FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
+            "SELECT * FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
         )
 
     if not in_choosen:
         return await bot.db.fetchrow(
-            "SELECT * FROM invalidation_out WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
+            "SELECT * FROM invalidation_out WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
         )
 
     return None
@@ -353,12 +353,12 @@ async def verify_invalidation_entity(entity_id: int, entity_type: InvalidateType
 async def remove_invalidation_entity(entity_id: int, entity_type: int, bot: JDBot, in_choosen=True):
     if in_choosen:
         return await bot.db.execute(
-            "DELETE FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
+            "DELETE FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
         )
 
     if not in_choosen:
         return await bot.db.execute(
-            "DELETE FROM invalidation_out WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
+            "DELETE FROM invalidation_out WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
         )
 
     return None
