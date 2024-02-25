@@ -36,7 +36,7 @@ class UserInfoButton(discord.ui.Button):
                 content="Will be sending you the information, ephemerally", view=self.view
             )
 
-            await menu.send(interaction=interaction, ephemeral=True)
+            await menu.send(interaction=interaction, ephemeral=True, override_page_kwargs=True)
 
         if self.custom_id == "1":
             await interaction.response.edit_message(
