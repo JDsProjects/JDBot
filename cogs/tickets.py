@@ -8,7 +8,8 @@ if TYPE_CHECKING:
     from ..main import JDBot, JDBotContext
 
     class RecordType(Protocol):
-        def get(self, key: str) -> Any: ...
+        def get(self, key: str) -> Any:
+            ...
 
     class TicketCacheData(TypedDict):
         author: discord.User

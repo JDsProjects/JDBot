@@ -304,10 +304,73 @@ class InvalidationConfig:
                 return self.bot.get_guild(self.entity_id)
 
             case InvalidateType.dm:
-                return self.bot.get_channel(self.entity_id)
+                user = self.bot.get_user(self.entity_id)
+                if user:
+                    return user.dm_channel
+
+                return None
+                # or maybe pass user idk.
 
             case InvalidateType.channel:
                 return self.bot.get_channel(self.entity_id)
+
+
+# make helper methods to add, remove, and get from the cache outside the class.
+# maybe make the cache not in cogs.DevTools but in class.
+# wait no that wouldn't work because this is an object only.
+# although I could add and remove from the cache in the commands to add/remove
+
+
+async def add_invalidation_entity(entity_id: int, entity_type: int, bot: JDBot, in_choosen=True):
+    if in_choosen:
+        await bot.db.execute(
+            "INSERT INTO invalidation_config (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type
+        )
+
+    if not in_choosen:
+        await bot.db.execute(
+            "INSERT INTO invalidation_out (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type
+        )
+
+    # also return result from bot.db execute
+    return InvalidationConfig(entity_id, entity_type)
+
+
+async def verify_invalidation_entity(entity_id: int, entity_type: int, bot: JDBot, in_choosen=True):
+    if in_choosen:
+        return await bot.db.fetchrow(
+            "SELECT * FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
+        )
+
+    if not in_choosen:
+        return await bot.db.fetchrow(
+            "SELECT * FROM invalidation_out WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
+        )
+
+    return None
+
+
+async def remove_invalidation_entity(entity_id: int, entity_type: int, bot: JDBot, in_choosen=True):
+    if in_choosen:
+        return await bot.db.execute(
+            "DELETE FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
+        )
+
+    if not in_choosen:
+        return await bot.db.execute(
+            "DELETE FROM invalidation_out WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
+        )
+
+    return None
+
+
+def invalidation_check(cache: list[InvalidationConfig], entity_id: int, entity_type: InvalidateType):
+    cache = [x for x in cache if x.entity_id == entity_id and x.entity_type == entity_type]
+
+    if cache:
+        return cache[0]
+
+    return None
 
 
 class TemperatureReadings(NamedTuple):
