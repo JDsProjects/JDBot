@@ -430,8 +430,8 @@ modalpaginator = ["discord-ext-modal-paginator"]
 [package.source]
 type = "git"
 url = "https://github.com/Soheab/discord-py-paginators"
-reference = "HEAD"
-resolved_reference = "3a811d43618c4ae98aea6e8b1640d424aa7a2e3b"
+reference = "5b2419746149d306878676637e0128bd13ea9d75"
+resolved_reference = "5b2419746149d306878676637e0128bd13ea9d75"
 
 [[package]]
 name = "discordlists-py"
@@ -862,7 +862,7 @@ resolved_reference = "91a41c6e1c955d278c370d51d5cf43b05f7cd979"
 
 [[package]]
 name = "typing-extensions"
-version = "4.9.0"
+version = "4.10.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
 category = "main"
 optional = false
@@ -936,7 +936,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">= 3.10,<4.0.0"
-content-hash = "2c50f1780e62fc29744abe3a0f7efb2f78ebdeb2a46a0bdedb40b509faf6ada7"
+content-hash = "6a4977e20c7ae357a1e87ff74387cad6448aa5938013f454b9ec5722b1f0a052"
 
 [metadata.files]
 aiodns = [
@@ -1895,8 +1895,8 @@ topggpy = [
 ]
 tweepy = []
 typing-extensions = [
-    {file = "typing_extensions-4.9.0-py3-none-any.whl", hash = "sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"},
-    {file = "typing_extensions-4.9.0.tar.gz", hash = "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783"},
+    {file = "typing_extensions-4.10.0-py3-none-any.whl", hash = "sha256:69b1a937c3a517342112fb4c6df7e72fc39a38e7891a5730ed4985b5214b5475"},
+    {file = "typing_extensions-4.10.0.tar.gz", hash = "sha256:b0abd7c89e8fb96f98db18d86106ff1d90ab692004eb746cf6eda2682f91b3cb"},
 ]
 update-checker = [
     {file = "update_checker-0.18.0-py3-none-any.whl", hash = "sha256:cbba64760a36fe2640d80d85306e8fe82b6816659190993b7bdabadee4d4bbfd"},
