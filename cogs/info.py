@@ -313,11 +313,11 @@ class DevTools(commands.Cog):
         self.tio = async_tio.Tio(session=self.bot.session)
 
         self.invalidation_config = [
-            utils.InvalidationConfig(record.entity_id, record.entity_type)
+            utils.InvalidationConfig(record.entity_id, record.entity_type, self.bot)
             for record in await self.bot.db.fetch("SELECT * FROM invalidation_config")
         ]
         self.invalidation_opt_out = [
-            utils.InvalidationConfig(record.entity_id, record.entity_type)
+            utils.InvalidationConfig(record.entity_id, record.entity_type, self.bot)
             for record in await self.bot.db.fetch("SELECT * FROM invalidation_out")
         ]
 
