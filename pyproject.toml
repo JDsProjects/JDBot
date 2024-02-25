@@ -37,7 +37,7 @@ python-dateutil = ">=2.8.2"
 pillow = ">=9.4.0"
 somerandomapi-py = ">=0.0.2"
 filetype = "^1.2.0"
-discord-py-paginators = {git = "https://github.com/Soheab/discord-py-paginators"}
+discord-py-paginators = {git = "https://github.com/Soheab/discord-py-paginators", rev="5b2419746149d306878676637e0128bd13ea9d75"}
 
 [tool.black]
 line-length = 120
