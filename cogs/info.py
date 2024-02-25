@@ -313,11 +313,11 @@ class DevTools(commands.Cog):
         self.tio = async_tio.Tio(session=self.bot.session)
 
         self.invalidation_config = [
-            utils.InvalidateType(record.entity_id, record.entity_type, self.bot)
+            utils.InvalidateType(record.entity_id, record.entity_type)
             for record in await self.bot.db.fetch("SELECT * FROM invalidation_config")
         ]
         self.invalidation_opt_out = [
-            utils.InvalidateType(record.entity_id, record.entity_type, self.bot)
+            utils.InvalidateType(record.entity_id, record.entity_type)
             for record in await self.bot.db.fetch("SELECT * FROM invalidation_out")
         ]
 
@@ -330,6 +330,10 @@ class DevTools(commands.Cog):
     async def on_message(self, message):
         if not message.guild or message.guild.id != 1019027330779332660:
             return
+        
+        # filter based on entity_type
+
+        
 
         match = self.TOKEN_RE.findall(message.content)
         if match:

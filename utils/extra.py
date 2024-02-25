@@ -321,7 +321,7 @@ class InvalidationConfig:
 # although I could add and remove from the cache in the commands to add/remove
 
 
-async def add_invalidation_entity(entity_id: int, entity_type: int, bot: JDBot, in_choosen=True):
+async def add_invalidation_entity(entity_id: int, entity_type: InvalidateType, bot: JDBot, in_choosen=True):
     if in_choosen:
         await bot.db.execute(
             "INSERT INTO invalidation_config (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type
@@ -336,7 +336,7 @@ async def add_invalidation_entity(entity_id: int, entity_type: int, bot: JDBot, 
     return InvalidationConfig(entity_id, entity_type)
 
 
-async def verify_invalidation_entity(entity_id: int, entity_type: int, bot: JDBot, in_choosen=True):
+async def verify_invalidation_entity(entity_id: int, entity_type: InvalidateType, bot: JDBot, in_choosen=True):
     if in_choosen:
         return await bot.db.fetchrow(
             "SELECT * FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type
