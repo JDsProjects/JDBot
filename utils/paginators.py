@@ -82,11 +82,13 @@ class Paginator(button_paginator.ButtonPaginator):
         self,
         destination: discord.abc.Messageable | discord.Interaction[Any] | None = None,
         *,
-        override_page_kwargs: bool = False,
+        interaction: discord.Interaction | None = None,
+        ctx: Context | None = None,
+        override_page_kwargs: bool = True,
         edit_message: bool = False,
         **send_kwargs: Any,
     ) -> Optional[discord.Message]:
-        destination = destination or self.ctx or self.interaction
+        destination = destination or interaction or ctx or self.ctx or self.interaction
         if destination is None:
             raise TypeError("destination is None")
 
@@ -370,7 +372,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.clear_items()
         await interaction.response.edit_message(content="Will be sending you the information, ephemerally", view=self)
 
-        await self.menu.send(interaction, ephemeral=True, override_page_kwargs=True)
+        await self.menu.send(interaction=interaction, ephemeral=True)
 
     @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
