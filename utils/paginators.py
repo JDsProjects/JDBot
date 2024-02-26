@@ -370,7 +370,7 @@ class dm_or_ephemeral(discord.ui.View):
         self.clear_items()
         await interaction.response.edit_message(content="Will be sending you the information, ephemerally", view=self)
 
-        await self.menu.send(interaction=interaction, ephemeral=True)
+        await self.menu.send(interaction, ephemeral=True, override_page_kwargs=True)
 
     @discord.ui.button(label="Direct", style=discord.ButtonStyle.success, emoji="📥")
     async def dmMessage(self, interaction: discord.Interaction, button: discord.ui.Button):
