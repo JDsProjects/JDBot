@@ -178,7 +178,7 @@ class Test(commands.Cog):
     ):
         images = await utils.asset_converter(ctx, assets)
 
-        files = [asyncio.to_thread(self.test, await image.read()) for image in images]
+        files = [asyncio.create_task(asyncio.to_thread(self.test, await image.read())) for image in images]
         done, _ = await asyncio.wait(files)
 
         files = [discord.File(file.result(), "image.png") for file in done]
