@@ -489,7 +489,7 @@ class Image(commands.Cog):
 
         jeyy_client = self.jeyy_client
 
-        files = [[asyncio.create_task(jeyy_client.half_invert(image)) for image in images]
+        files = [asyncio.create_task(jeyy_client.half_invert(image)) for image in images]
         done, _ = await asyncio.wait(files)
 
         files = [file.result() for file in done]

@@ -195,7 +195,7 @@ class Test(commands.Cog):
     ):
         images = await utils.asset_converter(ctx, assets)
 
-        files = [[asyncio.create_task(asyncio.to_thread(utils.invert, await image.read())) for image in images]
+        files = [asyncio.create_task(asyncio.to_thread(utils.invert, await image.read())) for image in images]
 
         time_before = time.perf_counter()
         done, _ = await asyncio.wait(files)
@@ -213,7 +213,7 @@ class Test(commands.Cog):
     ):
         images = await utils.asset_converter(ctx, assets)
 
-        files = [[asyncio.create_task(asyncio.to_thread(utils.invert2, await image.read())) for image in images]
+        files = [asyncio.create_task(asyncio.to_thread(utils.invert2, await image.read())) for image in images]
 
         time_before = time.perf_counter()
         done, _ = await asyncio.wait(files)
@@ -231,7 +231,7 @@ class Test(commands.Cog):
     ):
         images = await utils.asset_converter(ctx, assets)
 
-        files = [[asyncio.create_task(asyncio.to_thread(utils.crusty, await image.read())) for image in images]
+        files = [asyncio.create_task(asyncio.to_thread(utils.crusty, await image.read())) for image in images]
 
         time_before = time.perf_counter()
         done, _ = await asyncio.wait(files)
@@ -260,7 +260,7 @@ class Test(commands.Cog):
         else:
             epic = utils.laugh2
 
-        files = [[asyncio.create_task(asyncio.to_thread(epic, await image.read())) for image in images]
+        files = [asyncio.create_task(asyncio.to_thread(epic, await image.read())) for image in images]
         done, _ = await asyncio.wait(files)
 
         files = [file.result() for file in done]
