@@ -414,7 +414,7 @@ class DevTools(commands.Cog):
         self, interaction: discord.Interaction, library: typing.Optiona[str] = None, query: typing.Optional[str] = None
     ) -> None:
         """Looks up docs for a library with optionally a query."""
-        
+
         libraries = dict(self.rtfm_dictionary)
         library = library or libraries["master"]
         if query is None or query == "No Results Found":
