@@ -224,3 +224,5 @@ def crusty(raw_assets: bytes) -> discord.File:
 
     f.seek(0)
     return discord.File(f, f"crusty.{ext}")
+
+# petpet function soon :)
