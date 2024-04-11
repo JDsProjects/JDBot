@@ -57,7 +57,7 @@ async def cdn_upload(bot, image_bytes):
     )
     returned_data = await resp.json()
 
-    if isistance(image_bytes, bytes):
+    if isinstance(image_bytes, bytes):
         image_bytes = io.BytesIO(image_bytes)
 
     kind = filetype.guess(image_bytes)
