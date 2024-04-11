@@ -63,7 +63,6 @@ async def cdn_upload(bot, image_bytes):
     kind = filetype.guess(image_bytes)
     image_bytes.seek(0)
 
-
     ext = kind.extension if kind else "gif"
 
     url = f"https://cdn.jdjgbot.com/image/{returned_data.get('keys')[0]}.{ext}?opengraph_pass=true"
