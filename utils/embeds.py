@@ -59,7 +59,8 @@ async def cdn_upload(bot, image_bytes):
 
     if isinstance(image_bytes, bytes):
         image_bytes = io.BytesIO(image_bytes)
-        image_bytes.seek(0)
+
+    image_bytes.seek(0)
 
     kind = filetype.guess(image_bytes)
 
