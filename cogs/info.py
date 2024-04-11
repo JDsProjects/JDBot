@@ -411,7 +411,7 @@ class DevTools(commands.Cog):
 
     @app_commands.command(description="looks up docs", name="rtfm")
     async def rtfm_slash(
-        self, interaction: discord.Interaction, library: typing.Optiona[str] = None, query: typing.Optional[str] = None
+        self, interaction: discord.Interaction, library: typing.Optional[str] = None, query: typing.Optional[str] = None
     ) -> None:
         """Looks up docs for a library with optionally a query."""
 
