@@ -49,6 +49,13 @@ async def roleinfo(ctx, role):
 
 
 async def cdn_upload(bot, image_bytes):
+
+    if isinstance(image_bytes, bytes):
+        image_copy = io.BytesIO(image_bytes)
+
+    else:
+        image_copy = image_bytes.getvalue()
+
     form = aiohttp.FormData()
     form.add_field("file", image_bytes, content_type="application/octet-stream")
     # debate about the content_type exists, but it seems to be fine, so I will leave for now.
@@ -56,9 +63,6 @@ async def cdn_upload(bot, image_bytes):
         "https://cdn.jdjgbot.com/upload", data=form, headers={"Authorization": os.environ["cdn_key"]}
     )
     returned_data = await resp.json()
-
-    if isinstance(image_bytes, bytes):
-        image_bytes = io.BytesIO(image_bytes)
 
     image_bytes.seek(0)
 
