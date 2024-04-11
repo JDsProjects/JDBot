@@ -54,7 +54,7 @@ async def cdn_upload(bot, image_bytes):
         image_copy = io.BytesIO(image_bytes)
 
     else:
-        image_copy = io.Bytes(image_bytes.getvalue())
+        image_copy = io.BytesIO(image_bytes.getvalue())
 
     form = aiohttp.FormData()
     form.add_field("file", image_bytes, content_type="application/octet-stream")
