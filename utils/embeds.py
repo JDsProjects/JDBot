@@ -64,9 +64,9 @@ async def cdn_upload(bot, image_bytes):
     )
     returned_data = await resp.json()
 
-    image_bytes.seek(0)
+    image_copy.seek(0)
 
-    kind = filetype.guess(image_bytes)
+    kind = filetype.guess(image_copy)
 
     ext = kind.extension if kind else "gif"
 
