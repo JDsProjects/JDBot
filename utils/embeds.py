@@ -57,7 +57,13 @@ async def cdn_upload(bot, image_bytes):
     )
     returned_data = await resp.json()
 
+    if isistance(image_bytes, bytes):
+        image_bytes = io.BytesIO(image_bytes)
+
     kind = filetype.guess(image_bytes)
+    image_bytes.seek(0)
+
+
     ext = kind.extension if kind else "gif"
 
     url = f"https://cdn.jdjgbot.com/image/{returned_data.get('keys')[0]}.{ext}?opengraph_pass=true"
