@@ -659,12 +659,12 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Generates a fake token from the current time")
     async def fake_token(self, ctx):
-        object = discord.Object(utils.generate_snowflake())
+        discord_object = discord.Object(utils.generate_snowflake())
 
-        first_encoded = base64.b64encode(f"{object.id}".encode())
+        first_encoded = base64.b64encode(f"{discord_object.id}".encode())
         first_bit = first_encoded.decode().rstrip("=")
 
-        timestamp = int(object.created_at.timestamp() - 129384000)
+        timestamp = int(discord_object.created_at.timestamp() - 129384000)
         d = timestamp.to_bytes(4, "big")
         second_bit_encoded = base64.standard_b64encode(d)
         second_bit = second_bit_encoded.decode().rstrip("=")
@@ -673,7 +673,7 @@ class DevTools(commands.Cog):
 
         embed = discord.Embed(
             title=f"Newly Generated Fake Token",
-            description=f"ID: ``{object.id}``\nCreated at : \n{discord.utils.format_dt(object.created_at, style = 'd')}\n{discord.utils.format_dt(object.created_at, style = 'T')}",
+            description=f"ID: ``{discord_object.id}``\nCreated at : \n{discord.utils.format_dt(discord_object.created_at, style = 'd')}\n{discord.utils.format_dt(discord_object.created_at, style = 'T')}",
         )
         embed.add_field(name="Generated Token:", value=f"``{first_bit}.{second_bit}.{last_bit}``")
         embed.set_thumbnail(url=ctx.author.display_avatar.url)
