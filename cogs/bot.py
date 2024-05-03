@@ -520,9 +520,8 @@ class Bot(commands.Cog):
     @commands.command(brief="make a suggestion to the bot owner of a command to add", aliases=["suggestion"])
     async def suggest(self, ctx, *, args=None):
         if not args:
+            ctx.command.reset_cooldown(ctx)
             return await ctx.send("You didn't give me a command to add to the suggestion.")
-
-        ctx.command.reset_cooldown(ctx)
 
         embed = discord.Embed(
             title=f"New Suggestion requested by {ctx.author}",
