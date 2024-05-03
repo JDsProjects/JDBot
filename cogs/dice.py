@@ -55,16 +55,14 @@ class Dice(commands.Cog):
 
         emoji_choice = None
 
-        if isinstance(ctx.channel, discord.Thread):
-            if ctx.guild.emojis:
-                emoji_choice = random.choice(ctx.guild.emojis)
-                if emoji_choice.available is False:
-                    emoji_choice = emoji_choice.url
+        if isinstance(ctx.channel, discord.Thread) or isinstance(ctx.channel, discord.TextChannel):
+            # check guild channel for guild
+            # check if ctx.guild.emojis in the if check as well.
 
-        if isinstance(ctx.channel, discord.TextChannel):
             if ctx.guild.emojis:
                 emoji_choice = random.choice(ctx.guild.emojis)
                 if emoji_choice.available is False:
+                    # idk why i keep on getting None though.
                     emoji_choice = emoji_choice.url
 
         await ctx.send(f"{emoji_choosen} \n{emoji_choice}")
