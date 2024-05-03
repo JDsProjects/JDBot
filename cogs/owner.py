@@ -498,7 +498,7 @@ class Owner(commands.Cog):
 
         await ctx.send("Pick the way you want servers to be sent to you", view=view)
 
-    def bot_or_human(guild):
+    def bot_or_human(self, guild: discord.Guild):
         bots = [m for m in guild.members if m.bot]
         humans = [m for m in guild.members if not m.bot]
 
