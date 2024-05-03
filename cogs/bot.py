@@ -409,8 +409,9 @@ class Bot(commands.Cog):
 
         if view.value is True:
             message = await ctx.send(
-                content=f"Summoning JDJG now a.k.a the Bot Owner to the guild make sure invite permissions are open!"
+                content="Summoning JDJG now a.k.a the Bot Owner to the guild make sure invite permissions are open!"
             )
+
             await msg.delete()
 
             if isinstance(ctx.channel, discord.threads.Thread):
@@ -453,7 +454,7 @@ class Bot(commands.Cog):
                 )
 
         if view.value is False:
-            await ctx.send(content=f" You didn't agree to summoning me. So I will not be invited.")
+            await ctx.send(content="You didn't agree to summoning me. So I will not be invited.")
             await msg.delete()
 
     @commands.command(brief="this command tells you to how to report ex issues to owner")
