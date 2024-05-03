@@ -553,6 +553,7 @@ class Extra(commands.Cog):
         view = utils.ChatBotView(ctx)
 
         return await ctx.send("out of commission right now.")
+        # intentional till I get soheab's somerandomapi.py wrapper to work.
 
         view.ask = self.cleverbot.ask
         # update to use the chatbot system Soheab made and also figure out how to use a rsap api or to run a free open ai chatbot for view.ask2.
