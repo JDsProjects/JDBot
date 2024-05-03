@@ -59,7 +59,7 @@ class Dice(commands.Cog):
             # check guild channel for guild
             # check if ctx.guild.emojis in the if check as well.
 
-            if list(ctx.guild.emojis):
+            if ctx.guild.emojis:
                 emoji_choice = random.choice(ctx.guild.emojis)
                 if emoji_choice.available is False:
                     # idk why i keep on getting None though.
