@@ -201,7 +201,7 @@ class Bot(commands.Cog):
         )
         embed.add_field(name="Approximate Member Count:", value=f"{sum(g.member_count for g in self.bot.guilds):,}")
         embed.set_footer(
-            text=f"if you at all don't get what this means, you can ask our support team, if you do understand you can ask for clarification"
+            text="if you at all don't get what this means, you can ask our support team, if you do understand you can ask for clarification"
         )
         await ctx.send(embed=embed)
 
