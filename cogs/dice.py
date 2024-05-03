@@ -64,7 +64,7 @@ class Dice(commands.Cog):
                 if emoji_choice.available is False:
                     # idk why i keep on getting None though.
                     emoji_choice = emoji_choice.url
-        
+
         emoji_choice = emoji_choice or "No Emoji Found"
         await ctx.send(f"{emoji_choosen} \n{emoji_choice}")
 
