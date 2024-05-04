@@ -156,6 +156,7 @@ class Image(commands.Cog):
                     y += 1
                 if not a.filename.endswith(".png"):
                     pass
+                    # replace with the invert2 method with newer converter
 
         if not ctx.message.attachments or y == 0:
             url = (Member.display_avatar.with_format("png")).url
@@ -366,6 +367,8 @@ class Image(commands.Cog):
                     y += 1
                 if not a.filename.endswith(".png") or not a.filename.endswith(".jpg"):
                     pass
+                    # replace with newer method that I use.
+                    # replace with the invert2 method with newer converter
 
         if not ctx.message.attachments or y == 0:
             url = (Member.display_avatar.with_format("png")).url
@@ -466,6 +469,11 @@ class Image(commands.Cog):
                     y += 1
                 if not a.filename.endswith(".png"):
                     pass
+                    # replace with the invert2 method with newer converter
+
+        # use newer method as seen in like the testing command.
+        # invert2 for example just needs the internal method to be cleaned and similar methods to be cleaned up too.
+        # replace Member with lowercase member :)
 
         if not ctx.message.attachments or y == 0:
             url = (Member.display_avatar.with_format("png")).url

@@ -106,7 +106,7 @@ class Economy(commands.Cog):
 
         view = utils.BasicButtons(ctx)
 
-        msg = await ctx.send(f"Are you sure you want to leave the database?", view=view)
+        msg = await ctx.send("Are you sure you want to leave the database?", view=view)
 
         await view.wait()
 

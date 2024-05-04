@@ -103,7 +103,7 @@ class Bot(commands.Cog):
 
         embed.set_thumbnail(url=self.bot.user.display_avatar.url)
         embed.set_footer(
-            text=f"not all features may work if you invite with minimal perms, if you invite with 0 make sure these permissions are in a Bots/Bot role."
+            text="not all features may work if you invite with minimal perms, if you invite with 0 make sure these permissions are in a Bots/Bot role."
         )
 
         view = discord.ui.View()
@@ -348,7 +348,7 @@ class Bot(commands.Cog):
         view = discord.ui.View()
         view.add_item(
             discord.ui.Button(
-                label=f"Support Guild Invite",
+                label="Support Guild Invite",
                 url="https://discord.gg/eVQH2ZRYpz",
                 style=discord.ButtonStyle.link,
                 row=1,
@@ -411,7 +411,6 @@ class Bot(commands.Cog):
             message = await ctx.send(
                 content="Summoning JDJG now a.k.a the Bot Owner to the guild make sure invite permissions are open!"
             )
-
             await msg.delete()
 
             if isinstance(ctx.channel, discord.threads.Thread):
