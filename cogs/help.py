@@ -38,7 +38,9 @@ class JDBotHelp(commands.MinimalHelpCommand):
         filtered = await self.filter_commands(bot.commands, sort=True, key=get_category)
         to_iterate = itertools.groupby(filtered, key=get_category)
 
-        for category, Commands in to_iterate:
+        for category, bot_commands in to_iterate:
+            # bot_commands never used
+            
             self.paginator.add_line(category)
 
         note = self.get_ending_note()

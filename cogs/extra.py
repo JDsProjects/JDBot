@@ -395,7 +395,7 @@ class Extra(commands.Cog):
         embed = discord.Embed(title=f"{response_dict['joke']}", color=random.randint(0, 16777215))
         embed.set_author(name=f"{response_dict['category']} Joke:")
         embed.add_field(name="Language:", value=f"{response_dict['lang']}")
-        embed.add_field(name=f"Joke ID:", value=f"{response_dict['id']}")
+        embed.add_field(name="Joke ID:", value=f"{response_dict['id']}")
         embed.add_field(name="Type:", value=f"{response_dict['type']}")
         embed.set_footer(text=f"Joke Requested By {ctx.author} \nPowered by jokeapi.dev")
         await ctx.send(embed=embed)
@@ -540,7 +540,7 @@ class Extra(commands.Cog):
 
         num = numbers[-1]
 
-        embed = discord.Embed(title=f"Result of the function", color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Result of the function", color=random.randint(0, 16777215))
         embed.add_field(name=f"Formula: {num} ^ {root}", value=f"Result: {(num**root)}")
         embed.set_footer(text=f"{ctx.author.id}")
         embed.set_thumbnail(url="https://i.imgur.com/E7GIyu6.png")
@@ -553,7 +553,6 @@ class Extra(commands.Cog):
         view = utils.ChatBotView(ctx)
 
         return await ctx.send("out of commission right now.")
-        # intentional till I get soheab's somerandomapi.py wrapper to work.
 
         view.ask = self.cleverbot.ask
         # update to use the chatbot system Soheab made and also figure out how to use a rsap api or to run a free open ai chatbot for view.ask2.
@@ -647,7 +646,7 @@ class Extra(commands.Cog):
             number_each_time = numbers[1]
             times_ran = numbers[-1]
 
-            embed = discord.Embed(title=f"Result of the function", color=random.randint(0, 16777215))
+            embed = discord.Embed(title="Result of the function", color=random.randint(0, 16777215))
 
             embed.add_field(
                 name=f"Formula: {orginal} + {number_each_time} * ( {times_ran} - 1 )",
@@ -709,7 +708,7 @@ class Extra(commands.Cog):
 
     @commands.command(brief="says nook nook and shows an image")
     async def pingu(self, ctx):
-        embed = discord.Embed(description=f"nook nook", color=random.randint(0, 16777215))
+        embed = discord.Embed(description="nook nook", color=random.randint(0, 16777215))
         embed.set_image(url="https://i.imgur.com/Z6NURwi.gif")
         embed.set_author(name=f"Pingu has been summoned by {ctx.author}:", icon_url=ctx.author.display_avatar.url)
         await ctx.send("nook nook", embed=embed)
@@ -730,7 +729,7 @@ class Extra(commands.Cog):
     @commands.command(brief="brings up two sites of logical fallicies")
     async def fallacies_list(self, ctx):
         await ctx.send(
-            f"https://www.futurelearn.com/info/courses/logical-and-critical-thinking/0/steps/9131 \nhttps://yourlogicalfallacyis.com/"
+            "https://www.futurelearn.com/info/courses/logical-and-critical-thinking/0/steps/9131 \nhttps://yourlogicalfallacyis.com/"
         )
 
     @commands.command(brief="based on pog bot's nitro command")
@@ -789,7 +788,7 @@ class Extra(commands.Cog):
     )
     async def urban(self, ctx, *, search: commands.clean_content = None):
         if search is None:
-            return await ctx.send(f"Specify what you need to be searched in the urban dictionary.")
+            return await ctx.send("Specify what you need to be searched in the urban dictionary.")
 
         try:
             response = await self.bot.session.get(
@@ -797,7 +796,7 @@ class Extra(commands.Cog):
             )
 
         except Exception:
-            return await ctx.send(f"Urban API returned invalid data.")
+            return await ctx.send("Urban API returned invalid data.")
 
         url = await response.json()
 
@@ -805,7 +804,7 @@ class Extra(commands.Cog):
             return await ctx.send(":fire: an Error has occured.")
 
         if not len(url["list"]):
-            return await ctx.send(f"Couldn't find your search in the dictionary.")
+            return await ctx.send("Couldn't find your search in the dictionary.")
 
         result = sorted(url["list"], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
         definition = result["definition"]
@@ -1059,7 +1058,9 @@ class Extra(commands.Cog):
 
         db = self.bot.db
         if ctx.guild:
-            if not ctx.author.guild_permissions.administrator and not ctx.author.id in self.bot.owner_ids:
+            if not ctx.author.guild_permissions.administrator and not await bot.is_owner(ctx.author):
+                # better method to run handle permissions.
+
                 return await ctx.send("You do not have proper permission for this.")
             is_dm = 0
             tid = ctx.guild.id
