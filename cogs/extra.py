@@ -1058,7 +1058,7 @@ class Extra(commands.Cog):
 
         db = self.bot.db
         if ctx.guild:
-            if not ctx.author.guild_permissions.administrator and not await bot.is_owner(ctx.author):
+            if not ctx.author.guild_permissions.administrator and not await self.bot.is_owner(ctx.author):
                 # better method to run handle permissions.
 
                 return await ctx.send("You do not have proper permission for this.")
