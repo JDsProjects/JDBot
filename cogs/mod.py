@@ -16,8 +16,8 @@ class Moderation(commands.Cog):
 
     @commands.cooldown(1, 90, BucketType.user)
     @commands.command(brief="a command to warn people, but if you aren't admin it doesn't penalize.")
-    async def warn(self, ctx, *, Member: utils.SuperConverter = commands.Author):
-        warn_useable = utils.warn_permission(ctx, Member)
+    async def warn(self, ctx, *, member: utils.SuperConverter = commands.Author):
+        warn_useable = utils.warn_permission(ctx, member)
         # modal for a reason(basically the same button as well above)
         # soon
 
@@ -28,18 +28,18 @@ class Moderation(commands.Cog):
             embed.set_footer(text=f"ID: {ctx.author.id}")
 
             try:
-                await Member.send(embed=embed)
+                await member.send(embed=embed)
 
             except discord.Forbidden:
                 await ctx.send("they don't seem like a valid user or they weren't DMable.")
 
             embed.set_footer(
-                text=f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {Member.id} \nWarned: {Member}"
+                text=f"ID: {ctx.author.id}\nWarned by {ctx.author}\nWarned ID: {member.id} \nWarned: {member}"
             )
             await self.bot.support_webhook.send(embed=embed)
 
             try:
-                await ctx.author.send(content=f"Why did you warn {Member}?")
+                await ctx.author.send(content=f"Why did you warn {member}?")
 
             except discord.Forbidden:
                 await ctx.send("we can't DM them :(")
