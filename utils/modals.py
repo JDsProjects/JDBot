@@ -1,5 +1,8 @@
+import typing
+
 # Modal Classes
 import discord
+
 
 
 class CodeBlockModal(discord.ui.Modal, title="Pep8 Project Formatter:"):
@@ -24,8 +27,8 @@ class CodeBlockModal(discord.ui.Modal, title="Pep8 Project Formatter:"):
 
 class CodeBlockView(discord.ui.View):
     def __init__(self, ctx, **kwargs):
-        self.value: str = None
-        self.value2: str = None
+        self.value: typing.Optional[str] = None
+        self.value2: typing.Optional[str] = None
         self.ctx = ctx
         super().__init__(**kwargs)
 
@@ -97,7 +100,7 @@ class MailModal(discord.ui.Modal, title="Mail:"):
 class MailView(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         self.ctx = ctx
-        self.value: str = None
+        self.value: typing.Optional[str] = None
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -169,6 +172,7 @@ class ChatBotModal2(discord.ui.Modal, title="ChatBot (Some Random Api):"):
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.defer()
         args = self.args
+        # will be used again once modal is back up.
         self.view.message = await interaction.followup.send(
             "Message Received(you will receive your chatbot response in a moment", ephemeral=True
         )
@@ -243,7 +247,7 @@ class ReportModal(discord.ui.Modal, title="Report:"):
 class ReportView(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         self.ctx = ctx
-        self.value: str = None
+        self.value: typing.Optional[str] = None
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -296,7 +300,7 @@ class AddBotModal(discord.ui.Modal, title="Reason:"):
 class AddBotView(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         self.ctx = ctx
-        self.value: str = None
+        self.value: typing.Optional[str] = None
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):
@@ -363,7 +367,7 @@ class AceView(discord.ui.View):
     def __init__(self, ctx, jeyy_client, **kwargs):
         self.ctx = ctx
         self.jeyy_client = jeyy_client
-        self.value: str = None
+        self.value: typing.Optional[str] = None
         super().__init__(**kwargs)
 
     async def interaction_check(self, interaction: discord.Interaction):

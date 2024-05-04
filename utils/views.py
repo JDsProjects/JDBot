@@ -40,13 +40,13 @@ class UserInfoButton(discord.ui.Button):
 
         if self.custom_id == "1":
             await interaction.response.edit_message(
-                content=f"Well be Dming you the paginator to view this info", view=self.view
+                content="Well be Dming you the paginator to view this info", view=self.view
             )
 
             await menu.send(send_to=self.view.ctx.author)
 
         if self.custom_id == "2":
-            await interaction.response.edit_message(content=f"not sending the paginator to you", view=self.view)
+            await interaction.response.edit_message(content="not sending the paginator to you", view=self.view)
 
 
 def profile_converter(
@@ -663,7 +663,7 @@ class BasicButtons(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.value: str = None
+        self.value: typing.Optional[str] = None
 
     @discord.ui.button(label="Accept", style=discord.ButtonStyle.success, emoji="✅")
     async def accept(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -722,7 +722,7 @@ class BasicShuffleQuestion(discord.ui.View):
     def __init__(self, ctx, **kwargs):
         super().__init__(**kwargs)
         self.ctx = ctx
-        self.value: str = None
+        self.value: typing.Optional[str] = None
 
     @discord.ui.button(label="Closest", style=discord.ButtonStyle.success, emoji="🔍")
     async def closest(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -816,6 +816,7 @@ class nitroButtons(discord.ui.View):
         # message = await interaction.followup.send(
         # content="You closed the message, so I can't edit it.", ephemeral=True
         # )
+        # I want to see if this is possible but I have not been able to do it.
 
         await message.edit(content="Prepare to get rickrolled...(it's a good song anyway)")
         await asyncio.sleep(2)
@@ -903,7 +904,7 @@ class RpsGameButton(discord.ui.Button):
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors"}
 
-        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
+        embed = discord.Embed(title="RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
 
         if choosen == deciding:
             text = "Tie!"
@@ -1032,7 +1033,7 @@ class CoinFlipButton(discord.ui.Button):
         url_dic = {"Heads": "https://i.imgur.com/C3tF8ud.png", "Tails": "https://i.imgur.com/tSmhWgg.png"}
         embed = discord.Embed(title="coin flip", color=random.randint(0, 16777215))
         embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
-        embed.add_field(name=f"The Coin Flipped:", value=f"{value}")
+        embed.add_field(name="The Coin Flipped:", value=f"{value}")
         embed.add_field(name="You guessed:", value=f"{choosen}")
         embed.set_thumbnail(url=url_dic[value])
         text = "You Won" if (win) else "You lost"
@@ -1088,7 +1089,7 @@ class GuessingButton(discord.ui.Button):
 
         embed = discord.Embed(title="Picked Random Number", color=random.randint(0, 16777215))
         embed.set_author(name=f"{view.ctx.author}", icon_url=view.ctx.author.display_avatar.url)
-        embed.add_field(name=f"The Bot picked:", value=f"{value}")
+        embed.add_field(name="The Bot picked:", value=f"{value}")
         embed.add_field(name="You guessed:", value=f"{choosen}")
         embed.set_image(url="https://i.imgur.com/SSgk15U.gif")
         text = "You Won" if (win) else "You lost"

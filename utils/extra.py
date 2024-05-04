@@ -145,23 +145,23 @@ def npm_create_embed(data: dict) -> discord.Embed:
 
 def get_required_npm(data) -> dict:
     latest = data["dist-tags"]["latest"]
-    next = data["dist-tags"].get("next")
+    npm_next = data["dist-tags"].get("next")
     version_data = data["versions"][latest]
     name = version_data["name"]
     description = version_data["description"]
     authors = data.get("author", data.get("maintainers"))
-    license = version_data.get("license")
+    npm_license = version_data.get("license")
     _dependencies = version_data.get("dependencies", {})
     dependencies = {}
     for lib, ver in _dependencies.items():
         dependencies[lib] = ver.strip("^")
     return {
         "latest_version": latest,
-        "next_version": next,
+        "next_version": npm_next,
         "name": name,
         "description": description,
         "authors": authors,
-        "license": license,
+        "license": npm_license,
         "dependencies": dependencies,
     }
 
@@ -228,7 +228,9 @@ async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
     results = []
     for x in new_list:
         try:
-            name, type, _, fragment, *label = x.split(" ")
+            name, python_type, number, fragment, *label = x.split(" ")
+            # fixes shadowing tested with print(name, type, _)
+            # ('discord.Activity.emoji', 'py:attribute', '1')
 
             text = " ".join(label)
 

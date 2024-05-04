@@ -295,7 +295,7 @@ class GoogleEmbed(Paginator):
             embed.set_image(url=item.image)
 
         embed.set_footer(
-            text=f"Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D"
+            text="Google does some sketchy ad stuff, and descriptions from google are shown here, please be careful :D, thanks :D"
         )
 
         return embed
@@ -382,7 +382,7 @@ class dm_or_ephemeral(discord.ui.View):
     @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="✖️")
     async def denied(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.clear_items()
-        await interaction.response.edit_message(content=f"not sending the paginator to you", view=self)
+        await interaction.response.edit_message(content="not sending the paginator to you", view=self)
 
     async def interaction_check(self, interaction: discord.Interaction):
         if self.ctx.author.id != interaction.user.id:
@@ -439,7 +439,7 @@ class TweetsPaginator(Paginator):
         self._update_buttons_state()
 
     def media_page_formater(self, media: Media) -> Embed:
-        embed = discord.Embed(title=f"Images", description=f"url: {media.url}", color=0x1DA1F2)
+        embed = discord.Embed(title="Images", description=f"url: {media.url}", color=0x1DA1F2)
         embed.set_image(url=media.url)
         return embed
 
