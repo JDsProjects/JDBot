@@ -4,7 +4,6 @@ import typing
 import discord
 
 
-
 class CodeBlockModal(discord.ui.Modal, title="Pep8 Project Formatter:"):
     code = discord.ui.TextInput(
         label="Code Block:", placeholder="Please Put your code here:", style=discord.TextStyle.paragraph
