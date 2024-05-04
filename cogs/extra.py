@@ -1032,7 +1032,7 @@ class Extra(commands.Cog):
 
         view = utils.BasicButtons(ctx)
 
-        msg = await ctx.send(f"Are you sure you want to clear your todo list?", view=view)
+        msg = await ctx.send("Are you sure you want to clear your todo list?", view=view)
 
         await view.wait()
         if view.value is None:

@@ -144,7 +144,7 @@ class Image(commands.Cog):
     @commands.command(
         brief="uses our headpat program to pat you", help="a command that uses jeyyapi to make a headpat of you."
     )
-    async def headpat2(self, ctx, *, Member: utils.SuperConverter = commands.Author):
+    async def headpat2(self, ctx, *, member: utils.SuperConverter = commands.Author):
         y = 0
         embeds = []
 
@@ -159,7 +159,7 @@ class Image(commands.Cog):
                     # replace with the invert2 method with newer converter
 
         if not ctx.message.attachments or y == 0:
-            url = (Member.display_avatar.with_format("png")).url
+            url = (member.display_avatar.with_format("png")).url
             embeds.append(await utils.headpat_converter(url, ctx))
 
         menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
@@ -354,7 +354,7 @@ class Image(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(help="Headpat generator :D")
-    async def headpat(self, ctx, Member: utils.SuperConverter = commands.Author):
+    async def headpat(self, ctx, member: utils.SuperConverter = commands.Author):
         y = 0
         embeds = []
 
@@ -371,7 +371,7 @@ class Image(commands.Cog):
                     # replace with the invert2 method with newer converter
 
         if not ctx.message.attachments or y == 0:
-            url = (Member.display_avatar.with_format("png")).url
+            url = (member.display_avatar.with_format("png")).url
 
             embeds.append(await utils.headpat_converter2(url, ctx))
 
@@ -456,7 +456,7 @@ class Image(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(brief="uses dagpi to make an image of you in jail")
-    async def jail(self, ctx, *, Member: utils.SuperConverter = commands.Author):
+    async def jail(self, ctx, *, member: utils.SuperConverter = commands.Author):
         y = 0
         embeds = []
 
@@ -476,7 +476,7 @@ class Image(commands.Cog):
         # replace Member with lowercase member :)
 
         if not ctx.message.attachments or y == 0:
-            url = (Member.display_avatar.with_format("png")).url
+            url = (member.display_avatar.with_format("png")).url
             embeds.append(await utils.jail_converter(url, ctx))
 
         menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
