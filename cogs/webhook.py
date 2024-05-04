@@ -101,7 +101,7 @@ class Webhook(commands.Cog):
                 color=random.randint(0, 16777215),
                 timestamp=ctx.message.created_at,
             )
-            embed.set_image(url=webhook.avatar.url)
+            embed.set_image(url=webhook.display_avatar.url)
 
             await ctx.send(content="Got the Webhook's avatar url", embed=embed)
 
