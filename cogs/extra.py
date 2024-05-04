@@ -100,9 +100,9 @@ class Extra(commands.Cog):
     @commands.command(brief="reverses text")
     async def reverse(self, ctx, *, args=None):
         if args:
-            reversed = args[::-1]
+            reversed_text = args[::-1]
 
-            await ctx.send(content=f"{reversed}", allowed_mentions=discord.AllowedMentions.none())
+            await ctx.send(content=f"{reversed_text}", allowed_mentions=discord.AllowedMentions.none())
 
         if args is None:
             await ctx.send("Try sending actual to reverse")
