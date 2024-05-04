@@ -40,7 +40,7 @@ class JDBotHelp(commands.MinimalHelpCommand):
 
         for category, bot_commands in to_iterate:
             # bot_commands never used
-            
+
             self.paginator.add_line(category)
 
         note = self.get_ending_note()
