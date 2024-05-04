@@ -293,7 +293,7 @@ class Info(commands.Cog):
             # backend and how it works will be updated soon
 
         if not role:
-            await ctx.send(f"The role you wanted was not found.")
+            await ctx.send("The role you wanted was not found.")
 
 
 class DevTools(commands.Cog):
@@ -590,7 +590,7 @@ class DevTools(commands.Cog):
             )
         )
 
-        await ctx.send(f"Invite with slash commands and the bot scope or only with a bot scope:", view=view)
+        await ctx.send("Invite with slash commands and the bot scope or only with a bot scope:", view=view)
 
     @commands.command(brief="some old fooz command..")
     async def fooz(self, ctx, *, args=None):
@@ -605,7 +605,7 @@ class DevTools(commands.Cog):
         embed = discord.Embed(title="Message Time", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
         embed.set_footer(text=f"{ctx.message.id}")
 
-        await ctx.send(content=f"Only here cause JDJG Bot has it and why not have it here now.", embed=embed)
+        await ctx.send(content="Only here cause JDJG Bot has it and why not have it here now.", embed=embed)
 
     @commands.command(brief="converts info about colors for you.", invoke_without_command=True)
     async def color(self, ctx, *, color: utils.ColorConverter = None):
@@ -672,7 +672,7 @@ class DevTools(commands.Cog):
         last_bit = secrets.token_urlsafe(20)
 
         embed = discord.Embed(
-            title=f"Newly Generated Fake Token",
+            title="Newly Generated Fake Token",
             description=f"ID: ``{discord_object.id}``\nCreated at : \n{discord.utils.format_dt(discord_object.created_at, style = 'd')}\n{discord.utils.format_dt(discord_object.created_at, style = 'T')}",
         )
         embed.add_field(name="Generated Token:", value=f"``{first_bit}.{second_bit}.{last_bit}``")
@@ -702,7 +702,7 @@ class DevTools(commands.Cog):
             view = discord.ui.View()
             view.add_item(
                 discord.ui.Button(
-                    label=f"Test Guild Invite",
+                    label="Test Guild Invite",
                     url="https://discord.gg/hKn8qgCDzK",
                     style=discord.ButtonStyle.link,
                     row=1,

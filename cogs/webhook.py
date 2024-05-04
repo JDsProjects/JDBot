@@ -19,21 +19,22 @@ class Webhook(commands.Cog):
         session = self.bot.session
         response = await session.get(webhook.group())
 
-        if response.status != 200:
+        if not response.ok:
             return await ctx.send("Not a valid link or an error occured.")
 
-        if response.status == 200:
-            webhook = discord.Webhook.from_url(webhook.group(), session=session)
+        webhook = discord.Webhook.from_url(webhook.group(), session=session)
 
-            embed = discord.Embed(
-                title=f"Webhook {webhook.name}'s Message",
-                color=random.randint(0, 16777215),
-                timestamp=(ctx.message.created_at),
-            )
-            embed.add_field(name="Content:", value=content)
-            await webhook.send(embed=embed)
+        embed = discord.Embed(
+            title=f"Webhook {webhook.name}'s Message",
+            color=random.randint(0, 16777215),
+            timestamp=(ctx.message.created_at),
+        )
+        embed.add_field(name="Content:", value=content)
+        await webhook.send(embed=embed)
 
-            await ctx.send(f"Message was sent to the desired webhook channel.")
+        await ctx.send(f"Message was sent to the desired webhook channel.")
+
+        # should be fine.
 
     @commands.command(brief="a way to create webhooks", help="make commands with this.")
     async def webhook_create(self, ctx, name: str = None, *, args=None):
@@ -92,7 +93,7 @@ class Webhook(commands.Cog):
         webhook = webhook.group()
         session = self.bot.session
         response = await session.get(webhook)
-        if not response.status != 200:
+        if response.ok:
             webhook = discord.Webhook.from_url(webhook, session=session)
 
             embed = discord.Embed(
@@ -104,7 +105,7 @@ class Webhook(commands.Cog):
 
             await ctx.send(content="Got the Webhook's avatar url", embed=embed)
 
-        if response.status != 200:
+        if not response.ok:
             await ctx.send("Not a valid link or an error occured")
 
         try:
@@ -121,7 +122,7 @@ class Webhook(commands.Cog):
         webhook = webhook.group()
         session = self.bot.session
         response = await session.get(webhook)
-        if not response.status != 200:
+        if not response.ok:
             webhook = discord.Webhook.from_url(webhook, session=session)
 
             info = await response.json()
@@ -155,7 +156,7 @@ class Webhook(commands.Cog):
             else:
                 return await ctx.send("You do not have proper permissions to delete webhooks in that channel.")
 
-        if response.status != 200:
+        if not response.ok:
             return await ctx.send("Not a valid link or an error occured")
 
 
