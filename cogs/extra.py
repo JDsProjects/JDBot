@@ -18,6 +18,7 @@ from better_profanity import profanity
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord_games import button_games
+from discord import app_commands
 
 import utils
 
