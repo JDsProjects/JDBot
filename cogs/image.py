@@ -5,6 +5,7 @@ import os
 import random
 
 import asuna_api
+from better_profanity import profanity
 import asyncdagpi
 import discord
 import jeyyapi

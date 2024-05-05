@@ -10,7 +10,6 @@ import traceback
 import typing
 
 import discord
-from better_profanity import profanity
 from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
@@ -247,46 +246,6 @@ class Test(commands.Cog):
     async def emoji_add(self, ctx):
         await ctx.send("WIP")
         # look at the JDJG Bot orginal
-
-    @commands.command(brief="scans statuses/activities to see if there is any bad ones.")
-    @commands.has_permissions(manage_messages=True)
-    async def scan_status(self, ctx):
-        def scan(word):
-            if profanity.contains_profanity(word):
-                return {"type": "Profanity"}
-            regex = re.compile(r"(?:https?://)?discord(?:(?:app)?\.com/invite|\.gg)/?[a-zA-Z0-9]+/?")
-            if regex.search(word):
-                return {"type": "Server Invite"}
-
-            regex = re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-\_@\.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
-            if regex.search(word):
-                return {"type": "External Link"}
-            else:
-                return None
-
-        pages = []
-        i = 0
-        fi = 1
-        count = [mem.activity for mem in ctx.guild.members if mem.activity is not None]
-        count = len([scan(act.name) for act in count if scan(act.name) is not None])
-        chunck = "**Total Members With A Bad Status: {}**\n\n".format(count)
-        for member in ctx.guild.members:
-            act = member.activity
-            if act is not None:
-                sc = scan(act.name)
-                if sc is not None:
-                    chunck += f"{fi}) **{member}** ({member.mention}) - **Reason**: {sc['type']}\n"
-                    if i == 10:
-                        pages.append(chunck)
-                        chunck = "**Total Members With A Bad Status: {}**\n\n".format(count)
-                        i = 0
-                    i += 1
-                    fi += 1
-
-        pages.append(chunck)
-
-        menu = utils.ScanStatusEmbed(pages, ctx=ctx, delete_after=True)
-        await menu.send()
 
     @commands.command(brief="sets logs for a guild", name="logging")
     async def _logging(self, ctx):
