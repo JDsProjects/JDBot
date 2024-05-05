@@ -14,6 +14,7 @@ from jishaku.codeblocks import codeblock_converter
 
 import utils
 
+
 class SVGFlags(commands.FlagConverter, prefix="--", delimiter=" ", case_insensitive=True):
     code: codeblock_converter = commands.flag(default=None, positional=True)
     width: int = commands.flag(default=340, aliases=["w"])
@@ -416,8 +417,14 @@ class Image(commands.Cog):
         if not svgs:
             return await ctx.send("you need svg attachments")
 
-        files = [self.convert_svg(await svg.read(), flags.width, flags.height) for svg in svgs if isinstance(svg, discord.Attachment)]
-        files2 = [self.convert_svg(svg.read(), flags.width, flags.height) for svg in svgs if isinstance(svg, io.BytesIO)]
+        files = [
+            self.convert_svg(await svg.read(), flags.width, flags.height)
+            for svg in svgs
+            if isinstance(svg, discord.Attachment)
+        ]
+        files2 = [
+            self.convert_svg(svg.read(), flags.width, flags.height) for svg in svgs if isinstance(svg, io.BytesIO)
+        ]
 
         files = files + files2
 
