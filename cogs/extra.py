@@ -5,8 +5,8 @@ import math
 import os
 import random
 import re
-import traceback
 import time
+import traceback
 import typing
 
 import alexflipnote
@@ -15,10 +15,10 @@ import asyncpraw
 import chardet
 import discord
 from better_profanity import profanity
+from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord_games import button_games
-from discord import app_commands
 
 import utils
 

@@ -5,11 +5,11 @@ import os
 import random
 
 import asuna_api
-from better_profanity import profanity
 import asyncdagpi
 import discord
 import jeyyapi
 import mystbin
+from better_profanity import profanity
 from discord.ext import commands
 from jishaku.codeblocks import codeblock_converter
 
