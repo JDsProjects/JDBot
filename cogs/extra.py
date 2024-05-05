@@ -1187,7 +1187,7 @@ class Extra(commands.Cog):
             msg = f"Sorry {u.mention} is afk right now \nReason: {data.text} \nAfk Since: {timestamp}"
 
         await message.channel.send(msg, allowed_mentions=discord.AllowedMentions.none())
-    
+
     @app_commands.user_install()
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.command(description="Makes a command to convert temperature")

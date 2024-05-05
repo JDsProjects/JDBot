@@ -330,6 +330,7 @@ class Test(commands.Cog):
         await ctx.send("WIP")
         # Note this is not like todo, todo is for small things, notes is for big things
 
+
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
 
