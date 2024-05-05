@@ -840,7 +840,7 @@ resolved_reference = "585e0dddb24aefbcc16569a2f7db44d1d194107a"
 
 [[package]]
 name = "discord.py"
-version = "2.4.0a5013+g692db7e9a"
+version = "2.4.0a5015+g71358b8dc"
 description = "A Python wrapper for the Discord API"
 optional = false
 python-versions = ">=3.8.0"
@@ -865,7 +865,7 @@ voice = ["PyNaCl (>=1.3.0,<1.6)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "692db7e9ab86f48bebe6e68742c6d0a4fbbaf42d"
+resolved_reference = "71358b8dcea1923558fb0e51f641d5881e825bf4"
 
 [[package]]
 name = "discord-py-paginators"
