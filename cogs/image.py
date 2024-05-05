@@ -514,6 +514,41 @@ class Image(commands.Cog):
 
         await ctx.send(files=files)
 
+    @commands.command(brief="adds a text to Go Go Gadget or Wowzers Username")
+    async def gadget(self, ctx, *, text=None):
+        if not text:
+            return await ctx.send("You need to give text for me to process")
+
+        if profanity.contains_profanity(text):
+            response = f"Wowsers! \n{ctx.author} your gadget is really inapporiate"
+
+            if profanity.contains_profanity(response):
+                response = f"Wowzers! \nYour name is really inapporiate"
+
+        else:
+            response = f"Go Go Gadget {text}"
+
+        if len(response) > 140:
+            response = "Wowzers! \nYour name is too long"
+
+            # doesn't check if it's from the actual user response or the name itself
+
+        # unknown on actual size limit, but 140 should work as a placeholder
+
+        embed = discord.Embed(title="Inspector Gadget is here!", color=13420741)
+        embed.set_image(url="attachment://gadget.png")
+        embed.set_footer(text=f"Requested by {ctx.author}")
+
+        # may need a better color that is a inspector gadget color
+
+        image = await asyncio.to_thread(utils.gadget, response)
+        file = discord.File(image, filename="gadget.png")
+        image.close()
+
+        await ctx.send(embed=embed, file=file)
+
+        # currently good but the rust version will be even better.
+
 
 async def setup(bot):
     await bot.add_cog(Image(bot))

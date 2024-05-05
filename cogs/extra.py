@@ -1187,6 +1187,41 @@ class Extra(commands.Cog):
             msg = f"Sorry {u.mention} is afk right now \nReason: {data.text} \nAfk Since: {timestamp}"
 
         await message.channel.send(msg, allowed_mentions=discord.AllowedMentions.none())
+    
+    @app_commands.user_install()
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.command(description="Makes a command to convert temperature")
+    async def convert_temperature(
+        self,
+        interaction: discord.Interaction,
+        temp_system: utils.Temperature,
+        temperature: float,
+    ):
+        temps = temp_system.convert_to(temperature)
+
+        if temps.celsius < 20:
+            color = 0x0000FF
+
+        if temps.celsius >= 20 and temps.celsius <= 30:
+            color = 0xFFA500
+
+        if temps.celsius > 30:
+            color = 0xFF0000
+
+        embed = discord.Embed(title="Temperature:", color=color)
+        embed.add_field(name="Celsius:", value=f"{temps.celsius:,} °C")
+        embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit:,} °F")
+        embed.add_field(name="Kelvin:", value=f"{temps.kelvin:,} °K")
+        embed.add_field(name="Rankine:", value=f"{temps.rankine:,} °R")
+        embed.set_footer(text=f"Chose: {temp_system.value}")
+
+        await interaction.response.send_message(embed=embed)
+
+    @convert_temperature.error
+    async def convert_temperature_error(self, interaction: discord.Interaction, error):
+        await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
+        print(interaction.command)
+        traceback.print_exc()
 
 
 async def setup(bot):

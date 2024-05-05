@@ -129,39 +129,6 @@ class Test(commands.Cog):
 
         # when fully completed move to extra.py(not the old Twitter Cog.), will also use modals, maybe
 
-    @commands.command(brief="adds a text to Go Go Gadget or Wowzers Username")
-    async def gadget(self, ctx, *, text=None):
-        if not text:
-            return await ctx.send("You need to give text for me to process")
-
-        if profanity.contains_profanity(text):
-            response = f"Wowsers! \n{ctx.author} your gadget is really inapporiate"
-
-            if profanity.contains_profanity(response):
-                response = f"Wowzers! \nYour name is really inapporiate"
-
-        else:
-            response = f"Go Go Gadget {text}"
-
-        if len(response) > 140:
-            response = "Wowzers! \nYour name is too long"
-
-            # doesn't check if it's from the actual user response or the name itself
-
-        # unknown on actual size limit, but 140 should work as a placeholder
-
-        embed = discord.Embed(title="Inspector Gadget is here!", color=13420741)
-        embed.set_image(url="attachment://gadget.png")
-        embed.set_footer(text=f"Requested by {ctx.author}")
-
-        # may need a better color that is a inspector gadget color
-
-        image = await asyncio.to_thread(utils.gadget, response)
-        file = discord.File(image, filename="gadget.png")
-        image.close()
-
-        await ctx.send(embed=embed, file=file)
-
     def test(self, image):
         import io
 
@@ -362,40 +329,6 @@ class Test(commands.Cog):
     async def notes(self, ctx):
         await ctx.send("WIP")
         # Note this is not like todo, todo is for small things, notes is for big things
-
-    @app_commands.command(description="Makes a command to convert temperature")
-    async def convert_temperature(
-        self,
-        interaction: discord.Interaction,
-        temp_system: utils.Temperature,
-        temperature: float,
-    ):
-        temps = temp_system.convert_to(temperature)
-
-        if temps.celsius < 20:
-            color = 0x0000FF
-
-        if temps.celsius >= 20 and temps.celsius <= 30:
-            color = 0xFFA500
-
-        if temps.celsius > 30:
-            color = 0xFF0000
-
-        embed = discord.Embed(title="Temperature:", color=color)
-        embed.add_field(name="Celsius:", value=f"{temps.celsius:,} °C")
-        embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit:,} °F")
-        embed.add_field(name="Kelvin:", value=f"{temps.kelvin:,} °K")
-        embed.add_field(name="Rankine:", value=f"{temps.rankine:,} °R")
-        embed.set_footer(text=f"Chose: {temp_system.value}")
-
-        await interaction.response.send_message(embed=embed)
-
-    @convert_temperature.error
-    async def convert_temperature_error(self, interaction: discord.Interaction, error):
-        await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
-        print(interaction.command)
-        traceback.print_exc()
-
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
