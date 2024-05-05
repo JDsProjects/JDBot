@@ -128,6 +128,7 @@ def clear_permission(ctx):
     if isinstance(ctx.channel, discord.DMChannel):
         return False
 
+
 async def headpat_converter2(url, ctx):
     dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
     image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(), str(url))
@@ -138,6 +139,7 @@ async def headpat_converter2(url, ctx):
     embed.set_image(url=url)
     embed.set_footer(text="powered by dagpi")
     return embed
+
 
 async def jail_converter(url, ctx):
     dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
