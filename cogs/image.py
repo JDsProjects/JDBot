@@ -14,6 +14,11 @@ from jishaku.codeblocks import codeblock_converter
 
 import utils
 
+class SVGFlags(commands.FlagConverter, prefix="--", delimiter=" ", case_insensitive=True):
+    code: codeblock_converter = commands.flag(default=None, positional=True)
+    width: int = commands.flag(default=340, aliases=["w"])
+    height: int = commands.flag(default=340, aliases=["h"])
+
 
 class Image(commands.Cog):
     "A bunch of Image Manipulation and other related Image commands"
@@ -378,8 +383,8 @@ class Image(commands.Cog):
         menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
         await menu.send()
 
-    async def convert_svg(self, blob):
-        rsvg = "rsvg-convert --width=340 --height=340"
+    async def convert_svg(self, blob, width, height):
+        rsvg = f"rsvg-convert --{width=} --{height=}"
         proc = await asyncio.create_subprocess_shell(
             rsvg, stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
@@ -392,30 +397,27 @@ class Image(commands.Cog):
         return io.BytesIO(stdout)
 
     async def svg_convert(self, attachments):
-        svgs = []
-
-        for attachment in attachments:
-            if attachment.content_type in ("image/svg+xml", "image/svg+xml; charset=utf-8"):
-                svgs.append(attachment)
-
-        return svgs
+        return [
+            attachment
+            for attachment in attachments
+            if attachment.content_type and attachment.content_type.startswith("image/svg+xml")
+        ]
 
     @commands.command(brief="Converts svg images to png images")
-    async def svgconvert(self, ctx, *, code: codeblock_converter = None):
+    async def svgconvert(self, ctx, *, flags: SVGFlags):
         svgs = await self.svg_convert(ctx.message.attachments)
 
-        if code:
-            value = bytes(code.content, "utf-8")
+        if flags.code:
+            value = bytes(flags.code.content, "utf-8")
             svg_code = io.BytesIO(value)
             svg_code.seek(0)
-
             svgs.append(svg_code)
 
         if not svgs:
             return await ctx.send("you need svg attachments")
 
-        files = [self.convert_svg(await svg.read()) for svg in svgs if isinstance(svg, discord.Attachment)]
-        files2 = [self.convert_svg(svg.read()) for svg in svgs if isinstance(svg, io.BytesIO)]
+        files = [self.convert_svg(await svg.read(), flags.width, flags.height) for svg in svgs if isinstance(svg, discord.Attachment)]
+        files2 = [self.convert_svg(svg.read(), flags.width, flags.height) for svg in svgs if isinstance(svg, io.BytesIO)]
 
         files = files + files2
 
