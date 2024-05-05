@@ -300,7 +300,7 @@ class Order(commands.Cog):
 
         embed = discord.Embed(
             title="Item: disco",
-            description=f"Random Disco Gif:",
+            description="Random Disco Gif:",
             color=random.randint(0, 16777215),
             timestamp=ctx.message.created_at,
         )
@@ -340,7 +340,7 @@ class Order(commands.Cog):
 
         embed = discord.Embed(
             title="Item: dance",
-            description=f"Random Dance Gif:",
+            description="Random Dance Gif:",
             color=random.randint(0, 16777215),
             timestamp=ctx.message.created_at,
         )

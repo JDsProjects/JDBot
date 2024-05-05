@@ -158,7 +158,7 @@ class Image(commands.Cog):
             for a in ctx.message.attachments:
                 if a.filename.endswith(".png"):
                     url = a.url
-                    embeds.append(await utils.headpat_converter(url, ctx))
+                    embeds.append(await utils.headpat_converter(url, ctx, self.jeyy_client))
                     y += 1
                 if not a.filename.endswith(".png"):
                     pass
@@ -458,7 +458,7 @@ class Image(commands.Cog):
         url = await utils.cdn_upload(ctx.bot, image)
         image.close()
 
-        embed = discord.Embed(title=f"Called Text", color=random.randint(0, 16777215), url=url)
+        embed = discord.Embed(title="Called Text", color=random.randint(0, 16777215), url=url)
         embed.set_image(url=url)
         embed.set_footer(text=f"Requested by {ctx.author}")
 

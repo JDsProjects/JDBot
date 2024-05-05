@@ -32,7 +32,7 @@ class Webhook(commands.Cog):
         embed.add_field(name="Content:", value=content)
         await webhook.send(embed=embed)
 
-        await ctx.send(f"Message was sent to the desired webhook channel.")
+        await ctx.send("Message was sent to the desired webhook channel.")
 
         # should be fine.
 

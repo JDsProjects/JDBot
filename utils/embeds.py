@@ -7,7 +7,6 @@ import aiohttp
 import asyncdagpi
 import discord
 import filetype
-import jeyyapi
 import somerandomapi
 
 
@@ -92,11 +91,11 @@ async def triggered_converter(url, ctx):
     return embed
 
 
-async def headpat_converter(url, ctx):
+async def headpat_converter(url, ctx, jeyy_client):
     embed = discord.Embed(color=random.randint(0, 16777215))
 
     try:
-        client = jeyyapi.JeyyAPIClient(session=ctx.bot.session)
+        client = jeyy_client
         image = await client.patpat(url)
 
     except Exception as e:
@@ -129,23 +128,6 @@ def clear_permission(ctx):
     if isinstance(ctx.channel, discord.DMChannel):
         return False
 
-
-async def invert_converter(url, ctx):
-    embed = discord.Embed(color=random.randint(0, 16777215))
-
-    # embed.set_author(name=f"Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    # embed.set_image(url=url)
-    # embed.set_footer(text="An Unexcepted Error Occured")
-    # return embed
-
-    # url = await cdn_upload(ctx.bot, image)
-    embed.set_author(name=f"Inverted Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    embed.set_image(url=url)
-    embed.set_footer(text="powered by some random api")
-
-    return embed
-
-
 async def headpat_converter2(url, ctx):
     dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)
     image = await dagpi_client.image_process(asyncdagpi.ImageFeatures.petpet(), str(url))
@@ -156,24 +138,6 @@ async def headpat_converter2(url, ctx):
     embed.set_image(url=url)
     embed.set_footer(text="powered by dagpi")
     return embed
-
-
-async def invert_converter2(url, ctx):
-    embed = discord.Embed(color=random.randint(0, 16777215))
-
-    # embed.set_author(name=f"Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    # embed.set_image(url=url)
-    # embed.set_footer(text="An Unexcepted Error Occured")
-    # return embed
-
-    # url = await cdn_upload(ctx.bot, image)
-
-    embed.set_author(name=f"Inverted Image requested by {ctx.author}", icon_url=(ctx.author.display_avatar.url))
-    embed.set_image(url=url)
-    embed.set_footer(text="powered by some jeyyapi")
-
-    return embed
-
 
 async def jail_converter(url, ctx):
     dagpi_client = asyncdagpi.Client(os.environ["dagpi_key"], session=ctx.bot.session)

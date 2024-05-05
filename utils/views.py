@@ -955,7 +955,7 @@ class RpsGameButtonGun(discord.ui.Button):
         deciding = random.randint(1, 3)
         number_to_text = {1: "Rock", 2: "Paper", 3: "Scissors", 4: "Gun"}
 
-        embed = discord.Embed(title=f"RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
+        embed = discord.Embed(title="RPS Game", color=random.randint(0, 16777215), timestamp=message.created_at)
 
         text = "You Won"
 
