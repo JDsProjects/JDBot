@@ -167,7 +167,7 @@ class Image(commands.Cog):
 
         if not ctx.message.attachments or y == 0:
             url = (member.display_avatar.with_format("png")).url
-            embeds.append(await utils.headpat_converter(url, ctx))
+            embeds.append(await utils.headpat_converter(url, ctx, self.jeyy_client))
 
         menu = utils.Paginator(embeds, ctx=ctx, delete_after=True)
         await menu.send()
