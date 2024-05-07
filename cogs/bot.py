@@ -175,7 +175,7 @@ class Bot(commands.Cog):
         if not information.team:
             true_owner = information.team.owner
             team_members = information.team.members
-            
+
         embed = discord.Embed(title=information.name, color=random.randint(0, 16777215))
         embed.add_field(name="Owner", value=true_owner)
         embed.set_footer(text=f"ID: {true_owner.id}")
