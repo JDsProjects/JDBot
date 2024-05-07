@@ -142,7 +142,7 @@ class Bot(commands.Cog):
 
     @commands.command(brief="gives you who the owner is.")
     async def owner(self, ctx):
-        info = await self.bot.application_info()
+        info = self.bot.application
         owner_id = info.team.owner_id if info.team else info.owner.id
 
         support_guild = self.bot.get_guild(1019027330779332660)
@@ -167,14 +167,15 @@ class Bot(commands.Cog):
         brief="this command works if you are in team otherwise it will just give the owner.",
     )
     async def team(self, ctx):
-        information = await self.bot.application_info()
+        information = self.bot.application
         if information.team == None:
             true_owner = information.owner
             team_members = []
 
-        if information.team != None:
+        if not information.team:
             true_owner = information.team.owner
             team_members = information.team.members
+            
         embed = discord.Embed(title=information.name, color=random.randint(0, 16777215))
         embed.add_field(name="Owner", value=true_owner)
         embed.set_footer(text=f"ID: {true_owner.id}")
