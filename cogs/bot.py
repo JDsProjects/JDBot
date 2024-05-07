@@ -168,11 +168,11 @@ class Bot(commands.Cog):
     )
     async def team(self, ctx):
         information = self.bot.application
-        if information.team == None:
+        if not information.team:
             true_owner = information.owner
             team_members = []
 
-        if not information.team:
+        if information.team:
             true_owner = information.team.owner
             team_members = information.team.members
 
