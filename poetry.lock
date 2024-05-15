@@ -840,10 +840,10 @@ resolved_reference = "585e0dddb24aefbcc16569a2f7db44d1d194107a"
 
 [[package]]
 name = "discord.py"
-version = "2.4.0a5015+g71358b8dc"
+version = "2.4.0a5025+g041abf8b4"
 description = "A Python wrapper for the Discord API"
 optional = false
-python-versions = ">=3.8.0"
+python-versions = ">=3.8"
 files = []
 develop = false
 
@@ -865,7 +865,7 @@ voice = ["PyNaCl (>=1.3.0,<1.6)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "71358b8dcea1923558fb0e51f641d5881e825bf4"
+resolved_reference = "041abf8b487038c2935da668405ba8b0686ff2f8"
 
 [[package]]
 name = "discord-py-paginators"
@@ -1243,13 +1243,13 @@ files = [
 
 [[package]]
 name = "mystbin-py"
-version = "6.1.0"
+version = "7.0.0"
 description = "A small simple wrapper around the mystb.in API."
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "mystbin_py-6.1.0-py3-none-any.whl", hash = "sha256:747c90be69b766b5e1b96a77a37ade6eec9e3b1ae83a9209193215b977f7fdcd"},
-    {file = "mystbin_py-6.1.0.tar.gz", hash = "sha256:6a8a7ef5846a0fb718010371f768004eec815c4b9241c10f1a043cb9f2ce26e8"},
+    {file = "mystbin_py-7.0.0-py3-none-any.whl", hash = "sha256:f33da624c862b42f5ab6c39803c82528db3e42ad53636bdcee84a4cea47763bb"},
+    {file = "mystbin_py-7.0.0.tar.gz", hash = "sha256:3ef718699e0ae3a01d5240a49ad09acb3e0e7fa3f0f5882965f16f1082696c17"},
 ]
 
 [package.extras]
