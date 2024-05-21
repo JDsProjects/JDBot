@@ -260,20 +260,6 @@ files = [
 aiohttp = "*"
 
 [[package]]
-name = "async-lru"
-version = "2.0.4"
-description = "Simple LRU cache for asyncio"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "async-lru-2.0.4.tar.gz", hash = "sha256:b8a59a5df60805ff63220b2a0c5b5393da5521b113cd5465a44eb037d81a5627"},
-    {file = "async_lru-2.0.4-py3-none-any.whl", hash = "sha256:ff02944ce3c288c5be660c42dbcca0742b32c3b279d6dceda655190240b99224"},
-]
-
-[package.dependencies]
-typing-extensions = {version = ">=4.0.0", markers = "python_version < \"3.11\""}
-
-[[package]]
 name = "async-timeout"
 version = "4.0.3"
 description = "Timeout context manager for asyncio programs"
@@ -840,7 +826,7 @@ resolved_reference = "585e0dddb24aefbcc16569a2f7db44d1d194107a"
 
 [[package]]
 name = "discord.py"
-version = "2.4.0a5025+g041abf8b4"
+version = "2.4.0a5033+gf77ba711"
 description = "A Python wrapper for the Discord API"
 optional = false
 python-versions = ">=3.8"
@@ -850,13 +836,12 @@ develop = false
 [package.dependencies]
 aiodns = {version = ">=1.1", optional = true, markers = "extra == \"speed\""}
 aiohttp = ">=3.7.4,<4"
-async-timeout = {version = ">=4.0,<5.0", markers = "python_version < \"3.11\""}
 Brotli = {version = "*", optional = true, markers = "extra == \"speed\""}
 orjson = {version = ">=3.5.4", optional = true, markers = "extra == \"speed\""}
 PyNaCl = {version = ">=1.3.0,<1.6", optional = true, markers = "extra == \"voice\""}
 
 [package.extras]
-docs = ["sphinx (==4.4.0)", "sphinx-inline-tabs (==2023.4.21)", "sphinxcontrib-applehelp (==1.0.4)", "sphinxcontrib-devhelp (==1.0.2)", "sphinxcontrib-htmlhelp (==2.0.1)", "sphinxcontrib-jsmath (==1.0.1)", "sphinxcontrib-qthelp (==1.0.3)", "sphinxcontrib-serializinghtml (==1.1.5)", "sphinxcontrib-websupport (==1.2.4)", "sphinxcontrib_trio (==1.1.2)", "typing-extensions (>=4.3,<5)"]
+docs = ["sphinx (==4.4.0)", "sphinx-inline-tabs (==2023.4.21)", "sphinxcontrib-applehelp (==1.0.4)", "sphinxcontrib-devhelp (==1.0.2)", "sphinxcontrib-htmlhelp (==2.0.1)", "sphinxcontrib-jsmath (==1.0.1)", "sphinxcontrib-qthelp (==1.0.3)", "sphinxcontrib-serializinghtml (==1.1.5)", "sphinxcontrib-trio (==1.1.2)", "sphinxcontrib-websupport (==1.2.4)", "typing-extensions (>=4.3,<5)"]
 speed = ["Brotli", "aiodns (>=1.1)", "cchardet (==2.1.7)", "orjson (>=3.5.4)"]
 test = ["coverage[toml]", "pytest", "pytest-asyncio", "pytest-cov", "pytest-mock", "typing-extensions (>=4.3,<5)", "tzdata"]
 voice = ["PyNaCl (>=1.3.0,<1.6)"]
@@ -865,7 +850,7 @@ voice = ["PyNaCl (>=1.3.0,<1.6)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "041abf8b487038c2935da668405ba8b0686ff2f8"
+resolved_reference = "f77ba711ba21bc2f70b252134880ebac3856acf8"
 
 [[package]]
 name = "discord-py-paginators"
@@ -1616,13 +1601,13 @@ six = ">=1.5"
 
 [[package]]
 name = "requests"
-version = "2.31.0"
+version = "2.32.0"
 description = "Python HTTP for Humans."
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "requests-2.31.0-py3-none-any.whl", hash = "sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003f"},
-    {file = "requests-2.31.0.tar.gz", hash = "sha256:942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1"},
+    {file = "requests-2.32.0-py3-none-any.whl", hash = "sha256:f2c3881dddb70d056c5bd7600a4fae312b2a300e39be6a118d30b90bd27262b5"},
+    {file = "requests-2.32.0.tar.gz", hash = "sha256:fa5490319474c82ef1d2c9bc459d3652e3ae4ef4c4ebdd18a21145a47ca4b6b8"},
 ]
 
 [package.dependencies]
@@ -1730,8 +1715,6 @@ files = []
 develop = false
 
 [package.dependencies]
-aiohttp = {version = ">=3.7.3,<4", optional = true, markers = "extra == \"async\""}
-async-lru = {version = ">=1.0.3,<3", optional = true, markers = "extra == \"async\""}
 oauthlib = ">=3.2.0,<4"
 requests = ">=2.27.0,<3"
 requests-oauthlib = ">=1.2.0,<2"
