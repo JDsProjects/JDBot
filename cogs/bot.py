@@ -699,6 +699,7 @@ class Bot(commands.Cog):
             343019667511574528,
             1033906684965421086,
             1163416356566347828,
+            396290259907903491,
         ]
         users = sorted([(f"{await self.bot.try_user(uid)}") or f"Unknown User#0000 ({uid})" for uid in to_credit])
         joined_users = "\n".join(users)
