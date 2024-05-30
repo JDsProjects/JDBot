@@ -721,7 +721,7 @@ class Extra(commands.Cog):
         aliases=["generate_color_code", "generate_colorcode", "g_cc", "cc_generator"],
     )
     async def generate_cc(self, ctx):
-        embed = discord.Embed(description=f"```yaml \n{utils.cc_generate()}```", color=random.randint(0, 16777215))
+        embed = discord.Embed(description=f"```{utils.cc_generate()}```", color=random.randint(0, 16777215))
 
         embed.set_author(name=f"{ctx.author} Generated A Random CC:", icon_url=ctx.author.display_avatar.url)
 
