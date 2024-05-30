@@ -703,7 +703,7 @@ class Bot(commands.Cog):
 
         embed = discord.Embed(
             color=14352639,
-            description=f"```{joined_users}```",
+            description=f"```yaml\n{joined_users}```",
         )
         embed.set_author(name=f"{self.bot.user} Bot Credits:", icon_url=self.bot.user.display_avatar.url)
         embed.set_footer(
