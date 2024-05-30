@@ -1192,7 +1192,7 @@ class Extra(commands.Cog):
 
     @app_commands.user_install()
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-    @app_commands.command(description="Makes a command to convert temperature")
+    @app_commands.command(description="A command to convert temperatures to different scales")
     async def convert_temperature(
         self,
         interaction: discord.Interaction,
