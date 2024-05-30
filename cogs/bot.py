@@ -697,10 +697,6 @@ class Bot(commands.Cog):
             746807014658801704,
             910899642236043294,
             343019667511574528,
-            1033906684965421086,
-            1163416356566347828,
-            396290259907903491,
-            263602820496883712,
         ]
         users = sorted([(f"{await self.bot.try_user(uid)}") or f"Unknown User#0000 ({uid})" for uid in to_credit])
         joined_users = "\n".join(users)
@@ -714,6 +710,30 @@ class Bot(commands.Cog):
             text="Credits are done in abc order. \nPlease don't randomly contact them unless they allow you to."
         )
         await ctx.send(embed=embed)
+
+    @commands.command(brief="Bot Volunteer Translator Credits")
+    async def translators(self, ctx):
+        volunteer_translators = [
+            1033906684965421086,
+            1163416356566347828,
+            396290259907903491,
+            263602820496883712,
+        ]
+
+        users = sorted([(f"{await self.bot.try_user(uid)}") or f"Unknown User#0000 ({uid})" for uid in volunteer_translators])
+        joined_users = "\n".join(users)
+        
+        embed = discord.Embed(
+            color=14352639,
+            description=f"```{joined_users}```",
+        )
+        embed.set_author(name=f"{self.bot.user} Bot Volunteer Translator Credits:", icon_url=self.bot.user.display_avatar.url)
+        embed.set_footer(
+            text="Credits are done in abc order. \nPlease don't randomly contact them unless they allow you to."
+        )
+        await ctx.send(embed=embed)
+
+
 
 
 async def setup(bot):
