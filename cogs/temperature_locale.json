@@ -1,0 +1,16 @@
+{
+  "en-US" :
+  {
+  "name": {"text": "convert_temperature"},
+  "text_1" : {"text": "Temperature:"},
+  "text_2" : {"text": "Celsius:"},
+  "text_3" : {"text": "Fahrenheit:"},
+  "text_4" : {"text": "Kelvin:"},
+  "text_5" : {"text": "Rankine:"},
+  "desc" : {"text": "Chose:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R}"}
+  }
+}
