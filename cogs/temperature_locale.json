@@ -12,7 +12,7 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"},
+  "r_symbol" : {"text": "°R"},
   "translator_id" : "168422909482762240"
   },
   "hi":
@@ -28,7 +28,7 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"},
+  "r_symbol" : {"text": "°R"},
   "translator_id" : "1033906684965421086"
   },
   "ja" : 
@@ -44,7 +44,7 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"},
+  "r_symbol" : {"text": "°R"},
   "translator_id" : "1163416356566347828"
   },
   "fi" :
@@ -60,7 +60,7 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"},
+  "r_symbol" : {"text": "°R"},
   "translator_id" : "396290259907903491"
   },
   "sv-SE" :
@@ -76,7 +76,7 @@
     "c_symbol" : {"text": "°C"},
     "f_symbol" : {"text": "°F"},
     "k_symbol" : {"text": "°K"},
-    "r_symbol" : {"text": "°R}"},
+    "r_symbol" : {"text": "°R"},
     "translator_id" : "263602820496883712"
     },
   "nl" :
@@ -92,7 +92,7 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"},
+  "r_symbol" : {"text": "°R"},
   "translator_id" : "171539705043615744"
   },
   "de" :
@@ -108,7 +108,7 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"},
+  "r_symbol" : {"text": "°R"},
   "translator_id" : "1022842005920940063"
   },
   "pl" :
@@ -124,7 +124,7 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"},
+  "r_symbol" : {"text": "°R"},
   "translator_id" : "1022842005920940063"
   },
   "fr" :
@@ -140,7 +140,23 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"},
+  "r_symbol" : {"text": "°R"},
   "translator_id" : "1022842005920940063"
+  },
+  "es-ES" : 
+  {
+  "name": {"text": "convert_temperature"},
+  "command_desc": {"text": "A command to convert temperatures to different scales"},
+  "title" : {"text": "Temperature:"},
+  "c_name" : {"text": "Celsius:"},
+  "f_name" : {"text": "Fahrenheit:"},
+  "k_name" : {"text": "Kelvin:"},
+  "r_name" : {"text": "Rankine:"},
+  "desc" : {"text": "Chose:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R"},
+  "translator_id" : "414562510226849802"
   }
 }
