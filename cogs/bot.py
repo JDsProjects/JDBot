@@ -723,11 +723,7 @@ class Bot(commands.Cog):
         }
 
         users = sorted(
-            [
-                (f"{await self.bot.try_user(uid)} : {volunteers_translators[uuid]}")
-                or f"Unknown User#0000 ({uid}) : {volunteers_translators[uuid]}"
-                for uid in volunteer_translators
-            ]
+            [(f"{await self.bot.try_user(uid)} : {volunteer_translators[uuid]}") or f"Unknown User#0000 ({uid}) : {volunteer_translators[uuid]}" for uid in volunteer_translators]
         )
 
         joined_users = "\n".join(users)
