@@ -2,6 +2,7 @@
   "en-US" :
   {
   "name": {"text": "convert_temperature"},
+  "command_desc": {"text": "A command to convert temperatures to different scales"},
   "text_1" : {"text": "Temperature:"},
   "text_2" : {"text": "Celsius:"},
   "text_3" : {"text": "Fahrenheit:"},
