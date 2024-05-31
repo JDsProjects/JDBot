@@ -23,7 +23,7 @@
   "c_name" : {"text": "सेल्सियस:"},
   "f_name" : {"text": "फ़ारेनहाइ:"},
   "k_name" : {"text": "केल्विन:"},
-  "r_name" : {"text": "रैंकिन :"},
+  "r_name" : {"text": "रैंकिन:"},
   "desc" : {"text": "अपनी पसंद चुनें:"},
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
