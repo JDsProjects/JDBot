@@ -83,7 +83,7 @@
   {
   "name": {"text": "temperatuur_omrekenen"},
   "command_desc": {"text": "Een command om temperaturen naar andere schalen om te rekenen"},
-  "text_1" : {"text": "Temperature:"},
+  "text_1" : {"text": "Temperatuur:"},
   "text_2" : {"text": "Celsius:"},
   "text_3" : {"text": "Fahrenheit:"},
   "text_4" : {"text": "Kelvin:"},
