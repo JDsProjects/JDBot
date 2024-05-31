@@ -724,8 +724,8 @@ class Bot(commands.Cog):
 
         users = sorted(
             [
-                (f"{await self.bot.try_user(uid)} : {volunteer_translators[uuid]}")
-                or f"Unknown User#0000 ({uid}) : {volunteer_translators[uuid]}"
+                (f"{await self.bot.try_user(uid)} : {volunteer_translators[uid]}")
+                or f"Unknown User#0000 ({uid}) : {volunteer_translators[uid]}"
                 for uid in volunteer_translators
             ]
         )
