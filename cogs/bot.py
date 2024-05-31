@@ -714,7 +714,6 @@ class Bot(commands.Cog):
     @commands.command(brief="Bot Volunteer Translator Credits")
     async def translators(self, ctx):
         volunteer_translators = {
-            261755551350784010: "🇮🇳",
             1033906684965421086: "🇮🇳",
             1163416356566347828: "🇯🇵",
             396290259907903491: "🇫🇮",
@@ -722,6 +721,7 @@ class Bot(commands.Cog):
             171539705043615744: "🇳🇱",
             1022842005920940063: "🇫🇷 🇩🇪 🇵🇱",
             414562510226849802: "🇪🇸 🇲🇽",
+            261755551350784010: "🇮🇳",
         }
 
         users = sorted(
