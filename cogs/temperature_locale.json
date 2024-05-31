@@ -46,5 +46,53 @@
   "k_symbol" : {"text": "°K"},
   "r_symbol" : {"text": "°R}"},
   "translator_id" : "1163416356566347828"
+  },
+  "fi" :
+  {
+  "name": {"text": "convert_temperature"},
+  "command_desc": {"text": "Komento lämpötilojen muuntamista varten"},
+  "text_1" : {"text": "Lämpötila"},
+  "text_2" : {"text": "Celsius:"},
+  "text_3" : {"text": "Fahrenheit:"},
+  "text_4" : {"text": "Kelvin:"},
+  "text_5" : {"text": "Rankine:"},
+  "desc" : {"text": "Valinta:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R}"},
+  "translator_id" : "396290259907903491"
+  },
+  "sv-SE" :
+  {
+    "name": {"text": "convert_temperature"},
+    "command_desc": {"text": "Ett kommando för att konvertera temperaturer till olika skalor"},
+    "text_1" : {"text": "Temperatur:"},
+    "text_2" : {"text": "Celsius:"},
+    "text_3" : {"text": "Fahrenheit:"},
+    "text_4" : {"text": "Kelvin:"},
+    "text_5" : {"text": "Rankine:"},
+    "desc" : {"text": "Valde:"},
+    "c_symbol" : {"text": "°C"},
+    "f_symbol" : {"text": "°F"},
+    "k_symbol" : {"text": "°K"},
+    "r_symbol" : {"text": "°R}"},
+    "translator_id" : "263602820496883712"
+    },
+  "nl" :
+  {
+  "name": {"text": "temperatuur_omrekenen"},
+  "command_desc": {"text": "Een command om temperaturen naar andere schalen om te rekenen"},
+  "text_1" : {"text": "Temperature:"},
+  "text_2" : {"text": "Celsius:"},
+  "text_3" : {"text": "Fahrenheit:"},
+  "text_4" : {"text": "Kelvin:"},
+  "text_5" : {"text": "Rankine:"},
+  "desc" : {"text": "gekozen:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R}"},
+  "translator_id" : "171539705043615744"
   }
 }
