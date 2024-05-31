@@ -713,14 +713,14 @@ class Bot(commands.Cog):
 
     @commands.command(brief="Bot Volunteer Translator Credits")
     async def translators(self, ctx):
-        volunteer_translators = [
-            1033906684965421086,
-            1163416356566347828,
-            396290259907903491,
-            263602820496883712,
-            171539705043615744,
-            1022842005920940063,
-        ]
+        volunteer_translators = {
+            1033906684965421086 : "🇮🇳",
+            1163416356566347828 : "🇯🇵",
+            396290259907903491 : "🇫🇮",
+            263602820496883712 : "🇸🇪",
+            171539705043615744 : "🇳🇱",
+            1022842005920940063 : "🇫🇷 🇩🇪 🇵🇱",
+        }
 
         users = sorted(
             [(f"{await self.bot.try_user(uid)}") or f"Unknown User#0000 ({uid})" for uid in volunteer_translators]
