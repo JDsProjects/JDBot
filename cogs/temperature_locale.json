@@ -94,5 +94,53 @@
   "k_symbol" : {"text": "°K"},
   "r_symbol" : {"text": "°R}"},
   "translator_id" : "171539705043615744"
+  },
+  "de" :
+  {
+  "name": {"text": "temperatur_konvertieren"},
+  "command_desc": {"text": "Ein Befehl zum Konvertieren von Temperaturen in verschiedene Maßstäbe"},
+  "title" : {"text": "Temperatur:"},
+  "c_name" : {"text": "Celsius:"},
+  "f_name" : {"text": "Fahrenheit:"},
+  "k_name" : {"text": "Kelvin:"},
+  "r_name" : {"text": "Rankine:"},
+  "desc" : {"text": "Gewählt:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R}"},
+  "translator_id" : "1022842005920940063"
+  },
+  "pl" :
+  {
+  "name": {"text": "temperatury_konwersja"},
+  "command_desc": {"text": "Polecenie przeliczania temperatur na różne skale"},
+  "title" : {"text": "Temperatura:"},
+  "c_name" : {"text": "Celsjusz:"},
+  "f_name" : {"text": "Fahrenheit:"},
+  "k_name" : {"text": "Kelvin:"},
+  "r_name" : {"text": "Rankine:"},
+  "desc" : {"text": "Wybrane:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R}"},
+  "translator_id" : "1022842005920940063"
+  },
+  "fr" :
+  {
+  "name": {"text": "temperature_convertir"},
+  "command_desc": {"text": "Une commande pour convertir les températures à différentes échelles"},
+  "title" : {"text": "Température:"},
+  "c_name" : {"text": "Celsius:"},
+  "f_name" : {"text": "Fahrenheit:"},
+  "k_name" : {"text": "Kelvin:"},
+  "r_name" : {"text": "Rankine:"},
+  "desc" : {"text": "Choisi:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R}"},
+  "translator_id" : "1022842005920940063"
   }
 }
