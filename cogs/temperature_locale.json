@@ -12,6 +12,39 @@
   "c_symbol" : {"text": "°C"},
   "f_symbol" : {"text": "°F"},
   "k_symbol" : {"text": "°K"},
-  "r_symbol" : {"text": "°R}"}
+  "r_symbol" : {"text": "°R}"},
+  "translator_id" : "168422909482762240"
+  },
+  "hi":
+  {
+  "name": {"text": "तापमान_परिवर्तन"},
+  "command_desc": {"text": "एक कमांड बनाए तापमान परिवर्तन के लिए ।"},
+  "text_1" : {"text": "तापमान:"},
+  "text_2" : {"text": "सेल्सियस:"},
+  "text_3" : {"text": "फ़ारेनहाइ:"},
+  "text_4" : {"text": "केल्विन:"},
+  "text_5" : {"text": "रैंकिन :"},
+  "desc" : {"text": "अपनी पसंद चुनें:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R}"},
+  "translator_id" : "1033906684965421086"
+  },
+  "ja" : 
+  {
+  "name": {"text": "convert_temperature"},
+  "command_desc": {"text": "温度を変換します:"},
+  "text_1" : {"text": "温度:"},
+  "text_2" : {"text": "摂氏:"},
+  "text_3" : {"text": "華氏:"},
+  "text_4" : {"text": "ケルビン:"},
+  "text_5" : {"text": "ランキン度:"},
+  "desc" : {"text": "選択:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R}"},
+  "translator_id" : "1163416356566347828"
   }
 }
