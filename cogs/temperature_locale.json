@@ -15,6 +15,25 @@
   "r_symbol" : {"text": "°R"},
   "translator_id" : "168422909482762240"
   },
+  {"tr": {
+         "name": {"text": "sıcaklık_dönüştür"},
+         "command_desc": {"text": "Sıcaklık birimler arasında dönüşüm yapabilen bir komut"},
+         "title": {"text": "Sıcaklık:"},
+         
+         "c_name": {"text": "Santigrat:"},
+         "f_name": {"text": "Fahrenhayt:"},
+         "k_name": {"text": "Kelvin:"},
+         "r_name": {"text": "Rankine:"},
+    
+         "desc": {"text": "Seçilen birim:"},
+         "c_symbol": {"text": "°C"},
+         "f_symbol": {"text": "°F"},
+         "k_symbol": {"text": "°K"},
+         "r_symbol": {"text": "°R"},
+
+         "translator_id": "351656397257310212"
+  }
+  },
   "hi":
   {
   "name": {"text": "तापमान_परिवर्तन"},
