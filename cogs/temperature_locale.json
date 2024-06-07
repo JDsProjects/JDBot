@@ -15,7 +15,8 @@
   "r_symbol" : {"text": "°R"},
   "translator_id" : "168422909482762240"
   },
-  {"tr": {
+  "tr": 
+  {
          "name": {"text": "sıcaklık_dönüştür"},
          "command_desc": {"text": "Sıcaklık birimler arasında dönüşüm yapabilen bir komut"},
          "title": {"text": "Sıcaklık:"},
@@ -32,7 +33,6 @@
          "r_symbol": {"text": "°R"},
 
          "translator_id": "351656397257310212"
-  }
   },
   "hi":
   {
