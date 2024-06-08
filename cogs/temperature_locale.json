@@ -194,4 +194,20 @@
   "r_symbol" : {"text": "°R"},
   "translator_id" : "414562510226849802"
   }
+  "pt-BR" :
+  {
+  "name": {"text": "converter_temperatura"},
+  "command_desc": {"text": "Um comando para converter temperaturas para diferentes escalas"},
+  "title" : {"text": "Temperatura:"},
+  "c_name" : {"text": "Celsius:"},
+  "f_name" : {"text": "Fahrenheit:"},
+  "k_name" : {"text": "Kelvin:"},
+  "r_name" : {"text": "Rankine:"},
+  "desc" : {"text": "Selecione:"},
+  "c_symbol" : {"text": "°C"},
+  "f_symbol" : {"text": "°F"},
+  "k_symbol" : {"text": "°K"},
+  "r_symbol" : {"text": "°R"},
+  "translator_id" : "1096865109541929161"
+  }
 }
