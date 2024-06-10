@@ -209,5 +209,37 @@
   "k_symbol" : {"text": "°K"},
   "r_symbol" : {"text": "°R"},
   "translator_id" : "1096865109541929161"
-  }
+  },
+  "zh-CN" :
+{
+"name": {"text": "convert_temperature"},
+"command_desc": {"text": "一个可以转换温度至不同温标的指令"},
+"title" : {"text": "温度："},
+"c_name" : {"text": "摄氏度："},
+"f_name" : {"text": "华氏度"},
+"k_name" : {"text": "开尔文："},
+"r_name" : {"text": "兰氏温标："},
+"desc" : {"text": "请选择："},
+"c_symbol" : {"text": "°C"},
+"f_symbol" : {"text": "°F"},
+"k_symbol" : {"text": "°K"},
+"r_symbol" : {"text": "°R"},
+"translator_id" : "869928921574035486"
+},
+"zh-TW" :
+{
+"name": {"text": "convert_temperature"},
+"command_desc": {"text": "一個可以轉換溫度至不同溫標的指令"},
+"title" : {"text": "溫度："},
+"c_name" : {"text": "攝氏度："},
+"f_name" : {"text": "華氏度"},
+"k_name" : {"text": "開爾文："},
+"r_name" : {"text": "蘭氏溫標："},
+"desc" : {"text": "請選擇："},
+"c_symbol" : {"text": "°C"},
+"f_symbol" : {"text": "°F"},
+"k_symbol" : {"text": "°K"},
+"r_symbol" : {"text": "°R"},
+"translator_id" : "869928921574035486"
+}
 }
