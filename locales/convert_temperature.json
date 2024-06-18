@@ -366,12 +366,12 @@
             "text": "°R"
         },
         "temp_system": {
-            "name": null,
-            "description": null
+            "name": "temperatureinheit",
+            "description": "Wähle eine Temperatureinheit aus der Liste."
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "temperatur",
+            "description": "Bitte eine Zahl eingeben."
         },
         "translator_id": "1022842005920940063"
     },
@@ -380,7 +380,7 @@
             "text": "temperatury_konwersja"
         },
         "command_desc": {
-            "text": "Polecenie przeliczania temperatur na różne skale"
+            "text": "Polecenie przeliczania temperatur na różne jednostki."
         },
         "title": {
             "text": "Temperatura:"
@@ -413,12 +413,12 @@
             "text": "°R"
         },
         "temp_system": {
-            "name": null,
-            "description": null
+            "name": "jednostka_temperatury",
+            "description": "Wybierz jednostkę temperatury z listy."
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "temperatura",
+            "description": "Wpisz numer temperatury."
         },
         "translator_id": "1022842005920940063"
     },
@@ -460,12 +460,12 @@
             "text": "°R"
         },
         "temp_system": {
-            "name": null,
-            "description": null
+            "name": "unité_de_température",
+            "description": "Sélectionnez une unité de température dans la liste."
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "température",
+            "description": "Veuillez saisir un numéro."
         },
         "translator_id": "1022842005920940063"
     },
