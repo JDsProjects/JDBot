@@ -132,7 +132,7 @@
         },
         "temperature_unit": {
             "name": null,
-            "description": null
+            "description": "एक संख्या दर्ज करें।"
         },
         "temperature": {
             "name": null,
