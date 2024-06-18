@@ -272,12 +272,12 @@
             "text": "°R"
         },
         "temp_system": {
-            "name": null,
-            "description": null
+            "name": "temp_system",
+            "description": "Välj en temperaturenhet från menyn"
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "temperatur",
+            "description": "Var god och mata in ett nummer"
         },
         "translator_id": "263602820496883712"
     },
