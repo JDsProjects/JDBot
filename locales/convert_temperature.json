@@ -651,8 +651,8 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system" : {"name" : "temp_system", "description" : "Select a Unit of Temperature from the dropdown."},
+        "temperature" : {"name" : "temperature" , "description" : "Please enter a number"},
         "translator_id": "566653183774949395"
     }
 }
