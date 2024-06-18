@@ -648,12 +648,12 @@
             "text": "°R"
         },
         "temperature_unit": {
-            "name": null,
-            "description": null
+            "name": "温标单位",
+            "description": "请选择以下一种温标单位"
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "温度",
+            "description": "请输入数字"
         },
         "translator_id": "869928921574035486"
     },
@@ -695,12 +695,12 @@
             "text": "°R"
         },
         "temperature_unit": {
-            "name": null,
-            "description": null
+            "name": "溫標單位",
+            "description": "請選擇以下一種溫標單位"
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "溫度",
+            "description": "請輸入數字"
         },
         "translator_id": "869928921574035486"
     },
