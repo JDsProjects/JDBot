@@ -320,7 +320,7 @@
         },
         "temperature_unit": {
             "name": "temperatuureenheid",
-            "description": "De schaal van de temperatuur die je wilt omrekenen"
+            "description": "De eenheid van de temperatuur die je wilt omrekenen"
         },
         "temperature": {
             "name": "temperatuur",
