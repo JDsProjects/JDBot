@@ -583,5 +583,44 @@
             "text": "°R"
         },
         "translator_id": "869928921574035486"
+    },
+    "en-UK": {
+        "name": {
+            "text": "convert_temperature"
+        },
+        "command_desc": {
+            "text": "A command to convert temperatures to different scales"
+        },
+        "title": {
+            "text": "Temperature:"
+        },
+        "c_name": {
+            "text": "Celsius:"
+        },
+        "f_name": {
+            "text": "Fahrenheit:"
+        },
+        "k_name": {
+            "text": "Kelvin:"
+        },
+        "r_name": {
+            "text": "Rankine:"
+        },
+        "desc": {
+            "text": "Choose:"
+        },
+        "c_symbol": {
+            "text": "°C"
+        },
+        "f_symbol": {
+            "text": "°F"
+        },
+        "k_symbol": {
+            "text": "K"
+        },
+        "r_symbol": {
+            "text": "°R"
+        },
+        "translator_id": "566653183774949395"
     }
 }
