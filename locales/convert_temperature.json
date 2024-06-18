@@ -118,7 +118,7 @@
     },
     "ja": {
         "name": {
-            "text": "convert_temperature"
+            "text": "温度_変換"
         },
         "command_desc": {
             "text": "温度を変換します:"
