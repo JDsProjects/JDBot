@@ -241,7 +241,7 @@ class Bot(commands.Cog):
 
         lines, firstline = inspect.getsourcelines(src)
 
-        path = Pathlib.Path.cwd()
+        path = pathlib.Path.cwd()
         check_path = filename.startswith(path)
         filename = module.replace(".", "/") + ".py"
 
