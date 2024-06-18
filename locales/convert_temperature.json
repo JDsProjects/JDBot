@@ -36,8 +36,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : "temp_system", "description" : "Select a Unit of Temperature from the dropdown."},
-        "temperature" : {"name" : "temperature" , "description" : "Please enter a number"},
+        "temp_system": {
+            "name": "temp_system",
+            "description": "Select a Unit of Temperature from the dropdown."
+        },
+        "temperature": {
+            "name": "temperature",
+            "description": "Please enter a number"
+        },
         "translator_id": "168422909482762240"
     },
     "tr": {
@@ -77,8 +83,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "351656397257310212"
     },
     "hi": {
@@ -118,8 +130,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "1033906684965421086"
     },
     "ja": {
@@ -159,8 +177,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : "変換元単位", "description" :"変換する元の単位を選択"},
-        "temperature" : {"name" : "温度" , "description" : "変換元単位の温度を入力"},
+        "temp_system": {
+            "name": "変換元単位",
+            "description": "変換する元の単位を選択"
+        },
+        "temperature": {
+            "name": "温度",
+            "description": "変換元単位の温度を入力"
+        },
         "translator_id": "1163416356566347828"
     },
     "fi": {
@@ -200,8 +224,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "396290259907903491"
     },
     "sv-SE": {
@@ -241,8 +271,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "263602820496883712"
     },
     "nl": {
@@ -282,8 +318,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "171539705043615744"
     },
     "de": {
@@ -323,8 +365,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "1022842005920940063"
     },
     "pl": {
@@ -364,8 +412,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "1022842005920940063"
     },
     "fr": {
@@ -405,8 +459,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "1022842005920940063"
     },
     "es-ES": {
@@ -446,8 +506,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "414562510226849802"
     },
     "es-419": {
@@ -487,8 +553,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "414562510226849802"
     },
     "pt-BR": {
@@ -528,8 +600,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "1096865109541929161"
     },
     "zh-CN": {
@@ -569,8 +647,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "869928921574035486"
     },
     "zh-TW": {
@@ -610,8 +694,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system": {
+            "name": null,
+            "description": null
+        },
+        "temperature": {
+            "name": null,
+            "description": null
+        },
         "translator_id": "869928921574035486"
     },
     "en-GB": {
@@ -651,8 +741,14 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : "temp_system", "description" : "Select a Unit of Temperature from the dropdown."},
-        "temperature" : {"name" : "temperature" , "description" : "Please enter a number"},
+        "temp_system": {
+            "name": "temp_system",
+            "description": "Select a Unit of Temperature from the dropdown."
+        },
+        "temperature": {
+            "name": "temperature",
+            "description": "Please enter a number"
+        },
         "translator_id": "566653183774949395"
     }
 }
