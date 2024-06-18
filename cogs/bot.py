@@ -242,7 +242,7 @@ class Bot(commands.Cog):
         lines, firstline = inspect.getsourcelines(src)
 
         path = pathlib.Path.cwd()
-        check_path = filename.startswith(path)
+        check_path = filename.startswith(str(path))
         filename = module.replace(".", "/") + ".py"
 
         # I need a way to check if it is not a regular file path.
