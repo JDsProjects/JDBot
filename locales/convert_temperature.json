@@ -507,12 +507,12 @@
             "text": "°R"
         },
         "temp_system": {
-            "name": null,
-            "description": null
+            "name": "Sistema_de_temperatura",
+            "description": "Seleccione una unidad de temperatura del menú desplegable"
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "temperatura",
+            "description": " Por favor colocar un número"
         },
         "translator_id": "414562510226849802"
     },
@@ -554,12 +554,12 @@
             "text": "°R"
         },
         "temp_system": {
-            "name": null,
-            "description": null
+            "name": "Sistema_de_temperatura",
+            "description": "Seleccione una unidad de temperatura del menú desplegable"
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "temperatura",
+            "description": " Por favor colocar un número"
         },
         "translator_id": "414562510226849802"
     },
