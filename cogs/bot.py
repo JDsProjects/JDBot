@@ -3,6 +3,7 @@ import contextlib
 import difflib
 import inspect
 import os
+import pathlib
 import platform
 import random
 import time
@@ -240,8 +241,12 @@ class Bot(commands.Cog):
 
         lines, firstline = inspect.getsourcelines(src)
 
-        check_path = filename.startswith(os.getcwd())
+        path = Pathlib.Path.cwd()
+        check_path = filename.startswith(path)
         filename = module.replace(".", "/") + ".py"
+
+        # I need a way to check if it is not a regular file path.
+        # because right now I cannot have it link to the source codes below.
 
         if not check_path:
             if module.startswith("jishaku"):
