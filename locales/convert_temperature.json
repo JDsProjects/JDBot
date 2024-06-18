@@ -612,7 +612,7 @@
     },
     "zh-CN": {
         "name": {
-            "text": "convert_temperature"
+            "text": ":转换温度"
         },
         "command_desc": {
             "text": "一个可以转换温度至不同温标的指令"
@@ -659,7 +659,7 @@
     },
     "zh-TW": {
         "name": {
-            "text": "convert_temperature"
+            "text": "轉換溫度"
         },
         "command_desc": {
             "text": "一個可以轉換溫度至不同溫標的指令"
