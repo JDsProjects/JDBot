@@ -36,8 +36,8 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
-            "name": "temp_system",
+        "temperature_unit": {
+            "name": "temperature_unit",
             "description": "Select a Unit of Temperature from the dropdown."
         },
         "temperature": {
@@ -83,7 +83,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": null,
             "description": null
         },
@@ -130,7 +130,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": null,
             "description": null
         },
@@ -177,7 +177,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": "変換元単位",
             "description": "変換する元の単位を選択"
         },
@@ -224,7 +224,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": null,
             "description": null
         },
@@ -271,8 +271,8 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
-            "name": "temp_system",
+        "temperature_unit": {
+            "name": "temperature_unit",
             "description": "Välj en temperaturenhet från menyn"
         },
         "temperature": {
@@ -318,7 +318,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": "temperatuur_systeem",
             "description": "De schaal van de temperatuur die je wilt omrekenen"
         },
@@ -365,7 +365,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": "temperatureinheit",
             "description": "Wähle eine Temperatureinheit aus der Liste."
         },
@@ -412,7 +412,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": "jednostka_temperatury",
             "description": "Wybierz jednostkę temperatury z listy."
         },
@@ -459,7 +459,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": "unité_de_température",
             "description": "Sélectionnez une unité de température dans la liste."
         },
@@ -506,7 +506,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": "Sistema_de_temperatura",
             "description": "Seleccione una unidad de temperatura del menú desplegable"
         },
@@ -553,7 +553,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": "Sistema_de_temperatura",
             "description": "Seleccione una unidad de temperatura del menú desplegable"
         },
@@ -600,7 +600,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": null,
             "description": null
         },
@@ -647,7 +647,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": null,
             "description": null
         },
@@ -694,7 +694,7 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
+        "temperature_unit": {
             "name": null,
             "description": null
         },
@@ -741,8 +741,8 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system": {
-            "name": "temp_system",
+        "temperature_unit": {
+            "name": "temperature_unit",
             "description": "Select a Unit of Temperature from the dropdown."
         },
         "temperature": {
