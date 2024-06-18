@@ -159,8 +159,8 @@
         "r_symbol": {
             "text": "°R"
         },
-        "temp_system" : {"name" : null, "description" : null},
-        "temperature" : {"name" : null , "description" : null},
+        "temp_system" : {"name" : "変換元単位", "description" :"変換する元の単位を選択"},
+        "temperature" : {"name" : "温度" , "description" : "変換元単位の温度を入力"},
         "translator_id": "1163416356566347828"
     },
     "fi": {
