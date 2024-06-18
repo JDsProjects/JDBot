@@ -272,7 +272,7 @@
             "text": "°R"
         },
         "temperature_unit": {
-            "name": "temperature_unit",
+            "name": "temperatur_enhet",
             "description": "Välj en temperaturenhet från menyn"
         },
         "temperature": {
@@ -319,7 +319,7 @@
             "text": "°R"
         },
         "temperature_unit": {
-            "name": "temperatuur_systeem",
+            "name": "temperatuureenheid",
             "description": "De schaal van de temperatuur die je wilt omrekenen"
         },
         "temperature": {
