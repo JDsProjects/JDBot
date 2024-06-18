@@ -304,7 +304,7 @@
             "text": "Rankine:"
         },
         "desc": {
-            "text": "gekozen:"
+            "text": "Gekozen:"
         },
         "c_symbol": {
             "text": "°C"
@@ -319,12 +319,12 @@
             "text": "°R"
         },
         "temp_system": {
-            "name": null,
-            "description": null
+            "name": "temperatuur_systeem",
+            "description": "De schaal van de temperatuur die je wilt omrekenen"
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "temperatuur",
+            "description": "De temperatuur die je wilt omrekenen"
         },
         "translator_id": "171539705043615744"
     },
