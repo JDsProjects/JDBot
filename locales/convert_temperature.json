@@ -371,7 +371,7 @@
         },
         "temperature": {
             "name": "temperatur",
-            "description": "Bitte eine Zahl eingeben."
+            "description": "Bitte gebe eine Zahl ein."
         },
         "translator_id": "1022842005920940063"
     },
