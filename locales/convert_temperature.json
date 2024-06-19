@@ -507,7 +507,7 @@
             "text": "°R"
         },
         "temperature_unit": {
-            "name": "Unidades_de_temperatura",
+            "name": "unidades_de_temperatura",
             "description": "Seleccione una unidad de temperatura del menú desplegable"
         },
         "temperature": {
@@ -554,7 +554,7 @@
             "text": "°R"
         },
         "temperature_unit": {
-            "name": "Unidades_de_temperatura",
+            "name": "unidades_de_temperatura",
             "description": "Seleccione una unidad de temperatura del menú desplegable"
         },
         "temperature": {
