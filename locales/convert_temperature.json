@@ -84,12 +84,12 @@
             "text": "°R"
         },
         "temperature_unit": {
-            "name": null,
-            "description": null
+            "name": "birim",
+            "description": "Birim seçiniz."
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "sıcaklık",
+            "description": "Dönüştürmek istediğiniz sıcaklığı girin."
         },
         "translator_id": "351656397257310212"
     },
