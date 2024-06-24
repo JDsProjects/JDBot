@@ -423,7 +423,7 @@ class SpeedReadings(NamedTuple):
     meters: float
     feet: float
     megameters: float
-    light_speed: float
+    light: float
 
 
 class Speed(enum.Enum):
@@ -432,7 +432,7 @@ class Speed(enum.Enum):
     meters = "Meters"
     feet = "Feet"
     megameters = "Megameters"
-    light_speed: "Light"
+    light: "Light"
 
     def convert_to(self, value: float) -> SpeedReadings:
         match self:
@@ -442,7 +442,7 @@ class Speed(enum.Enum):
                 meters = kilometers * 1000
                 feet = 5280 * miles
                 megameters = kilometers / 1000
-                light_speed = meters / 299792458
+                light = meters / 299792458
                 # https://en.wikipedia.org/wiki/Speed_of_light
 
             case Speed.kilometers:
@@ -451,13 +451,13 @@ class Speed(enum.Enum):
                 miles = kilometers / 1.609344
                 feet = 5280 * miles
                 megameters = kilometers / 1000
-                light_speed = meters / 299792458
+                light = meters / 299792458
 
             case Speed.meters:
                 meters = value
                 kilometers = meters / 1000
                 megameters = kilomters / 1000
-                light_speed = meters / 299792458
+                light = meters / 299792458
                 miles = kilometers / 1.609344
                 feet = 5280 * miles
 
@@ -467,19 +467,19 @@ class Speed(enum.Enum):
                 kilometers = miles * 1.609344
                 meters = kilometers * 1000
                 megameters = kilometers / 1000
-                light_speed = meters / 299792458
+                light = meters / 299792458
 
             case Speed.megameters:
                 megameters = value
                 kilometers = megameters * 1000
                 meters = kilometers * 1000
-                light_speed = meters / 299792458
+                light = meters / 299792458
                 miles = kilometers / 1.609344
                 feet = 5280 * miles
 
-            case Speed.light_speed:
-                light_speed = value
-                meters = light_speed * 299792458
+            case Speed.light:
+                light = value
+                meters = light * 299792458
                 kilometers = meters / 1000
                 miles = kilometers / 1.609344
                 feet = 5280 * miles
@@ -491,5 +491,5 @@ class Speed(enum.Enum):
             round(meters, 2),
             round(feet, 2),
             round(megameters, 2),
-            round(light_speed, 2),
+            round(light, 2),
         )
