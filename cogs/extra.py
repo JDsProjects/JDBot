@@ -1233,20 +1233,20 @@ class Extra(commands.Cog):
     async def convert_speed(self, interaction: discord.Interaction, speed_system: utils.Speed, speed: float):
         speeds = speed_system.convert_to(speed)
 
-        if speed.miles <= 25:
+        if speeds.miles <= 25:
             color = 0xFFFF00
 
             # 25 miles per hour in a us residence zone
             # yellow for a small speed
 
-        if speed.miles > 25 and speed.miles <= 55:
+        if speeds.miles > 25 and speeds.miles <= 55:
 
             color = 0x8450
 
             # 55 mph speed limit on rural highways
             # green for about a not so slow speed.
 
-        if speed.miles > 55 and speed.miles <= 70:
+        if speeds.miles > 55 and speeds.miles <= 70:
 
             color = 0x26F7FD
 
@@ -1256,7 +1256,7 @@ class Extra(commands.Cog):
         # https://highways.dot.gov/safety/speed-management/speed-limit-basics
         # information gathered from here.
 
-        if speed.miles > 70 and speed.miles <= 85:
+        if speeds.miles > 70 and speeds.miles <= 85:
 
             # texas has the highest maximum sped limit at 85 mph according to
             # https://worldpopulationreview.com/state-rankings/speed-limit-map-by-state
@@ -1265,7 +1265,7 @@ class Extra(commands.Cog):
 
             # color choosen for faster boost color essentially
 
-        if speed.miles > 85 and speed.miles <= 212.81:
+        if speeds.miles > 85 and speeds.miles <= 212.81:
 
             # https://rerev.com/articles/how-fast-do-nascar-cars-go
             # 212.809 miles per hour is the maximum they go up to.
@@ -1274,7 +1274,7 @@ class Extra(commands.Cog):
             color = 0xCC0202
             # red for please don't go this speed normally.
 
-        if speed.miles >= 212.81:
+        if speeds.miles >= 212.81:
             # basically please don't go more than this speed unless you are in a plane or so other faster vehicle
             color = 0x0
             # pure black for emphasis.
@@ -1285,9 +1285,9 @@ class Extra(commands.Cog):
         embed.add_field(name="Kilometers:", value=f"{speeds.kilometers:,} KM")
         embed.add_field(name="Meters:", value=f"{speeds.meters:,} m")
         embed.add_field(name="Feet", value=f"{speeds.feet:,} ft")
-        embed.add_field(name="Megameters", value=f"{speed.megameters:,} Mm")
+        embed.add_field(name="Megameters", value=f"{speeds.megameters:,} Mm")
         # speed of light's name value needs a better name
-        embed.add_field(name="Speed of Light:", value=f"{speed.light_speed:,} C")
+        embed.add_field(name="Speed of Light:", value=f"{speeds.light_speed:,} C")
         # megameters and light speed are elite dangerous references
         # see https://www.reddit.com/r/EliteDangerous/s/1AgiKH9Xj0
 
