@@ -481,5 +481,10 @@ class Speed(enum.Enum):
                 megameters = kilometers / 1000
 
         return SpeedReadings(
-            round(miles, 2), round(kilometers, 2), round(meters, 2), round(feet, 2), round(megameters, 2), round(light_speed, 2)
+            round(miles, 2),
+            round(kilometers, 2),
+            round(meters, 2),
+            round(feet, 2),
+            round(megameters, 2),
+            round(light_speed, 2),
         )
