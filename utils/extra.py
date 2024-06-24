@@ -476,7 +476,6 @@ class Speed(enum.Enum):
                 light_speed = meters / 299792458
                 miles = kilometers / 1.609344
                 feet = 5280 * miles
-                
 
             case Speed.light_speed:
                 light_speed = value
