@@ -444,7 +444,6 @@ class Speed(enum.Enum):
                 light_speed = meters / 299792458
                 # https://en.wikipedia.org/wiki/Speed_of_light
 
-            
             case Speed.kilometers:
                 kilometers = value
                 meters = kilometers * 1000
@@ -452,7 +451,6 @@ class Speed(enum.Enum):
                 feet = 5280 * miles
                 megameters = kilometers / 1000
                 light_speed = meters / 299792458
-                
 
             case Speed.meters:
                 meters = value
@@ -481,5 +479,6 @@ class Speed(enum.Enum):
                 feet = 5280 * miles
                 megameters = kilometers / 1000
 
-        return SpeedReadings(round(miles, 2), round(kilometers, 2), round(feet, 2), round(megameters, 2), round(light_speed, 2))
-
+        return SpeedReadings(
+            round(miles, 2), round(kilometers, 2), round(feet, 2), round(megameters, 2), round(light_speed, 2)
+        )

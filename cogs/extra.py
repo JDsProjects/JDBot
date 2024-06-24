@@ -1232,7 +1232,7 @@ class Extra(commands.Cog):
     @app_commands.command(description="A command to convert speeds to different scales")
     async def convert_speed(self, interaction: discord.Interaction, speed_system: utils.Speed, speed: float):
         speeds = speed_system.convert_to(speed)
-        
+
         if speed.miles <= 25:
             color = 0xFFFF00
 
@@ -1248,7 +1248,7 @@ class Extra(commands.Cog):
 
         if speed.miles > 55 and speed.miles <= 70:
 
-            color = 0x26f7fd
+            color = 0x26F7FD
 
             # 70 mph is the max on rural interstate highways
             # color is choosen from the hydro thunder hurriance boost colors as close as I could match
@@ -1261,7 +1261,7 @@ class Extra(commands.Cog):
             # texas has the highest maximum sped limit at 85 mph according to
             # https://worldpopulationreview.com/state-rankings/speed-limit-map-by-state
 
-            color = 0x8b
+            color = 0x8B
 
             # color choosen for faster boost color essentially
 
@@ -1269,17 +1269,17 @@ class Extra(commands.Cog):
 
             # https://rerev.com/articles/how-fast-do-nascar-cars-go
             # 212.809 miles per hour is the maximum they go up to.
-            # rounded to 212.81 for convivence 
+            # rounded to 212.81 for convivence
 
-            color = 0xcc0202
+            color = 0xCC0202
             # red for please don't go this speed normally.
 
         if speed.miles >= 212.81:
-            # basically please don't go more than this speed unless you are in a plane or so other faster vehicle 
+            # basically please don't go more than this speed unless you are in a plane or so other faster vehicle
             color = 0x0
             # pure black for emphasis.
-        
-        embed = discord.Embed(title = "Speed:", color=color)
+
+        embed = discord.Embed(title="Speed:", color=color)
 
         embed.add_field(name="Miles:", value=f"{speeds.miles:,} MI")
         embed.add_field(name="Kilometers:", value=f"{speeds.kilometers:,} KM")
@@ -1299,6 +1299,7 @@ class Extra(commands.Cog):
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(interaction.command)
         traceback.print_exc()
+
 
 async def setup(bot):
     await bot.add_cog(Extra(bot))
