@@ -432,7 +432,7 @@ class Speed(enum.Enum):
     meters = "Meters"
     feet = "Feet"
     megameters = "Megameters"
-    light: "Light"
+    light = "Light Speed"
 
     def convert_to(self, value: float) -> SpeedReadings:
         match self:
