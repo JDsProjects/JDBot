@@ -1295,7 +1295,7 @@ class Extra(commands.Cog):
         embed.add_field(name="Feet", value=f"{speeds.feet:,} ft")
         embed.add_field(name="Megameters", value=f"{speeds.megameters:,} Mm")
         # speed of light's name value needs a better name
-        embed.add_field(name="Constants (Speed of Light):", value=f"{speeds.light:,} c")
+        embed.add_field(name="Constants (Speed of Light):", value=f"{speeds.light:,} C")
         # megameters and light speed are elite dangerous references
         # see https://www.reddit.com/r/EliteDangerous/s/1AgiKH9Xj0
 
