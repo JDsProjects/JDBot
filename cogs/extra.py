@@ -1226,6 +1226,79 @@ class Extra(commands.Cog):
         print(interaction.command)
         traceback.print_exc()
 
+    @app_commands.user_install()
+    @app_commands.guild_install()
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.command(description="A command to convert speeds to different scales")
+    async def convert_speed(self, interaction: discord.Interaction, speed_system: utils.Speed, speed: float):
+        speeds = speed_system.convert_to(speed)
+        
+        if speed.miles <= 25:
+            color = 0xFFFF00
+
+            # 25 miles per hour in a us residence zone
+            # yellow for a small speed
+
+        if speed.miles > 25 and speed.miles <= 55:
+
+            color = 0x8450
+
+            # 55 mph speed limit on rural highways
+            # green for about a not so slow speed.
+
+        if speed.miles > 55 and speed.miles <= 70:
+
+            color = 0x26f7fd
+
+            # 70 mph is the max on rural interstate highways
+            # color is choosen from the hydro thunder hurriance boost colors as close as I could match
+
+        # https://highways.dot.gov/safety/speed-management/speed-limit-basics
+        # information gathered from here.
+
+        if speed.miles > 70 and speed.miles <= 85:
+
+            # texas has the highest maximum sped limit at 85 mph according to
+            # https://worldpopulationreview.com/state-rankings/speed-limit-map-by-state
+
+            color = 0x8b
+
+            # color choosen for faster boost color essentially
+
+        if speed.miles > 85 and speed.miles <= 212.81:
+
+            # https://rerev.com/articles/how-fast-do-nascar-cars-go
+            # 212.809 miles per hour is the maximum they go up to.
+            # rounded to 212.81 for convivence 
+
+            color = 0xcc0202
+            # red for please don't go this speed normally.
+
+        if speed.miles >= 212.81:
+            # basically please don't go more than this speed unless you are in a plane or so other faster vehicle 
+            color = 0x0
+            # pure black for emphasis.
+        
+        embed = discord.Embed(title = "Speed:", color=color)
+
+        embed.add_field(name="Miles:", value=f"{speeds.miles:,} MI")
+        embed.add_field(name="Kilometers:", value=f"{speeds.kilometers:,} KM")
+        embed.add_field(name="Meters:", value=f"{speeds.meters:,} m")
+        embed.add_field(name="Feet", value=f"{speeds.feet:,} ft")
+        embed.add_field(name="Megameters", value=f"{speed.megameters:,} Mm")
+        # speed of light's name value needs a better name
+        embed.add_field(name="Speed of Light:", value=f"{speed.light_speed:,} C")
+        # megameters and light speed are elite dangerous references
+        # see https://www.reddit.com/r/EliteDangerous/s/1AgiKH9Xj0
+
+        embed.set_footer(text=f"Chose: {speed_system.value}")
+        await interaction.response.send_message(embed=embed)
+
+    @convert_speed.error
+    async def convert_speed_error(self, interaction: discord.Interaction, error):
+        await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
+        print(interaction.command)
+        traceback.print_exc()
 
 async def setup(bot):
     await bot.add_cog(Extra(bot))

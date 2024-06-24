@@ -376,10 +376,10 @@ def invalidation_check(cache: list[InvalidationConfig], entity_id: int, entity_t
 
 
 class TemperatureReadings(NamedTuple):
-    celsius: int
-    fahrenheit: int
-    kelvin: int
-    rankine: int
+    celsius: float
+    fahrenheit: float
+    kelvin: float
+    rankine: float
 
 
 class Temperature(enum.Enum):
@@ -415,3 +415,71 @@ class Temperature(enum.Enum):
                 k = c + 273.15
 
         return TemperatureReadings(round(c, 1), round(f, 1), round(k, 1), round(r, 1))
+
+
+class SpeedReadings(NamedTuple):
+    miles: float
+    kilometers: float
+    meters: float
+    feet: float
+    megameters: float
+    light_speed: float
+
+
+class Speed(enum.Enum):
+    miles = "Miles"
+    kilometers = "Kilometers"
+    feet = "Feet"
+    megameters = "Megameters"
+    light_speed: "Light Speed"
+
+    def convert_to(self, value: float) -> SpeedReadings:
+        match self:
+            case Speed.miles:
+                miles = value
+                kilometers = 1.609344 * miles
+                meters = kilometers * 1000
+                feet = 5280 * miles
+                megameters = kilometers / 1000
+                light_speed = meters / 299792458
+                # https://en.wikipedia.org/wiki/Speed_of_light
+
+            
+            case Speed.kilometers:
+                kilometers = value
+                meters = kilometers * 1000
+                miles = kilometers / 1.609344
+                feet = 5280 * miles
+                megameters = kilometers / 1000
+                light_speed = meters / 299792458
+                
+
+            case Speed.meters:
+                meters = value
+                kilometers = meters / 1000
+                megameters = kilomters / 1000
+                light_speed = meters / 299792458
+                miles = kilometers / 1.609344
+                feet = 5280 * miles
+
+            case Speed.feet:
+                feet = value
+                miles = feet / 5280
+                kilometers = miles * 1.609344
+                meters = kilometers * 1000
+                megameters = kilometers / 1000
+                light_speed = meters / 299792458
+
+            case Speed.megameters:
+                megameters = value
+
+            case Speed.light_speed:
+                light_speed = value
+                meters = light_speed * 299792458
+                kilometers = meters / 1000
+                miles = kilometers / 1.609344
+                feet = 5280 * miles
+                megameters = kilometers / 1000
+
+        return SpeedReadings(round(miles, 2), round(kilometers, 2), round(feet, 2), round(megameters, 2), round(light_speed, 2))
+
