@@ -456,7 +456,7 @@ class Speed(enum.Enum):
             case Speed.meters:
                 meters = value
                 kilometers = meters / 1000
-                megameters = kilomters / 1000
+                megameters = kilometers / 1000
                 light = meters / 299792458
                 miles = kilometers / 1.609344
                 feet = 5280 * miles
