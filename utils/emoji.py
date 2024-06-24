@@ -11,7 +11,7 @@ from urllib.parse import quote_plus
 from discord import PartialEmoji
 from discord.asset import AssetMixin
 from discord.ext.commands import BadArgument, Context, Converter
-from emoji import unicode_codes
+import emoji
 
 if TYPE_CHECKING:
     from discord.ext.commands import Context
@@ -36,7 +36,19 @@ if TYPE_CHECKING:
 
 __all__: Tuple[str, ...] = ("CustomEmoji", "EmojiConverter", "InvalidEmojis")
 
-language_pack: Dict[str, str] = unicode_codes.get_emoji_unicode_dict("en")  # type: ignore
+_EMOJI_UNICODE: Dict[str, Any] = {lang: None for lang in emoji.LANGUAGES}  # Cache for the language dicts
+
+def get_emoji_unicode_dict(lang: str) -> Dict[str, Any]:
+    """Generate dict containing all fully-qualified and component emoji name for a language
+    The dict is only generated once per language and then cached in _EMOJI_UNICODE[lang]"""
+
+    if _EMOJI_UNICODE[lang] is None:
+        _EMOJI_UNICODE[lang] = {data[lang]: emj for emj, data in emoji.EMOJI_DATA.items()
+                                if lang in data and data['status'] <= emoji.STATUS['fully_qualified']}
+
+    return _EMOJI_UNICODE[lang]
+
+language_pack: Dict[str, str] = get_emoji_unicode_dict("en")  # type: ignore
 _UNICODE_EMOJI_REGEX = "|".join(map(re_escape, sorted(language_pack.values(), key=len, reverse=True)))
 _DISCORD_EMOJI_REGEX = "<a?:[a-zA-Z0-9_]{2,32}:[0-9]{17,22}>"
 
