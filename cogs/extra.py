@@ -1201,10 +1201,10 @@ class Extra(commands.Cog):
     async def convert_temperature(
         self,
         interaction: discord.Interaction,
-        temp_unit: utils.Temperature,
+        temperature_unit: utils.Temperature,
         temperature: float,
     ):
-        temps = temp_unit.convert_to(temperature)
+        temps = temperature_unit.convert_to(temperature)
 
         if temps.celsius < 20:
             color = 0x0000FF
@@ -1220,7 +1220,7 @@ class Extra(commands.Cog):
         embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit:,} °F")
         embed.add_field(name="Kelvin:", value=f"{temps.kelvin:,} K")
         embed.add_field(name="Rankine:", value=f"{temps.rankine:,} °R")
-        embed.set_footer(text=f"Chose: {temp_unit.value}")
+        embed.set_footer(text=f"Chose: {temperature_unit.value}")
 
         await interaction.response.send_message(embed=embed)
 
