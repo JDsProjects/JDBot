@@ -1193,14 +1193,18 @@ class Extra(commands.Cog):
     @app_commands.user_install()
     @app_commands.guild_install()
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.describe(
+        temperature_unit="Select a Unit Temperature from the dropdown.",
+        temperature="Please enter a number",
+    )
     @app_commands.command(description="A command to convert temperatures to different scales")
     async def convert_temperature(
         self,
         interaction: discord.Interaction,
-        temp_system: utils.Temperature,
+        temp_unit: utils.Temperature,
         temperature: float,
     ):
-        temps = temp_system.convert_to(temperature)
+        temps = temp_unit.convert_to(temperature)
 
         if temps.celsius < 20:
             color = 0x0000FF
@@ -1216,7 +1220,7 @@ class Extra(commands.Cog):
         embed.add_field(name="Fahrenheit:", value=f"{temps.fahrenheit:,} °F")
         embed.add_field(name="Kelvin:", value=f"{temps.kelvin:,} K")
         embed.add_field(name="Rankine:", value=f"{temps.rankine:,} °R")
-        embed.set_footer(text=f"Chose: {temp_system.value}")
+        embed.set_footer(text=f"Chose: {temp_unit.value}")
 
         await interaction.response.send_message(embed=embed)
 
@@ -1229,9 +1233,13 @@ class Extra(commands.Cog):
     @app_commands.user_install()
     @app_commands.guild_install()
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.describe(
+        speed_unit="Select a Unit of Speed from the dropdown.",
+        speed="Please enter a number",
+    )
     @app_commands.command(description="A command to convert speeds to different scales")
-    async def convert_speed(self, interaction: discord.Interaction, speed_system: utils.Speed, speed: float):
-        speeds = speed_system.convert_to(speed)
+    async def convert_speed(self, interaction: discord.Interaction, speed_unit: utils.Speed, speed: float):
+        speeds = speed_unit.convert_to(speed)
 
         if speeds.miles <= 25:
             color = 0xFFFF00
@@ -1281,17 +1289,17 @@ class Extra(commands.Cog):
 
         embed = discord.Embed(title="Speed:", color=color)
 
-        embed.add_field(name="Miles:", value=f"{speeds.miles:,} MI")
-        embed.add_field(name="Kilometers:", value=f"{speeds.kilometers:,} KM")
+        embed.add_field(name="Miles:", value=f"{speeds.miles:,} mi")
+        embed.add_field(name="Kilometers:", value=f"{speeds.kilometers:,} km")
         embed.add_field(name="Meters:", value=f"{speeds.meters:,} m")
         embed.add_field(name="Feet", value=f"{speeds.feet:,} ft")
         embed.add_field(name="Megameters", value=f"{speeds.megameters:,} Mm")
         # speed of light's name value needs a better name
-        embed.add_field(name="Constants (Speed of Light):", value=f"{speeds.light:,} C")
+        embed.add_field(name="Constants (Speed of Light):", value=f"{speeds.light:,} c")
         # megameters and light speed are elite dangerous references
         # see https://www.reddit.com/r/EliteDangerous/s/1AgiKH9Xj0
 
-        embed.set_footer(text=f"Chose: {speed_system.value}")
+        embed.set_footer(text=f"Chose: {speed_unit.value}")
         await interaction.response.send_message(embed=embed)
 
     @convert_speed.error
