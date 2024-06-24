@@ -38,15 +38,20 @@ __all__: Tuple[str, ...] = ("CustomEmoji", "EmojiConverter", "InvalidEmojis")
 
 _EMOJI_UNICODE: Dict[str, Any] = {lang: None for lang in emoji.LANGUAGES}  # Cache for the language dicts
 
+
 def get_emoji_unicode_dict(lang: str) -> Dict[str, Any]:
     """Generate dict containing all fully-qualified and component emoji name for a language
     The dict is only generated once per language and then cached in _EMOJI_UNICODE[lang]"""
 
     if _EMOJI_UNICODE[lang] is None:
-        _EMOJI_UNICODE[lang] = {data[lang]: emj for emj, data in emoji.EMOJI_DATA.items()
-                                if lang in data and data['status'] <= emoji.STATUS['fully_qualified']}
+        _EMOJI_UNICODE[lang] = {
+            data[lang]: emj
+            for emj, data in emoji.EMOJI_DATA.items()
+            if lang in data and data["status"] <= emoji.STATUS["fully_qualified"]
+        }
 
     return _EMOJI_UNICODE[lang]
+
 
 language_pack: Dict[str, str] = get_emoji_unicode_dict("en")  # type: ignore
 _UNICODE_EMOJI_REGEX = "|".join(map(re_escape, sorted(language_pack.values(), key=len, reverse=True)))
