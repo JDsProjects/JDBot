@@ -1274,7 +1274,7 @@ class Extra(commands.Cog):
             color = 0xCC0202
             # red for please don't go this speed normally.
 
-        if speeds.miles >= 212.81:
+        if speeds.miles > 212.81:
             # basically please don't go more than this speed unless you are in a plane or so other faster vehicle
             color = 0x0
             # pure black for emphasis.
