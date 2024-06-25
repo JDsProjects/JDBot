@@ -120,32 +120,22 @@
         "title": {
             "text": "温度:"
         },
-        "c_name": {
-            "text": "摂氏:"
-        },
-        "f_name": {
-            "text": "華氏:"
-        },
-        "k_name": {
-            "text": "ケルビン:"
-        },
-        "r_name": {
-            "text": "ランキン度:"
+        "unit_names" :
+        {
+            "celsius" : "摂氏:",
+            "fahrenheit" : "華氏:",
+            "kelvin" : "ケルビン:",
+            "rankine" : "ランキン度:"
         },
         "desc": {
             "text": "選択:"
         },
-        "c_symbol": {
-            "text": "°C"
-        },
-        "f_symbol": {
-            "text": "°F"
-        },
-        "k_symbol": {
-            "text": "K"
-        },
-        "r_symbol": {
-            "text": "°R"
+        "unit_symbols":
+        {
+            "celsius" : "°C",
+            "fahrenheit" : "°F",
+            "kelvin" : "K",
+            "rankine" : "°R"
         },
         "temperature_unit": {
             "name": "変換元単位",
