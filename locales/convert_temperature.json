@@ -342,32 +342,22 @@
         "title": {
             "text": "Température:"
         },
-        "c_name": {
-            "text": "Celsius:"
-        },
-        "f_name": {
-            "text": "Fahrenheit:"
-        },
-        "k_name": {
-            "text": "Kelvin:"
-        },
-        "r_name": {
-            "text": "Rankine:"
+        "unit_names" :
+        {
+            "celsius" : "Celsius:",
+            "fahrenheit" : "Fahrenheit:",
+            "kelvin" : "Kelvin:",
+            "rankine" : "Rankine:"
         },
         "desc": {
             "text": "Choisi:"
         },
-        "c_symbol": {
-            "text": "°C"
-        },
-        "f_symbol": {
-            "text": "°F"
-        },
-        "k_symbol": {
-            "text": "K"
-        },
-        "r_symbol": {
-            "text": "°R"
+        "unit_symbols":
+        {
+            "celsius" : "°C",
+            "fahrenheit" : "°F",
+            "kelvin" : "K",
+            "rankine" : "°R"
         },
         "temperature_unit": {
             "name": "unité_de_température",
