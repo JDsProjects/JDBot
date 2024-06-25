@@ -527,32 +527,22 @@
         "title": {
             "text": "溫度："
         },
-        "c_name": {
-            "text": "攝氏度："
-        },
-        "f_name": {
-            "text": "華氏度"
-        },
-        "k_name": {
-            "text": "開爾文："
-        },
-        "r_name": {
-            "text": "蘭氏溫標："
+        "unit_names" :
+        {
+            "celsius" : "攝氏度:",
+            "fahrenheit" : "華氏度:",
+            "kelvin" : "開爾文:",
+            "rankine" : "蘭氏溫標:"
         },
         "desc": {
             "text": "請選擇："
         },
-        "c_symbol": {
-            "text": "°C"
-        },
-        "f_symbol": {
-            "text": "°F"
-        },
-        "k_symbol": {
-            "text": "K"
-        },
-        "r_symbol": {
-            "text": "°R"
+        "unit_symbols":
+        {
+            "celsius" : "°C",
+            "fahrenheit" : "°F",
+            "kelvin" : "K",
+            "rankine" : "°R"
         },
         "temperature_unit": {
             "name": "溫標單位",
