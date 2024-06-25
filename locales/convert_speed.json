@@ -70,5 +70,41 @@
             "description": "Please enter a number"
         },
         "translator_id": "168422909482762240"
+    },
+     "tr": {
+        "name": {
+            "text": "uzunluk_dönüştür"
+        },
+        "command_desc": {
+            "text": "Uzunuluk birimler arasında değişim yapabilen komut"
+        },
+        "title": {
+            "text": "Uzunluk:"
+        },
+        "unit_names": {
+            "miles": "Mil:",
+            "kilometers": "Kilometre:",
+            "meters": "Metre:",
+            "feet": "Fit:",
+            "megameters": "Megametre",
+            "light": "Işık Hızı"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "uzunluk_birimi",
+            "description": "Uzunluk birimi seçin"
+        },
+        "speed": {
+            "name": "uzunuluk",
+            "description": "Uzunluk girin"
+        },
+        "translator_id": "351656397257310212"
     }
 }
