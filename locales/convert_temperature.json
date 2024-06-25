@@ -490,32 +490,22 @@
         "title": {
             "text": "温度："
         },
-        "c_name": {
-            "text": "摄氏度："
-        },
-        "f_name": {
-            "text": "华氏度"
-        },
-        "k_name": {
-            "text": "开尔文："
-        },
-        "r_name": {
-            "text": "兰氏温标："
+        "unit_names" :
+        {
+            "celsius" : "摄氏度:",
+            "fahrenheit" : "华氏度:",
+            "kelvin" : "开尔文:",
+            "rankine" : "兰氏温标:"
         },
         "desc": {
             "text": "请选择："
         },
-        "c_symbol": {
-            "text": "°C"
-        },
-        "f_symbol": {
-            "text": "°F"
-        },
-        "k_symbol": {
-            "text": "K"
-        },
-        "r_symbol": {
-            "text": "°R"
+        "unit_symbols":
+        {
+            "celsius" : "°C",
+            "fahrenheit" : "°F",
+            "kelvin" : "K",
+            "rankine" : "°R"
         },
         "temperature_unit": {
             "name": "温标单位",
