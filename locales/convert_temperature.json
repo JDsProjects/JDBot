@@ -433,9 +433,6 @@
             "kelvin" : "K",
             "rankine" : "°R"
         },
-        "c_symbol": {
-            "text": 
-        },
         "temperature_unit": {
             "name": "unidades_de_temperatura",
             "description": "Seleccione una unidad de temperatura del menú desplegable"
