@@ -46,32 +46,22 @@
         "title": {
             "text": "Sıcaklık:"
         },
-        "c_name": {
-            "text": "Santigrat:"
-        },
-        "f_name": {
-            "text": "Fahrenhayt:"
-        },
-        "k_name": {
-            "text": "Kelvin:"
-        },
-        "r_name": {
-            "text": "Rankine:"
+        "unit_names" :
+        {
+            "celsius" : "Santigrat:",
+            "fahrenheit" : "Fahrenhayt:",
+            "kelvin" : "Kelvin:",
+            "rankine" : "Rankine:"
         },
         "desc": {
             "text": "Seçilen birim:"
         },
-        "c_symbol": {
-            "text": "°C"
-        },
-        "f_symbol": {
-            "text": "°F"
-        },
-        "k_symbol": {
-            "text": "K"
-        },
-        "r_symbol": {
-            "text": "°R"
+        "unit_symbols":
+        {
+            "celsius" : "°C",
+            "fahrenheit" : "°F",
+            "kelvin" : "K",
+            "rankine" : "°R"
         },
         "temperature_unit": {
             "name": "birim",
@@ -93,32 +83,22 @@
         "title": {
             "text": "तापमान:"
         },
-        "c_name": {
-            "text": "सेल्सियस:"
-        },
-        "f_name": {
-            "text": "फ़ारेनहाइ:"
-        },
-        "k_name": {
-            "text": "केल्विन:"
-        },
-        "r_name": {
-            "text": "रैंकिन:"
+        "unit_names" :
+        {
+            "celsius" : "सेल्सियस:",
+            "fahrenheit" : "फ़ारेनहाइ:",
+            "kelvin" : "केल्विन:",
+            "rankine" : "रैंकिन:"
         },
         "desc": {
             "text": "अपनी पसंद चुनें:"
         },
-        "c_symbol": {
-            "text": "°C"
-        },
-        "f_symbol": {
-            "text": "°F"
-        },
-        "k_symbol": {
-            "text": "K"
-        },
-        "r_symbol": {
-            "text": "°R"
+        "unit_symbols":
+        {
+            "celsius" : "°C",
+            "fahrenheit" : "°F",
+            "kelvin" : "K",
+            "rankine" : "°R"
         },
         "temperature_unit": {
             "name": "तापमान_इकाई",
