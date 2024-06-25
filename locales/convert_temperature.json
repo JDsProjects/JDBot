@@ -305,32 +305,22 @@
         "title": {
             "text": "Temperatura:"
         },
-        "c_name": {
-            "text": "Celsjusz:"
-        },
-        "f_name": {
-            "text": "Fahrenheit:"
-        },
-        "k_name": {
-            "text": "Kelvin:"
-        },
-        "r_name": {
-            "text": "Rankine:"
+        "unit_names" :
+        {
+            "celsius" : "Celsjusz:",
+            "fahrenheit" : "Fahrenheit:",
+            "kelvin" : "Kelvin:",
+            "rankine" : "Rankine:"
         },
         "desc": {
             "text": "Wybrane:"
         },
-        "c_symbol": {
-            "text": "°C"
-        },
-        "f_symbol": {
-            "text": "°F"
-        },
-        "k_symbol": {
-            "text": "K"
-        },
-        "r_symbol": {
-            "text": "°R"
+        "unit_symbols":
+        {
+            "celsius" : "°C",
+            "fahrenheit" : "°F",
+            "kelvin" : "K",
+            "rankine" : "°R"
         },
         "temperature_unit": {
             "name": "jednostka_temperatury",
