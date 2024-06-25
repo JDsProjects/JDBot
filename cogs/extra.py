@@ -1302,6 +1302,8 @@ class Extra(commands.Cog):
         embed.set_footer(text=f"Chose: {speed_unit.value}")
         await interaction.response.send_message(embed=embed)
 
+        # embed could be be better
+
     @convert_speed.error
     async def convert_speed_error(self, interaction: discord.Interaction, error):
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
