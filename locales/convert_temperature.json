@@ -379,32 +379,22 @@
         "title": {
             "text": "Temperatura:"
         },
-        "c_name": {
-            "text": "Celcius:"
-        },
-        "f_name": {
-            "text": "Fahrenheit:"
-        },
-        "k_name": {
-            "text": "Kelvin:"
-        },
-        "r_name": {
-            "text": "Rankine:"
+        "unit_names" :
+        {
+            "celsius" : "Celcius:",
+            "fahrenheit" : "Fahrenheit:",
+            "kelvin" : "Kelvin:",
+            "rankine" : "Rankine:"
         },
         "desc": {
             "text": "Eligió"
         },
-        "c_symbol": {
-            "text": "°C"
-        },
-        "f_symbol": {
-            "text": "°F"
-        },
-        "k_symbol": {
-            "text": "K"
-        },
-        "r_symbol": {
-            "text": "°R"
+        "unit_symbols":
+        {
+            "celsius" : "°C",
+            "fahrenheit" : "°F",
+            "kelvin" : "K",
+            "rankine" : "°R"
         },
         "temperature_unit": {
             "name": "unidades_de_temperatura",
