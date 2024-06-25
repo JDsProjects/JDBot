@@ -9,41 +9,21 @@
         "title": {
             "text": "Speed:"
         },
-        "miles_name": {
-            "text": "Miles:"
+        "unit_names": {
+            "miles": "Miles:",
+            "kilometers": "Kilometers:",
+            "meters": "Meters:",
+            "feet": "Feet:",
+            "megameters": "MegaMeters",
+            "light": "Constants (Speed of Light):"
         },
-        "kilometers_name": {
-            "text": "Kilometers:"
-        },
-        "meters_name": {
-            "text": "Meters:"
-        },
-        "feet_name": {
-            "text": "Feet:"
-        },
-        "megameters_name": {
-            "text": "MegaMeters:"
-        },
-        "light_name": {
-            "text": "Constants (Speed of Light):"
-        },
-        "miles_symbol": {
-            "text": "mi"
-        },
-        "kilometers_symbol": {
-            "text": "km"
-        },
-        "meters_symbol": {
-            "text": "m"
-        },
-        "feet_symbol": {
-            "text": "ft"
-        },
-        "megameters_symbol": {
-            "text": "Mm"
-        },
-        "light_symbol": {
-            "text": "C"
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
         },
         "speed_unit": {
             "name": "speed_unit",
@@ -65,41 +45,21 @@
         "title": {
             "text": "Speed:"
         },
-        "miles_name": {
-            "text": "Miles:"
+        "unit_names": {
+            "miles": "Miles:",
+            "kilometers": "Kilometers:",
+            "meters": "Meters:",
+            "feet": "Feet:",
+            "megameters": "MegaMeters",
+            "light": "Constants (Speed of Light):"
         },
-        "kilometers_name": {
-            "text": "Kilometers:"
-        },
-        "meters_name": {
-            "text": "Meters:"
-        },
-        "feet_name": {
-            "text": "Feet:"
-        },
-        "megameters_name": {
-            "text": "MegaMeters:"
-        },
-        "light_name": {
-            "text": "Constants (Speed of Light):"
-        },
-        "miles_symbol": {
-            "text": "mi"
-        },
-        "kilometers_symbol": {
-            "text": "km"
-        },
-        "meters_symbol": {
-            "text": "m"
-        },
-        "feet_symbol": {
-            "text": "ft"
-        },
-        "megameters_symbol": {
-            "text": "Mm"
-        },
-        "light_symbol": {
-            "text": "C"
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
         },
         "speed_unit": {
             "name": "speed_unit",
