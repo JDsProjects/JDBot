@@ -8,6 +8,7 @@ import re
 import time
 import traceback
 import typing
+import zoneinfo
 
 import alexflipnote
 import asuna_api
@@ -16,6 +17,7 @@ import chardet
 import discord
 from better_profanity import profanity
 from discord import app_commands
+from discord.app_commands import Choice
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord_games import button_games
@@ -47,6 +49,7 @@ class Extra(commands.Cog):
 
         records = await pool.fetch("SELECT * FROM AFK")
         self.afk = {record.user_id: record for record in records}
+        self.available_timezones = sorted(list(await asyncio.to_thread(zoneinfo.available_timezones)))
 
     @commands.command(
         brief="a way to look up minecraft usernames",
@@ -1310,6 +1313,49 @@ class Extra(commands.Cog):
         print(interaction.command)
         traceback.print_exc()
 
+    @app_commands.user_install()
+    @app_commands.guild_install()
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.describe(
+        timezone="Select a timezone from the list or look it up from the list.",
+    )
+    @app_commands.command(description="A command to convert the message timestamp to the region's time.")
+    async def convert_timezone(self, interaction: discord.Interaction, timezone: typing.Optional[str] = None):
+
+        # unsure how to check if timezone doesn't exist to force it to None with a message.
+
+        timezones = self.available_timezones
+        
+        message = "Let us Find the Timezone for you"
+        if not timezone in timezones:
+            timezone = None
+            message = "You Chose an invalid timezone, time to just display your timezone with the discord timestamp"
+
+        if not timezone:
+            timestamp = discord.utils.format_dt(interaction.created_at)
+
+        else:
+            timestamp = interaction.created_at.astimezone(ZoneInfo(timezone))
+            # somehow format to be right?
+
+    @convert_timezone.autocomplete("timezone")
+    async def convert_timezone_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
+
+        timezones = self.available_timezones
+        all_choices = [Choice(name=timezone, value=timezone) for timezone in timezones]
+        startswith = [choices for choices in all_choices if choices.name.startswith(current)]
+        if not (current and startswith):
+            return all_choices[0:25]
+
+        return startswith
+
+        # should I use the transformer and difflib it?
+
+    @convert_timezone.error
+    async def convert_timezone_error(self, interaction: discord.Interaction, error):
+        await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
+        print(interaction.command)
+        traceback.print_exc()
 
 async def setup(bot):
     await bot.add_cog(Extra(bot))
