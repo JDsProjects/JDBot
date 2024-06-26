@@ -1336,7 +1336,7 @@ class Extra(commands.Cog):
             timestamp = discord.utils.format_dt(interaction.created_at)
 
         else:
-            timestamp = interaction.created_at.astimezone(ZoneInfo(timezone))
+            timestamp = interaction.created_at.astimezone(zoneinfo.ZoneInfo(timezone))
             # somehow format to be right?
             # needs to determine datetime on locale's datetime preference.
             # how do I do this?
