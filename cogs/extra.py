@@ -1337,6 +1337,11 @@ class Extra(commands.Cog):
 
         else:
             timestamp = interaction.created_at.astimezone(zoneinfo.ZoneInfo(timezone))
+
+            # time to list every format known to man
+            # https://pynative.com/python-datetime-format-strftime/#h-strftime-date-format-codes
+            # we can use that as a guide
+
             message = "Here's the timezone you picked"
             # somehow format to be right?
             # needs to determine datetime on locale's datetime preference.
