@@ -106,5 +106,41 @@
             "description": "Uzunluk girin"
         },
         "translator_id": "351656397257310212"
+    },
+    "ja": {
+        "name": {
+            "text": "速度_変換"
+        },
+        "command_desc": {
+            "text": "速度を異なるスケールに変換するコマンドです。"
+        },
+        "title": {
+            "text": "速度:"
+        },
+        "unit_names": {
+            "miles": "マイル:",
+            "kilometers": "キロメートル:",
+            "meters": "メートル:",
+            "feet": "フィート:",
+            "megameters": "メガメートル",
+            "light": "定数 (光の速度):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "変換元単位",
+            "description": "変換する元の速度単位を選択"
+        },
+        "speed": {
+            "name": "速度",
+            "description": "値を入力"
+        },
+        "translator_id": "1163416356566347828"
     }
 }
