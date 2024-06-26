@@ -1344,7 +1344,7 @@ class Extra(commands.Cog):
             # unsure how to embed this.
 
     @convert_timezone.autocomplete("timezone")
-    async def convert_timezone_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
+    async def convert_timezone_autocomplete(self, interaction: discord.Interaction, current: str):
 
         timezones = self.available_timezones
         all_choices = [Choice(name=timezone, value=timezone) for timezone in timezones]
