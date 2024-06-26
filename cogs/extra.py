@@ -1352,7 +1352,7 @@ class Extra(commands.Cog):
         if not (current and startswith):
             return all_choices[0:25]
 
-        return startswith
+        return startswith[0:25]
 
         # should I use the transformer and difflib it?
 
