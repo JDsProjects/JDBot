@@ -1325,7 +1325,7 @@ class Extra(commands.Cog):
         # unsure how to check if timezone doesn't exist to force it to None with a message.
 
         timezones = self.available_timezones
-        
+
         message = "Let us Find the Timezone for you"
         if not timezone in timezones:
             timezone = None
@@ -1356,6 +1356,7 @@ class Extra(commands.Cog):
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(interaction.command)
         traceback.print_exc()
+
 
 async def setup(bot):
     await bot.add_cog(Extra(bot))
