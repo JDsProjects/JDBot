@@ -1341,8 +1341,8 @@ class Extra(commands.Cog):
             # needs to determine datetime on locale's datetime preference.
             # how do I do this?
 
-            await interaction.response.send_message(f"Wip but here: {timestamp}")
-            # unsure how to embed this.
+        await interaction.response.send_message(f"Wip but here: {timestamp}")
+        # unsure how to embed this.
 
     @convert_timezone.autocomplete("timezone")
     async def convert_timezone_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
