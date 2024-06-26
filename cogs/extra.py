@@ -1327,7 +1327,7 @@ class Extra(commands.Cog):
 
         timezones = self.available_timezones
 
-        message = "Let us Find the Timezone for you"
+        message = "You did not choose a timezone, so here's a time according to each client"
         if not timezone in timezones:
             timezone = None
             message = "You Chose an invalid timezone, time to just display your timezone with the discord timestamp"
@@ -1337,6 +1337,7 @@ class Extra(commands.Cog):
 
         else:
             timestamp = interaction.created_at.astimezone(zoneinfo.ZoneInfo(timezone))
+            message = "Here's the timezone with the discord timestamp"
             # somehow format to be right?
             # needs to determine datetime on locale's datetime preference.
             # how do I do this?
