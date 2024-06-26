@@ -1317,7 +1317,7 @@ class Extra(commands.Cog):
     @app_commands.guild_install()
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.describe(
-        timezone="Select a timezone from the list or look it up from the list.",
+        timezone="Select the timezone you would like to convert to.",
     )
     @app_commands.command(description="A command to convert the message timestamp to the region's time.")
     async def convert_timezone(self, interaction: discord.Interaction, timezone: typing.Optional[str] = None):
