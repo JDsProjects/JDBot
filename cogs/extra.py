@@ -1342,7 +1342,8 @@ class Extra(commands.Cog):
             # needs to determine datetime on locale's datetime preference.
             # how do I do this?
 
-        await interaction.response.send_message(f"Wip but here: {timestamp} \n{message}")
+        timezone = timezone or "Unknown"
+        await interaction.response.send_message(f"Wip but here: {timestamp} \n{message} \nTimezone: {timezone}")
         # unsure how to embed this.
 
     @convert_timezone.autocomplete("timezone")
