@@ -1337,7 +1337,7 @@ class Extra(commands.Cog):
 
         else:
             timestamp = interaction.created_at.astimezone(zoneinfo.ZoneInfo(timezone))
-            message = "Here's the timezone with the discord timestamp"
+            message = "Here's the timezone you picked"
             # somehow format to be right?
             # needs to determine datetime on locale's datetime preference.
             # how do I do this?
