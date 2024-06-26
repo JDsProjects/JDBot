@@ -23,6 +23,7 @@ from discord.ext.commands.cooldowns import BucketType
 from discord_games import button_games
 
 import utils
+from utils import fuzzy
 
 
 class Extra(commands.Cog):
@@ -1348,13 +1349,15 @@ class Extra(commands.Cog):
 
         timezones = self.available_timezones
         all_choices = [Choice(name=timezone, value=timezone) for timezone in timezones]
-        startswith = [choices for choices in all_choices if choices.name.startswith(current)]
-        if not (current and startswith):
+
+        if not (current):
             return all_choices[0:25]
 
-        return startswith[0:25]
+        filtered_results = fuzzy.finder(current, timezones)
+        results = [Choice(name=result, value=result) for result in filtered_results]
 
-        # should I use the transformer and difflib it?
+        return results[0:25]
+
 
     @convert_timezone.error
     async def convert_timezone_error(self, interaction: discord.Interaction, error):
