@@ -1358,7 +1358,6 @@ class Extra(commands.Cog):
 
         return results[0:25]
 
-
     @convert_timezone.error
     async def convert_timezone_error(self, interaction: discord.Interaction, error):
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
