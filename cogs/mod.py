@@ -183,7 +183,7 @@ class Moderation(commands.Cog):
                 "You can only do that in thread channels, if you did try it on a thread channel, send a command in the thread channel so the bot caches the thread."
             )
 
-    @commands.command(brief="Unarchives thread channel")
+    @commands.command(brief="Archives thread channel")
     async def archive_thread(self, ctx, channel: typing.Optional[discord.Thread] = commands.CurrentChannel):
         if isinstance(channel, discord.Thread):
             if ctx.me.guild_permissions.manage_threads and ctx.author.guild_permissions.manage_threads:
