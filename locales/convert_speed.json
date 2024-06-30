@@ -71,6 +71,42 @@
         },
         "translator_id": "168422909482762240"
     },
+    "de": {
+        "name": {
+            "text": "geschwindigkeit_konvertieren"
+        },
+        "command_desc": {
+            "text": "Ein Befehl zum Konvertieren von Geschwindigkeiten in verschiedene Maßstäbe"
+        },
+        "title": {
+            "text": "Geschwindigkeit:"
+        },
+        "unit_names": {
+            "miles": "Meilen:",
+            "kilometers": "Kilometer:",
+            "meters": "Meter:",
+            "feet": "Fuß:",
+            "megameters": "Megameter",
+            "light": "Konstanten (Lichtgeschwindigkeit):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "geschwindigkeit_einheit",
+            "description": "Wähle eine Geschwindigkeit Einheit aus der Liste."
+        },
+        "speed": {
+            "name": "geschwindigkeit",
+            "description": "Bitte gebe eine Zahl ein."
+        },
+        "translator_id": "1022842005920940063"
+    },
      "tr": {
         "name": {
             "text": "uzunluk_dönüştür"
