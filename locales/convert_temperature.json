@@ -445,12 +445,12 @@
             "rankine": "°R"
         },
         "temperature_unit": {
-            "name": null,
-            "description": null
+            "name": "unidade_de_temperatura",
+            "description": "Selecione uma unidade de temperatura no menu abaixo"
         },
         "temperature": {
-            "name": null,
-            "description": null
+            "name": "temperatura",
+            "description": "Insira um número"
         },
         "translator_id": "1096865109541929161"
     },
