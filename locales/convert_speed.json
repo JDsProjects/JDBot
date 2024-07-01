@@ -178,5 +178,42 @@
             "description": "値を入力"
         },
         "translator_id": "1163416356566347828"
-    }
+    },
+    
+    "pt-BR": {
+        "name": {
+            "text": "converter_velocidade"
+        },
+        "command_desc": {
+            "text": "Um comando para converter velocidades para diferentes escalas"
+        },
+        "title": {
+            "text": "Velocidade:"
+        },
+        "unit_names": {
+            "miles": "Milhas:",
+            "kilometers": "Quilômetros:",
+            "meters": "Metros:",
+            "feet": "Pés:",
+            "megameters": "MegaMetros",
+            "light": "Constantes (Velocidade da Luz):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "unidade_de_velocidade",
+            "description": "Selecione uma unidade de velocidade no menu abaixo."
+        },
+        "speed": {
+            "name": "velocidade",
+            "description": "Insira um número"
+        },
+        "translator_id": "1096865109541929161"
+    },
 }
