@@ -166,7 +166,7 @@
         },
         "temperature_unit": {
             "name": "Lämpötilayksikkö",
-            "description": "Valitse lämpötila valikosta."
+            "description": "Valitse lämpötilayksikkö valikosta"
         },
         "temperature": {
             "name": "Lämpötila",
