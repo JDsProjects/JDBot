@@ -179,7 +179,6 @@
         },
         "translator_id": "1163416356566347828"
     },
-    
     "pt-BR": {
         "name": {
             "text": "converter_velocidade"
@@ -215,5 +214,5 @@
             "description": "Insira um número"
         },
         "translator_id": "1096865109541929161"
-    },
+    }
 }
