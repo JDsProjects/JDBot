@@ -107,7 +107,7 @@
         },
         "translator_id": "1022842005920940063"
     },
-    "pl" {
+    "pl" : {
         "name": {
             "text": "prędkości_konwersja"
         },
@@ -143,7 +143,7 @@
         },
         "translator_id": "1022842005920940063"
     },
-    "fr" {
+    "fr" : {
         "name": {
             "text": "vitesse_convertir"
         },
