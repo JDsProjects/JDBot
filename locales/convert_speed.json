@@ -76,7 +76,7 @@
             "text": "geschwindigkeit_konvertieren"
         },
         "command_desc": {
-            "text": "Ein Befehl zum Konvertieren von Geschwindigkeiten in verschiedene Maßstäbe"
+            "text": "Ein Befehl zum Umwandeln von Geschwindigkeiten in verschiedene Einheiten"
         },
         "title": {
             "text": "Geschwindigkeit:"
@@ -98,12 +98,12 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "geschwindigkeit_einheit",
-            "description": "Wähle eine Geschwindigkeit Einheit aus der Liste"
+            "name": "geschwindigkeits_einheit",
+            "description": "Wähle eine Geschwindigkeitseinheit aus der Liste aus"
         },
         "speed": {
             "name": "geschwindigkeit",
-            "description": "Bitte gebe eine Zahl ein"
+            "description": "Bitte gib eine Zahl ein"
         },
         "translator_id": "1022842005920940063"
     },

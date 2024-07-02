@@ -249,7 +249,7 @@
             "text": "temperatur_konvertieren"
         },
         "command_desc": {
-            "text": "Ein Befehl zum Konvertieren von Temperaturen in verschiedene Maßstäbe"
+            "text": "Ein Befehl zum Umwandeln von Temperaturen in verschiedene Einheiten"
         },
         "title": {
             "text": "Temperatur:"
@@ -275,7 +275,7 @@
         },
         "temperature": {
             "name": "temperatur",
-            "description": "Bitte gebe eine Zahl ein."
+            "description": "Bitte gib eine Zahl ein."
         },
         "translator_id": "1022842005920940063"
     },
