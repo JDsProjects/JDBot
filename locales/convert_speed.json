@@ -286,5 +286,41 @@
             "description": "Insira um número"
         },
         "translator_id": "1096865109541929161"
+    },
+    "fi": {
+        "name": {
+            "text": "Muunnanopeus"
+        },
+        "command_desc": {
+            "text": "Komento nopeuden muuntamiseen eri asteikoille."
+        },
+        "title": {
+            "text": "Nopeus:"
+        },
+        "unit_names": {
+            "miles": "Mailia:",
+            "kilometers": "Kilometriä:",
+            "meters": "Metriä:",
+            "feet": "Jalkaa:",
+            "megameters": "Megametriä:",
+            "light": "Vakiot (Valon nopeus):"
+        },
+        "unit_symbols": {
+            "miles": "mailia",
+            "kilometers": "kilometriä:",
+            "meters": "Metriä",
+            "feet": "jalkaa:",
+            "megameters": "megametriä:",
+            "light": "vakiot"
+        },
+        "speed_unit": {
+            "name": "Nopeusyksikkö",
+            "description": "Valitse nopeusyksikkö valikosta alla."
+        },
+        "speed": {
+            "name": "Nopeus",
+            "description": "Syötä numero."
+        },
+        "translator_id": "1058768145722134528"
     }
 }
