@@ -207,7 +207,9 @@ class Bot(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    async def command_autocomplete(self, interaction: discord.Interaction, current: str) -> list[app_commands.Choice[str]]:
+    async def command_autocomplete(
+        self, interaction: discord.Interaction, current: str
+    ) -> list[app_commands.Choice[str]]:
         all_items = set()
         # Add commands
         for command in self.bot.walk_commands():
@@ -219,17 +221,18 @@ class Bot(commands.Cog):
             all_items.add(f"cog:{cog.qualified_name}")
         # Add utils (assuming you have a 'utils' module)
         try:
-            utils = importlib.import_module('utils')
+            utils = importlib.import_module("utils")
             for name in dir(utils):
-                if not name.startswith('_'):  # Skip private attributes
+                if not name.startswith("_"):  # Skip private attributes
                     all_items.add(f"util:{name}")
         except ImportError:
             pass  # No utils module found
         return [
-            app_commands.Choice(name=item.split(':', 1)[1], value=item)
+            app_commands.Choice(name=item.split(":", 1)[1], value=item)
             for item in all_items
             if current.lower() in item.lower()
         ][:25]
+
     @app_commands.command(name="source", description="Find the source code for a command, cog, or utility function")
     @app_commands.autocomplete(item=command_autocomplete)
     async def source_slash(self, interaction: discord.Interaction, item: str = None):
@@ -243,30 +246,40 @@ class Bot(commands.Cog):
         )
         if item is None:
             return await interaction.response.send_message("Here's the github link:", embed=embed)
-        item_type, item_name = item.split(':', 1)
-        if item_type == 'command':
+        item_type, item_name = item.split(":", 1)
+        if item_type == "command":
             command_wanted = self.bot.get_command(item_name) or self.bot.tree.get_command(item_name)
             if not command_wanted:
-                return await interaction.response.send_message(f"Couldn't find command {item_name}. Here's source anyway:", embed=embed)
+                return await interaction.response.send_message(
+                    f"Couldn't find command {item_name}. Here's source anyway:", embed=embed
+                )
             if isinstance(command_wanted, app_commands.Command):
                 src = command_wanted.callback
             else:
                 src = command_wanted.callback
-        elif item_type == 'cog':
+        elif item_type == "cog":
             cog = self.bot.get_cog(item_name)
             if not cog:
-                return await interaction.response.send_message(f"Couldn't find cog {item_name}. Here's source anyway:", embed=embed)
+                return await interaction.response.send_message(
+                    f"Couldn't find cog {item_name}. Here's source anyway:", embed=embed
+                )
             src = type(cog)
-        elif item_type == 'util':
+        elif item_type == "util":
             try:
-                utils = importlib.import_module('utils')
+                utils = importlib.import_module("utils")
                 src = getattr(utils, item_name)
                 if not src:
-                    return await interaction.response.send_message(f"Couldn't find utility {item_name}. Here's source anyway:", embed=embed)
+                    return await interaction.response.send_message(
+                        f"Couldn't find utility {item_name}. Here's source anyway:", embed=embed
+                    )
             except (ImportError, AttributeError):
-                return await interaction.response.send_message(f"Couldn't find utility {item_name}. Here's source anyway:", embed=embed)
+                return await interaction.response.send_message(
+                    f"Couldn't find utility {item_name}. Here's source anyway:", embed=embed
+                )
         else:
-            return await interaction.response.send_message(f"Unknown item type {item_type}. Here's source anyway:", embed=embed)
+            return await interaction.response.send_message(
+                f"Unknown item type {item_type}. Here's source anyway:", embed=embed
+            )
         module = src.__module__
         try:
             filename = inspect.getsourcefile(src)
