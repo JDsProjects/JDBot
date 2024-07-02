@@ -1,0 +1,33 @@
+name: Update requirements.txt
+
+on:
+  push:
+    paths:
+      - poetry.lock
+
+jobs:
+  update-requirements:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'  # Specify the Python version you need
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "::add-path::$HOME/.local/bin"
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Export dependencies to requirements.txt
+      run: poetry export --without-hashes --without-urls | awk '{ print $1 }' FS=';' > requirements.txt
+
+    - name: Show generated requirements.txt
+      run: cat requirements.txt
