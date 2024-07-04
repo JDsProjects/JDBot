@@ -247,8 +247,10 @@ class Bot(commands.Cog):
 
     async def get_source(self, ctx, item=None):
         embed = discord.Embed(
-            title="Github link", description=f"{self.github_url}", color=15428885, 
-            timestamp=ctx.created_at if isinstance(ctx, discord.Interaction) else ctx.message.created_at
+            title="Github link",
+            description=f"{self.github_url}",
+            color=15428885,
+            timestamp=ctx.created_at if isinstance(ctx, discord.Interaction) else ctx.message.created_at,
         )
         embed.set_footer(
             text="This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works."
@@ -263,7 +265,7 @@ class Bot(commands.Cog):
                 return await self.send_response(ctx, embed=embed)
 
             github_url, filename, lines, firstline = self.process_source(src)
-            
+
             file_url = f"{github_url}/blob/{self.branch}/{filename}"
             line_url = f"{file_url}#L{firstline}-L{firstline + len(lines) - 1}"
             embed.title = f"Source for {item_name}:"
@@ -281,7 +283,11 @@ class Bot(commands.Cog):
                 if not command_wanted:
                     await self.send_response(ctx, f"Couldn't find command {item_name}. Here's source anyway:")
                     return None, None
-                return command_wanted.callback if isinstance(command_wanted, app_commands.Command) else command_wanted.callback, item_name
+                return (
+                    command_wanted.callback
+                    if isinstance(command_wanted, app_commands.Command)
+                    else command_wanted.callback
+                ), item_name
             elif item_type == "cog":
                 cog = self.bot.get_cog(item_name)
                 if not cog:
