@@ -236,7 +236,7 @@ class Bot(commands.Cog):
 
     @app_commands.command(name="source", description="Find the source code for a command, cog, or utility function")
     @app_commands.autocomplete(item=command_autocomplete)
-    async def source_slash(self, interaction: discord.Interaction, item: str = None):
+    async def source_slash(self, interaction: discord.Interaction, item: typing.Optional[str] = None):
         github_url = "https://github.com/JDsProjects/JDBot"
         branch = "master"
         embed = discord.Embed(
