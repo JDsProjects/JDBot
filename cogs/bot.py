@@ -307,56 +307,56 @@ class Bot(commands.Cog):
         embed.description = f"[**Click Here**]({line_url})"
         await interaction.response.send_message(embed=embed)
 
-        @commands.command(
-            brief="finds out where the location of the command on my github repo(so people can learn from my commands)"
+    @commands.command(
+        brief="finds out where the location of the command on my github repo(so people can learn from my commands)"
+    )
+    async def source(self, ctx, *, command=None):
+        github_url = "https://github.com/JDJGInc/JDBot"
+        branch = "master"
+        embed = discord.Embed(
+            title="Github link", description=f"{github_url}", color=15428885, timestamp=ctx.message.created_at
         )
-        async def source(self, ctx, *, command=None):
-            github_url = "https://github.com/JDJGInc/JDBot"
-            branch = "master"
-            embed = discord.Embed(
-                title="Github link", description=f"{github_url}", color=15428885, timestamp=ctx.message.created_at
-            )
-            embed.set_footer(
-                text="This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works."
-            )
-            if command is None:
-                return await ctx.send("Here's the github link:", embed=embed)
-            command_wanted = self.bot.get_command(command)
-            if not command_wanted:
-                return await ctx.send(f"Couldn't find {command}. Here's source anyway:", embed=embed)
-            src = command_wanted.callback.__code__
-            filename = src.co_filename
-            module = command_wanted.callback.__module__
-            if command == "help":
-                src = type(self.bot.help_command)
-                module = src.__module__
-                filename = inspect.getsourcefile(src)
-            lines, firstline = inspect.getsourcelines(src)
+        embed.set_footer(
+            text="This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works."
+        )
+        if command is None:
+            return await ctx.send("Here's the github link:", embed=embed)
+        command_wanted = self.bot.get_command(command)
+        if not command_wanted:
+            return await ctx.send(f"Couldn't find {command}. Here's source anyway:", embed=embed)
+        src = command_wanted.callback.__code__
+        filename = src.co_filename
+        module = command_wanted.callback.__module__
+        if command == "help":
+            src = type(self.bot.help_command)
+            module = src.__module__
+            filename = inspect.getsourcefile(src)
+        lines, firstline = inspect.getsourcelines(src)
 
-            if not os.path.isabs(filename):
-                if module.startswith("jishaku"):
-                    github_url = "https://github.com/Gorialis/jishaku"
-                    branch = "master"
-                elif module.startswith("discord"):
-                    github_url = "https://github.com/Rapptz/discord.py"
-                    branch = "master"
-                else:
-                    module = module.split(".")[0]
-                    return await ctx.send(
-                        f"We don't support getting the source of {module}. Here's my bot's source:", embed=embed
-                    )
-                filename = module.replace(".", "/") + ".py"
+        if not os.path.isabs(filename):
+            if module.startswith("jishaku"):
+                github_url = "https://github.com/Gorialis/jishaku"
+                branch = "master"
+            elif module.startswith("discord"):
+                github_url = "https://github.com/Rapptz/discord.py"
+                branch = "master"
             else:
-                # This is a local file
-                path = pathlib.Path.cwd()
-                relative_path = os.path.relpath(filename, path)
-                filename = relative_path.replace("\\", "/")  # Ensure forward slashes for URL
+                module = module.split(".")[0]
+                return await ctx.send(
+                    f"We don't support getting the source of {module}. Here's my bot's source:", embed=embed
+                )
+            filename = module.replace(".", "/") + ".py"
+        else:
+            # This is a local file
+            path = pathlib.Path.cwd()
+            relative_path = os.path.relpath(filename, path)
+            filename = relative_path.replace("\\", "/")  # Ensure forward slashes for URL
 
-            embed.title = f"Source for {command_wanted}:"
-            embed.description = (
-                f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})"
-            )
-            await ctx.send(embed=embed)
+        embed.title = f"Source for {command_wanted}:"
+        embed.description = (
+            f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})"
+        )
+        await ctx.send(embed=embed)
 
     @commands.command(brief="a set of rules we will follow")
     async def promise(self, ctx):
