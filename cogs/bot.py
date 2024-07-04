@@ -89,7 +89,7 @@ class Bot(commands.Cog):
         minimal_invite = discord.utils.oauth_url(
             self.bot.user.id, permissions=discord.Permissions(permissions=70634561), scopes=("bot",)
         )
-    
+
         normal_inv_slash = discord.utils.oauth_url(
             self.bot.user.id,
             permissions=discord.Permissions(permissions=8),
@@ -98,21 +98,21 @@ class Bot(commands.Cog):
             self.bot.user.id,
             permissions=discord.Permissions(permissions=70634561),
         )
-    
+
         embed = discord.Embed(title="Invite link:", color=random.randint(0, 16777215))
         embed.add_field(
             name=f"{self.bot.user.name} invite:",
             value=f"[{self.bot.user.name} invite url]({normal_inv}) \nNon Markdown invite: {normal_inv}",
         )
         embed.add_field(name="Minimal permissions", value=f"{minimal_invite}")
-    
+
         embed.set_thumbnail(url=self.bot.user.display_avatar.url)
         embed.set_footer(
             text="Not all features may work if you invite with minimal permissions. If you invite with 0 permissions, make sure these permissions are in a Bots/Bot role."
         )
-    
+
         view = discord.ui.View()
-    
+
         view.add_item(
             discord.ui.Button(
                 label=f"{self.bot.user.name}'s Normal invite", url=normal_inv, style=discord.ButtonStyle.link
@@ -125,7 +125,7 @@ class Bot(commands.Cog):
                 style=discord.ButtonStyle.link,
             )
         )
-    
+
         view.add_item(
             discord.ui.Button(
                 label=f"{self.bot.user.name}'s Normal Invite (Slash)",
@@ -142,7 +142,7 @@ class Bot(commands.Cog):
                 row=2,
             )
         )
-    
+
         await ctx.send(embed=embed, view=view)
 
     @commands.command(brief="gives you who the owner is.")
