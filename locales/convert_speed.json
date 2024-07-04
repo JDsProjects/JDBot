@@ -76,7 +76,7 @@
             "text": "geschwindigkeit_konvertieren"
         },
         "command_desc": {
-            "text": "Ein Befehl zum Konvertieren von Geschwindigkeiten in verschiedene Maßstäbe"
+            "text": "Ein Befehl zum Umwandeln von Geschwindigkeiten in verschiedene Einheiten"
         },
         "title": {
             "text": "Geschwindigkeit:"
@@ -98,16 +98,16 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "geschwindigkeit_einheit",
-            "description": "Wähle eine Geschwindigkeit Einheit aus der Liste"
+            "name": "geschwindigkeits_einheit",
+            "description": "Wähle eine Geschwindigkeitseinheit aus der Liste aus"
         },
         "speed": {
             "name": "geschwindigkeit",
-            "description": "Bitte gebe eine Zahl ein"
+            "description": "Bitte gib eine Zahl ein"
         },
         "translator_id": "1022842005920940063"
     },
-    "pl" : {
+    "pl": {
         "name": {
             "text": "prędkości_konwersja"
         },
@@ -143,7 +143,7 @@
         },
         "translator_id": "1022842005920940063"
     },
-    "fr" : {
+    "fr": {
         "name": {
             "text": "vitesse_convertir"
         },
@@ -286,5 +286,41 @@
             "description": "Insira um número"
         },
         "translator_id": "1096865109541929161"
+    },
+    "fi": {
+        "name": {
+            "text": "Muunnanopeus"
+        },
+        "command_desc": {
+            "text": "Komento nopeuden muuntamiseen eri asteikoille."
+        },
+        "title": {
+            "text": "Nopeus:"
+        },
+        "unit_names": {
+            "miles": "Mailia:",
+            "kilometers": "Kilometriä:",
+            "meters": "Metriä:",
+            "feet": "Jalkaa:",
+            "megameters": "Megametriä:",
+            "light": "Vakiot (Valon nopeus):"
+        },
+        "unit_symbols": {
+            "miles": "mailia",
+            "kilometers": "kilometriä:",
+            "meters": "Metriä",
+            "feet": "jalkaa:",
+            "megameters": "megametriä:",
+            "light": "vakiot"
+        },
+        "speed_unit": {
+            "name": "Nopeusyksikkö",
+            "description": "Valitse nopeusyksikkö valikosta alla."
+        },
+        "speed": {
+            "name": "Nopeus",
+            "description": "Syötä numero."
+        },
+        "translator_id": "1058768145722134528"
     }
 }
