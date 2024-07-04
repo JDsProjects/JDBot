@@ -1,8 +1,8 @@
 import asyncio
 import contextlib
 import difflib
-import inspect
 import importlib
+import inspect
 import os
 import pathlib
 import platform
@@ -13,8 +13,8 @@ import typing
 import discord
 import psutil
 from dateutil.relativedelta import relativedelta
-from discord.ext import commands, tasks
 from discord import app_commands
+from discord.ext import commands, tasks
 from discord.ext.commands.cooldowns import BucketType
 
 import utils
