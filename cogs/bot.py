@@ -86,7 +86,7 @@ class Bot(commands.Cog):
         normal_inv = discord.utils.oauth_url(
             self.bot.user.id, permissions=discord.Permissions(permissions=8), scopes=("bot",)
         )
-        minimial_invite = discord.utils.oauth_url(
+        minimal_invite = discord.utils.oauth_url(
             self.bot.user.id, permissions=discord.Permissions(permissions=70634561), scopes=("bot",)
         )
 
@@ -94,7 +94,7 @@ class Bot(commands.Cog):
             self.bot.user.id,
             permissions=discord.Permissions(permissions=8),
         )
-        minimial_invite_slash = discord.utils.oauth_url(
+        minimal_invite_slash = discord.utils.oauth_url(
             self.bot.user.id,
             permissions=discord.Permissions(permissions=70634561),
         )
@@ -102,13 +102,13 @@ class Bot(commands.Cog):
         embed = discord.Embed(title="Invite link:", color=random.randint(0, 16777215))
         embed.add_field(
             name=f"{self.bot.user.name} invite:",
-            value=f"[{self.bot.user.name} invite url]({normal_inv}) \nNon Markdowned invite : {normal_inv}",
+            value=f"[{self.bot.user.name} invite url]({normal_inv}) \nNon Markdown invite: {normal_inv}",
         )
-        embed.add_field(name="Minimial permisions", value=f"{ minimial_invite}")
+        embed.add_field(name="Minimal permissions", value=f"{minimal_invite}")
 
         embed.set_thumbnail(url=self.bot.user.display_avatar.url)
         embed.set_footer(
-            text="not all features may work if you invite with minimal perms, if you invite with 0 make sure these permissions are in a Bots/Bot role."
+            text="Not all features may work if you invite with minimal permissions. If you invite with 0 permissions, make sure these permissions are in a Bots/Bot role."
         )
 
         view = discord.ui.View()
@@ -120,15 +120,15 @@ class Bot(commands.Cog):
         )
         view.add_item(
             discord.ui.Button(
-                label=f"{self.bot.user.name}'s Minimial Permisions Invite",
-                url=minimial_invite,
+                label=f"{self.bot.user.name}'s Minimal Permissions Invite",
+                url=minimal_invite,
                 style=discord.ButtonStyle.link,
             )
         )
 
         view.add_item(
             discord.ui.Button(
-                label=f"{self.bot.user.name}'s Normal Invite(Slash)",
+                label=f"{self.bot.user.name}'s Normal Invite (Slash)",
                 url=normal_inv_slash,
                 style=discord.ButtonStyle.link,
                 row=2,
@@ -136,8 +136,8 @@ class Bot(commands.Cog):
         )
         view.add_item(
             discord.ui.Button(
-                label=f"{self.bot.user.name}'s Minimial Permisions(Slash)",
-                url=minimial_invite_slash,
+                label=f"{self.bot.user.name}'s Minimal Permissions (Slash)",
+                url=minimal_invite_slash,
                 style=discord.ButtonStyle.link,
                 row=2,
             )
@@ -241,31 +241,25 @@ class Bot(commands.Cog):
         brief="finds out where the location of the command on my github repo(so people can learn from my commands)"
     )
     async def source(self, ctx, *, command=None):
-        await self.get_source(ctx, command)
-
-    @app_commands.command(name="source", description="Find the source code for a command, cog, or utility function")
-    @app_commands.autocomplete(item=command_autocomplete)
-    async def source_slash(self, interaction: discord.Interaction, item: typing.Optional[str] = None):
-        await self.get_source(interaction, item)
-
-    async def get_source(self, ctx, item=None):
         embed = discord.Embed(
             title="Github link",
             description=f"{self.github_url}",
             color=15428885,
-            timestamp=ctx.created_at if isinstance(ctx, discord.Interaction) else ctx.message.created_at,
+            timestamp=ctx.message.created_at,
         )
         embed.set_footer(
             text="This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works."
         )
 
-        if item is None:
-            return await self.send_response(ctx, "Here's the github link:", embed=embed)
+        if command is None:
+            await ctx.send("Here's the github link:", embed=embed)
+            return
 
         try:
-            src, item_name = await self.fetch_source(ctx, item)
+            src, item_name = await self.fetch_source(ctx, command)
             if src is None:
-                return await self.send_response(ctx, embed=embed)
+                await ctx.send(embed=embed)
+                return
 
             github_url, filename, lines, firstline = self.process_source(src)
 
@@ -273,10 +267,44 @@ class Bot(commands.Cog):
             line_url = f"{file_url}#L{firstline}-L{firstline + len(lines) - 1}"
             embed.title = f"Source for {item_name}:"
             embed.description = f"[**Click Here**]({line_url})"
-            await self.send_response(ctx, embed=embed)
+            await ctx.send(embed=embed)
 
         except Exception as e:
-            await self.send_response(ctx, f"An error occurred while fetching the source: {str(e)}")
+            await ctx.send(f"An error occurred while fetching the source: {str(e)}")
+
+    @app_commands.command(name="source", description="Find the source code for a command, cog, or utility function")
+    @app_commands.autocomplete(item=command_autocomplete)
+    async def source_slash(self, interaction: discord.Interaction, item: typing.Optional[str] = None):
+        embed = discord.Embed(
+            title="Github link",
+            description=f"{self.github_url}",
+            color=15428885,
+            timestamp=interaction.created_at,
+        )
+        embed.set_footer(
+            text="This Bot's License is MIT, you must credit if you use my code, but please just make your own, if you don't know something works ask me, or try to learn how mine works."
+        )
+
+        if item is None:
+            await interaction.response.send_message("Here's the github link:", embed=embed)
+            return
+
+        try:
+            src, item_name = await self.fetch_source(interaction, item)
+            if src is None:
+                await interaction.response.send_message(embed=embed)
+                return
+
+            github_url, filename, lines, firstline = self.process_source(src)
+
+            file_url = f"{github_url}/blob/{self.branch}/{filename}"
+            line_url = f"{file_url}#L{firstline}-L{firstline + len(lines) - 1}"
+            embed.title = f"Source for {item_name}:"
+            embed.description = f"[**Click Here**]({line_url})"
+            await interaction.response.send_message(embed=embed)
+
+        except Exception as e:
+            await interaction.response.send_message(f"An error occurred while fetching the source: {str(e)}")
 
     async def fetch_source(self, ctx, item):
         if isinstance(ctx, discord.Interaction):
@@ -284,7 +312,6 @@ class Bot(commands.Cog):
             if item_type == "command":
                 command_wanted = self.bot.get_command(item_name) or self.bot.tree.get_command(item_name)
                 if not command_wanted:
-                    await self.send_response(ctx, f"Couldn't find command {item_name}. Here's source anyway:")
                     return None, None
                 return (
                     command_wanted.callback
@@ -294,7 +321,6 @@ class Bot(commands.Cog):
             elif item_type == "cog":
                 cog = self.bot.get_cog(item_name)
                 if not cog:
-                    await self.send_response(ctx, f"Couldn't find cog {item_name}. Here's source anyway:")
                     return None, None
                 return type(cog), item_name
             elif item_type == "util":
@@ -302,19 +328,15 @@ class Bot(commands.Cog):
                     utils = importlib.import_module("utils")
                     src = getattr(utils, item_name)
                     if not src:
-                        await self.send_response(ctx, f"Couldn't find utility {item_name}. Here's source anyway:")
                         return None, None
                     return src, item_name
                 except (ImportError, AttributeError):
-                    await self.send_response(ctx, f"Couldn't find utility {item_name}. Here's source anyway:")
                     return None, None
             else:
-                await self.send_response(ctx, f"Unknown item type {item_type}. Here's source anyway:")
                 return None, None
         else:
             command_wanted = self.bot.get_command(item)
             if not command_wanted:
-                await self.send_response(ctx, f"Couldn't find {item}. Here's source anyway:")
                 return None, None
             return command_wanted.callback, item
 
