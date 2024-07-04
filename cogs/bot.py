@@ -305,7 +305,7 @@ class Bot(commands.Cog):
         embed.title = f"Source for {item_name}:"
         embed.description = f"[**Click Here**]({line_url})"
         await interaction.response.send_message(embed=embed)
-        
+
         @commands.command(
             brief="finds out where the location of the command on my github repo(so people can learn from my commands)"
         )
@@ -331,7 +331,7 @@ class Bot(commands.Cog):
                 module = src.__module__
                 filename = inspect.getsourcefile(src)
             lines, firstline = inspect.getsourcelines(src)
-            
+
             if not os.path.isabs(filename):
                 if module.startswith("jishaku"):
                     github_url = "https://github.com/Gorialis/jishaku"
@@ -350,7 +350,7 @@ class Bot(commands.Cog):
                 path = pathlib.Path.cwd()
                 relative_path = os.path.relpath(filename, path)
                 filename = relative_path.replace("\\", "/")  # Ensure forward slashes for URL
-        
+
             embed.title = f"Source for {command_wanted}:"
             embed.description = (
                 f"[**Click Here**]({github_url}/blob/{branch}/{filename}#L{firstline}-L{firstline + len(lines)-1})"
