@@ -26,6 +26,7 @@ class Bot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.status_task.start()
+        self.github_url = "https://github.com/JDsProjects/JDBot"
 
     @tasks.loop(seconds=40)
     async def status_task(self):
