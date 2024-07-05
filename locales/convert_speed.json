@@ -322,5 +322,41 @@
             "description": "Syötä numero."
         },
         "translator_id": "1058768145722134528"
+    },
+    "kr": {
+        "name": {
+            "text": "속도_변환"
+        },
+        "command_desc": {
+            "text": "특정 단위의 속도를 다른 속도 단위들로 변환시켜 줍니다."
+        },
+        "title": {
+            "text": "속도 변환됨"
+        },
+        "unit_names": {
+            "miles": "마일",
+            "kilometers": "킬로미터",
+            "meters": "미터",
+            "feet": "피트",
+            "megameters": "메가미터",
+            "light": "상수 (빛의 속도)"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "변환할_속도",
+            "description": "다른 속도 단위로 변환시킬 속도 단위를 선택합니다."
+        },
+        "speed": {
+            "name": "속도",
+            "description": "단위를 제외한 속도(숫자)를 입력해 주세요."
+        },
+        "translator_id": "622098032854433813"
     }
 }
