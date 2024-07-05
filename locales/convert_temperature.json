@@ -558,5 +558,40 @@
             "description": "Please enter a number"
         },
         "translator_id": "566653183774949395"
+    },
+    "kr": {
+        "name": {
+            "text": "온도_변환"
+        },
+        "command_desc": {
+            "text": "특정 단위의 온도를 다른 온도 단위들로 변환시켜 줍니다."
+        },
+        "title": {
+            "text": "온도 변환됨"
+        },
+        "unit_names": {
+            "celsius": "섭씨",
+            "fahrenheit": "화씨",
+            "kelvin": "절대온도(켈빈)",
+            "rankine": "란씨(랭킨)"
+        },
+        "desc": {
+            "text": "선택한 온도:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "변환할_온도",
+            "description": "다른 온도 단위로 변환시킬 온도 단위를 선택합니다."
+        },
+        "temperature": {
+            "name": "온도",
+            "description": "단위를 제외한 온도(숫자)를 입력해 주세요."
+        },
+        "translator_id": "622098032854433813"
     }
 }
