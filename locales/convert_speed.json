@@ -404,5 +404,51 @@
             "name": "Velocidad",
             "description": "Porfavor inserte un número"
         }
+    },
+
+    "es-ES": {
+
+        "name":{
+            "text": "Convertir-temperatura"
+        },
+
+        "command_desc": {
+
+            "text": "Un comando para convertir velocidades a diferentes escalas"
+            },
+
+            "title": {
+
+                "text": "Velocidad: "
+            },
+
+            "unit_names": {
+
+                "miles": "Millas: ",
+                "kilometers": "Kilometros: ",
+                "meters": "Metros: ",
+                "feet": "Pies: ",
+                "megameters": "Megámetros: ",
+                "light": "Constantes (Velocidad de la luz):"
+            },
+            
+            "unit_symbols": {
+
+                "miles": "mi",
+                "kilometers": "km",
+                "meters": "m",
+                "feet": "ft",
+                "megameters": "Mm",
+                "light": "C"
+            },
+
+        "speed_unit": {
+            "name": "Unidad de velocidad: ",
+            "description": "Seleccione una unidad de velocidad del menú"
+        },
+        "speed": {
+            "name": "Velocidad",
+            "description": "Porfavor inserte un número"
+        }
     }
 }
