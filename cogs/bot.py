@@ -847,6 +847,7 @@ class Bot(commands.Cog):
         )
 
         joined_users = "\n".join(users)
+        joined_users = discord.utils.escape_markdown(joined_users)
 
         embed = discord.Embed(
             color=14352639,
