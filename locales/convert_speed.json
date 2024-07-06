@@ -392,7 +392,8 @@
         "speed": {
             "name": "Velocidad",
             "description": "Porfavor inserte un número"
-        }
+        },
+        "translator_id": "311977922481356801"
     },
     "es-ES": {
         "name": {
@@ -427,6 +428,7 @@
         "speed": {
             "name": "Velocidad",
             "description": "Porfavor inserte un número"
-        }
+        },
+        "translator_id": "311977922481356801"
     }
 }
