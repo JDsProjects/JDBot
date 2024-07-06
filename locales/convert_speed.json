@@ -361,20 +361,20 @@
     },
     "es-419": {
         "name": {
-            "text": "Convertir-temperatura"
+            "text": "convertir-temperatura"
         },
         "command_desc": {
             "text": "Un comando para convertir velocidades a diferentes escalas"
         },
         "title": {
-            "text": "Velocidad: "
+            "text": "Velocidad:"
         },
         "unit_names": {
-            "miles": "Millas: ",
-            "kilometers": "Kilometros: ",
-            "meters": "Metros: ",
-            "feet": "Pies: ",
-            "megameters": "Megámetros: ",
+            "miles": "Millas:",
+            "kilometers": "Kilometros:",
+            "meters": "Metros:",
+            "feet": "Pies:",
+            "megameters": "Megámetros:",
             "light": "Constantes (Velocidad de la luz):"
         },
         "unit_symbols": {
@@ -386,31 +386,31 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "Unidad de velocidad: ",
+            "name": "unidad_de_velocidad",
             "description": "Seleccione una unidad de velocidad del menú"
         },
         "speed": {
-            "name": "Velocidad",
+            "name": "velocidad",
             "description": "Porfavor inserte un número"
         },
         "translator_id": "311977922481356801"
     },
     "es-ES": {
         "name": {
-            "text": "Convertir-temperatura"
+            "text": "convertir-temperatura"
         },
         "command_desc": {
             "text": "Un comando para convertir velocidades a diferentes escalas"
         },
         "title": {
-            "text": "Velocidad: "
+            "text": "Velocidad:"
         },
         "unit_names": {
-            "miles": "Millas: ",
-            "kilometers": "Kilometros: ",
-            "meters": "Metros: ",
-            "feet": "Pies: ",
-            "megameters": "Megámetros: ",
+            "miles": "Millas:",
+            "kilometers": "Kilometros:",
+            "meters": "Metros:",
+            "feet": "Pies:",
+            "megameters": "Megámetros:",
             "light": "Constantes (Velocidad de la luz):"
         },
         "unit_symbols": {
@@ -422,11 +422,11 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "Unidad de velocidad: ",
+            "name": "unidad_de_velocidad",
             "description": "Seleccione una unidad de velocidad del menú"
         },
         "speed": {
-            "name": "Velocidad",
+            "name": "velocidad",
             "description": "Porfavor inserte un número"
         },
         "translator_id": "311977922481356801"
