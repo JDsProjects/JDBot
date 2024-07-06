@@ -835,6 +835,7 @@ class Bot(commands.Cog):
             1048448686914551879: "🇯🇵",
             841683507762823208: "🇩🇪",
             622098032854433813: "🇰🇷",
+            311977922481356801: "🇪🇸 🇺🇾",
         }
 
         users = sorted(
@@ -846,6 +847,7 @@ class Bot(commands.Cog):
         )
 
         joined_users = "\n".join(users)
+        joined_users = discord.utils.escape_markdown(joined_users)
 
         embed = discord.Embed(
             color=14352639,
