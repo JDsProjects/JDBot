@@ -358,5 +358,51 @@
             "description": "단위를 제외한 속도(숫자)를 입력해 주세요."
         },
         "translator_id": "622098032854433813"
+    },
+
+    "es-419": {
+
+        "name":{
+            "text": "Convertir-temperatura"
+        },
+
+        "command_desc": {
+
+            "text": "Un comando para convertir velocidades a diferentes escalas"
+            },
+
+            "title": {
+
+                "text": "Velocidad: "
+            },
+
+            "unit_names": {
+
+                "miles": "Millas: ",
+                "kilometers": "Kilometros: ",
+                "meters": "Metros: ",
+                "feet": "Pies: ",
+                "megameters": "Megámetros: ",
+                "light": "Constantes (Velocidad de la luz):"
+            },
+            
+            "unit_symbols": {
+
+                "miles": "mi",
+                "kilometers": "km",
+                "meters": "m",
+                "feet": "ft",
+                "megameters": "Mm",
+                "light": "C"
+            },
+
+        "speed_unit": {
+            "name": "Unidad de velocidad: ",
+            "description": "Seleccione una unidad de velocidad del menú"
+        },
+        "speed": {
+            "name": "Velocidad",
+            "description": "Porfavor inserte un número"
+        }
     }
 }
