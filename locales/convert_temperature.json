@@ -165,11 +165,11 @@
             "rankine": "°R"
         },
         "temperature_unit": {
-            "name": "Lämpötilayksikkö",
+            "name": "lämpötilayksikkö",
             "description": "Valitse lämpötilayksikkö valikosta"
         },
         "temperature": {
-            "name": "Lämpötila",
+            "name": "lämpötila",
             "description": "Syötä numero."
         },
         "translator_id": "396290259907903491"
