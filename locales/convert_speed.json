@@ -458,7 +458,7 @@
             "light": "c"
         },
         "speed_unit": {
-            "name": "hastighets_enhet",
+            "name": "hastighetsenhet",
             "description": "Välj en hastighetsenhet från menyn"
         },
         "speed": {
