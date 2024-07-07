@@ -430,5 +430,41 @@
             "description": "Porfavor inserte un número"
         },
         "translator_id": "311977922481356801"
+    },
+    "sv-SE": {
+        "name": {
+            "text": "konvertera_hastighet"
+        },
+        "command_desc": {
+            "text": "Ett kommando för att konvertera hastighet till olika skalor"
+        },
+        "title": {
+            "text": "Hastighet:"
+        },
+        "unit_names": {
+            "miles": "Engelska mil:",
+            "kilometers": "Kilometer:",
+            "meters": "Meter:",
+            "feet": "Fot:",
+            "megameters": "Megameter:",
+            "light": "Konstanter (Ljusets hastighet):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "c"
+        },
+        "speed_unit": {
+            "name": "hastighets_enhet",
+            "description": "Välj en hastighetsenhet från menyn"
+        },
+        "speed": {
+            "name": "hastighet",
+            "description": "Var god skriv in ett nummer"
+        },
+        "translator_id": "263602820496883712"
     }
 }
