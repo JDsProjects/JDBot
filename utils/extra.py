@@ -22,7 +22,7 @@ async def google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
-                "https://api.jdjgbot.com/tts",
+                "https://api.jdjgbot.com/api/tts",
                 params={"text": text, "lang": "en"},
             )
         ).read()
@@ -35,7 +35,7 @@ async def latin_google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
-                "https://api.jdjgbot.com/tts",
+                "https://api.jdjgbot.com/api/tts",
                 params={"text": text, "lang": "la"},
             )
         ).read()
