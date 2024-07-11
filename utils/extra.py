@@ -22,9 +22,8 @@ async def google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
-                "https://repi.openrobot.xyz/tts",
+                "https://api.jdjgbot.com/tts",
                 params={"text": text, "lang": "en"},
-                headers={"Authorization": os.environ["frostiweeb_api"]},
             )
         ).read()
     )
@@ -36,9 +35,8 @@ async def latin_google_tts(bot: JDBot, text: str) -> discord.File:
     mp3_fp = io.BytesIO(
         await (
             await bot.session.get(
-                "https://repi.openrobot.xyz/tts",
+                "https://api.jdjgbot.com/tts",
                 params={"text": text, "lang": "la"},
-                headers={"Authorization": os.environ["frostiweeb_api"]},
             )
         ).read()
     )
