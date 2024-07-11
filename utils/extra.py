@@ -23,7 +23,7 @@ async def google_tts(bot: JDBot, text: str) -> discord.File:
         await (
             await bot.session.get(
                 "https://api.jdjgbot.com/api/tts",
-                params={"text": text, "lang": "en"},
+                params={"text": text, "language": "en"},
             )
         ).read()
     )
@@ -36,7 +36,7 @@ async def latin_google_tts(bot: JDBot, text: str) -> discord.File:
         await (
             await bot.session.get(
                 "https://api.jdjgbot.com/api/tts",
-                params={"text": text, "lang": "la"},
+                params={"text": text, "language": "la"},
             )
         ).read()
     )
