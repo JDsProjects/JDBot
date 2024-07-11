@@ -21,7 +21,7 @@ class DSLCount(commands.Cog):
         self.topgg = topgg.DBLClient(self.bot, self.token)
         self.update_stats.start()
 
-    @tasks.loop(minutes=5)
+    @tasks.loop(hours=2)
     async def update_stats(self):
         self.logger.info("Attempting to post server count")
         try:
