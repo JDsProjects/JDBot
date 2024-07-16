@@ -28,9 +28,9 @@ chess==1.10.0
 click==8.1.7 
 colorama==0.4.6 
 discord-games @ git+https://github.com/Tom-the-Bomb/Discord-Games@585e0dddb24aefbcc16569a2f7db44d1d194107a 
-discord-py @ git+https://github.com/Rapptz/discord.py.git@7d3eff9d9d115dc29b5716c42eaeedf1a008e9b0 
+discord-py @ git+https://github.com/Rapptz/discord.py.git@a13fc8f835a94fced4f0b5ceb7c9004e07fb879e 
 discord-py-paginators @ git+https://github.com/Soheab/discord-py-paginators@3ed81f3bbd6637c91625cddb9568b5f4d21f832a 
-discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@7d3eff9d9d115dc29b5716c42eaeedf1a008e9b0 
+discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@a13fc8f835a94fced4f0b5ceb7c9004e07fb879e 
 discordlists-py==1.1.1 
 emoji==2.12.1 
 english-words==2.0.1 
