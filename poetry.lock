@@ -849,7 +849,7 @@ voice = ["PyNaCl (>=1.3.0,<1.6)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "a13fc8f835a94fced4f0b5ceb7c9004e07fb879e"
+resolved_reference = "86dd29a8e8ceeb9db4086a12b73a79b07ef04aef"
 
 [[package]]
 name = "discord-py-paginators"
