@@ -438,7 +438,7 @@ class OwnerSuperSelects(discord.ui.Select):
             )
 
         if choice == "banner":
-            
+
             if user.banner:
                 embed.set_image(url=banner.url)
 
