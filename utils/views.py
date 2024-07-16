@@ -163,8 +163,6 @@ def activity_collect(user):
 class UserInfoSuperSelects(discord.ui.Select):
     def __init__(self, ctx, **kwargs):
         self.ctx = ctx
-        self.banner = None
-        self.banner_fetched = False
 
         options = [
             discord.SelectOption(label="Basic Info", description="Simple Info", value="basic", emoji="📝"),
@@ -287,19 +285,8 @@ class UserInfoSuperSelects(discord.ui.Select):
             )
 
         if choice == "banner":
-            if self.banner is None and not self.banner_fetched:
-                try:
-                    user_banner = await interaction.client.fetch_user(user.id)
 
-                except:
-                    user_banner = user
-                    traceback.print_exc()
-
-                self.banner = user_banner.banner
-                self.banner_fetched = True
-
-            banner = self.banner
-            if banner:
+            if user.banner:
                 embed.set_image(url=banner.url)
 
             else:
@@ -451,19 +438,8 @@ class OwnerSuperSelects(discord.ui.Select):
             )
 
         if choice == "banner":
-            if self.banner is None and not self.banner_fetched:
-                try:
-                    user_banner = await interaction.client.fetch_user(user.id)
-
-                except:
-                    user_banner = user
-                    traceback.print_exc()
-
-                self.banner = user_banner.banner
-                self.banner_fetched = True
-
-            banner = self.banner
-            if banner:
+            
+            if user.banner:
                 embed.set_image(url=banner.url)
 
             else:
