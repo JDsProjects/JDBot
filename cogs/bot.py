@@ -842,6 +842,8 @@ class Bot(commands.Cog):
             444360808412086292: "🇻🇳",
         }
 
+        # might be good paginating this soon.
+
         users = sorted(
             [
                 (f"{await self.bot.try_user(uid)} : {volunteer_translators[uid]}")
