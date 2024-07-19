@@ -538,5 +538,41 @@
             "description": "Vui lòng gõ một số bất kì"
         },
         "translator_id": "444360808412086292"
+    },
+    "hi": {
+    "name": {
+        "text": "गति_परिवर्तन"
+    },
+    "command_desc": {
+        "text": "विभिन्न प्रमाणों में गति को परिवर्तित करने का एक कमांड"
+    },
+    "title": {
+        "text": "गति"
+    },
+    "unit_names": {
+        "miles": "मील",
+        "kilometers": "किलोमीटर",
+        "meters": "मीटर",
+        "feet": "फ़ीट",
+        "megameters": "मेगामीटर",
+        "light": "मानक (प्रकाश की गति)"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "गति_इकाई",
+        "description": "ड्रॉपडाउन से गति की इकाई का चयन करें"
+    },
+    "speed": {
+        "name": "गति",
+        "description": "कृपया एक संख्या दर्ज करें"
+    },
+    "translator_id": "747737674952999024"
     }
 }
