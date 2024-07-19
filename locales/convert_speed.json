@@ -35,6 +35,42 @@
         },
         "translator_id": "168422909482762240"
     },
+        "it": {
+        "name": {
+            "text": "convert_speed"
+        },
+        "command_desc": {
+            "text": "Un comando per convertire le velocita' in scale diverse."
+        },
+        "title": {
+            "text": "Velocità:"
+        },
+        "unit_names": {
+            "miles": "Miglia:",
+            "kilometers": "Chilometri:",
+            "meters": "Metri:",
+            "feet": "Altezza:",
+            "megameters": "MegaMetri",
+            "light": "Constanti (Velocità Della Luce):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "speed_unit",
+            "description": "Seleziona un'unità di velocità dal menu."
+        },
+        "speed": {
+            "name": "speed",
+            "description": "Inserisci un numero"
+        },
+        "translator_id": "168422909482762240"
+    },
     "en-GB": {
         "name": {
             "text": "convert_speed"
