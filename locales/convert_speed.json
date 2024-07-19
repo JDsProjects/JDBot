@@ -1,4 +1,4 @@
-
+{
 "en-US": {
     "name": {
         "text": "convert_speed"
@@ -538,4 +538,5 @@
         "description": "Vui lòng gõ một số bất kì"
     },
     "translator_id": "444360808412086292"
+}
 }
