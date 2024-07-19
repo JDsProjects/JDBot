@@ -431,6 +431,42 @@
         },
         "translator_id": "311977922481356801"
     },
+    "ru": {
+        "name": {
+            "text": "конверция_скорости"
+        },
+        "command_desc": {
+            "text": "Команда для конвертирования скорости"
+        },
+        "title": {
+            "text": "Скорости:"
+        },
+        "unit_names": {
+            "miles": "Мили:",
+            "kilometers": "Километры:",
+            "meters": "Метры:",
+            "feet": "Футы:",
+            "megameters": "Мегаметры",
+            "light": "Скорости света:"
+        },
+        "unit_symbols": {
+            "miles": "мили",
+            "kilometers": "км",
+            "meters": "м",
+            "feet": "фут",
+            "megameters": "мм",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "единица_скорости",
+            "description": "Выберите вашу единицу скорости."
+        },
+        "speed": {
+            "name": "скорость",
+            "description": "Пожалуйста введите ваше число!"
+        },
+        "translator_id": "540142383270985738"
+    },
     "sv-SE": {
         "name": {
             "text": "konvertera_hastighet"
