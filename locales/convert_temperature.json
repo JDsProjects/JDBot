@@ -34,6 +34,41 @@
         },
         "translator_id": "168422909482762240"
     },
+    "it": {
+        "name": {
+            "text": "convert_temperature"
+        },
+        "command_desc": {
+            "text": "Un comando per convertire le temperature in diverse scale"
+        },
+        "title": {
+            "text": "Temperatura:"
+        },
+        "unit_names": {
+            "celsius": "Celsius:",
+            "fahrenheit": "Fahrenheit:",
+            "kelvin": "Kelvin:",
+            "rankine": "Rankine:"
+        },
+        "desc": {
+            "text": "Visualizzando:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "temperature_unit",
+            "description": "Seleziona un'unità di misura dal menu."
+        },
+        "temperature": {
+            "name": "temperature",
+            "description": "Inserisci un numero"
+        },
+        "translator_id": "168422909482762240"
+    },
     "tr": {
         "name": {
             "text": "sıcaklık_dönüştür"
