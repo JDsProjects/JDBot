@@ -502,5 +502,41 @@
             "description": "Var god skriv in ett nummer"
         },
         "translator_id": "263602820496883712"
+    },
+    "vi": {
+        "name": {
+            "text": "chuyển_đổi_vận_tốc"
+        },
+        "command_desc": {
+            "text": "Một loại lệnh để chuyển đổi vận tốc thành loại đo khác nhau"
+        },
+        "title": {
+            "text": "Vận tốc:"
+        },
+        "unit_names": {
+            "miles": "Dạm:",
+            "kilometers": "Ki-lô-mét:",
+            "meters": "Mét:",
+            "feet": "Phân:",
+            "megameters": "Mê-ga-mét",
+            "light": "Hằng số (Vận tốc của ánh sáng):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "đơn_vị_của_vận_tốc",
+            "description": "Chọn một đơn vị của vận tốc từ danh sách dưới đây."
+        },
+        "speed": {
+            "name": "vận_tốc",
+            "description": "Vui lòng gõ một số bất kì"
+        },
+        "translator_id": "444360808412086292"
     }
 }
