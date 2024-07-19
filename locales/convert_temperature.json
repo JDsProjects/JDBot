@@ -209,6 +209,41 @@
         },
         "translator_id": "263602820496883712"
     },
+    "ru": {
+        "name": {
+            "text": "конвертация_температур"
+        },
+        "command_desc": {
+            "text": "Перевод температуры в разные единицы"
+        },
+        "title": {
+            "text": "Температура:"
+        },
+        "unit_names": {
+            "celsius": "Цельсий:",
+            "fahrenheit": "Фаренгейт:",
+            "kelvin": "Кельвин:",
+            "rankine": "Ранкин:"
+        },
+        "desc": {
+            "text": "Выберите ваш вариант:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "единица_температуры",
+            "description": "Пожалуйста выберите единицу температуры которую вы хотите использовать!"
+        },
+        "temperature": {
+            "name": "температура",
+            "description": "Пожалуйста введите ваше число!"
+        },
+        "translator_id": "540142383270985738"
+    },
     "nl": {
         "name": {
             "text": "temperatuur_omrekenen"
