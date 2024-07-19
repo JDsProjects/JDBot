@@ -1,506 +1,541 @@
-{
-    "en-US": {
-        "name": {
-            "text": "convert_speed"
-        },
-        "command_desc": {
-            "text": "A command to convert speeds to different scales"
-        },
-        "title": {
-            "text": "Speed:"
-        },
-        "unit_names": {
-            "miles": "Miles:",
-            "kilometers": "Kilometers:",
-            "meters": "Meters:",
-            "feet": "Feet:",
-            "megameters": "MegaMeters",
-            "light": "Constants (Speed of Light):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "speed_unit",
-            "description": "Select a Unit of Speed from the dropdown."
-        },
-        "speed": {
-            "name": "speed",
-            "description": "Please enter a number"
-        },
-        "translator_id": "168422909482762240"
+
+"en-US": {
+    "name": {
+        "text": "convert_speed"
     },
-    "en-GB": {
-        "name": {
-            "text": "convert_speed"
-        },
-        "command_desc": {
-            "text": "A command to convert speeds to different scales"
-        },
-        "title": {
-            "text": "Speed:"
-        },
-        "unit_names": {
-            "miles": "Miles:",
-            "kilometers": "Kilometers:",
-            "meters": "Meters:",
-            "feet": "Feet:",
-            "megameters": "MegaMeters",
-            "light": "Constants (Speed of Light):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "speed_unit",
-            "description": "Select a Unit of Speed from the dropdown."
-        },
-        "speed": {
-            "name": "speed",
-            "description": "Please enter a number"
-        },
-        "translator_id": "168422909482762240"
+    "command_desc": {
+        "text": "A command to convert speeds to different scales"
     },
-    "de": {
-        "name": {
-            "text": "geschwindigkeit_konvertieren"
-        },
-        "command_desc": {
-            "text": "Ein Befehl zum Umwandeln von Geschwindigkeiten in verschiedene Einheiten"
-        },
-        "title": {
-            "text": "Geschwindigkeit:"
-        },
-        "unit_names": {
-            "miles": "Meilen:",
-            "kilometers": "Kilometer:",
-            "meters": "Meter:",
-            "feet": "Fuß:",
-            "megameters": "Megameter",
-            "light": "Konstanten (Lichtgeschwindigkeit):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "geschwindigkeits_einheit",
-            "description": "Wähle eine Geschwindigkeitseinheit aus der Liste aus"
-        },
-        "speed": {
-            "name": "geschwindigkeit",
-            "description": "Bitte gib eine Zahl ein"
-        },
-        "translator_id": "1022842005920940063"
+    "title": {
+        "text": "Speed:"
     },
-    "pl": {
-        "name": {
-            "text": "prędkości_konwersja"
-        },
-        "command_desc": {
-            "text": "Polecenie przeliczania prędkości na różne jednostki."
-        },
-        "title": {
-            "text": "Prędkośc:"
-        },
-        "unit_names": {
-            "miles": "Mile:",
-            "kilometers": "Kilometry:",
-            "meters": "Metry:",
-            "feet": "Stopa:",
-            "megameters": "Megametry",
-            "light": "Stałe (prędkość światła):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "jednostka_prędkości",
-            "description": "Wybierz jednostkę prędkości z listy"
-        },
-        "speed": {
-            "name": "prędkośc",
-            "description": "Wpisz numer prędkości"
-        },
-        "translator_id": "1022842005920940063"
+    "unit_names": {
+        "miles": "Miles:",
+        "kilometers": "Kilometers:",
+        "meters": "Meters:",
+        "feet": "Feet:",
+        "megameters": "MegaMeters",
+        "light": "Constants (Speed of Light):"
     },
-    "fr": {
-        "name": {
-            "text": "vitesse_convertir"
-        },
-        "command_desc": {
-            "text": "Une commande pour convertir la vitesse en différentes échelles"
-        },
-        "title": {
-            "text": "Vitesse:"
-        },
-        "unit_names": {
-            "miles": "Milles:",
-            "kilometers": "Kilomètres:",
-            "meters": "Mètres:",
-            "feet": "Pieds:",
-            "megameters": "Mégamètres",
-            "light": "Constantes (vitesse de la lumière):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "unité_de_vitesse",
-            "description": "Sélectionner une unité de vitesse dans la liste"
-        },
-        "speed": {
-            "name": "vitesse",
-            "description": "Veuillez saisir un numéro"
-        },
-        "translator_id": "1022842005920940063"
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
     },
-    "tr": {
-        "name": {
-            "text": "uzunluk_dönüştür"
-        },
-        "command_desc": {
-            "text": "Uzunuluk birimler arasında değişim yapabilen komut"
-        },
-        "title": {
-            "text": "Uzunluk:"
-        },
-        "unit_names": {
-            "miles": "Mil:",
-            "kilometers": "Kilometre:",
-            "meters": "Metre:",
-            "feet": "Fit:",
-            "megameters": "Megametre",
-            "light": "Işık Hızı"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "uzunluk_birimi",
-            "description": "Uzunluk birimi seçin"
-        },
-        "speed": {
-            "name": "uzunuluk",
-            "description": "Uzunluk girin"
-        },
-        "translator_id": "351656397257310212"
+    "speed_unit": {
+        "name": "speed_unit",
+        "description": "Select a Unit of Speed from the dropdown."
     },
-    "ja": {
-        "name": {
-            "text": "速度_変換"
-        },
-        "command_desc": {
-            "text": "速度を異なるスケールに変換するコマンドです。"
-        },
-        "title": {
-            "text": "速度:"
-        },
-        "unit_names": {
-            "miles": "マイル:",
-            "kilometers": "キロメートル:",
-            "meters": "メートル:",
-            "feet": "フィート:",
-            "megameters": "メガメートル",
-            "light": "定数 (光の速度):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "変換元単位",
-            "description": "変換する元の速度単位を選択"
-        },
-        "speed": {
-            "name": "速度",
-            "description": "値を入力"
-        },
-        "translator_id": "1163416356566347828"
+    "speed": {
+        "name": "speed",
+        "description": "Please enter a number"
     },
-    "pt-BR": {
-        "name": {
-            "text": "converter_velocidade"
-        },
-        "command_desc": {
-            "text": "Um comando para converter velocidades para diferentes escalas"
-        },
-        "title": {
-            "text": "Velocidade:"
-        },
-        "unit_names": {
-            "miles": "Milhas:",
-            "kilometers": "Quilômetros:",
-            "meters": "Metros:",
-            "feet": "Pés:",
-            "megameters": "MegaMetros",
-            "light": "Constantes (Velocidade da Luz):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "unidade_de_velocidade",
-            "description": "Selecione uma unidade de velocidade no menu abaixo."
-        },
-        "speed": {
-            "name": "velocidade",
-            "description": "Insira um número"
-        },
-        "translator_id": "1096865109541929161"
+    "translator_id": "168422909482762240"
+},
+"en-GB": {
+    "name": {
+        "text": "convert_speed"
     },
-    "fi": {
-        "name": {
-            "text": "Muunnanopeus"
-        },
-        "command_desc": {
-            "text": "Komento nopeuden muuntamiseen eri asteikoille."
-        },
-        "title": {
-            "text": "Nopeus:"
-        },
-        "unit_names": {
-            "miles": "Mailia:",
-            "kilometers": "Kilometriä:",
-            "meters": "Metriä:",
-            "feet": "Jalkaa:",
-            "megameters": "Megametriä:",
-            "light": "Vakiot (Valon nopeus):"
-        },
-        "unit_symbols": {
-            "miles": "mailia",
-            "kilometers": "kilometriä:",
-            "meters": "Metriä",
-            "feet": "jalkaa:",
-            "megameters": "megametriä:",
-            "light": "vakiot"
-        },
-        "speed_unit": {
-            "name": "Nopeusyksikkö",
-            "description": "Valitse nopeusyksikkö valikosta alla."
-        },
-        "speed": {
-            "name": "Nopeus",
-            "description": "Syötä numero."
-        },
-        "translator_id": "1058768145722134528"
+    "command_desc": {
+        "text": "A command to convert speeds to different scales"
     },
-    "ko": {
-        "name": {
-            "text": "속도_변환"
-        },
-        "command_desc": {
-            "text": "특정 단위의 속도를 다른 속도 단위들로 변환시켜 줍니다."
-        },
-        "title": {
-            "text": "속도 변환됨"
-        },
-        "unit_names": {
-            "miles": "마일",
-            "kilometers": "킬로미터",
-            "meters": "미터",
-            "feet": "피트",
-            "megameters": "메가미터",
-            "light": "상수 (빛의 속도)"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "변환할_속도",
-            "description": "다른 속도 단위로 변환시킬 속도 단위를 선택합니다."
-        },
-        "speed": {
-            "name": "속도",
-            "description": "단위를 제외한 속도(숫자)를 입력해 주세요."
-        },
-        "translator_id": "622098032854433813"
+    "title": {
+        "text": "Speed:"
     },
-    "es-419": {
-        "name": {
-            "text": "convertir-temperatura"
-        },
-        "command_desc": {
-            "text": "Un comando para convertir velocidades a diferentes escalas"
-        },
-        "title": {
-            "text": "Velocidad:"
-        },
-        "unit_names": {
-            "miles": "Millas:",
-            "kilometers": "Kilometros:",
-            "meters": "Metros:",
-            "feet": "Pies:",
-            "megameters": "Megámetros:",
-            "light": "Constantes (Velocidad de la luz):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "unidad_de_velocidad",
-            "description": "Seleccione una unidad de velocidad del menú"
-        },
-        "speed": {
-            "name": "velocidad",
-            "description": "Porfavor inserte un número"
-        },
-        "translator_id": "311977922481356801"
+    "unit_names": {
+        "miles": "Miles:",
+        "kilometers": "Kilometers:",
+        "meters": "Meters:",
+        "feet": "Feet:",
+        "megameters": "MegaMeters",
+        "light": "Constants (Speed of Light):"
     },
-    "es-ES": {
-        "name": {
-            "text": "convertir-temperatura"
-        },
-        "command_desc": {
-            "text": "Un comando para convertir velocidades a diferentes escalas"
-        },
-        "title": {
-            "text": "Velocidad:"
-        },
-        "unit_names": {
-            "miles": "Millas:",
-            "kilometers": "Kilometros:",
-            "meters": "Metros:",
-            "feet": "Pies:",
-            "megameters": "Megámetros:",
-            "light": "Constantes (Velocidad de la luz):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "unidad_de_velocidad",
-            "description": "Seleccione una unidad de velocidad del menú"
-        },
-        "speed": {
-            "name": "velocidad",
-            "description": "Porfavor inserte un número"
-        },
-        "translator_id": "311977922481356801"
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
     },
-    "ru": {
-        "name": {
-            "text": "конверция_скорости"
-        },
-        "command_desc": {
-            "text": "Команда для конвертирования скорости"
-        },
-        "title": {
-            "text": "Скорости:"
-        },
-        "unit_names": {
-            "miles": "Мили:",
-            "kilometers": "Километры:",
-            "meters": "Метры:",
-            "feet": "Футы:",
-            "megameters": "Мегаметры",
-            "light": "Скорости света:"
-        },
-        "unit_symbols": {
-            "miles": "мили",
-            "kilometers": "км",
-            "meters": "м",
-            "feet": "фут",
-            "megameters": "мм",
-            "light": "C"
-        },
-        "speed_unit": {
-            "name": "единица_скорости",
-            "description": "Выберите вашу единицу скорости."
-        },
-        "speed": {
-            "name": "скорость",
-            "description": "Пожалуйста введите ваше число!"
-        },
-        "translator_id": "540142383270985738"
+    "speed_unit": {
+        "name": "speed_unit",
+        "description": "Select a Unit of Speed from the dropdown."
     },
-    "sv-SE": {
-        "name": {
-            "text": "konvertera_hastighet"
-        },
-        "command_desc": {
-            "text": "Ett kommando för att konvertera hastighet till olika skalor"
-        },
-        "title": {
-            "text": "Hastighet:"
-        },
-        "unit_names": {
-            "miles": "Engelska mil:",
-            "kilometers": "Kilometer:",
-            "meters": "Meter:",
-            "feet": "Fot:",
-            "megameters": "Megameter:",
-            "light": "Konstanter (Ljusets hastighet):"
-        },
-        "unit_symbols": {
-            "miles": "mi",
-            "kilometers": "km",
-            "meters": "m",
-            "feet": "ft",
-            "megameters": "Mm",
-            "light": "c"
-        },
-        "speed_unit": {
-            "name": "hastighetsenhet",
-            "description": "Välj en hastighetsenhet från menyn"
-        },
-        "speed": {
-            "name": "hastighet",
-            "description": "Var god skriv in ett nummer"
-        },
-        "translator_id": "263602820496883712"
-    }
+    "speed": {
+        "name": "speed",
+        "description": "Please enter a number"
+    },
+    "translator_id": "168422909482762240"
+},
+"de": {
+    "name": {
+        "text": "geschwindigkeit_konvertieren"
+    },
+    "command_desc": {
+        "text": "Ein Befehl zum Umwandeln von Geschwindigkeiten in verschiedene Einheiten"
+    },
+    "title": {
+        "text": "Geschwindigkeit:"
+    },
+    "unit_names": {
+        "miles": "Meilen:",
+        "kilometers": "Kilometer:",
+        "meters": "Meter:",
+        "feet": "Fuß:",
+        "megameters": "Megameter",
+        "light": "Konstanten (Lichtgeschwindigkeit):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "geschwindigkeits_einheit",
+        "description": "Wähle eine Geschwindigkeitseinheit aus der Liste aus"
+    },
+    "speed": {
+        "name": "geschwindigkeit",
+        "description": "Bitte gib eine Zahl ein"
+    },
+    "translator_id": "1022842005920940063"
+},
+"pl": {
+    "name": {
+        "text": "prędkości_konwersja"
+    },
+    "command_desc": {
+        "text": "Polecenie przeliczania prędkości na różne jednostki."
+    },
+    "title": {
+        "text": "Prędkośc:"
+    },
+    "unit_names": {
+        "miles": "Mile:",
+        "kilometers": "Kilometry:",
+        "meters": "Metry:",
+        "feet": "Stopa:",
+        "megameters": "Megametry",
+        "light": "Stałe (prędkość światła):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "jednostka_prędkości",
+        "description": "Wybierz jednostkę prędkości z listy"
+    },
+    "speed": {
+        "name": "prędkośc",
+        "description": "Wpisz numer prędkości"
+    },
+    "translator_id": "1022842005920940063"
+},
+"fr": {
+    "name": {
+        "text": "vitesse_convertir"
+    },
+    "command_desc": {
+        "text": "Une commande pour convertir la vitesse en différentes échelles"
+    },
+    "title": {
+        "text": "Vitesse:"
+    },
+    "unit_names": {
+        "miles": "Milles:",
+        "kilometers": "Kilomètres:",
+        "meters": "Mètres:",
+        "feet": "Pieds:",
+        "megameters": "Mégamètres",
+        "light": "Constantes (vitesse de la lumière):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "unité_de_vitesse",
+        "description": "Sélectionner une unité de vitesse dans la liste"
+    },
+    "speed": {
+        "name": "vitesse",
+        "description": "Veuillez saisir un numéro"
+    },
+    "translator_id": "1022842005920940063"
+},
+"tr": {
+    "name": {
+        "text": "uzunluk_dönüştür"
+    },
+    "command_desc": {
+        "text": "Uzunuluk birimler arasında değişim yapabilen komut"
+    },
+    "title": {
+        "text": "Uzunluk:"
+    },
+    "unit_names": {
+        "miles": "Mil:",
+        "kilometers": "Kilometre:",
+        "meters": "Metre:",
+        "feet": "Fit:",
+        "megameters": "Megametre",
+        "light": "Işık Hızı"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "uzunluk_birimi",
+        "description": "Uzunluk birimi seçin"
+    },
+    "speed": {
+        "name": "uzunuluk",
+        "description": "Uzunluk girin"
+    },
+    "translator_id": "351656397257310212"
+},
+"ja": {
+    "name": {
+        "text": "速度_変換"
+    },
+    "command_desc": {
+        "text": "速度を異なるスケールに変換するコマンドです。"
+    },
+    "title": {
+        "text": "速度:"
+    },
+    "unit_names": {
+        "miles": "マイル:",
+        "kilometers": "キロメートル:",
+        "meters": "メートル:",
+        "feet": "フィート:",
+        "megameters": "メガメートル",
+        "light": "定数 (光の速度):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "変換元単位",
+        "description": "変換する元の速度単位を選択"
+    },
+    "speed": {
+        "name": "速度",
+        "description": "値を入力"
+    },
+    "translator_id": "1163416356566347828"
+},
+"pt-BR": {
+    "name": {
+        "text": "converter_velocidade"
+    },
+    "command_desc": {
+        "text": "Um comando para converter velocidades para diferentes escalas"
+    },
+    "title": {
+        "text": "Velocidade:"
+    },
+    "unit_names": {
+        "miles": "Milhas:",
+        "kilometers": "Quilômetros:",
+        "meters": "Metros:",
+        "feet": "Pés:",
+        "megameters": "MegaMetros",
+        "light": "Constantes (Velocidade da Luz):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "unidade_de_velocidade",
+        "description": "Selecione uma unidade de velocidade no menu abaixo."
+    },
+    "speed": {
+        "name": "velocidade",
+        "description": "Insira um número"
+    },
+    "translator_id": "1096865109541929161"
+},
+"fi": {
+    "name": {
+        "text": "Muunnanopeus"
+    },
+    "command_desc": {
+        "text": "Komento nopeuden muuntamiseen eri asteikoille."
+    },
+    "title": {
+        "text": "Nopeus:"
+    },
+    "unit_names": {
+        "miles": "Mailia:",
+        "kilometers": "Kilometriä:",
+        "meters": "Metriä:",
+        "feet": "Jalkaa:",
+        "megameters": "Megametriä:",
+        "light": "Vakiot (Valon nopeus):"
+    },
+    "unit_symbols": {
+        "miles": "mailia",
+        "kilometers": "kilometriä:",
+        "meters": "Metriä",
+        "feet": "jalkaa:",
+        "megameters": "megametriä:",
+        "light": "vakiot"
+    },
+    "speed_unit": {
+        "name": "Nopeusyksikkö",
+        "description": "Valitse nopeusyksikkö valikosta alla."
+    },
+    "speed": {
+        "name": "Nopeus",
+        "description": "Syötä numero."
+    },
+    "translator_id": "1058768145722134528"
+},
+"ko": {
+    "name": {
+        "text": "속도_변환"
+    },
+    "command_desc": {
+        "text": "특정 단위의 속도를 다른 속도 단위들로 변환시켜 줍니다."
+    },
+    "title": {
+        "text": "속도 변환됨"
+    },
+    "unit_names": {
+        "miles": "마일",
+        "kilometers": "킬로미터",
+        "meters": "미터",
+        "feet": "피트",
+        "megameters": "메가미터",
+        "light": "상수 (빛의 속도)"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "변환할_속도",
+        "description": "다른 속도 단위로 변환시킬 속도 단위를 선택합니다."
+    },
+    "speed": {
+        "name": "속도",
+        "description": "단위를 제외한 속도(숫자)를 입력해 주세요."
+    },
+    "translator_id": "622098032854433813"
+},
+"es-419": {
+    "name": {
+        "text": "convertir-temperatura"
+    },
+    "command_desc": {
+        "text": "Un comando para convertir velocidades a diferentes escalas"
+    },
+    "title": {
+        "text": "Velocidad:"
+    },
+    "unit_names": {
+        "miles": "Millas:",
+        "kilometers": "Kilometros:",
+        "meters": "Metros:",
+        "feet": "Pies:",
+        "megameters": "Megámetros:",
+        "light": "Constantes (Velocidad de la luz):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "unidad_de_velocidad",
+        "description": "Seleccione una unidad de velocidad del menú"
+    },
+    "speed": {
+        "name": "velocidad",
+        "description": "Porfavor inserte un número"
+    },
+    "translator_id": "311977922481356801"
+},
+"es-ES": {
+    "name": {
+        "text": "convertir-temperatura"
+    },
+    "command_desc": {
+        "text": "Un comando para convertir velocidades a diferentes escalas"
+    },
+    "title": {
+        "text": "Velocidad:"
+    },
+    "unit_names": {
+        "miles": "Millas:",
+        "kilometers": "Kilometros:",
+        "meters": "Metros:",
+        "feet": "Pies:",
+        "megameters": "Megámetros:",
+        "light": "Constantes (Velocidad de la luz):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "unidad_de_velocidad",
+        "description": "Seleccione una unidad de velocidad del menú"
+    },
+    "speed": {
+        "name": "velocidad",
+        "description": "Porfavor inserte un número"
+    },
+    "translator_id": "311977922481356801"
+},
+"ru": {
+    "name": {
+        "text": "конверция_скорости"
+    },
+    "command_desc": {
+        "text": "Команда для конвертирования скорости"
+    },
+    "title": {
+        "text": "Скорости:"
+    },
+    "unit_names": {
+        "miles": "Мили:",
+        "kilometers": "Километры:",
+        "meters": "Метры:",
+        "feet": "Футы:",
+        "megameters": "Мегаметры",
+        "light": "Скорости света:"
+    },
+    "unit_symbols": {
+        "miles": "мили",
+        "kilometers": "км",
+        "meters": "м",
+        "feet": "фут",
+        "megameters": "мм",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "единица_скорости",
+        "description": "Выберите вашу единицу скорости."
+    },
+    "speed": {
+        "name": "скорость",
+        "description": "Пожалуйста введите ваше число!"
+    },
+    "translator_id": "540142383270985738"
+},
+"sv-SE": {
+    "name": {
+        "text": "konvertera_hastighet"
+    },
+    "command_desc": {
+        "text": "Ett kommando för att konvertera hastighet till olika skalor"
+    },
+    "title": {
+        "text": "Hastighet:"
+    },
+    "unit_names": {
+        "miles": "Engelska mil:",
+        "kilometers": "Kilometer:",
+        "meters": "Meter:",
+        "feet": "Fot:",
+        "megameters": "Megameter:",
+        "light": "Konstanter (Ljusets hastighet):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "c"
+    },
+    "speed_unit": {
+        "name": "hastighetsenhet",
+        "description": "Välj en hastighetsenhet från menyn"
+    },
+    "speed": {
+        "name": "hastighet",
+        "description": "Var god skriv in ett nummer"
+    },
+    "translator_id": "263602820496883712"
+},
+"vi": {
+    "name": {
+        "text": "chuyển_đổi_vận_tốc"
+    },
+    "command_desc": {
+        "text": "Một loại lệnh để chuyển đổi vận tốc thành loại đo khác nhau"
+    },
+    "title": {
+        "text": "Vận tốc:"
+    },
+    "unit_names": {
+        "miles": "Dạm:",
+        "kilometers": "Ki-lô-mét:",
+        "meters": "Mét:",
+        "feet": "Phân:",
+        "megameters": "Mê-ga-mét",
+        "light": "Hằng số (Vận tốc của ánh sáng):"
+    },
+    "unit_symbols": {
+        "miles": "mi",
+        "kilometers": "km",
+        "meters": "m",
+        "feet": "ft",
+        "megameters": "Mm",
+        "light": "C"
+    },
+    "speed_unit": {
+        "name": "đơn_vị_của_vận_tốc",
+        "description": "Chọn một đơn vị của vận tốc từ danh sách dưới đây."
+    },
+    "speed": {
+        "name": "vận_tốc",
+        "description": "Vui lòng gõ một số bất kì"
+    },
+    "translator_id": "444360808412086292"
 }

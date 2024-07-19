@@ -628,5 +628,40 @@
             "description": "단위를 제외한 온도(숫자)를 입력해 주세요."
         },
         "translator_id": "622098032854433813"
+    },
+    "vi": {
+        "name": {
+            "text": "chuyển_đổi_nhiệt_độ"
+        },
+        "command_desc": {
+            "text": "Một loại lệnh để chuyển đổi nhiệt độ thành loại đo khác nhau"
+        },
+        "title": {
+            "text": "Nhiệt độ:"
+        },
+        "unit_names": {
+            "celsius": "Độ C:",
+            "fahrenheit": "độ F:",
+            "kelvin": "Nhiệt độ đo Kelvin:",
+            "rankine": "Nhiệt độ đo Rankine:"
+        },
+        "desc": {
+            "text": "Đã chọn:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "đơn_vị_của_nhiệt_độ",
+            "description": "Chọn một đơn vị của nhiệt độ từ danh sách dưới đây."
+        },
+        "temperature": {
+            "name": "nhiệt_độ",
+            "description": "Vui lòng gõ một số bất kì"
+        },
+        "translator_id": "444360808412086292"
     }
 }
