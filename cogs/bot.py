@@ -871,6 +871,10 @@ class Bot(commands.Cog):
         )
         await ctx.send(embed=embed)
 
+    @commands.command(brief="Gives the bot name")
+    async def bot_introduction(self, ctx):
+        await ctx.send("Hi My name Maria JDBot Jefferson.\nYou can call me Maria or JDBot \:)")
+
 
 async def setup(bot):
     await bot.add_cog(Bot(bot))
