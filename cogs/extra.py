@@ -1351,7 +1351,7 @@ class Extra(commands.Cog):
             embed = discord.Embed(title="Time:")
             embed.add_field(name="AM/PM:", value=am_pm_format)
             embed.add_field(name="24 hour:", value=twenty_four_format)
-            embed.add_field(name = "\u2800", value = "\u2800")
+            embed.add_field(name="\u2800", value="\u2800")
             embed.add_field(name="YYYY-DD-MM:", value=first_format)
             embed.add_field(name="DD-MM-YYYY:", value=second_format)
             embed.add_field(name="MM-DD-YYYY:", value=third_format)
