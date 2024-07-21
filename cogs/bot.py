@@ -873,7 +873,7 @@ class Bot(commands.Cog):
 
     @commands.command(brief="Gives the bot name", aliases=["intro"])
     async def introduction(self, ctx):
-        await ctx.send("Hi My name Maria JDBot Gallagher.\nYou can call me Maria or JDBot \:)")
+        await ctx.send("Hi, My name Maria JDBot Gallagher.\nYou can call me Maria or JDBot \:)")
 
 
 async def setup(bot):
