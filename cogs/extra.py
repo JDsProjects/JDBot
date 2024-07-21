@@ -1332,7 +1332,7 @@ class Extra(commands.Cog):
             embed = discord.Embed(title="Time:", description=timestamp)
             embed.set_footer(text="Timezone: Not Found")
 
-        if not timezone:
+        elif not timezone:
             text = "You did not pick a timezone, so it will use discord timestamp instead."
             timestamp = discord.utils.format_dt(interaction.created_at)
             embed = discord.Embed(title="Time:", description=timestamp)
@@ -1349,11 +1349,11 @@ class Extra(commands.Cog):
             third_format = now_tz.strftime("%m-%d-%Y")
 
             embed = discord.Embed(title="Time:")
-            embed.add_field(name="AM/PM", value=am_pm_format)
+            embed.add_field(name="AM/PM:", value=am_pm_format)
             embed.add_field(name="24 hour:", value=twenty_four_format)
-            embed.add_field(name="YYYY-DD-MM", value=first_format)
-            embed.add_field(name="DD-MM-YYYY", value=second_format)
-            embed.add_field(name="MM-DD-YYYY", value=third_format)
+            embed.add_field(name="YYYY-DD-MM:", value=first_format)
+            embed.add_field(name="DD-MM-YYYY:", value=second_format)
+            embed.add_field(name="MM-DD-YYYY:", value=third_format)
 
             embed.set_footer(text=f"Timezone: {timezone}")
 
