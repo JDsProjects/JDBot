@@ -1349,9 +1349,11 @@ class Extra(commands.Cog):
             third_format = now_tz.strftime("%m-%d-%Y")
 
             embed = discord.Embed(title="Time:")
-            embed.add_field(name="(YYYY-DD-MM)", value=first_format)
-            embed.add_field(name="(DD-MM-YYYY)", value=second_format)
-            embed.add_field(name="(MM-DD-YYYY)", value=third_format)
+            embed.add_field(name="AM/PM", value=am_pm_format)
+            embed.add_field(name="24 hour:", value=twenty_four_format )
+            embed.add_field(name="YYYY-DD-MM",value=first_format)
+            embed.add_field(name="DD-MM-YYYY",value=second_format)
+            embed.add_field(name="MM-DD-YYYY",value=third_format)
 
             embed.set_footer(text=f"Timezone: {timezone}")
 
