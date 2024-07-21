@@ -1323,33 +1323,39 @@ class Extra(commands.Cog):
     @app_commands.command(description="A command to convert the message timestamp to the region's time.")
     async def convert_timezone(self, interaction: discord.Interaction, timezone: typing.Optional[str] = None):
 
-        # unsure how to check if timezone doesn't exist to force it to None with a message.
-
         timezones = self.available_timezones
 
-        message = "You did not choose a timezone, so here's a time according to each client"
         if not timezone in timezones:
-            timezone = None
-            message = "You Chose an invalid timezone, time to just display your timezone with the discord timestamp"
-
-        if not timezone:
+            text = "Your timezone was not found in the list (using discord timestamp instead.)"
             timestamp = discord.utils.format_dt(interaction.created_at)
 
+            embed = discord.Embed(title="Time:", value=timestamp)
+            embed.set_footer(text="Timezone: Not Found")
+
+        if not timezone:
+            text = "You did not pick a timezone, so it will use discord timestamp instead."
+            timestamp = discord.utils.format_dt(interaction.created_at)
+            embed = discord.Embed(title="Time:", value=timestamp)
+            embed.set_footer(text="Timezone: Not Specified")
+
         else:
-            timestamp = interaction.created_at.astimezone(zoneinfo.ZoneInfo(timezone))
+            text = "You choose a timezone, I will be using that."
+            now_tz = interaction.created_at.astimezone(zoneinfo.ZoneInfo(timezone))
+            am_pm_format = now_tz.strftime("%I:%M:%S %p")
+            twenty_four_format = now_tz.strftime("%H:%M:%S")
 
-            # time to list every format known to man
-            # https://pynative.com/python-datetime-format-strftime/#h-strftime-date-format-codes
-            # we can use that as a guide
+            first_format = now_tz.strftime("%Y-%d-%m")
+            second_format = now_tz.strftime("%d-%m-%Y")
+            third_format = now_tz.strftime("%m-%d-%Y")
 
-            message = "Here's the timezone you picked"
-            # somehow format to be right?
-            # needs to determine datetime on locale's datetime preference.
-            # how do I do this?
+            embed = discord.Embed(title="Time:")
+            embed.add_field(name="(YYYY-DD-MM)",value=first_format)
+            embed.add_field(name="(DD-MM-YYYY)",value=second_format)
+            embed.add_field(name="(MM-DD-YYYY)",value=third_format)
 
-        timezone = timezone or "Unknown"
-        await interaction.response.send_message(f"Wip but here: {timestamp} \n{message} \nTimezone: {timezone}")
-        # unsure how to embed this.
+            embed.set_footer(text=f"Timezone: {timezone}")
+
+        await interaction.response.send_message(text, embed=embed)
 
     @convert_timezone.autocomplete("timezone")
     async def convert_timezone_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
