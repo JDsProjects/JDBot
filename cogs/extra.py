@@ -1325,18 +1325,18 @@ class Extra(commands.Cog):
 
         timezones = self.available_timezones
 
-        if not timezone in timezones:
+        if not timezone:
+            text = "You did not pick a timezone, so it will use discord timestamp instead."
+            timestamp = discord.utils.format_dt(interaction.created_at)
+            embed = discord.Embed(title="Time:", description=timestamp)
+            embed.set_footer(text="Timezone: Not Specified")
+
+        elif not timezone in timezones:
             text = "Your timezone was not found in the list (using discord timestamp instead.)"
             timestamp = discord.utils.format_dt(interaction.created_at)
 
             embed = discord.Embed(title="Time:", description=timestamp)
             embed.set_footer(text="Timezone: Not Found")
-
-        elif not timezone:
-            text = "You did not pick a timezone, so it will use discord timestamp instead."
-            timestamp = discord.utils.format_dt(interaction.created_at)
-            embed = discord.Embed(title="Time:", description=timestamp)
-            embed.set_footer(text="Timezone: Not Specified")
 
         else:
             text = "You choose a timezone, I will be using that."
