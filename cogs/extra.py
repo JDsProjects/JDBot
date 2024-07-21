@@ -1329,13 +1329,13 @@ class Extra(commands.Cog):
             text = "Your timezone was not found in the list (using discord timestamp instead.)"
             timestamp = discord.utils.format_dt(interaction.created_at)
 
-            embed = discord.Embed(title="Time:", value=timestamp)
+            embed = discord.Embed(title="Time:", description=timestamp)
             embed.set_footer(text="Timezone: Not Found")
 
         if not timezone:
             text = "You did not pick a timezone, so it will use discord timestamp instead."
             timestamp = discord.utils.format_dt(interaction.created_at)
-            embed = discord.Embed(title="Time:", value=timestamp)
+            embed = discord.Embed(title="Time:", description=timestamp)
             embed.set_footer(text="Timezone: Not Specified")
 
         else:
