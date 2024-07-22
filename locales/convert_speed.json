@@ -610,5 +610,41 @@
             "description": "कृपया एक संख्या दर्ज करें"
         },
         "translator_id": "747737674952999024"
+    },
+    "hr": {
+        "name": {
+            "text": "brzina"
+        },
+        "command_desc": {
+            "text": "Naredba za pretvaranje brzina u različite skale"
+        },
+        "title": {
+            "text": "Brzina:"
+        },
+        "unit_names": {
+            "miles": "Milje:",
+            "kilometers": "Kilometri:",
+            "meters": "Metri:",
+            "feet": "Stope:",
+            "megameters": "Megametri",
+            "light": "Konstante (Brzina svjetlosti):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "jedinica_brzine",
+            "description": "Odaberite jedinicu brzine iz padajućeg izbornika."
+        },
+        "speed": {
+            "name": "brzina",
+            "description": "Molimo unesite broj"
+        },
+        "translator_id": "700210850513944576"
     }
 }
