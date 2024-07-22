@@ -646,5 +646,41 @@
             "description": "Molimo unesite broj"
         },
         "translator_id": "700210850513944576"
+    },
+    "nl": {
+        "name": {
+            "text": "snelheid_omzetten"
+        },
+        "command_desc": {
+            "text": "Een command om snelheden naar verschillende eenheden om te zetten"
+        },
+        "title": {
+            "text": "Snelheid:"
+        },
+        "unit_names": {
+            "miles": "Mijl",
+            "kilometers": "Kilometer",
+            "meters": "Meter",
+            "feet": "Voet",
+            "megameters": "Megameter",
+            "light": "Licht"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "snelheid_eenheid",
+            "description": "Selecteer een eenheid"
+        },
+        "speed": {
+            "name": "snelheid",
+            "description": "Voer een getal in"
+        },
+        "translator_id": "150665783268212746"
     }
 }
