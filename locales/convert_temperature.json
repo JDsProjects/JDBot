@@ -700,38 +700,38 @@
         "translator_id": "444360808412086292"
     },
     "hr": {
-            "name": {
-                "text": "pretvori_temperaturu"
-            },
-            "command_desc": {
-                "text": "A command to convert temperatured to different scales"
-            },
-            "title": {
-                "text": "Temperatura:"
-            },
-            "unit_names": {
-                "celsius": "Celzij:",
-                "fahrenheit": "Fahrenheit:",
-                "kelvin": "Kelvin:",
-                "rankine": "Rankine:"
-            },
-            "desc": {
-                "text": "Odaberi:"
-            },
-            "unit_symbols": {
-                "celsius": "°C",
-                "fahrenheit": "°F",
-                "kelvin": "K",
-                "rankine": "°R"
-            },
-            "temperature_unit": {
-                "name": "jedinica_temperature",
-                "description": "Please enter a number"
-            },
-            "temperature": {
-                "name": "temperatura",
-                "description": "Unesite broj"
-            },
-            "translator_id": "700210850513944576"
+        "name": {
+            "text": "pretvori_temperaturu"
+        },
+        "command_desc": {
+            "text": "A command to convert temperatured to different scales"
+        },
+        "title": {
+            "text": "Temperatura:"
+        },
+        "unit_names": {
+            "celsius": "Celzij:",
+            "fahrenheit": "Fahrenheit:",
+            "kelvin": "Kelvin:",
+            "rankine": "Rankine:"
+        },
+        "desc": {
+            "text": "Odaberi:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "jedinica_temperature",
+            "description": "Please enter a number"
+        },
+        "temperature": {
+            "name": "temperatura",
+            "description": "Unesite broj"
+        },
+        "translator_id": "700210850513944576"
     }
 }
