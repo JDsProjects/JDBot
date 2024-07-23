@@ -397,7 +397,7 @@
     },
     "es-419": {
         "name": {
-            "text": "convertir-temperatura"
+            "text": "convertir_velocidad"
         },
         "command_desc": {
             "text": "Un comando para convertir velocidades a diferentes escalas"
@@ -433,7 +433,7 @@
     },
     "es-ES": {
         "name": {
-            "text": "convertir-temperatura"
+            "text": "convertir_velocidad"
         },
         "command_desc": {
             "text": "Un comando para convertir velocidades a diferentes escalas"
