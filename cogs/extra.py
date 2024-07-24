@@ -1379,7 +1379,7 @@ class Extra(commands.Cog):
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(interaction.command)
         traceback.print_exc()
-    
+
     # convert economy soon here.
 
 
