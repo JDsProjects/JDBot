@@ -704,7 +704,7 @@
             "text": "pretvori_temperaturu"
         },
         "command_desc": {
-            "text": "A command to convert temperatured to different scales"
+            "text": "Naredba za pretvaranje temperatura u različite skale"
         },
         "title": {
             "text": "Temperatura:"
@@ -726,7 +726,7 @@
         },
         "temperature_unit": {
             "name": "jedinica_temperature",
-            "description": "Please enter a number"
+            "description": "Unesite broj"
         },
         "temperature": {
             "name": "temperatura",
