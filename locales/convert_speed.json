@@ -718,40 +718,5 @@
             "description": "Voer een getal in"
         },
         "translator_id": "150665783268212746"
-    },
-    "uk": {
-        "name": {
-            "text": "перетворювати_швидкість"
-        },
-        "command_desc": {
-            "text": "Команда для перетворення температур на різні шкали"
-        },
-        "title": {
-            "text": "Температура:"
-        },
-        "unit_names": {
-            "celsius": "Цельсій:",
-            "fahrenheit": "Фаренгейт:",
-            "kelvin": "Кельвін:",
-            "rankine": "Ранкін:"
-        },
-        "desc": {
-            "text": "Оберіть:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "одиниця_температури",
-            "description": "Оберіть одиницю температури з випадаючого списку."
-        },
-        "temperature": {
-            "name": "температура",
-            "description": "Будь ласка, введіть число"
-        },
-        "translator_id": "438343198189027329"
     }
 }
