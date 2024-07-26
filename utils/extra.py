@@ -323,6 +323,7 @@ class InvalidationConfig:
 
 # replace with sqlachemly maybe?
 
+
 async def add_invalidation_entity(entity_id: int, entity_type: InvalidateType, bot: JDBot, in_choosen=True):
     if in_choosen:
         await bot.db.execute(
