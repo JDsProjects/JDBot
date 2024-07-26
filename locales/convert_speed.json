@@ -475,7 +475,7 @@
             "text": "Команда для конвертирования скорости"
         },
         "title": {
-            "text": "СкоростЬ:"
+            "text": "Скорость:"
         },
         "unit_names": {
             "miles": "Мили:",
@@ -502,6 +502,42 @@
             "description": "Пожалуйста введите ваше число!"
         },
         "translator_id": "540142383270985738"
+    },
+    "ro": {
+        "name": {
+            "text": "convertiți_viteza"
+        },
+        "command_desc": {
+            "text": "O comandă pentru a converti vitezele în diferite scări"
+        },
+        "title": {
+            "text": "Viteză:"
+        },
+        "unit_names": {
+            "miles": "Mile:",
+            "kilometers": "Kilometri:",
+            "meters": "Metri:",
+            "feet": "feet:",
+            "megameters": "MegaMetri:",
+            "light": "Viteza luminii:"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "unitate_de_viteză",
+            "description": "Selectați o unitate de viteză din lista derulantă."
+        },
+        "speed": {
+            "name": "viteză",
+            "description": "Vă rugăm să introduceți un număr"
+        },
+        "translator_id": "177494227918389249"
     },
     "sv-SE": {
         "name": {
