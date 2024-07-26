@@ -321,6 +321,8 @@ class InvalidationConfig:
 # although I could add and remove from the cache in the commands to add/remove
 
 
+# replace with sqlachemly maybe?
+
 async def add_invalidation_entity(entity_id: int, entity_type: InvalidateType, bot: JDBot, in_choosen=True):
     if in_choosen:
         await bot.db.execute(
