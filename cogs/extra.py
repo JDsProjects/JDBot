@@ -1344,8 +1344,11 @@ class Extra(commands.Cog):
             third_format = now_tz.strftime("%m-%d-%Y")
 
             # possibly do colors depending on time but not sure.
-            
-            embed = discord.Embed(title="Time:", description=f"12 hour: {am_pm_format}\n24 hour: {twenty_four_format}\nYYYY-DD-MM: {first_format}\nDD-MM-YYYY:{second_format}\nMM-DD-YYYY: {third_format}")
+
+            embed = discord.Embed(
+                title="Time:",
+                description=f"12 hour: {am_pm_format}\n24 hour: {twenty_four_format}\nYYYY-DD-MM: {first_format}\nDD-MM-YYYY:{second_format}\nMM-DD-YYYY: {third_format}",
+            )
             embed.set_footer(text=f"Timezone: {timezone}")
 
         await interaction.response.send_message(embed=embed)
