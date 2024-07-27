@@ -1,877 +1,912 @@
 {
-    "en-US": {
-        "name": {
-            "text": "convert_temperature"
-        },
-        "command_desc": {
-            "text": "A command to convert temperatures to different scales"
-        },
-        "title": {
-            "text": "Temperature:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Chose:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "temperature_unit",
-            "description": "Select a Unit of Temperature from the dropdown."
-        },
-        "temperature": {
-            "name": "temperature",
-            "description": "Please enter a number"
-        },
-        "translator_id": "168422909482762240"
+  "en-US": {
+    "name": {
+      "text": "convert_temperature"
     },
-    "it": {
-        "name": {
-            "text": "convert_temperature"
-        },
-        "command_desc": {
-            "text": "Un comando per convertire le temperature in diverse scale"
-        },
-        "title": {
-            "text": "Temperatura:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Visualizzando:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "temperature_unit",
-            "description": "Seleziona un'unità di misura dal menu."
-        },
-        "temperature": {
-            "name": "temperature",
-            "description": "Inserisci un numero"
-        },
-        "translator_id": "144126010642792449"
+    "command_desc": {
+      "text": "A command to convert temperatures to different scales"
     },
-    "tr": {
-        "name": {
-            "text": "sıcaklık_dönüştür"
-        },
-        "command_desc": {
-            "text": "Sıcaklık birimler arasında dönüşüm yapabilen bir komut"
-        },
-        "title": {
-            "text": "Sıcaklık:"
-        },
-        "unit_names": {
-            "celsius": "Santigrat:",
-            "fahrenheit": "Fahrenhayt:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Seçilen birim:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "birim",
-            "description": "Birim seçiniz."
-        },
-        "temperature": {
-            "name": "sıcaklık",
-            "description": "Dönüştürmek istediğiniz sıcaklığı girin."
-        },
-        "translator_id": "351656397257310212"
+    "title": {
+      "text": "Temperature:"
     },
-    "hi": {
-        "name": {
-            "text": "तापमान_परिवर्तन"
-        },
-        "command_desc": {
-            "text": "तापमान को विभिन्न पैमानों में परिवर्तित करने हेतु एक कमांड।"
-        },
-        "title": {
-            "text": "तापमान:"
-        },
-        "unit_names": {
-            "celsius": "सेल्सियस:",
-            "fahrenheit": "फ़ारेनहाइ:",
-            "kelvin": "केल्विन:",
-            "rankine": "रैंकिन:"
-        },
-        "desc": {
-            "text": "अपनी पसंद चुनें:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "तापमान_इकाई",
-            "description": "ड्रॉपडाउन से तापमान की एक इकाई का चयन करें।"
-        },
-        "temperature": {
-            "name": "तापमान",
-            "description": "एक संख्या दर्ज करें।"
-        },
-        "translator_id": "1033906684965421086"
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
     },
-    "ja": {
-        "name": {
-            "text": "温度_変換"
-        },
-        "command_desc": {
-            "text": "温度を変換します。"
-        },
-        "title": {
-            "text": "温度:"
-        },
-        "unit_names": {
-            "celsius": "摂氏:",
-            "fahrenheit": "華氏:",
-            "kelvin": "ケルビン:",
-            "rankine": "ランキン度:"
-        },
-        "desc": {
-            "text": "選択:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "変換元単位",
-            "description": "変換する元の単位を選択"
-        },
-        "temperature": {
-            "name": "温度",
-            "description": "変換元単位の温度を入力"
-        },
-        "translator_id": "1163416356566347828"
+    "desc": {
+      "text": "Chose:"
     },
-    "fi": {
-        "name": {
-            "text": "convert_temperature"
-        },
-        "command_desc": {
-            "text": "Komento lämpötilojen muuntamista varten"
-        },
-        "title": {
-            "text": "Lämpötila"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Valinta:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "lämpötilayksikkö",
-            "description": "Valitse lämpötilayksikkö valikosta"
-        },
-        "temperature": {
-            "name": "lämpötila",
-            "description": "Syötä numero."
-        },
-        "translator_id": "396290259907903491"
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
     },
-    "sv-SE": {
-        "name": {
-            "text": "convert_temperature"
-        },
-        "command_desc": {
-            "text": "Ett kommando för att konvertera temperaturer till olika skalor"
-        },
-        "title": {
-            "text": "Temperatur:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Valde:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "temperatur_enhet",
-            "description": "Välj en temperaturenhet från menyn"
-        },
-        "temperature": {
-            "name": "temperatur",
-            "description": "Var god och mata in ett nummer"
-        },
-        "translator_id": "263602820496883712"
+    "temperature_unit": {
+      "name": "temperature_unit",
+      "description": "Select a Unit of Temperature from the dropdown."
     },
-    "ru": {
-        "name": {
-            "text": "конвертация_температур"
-        },
-        "command_desc": {
-            "text": "Перевод температуры в разные единицы"
-        },
-        "title": {
-            "text": "Температура:"
-        },
-        "unit_names": {
-            "celsius": "Цельсий:",
-            "fahrenheit": "Фаренгейт:",
-            "kelvin": "Кельвин:",
-            "rankine": "Ранкин:"
-        },
-        "desc": {
-            "text": "Выберите ваш вариант:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "единица_температуры",
-            "description": "Пожалуйста выберите единицу температуры которую вы хотите использовать!"
-        },
-        "temperature": {
-            "name": "температура",
-            "description": "Пожалуйста введите ваше число!"
-        },
-        "translator_id": "540142383270985738"
+    "temperature": {
+      "name": "temperature",
+      "description": "Please enter a number"
     },
-    "nl": {
-        "name": {
-            "text": "temperatuur_omrekenen"
-        },
-        "command_desc": {
-            "text": "Een command om temperaturen naar andere schalen om te rekenen"
-        },
-        "title": {
-            "text": "Temperatuur:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Gekozen:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "temperatuureenheid",
-            "description": "De eenheid van de temperatuur die je wilt omrekenen"
-        },
-        "temperature": {
-            "name": "temperatuur",
-            "description": "De temperatuur die je wilt omrekenen"
-        },
-        "translator_id": "171539705043615744"
+    "translator_id": "168422909482762240"
+  },
+  "it": {
+    "name": {
+      "text": "convert_temperature"
     },
-    "de": {
-        "name": {
-            "text": "temperatur_konvertieren"
-        },
-        "command_desc": {
-            "text": "Ein Befehl zum Umwandeln von Temperaturen in verschiedene Einheiten"
-        },
-        "title": {
-            "text": "Temperatur:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Gewählt:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "temperatureinheit",
-            "description": "Wähle eine Temperatureinheit aus der Liste."
-        },
-        "temperature": {
-            "name": "temperatur",
-            "description": "Bitte gib eine Zahl ein."
-        },
-        "translator_id": "1022842005920940063"
+    "command_desc": {
+      "text": "Un comando per convertire le temperature in diverse scale"
     },
-    "pl": {
-        "name": {
-            "text": "temperatury_konwersja"
-        },
-        "command_desc": {
-            "text": "Polecenie przeliczania temperatur na różne jednostki."
-        },
-        "title": {
-            "text": "Temperatura:"
-        },
-        "unit_names": {
-            "celsius": "Celsjusz:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Wybrane:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "jednostka_temperatury",
-            "description": "Wybierz jednostkę temperatury z listy."
-        },
-        "temperature": {
-            "name": "temperatura",
-            "description": "Wpisz numer temperatury."
-        },
-        "translator_id": "1022842005920940063"
+    "title": {
+      "text": "Temperatura:"
     },
-    "fr": {
-        "name": {
-            "text": "temperature_convertir"
-        },
-        "command_desc": {
-            "text": "Une commande pour convertir les températures à différentes échelles"
-        },
-        "title": {
-            "text": "Température:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Choisi:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "unité_de_température",
-            "description": "Sélectionnez une unité de température dans la liste."
-        },
-        "temperature": {
-            "name": "température",
-            "description": "Veuillez saisir un numéro."
-        },
-        "translator_id": "1022842005920940063"
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
     },
-    "es-ES": {
-        "name": {
-            "text": "convertir_temperatura"
-        },
-        "command_desc": {
-            "text": "un comando para convertir temperaturas en diferentes escalas"
-        },
-        "title": {
-            "text": "Temperatura:"
-        },
-        "unit_names": {
-            "celsius": "Celcius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Eligió"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "unidades_de_temperatura",
-            "description": "Seleccione una unidad de temperatura del menú desplegable"
-        },
-        "temperature": {
-            "name": "temperatura",
-            "description": " Por favor colocar un número"
-        },
-        "translator_id": "414562510226849802"
+    "desc": {
+      "text": "Visualizzando:"
     },
-    "es-419": {
-        "name": {
-            "text": "convertir_temperatura"
-        },
-        "command_desc": {
-            "text": "un comando para convertir temperaturas en diferentes escalas"
-        },
-        "title": {
-            "text": "Temperatura:"
-        },
-        "unit_names": {
-            "celsius": "Celcius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Eligió"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "unidades_de_temperatura",
-            "description": "Seleccione una unidad de temperatura del menú desplegable"
-        },
-        "temperature": {
-            "name": "temperatura",
-            "description": " Por favor colocar un número"
-        },
-        "translator_id": "414562510226849802"
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
     },
-    "pt-BR": {
-        "name": {
-            "text": "converter_temperatura"
-        },
-        "command_desc": {
-            "text": "Um comando para converter temperaturas para diferentes escalas"
-        },
-        "title": {
-            "text": "Temperatura:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Selecionado:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "unidade_de_temperatura",
-            "description": "Selecione uma unidade de temperatura no menu abaixo"
-        },
-        "temperature": {
-            "name": "temperatura",
-            "description": "Insira um número"
-        },
-        "translator_id": "1096865109541929161"
+    "temperature_unit": {
+      "name": "temperature_unit",
+      "description": "Seleziona un'unità di misura dal menu."
     },
-    "zh-CN": {
-        "name": {
-            "text": "转换温度"
-        },
-        "command_desc": {
-            "text": "一个可以转换温度至不同温标的指令"
-        },
-        "title": {
-            "text": "温度："
-        },
-        "unit_names": {
-            "celsius": "摄氏度:",
-            "fahrenheit": "华氏度:",
-            "kelvin": "开尔文:",
-            "rankine": "兰氏温标:"
-        },
-        "desc": {
-            "text": "请选择："
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "温标单位",
-            "description": "请选择以下一种温标单位"
-        },
-        "temperature": {
-            "name": "温度",
-            "description": "请输入数字"
-        },
-        "translator_id": "869928921574035486"
+    "temperature": {
+      "name": "temperature",
+      "description": "Inserisci un numero"
     },
-    "zh-TW": {
-        "name": {
-            "text": "轉換溫度"
-        },
-        "command_desc": {
-            "text": "一個可以轉換溫度至不同溫標的指令"
-        },
-        "title": {
-            "text": "溫度："
-        },
-        "unit_names": {
-            "celsius": "攝氏度:",
-            "fahrenheit": "華氏度:",
-            "kelvin": "開爾文:",
-            "rankine": "蘭氏溫標:"
-        },
-        "desc": {
-            "text": "請選擇："
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "溫標單位",
-            "description": "請選擇以下一種溫標單位"
-        },
-        "temperature": {
-            "name": "溫度",
-            "description": "請輸入數字"
-        },
-        "translator_id": "869928921574035486"
+    "translator_id": "144126010642792449"
+  },
+  "tr": {
+    "name": {
+      "text": "sıcaklık_dönüştür"
     },
-    "en-GB": {
-        "name": {
-            "text": "convert_temperature"
-        },
-        "command_desc": {
-            "text": "A command to convert temperatures to different scales"
-        },
-        "title": {
-            "text": "Temperature:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Choose:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "temperature_unit",
-            "description": "Select a Unit of Temperature from the dropdown."
-        },
-        "temperature": {
-            "name": "temperature",
-            "description": "Please enter a number"
-        },
-        "translator_id": "566653183774949395"
+    "command_desc": {
+      "text": "Sıcaklık birimler arasında dönüşüm yapabilen bir komut"
     },
-    "ko": {
-        "name": {
-            "text": "온도_변환"
-        },
-        "command_desc": {
-            "text": "특정 단위의 온도를 다른 온도 단위들로 변환시켜 줍니다."
-        },
-        "title": {
-            "text": "온도 변환됨"
-        },
-        "unit_names": {
-            "celsius": "섭씨",
-            "fahrenheit": "화씨",
-            "kelvin": "절대온도(켈빈)",
-            "rankine": "란씨(랭킨)"
-        },
-        "desc": {
-            "text": "선택한 온도:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "변환할_온도",
-            "description": "다른 온도 단위로 변환시킬 온도 단위를 선택합니다."
-        },
-        "temperature": {
-            "name": "온도",
-            "description": "단위를 제외한 온도(숫자)를 입력해 주세요."
-        },
-        "translator_id": "622098032854433813"
+    "title": {
+      "text": "Sıcaklık:"
     },
-    "vi": {
-        "name": {
-            "text": "chuyển_đổi_nhiệt_độ"
-        },
-        "command_desc": {
-            "text": "Một loại lệnh để chuyển đổi nhiệt độ thành loại đo khác nhau"
-        },
-        "title": {
-            "text": "Nhiệt độ:"
-        },
-        "unit_names": {
-            "celsius": "Độ C:",
-            "fahrenheit": "độ F:",
-            "kelvin": "Nhiệt độ đo Kelvin:",
-            "rankine": "Nhiệt độ đo Rankine:"
-        },
-        "desc": {
-            "text": "Đã chọn:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "đơn_vị_của_nhiệt_độ",
-            "description": "Chọn một đơn vị của nhiệt độ từ danh sách dưới đây."
-        },
-        "temperature": {
-            "name": "nhiệt_độ",
-            "description": "Vui lòng gõ một số bất kì"
-        },
-        "translator_id": "444360808412086292"
+    "unit_names": {
+      "celsius": "Santigrat:",
+      "fahrenheit": "Fahrenhayt:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
     },
-    "hr": {
-        "name": {
-            "text": "pretvori_temperaturu"
-        },
-        "command_desc": {
-            "text": "Naredba za pretvaranje temperatura u različite skale"
-        },
-        "title": {
-            "text": "Temperatura:"
-        },
-        "unit_names": {
-            "celsius": "Celzij:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Odaberi:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "jedinica_temperature",
-            "description": "Unesite broj"
-        },
-        "temperature": {
-            "name": "temperatura",
-            "description": "Unesite broj"
-        },
-        "translator_id": "700210850513944576"
+    "desc": {
+      "text": "Seçilen birim:"
     },
-    "cs": {
-        "name": {
-            "text": "převod_teploty"
-        },
-        "command_desc": {
-            "text": "Příkaz pro převod teploty do různých stupnic"
-        },
-        "title": {
-            "text": "Teplota:"
-        },
-        "unit_names": {
-            "celsius": "Celsia:",
-            "fahrenheit": "Fahrenheita:",
-            "kelvin": "Kelvina:",
-            "rankine": "Rankina:"
-        },
-        "desc": {
-            "text": "Vyberte:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "jednotka_teploty",
-            "description": "Vyberte jednotku teploty z nabídky."
-        },
-        "temperature": {
-            "name": "teplota",
-            "description": "Zadejte prosím hodnotu"
-        },
-        "translator_id": "344176097300054016"
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
     },
-    "id": {
-        "name": {
-            "text": "konvert_suhu"
-        },
-        "command_desc": {
-            "text": "Sebuah perintah untuk mengonversi suhu ke skala lain"
-        },
-        "title": {
-            "text": "Suhu:"
-        },
-        "unit_names": {
-            "celsius": "Celsius:",
-            "fahrenheit": "Fahrenheit:",
-            "kelvin": "Kelvin:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Terpilih: "
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "satuan_suhu",
-            "description": "Pilihlah sebuah satuan suhu dari dropdown."
-        },
-        "temperature": {
-            "name": "suhu",
-            "description": "Mohon berikan sebuah nomor"
-        },
-        "translator_id": "781708312466554940"
+    "temperature_unit": {
+      "name": "birim",
+      "description": "Birim seçiniz."
     },
-    "lt": {
-        "name": {
-            "text": "paversti_temperatūrą"
-        },
-        "command_desc": {
-            "text": "Komanda, paversti temperatūrą į skirtingas skales"
-        },
-        "title": {
-            "text": "Temperatūra:"
-        },
-        "unit_names": {
-            "celsius": "Celsijus:",
-            "fahrenheit": "Farenheitas:",
-            "kelvin": "Kelvinas:",
-            "rankine": "Rankine:"
-        },
-        "desc": {
-            "text": "Pasirinkite:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "temperatūros_vienetas",
-            "description": "Pasirinkite temperatūros vienetą iš išskleidžiamos meniu. "
-        },
-        "temperature": {
-            "name": "temperatūra",
-            "description": "Įveskite skaičių"
-        },
-        "translator_id": "673129564511273000"
+    "temperature": {
+      "name": "sıcaklık",
+      "description": "Dönüştürmek istediğiniz sıcaklığı girin."
     },
-    "uk": {
-        "name": {
-            "text": "Змінити_шкалу_температури"
-        },
-        "command_desc": {
-            "text": "Команда для перетворення температур на різні шкали"
-        },
-        "title": {
-            "text": "Температура:"
-        },
-        "unit_names": {
-            "celsius": "Цельсій:",
-            "fahrenheit": "Фаренгейт:",
-            "kelvin": "Кельвін:",
-            "rankine": "Ранкін:"
-        },
-        "desc": {
-            "text": "Оберіть:"
-        },
-        "unit_symbols": {
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K",
-            "rankine": "°R"
-        },
-        "temperature_unit": {
-            "name": "одиниця_температури",
-            "description": "Оберіть одиницю температури з випадаючого списку."
-        },
-        "temperature": {
-            "name": "температура",
-            "description": "Будь ласка, введіть число"
-        },
-        "translator_id": "438343198189027329"
-    }
+    "translator_id": "351656397257310212"
+  },
+  "hi": {
+    "name": {
+      "text": "तापमान_परिवर्तन"
+    },
+    "command_desc": {
+      "text": "तापमान को विभिन्न पैमानों में परिवर्तित करने हेतु एक कमांड।"
+    },
+    "title": {
+      "text": "तापमान:"
+    },
+    "unit_names": {
+      "celsius": "सेल्सियस:",
+      "fahrenheit": "फ़ारेनहाइ:",
+      "kelvin": "केल्विन:",
+      "rankine": "रैंकिन:"
+    },
+    "desc": {
+      "text": "अपनी पसंद चुनें:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "तापमान_इकाई",
+      "description": "ड्रॉपडाउन से तापमान की एक इकाई का चयन करें।"
+    },
+    "temperature": {
+      "name": "तापमान",
+      "description": "एक संख्या दर्ज करें।"
+    },
+    "translator_id": "1033906684965421086"
+  },
+  "ja": {
+    "name": {
+      "text": "温度_変換"
+    },
+    "command_desc": {
+      "text": "温度を変換します。"
+    },
+    "title": {
+      "text": "温度:"
+    },
+    "unit_names": {
+      "celsius": "摂氏:",
+      "fahrenheit": "華氏:",
+      "kelvin": "ケルビン:",
+      "rankine": "ランキン度:"
+    },
+    "desc": {
+      "text": "選択:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "変換元単位",
+      "description": "変換する元の単位を選択"
+    },
+    "temperature": {
+      "name": "温度",
+      "description": "変換元単位の温度を入力"
+    },
+    "translator_id": "1163416356566347828"
+  },
+  "fi": {
+    "name": {
+      "text": "convert_temperature"
+    },
+    "command_desc": {
+      "text": "Komento lämpötilojen muuntamista varten"
+    },
+    "title": {
+      "text": "Lämpötila"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Valinta:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "lämpötilayksikkö",
+      "description": "Valitse lämpötilayksikkö valikosta"
+    },
+    "temperature": {
+      "name": "lämpötila",
+      "description": "Syötä numero."
+    },
+    "translator_id": "396290259907903491"
+  },
+  "sv-SE": {
+    "name": {
+      "text": "convert_temperature"
+    },
+    "command_desc": {
+      "text": "Ett kommando för att konvertera temperaturer till olika skalor"
+    },
+    "title": {
+      "text": "Temperatur:"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Valde:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "temperatur_enhet",
+      "description": "Välj en temperaturenhet från menyn"
+    },
+    "temperature": {
+      "name": "temperatur",
+      "description": "Var god och mata in ett nummer"
+    },
+    "translator_id": "263602820496883712"
+  },
+  "ru": {
+    "name": {
+      "text": "конвертация_температуры"
+    },
+    "command_desc": {
+      "text": "Перевод температуры в разные единицы"
+    },
+    "title": {
+      "text": "Температура:"
+    },
+    "unit_names": {
+      "celsius": "Цельсий:",
+      "fahrenheit": "Фаренгейт:",
+      "kelvin": "Кельвин:",
+      "rankine": "Ранкин:"
+    },
+    "desc": {
+      "text": "Выберите ваш вариант:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "единица_температуры",
+      "description": "Пожалуйста выберите единицу температуры которую вы хотите использовать!"
+    },
+    "temperature": {
+      "name": "температура",
+      "description": "Пожалуйста введите ваше число!"
+    },
+    "translator_id": "177494227918389249"
+  },
+  "ro": {
+    "name": {
+      "text": "convertiți_temperatura"
+    },
+    "command_desc": {
+      "text": "O comandă pentru a converti temperaturile în diferite scări"
+    },
+    "title": {
+      "text": "temperatură:"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Alege:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "unitate_de_temperatură",
+      "description": "Selectați o unitate de temperatură din meniul derulant."
+    },
+    "temperature": {
+      "name": "temperatură",
+      "description": "Vă rugăm să introduceți un număr"
+    },
+    "translator_id": "177494227918389249"
+  },
+  "nl": {
+    "name": {
+      "text": "temperatuur_omrekenen"
+    },
+    "command_desc": {
+      "text": "Een command om temperaturen naar andere schalen om te rekenen"
+    },
+    "title": {
+      "text": "Temperatuur:"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Gekozen:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "temperatuureenheid",
+      "description": "De eenheid van de temperatuur die je wilt omrekenen"
+    },
+    "temperature": {
+      "name": "temperatuur",
+      "description": "De temperatuur die je wilt omrekenen"
+    },
+    "translator_id": "171539705043615744"
+  },
+  "de": {
+    "name": {
+      "text": "temperatur_konvertieren"
+    },
+    "command_desc": {
+      "text": "Ein Befehl zum Umwandeln von Temperaturen in verschiedene Einheiten"
+    },
+    "title": {
+      "text": "Temperatur:"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Gewählt:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "temperatureinheit",
+      "description": "Wähle eine Temperatureinheit aus der Liste."
+    },
+    "temperature": {
+      "name": "temperatur",
+      "description": "Bitte gib eine Zahl ein."
+    },
+    "translator_id": "1022842005920940063"
+  },
+  "pl": {
+    "name": {
+      "text": "temperatury_konwersja"
+    },
+    "command_desc": {
+      "text": "Polecenie przeliczania temperatur na różne jednostki."
+    },
+    "title": {
+      "text": "Temperatura:"
+    },
+    "unit_names": {
+      "celsius": "Celsjusz:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Wybrane:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "jednostka_temperatury",
+      "description": "Wybierz jednostkę temperatury z listy."
+    },
+    "temperature": {
+      "name": "temperatura",
+      "description": "Wpisz numer temperatury."
+    },
+    "translator_id": "1022842005920940063"
+  },
+  "fr": {
+    "name": {
+      "text": "temperature_convertir"
+    },
+    "command_desc": {
+      "text": "Une commande pour convertir les températures à différentes échelles"
+    },
+    "title": {
+      "text": "Température:"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Choisi:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "unité_de_température",
+      "description": "Sélectionnez une unité de température dans la liste."
+    },
+    "temperature": {
+      "name": "température",
+      "description": "Veuillez saisir un numéro."
+    },
+    "translator_id": "1022842005920940063"
+  },
+  "es-ES": {
+    "name": {
+      "text": "convertir_temperatura"
+    },
+    "command_desc": {
+      "text": "un comando para convertir temperaturas en diferentes escalas"
+    },
+    "title": {
+      "text": "Temperatura:"
+    },
+    "unit_names": {
+      "celsius": "Celcius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Eligió"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "unidades_de_temperatura",
+      "description": "Seleccione una unidad de temperatura del menú desplegable"
+    },
+    "temperature": {
+      "name": "temperatura",
+      "description": " Por favor colocar un número"
+    },
+    "translator_id": "414562510226849802"
+  },
+  "es-419": {
+    "name": {
+      "text": "convertir_temperatura"
+    },
+    "command_desc": {
+      "text": "un comando para convertir temperaturas en diferentes escalas"
+    },
+    "title": {
+      "text": "Temperatura:"
+    },
+    "unit_names": {
+      "celsius": "Celcius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Eligió"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "unidades_de_temperatura",
+      "description": "Seleccione una unidad de temperatura del menú desplegable"
+    },
+    "temperature": {
+      "name": "temperatura",
+      "description": " Por favor colocar un número"
+    },
+    "translator_id": "414562510226849802"
+  },
+  "pt-BR": {
+    "name": {
+      "text": "converter_temperatura"
+    },
+    "command_desc": {
+      "text": "Um comando para converter temperaturas para diferentes escalas"
+    },
+    "title": {
+      "text": "Temperatura:"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Selecionado:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "unidade_de_temperatura",
+      "description": "Selecione uma unidade de temperatura no menu abaixo"
+    },
+    "temperature": {
+      "name": "temperatura",
+      "description": "Insira um número"
+    },
+    "translator_id": "1096865109541929161"
+  },
+  "zh-CN": {
+    "name": {
+      "text": "转换温度"
+    },
+    "command_desc": {
+      "text": "一个可以转换温度至不同温标的指令"
+    },
+    "title": {
+      "text": "温度："
+    },
+    "unit_names": {
+      "celsius": "摄氏度:",
+      "fahrenheit": "华氏度:",
+      "kelvin": "开尔文:",
+      "rankine": "兰氏温标:"
+    },
+    "desc": {
+      "text": "请选择："
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "温标单位",
+      "description": "请选择以下一种温标单位"
+    },
+    "temperature": {
+      "name": "温度",
+      "description": "请输入数字"
+    },
+    "translator_id": "869928921574035486"
+  },
+  "zh-TW": {
+    "name": {
+      "text": "轉換溫度"
+    },
+    "command_desc": {
+      "text": "一個可以轉換溫度至不同溫標的指令"
+    },
+    "title": {
+      "text": "溫度："
+    },
+    "unit_names": {
+      "celsius": "攝氏度:",
+      "fahrenheit": "華氏度:",
+      "kelvin": "開爾文:",
+      "rankine": "蘭氏溫標:"
+    },
+    "desc": {
+      "text": "請選擇："
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "溫標單位",
+      "description": "請選擇以下一種溫標單位"
+    },
+    "temperature": {
+      "name": "溫度",
+      "description": "請輸入數字"
+    },
+    "translator_id": "869928921574035486"
+  },
+  "en-GB": {
+    "name": {
+      "text": "convert_temperature"
+    },
+    "command_desc": {
+      "text": "A command to convert temperatures to different scales"
+    },
+    "title": {
+      "text": "Temperature:"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Choose:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "temperature_unit",
+      "description": "Select a Unit of Temperature from the dropdown."
+    },
+    "temperature": {
+      "name": "temperature",
+      "description": "Please enter a number"
+    },
+    "translator_id": "566653183774949395"
+  },
+  "ko": {
+    "name": {
+      "text": "온도_변환"
+    },
+    "command_desc": {
+      "text": "특정 단위의 온도를 다른 온도 단위들로 변환시켜 줍니다."
+    },
+    "title": {
+      "text": "온도 변환됨"
+    },
+    "unit_names": {
+      "celsius": "섭씨",
+      "fahrenheit": "화씨",
+      "kelvin": "절대온도(켈빈)",
+      "rankine": "란씨(랭킨)"
+    },
+    "desc": {
+      "text": "선택한 온도:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "변환할_온도",
+      "description": "다른 온도 단위로 변환시킬 온도 단위를 선택합니다."
+    },
+    "temperature": {
+      "name": "온도",
+      "description": "단위를 제외한 온도(숫자)를 입력해 주세요."
+    },
+    "translator_id": "622098032854433813"
+  },
+  "vi": {
+    "name": {
+      "text": "chuyển_đổi_nhiệt_độ"
+    },
+    "command_desc": {
+      "text": "Một loại lệnh để chuyển đổi nhiệt độ thành loại đo khác nhau"
+    },
+    "title": {
+      "text": "Nhiệt độ:"
+    },
+    "unit_names": {
+      "celsius": "Độ C:",
+      "fahrenheit": "độ F:",
+      "kelvin": "Nhiệt độ đo Kelvin:",
+      "rankine": "Nhiệt độ đo Rankine:"
+    },
+    "desc": {
+      "text": "Đã chọn:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "đơn_vị_của_nhiệt_độ",
+      "description": "Chọn một đơn vị của nhiệt độ từ danh sách dưới đây."
+    },
+    "temperature": {
+      "name": "nhiệt_độ",
+      "description": "Vui lòng gõ một số bất kì"
+    },
+    "translator_id": "444360808412086292"
+  },
+  "hr": {
+    "name": {
+      "text": "pretvori_temperaturu"
+    },
+    "command_desc": {
+      "text": "Naredba za pretvaranje temperatura u različite skale"
+    },
+    "title": {
+      "text": "Temperatura:"
+    },
+    "unit_names": {
+      "celsius": "Celzij:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Odaberi:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "jedinica_temperature",
+      "description": "Unesite broj"
+    },
+    "temperature": {
+      "name": "temperatura",
+      "description": "Unesite broj"
+    },
+    "translator_id": "700210850513944576"
+  },
+  "cs": {
+    "name": {
+      "text": "převod_teploty"
+    },
+    "command_desc": {
+      "text": "Příkaz pro převod teploty do různých stupnic"
+    },
+    "title": {
+      "text": "Teplota:"
+    },
+    "unit_names": {
+      "celsius": "Celsia:",
+      "fahrenheit": "Fahrenheita:",
+      "kelvin": "Kelvina:",
+      "rankine": "Rankina:"
+    },
+    "desc": {
+      "text": "Vyberte:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "jednotka_teploty",
+      "description": "Vyberte jednotku teploty z nabídky."
+    },
+    "temperature": {
+      "name": "teplota",
+      "description": "Zadejte prosím hodnotu"
+    },
+    "translator_id": "344176097300054016"
+  },
+  "id": {
+    "name": {
+      "text": "konvert_suhu"
+    },
+    "command_desc": {
+      "text": "Sebuah perintah untuk mengonversi suhu ke skala lain"
+    },
+    "title": {
+      "text": "Suhu:"
+    },
+    "unit_names": {
+      "celsius": "Celsius:",
+      "fahrenheit": "Fahrenheit:",
+      "kelvin": "Kelvin:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Terpilih: "
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "satuan_suhu",
+      "description": "Pilihlah sebuah satuan suhu dari dropdown."
+    },
+    "temperature": {
+      "name": "suhu",
+      "description": "Mohon berikan sebuah nomor"
+    },
+    "translator_id": "781708312466554940"
+  },
+  "lt": {
+    "name": {
+      "text": "paversti_temperatūrą"
+    },
+    "command_desc": {
+      "text": "Komanda, paversti temperatūrą į skirtingas skales"
+    },
+    "title": {
+      "text": "Temperatūra:"
+    },
+    "unit_names": {
+      "celsius": "Celsijus:",
+      "fahrenheit": "Farenheitas:",
+      "kelvin": "Kelvinas:",
+      "rankine": "Rankine:"
+    },
+    "desc": {
+      "text": "Pasirinkite:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "temperatūros_vienetas",
+      "description": "Pasirinkite temperatūros vienetą iš išskleidžiamos meniu. "
+    },
+    "temperature": {
+      "name": "temperatūra",
+      "description": "Įveskite skaičių"
+    },
+    "translator_id": "673129564511273000"
+  },
+  "uk": {
+    "name": {
+      "text": "Змінити_шкалу_температури"
+    },
+    "command_desc": {
+      "text": "Команда для перетворення температур на різні шкали"
+    },
+    "title": {
+      "text": "Температура:"
+    },
+    "unit_names": {
+      "celsius": "Цельсій:",
+      "fahrenheit": "Фаренгейт:",
+      "kelvin": "Кельвін:",
+      "rankine": "Ранкін:"
+    },
+    "desc": {
+      "text": "Оберіть:"
+    },
+    "unit_symbols": {
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K",
+      "rankine": "°R"
+    },
+    "temperature_unit": {
+      "name": "одиниця_температури",
+      "description": "Оберіть одиницю температури з випадаючого списку."
+    },
+    "temperature": {
+      "name": "температура",
+      "description": "Будь ласка, введіть число"
+    },
+    "translator_id": "438343198189027329"
+  }
 }
