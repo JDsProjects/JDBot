@@ -246,7 +246,7 @@
     },
     "ru": {
         "name": {
-            "text": "конвертация_температур"
+            "text": "конвертация_температуры"
         },
         "command_desc": {
             "text": "Перевод температуры в разные единицы"
@@ -278,6 +278,41 @@
             "description": "Пожалуйста введите ваше число!"
         },
         "translator_id": "540142383270985738"
+    },
+    "ro": {
+        "name": {
+            "text": "convertiți_temperatura"
+        },
+        "command_desc": {
+            "text": "O comandă pentru a converti temperaturile în diferite scări"
+        },
+        "title": {
+            "text": "temperatură:"
+        },
+        "unit_names": {
+            "celsius": "Celsius:",
+            "fahrenheit": "Fahrenheit:",
+            "kelvin": "Kelvin:",
+            "rankine": "Rankine:"
+        },
+        "desc": {
+            "text": "Alege:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "unitate_de_temperatură",
+            "description": "Selectați o unitate de temperatură din meniul derulant."
+        },
+        "temperature": {
+            "name": "temperatură",
+            "description": "Vă rugăm să introduceți un număr"
+        },
+        "translator_id": "177494227918389249"
     },
     "nl": {
         "name": {
