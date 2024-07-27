@@ -757,10 +757,10 @@
     },
     "lt": {
         "name": {
-            "text": "konvertuoti_greitį"
+            "text": "paversti_greitį"
         },
         "command_desc": {
-            "text": "Komanda konvertuoti temperatūra į skirtingas skales"
+            "text": "Komanda paversti greitį į skirtingas skales"
         },
         "title": {
             "text": "Greitis:"

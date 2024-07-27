@@ -803,5 +803,40 @@
             "description": "Mohon berikan sebuah nomor"
         },
         "translator_id": "781708312466554940"
+    },
+    "lt": {
+        "name": {
+            "text":"paversti_temperatūrą"
+        },
+        "command_desc": {
+            "text": "Komanda, paversti temperatūrą į skirtingas skales"
+        },
+        "title": {
+            "text": "Temperatūra:"
+        },
+        "unit_names": {
+            "celsius": "Celsijus:",
+            "fahrenheit": "Farenheitas:",
+            "kelvin": "Kelvinas:",
+            "rankine": "Rankine:"
+        },
+        "desc": {
+            "text": "Pasirinkite:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "temperatūros_vienetas",
+            "description": "Pasirinkite temperatūros vienetą iš išskleidžiamos meniu. "
+        },
+        "temperature": {
+            "name": "temperatūra",
+            "description": "Įveskite skaičių"
+        },
+        "translator_id": "673129564511273000"
     }
 }
