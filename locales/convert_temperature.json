@@ -733,5 +733,40 @@
             "description": "Unesite broj"
         },
         "translator_id": "700210850513944576"
+    },
+    "cs": {
+        "name": {
+            "text": "převod_teploty"
+        },
+        "command_desc": {
+            "text": "Příkaz pro převod teploty do různých stupnic"
+        },
+        "title": {
+            "text": "Teplota:"
+        },
+        "unit_names": {
+            "celsius": "Celsia:",
+            "fahrenheit": "Fahrenheita:",
+            "kelvin": "Kelvina:",
+            "rankine": "Rankina:"
+        },
+        "desc": {
+            "text": "Vyberte:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "jednotka_teploty",
+            "description": "Vyberte jednotku teploty z nabídky."
+        },
+        "temperature": {
+            "name": "teplota",
+            "description": "Zadejte prosím číslo"
+        },
+        "translator_id": "344176097300054016"
     }
 }

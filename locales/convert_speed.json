@@ -718,5 +718,41 @@
             "description": "Voer een getal in"
         },
         "translator_id": "150665783268212746"
+    },
+    "cs": {
+        "name": {
+            "text": "převod_rychlosti"
+        },
+        "command_desc": {
+            "text": "Příkaz pro převod rychlosti do různých stupnic"
+        },
+        "title": {
+            "text": "Rychlost:"
+        },
+        "unit_names": {
+            "miles": "Míle:",
+            "kilometers": "Kilometry:",
+            "meters": "Metry:",
+            "feet": "Stopy:",
+            "megameters": "Megametry",
+            "light": "Konstanty (Rychlost světla):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "rychlostní_jednotka",
+            "description": "Vyberte jednotku rychlosti z nabídky."
+        },
+        "speed": {
+            "name": "rychlost",
+            "description": "Zadejte prosím číslo"
+        },
+        "translator_id": "344176097300054016"
     }
 }
