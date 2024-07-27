@@ -754,5 +754,41 @@
             "description": "Zadejte prosím hodnotu"
         },
         "translator_id": "344176097300054016"
+    },
+    "lt": {
+        "name": {
+            "text": "konvertuoti_greitį"
+        },
+        "command_desc": {
+            "text": "Komanda konvertuoti temperatūra į skirtingas skales"
+        },
+        "title": {
+            "text": "Greitis:"
+        },
+        "unit_names": {
+            "miles": "Mylios:",
+            "kilometers": "Kilometrai:",
+            "meters": "Metrai:",
+            "feet": "Pėdos:",
+            "megameters": "MegaMetrai",
+            "light": "Konstantos (Šviesos greitis):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "greičio_vienetas",
+            "description": "Pasirinkite greičio vienetą iš išskleidžiamos meniu."
+        },
+        "speed": {
+            "name": "greitis",
+            "description": "Įveskite skaičių"
+        },
+        "translator_id": "673129564511273000"
     }
 }
