@@ -1348,6 +1348,8 @@ class Extra(commands.Cog):
             second_format = now_tz.strftime("%d-%m-%Y")
             third_format = now_tz.strftime("%m-%d-%Y")
 
+            # possibly do colors depending on time but not sure.
+
             embed = discord.Embed(title="Time:")
             embed.add_field(name="AM/PM:", value=am_pm_format)
             embed.add_field(name="24 hour:", value=twenty_four_format)
