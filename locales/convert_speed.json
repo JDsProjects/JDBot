@@ -826,5 +826,41 @@
             "description": "Pilihlah sebuah nomor"
         },
         "translator_id": "781708312466554940"
+    },
+    "uk": {
+        "name": {
+            "text": "конвертувати_швидкість"
+        },
+        "command_desc": {
+            "text": "Команда для конвертації швидкості у різні шкали"
+        },
+        "title": {
+            "text": "Швидкість:"
+        },
+        "unit_names": {
+            "miles": "Милі:",
+            "kilometers": "Кілометри:",
+            "meters": "Метри:",
+            "feet": "Фути:",
+            "megameters": "Мегаметри:",
+            "light": " Швидкість Світла:"
+        },
+        "unit_symbols": {
+            "miles": "милі",
+            "kilometers": "км",
+            "meters": "м",
+            "feet": "фт",
+            "megameters": "Мм",
+            "light": "с"
+        },
+        "speed_unit": {
+            "name": "одиниця_швидкості",
+            "description": "Оберіть одиницю швидкості з випадаючого списку."
+        },
+        "speed": {
+            "name": "швидкість",
+            "description": "Будь ласка, введіть число"
+        },
+        "translator_id": "438343198189027329"
     }
 }
