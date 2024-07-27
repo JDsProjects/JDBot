@@ -765,7 +765,7 @@
         },
         "temperature": {
             "name": "teplota",
-            "description": "Zadejte prosím číslo"
+            "description": "Zadejte prosím hodnotu"
         },
         "translator_id": "344176097300054016"
     }
