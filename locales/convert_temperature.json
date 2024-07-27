@@ -806,7 +806,7 @@
     },
     "lt": {
         "name": {
-            "text":"paversti_temperatūrą"
+            "text": "paversti_temperatūrą"
         },
         "command_desc": {
             "text": "Komanda, paversti temperatūrą į skirtingas skales"

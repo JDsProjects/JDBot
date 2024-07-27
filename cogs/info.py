@@ -320,6 +320,7 @@ class DevTools(commands.Cog):
             utils.InvalidationConfig(record.entity_id, record.entity_type, self.bot)
             for record in await self.bot.db.fetch("SELECT * FROM invalidation_out")
         ]
+        # find a better way to handle invalidation_config and invalidation_opt_out.
 
     async def cog_unload(self):
         await self.github.close()
