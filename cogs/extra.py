@@ -1326,24 +1326,19 @@ class Extra(commands.Cog):
         timezones = self.available_timezones
 
         if not timezone:
-            text = "No timezone was choosen:"
             timestamp = discord.utils.format_dt(interaction.created_at)
             embed = discord.Embed(title="Time:", description=timestamp)
             embed.set_footer(text="Timezone: Not Specified")
 
         elif not timezone in timezones:
-            text = "No timezone found:"
             timestamp = discord.utils.format_dt(interaction.created_at)
-
             embed = discord.Embed(title="Time:", description=timestamp)
             embed.set_footer(text="Timezone: Not Found")
 
         else:
-            text = "Using the timezone you choose:"
             now_tz = interaction.created_at.astimezone(zoneinfo.ZoneInfo(timezone))
             am_pm_format = now_tz.strftime("%I:%M:%S %p")
             twenty_four_format = now_tz.strftime("%H:%M:%S")
-
             first_format = now_tz.strftime("%Y-%d-%m")
             second_format = now_tz.strftime("%d-%m-%Y")
             third_format = now_tz.strftime("%m-%d-%Y")
@@ -1351,7 +1346,7 @@ class Extra(commands.Cog):
             # possibly do colors depending on time but not sure.
 
             embed = discord.Embed(title="Time:")
-            embed.add_field(name="AM/PM:", value=am_pm_format)
+            embed.add_field(name="12 hour:", value=am_pm_format)
             embed.add_field(name="24 hour:", value=twenty_four_format)
             embed.add_field(name="\u2800", value="\u2800")
             embed.add_field(name="YYYY-DD-MM:", value=first_format)
@@ -1360,7 +1355,7 @@ class Extra(commands.Cog):
 
             embed.set_footer(text=f"Timezone: {timezone}")
 
-        await interaction.response.send_message(text, embed=embed)
+        await interaction.response.send_message(embed=embed)
 
     @convert_timezone.autocomplete("timezone")
     async def convert_timezone_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
