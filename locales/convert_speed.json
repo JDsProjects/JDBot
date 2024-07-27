@@ -790,5 +790,41 @@
             "description": "Įveskite skaičių"
         },
         "translator_id": "673129564511273000"
+    },
+    "id": {
+        "name": {
+            "text": "konvert_kecepatan"
+        },
+        "command_desc": {
+            "text": "Sebuah perintah untuk mengubah kecepatan menjadi skala yang berbeda"
+        },
+        "title": {
+            "text": "Kecepatan:"
+        },
+        "unit_names": {
+            "miles": "Mil:",
+            "kilometers": "Kilometer",
+            "meters": "Meter",
+            "feet": "Kaki:",
+            "megameters": "MegaMeter",
+            "light": "Konstanta (Kecepatan Cahaya):"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "satuan_kecepatan",
+            "description": "Pilih satuan kecepatan dari pilihan dropdown."
+        },
+        "speed": {
+            "name": "kecepatan",
+            "description": "Pilihlah sebuah nomor"
+        },
+        "translator_id": "781708312466554940"
     }
 }
