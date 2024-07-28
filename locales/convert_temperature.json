@@ -978,5 +978,40 @@
             "description": "Kérlek, adj meg egy számot"
         },
         "translator_id": "1011711862729101484"
+    },
+    "el": {
+        "name": {
+            "text": "μετατροπή_θερμοκρασίας"
+        },
+        "command_desc": {
+            "text": "Εντολή που μετατρέπει την θερμοκρασία σε διαφορετικές μονάδες μέτρησης"
+        },
+        "title": {
+            "text": "Θερμοκρασία:"
+        },
+        "unit_names": {
+            "celsius": "Κελσίου:",
+            "fahrenheit": "Φαρενάιτ:",
+            "kelvin": "Κέλβιν:",
+            "rankine": "Ράνκιν:"
+        },
+        "desc": {
+            "text": "Επιλογές:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "μονάδα_μέτρησης_θερμοκρασίας",
+            "description": "Επιλέξτε μία μονάδα μέτρησης της θερμοκρασίας από το αναπτυσσόμενο μενού."
+        },
+        "temperature": {
+            "name": "θερμοκρασία",
+            "description": "Εισάγετε έναν αριθμό"
+        },
+        "translator_id": "189036489265381387"
     }
 }

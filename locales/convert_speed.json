@@ -1090,5 +1090,44 @@
             "description": "Kérjük, adjon meg egy számot"
         },
         "translator_id": "1011711862729101484"
+    },
+    "el": {
+        "name": {
+            "text": "μετατροπή_ταχύτητας"
+        },
+        "command_desc": {
+            "text": "Εντολή που μετατρέπει την ταχύτητα σε διαφορετικές μονάδες μέτρησης"
+        },
+        "title": {
+            "text": "Ταχύτητα:"
+        },
+        "unit_names": {
+            "miles": "Μίλια:",
+            "kilometers": "Χιλιόμετρα:",
+            "meters": "Μέτρα:",
+            "feet": "Πόδια:",
+            "megameters": "Μεγαμέτρα:",
+            "light": "Σταθερές (Ταχύτητα του φωτός):"
+        },
+        "desc": {
+            "text": "Επιλέξτε:"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "χμ",
+            "meters": "μ",
+            "feet": "ft",
+            "megameters": "Mμ",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "μονάδα_μέτρησης_ταχύτητας",
+            "description": "Επιλέξτε μια μονάδα μέτρησης ταχύτητας από το αναπτυσσόμενο μενού."
+        },
+        "speed": {
+            "name": "ταχύτητα",
+            "description": "Εισάγετε έναν αριθμό"
+        },
+        "translator_id": "189036489265381387"
     }
 }
