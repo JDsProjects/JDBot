@@ -1048,5 +1048,40 @@
             "description": "Vennligst skriv inn et tall"
         },
         "translator_id": "554107005824925707"
+    },
+    "da": {
+        "name": {
+            "text": "konveter_temperatur"
+        },
+        "command_desc": {
+            "text": "En command til at konvetere temperaturer til forskellige enheder"
+        },
+        "title": {
+            "text": "Temperatur:"
+        },
+        "unit_names": {
+            "celsius": "Celsius:",
+            "fahrenheit": "Fahrenheit:",
+            "kelvin": "Kelvin:",
+            "rankine": "Rankine:"
+        },
+        "desc": {
+            "text": "Vælg:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "temperatur_enhed",
+            "description": "Vælg en enhed af temperature fra rullemenuen."
+        },
+    "temperatur": {
+        "name": "temperatur",
+        "description": "Skriv et nummer"
+    },
+    "translator_id": "844466398540333056" 
     }
 }

@@ -1168,5 +1168,44 @@
             "description": "Vennligst skriv inn et tall"
         },
         "translator_id": "554107005824925707"
+    },
+    "da": {
+        "name": {
+            "text": "konveter_hastighed"
+        },
+        "command_desc": {
+            "text": "En command til at konvetere hastigheder til forskellige enheder"
+        },
+        "title": {
+            "text": "Hastighed:"
+        },
+        "unit_names": {
+            "miles": "Miles:",
+            "kilometers": "Kilometer:",
+            "meters": "Meter:",
+            "feet": "Feet:",
+            "megameters": "Megameter:",
+            "light": "Konstanter (Lysets Hastighed):"
+        },
+        "desc": {
+            "text": "Vælg:"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "K"
+        },
+        "speed_unit": {
+            "name": "Hastigheds_enhed",
+            "description": "Vælg en enhed af hastigheder fra rullemenuen."
+        },
+        "speed": {
+            "name": "hastighed",
+            "description": "Skriv et nummer"
+        },
+        "translator_id": "844466398540333056"
     }
 }
