@@ -948,10 +948,10 @@
         "unit_names": {
             "miles": "英里",
             "kilometers": "公里",
-            "meters": "公尺：",
-            "feet": "英尺：",
-            "megameters": "百萬米：",
-            "light": "光速："
+            "meters": "公尺",
+            "feet": "英尺",
+            "megameters": "百萬米",
+            "light": "光速"
         },
         "unit_symbols": {
             "miles": "mi",
