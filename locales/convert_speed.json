@@ -17,6 +17,9 @@
             "megameters": "MegaMeters",
             "light": "Constants (Speed of Light):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -52,6 +55,9 @@
             "feet": "Altezza:",
             "megameters": "MegaMetri",
             "light": "Constanti (Velocità Della Luce):"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -89,6 +95,9 @@
             "megameters": "MegaMeters",
             "light": "Constants (Speed of Light):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -124,6 +133,9 @@
             "feet": "Fuß:",
             "megameters": "Megameter",
             "light": "Konstanten (Lichtgeschwindigkeit):"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -161,6 +173,9 @@
             "megameters": "Megametry",
             "light": "Stałe (prędkość światła):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -196,6 +211,9 @@
             "feet": "Pieds:",
             "megameters": "Mégamètres",
             "light": "Constantes (vitesse de la lumière):"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -233,6 +251,9 @@
             "megameters": "Megametre",
             "light": "Işık Hızı"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -268,6 +289,9 @@
             "feet": "フィート:",
             "megameters": "メガメートル",
             "light": "定数 (光の速度):"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -305,6 +329,9 @@
             "megameters": "MegaMetros",
             "light": "Constantes (Velocidade da Luz):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -340,6 +367,9 @@
             "feet": "Jalkaa:",
             "megameters": "Megametriä:",
             "light": "Vakiot (Valon nopeus):"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mailia",
@@ -377,6 +407,9 @@
             "megameters": "메가미터",
             "light": "상수 (빛의 속도)"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -412,6 +445,9 @@
             "feet": "Pies:",
             "megameters": "Megámetros:",
             "light": "Constantes (Velocidad de la luz):"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -449,6 +485,9 @@
             "megameters": "Megámetros:",
             "light": "Constantes (Velocidad de la luz):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -484,6 +523,9 @@
             "feet": "Футы:",
             "megameters": "Мегаметры",
             "light": "Скорости света:"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "мили",
@@ -521,6 +563,9 @@
             "megameters": "MegaMetri:",
             "light": "Viteza luminii:"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -556,6 +601,9 @@
             "feet": "Fot:",
             "megameters": "Megameter:",
             "light": "Konstanter (Ljusets hastighet):"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -593,6 +641,9 @@
             "megameters": "Mê-ga-mét",
             "light": "Hằng số (Vận tốc của ánh sáng):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -628,6 +679,9 @@
             "feet": "फ़ीट",
             "megameters": "मेगामीटर",
             "light": "मानक (प्रकाश की गति)"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -665,6 +719,9 @@
             "megameters": "Megametri",
             "light": "Konstante (Brzina svjetlosti):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -700,6 +757,9 @@
             "feet": "Voet",
             "megameters": "Megameter",
             "light": "Licht"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -737,6 +797,9 @@
             "megameters": "Megametry",
             "light": "Konstanty (Rychlost světla):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -772,6 +835,9 @@
             "feet": "Pėdos:",
             "megameters": "MegaMetrai",
             "light": "Konstantos (Šviesos greitis):"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -809,6 +875,9 @@
             "megameters": "MegaMeter",
             "light": "Konstanta (Kecepatan Cahaya):"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -844,6 +913,9 @@
             "feet": "Фути:",
             "megameters": "Мегаметри:",
             "light": " Швидкість Світла:"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "милі",
@@ -881,6 +953,9 @@
             "megameters": "ในหน่วยล้านเมตร",
             "light": "ในความเร็วแสง:"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "ไมล์",
             "kilometers": "กิโลเมตร",
@@ -917,6 +992,9 @@
             "megameters": "百萬米",
             "light": "光速"
         },
+        "desc": {
+            "text": "Chose:"
+        },
         "unit_symbols": {
             "miles": "mi",
             "kilometers": "km",
@@ -952,6 +1030,9 @@
             "feet": "英尺",
             "megameters": "百萬米",
             "light": "光速"
+        },
+        "desc": {
+            "text": "Chose:"
         },
         "unit_symbols": {
             "miles": "mi",
