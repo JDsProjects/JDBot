@@ -898,5 +898,77 @@
             "description": "โปรดใส่ตัวเลขที่ต้องการแปลง"
         },
         "translator_id": "688603574707552313"
+    },
+    "zh-CN": {
+        "name": {
+            "text": "转换速度"
+        },
+        "command_desc": {
+            "text": "一个可以转换速度到不同速度单位的指令"
+        },
+        "title": {
+            "text": "速度："
+        },
+        "unit_names": {
+            "miles": "英里：",
+            "kilometers": "公里：",
+            "meters": "公尺：:",
+            "feet": "英尺：",
+            "megameters": "百萬米：",
+            "light": "光速："
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "速度单位",
+            "description": "请选择以下一种速度单位"
+        },
+        "speed": {
+            "name": "速度",
+            "description": "请输入一个数字"
+        },
+        "translator_id": "1130334020740321431"
+    },
+    "zh-TW": {
+        "name": {
+            "text": "轉換速度"
+        },
+        "command_desc": {
+            "text": "一個轉換速度到不同速度單位的指令"
+        },
+        "title": {
+            "text": "速度："
+        },
+        "unit_names": {
+            "miles": "英里：",
+            "kilometers": "公里：",
+            "meters": "公尺：:",
+            "feet": "英尺：",
+            "megameters": "百萬米：",
+            "light": "光速："
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "速度單位",
+            "description": "請選擇以下一種速度單位"
+        },
+        "speed": {
+            "name": "速度",
+            "description": "請輸入一個數字"
+        },
+        "translator_id": "1130334020740321431"
     }
 }

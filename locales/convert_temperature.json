@@ -570,10 +570,10 @@
             "text": "温度："
         },
         "unit_names": {
-            "celsius": "摄氏度:",
-            "fahrenheit": "华氏度:",
-            "kelvin": "开尔文:",
-            "rankine": "兰氏温标:"
+            "celsius": "摄氏度：",
+            "fahrenheit": "华氏度：",
+            "kelvin": "开氏度：",
+            "rankine": "兰氏度："
         },
         "desc": {
             "text": "请选择："
@@ -586,29 +586,29 @@
         },
         "temperature_unit": {
             "name": "温标单位",
-            "description": "请选择以下一种温标单位"
+            "description": "请选择以下一种温度单位"
         },
         "temperature": {
             "name": "温度",
             "description": "请输入数字"
         },
-        "translator_id": "869928921574035486"
+        "translator_id": "1130334020740321431"
     },
     "zh-TW": {
         "name": {
             "text": "轉換溫度"
         },
         "command_desc": {
-            "text": "一個可以轉換溫度至不同溫標的指令"
+            "text": "一個轉換溫度到不同溫度單位的指令"
         },
         "title": {
-            "text": "溫度："
+            "text": "溫度：:"
         },
         "unit_names": {
-            "celsius": "攝氏度:",
-            "fahrenheit": "華氏度:",
-            "kelvin": "開爾文:",
-            "rankine": "蘭氏溫標:"
+            "celsius": "攝氏度：",
+            "fahrenheit": "華氏度：",
+            "kelvin": "克耳文：",
+            "rankine": "蘭氏度："
         },
         "desc": {
             "text": "請選擇："
@@ -620,14 +620,14 @@
             "rankine": "°R"
         },
         "temperature_unit": {
-            "name": "溫標單位",
-            "description": "請選擇以下一種溫標單位"
+            "name": "溫度單位",
+            "description": "請選擇以下一種溫度單位"
         },
         "temperature": {
             "name": "溫度",
             "description": "請輸入數字"
         },
-        "translator_id": "869928921574035486"
+        "translator_id": "1130334020740321431"
     },
     "en-GB": {
         "name": {
@@ -876,7 +876,7 @@
     },
     "uk": {
         "name": {
-            "text": "Змінити_шкалу_температури"
+            "text": "мінити_шкалу_температури"
         },
         "command_desc": {
             "text": "Команда для перетворення температур на різні шкали"
