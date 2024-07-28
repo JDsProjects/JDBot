@@ -14,7 +14,7 @@
             "kilometers": "Kilometers:",
             "meters": "Meters:",
             "feet": "Feet:",
-            "megameters": "Megameters",
+            "megameters": "Megameters:",
             "light": "Constants (Speed of Light):"
         },
         "desc": {
@@ -92,7 +92,7 @@
             "kilometers": "Kilometers:",
             "meters": "Meters:",
             "feet": "Feet:",
-            "megameters": "MegaMeters",
+            "megameters": "Megameters:",
             "light": "Constants (Speed of Light):"
         },
         "desc": {
