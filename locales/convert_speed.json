@@ -1199,7 +1199,7 @@
             "light": "K"
         },
         "speed_unit": {
-            "name": "Hastigheds_enhed",
+            "name": "hastigheds_enhed",
             "description": "Vælg en enhed af hastigheder fra rullemenuen."
         },
         "speed": {
