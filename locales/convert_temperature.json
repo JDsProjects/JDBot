@@ -1078,10 +1078,10 @@
             "name": "temperatur_enhed",
             "description": "Vælg en enhed af temperature fra rullemenuen."
         },
-    "temperatur": {
-        "name": "temperatur",
-        "description": "Skriv et nummer"
-    },
-    "translator_id": "844466398540333056" 
+        "temperatur": {
+            "name": "temperatur",
+            "description": "Skriv et nummer"
+        },
+        "translator_id": "844466398540333056"
     }
 }
