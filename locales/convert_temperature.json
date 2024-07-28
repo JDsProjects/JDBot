@@ -908,5 +908,40 @@
             "description": "Будь ласка, введіть число"
         },
         "translator_id": "438343198189027329"
+    },
+    "th-TH": {
+        "name": {
+            "text": "แปลงหน่วยอุณหภูมิ"
+        },
+        "command_desc": {
+            "text": "คำสั่งนี้ใช้สำหรับการแปลงอุณหภูมิเป็นหน่วยอื่นๆ"
+        },
+        "title": {
+            "text": "อุณหภูมิในหน่วยต่างๆ:"
+        },
+        "unit_names": {
+            "celsius": "องศาเซลเซียส:",
+            "fahrenheit": "องศาฟาเรนไฮ:",
+            "kelvin": "เคลวิน:",
+            "rankine": "องศาแรงคิน:"
+        },
+        "desc": {
+            "text": "เลือก:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "หน่วยอุณหภูมิ",
+            "description": "เลื่อนเพื่อเลือกหน่วยอุณหภูมิจากเมนู"
+        },
+        "temperature": {
+            "name": "อุณหภูมิ",
+            "description": "โปรดใส่ตัวเลขที่ต้องการแปลง"
+        },
+        "translator_id": "688603574707552313"
     }
 }
