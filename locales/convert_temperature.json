@@ -1013,5 +1013,40 @@
             "description": "Εισάγετε έναν αριθμό"
         },
         "translator_id": "189036489265381387"
+    },
+    "no": {
+        "name": {
+            "text": "konverter_temperatur"
+        },
+        "command_desc": {
+            "text": "En kommando for å konvertere temperaturer til forskjellige skalaer"
+        },
+        "title": {
+            "text": "Temperatur:"
+        },
+        "unit_names": {
+            "celsius": "Celsius:",
+            "fahrenheit": "Fahrenheit:",
+            "kelvin": "Kelvin:",
+            "rankine": "Rankine:"
+        },
+        "desc": {
+            "text": "Velg:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "temperature_unit",
+            "description": "Velg en temperatur-enhet fra rullegardinmenyen."
+        },
+        "temperature": {
+            "name": "temperature",
+            "description": "Vennligst skriv inn et tall"
+        },
+        "translator_id": "554107005824925707"
     }
 }

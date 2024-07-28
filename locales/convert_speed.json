@@ -1129,5 +1129,44 @@
             "description": "Εισάγετε έναν αριθμό"
         },
         "translator_id": "189036489265381387"
+    },
+    "no": {
+        "name": {
+            "text": "konverter_hastighet"
+        },
+        "command_desc": {
+            "text": "En kommando for å konvertere hastigheter til forskjellige skalaer"
+        },
+        "title": {
+            "text": "Hastighet:"
+        },
+        "unit_names": {
+            "miles": "Miles:",
+            "kilometers": "Kilometer:",
+            "meters": "Meter:",
+            "feet": "Fot:",
+            "megameters": "Megameter:",
+            "light": "Konstanter (Lysets hastighet):"
+        },
+        "desc": {
+            "text": "Velg:"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "speed_unit",
+            "description": "Velg en hastighets-enhet fra rullegardinmenyen."
+        },
+        "speed": {
+            "name": "speed",
+            "description": "Vennligst skriv inn et tall"
+        },
+        "translator_id": "554107005824925707"
     }
 }
