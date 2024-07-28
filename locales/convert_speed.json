@@ -46,7 +46,7 @@
             "text": "Un comando per convertire le velocita' in scale diverse."
         },
         "title": {
-            "text": "Velocit\u00e0:"
+            "text": "Velocità:"
         },
         "unit_names": {
             "miles": "Miglia:",
@@ -54,7 +54,7 @@
             "meters": "Metri:",
             "feet": "Altezza:",
             "megameters": "MegaMetri",
-            "light": "Constanti (Velocit\u00e0 Della Luce):"
+            "light": "Constanti (Velocità Della Luce):"
         },
         "desc": {
             "text": "Visualizzando:"
@@ -69,7 +69,7 @@
         },
         "speed_unit": {
             "name": "speed_unit",
-            "description": "Seleziona un'unit\u00e0 di velocit\u00e0 dal menu."
+            "description": "Seleziona un'unità di velocità dal menu."
         },
         "speed": {
             "name": "speed",
@@ -130,12 +130,12 @@
             "miles": "Meilen:",
             "kilometers": "Kilometer:",
             "meters": "Meter:",
-            "feet": "Fu\u00df:",
+            "feet": "Fuß:",
             "megameters": "Megameter",
             "light": "Konstanten (Lichtgeschwindigkeit):"
         },
         "desc": {
-            "text": "Gew\u00e4hlt:"
+            "text": "Gewählt:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -147,7 +147,7 @@
         },
         "speed_unit": {
             "name": "geschwindigkeits_einheit",
-            "description": "W\u00e4hle eine Geschwindigkeitseinheit aus der Liste aus"
+            "description": "Wähle eine Geschwindigkeitseinheit aus der Liste aus"
         },
         "speed": {
             "name": "geschwindigkeit",
@@ -157,13 +157,13 @@
     },
     "pl": {
         "name": {
-            "text": "pr\u0119dko\u015bci_konwersja"
+            "text": "prędkości_konwersja"
         },
         "command_desc": {
-            "text": "Polecenie przeliczania pr\u0119dko\u015bci na r\u00f3\u017cne jednostki."
+            "text": "Polecenie przeliczania prędkości na różne jednostki."
         },
         "title": {
-            "text": "Pr\u0119dko\u015bc:"
+            "text": "Prędkośc:"
         },
         "unit_names": {
             "miles": "Mile:",
@@ -171,7 +171,7 @@
             "meters": "Metry:",
             "feet": "Stopa:",
             "megameters": "Megametry",
-            "light": "Sta\u0142e (pr\u0119dko\u015b\u0107 \u015bwiat\u0142a):"
+            "light": "Stałe (prędkość światła):"
         },
         "desc": {
             "text": "Wybrane:"
@@ -185,12 +185,12 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "jednostka_pr\u0119dko\u015bci",
-            "description": "Wybierz jednostk\u0119 pr\u0119dko\u015bci z listy"
+            "name": "jednostka_prędkości",
+            "description": "Wybierz jednostkę prędkości z listy"
         },
         "speed": {
-            "name": "pr\u0119dko\u015bc",
-            "description": "Wpisz numer pr\u0119dko\u015bci"
+            "name": "prędkośc",
+            "description": "Wpisz numer prędkości"
         },
         "translator_id": "1022842005920940063"
     },
@@ -199,18 +199,18 @@
             "text": "vitesse_convertir"
         },
         "command_desc": {
-            "text": "Une commande pour convertir la vitesse en diff\u00e9rentes \u00e9chelles"
+            "text": "Une commande pour convertir la vitesse en différentes échelles"
         },
         "title": {
             "text": "Vitesse:"
         },
         "unit_names": {
             "miles": "Milles:",
-            "kilometers": "Kilom\u00e8tres:",
-            "meters": "M\u00e8tres:",
+            "kilometers": "Kilomètres:",
+            "meters": "Mètres:",
             "feet": "Pieds:",
-            "megameters": "M\u00e9gam\u00e8tres",
-            "light": "Constantes (vitesse de la lumi\u00e8re):"
+            "megameters": "Mégamètres",
+            "light": "Constantes (vitesse de la lumière):"
         },
         "desc": {
             "text": "Choisi:"
@@ -224,21 +224,21 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "unit\u00e9_de_vitesse",
-            "description": "S\u00e9lectionner une unit\u00e9 de vitesse dans la liste"
+            "name": "unité_de_vitesse",
+            "description": "Sélectionner une unité de vitesse dans la liste"
         },
         "speed": {
             "name": "vitesse",
-            "description": "Veuillez saisir un num\u00e9ro"
+            "description": "Veuillez saisir un numéro"
         },
         "translator_id": "1022842005920940063"
     },
     "tr": {
         "name": {
-            "text": "uzunluk_d\u00f6n\u00fc\u015ft\u00fcr"
+            "text": "uzunluk_dönüştür"
         },
         "command_desc": {
-            "text": "Uzunuluk birimler aras\u0131nda de\u011fi\u015fim yapabilen komut"
+            "text": "Uzunuluk birimler arasında değişim yapabilen komut"
         },
         "title": {
             "text": "Uzunluk:"
@@ -249,10 +249,10 @@
             "meters": "Metre:",
             "feet": "Fit:",
             "megameters": "Megametre",
-            "light": "I\u015f\u0131k H\u0131z\u0131"
+            "light": "Işık Hızı"
         },
         "desc": {
-            "text": "Se\u00e7ilen birim:"
+            "text": "Seçilen birim:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -264,7 +264,7 @@
         },
         "speed_unit": {
             "name": "uzunluk_birimi",
-            "description": "Uzunluk birimi se\u00e7in"
+            "description": "Uzunluk birimi seçin"
         },
         "speed": {
             "name": "uzunuluk",
@@ -274,24 +274,24 @@
     },
     "ja": {
         "name": {
-            "text": "\u901f\u5ea6_\u5909\u63db"
+            "text": "速度_変換"
         },
         "command_desc": {
-            "text": "\u901f\u5ea6\u3092\u7570\u306a\u308b\u30b9\u30b1\u30fc\u30eb\u306b\u5909\u63db\u3059\u308b\u30b3\u30de\u30f3\u30c9\u3067\u3059\u3002"
+            "text": "速度を異なるスケールに変換するコマンドです。"
         },
         "title": {
-            "text": "\u901f\u5ea6:"
+            "text": "速度:"
         },
         "unit_names": {
-            "miles": "\u30de\u30a4\u30eb:",
-            "kilometers": "\u30ad\u30ed\u30e1\u30fc\u30c8\u30eb:",
-            "meters": "\u30e1\u30fc\u30c8\u30eb:",
-            "feet": "\u30d5\u30a3\u30fc\u30c8:",
-            "megameters": "\u30e1\u30ac\u30e1\u30fc\u30c8\u30eb",
-            "light": "\u5b9a\u6570 (\u5149\u306e\u901f\u5ea6):"
+            "miles": "マイル:",
+            "kilometers": "キロメートル:",
+            "meters": "メートル:",
+            "feet": "フィート:",
+            "megameters": "メガメートル",
+            "light": "定数 (光の速度):"
         },
         "desc": {
-            "text": "\u9078\u629e:"
+            "text": "選択:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -302,12 +302,12 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "\u5909\u63db\u5143\u5358\u4f4d",
-            "description": "\u5909\u63db\u3059\u308b\u5143\u306e\u901f\u5ea6\u5358\u4f4d\u3092\u9078\u629e"
+            "name": "変換元単位",
+            "description": "変換する元の速度単位を選択"
         },
         "speed": {
-            "name": "\u901f\u5ea6",
-            "description": "\u5024\u3092\u5165\u529b"
+            "name": "速度",
+            "description": "値を入力"
         },
         "translator_id": "1163416356566347828"
     },
@@ -323,9 +323,9 @@
         },
         "unit_names": {
             "miles": "Milhas:",
-            "kilometers": "Quil\u00f4metros:",
+            "kilometers": "Quilômetros:",
             "meters": "Metros:",
-            "feet": "P\u00e9s:",
+            "feet": "Pés:",
             "megameters": "MegaMetros",
             "light": "Constantes (Velocidade da Luz):"
         },
@@ -346,7 +346,7 @@
         },
         "speed": {
             "name": "velocidade",
-            "description": "Insira um n\u00famero"
+            "description": "Insira um número"
         },
         "translator_id": "1096865109541929161"
     },
@@ -362,10 +362,10 @@
         },
         "unit_names": {
             "miles": "Mailia:",
-            "kilometers": "Kilometri\u00e4:",
-            "meters": "Metri\u00e4:",
+            "kilometers": "Kilometriä:",
+            "meters": "Metriä:",
             "feet": "Jalkaa:",
-            "megameters": "Megametri\u00e4:",
+            "megameters": "Megametriä:",
             "light": "Vakiot (Valon nopeus):"
         },
         "desc": {
@@ -373,42 +373,42 @@
         },
         "unit_symbols": {
             "miles": "mailia",
-            "kilometers": "kilometri\u00e4:",
-            "meters": "Metri\u00e4",
+            "kilometers": "kilometriä:",
+            "meters": "Metriä",
             "feet": "jalkaa:",
-            "megameters": "megametri\u00e4:",
+            "megameters": "megametriä:",
             "light": "vakiot"
         },
         "speed_unit": {
-            "name": "Nopeusyksikk\u00f6",
-            "description": "Valitse nopeusyksikk\u00f6 valikosta alla."
+            "name": "Nopeusyksikkö",
+            "description": "Valitse nopeusyksikkö valikosta alla."
         },
         "speed": {
             "name": "Nopeus",
-            "description": "Sy\u00f6t\u00e4 numero."
+            "description": "Syötä numero."
         },
         "translator_id": "1058768145722134528"
     },
     "ko": {
         "name": {
-            "text": "\uc18d\ub3c4_\ubcc0\ud658"
+            "text": "속도_변환"
         },
         "command_desc": {
-            "text": "\ud2b9\uc815 \ub2e8\uc704\uc758 \uc18d\ub3c4\ub97c \ub2e4\ub978 \uc18d\ub3c4 \ub2e8\uc704\ub4e4\ub85c \ubcc0\ud658\uc2dc\ucf1c \uc90d\ub2c8\ub2e4."
+            "text": "특정 단위의 속도를 다른 속도 단위들로 변환시켜 줍니다."
         },
         "title": {
-            "text": "\uc18d\ub3c4 \ubcc0\ud658\ub428"
+            "text": "속도 변환됨"
         },
         "unit_names": {
-            "miles": "\ub9c8\uc77c",
-            "kilometers": "\ud0ac\ub85c\ubbf8\ud130",
-            "meters": "\ubbf8\ud130",
-            "feet": "\ud53c\ud2b8",
-            "megameters": "\uba54\uac00\ubbf8\ud130",
-            "light": "\uc0c1\uc218 (\ube5b\uc758 \uc18d\ub3c4)"
+            "miles": "마일",
+            "kilometers": "킬로미터",
+            "meters": "미터",
+            "feet": "피트",
+            "megameters": "메가미터",
+            "light": "상수 (빛의 속도)"
         },
         "desc": {
-            "text": "\uc120\ud0dd\ud55c \uc628\ub3c4:"
+            "text": "선택한 온도:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -419,12 +419,12 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "\ubcc0\ud658\ud560_\uc18d\ub3c4",
-            "description": "\ub2e4\ub978 \uc18d\ub3c4 \ub2e8\uc704\ub85c \ubcc0\ud658\uc2dc\ud0ac \uc18d\ub3c4 \ub2e8\uc704\ub97c \uc120\ud0dd\ud569\ub2c8\ub2e4."
+            "name": "변환할_속도",
+            "description": "다른 속도 단위로 변환시킬 속도 단위를 선택합니다."
         },
         "speed": {
-            "name": "\uc18d\ub3c4",
-            "description": "\ub2e8\uc704\ub97c \uc81c\uc678\ud55c \uc18d\ub3c4(\uc22b\uc790)\ub97c \uc785\ub825\ud574 \uc8fc\uc138\uc694."
+            "name": "속도",
+            "description": "단위를 제외한 속도(숫자)를 입력해 주세요."
         },
         "translator_id": "622098032854433813"
     },
@@ -443,11 +443,11 @@
             "kilometers": "Kilometros:",
             "meters": "Metros:",
             "feet": "Pies:",
-            "megameters": "Meg\u00e1metros:",
+            "megameters": "Megámetros:",
             "light": "Constantes (Velocidad de la luz):"
         },
         "desc": {
-            "text": "Eligi\u00f3"
+            "text": "Eligió"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -459,11 +459,11 @@
         },
         "speed_unit": {
             "name": "unidad_de_velocidad",
-            "description": "Seleccione una unidad de velocidad del men\u00fa"
+            "description": "Seleccione una unidad de velocidad del menú"
         },
         "speed": {
             "name": "velocidad",
-            "description": "Porfavor inserte un n\u00famero"
+            "description": "Porfavor inserte un número"
         },
         "translator_id": "311977922481356801"
     },
@@ -482,11 +482,11 @@
             "kilometers": "Kilometros:",
             "meters": "Metros:",
             "feet": "Pies:",
-            "megameters": "Meg\u00e1metros:",
+            "megameters": "Megámetros:",
             "light": "Constantes (Velocidad de la luz):"
         },
         "desc": {
-            "text": "Eligi\u00f3"
+            "text": "Eligió"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -498,62 +498,62 @@
         },
         "speed_unit": {
             "name": "unidad_de_velocidad",
-            "description": "Seleccione una unidad de velocidad del men\u00fa"
+            "description": "Seleccione una unidad de velocidad del menú"
         },
         "speed": {
             "name": "velocidad",
-            "description": "Porfavor inserte un n\u00famero"
+            "description": "Porfavor inserte un número"
         },
         "translator_id": "311977922481356801"
     },
     "ru": {
         "name": {
-            "text": "\u043a\u043e\u043d\u0432\u0435\u0440\u0446\u0438\u044f_\u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438"
+            "text": "конверция_скорости"
         },
         "command_desc": {
-            "text": "\u041a\u043e\u043c\u0430\u043d\u0434\u0430 \u0434\u043b\u044f \u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438"
+            "text": "Команда для конвертирования скорости"
         },
         "title": {
-            "text": "\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c:"
+            "text": "Скорость:"
         },
         "unit_names": {
-            "miles": "\u041c\u0438\u043b\u0438:",
-            "kilometers": "\u041a\u0438\u043b\u043e\u043c\u0435\u0442\u0440\u044b:",
-            "meters": "\u041c\u0435\u0442\u0440\u044b:",
-            "feet": "\u0424\u0443\u0442\u044b:",
-            "megameters": "\u041c\u0435\u0433\u0430\u043c\u0435\u0442\u0440\u044b",
-            "light": "\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u0441\u0432\u0435\u0442\u0430:"
+            "miles": "Мили:",
+            "kilometers": "Километры:",
+            "meters": "Метры:",
+            "feet": "Футы:",
+            "megameters": "Мегаметры",
+            "light": "Скорости света:"
         },
         "desc": {
-            "text": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0430\u0448 \u0432\u0430\u0440\u0438\u0430\u043d\u0442:"
+            "text": "Выберите ваш вариант:"
         },
         "unit_symbols": {
-            "miles": "\u043c\u0438\u043b\u0438",
-            "kilometers": "\u043a\u043c",
-            "meters": "\u043c",
-            "feet": "\u0444\u0443\u0442",
-            "megameters": "\u043c\u043c",
+            "miles": "мили",
+            "kilometers": "км",
+            "meters": "м",
+            "feet": "фут",
+            "megameters": "мм",
             "light": "C"
         },
         "speed_unit": {
-            "name": "\u0435\u0434\u0438\u043d\u0438\u0446\u0430_\u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438",
-            "description": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0430\u0448\u0443 \u0435\u0434\u0438\u043d\u0438\u0446\u0443 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438."
+            "name": "единица_скорости",
+            "description": "Выберите вашу единицу скорости."
         },
         "speed": {
-            "name": "\u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c",
-            "description": "\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430 \u0432\u0432\u0435\u0434\u0438\u0442\u0435 \u0432\u0430\u0448\u0435 \u0447\u0438\u0441\u043b\u043e!"
+            "name": "скорость",
+            "description": "Пожалуйста введите ваше число!"
         },
         "translator_id": "540142383270985738"
     },
     "ro": {
         "name": {
-            "text": "converti\u021bi_viteza"
+            "text": "convertiți_viteza"
         },
         "command_desc": {
-            "text": "O comand\u0103 pentru a converti vitezele \u00een diferite sc\u0103ri"
+            "text": "O comandă pentru a converti vitezele în diferite scări"
         },
         "title": {
-            "text": "Vitez\u0103:"
+            "text": "Viteză:"
         },
         "unit_names": {
             "miles": "Mile:",
@@ -575,12 +575,12 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "unitate_de_vitez\u0103",
-            "description": "Selecta\u021bi o unitate de vitez\u0103 din lista derulant\u0103."
+            "name": "unitate_de_viteză",
+            "description": "Selectați o unitate de viteză din lista derulantă."
         },
         "speed": {
-            "name": "vitez\u0103",
-            "description": "V\u0103 rug\u0103m s\u0103 introduce\u021bi un num\u0103r"
+            "name": "viteză",
+            "description": "Vă rugăm să introduceți un număr"
         },
         "translator_id": "177494227918389249"
     },
@@ -589,7 +589,7 @@
             "text": "konvertera_hastighet"
         },
         "command_desc": {
-            "text": "Ett kommando f\u00f6r att konvertera hastighet till olika skalor"
+            "text": "Ett kommando för att konvertera hastighet till olika skalor"
         },
         "title": {
             "text": "Hastighet:"
@@ -615,7 +615,7 @@
         },
         "speed_unit": {
             "name": "hastighetsenhet",
-            "description": "V\u00e4lj en hastighetsenhet fr\u00e5n menyn"
+            "description": "Välj en hastighetsenhet från menyn"
         },
         "speed": {
             "name": "hastighet",
@@ -625,24 +625,24 @@
     },
     "vi": {
         "name": {
-            "text": "chuy\u1ec3n_\u0111\u1ed5i_v\u1eadn_t\u1ed1c"
+            "text": "chuyển_đổi_vận_tốc"
         },
         "command_desc": {
-            "text": "M\u1ed9t lo\u1ea1i l\u1ec7nh \u0111\u1ec3 chuy\u1ec3n \u0111\u1ed5i v\u1eadn t\u1ed1c th\u00e0nh lo\u1ea1i \u0111o kh\u00e1c nhau"
+            "text": "Một loại lệnh để chuyển đổi vận tốc thành loại đo khác nhau"
         },
         "title": {
-            "text": "V\u1eadn t\u1ed1c:"
+            "text": "Vận tốc:"
         },
         "unit_names": {
-            "miles": "D\u1ea1m:",
-            "kilometers": "Ki-l\u00f4-m\u00e9t:",
-            "meters": "M\u00e9t:",
-            "feet": "Ph\u00e2n:",
-            "megameters": "M\u00ea-ga-m\u00e9t",
-            "light": "H\u1eb1ng s\u1ed1 (V\u1eadn t\u1ed1c c\u1ee7a \u00e1nh s\u00e1ng):"
+            "miles": "Dạm:",
+            "kilometers": "Ki-lô-mét:",
+            "meters": "Mét:",
+            "feet": "Phân:",
+            "megameters": "Mê-ga-mét",
+            "light": "Hằng số (Vận tốc của ánh sáng):"
         },
         "desc": {
-            "text": "\u0110\u00e3 ch\u1ecdn:"
+            "text": "Đã chọn:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -653,35 +653,35 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "\u0111\u01a1n_v\u1ecb_c\u1ee7a_v\u1eadn_t\u1ed1c",
-            "description": "Ch\u1ecdn m\u1ed9t \u0111\u01a1n v\u1ecb c\u1ee7a v\u1eadn t\u1ed1c t\u1eeb danh s\u00e1ch d\u01b0\u1edbi \u0111\u00e2y."
+            "name": "đơn_vị_của_vận_tốc",
+            "description": "Chọn một đơn vị của vận tốc từ danh sách dưới đây."
         },
         "speed": {
-            "name": "v\u1eadn_t\u1ed1c",
-            "description": "Vui l\u00f2ng g\u00f5 m\u1ed9t s\u1ed1 b\u1ea5t k\u00ec"
+            "name": "vận_tốc",
+            "description": "Vui lòng gõ một số bất kì"
         },
         "translator_id": "444360808412086292"
     },
     "hi": {
         "name": {
-            "text": "\u0917\u0924\u093f_\u092a\u0930\u093f\u0935\u0930\u094d\u0924\u0928"
+            "text": "गति_परिवर्तन"
         },
         "command_desc": {
-            "text": "\u0935\u093f\u092d\u093f\u0928\u094d\u0928 \u092a\u094d\u0930\u092e\u093e\u0923\u094b\u0902 \u092e\u0947\u0902 \u0917\u0924\u093f \u0915\u094b \u092a\u0930\u093f\u0935\u0930\u094d\u0924\u093f\u0924 \u0915\u0930\u0928\u0947 \u0915\u093e \u090f\u0915 \u0915\u092e\u093e\u0902\u0921"
+            "text": "विभिन्न प्रमाणों में गति को परिवर्तित करने का एक कमांड"
         },
         "title": {
-            "text": "\u0917\u0924\u093f"
+            "text": "गति"
         },
         "unit_names": {
-            "miles": "\u092e\u0940\u0932",
-            "kilometers": "\u0915\u093f\u0932\u094b\u092e\u0940\u091f\u0930",
-            "meters": "\u092e\u0940\u091f\u0930",
-            "feet": "\u092b\u093c\u0940\u091f",
-            "megameters": "\u092e\u0947\u0917\u093e\u092e\u0940\u091f\u0930",
-            "light": "\u092e\u093e\u0928\u0915 (\u092a\u094d\u0930\u0915\u093e\u0936 \u0915\u0940 \u0917\u0924\u093f)"
+            "miles": "मील",
+            "kilometers": "किलोमीटर",
+            "meters": "मीटर",
+            "feet": "फ़ीट",
+            "megameters": "मेगामीटर",
+            "light": "मानक (प्रकाश की गति)"
         },
         "desc": {
-            "text": "\u0905\u092a\u0928\u0940 \u092a\u0938\u0902\u0926 \u091a\u0941\u0928\u0947\u0902:"
+            "text": "अपनी पसंद चुनें:"
         },
         "unit_symbols": {
             "miles": "mi",
@@ -692,12 +692,12 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "\u0917\u0924\u093f_\u0907\u0915\u093e\u0908",
-            "description": "\u0921\u094d\u0930\u0949\u092a\u0921\u093e\u0909\u0928 \u0938\u0947 \u0917\u0924\u093f \u0915\u0940 \u0907\u0915\u093e\u0908 \u0915\u093e \u091a\u092f\u0928 \u0915\u0930\u0947\u0902"
+            "name": "गति_इकाई",
+            "description": "ड्रॉपडाउन से गति की इकाई का चयन करें"
         },
         "speed": {
-            "name": "\u0917\u0924\u093f",
-            "description": "\u0915\u0943\u092a\u092f\u093e \u090f\u0915 \u0938\u0902\u0916\u094d\u092f\u093e \u0926\u0930\u094d\u091c \u0915\u0930\u0947\u0902"
+            "name": "गति",
+            "description": "कृपया एक संख्या दर्ज करें"
         },
         "translator_id": "747737674952999024"
     },
@@ -706,7 +706,7 @@
             "text": "brzina"
         },
         "command_desc": {
-            "text": "Naredba za pretvaranje brzina u razli\u010dite skale"
+            "text": "Naredba za pretvaranje brzina u različite skale"
         },
         "title": {
             "text": "Brzina:"
@@ -732,7 +732,7 @@
         },
         "speed_unit": {
             "name": "jedinica_brzine",
-            "description": "Odaberite jedinicu brzine iz padaju\u0107eg izbornika."
+            "description": "Odaberite jedinicu brzine iz padajućeg izbornika."
         },
         "speed": {
             "name": "brzina",
@@ -781,21 +781,21 @@
     },
     "cs": {
         "name": {
-            "text": "p\u0159evod_rychlosti"
+            "text": "převod_rychlosti"
         },
         "command_desc": {
-            "text": "P\u0159\u00edkaz pro p\u0159evod rychlosti do r\u016fzn\u00fdch stupnic"
+            "text": "Příkaz pro převod rychlosti do různých stupnic"
         },
         "title": {
             "text": "Rychlost:"
         },
         "unit_names": {
-            "miles": "M\u00edle:",
+            "miles": "Míle:",
             "kilometers": "Kilometry:",
             "meters": "Metry:",
             "feet": "Stopy:",
             "megameters": "Megametry",
-            "light": "Konstanty (Rychlost sv\u011btla):"
+            "light": "Konstanty (Rychlost světla):"
         },
         "desc": {
             "text": "Vyberte:"
@@ -809,21 +809,21 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "rychlostn\u00ed_jednotka",
-            "description": "Vyberte jednotku rychlosti z nab\u00eddky."
+            "name": "rychlostní_jednotka",
+            "description": "Vyberte jednotku rychlosti z nabídky."
         },
         "speed": {
             "name": "rychlost",
-            "description": "Zadejte pros\u00edm hodnotu"
+            "description": "Zadejte prosím hodnotu"
         },
         "translator_id": "344176097300054016"
     },
     "lt": {
         "name": {
-            "text": "paversti_greit\u012f"
+            "text": "paversti_greitį"
         },
         "command_desc": {
-            "text": "Komanda paversti greit\u012f \u012f skirtingas skales"
+            "text": "Komanda paversti greitį į skirtingas skales"
         },
         "title": {
             "text": "Greitis:"
@@ -832,9 +832,9 @@
             "miles": "Mylios:",
             "kilometers": "Kilometrai:",
             "meters": "Metrai:",
-            "feet": "P\u0117dos:",
+            "feet": "Pėdos:",
             "megameters": "MegaMetrai",
-            "light": "Konstantos (\u0160viesos greitis):"
+            "light": "Konstantos (Šviesos greitis):"
         },
         "desc": {
             "text": "Pasirinkite:"
@@ -848,12 +848,12 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "grei\u010dio_vienetas",
-            "description": "Pasirinkite grei\u010dio vienet\u0105 i\u0161 i\u0161skleid\u017eiamos meniu."
+            "name": "greičio_vienetas",
+            "description": "Pasirinkite greičio vienetą iš išskleidžiamos meniu."
         },
         "speed": {
             "name": "greitis",
-            "description": "\u012eveskite skai\u010di\u0173"
+            "description": "Įveskite skaičių"
         },
         "translator_id": "673129564511273000"
     },
@@ -898,102 +898,102 @@
     },
     "uk": {
         "name": {
-            "text": "\u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0443\u0432\u0430\u0442\u0438_\u0428\u0432\u0438\u0434\u043a\u043e\u0441\u0442\u044c"
+            "text": "конвертувати_Швидкость"
         },
         "command_desc": {
-            "text": "\u041a\u043e\u043c\u0430\u043d\u0434\u0430 \u0434\u043b\u044f \u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0430\u0446\u0456\u0457 \u0448\u0432\u0438\u0434\u043a\u043e\u0441\u0442\u0456 \u0443 \u0440\u0456\u0437\u043d\u0456 \u0448\u043a\u0430\u043b\u0438"
+            "text": "Команда для конвертації швидкості у різні шкали"
         },
         "title": {
-            "text": "\u0428\u0432\u0438\u0434\u043a\u0456\u0441\u0442\u044c:"
+            "text": "Швидкість:"
         },
         "unit_names": {
-            "miles": "\u041c\u0438\u043b\u0456:",
-            "kilometers": "\u041a\u0456\u043b\u043e\u043c\u0435\u0442\u0440\u0438:",
-            "meters": "\u041c\u0435\u0442\u0440\u0438:",
-            "feet": "\u0424\u0443\u0442\u0438:",
-            "megameters": "\u041c\u0435\u0433\u0430\u043c\u0435\u0442\u0440\u0438:",
-            "light": " \u0428\u0432\u0438\u0434\u043a\u0456\u0441\u0442\u044c \u0421\u0432\u0456\u0442\u043b\u0430:"
+            "miles": "Милі:",
+            "kilometers": "Кілометри:",
+            "meters": "Метри:",
+            "feet": "Фути:",
+            "megameters": "Мегаметри:",
+            "light": " Швидкість Світла:"
         },
         "desc": {
-            "text": "\u041e\u0431\u0435\u0440\u0456\u0442\u044c:"
+            "text": "Оберіть:"
         },
         "unit_symbols": {
-            "miles": "\u043c\u0438\u043b\u0456",
-            "kilometers": "\u043a\u043c",
-            "meters": "\u043c",
-            "feet": "\u0444\u0442",
-            "megameters": "\u041c\u043c",
-            "light": "\u0441"
+            "miles": "милі",
+            "kilometers": "км",
+            "meters": "м",
+            "feet": "фт",
+            "megameters": "Мм",
+            "light": "с"
         },
         "speed_unit": {
-            "name": "\u043e\u0434\u0438\u043d\u0438\u0446\u044f_\u0448\u0432\u0438\u0434\u043a\u043e\u0441\u0442\u0456",
-            "description": "\u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043e\u0434\u0438\u043d\u0438\u0446\u044e \u0448\u0432\u0438\u0434\u043a\u043e\u0441\u0442\u0456 \u0437 \u0432\u0438\u043f\u0430\u0434\u0430\u044e\u0447\u043e\u0433\u043e \u0441\u043f\u0438\u0441\u043a\u0443."
+            "name": "одиниця_швидкості",
+            "description": "Оберіть одиницю швидкості з випадаючого списку."
         },
         "speed": {
-            "name": "\u0448\u0432\u0438\u0434\u043a\u0456\u0441\u0442\u044c",
-            "description": "\u0411\u0443\u0434\u044c \u043b\u0430\u0441\u043a\u0430, \u0432\u0432\u0435\u0434\u0456\u0442\u044c \u0447\u0438\u0441\u043b\u043e"
+            "name": "швидкість",
+            "description": "Будь ласка, введіть число"
         },
         "translator_id": "438343198189027329"
     },
     "th": {
         "name": {
-            "text": "\u0e41\u0e1b\u0e25\u0e07_\u0e04\u0e27\u0e32\u0e21\u0e40\u0e23\u0e47\u0e27"
+            "text": "แปลง_ความเร็ว"
         },
         "command_desc": {
-            "text": "\u0e04\u0e33\u0e2a\u0e31\u0e48\u0e07\u0e19\u0e35\u0e49\u0e43\u0e0a\u0e49\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a\u0e01\u0e32\u0e23\u0e41\u0e1b\u0e25\u0e07\u0e04\u0e27\u0e32\u0e21\u0e40\u0e23\u0e47\u0e27\u0e40\u0e1b\u0e47\u0e19\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e2d\u0e37\u0e48\u0e19\u0e46"
+            "text": "คำสั่งนี้ใช้สำหรับการแปลงความเร็วเป็นหน่วยอื่นๆ"
         },
         "title": {
-            "text": "\u0e04\u0e27\u0e32\u0e21\u0e40\u0e23\u0e47\u0e27:"
+            "text": "ความเร็ว:"
         },
         "unit_names": {
-            "miles": "\u0e43\u0e19\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e44\u0e21\u0e25\u0e4c:",
-            "kilometers": "\u0e43\u0e19\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e01\u0e34\u0e42\u0e25\u0e40\u0e21\u0e15\u0e23:",
-            "meters": "\u0e43\u0e19\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e40\u0e21\u0e15\u0e23:",
-            "feet": "\u0e43\u0e19\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e1f\u0e38\u0e15:",
-            "megameters": "\u0e43\u0e19\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e25\u0e49\u0e32\u0e19\u0e40\u0e21\u0e15\u0e23",
-            "light": "\u0e43\u0e19\u0e04\u0e27\u0e32\u0e21\u0e40\u0e23\u0e47\u0e27\u0e41\u0e2a\u0e07:"
+            "miles": "ในหน่วยไมล์:",
+            "kilometers": "ในหน่วยกิโลเมตร:",
+            "meters": "ในหน่วยเมตร:",
+            "feet": "ในหน่วยฟุต:",
+            "megameters": "ในหน่วยล้านเมตร",
+            "light": "ในความเร็วแสง:"
         },
         "desc": {
-            "text": "\u0e40\u0e25\u0e37\u0e2d\u0e01:"
+            "text": "เลือก:"
         },
         "unit_symbols": {
-            "miles": "\u0e44\u0e21\u0e25\u0e4c",
-            "kilometers": "\u0e01\u0e34\u0e42\u0e25\u0e40\u0e21\u0e15\u0e23",
-            "meters": "\u0e40\u0e21\u0e15\u0e23",
-            "feet": "\u0e1f\u0e38\u0e15",
-            "megameters": "\u0e40\u0e21\u0e01\u0e30\u0e40\u0e21\u0e15\u0e23",
+            "miles": "ไมล์",
+            "kilometers": "กิโลเมตร",
+            "meters": "เมตร",
+            "feet": "ฟุต",
+            "megameters": "เมกะเมตร",
             "light": "C"
         },
         "speed_unit": {
-            "name": "\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e04\u0e27\u0e32\u0e21\u0e40\u0e23\u0e47\u0e27",
-            "description": "\u0e40\u0e25\u0e37\u0e48\u0e2d\u0e19\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e04\u0e27\u0e32\u0e21\u0e40\u0e23\u0e47\u0e27\u0e08\u0e32\u0e01\u0e40\u0e21\u0e19\u0e39"
+            "name": "หน่วยความเร็ว",
+            "description": "เลื่อนเพื่อเลือกหน่วยความเร็วจากเมนู"
         },
         "speed": {
-            "name": "\u0e04\u0e27\u0e32\u0e21\u0e40\u0e23\u0e47\u0e27",
-            "description": "\u0e42\u0e1b\u0e23\u0e14\u0e43\u0e2a\u0e48\u0e15\u0e31\u0e27\u0e40\u0e25\u0e02\u0e17\u0e35\u0e48\u0e15\u0e49\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e41\u0e1b\u0e25\u0e07"
+            "name": "ความเร็ว",
+            "description": "โปรดใส่ตัวเลขที่ต้องการแปลง"
         },
         "translator_id": "688603574707552313"
     },
     "zh-CN": {
         "name": {
-            "text": "\u8f6c\u6362\u901f\u5ea6"
+            "text": "转换速度"
         },
         "command_desc": {
-            "text": "\u4e00\u4e2a\u53ef\u4ee5\u8f6c\u6362\u901f\u5ea6\u5230\u4e0d\u540c\u901f\u5ea6\u5355\u4f4d\u7684\u6307\u4ee4"
+            "text": "一个可以转换速度到不同速度单位的指令"
         },
         "title": {
-            "text": "\u901f\u5ea6\uff1a"
+            "text": "速度："
         },
         "unit_names": {
-            "miles": "\u82f1\u91cc",
-            "kilometers": "\u516c\u91cc",
-            "meters": "\u516c\u5c3a",
-            "feet": "\u82f1\u5c3a",
-            "megameters": "\u767e\u842c\u7c73",
-            "light": "\u5149\u901f"
+            "miles": "英里",
+            "kilometers": "公里",
+            "meters": "公尺",
+            "feet": "英尺",
+            "megameters": "百萬米",
+            "light": "光速"
         },
         "desc": {
-            "text": "\u9009\u62e9\uff1a"
+            "text": "选择："
         },
         "unit_symbols": {
             "miles": "mi",
@@ -1004,35 +1004,35 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "\u901f\u5ea6\u5355\u4f4d",
-            "description": "\u8bf7\u9009\u62e9\u4ee5\u4e0b\u4e00\u79cd\u901f\u5ea6\u5355\u4f4d"
+            "name": "速度单位",
+            "description": "请选择以下一种速度单位"
         },
         "speed": {
-            "name": "\u901f\u5ea6",
-            "description": "\u8bf7\u8f93\u5165\u4e00\u4e2a\u6570\u5b57"
+            "name": "速度",
+            "description": "请输入一个数字"
         },
         "translator_id": "1130334020740321431"
     },
     "zh-TW": {
         "name": {
-            "text": "\u8f49\u63db\u901f\u5ea6"
+            "text": "轉換速度"
         },
         "command_desc": {
-            "text": "\u4e00\u500b\u8f49\u63db\u901f\u5ea6\u5230\u4e0d\u540c\u901f\u5ea6\u55ae\u4f4d\u7684\u6307\u4ee4"
+            "text": "一個轉換速度到不同速度單位的指令"
         },
         "title": {
-            "text": "\u901f\u5ea6\uff1a"
+            "text": "速度："
         },
         "unit_names": {
-            "miles": "\u82f1\u91cc",
-            "kilometers": "\u516c\u91cc",
-            "meters": "\u516c\u5c3a",
-            "feet": "\u82f1\u5c3a",
-            "megameters": "\u767e\u842c\u7c73",
-            "light": "\u5149\u901f"
+            "miles": "英里",
+            "kilometers": "公里",
+            "meters": "公尺",
+            "feet": "英尺",
+            "megameters": "百萬米",
+            "light": "光速"
         },
         "desc": {
-            "text": "\u9078\u64c7\uff1a"
+            "text": "選擇："
         },
         "unit_symbols": {
             "miles": "mi",
@@ -1043,12 +1043,12 @@
             "light": "C"
         },
         "speed_unit": {
-            "name": "\u901f\u5ea6\u55ae\u4f4d",
-            "description": "\u8acb\u9078\u64c7\u4ee5\u4e0b\u4e00\u7a2e\u901f\u5ea6\u55ae\u4f4d"
+            "name": "速度單位",
+            "description": "請選擇以下一種速度單位"
         },
         "speed": {
-            "name": "\u901f\u5ea6",
-            "description": "\u8acb\u8f38\u5165\u4e00\u500b\u6578\u5b57"
+            "name": "速度",
+            "description": "請輸入一個數字"
         },
         "translator_id": "1130334020740321431"
     }
