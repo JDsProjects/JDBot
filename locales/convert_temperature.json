@@ -1078,7 +1078,7 @@
             "name": "temperatur_enhed",
             "description": "Vælg en enhed af temperature fra rullemenuen."
         },
-        "temperatur": {
+        "temperature": {
             "name": "temperatur",
             "description": "Skriv et nummer"
         },
