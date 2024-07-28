@@ -570,13 +570,13 @@
             "text": "温度："
         },
         "unit_names": {
-            "celsius": "摄氏度：",
-            "fahrenheit": "华氏度：",
-            "kelvin": "开氏度：",
-            "rankine": "兰氏度："
+            "celsius": "摄氏度",
+            "fahrenheit": "华氏度",
+            "kelvin": "开氏度",
+            "rankine": "兰氏度"
         },
         "desc": {
-            "text": "请选择："
+            "text": "选择："
         },
         "unit_symbols": {
             "celsius": "°C",
@@ -602,16 +602,16 @@
             "text": "一個轉換溫度到不同溫度單位的指令"
         },
         "title": {
-            "text": "溫度：:"
+            "text": "溫度："
         },
         "unit_names": {
-            "celsius": "攝氏度：",
-            "fahrenheit": "華氏度：",
-            "kelvin": "克耳文：",
-            "rankine": "蘭氏度："
+            "celsius": "攝氏度",
+            "fahrenheit": "華氏度",
+            "kelvin": "克耳文",
+            "rankine": "蘭氏度"
         },
         "desc": {
-            "text": "請選擇："
+            "text": "選擇："
         },
         "unit_symbols": {
             "celsius": "°C",
