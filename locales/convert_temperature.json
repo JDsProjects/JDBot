@@ -786,7 +786,7 @@
             "rankine": "Rankina:"
         },
         "desc": {
-            "text": "Vyberte:"
+            "text": "Vybráno:"
         },
         "unit_symbols": {
             "celsius": "°C",
