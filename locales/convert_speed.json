@@ -352,7 +352,7 @@
     },
     "fi": {
         "name": {
-            "text": "Muunnanopeus"
+            "text": "muunnanopeus"
         },
         "command_desc": {
             "text": "Komento nopeuden muuntamiseen eri asteikoille."
@@ -380,11 +380,11 @@
             "light": "vakiot"
         },
         "speed_unit": {
-            "name": "Nopeusyksikkö",
+            "name": "nopeusyksikkö",
             "description": "Valitse nopeusyksikkö valikosta alla."
         },
         "speed": {
-            "name": "Nopeus",
+            "name": "nopeus",
             "description": "Syötä numero."
         },
         "translator_id": "1058768145722134528"
@@ -898,7 +898,7 @@
     },
     "uk": {
         "name": {
-            "text": "конвертувати_Швидкость"
+            "text": "конвертувати_швидкость"
         },
         "command_desc": {
             "text": "Команда для конвертації швидкості у різні шкали"
