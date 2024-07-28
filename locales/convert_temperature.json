@@ -943,5 +943,40 @@
             "description": "โปรดใส่ตัวเลขที่ต้องการแปลง"
         },
         "translator_id": "688603574707552313"
+    },
+    "hu": {
+        "name": {
+            "text": "hőmérséklet_átalakítás"
+        },
+        "command_desc": {
+            "text": "Egy parancs, amely a hőmérsékletek különböző skálákra történő átalakítására szolgál"
+        },
+        "title": {
+            "text": "Hőmérséklet:"
+        },
+        "unit_names": {
+            "celsius": "Celsius:",
+            "fahrenheit": "Fahrenheit:",
+            "kelvin": "Kelvin:",
+            "rankine": "Rankine:"
+        },
+        "desc": {
+            "text": "Válassz:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "hőmérsékleti_egység",
+            "description": "Válassz egy hőmérsékleti egységet a legördülő menüből."
+        },
+        "temperature": {
+            "name": "hőmérséklet",
+            "description": "Kérlek, adj meg egy számot"
+        },
+        "translator_id": "1011711862729101484"
     }
 }

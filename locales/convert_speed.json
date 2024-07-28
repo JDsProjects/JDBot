@@ -1051,5 +1051,44 @@
             "description": "請輸入一個數字"
         },
         "translator_id": "1130334020740321431"
+    },
+    "hu": {
+        "name": {
+            "text": "sebesség_átváltás"
+        },
+        "command_desc": {
+            "text": "Parancs sebességek különböző skálákra történő átváltásához"
+        },
+        "title": {
+            "text": "Sebesség:"
+        },
+        "unit_names": {
+            "miles": "Mérföldek:",
+            "kilometers": "Kilométerek:",
+            "meters": "Méterek:",
+            "feet": "Lábak:",
+            "megameters": "Megaméterek",
+            "light": "Állandók (Fénysebesség):"
+        },
+        "desc": {
+            "text": "Válassz:"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "sebesség_egység",
+            "description": "Válasszon egy sebesség egységet a legördülő menüből."
+        },
+        "speed": {
+            "name": "sebesség",
+            "description": "Kérjük, adjon meg egy számot"
+        },
+        "translator_id": "1011711862729101484"
     }
 }
