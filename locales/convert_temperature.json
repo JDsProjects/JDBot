@@ -911,7 +911,7 @@
     },
     "th-TH": {
         "name": {
-            "text": "แปลงหน่วยอุณหภูมิ"
+            "text": "convert_temperature"
         },
         "command_desc": {
             "text": "คำสั่งนี้ใช้สำหรับการแปลงอุณหภูมิเป็นหน่วยอื่นๆ"
@@ -935,11 +935,11 @@
             "rankine": "°R"
         },
         "temperature_unit": {
-            "name": "หน่วยอุณหภูมิ",
+            "name": "temperature_unit",
             "description": "เลื่อนเพื่อเลือกหน่วยอุณหภูมิจากเมนู"
         },
         "temperature": {
-            "name": "อุณหภูมิ",
+            "name": "temperature",
             "description": "โปรดใส่ตัวเลขที่ต้องการแปลง"
         },
         "translator_id": "688603574707552313"
