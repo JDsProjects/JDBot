@@ -351,7 +351,7 @@ class Bot(commands.Cog):
         except TypeError:
             lines, firstline = inspect.getsourcelines(type(src))
 
-        if not os.path.isabs(filename):
+        if not pathlib.Path(filename).is_absolute():
             if module.startswith("jishaku"):
                 github_url = "https://github.com/Gorialis/jishaku"
             elif module.startswith("discord"):
