@@ -1083,5 +1083,40 @@
             "description": "Skriv et nummer"
         },
         "translator_id": "844466398540333056"
+    },
+    "bg": {
+        "name": {
+            "text": "преобразуване_на_температура"
+        },
+        "command_desc": {
+            "text": "Команда за преобразуване на температури в други мерни единици"
+        },
+        "title": {
+            "text": "Температура:"
+        },
+        "unit_names": {
+            "celsius": "Целзий:",
+            "fahrenheit": "Фаренхайт:",
+            "kelvin": "Келвин:",
+            "rankine": "Ранкин:"
+        },
+        "desc": {
+            "text": "Избрано:"
+        },
+        "unit_symbols": {
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K",
+            "rankine": "°R"
+        },
+        "temperature_unit": {
+            "name": "температура_мерна_единица",
+            "description": "Изберете мерна единица за температура от падащото меню."
+        },
+        "temperature": {
+            "name": "температура",
+            "description": "Моля въведете число"
+        },
+        "translator_id": "236831708354314240"
     }
 }

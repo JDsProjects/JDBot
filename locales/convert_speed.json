@@ -1207,5 +1207,44 @@
             "description": "Skriv et nummer"
         },
         "translator_id": "844466398540333056"
+    },
+    "bg": {
+        "name": {
+            "text": "преобразуване_на_скорост"
+        },
+        "command_desc": {
+            "text": "Команда за преобразуване на скорости в други мерни единици"
+        },
+        "title": {
+            "text": "Скорост:"
+        },
+        "unit_names": {
+            "miles": "Мили:",
+            "kilometers": "Километри:",
+            "meters": "Метри:",
+            "feet": "Футове:",
+            "megameters": "Мегаметри:",
+            "light": "Константи (скорост на светлината):"
+        },
+        "desc": {
+            "text": "Избрано:"
+        },
+        "unit_symbols": {
+            "miles": "mi",
+            "kilometers": "km",
+            "meters": "m",
+            "feet": "ft",
+            "megameters": "Mm",
+            "light": "C"
+        },
+        "speed_unit": {
+            "name": "скорост_мерна_единица",
+            "description": "Изберете мерна единица за скорост от падащото меню."
+        },
+        "speed": {
+            "name": "скорост",
+            "description": "Моля въведете число"
+        },
+        "translator_id": "236831708354314240"
     }
 }
