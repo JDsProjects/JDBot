@@ -1009,7 +1009,7 @@
         },
         "speed": {
             "name": "速度",
-            "description": "请输入一个数字"
+            "description": "请输入数字"
         },
         "translator_id": "1130334020740321431"
     },
@@ -1048,7 +1048,7 @@
         },
         "speed": {
             "name": "速度",
-            "description": "請輸入一個數字"
+            "description": "請輸入數字"
         },
         "translator_id": "1130334020740321431"
     },
