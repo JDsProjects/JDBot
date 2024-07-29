@@ -1339,15 +1339,16 @@ class Extra(commands.Cog):
             now_tz = interaction.created_at.astimezone(zoneinfo.ZoneInfo(timezone))
             am_pm_format = now_tz.strftime("%I:%M:%S %p")
             twenty_four_format = now_tz.strftime("%H:%M:%S")
-            first_format = now_tz.strftime("%Y-%d-%m")
-            second_format = now_tz.strftime("%d-%m-%Y")
-            third_format = now_tz.strftime("%m-%d-%Y")
+            first_format = now_tz.strftime("%Y-%m-%d")
+            second_format = now_tz.strftime("%Y-%d-%m")
+            third_format = now_tz.strftime("%d-%m-%Y")
+            fourth_format = now_tz.strftime("%m-%d-%Y")
 
             # possibly do colors depending on time but not sure.
 
             embed = discord.Embed(
                 title="Time:",
-                description=f"12 hour: {am_pm_format}\n24 hour: {twenty_four_format}\n\nYYYY-DD-MM: {first_format}\nDD-MM-YYYY: {second_format}\nMM-DD-YYYY: {third_format}",
+                description=f"12 hour: {am_pm_format}\n24 hour: {twenty_four_format}\n\nYYYY-MM-DD: {first_format} \nYYYY-DD-MM: {second_format}\nDD-MM-YYYY: {third_format}\nMM-DD-YYYY: {fourth_format}",
             )
             embed.set_footer(text=f"Timezone: {timezone}")
 
