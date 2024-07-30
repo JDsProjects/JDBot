@@ -360,10 +360,10 @@ class Bot(commands.Cog):
             relative_path_parts = relative_path.parts
 
             # Handle virtual environment paths
-            if 'venv' in relative_path_parts:
-                venv_index = relative_path_parts.index('venv')
-                relative_path = pathlib.Path(*relative_path_parts[venv_index + 1:])
-            
+            if "venv" in relative_path_parts:
+                venv_index = relative_path_parts.index("venv")
+                relative_path = pathlib.Path(*relative_path_parts[venv_index + 1 :])
+
             filename = str(relative_path).replace("\\", "/")  # Ensure forward slashes for URL
 
         return github_url, filename, lines, firstline
