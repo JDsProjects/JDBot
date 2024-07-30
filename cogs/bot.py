@@ -346,7 +346,6 @@ class Bot(commands.Cog):
             lines, firstline = inspect.getsourcelines(type(src))
 
         # Check if the source file is within a known library
-        print(module)
         if module.startswith("jishaku"):
             github_url = "https://github.com/Gorialis/jishaku"
             filename = module.replace(".", "/") + ".py"
