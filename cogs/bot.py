@@ -357,14 +357,6 @@ class Bot(commands.Cog):
             github_url = self.github_url
             path = pathlib.Path.cwd()
             relative_path = pathlib.Path(filename).relative_to(path)
-            relative_path_parts = relative_path.parts
-
-            # Handle virtual environment paths
-            if "venv" in relative_path_parts:
-                print("huh")
-                venv_index = relative_path_parts.index("venv")
-                relative_path = pathlib.Path(*relative_path_parts[venv_index + 1 :])
-
             filename = str(relative_path).replace("\\", "/")  # Ensure forward slashes for URL
 
         return github_url, filename, lines, firstline
