@@ -237,9 +237,7 @@ class Bot(commands.Cog):
             if current.lower() in item.lower()
         ][:25]
 
-    @commands.command(
-        brief="Finds the location of the command in the GitHub repo so people can learn from my commands"
-    )
+    @commands.command(brief="Finds the location of the command in the GitHub repo so people can learn from my commands")
     async def source(self, ctx, *, command=None):
         embed = discord.Embed(
             title="GitHub link",
@@ -250,28 +248,28 @@ class Bot(commands.Cog):
         embed.set_footer(
             text="This Bot's License is MIT. You must credit if you use my code. Please try to learn how it works or ask me if you don't know."
         )
-    
+
         if command is None:
             await ctx.send("Here's the GitHub link:", embed=embed)
             return
-    
+
         try:
             src, item_name = await self.fetch_source(ctx, command)
             if src is None:
                 await ctx.send(embed=embed)
                 return
-    
+
             github_url, filename, lines, firstline = self.process_source(src)
-    
+
             file_url = f"{github_url}/blob/{self.branch}/{filename}"
             line_url = f"{file_url}#L{firstline}-L{firstline + len(lines) - 1}"
             embed.title = f"Source for {item_name}:"
             embed.description = f"[**Click Here**]({line_url})"
             await ctx.send(embed=embed)
-    
+
         except Exception as e:
             await ctx.send(f"An error occurred while fetching the source: {str(e)}")
-    
+
     @app_commands.command(name="source", description="Find the source code for a command, cog, or utility function")
     @app_commands.autocomplete(item=command_autocomplete)
     async def source_slash(self, interaction: discord.Interaction, item: typing.Optional[str] = None):
@@ -284,28 +282,28 @@ class Bot(commands.Cog):
         embed.set_footer(
             text="This Bot's License is MIT. You must credit if you use my code. Please try to learn how it works or ask me if you don't know."
         )
-    
+
         if item is None:
             await interaction.response.send_message("Here's the GitHub link:", embed=embed)
             return
-    
+
         try:
             src, item_name = await self.fetch_source(interaction, item)
             if src is None:
                 await interaction.response.send_message(embed=embed)
                 return
-    
+
             github_url, filename, lines, firstline = self.process_source(src)
-    
+
             file_url = f"{github_url}/blob/{self.branch}/{filename}"
             line_url = f"{file_url}#L{firstline}-L{firstline + len(lines) - 1}"
             embed.title = f"Source for {item_name}:"
             embed.description = f"[**Click Here**]({line_url})"
             await interaction.response.send_message(embed=embed)
-    
+
         except Exception as e:
             await interaction.response.send_message(f"An error occurred while fetching the source: {str(e)}")
-    
+
     async def fetch_source(self, ctx, item):
         if isinstance(ctx, discord.Interaction):
             item_type, item_name = item.split(":", 1)
@@ -335,7 +333,7 @@ class Bot(commands.Cog):
             if not command_wanted:
                 return None, None
             return command_wanted.callback, item
-    
+
     def process_source(self, src):
         module = src.__module__
         try:
@@ -346,7 +344,7 @@ class Bot(commands.Cog):
             lines, firstline = inspect.getsourcelines(src)
         except TypeError:
             lines, firstline = inspect.getsourcelines(type(src))
-    
+
         if not pathlib.Path(filename).is_absolute():
             if module.startswith("jishaku"):
                 github_url = "https://github.com/Gorialis/jishaku"
@@ -360,11 +358,11 @@ class Bot(commands.Cog):
             path = pathlib.Path.cwd()
             relative_path = pathlib.Path(filename).relative_to(path)
             relative_path_parts = relative_path.parts
-            if 'venv' in relative_path_parts:
-                venv_index = relative_path_parts.index('venv')
-                relative_path = pathlib.Path(*relative_path_parts[venv_index + 1:])
+            if "venv" in relative_path_parts:
+                venv_index = relative_path_parts.index("venv")
+                relative_path = pathlib.Path(*relative_path_parts[venv_index + 1 :])
             filename = str(relative_path).replace("\\", "/")  # Ensure forward slashes for URL
-    
+
         return github_url, filename, lines, firstline
 
     @commands.command(brief="a set of rules we will follow")
