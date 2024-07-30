@@ -357,6 +357,7 @@ class Bot(commands.Cog):
             github_url = self.github_url
             path = pathlib.Path.cwd()
             relative_path = pathlib.Path(filename).relative_to(path)
+            print(relative_path)
             relative_path_parts = relative_path.parts
 
             # Handle virtual environment paths
