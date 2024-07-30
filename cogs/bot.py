@@ -345,22 +345,25 @@ class Bot(commands.Cog):
         except TypeError:
             lines, firstline = inspect.getsourcelines(type(src))
 
-        if not pathlib.Path(filename).is_absolute():
-            if module.startswith("jishaku"):
-                github_url = "https://github.com/Gorialis/jishaku"
-            elif module.startswith("discord"):
-                github_url = "https://github.com/Rapptz/discord.py"
-            else:
-                raise ValueError(f"We don't support getting the source of {module}.")
+        # Check if the source file is within a known library
+        if module.startswith("jishaku"):
+            github_url = "https://github.com/Gorialis/jishaku"
+            filename = module.replace(".", "/") + ".py"
+        elif module.startswith("discord"):
+            github_url = "https://github.com/Rapptz/discord.py"
             filename = module.replace(".", "/") + ".py"
         else:
+            # For your bot's source code
             github_url = self.github_url
             path = pathlib.Path.cwd()
             relative_path = pathlib.Path(filename).relative_to(path)
             relative_path_parts = relative_path.parts
-            if "venv" in relative_path_parts:
-                venv_index = relative_path_parts.index("venv")
-                relative_path = pathlib.Path(*relative_path_parts[venv_index + 1 :])
+
+            # Handle virtual environment paths
+            if 'venv' in relative_path_parts:
+                venv_index = relative_path_parts.index('venv')
+                relative_path = pathlib.Path(*relative_path_parts[venv_index + 1:])
+            
             filename = str(relative_path).replace("\\", "/")  # Ensure forward slashes for URL
 
         return github_url, filename, lines, firstline
