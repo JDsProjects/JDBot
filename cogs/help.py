@@ -23,11 +23,17 @@ class Dropdown(discord.ui.Select):
             embede.set_footer(text="Use dropdown to select a category")
             await interaction.response.edit_message(embed=embede, view=None)
 
+
 class DropdownView(discord.ui.View):
     def __init__(self, bot):
         super().__init__()
         self.bot = bot
-        options = [SelectOption(label=cog, value=cog) for cog in bot.cogs if cog.lower() not in ["testingcog", "preferences", "calculator", "help", "workers", "jishaku", "listeners", "utils"]]
+        options = [
+            SelectOption(label=cog, value=cog)
+            for cog in bot.cogs
+            if cog.lower()
+            not in ["testingcog", "preferences", "calculator", "help", "workers", "jishaku", "listeners", "utils"]
+        ]
         options.append(SelectOption(label="Close", value="Close"))
         self.add_item(Dropdown(options, self.bot))
 
@@ -38,7 +44,27 @@ class PaginationView(discord.ui.View):
         self.embeds = embeds
         self.current_page = 0
         self.bot = bot
-        self.add_item(Dropdown([SelectOption(label=cog, value=cog) for cog in bot.cogs if cog.lower() not in ["testingcog", "preferences", "calculator", "help", "workers", "jishaku", "listeners", "utils"]] + [SelectOption(label="Close", value="Close")], self.bot))
+        self.add_item(
+            Dropdown(
+                [
+                    SelectOption(label=cog, value=cog)
+                    for cog in bot.cogs
+                    if cog.lower()
+                    not in [
+                        "testingcog",
+                        "preferences",
+                        "calculator",
+                        "help",
+                        "workers",
+                        "jishaku",
+                        "listeners",
+                        "utils",
+                    ]
+                ]
+                + [SelectOption(label="Close", value="Close")],
+                self.bot,
+            )
+        )
         self.add_item(Button(style=ButtonStyle.primary, label="◀", custom_id="previous"))
         self.add_item(Button(style=ButtonStyle.primary, label="▶", custom_id="next"))
 
@@ -126,13 +152,13 @@ async def get_help(self, interaction, CogToPassAlong):
     if commands_text:
         embed.add_field(name="Commands", value=commands_text, inline=False)
     embeds.append(embed)
-   
+
     if len(embeds) > 1:
         view = PaginationView(embeds, self.bot)
         await interaction.response.edit_message(embed=embeds[0], view=view)
     else:
         await interaction.response.edit_message(embed=embeds[0])
 
+
 def setup(bot):
     bot.help_command = Help(bot)
-
