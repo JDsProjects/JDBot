@@ -32,9 +32,7 @@ class CustomHelpCommand(commands.MinimalHelpCommand):
         signature = f"{self.context.clean_prefix}{command.qualified_name}"
         if command.signature:
             signature += f" {command.signature}"
-        embed = HelpEmbed(
-            title=signature, description=command.help or "No help found..."
-        )
+        embed = HelpEmbed(title=signature, description=command.help or "No help found...")
 
         if cog := command.cog:
             embed.add_field(name="Category", value=cog.qualified_name)
