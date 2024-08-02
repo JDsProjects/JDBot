@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord import ButtonStyle, SelectOption
 from discord.ui import Button, Select, View
 
+
 class Dropdown(discord.ui.Select):
     def __init__(self, options, bot):
         self.bot = bot
@@ -30,6 +31,7 @@ class DropdownView(discord.ui.View):
         options.append(SelectOption(label="Close", value="Close"))
         self.add_item(Dropdown(options, self.bot))
 
+
 class PaginationView(discord.ui.View):
     def __init__(self, embeds, bot):
         super().__init__()
@@ -48,6 +50,7 @@ class PaginationView(discord.ui.View):
 
         await interaction.response.edit_message(embed=self.embeds[self.current_page], view=self)
         return True
+
 
 class Help(commands.HelpCommand):
     "The Help Menu Cog"
@@ -69,9 +72,7 @@ class Help(commands.HelpCommand):
         signature = f"/{command.name}"
         if isinstance(command, discord.app_commands.Command):
             signature += f" {' '.join([f'<{param.name}>' for param in command.parameters])}"
-        embed = HelpEmbed(
-            title=signature, description=command.description or "No help found..."
-        )
+        embed = HelpEmbed(title=signature, description=command.description or "No help found...")
 
         if cog := command.cog:
             embed.add_field(name="Category", value=cog.qualified_name)
@@ -89,11 +90,13 @@ class Help(commands.HelpCommand):
     async def send_cog_help(self, cog):
         await get_help(self, self.context, cog.qualified_name)
 
+
 class HelpEmbed(discord.Embed):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.timestamp = discord.utils.utcnow()
         self.set_footer(text="Use dropdown to select a category")
+
 
 async def get_help(self, interaction, CogToPassAlong):
     cog = self.bot.get_cog(CogToPassAlong)
