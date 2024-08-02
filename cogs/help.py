@@ -23,7 +23,7 @@ class CustomHelpCommand(commands.MinimalHelpCommand):
                 embeds.append(embed)
 
         myoptions.append(SelectOption(label="Close", value="Close"))
-        view = PaginatedHelpView(embeds)
+        view = CombinedHelpView(embeds, myoptions, self.context.bot)
 
         await ctx.send(embed=embeds[0], view=view)
 
@@ -67,18 +67,13 @@ class Dropdown(discord.ui.Select):
             await interaction.response.edit_message(embed=embede, view=None)
 
 
-class DropdownView(discord.ui.View):
-    def __init__(self, options, bot):
-        super().__init__()
-        self.bot = bot
-        self.add_item(Dropdown(options, self.bot))
-
-
-class PaginatedHelpView(discord.ui.View):
-    def __init__(self, embeds):
+class CombinedHelpView(discord.ui.View):
+    def __init__(self, embeds, options, bot):
         super().__init__()
         self.embeds = embeds
         self.current_page = 0
+        self.bot = bot
+        self.add_item(Dropdown(options, self.bot))
 
     @discord.ui.button(label="Previous", style=ButtonStyle.gray)
     async def previous_button(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -110,7 +105,7 @@ class HelpEmbed(discord.Embed):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.timestamp = discord.utils.utcnow()
-        self.set_footer(text="Use the buttons to navigate through pages")
+        self.set_footer(text="Use the buttons to navigate through pages and dropdown to select categories")
 
 
 async def get_help(self, interaction, CogToPassAlong):
