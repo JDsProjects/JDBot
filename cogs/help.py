@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord import ButtonStyle, SelectOption
 from discord.ui import Button, Select, View
 
+
 class Dropdown(discord.ui.Select):
     def __init__(self, options, bot):
         self.bot = bot
@@ -20,6 +21,7 @@ class Dropdown(discord.ui.Select):
             )
             embede.set_footer(text="Developed with ❤️ by Middlle")
             await interaction.response.edit_message(embed=embede, view=None)
+
 
 class PaginationView(discord.ui.View):
     def __init__(self, embeds, options, bot):
@@ -40,6 +42,7 @@ class PaginationView(discord.ui.View):
         await interaction.response.edit_message(embed=self.embeds[self.current_page], view=self)
         return True
 
+
 class CustomHelpCommand(commands.HelpCommand):
     def __init__(self):
         super().__init__()
@@ -54,14 +57,18 @@ class CustomHelpCommand(commands.HelpCommand):
 
         for cog_name, cog in bot.cogs.items():
             if cog_name.lower() not in [fc.lower() for fc in filtered_cogs]:
-                if filtered_commands := [cmd for cmd in cog.get_commands() if isinstance(cmd, discord.app_commands.Command)]:
+                if filtered_commands := [
+                    cmd for cmd in cog.get_commands() if isinstance(cmd, discord.app_commands.Command)
+                ]:
                     name = cog.qualified_name
                     description = cog.description or "No description"
                     myoptions.append(SelectOption(label=name, value=name))
-                   
+
                     embed = HelpEmbed(title=f"{name} Commands", description=description)
                     for command in filtered_commands:
-                        embed.add_field(name=f"/{command.name}", value=command.description or "No description", inline=False)
+                        embed.add_field(
+                            name=f"/{command.name}", value=command.description or "No description", inline=False
+                        )
                     embeds.append(embed)
 
         myoptions.append(SelectOption(label="Close", value="Close"))
@@ -71,13 +78,11 @@ class CustomHelpCommand(commands.HelpCommand):
 
     async def send_command_help(self, command):
         ctx = self.context
-       
+
         signature = f"/{command.name}"
         if isinstance(command, discord.app_commands.Command):
             signature += f" {' '.join([f'<{param.name}>' for param in command.parameters])}"
-        embed = HelpEmbed(
-            title=signature, description=command.description or "No help found..."
-        )
+        embed = HelpEmbed(title=signature, description=command.description or "No help found...")
 
         if cog := command.cog:
             embed.add_field(name="Category", value=cog.qualified_name)
@@ -91,6 +96,7 @@ class CustomHelpCommand(commands.HelpCommand):
             )
 
         await ctx.send(embed=embed)
+
 
 class Help(commands.Cog):
     "The Help Menu Cog"
@@ -115,11 +121,13 @@ class Help(commands.Cog):
             else:
                 await ctx.send(f"No command called '{command}' found.", ephemeral=True)
 
+
 class HelpEmbed(discord.Embed):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.timestamp = discord.utils.utcnow()
         self.set_footer(text="Developed with ❤️ by Middlle")
+
 
 async def get_help(self, interaction, CogToPassAlong):
     cog = self.bot.get_cog(CogToPassAlong)
@@ -132,10 +140,9 @@ async def get_help(self, interaction, CogToPassAlong):
     emb.set_author(name="Help System")
     for command in cog.get_commands():
         if isinstance(command, discord.app_commands.Command):
-            emb.add_field(
-                name=f"『`/{command.name}`』", value=command.description, inline=False
-            )
+            emb.add_field(name=f"『`/{command.name}`』", value=command.description, inline=False)
     await interaction.response.edit_message(embed=emb)
+
 
 async def setup(bot):
     await bot.add_cog(Help(bot))
