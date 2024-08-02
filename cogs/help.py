@@ -1,52 +1,7 @@
 import discord
-from discord import ButtonStyle, SelectOption
 from discord.ext import commands
+from discord import ButtonStyle, SelectOption
 from discord.ui import Button, Select, View
-
-
-class CustomHelpCommand(commands.MinimalHelpCommand):
-    async def send_bot_help(self, mapping):
-        ctx = self.context
-        embeds = []
-        myoptions = []
-
-        for cog, commands in mapping.items():
-            if filtered_commands := await self.filter_commands(commands):
-                amount_commands = len(filtered_commands)
-                name = cog.qualified_name if cog else "No Category"
-                description = cog.description if cog else "Commands with no category"
-                myoptions.append(SelectOption(label=name, value=name))
-
-                embed = HelpEmbed(title=f"{name} Commands", description=description)
-                for command in filtered_commands:
-                    embed.add_field(name=command.name, value=command.help or "No help available", inline=False)
-                embeds.append(embed)
-
-        myoptions.append(SelectOption(label="Close", value="Close"))
-        view = CombinedHelpView(embeds, myoptions, self.context.bot)
-
-        await ctx.send(embed=embeds[0], view=view)
-
-    async def send_command_help(self, command):
-        ctx = self.context
-        signature = f"{self.context.clean_prefix}{command.qualified_name}"
-        if command.signature:
-            signature += f" {command.signature}"
-        embed = HelpEmbed(title=signature, description=command.help or "No help found...")
-
-        if cog := command.cog:
-            embed.add_field(name="Category", value=cog.qualified_name)
-
-        embed.add_field(name="Usable", value="Yes")
-
-        if command._buckets and (cooldown := command._buckets._cooldown):
-            embed.add_field(
-                name="Cooldown",
-                value=f"{cooldown.rate} per {cooldown.per:.0f} seconds",
-            )
-
-        await ctx.send(embed=embed)
-
 
 class Dropdown(discord.ui.Select):
     def __init__(self, options, bot):
@@ -63,30 +18,79 @@ class Dropdown(discord.ui.Select):
                 title=":books: Help System",
                 description=f"Welcome To {self.bot.user.name} Help System",
             )
-            embede.set_footer(text="Use the dropdown menu to select a category")
+            embede.set_footer(text="Developed with ❤️ by Middlle")
             await interaction.response.edit_message(embed=embede, view=None)
 
-
-class CombinedHelpView(discord.ui.View):
+class PaginationView(discord.ui.View):
     def __init__(self, embeds, options, bot):
         super().__init__()
         self.embeds = embeds
         self.current_page = 0
         self.bot = bot
         self.add_item(Dropdown(options, self.bot))
+        self.add_item(Button(style=ButtonStyle.primary, label="◀", custom_id="previous"))
+        self.add_item(Button(style=ButtonStyle.primary, label="▶", custom_id="next"))
 
-    @discord.ui.button(label="Previous", style=ButtonStyle.gray)
-    async def previous_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if self.current_page > 0:
-            self.current_page -= 1
-            await interaction.response.edit_message(embed=self.embeds[self.current_page])
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if interaction.data["custom_id"] == "previous":
+            self.current_page = max(0, self.current_page - 1)
+        elif interaction.data["custom_id"] == "next":
+            self.current_page = min(len(self.embeds) - 1, self.current_page + 1)
 
-    @discord.ui.button(label="Next", style=ButtonStyle.gray)
-    async def next_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if self.current_page < len(self.embeds) - 1:
-            self.current_page += 1
-            await interaction.response.edit_message(embed=self.embeds[self.current_page])
+        await interaction.response.edit_message(embed=self.embeds[self.current_page], view=self)
+        return True
 
+class CustomHelpCommand(commands.HelpCommand):
+    def __init__(self):
+        super().__init__()
+
+    async def send_bot_help(self, mapping):
+        ctx = self.context
+        bot = ctx.bot
+
+        embeds = []
+        myoptions = []
+        filtered_cogs = ["testingCOG", "Preferences", "Calculator", "Help"]
+
+        for cog_name, cog in bot.cogs.items():
+            if cog_name.lower() not in [fc.lower() for fc in filtered_cogs]:
+                if filtered_commands := [cmd for cmd in cog.get_commands() if isinstance(cmd, discord.app_commands.Command)]:
+                    name = cog.qualified_name
+                    description = cog.description or "No description"
+                    myoptions.append(SelectOption(label=name, value=name))
+                   
+                    embed = HelpEmbed(title=f"{name} Commands", description=description)
+                    for command in filtered_commands:
+                        embed.add_field(name=f"/{command.name}", value=command.description or "No description", inline=False)
+                    embeds.append(embed)
+
+        myoptions.append(SelectOption(label="Close", value="Close"))
+        view = PaginationView(embeds, myoptions, bot)
+
+        await ctx.send(embed=embeds[0], view=view)
+
+    async def send_command_help(self, command):
+        ctx = self.context
+       
+        signature = f"/{command.name}"
+        if isinstance(command, discord.app_commands.Command):
+            signature += f" {' '.join([f'<{param.name}>' for param in command.parameters])}"
+        embed = HelpEmbed(
+            title=signature, description=command.description or "No help found..."
+        )
+
+        if cog := command.cog:
+            embed.add_field(name="Category", value=cog.qualified_name)
+
+        embed.add_field(name="Usable", value="Yes")
+
+        if command._buckets and (cooldown := command._buckets._cooldown):
+            embed.add_field(
+                name="Cooldown",
+                value=f"{cooldown.rate} per {cooldown.per:.0f} seconds",
+            )
+
+        await ctx.send(embed=embed)
 
 class Help(commands.Cog):
     "The Help Menu Cog"
@@ -100,13 +104,22 @@ class Help(commands.Cog):
     def cog_unload(self):
         self.bot.help_command = self._original_help_command
 
+    @commands.hybrid_command(name="help", description="Shows the help menu")
+    async def help(self, ctx: commands.Context, command: str = None):
+        if command is None:
+            await self.bot.help_command.send_bot_help(None)
+        else:
+            cmd = self.bot.get_command(command)
+            if cmd:
+                await self.bot.help_command.send_command_help(cmd)
+            else:
+                await ctx.send(f"No command called '{command}' found.", ephemeral=True)
 
 class HelpEmbed(discord.Embed):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.timestamp = discord.utils.utcnow()
-        self.set_footer(text="Use the buttons to navigate through pages and dropdown to select categories")
-
+        self.set_footer(text="Developed with ❤️ by Middlle")
 
 async def get_help(self, interaction, CogToPassAlong):
     cog = self.bot.get_cog(CogToPassAlong)
@@ -118,9 +131,11 @@ async def get_help(self, interaction, CogToPassAlong):
     )
     emb.set_author(name="Help System")
     for command in cog.get_commands():
-        emb.add_field(name=f"『`{interaction.client.command_prefix}{command.name}`』", value=command.help, inline=False)
+        if isinstance(command, discord.app_commands.Command):
+            emb.add_field(
+                name=f"『`/{command.name}`』", value=command.description, inline=False
+            )
     await interaction.response.edit_message(embed=emb)
 
-
-def setup(bot):
-    bot.add_cog(Help(bot))
+async def setup(bot):
+    await bot.add_cog(Help(bot))
