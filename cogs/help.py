@@ -53,9 +53,7 @@ class CustomHelpCommand(commands.MinimalHelpCommand):
 class Dropdown(discord.ui.Select):
     def __init__(self, options, bot):
         self.bot = bot
-        super().__init__(
-            placeholder="Select a category", min_values=1, max_values=1, options=options
-        )
+        super().__init__(placeholder="Select a category", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: discord.Interaction):
         label = self.values[0]
@@ -127,9 +125,7 @@ async def get_help(self, interaction, CogToPassAlong):
     )
     emb.set_author(name="Help System")
     for command in cog.get_commands():
-        emb.add_field(
-            name=f"『`{interaction.client.command_prefix}{command.name}`』", value=command.help, inline=False
-        )
+        emb.add_field(name=f"『`{interaction.client.command_prefix}{command.name}`』", value=command.help, inline=False)
     await interaction.response.edit_message(embed=emb)
 
 
