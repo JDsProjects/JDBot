@@ -1,150 +1,164 @@
-import itertools
-from typing import Any
-
 import discord
 from discord.ext import commands
-
-import utils
-
-
-class JDBotHelp(commands.MinimalHelpCommand):
-    def __init__(self, **options: Any):
-        super().__init__(**options)
-        self.help_reminder = "**Remember:** To get the commands in a category you need to **Capitlize the first letter.** So to get help in the Bot category you would do `{p}help Bot` instead of `{p}help bot` or `{p}Bot`"
-
-    async def send_pages(self):
-        menu = utils.SendHelp(self.paginator.pages, ctx=self.context, delete_after=True)
-
-        await menu.send()
-
-    async def send_bot_help(self, mapping):
-        ctx = self.context
-        bot = ctx.bot
-
-        if bot.description:
-            self.paginator.add_line(bot.description, empty=True)
-        self.paginator.add_line(self.help_reminder.format(p=ctx.clean_prefix), empty=True)
-        note = self.get_opening_note()
-
-        if note:
-            self.paginator.add_line(note, empty=True)
-
-        no_category = f"\u200b{self.no_category}"
-
-        def get_category(command, *, no_category=no_category):
-            cog = command.cog
-            return f"__**{cog.qualified_name}:**__ \n{cog.description}" if cog is not None else no_category
-
-        filtered = await self.filter_commands(bot.commands, sort=True, key=get_category)
-        to_iterate = itertools.groupby(filtered, key=get_category)
-
-        for category, bot_commands in to_iterate:
-            # bot_commands never used
-
-            self.paginator.add_line(category)
-
-        note = self.get_ending_note()
-        if note:
-            self.paginator.add_line()
-            self.paginator.add_line(note)
-
-        await self.send_pages()
-
-    def add_command_formatting(self, command):
-        if command.description:
-            self.paginator.add_line(command.description.format(p=self.context.clean_prefix), empty=True)
-
-        signature = self.get_command_signature(command)
-        if command.aliases:
-            self.paginator.add_line(signature)
-            self.add_aliases_formatting(command.aliases)
-
-        else:
-            self.paginator.add_line(discord.utils.escape_markdown(signature), empty=True)
-
-        if command.help:
-            try:
-                self.paginator.add_line(command.help, empty=True)
-
-            except RuntimeError:
-                for line in command.help.splitlines():
-                    self.paginator.add_line(line)
-
-                self.paginator.add_line()
-
-    def add_subcommand_formatting(self, command):
-        if len(command.name) < 15:
-            empty_space = 15 - len(command.name)
-            signature = f"`{command.name}{' '*empty_space}:` {command.short_doc if len(command.short_doc) < 58 else f'{command.short_doc[0:58]}...'}"
-
-        else:
-            signature = f"`{command.name[0:14]}...` {command.short_doc if len(command.short_doc) < 58 else f'{command.short_doc[0:58]}...'}"
-
-        self.paginator.add_line(signature)
-
-    async def send_group_help(self, group):
-        self.add_command_formatting(group)
-
-        filtered = await self.filter_commands(group.commands, sort=self.sort_commands)
-
-        if filtered:
-            note = self.get_opening_note()
-
-            if note:
-                self.paginator.add_line(note, empty=True)
-
-            self.paginator.add_line("**%s**" % self.commands_heading)
-
-            for command in filtered:
-                self.add_subcommand_formatting(command)
-
-            note = self.get_ending_note()
-
-            if note:
-                self.paginator.add_line()
-                self.paginator.add_line(note)
-
-            await self.send_pages()
-
-    async def send_cog_help(self, cog, /):
-        bot = self.context.bot
-        if bot.description:
-            self.paginator.add_line(bot.description, empty=True)
-        self.paginator.add_line(self.help_reminder.format(p=self.context.clean_prefix), empty=True)
-        note = self.get_opening_note()
-        if note:
-            self.paginator.add_line(note, empty=True)
-
-        if cog.description:
-            self.paginator.add_line(cog.description, empty=True)
-
-        filtered = await self.filter_commands(cog.get_commands(), sort=self.sort_commands)
-        if filtered:
-            self.paginator.add_line(f"**{cog.qualified_name} {self.commands_heading}**")
-            for command in filtered:
-                self.add_subcommand_formatting(command)
-
-            note = self.get_ending_note()
-            if note:
-                self.paginator.add_line()
-                self.paginator.add_line(note)
-
-        await self.send_pages()
+from discord import ButtonStyle, SelectOption
+from discord.ui import Button, Select, View
 
 
-class Help(commands.Cog):
+class Dropdown(discord.ui.Select):
+    def __init__(self, options, bot):
+        self.bot = bot
+        super().__init__(placeholder="Select a category", min_values=1, max_values=1, options=options)
+
+    async def callback(self, interaction: discord.Interaction):
+        label = self.values[0]
+        for cog in self.bot.cogs:
+            if label == cog:
+                await get_help(self, interaction, CogToPassAlong=cog)
+                return
+        if label == "Close":
+            embede = discord.Embed(
+                title=":books: Help System",
+                description=f"Welcome To {self.bot.user.name} Help System",
+            )
+            embede.set_footer(text="Use dropdown to select category")
+            await interaction.response.edit_message(embed=embede, view=None)
+
+
+class DropdownView(discord.ui.View):
+    def __init__(self, bot):
+        super().__init__()
+        self.bot = bot
+        options = [
+            SelectOption(label=cog, value=cog)
+            for cog in bot.cogs
+            if cog.lower()
+            not in ["testingcog", "preferences", "calculator", "help", "workers", "jishaku", "listeners", "utils"]
+        ]
+        options.append(SelectOption(label="Close", value="Close"))
+        self.add_item(Dropdown(options, self.bot))
+
+
+class PaginationView(discord.ui.View):
+    def __init__(self, embeds, bot):
+        super().__init__()
+        self.embeds = embeds
+        self.current_page = 0
+        self.bot = bot
+        self.add_item(
+            Dropdown(
+                [
+                    SelectOption(label=cog, value=cog)
+                    for cog in bot.cogs
+                    if cog.lower()
+                    not in [
+                        "testingcog",
+                        "preferences",
+                        "calculator",
+                        "help",
+                        "workers",
+                        "jishaku",
+                        "listeners",
+                        "utils",
+                    ]
+                ]
+                + [SelectOption(label="Close", value="Close")],
+                self.bot,
+            )
+        )
+        self.add_item(Button(style=ButtonStyle.primary, label="◀", custom_id="previous"))
+        self.add_item(Button(style=ButtonStyle.primary, label="▶", custom_id="next"))
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if interaction.data["custom_id"] == "previous":
+            self.current_page = max(0, self.current_page - 1)
+        elif interaction.data["custom_id"] == "next":
+            self.current_page = min(len(self.embeds) - 1, self.current_page + 1)
+
+        await interaction.response.edit_message(embed=self.embeds[self.current_page], view=self)
+        return True
+
+
+class Help(commands.HelpCommand):
     "The Help Menu Cog"
 
     def __init__(self, bot):
+        super().__init__()
         self.bot = bot
-        self._original_help_command = bot.help_command
-        self.bot.help_command = JDBotHelp()
-        self.bot.help_command.cog = self
+
+    async def send_bot_help(self, mapping):
+        embede = discord.Embed(
+            title=":books: Help System",
+            description=f"Welcome To {self.bot.user.name} Help System",
+        )
+        embede.set_footer(text="Use dropdown to select category")
+        view = DropdownView(self.bot)
+        await self.context.send(embed=embede, view=view)
+
+    async def send_command_help(self, command):
+        signature = f"/{command.name}"
+        if isinstance(command, discord.app_commands.Command):
+            signature += f" {' '.join([f'<{param.name}>' for param in command.parameters])}"
+        embed = HelpEmbed(title=signature, description=command.description or "No help found...")
+
+        if cog := command.cog:
+            embed.add_field(name="Category", value=cog.qualified_name)
+
+        embed.add_field(name="Usable", value="Yes")
+
+        if command._buckets and (cooldown := command._buckets._cooldown):
+            embed.add_field(
+                name="Cooldown",
+                value=f"{cooldown.rate} per {cooldown.per:.0f} seconds",
+            )
+
+        await self.context.send(embed=embed)
+
+    async def send_cog_help(self, cog):
+        await get_help(self, self.context, cog.qualified_name)
 
 
-async def cog_unload(self):
-    self.help_command = self._original_help_command
+class HelpEmbed(discord.Embed):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.timestamp = discord.utils.utcnow()
+        self.set_footer(text="Use dropdown to select category")
 
 
-async def setup(bot):
-    await bot.add_cog(Help(bot))
+async def get_help(self, interaction, CogToPassAlong):
+    cog = self.bot.get_cog(CogToPassAlong)
+    if not cog:
+        return
+    embeds = []
+    embed = discord.Embed(
+        title=f"{CogToPassAlong} - Commands",
+        description=cog.__doc__,
+    )
+    embed.set_author(name="Help System")
+    commands_text = ""
+    for command in cog.get_commands():
+        if isinstance(command, discord.app_commands.Command):
+            command_text = f"『`/{command.name}`』: {command.description}\n"
+            if len(commands_text) + len(command_text) > 1024:
+                embed.add_field(name="Commands", value=commands_text, inline=False)
+                embeds.append(embed)
+                embed = discord.Embed(
+                    title=f"{CogToPassAlong} - Commands (Continued)",
+                    description=cog.__doc__,
+                )
+                embed.set_author(name="Help System")
+                commands_text = command_text
+            else:
+                commands_text += command_text
+    if commands_text:
+        embed.add_field(name="Commands", value=commands_text, inline=False)
+    embeds.append(embed)
+
+    if len(embeds) > 1:
+        view = PaginationView(embeds, self.bot)
+        await interaction.response.edit_message(embed=embeds[0], view=view)
+    else:
+        await interaction.response.edit_message(embed=embeds[0])
+
+
+def setup(bot):
+    bot.add_cog(Help(bot))
