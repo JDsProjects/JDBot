@@ -16,9 +16,9 @@ asyncdagpi==4.1.5
 asyncpg==0.29.0 
 asyncpraw==7.7.1 
 asyncprawcore==2.4.0 
-attrs==23.2.0 
+attrs==24.1.0 
 better-profanity==0.7.0 
-black==24.4.2 
+black==24.8.0 
 braceexpand==0.1.7 
 brotli==1.1.0 
 certifi==2024.7.4 
@@ -30,7 +30,7 @@ click==8.1.7
 colorama==0.4.6 
 discord-games @ git+https://github.com/Tom-the-Bomb/Discord-Games@585e0dddb24aefbcc16569a2f7db44d1d194107a 
 discord-py @ git+https://github.com/Rapptz/discord.py.git@ff638d393d0f5a83639ccc087bec9bf588b59a22 
-discord-py-paginators @ git+https://github.com/Soheab/discord-py-paginators@d5ee16c9d5514aa4764017a6ace136d07f7dc8d3 
+discord-py-paginators @ git+https://github.com/Soheab/discord-py-paginators@e841b0513a7a5a85b9498fe5242aeda76d4045a2 
 discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@ff638d393d0f5a83639ccc087bec9bf588b59a22 
 discordlists-py==1.1.1 
 emoji==2.12.1 
