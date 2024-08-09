@@ -2,7 +2,7 @@ aiodns==3.2.0
 aiofiles==0.8.0 
 aiogifs @ git+https://github.com/moanie/aiogifs.git@730fdb7bca18842db93b71cf0c50b93f9cc3c31a 
 aiohappyeyeballs==2.3.4 
-aiohttp==3.10.0 
+aiohttp==3.10.2 
 aiosignal==1.3.1 
 aiosqlite==0.17.0 
 akinator-py==0.2.5 
