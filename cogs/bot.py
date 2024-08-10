@@ -335,7 +335,8 @@ class Bot(commands.Cog):
             return command_wanted.callback, item
 
     def process_source(self, src):
-        module = src.__module__
+        module = getattr(src, "__module__", None) or getattr(src, "__package__", None)
+
         try:
             filename = inspect.getsourcefile(src)
         except TypeError:
