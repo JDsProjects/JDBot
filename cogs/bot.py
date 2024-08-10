@@ -335,7 +335,8 @@ class Bot(commands.Cog):
             return command_wanted.callback, item
 
     def process_source(self, src):
-        module = getattr(src, "__module__", None) or getattr(src, "__package__", None)
+        module = getattr(src, "__module__", None) or getattr(src, "__name__", "None") or ""
+        # adds # just in case.
 
         try:
             filename = inspect.getsourcefile(src)
