@@ -851,6 +851,7 @@ class Bot(commands.Cog):
         }
 
         # might be good paginating this soon.
+        # might be worth paginating now.
 
         users = sorted(
             [
