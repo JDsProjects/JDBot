@@ -101,17 +101,6 @@ CREATE TABLE public.jobs (
 
 
 --
--- Name: my_images; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.my_images (
-    name text NOT NULL,
-    image bytea,
-    mime text
-);
-
-
---
 -- Name: prefixes; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -214,14 +203,6 @@ ALTER TABLE ONLY public.invalidation_config
 
 ALTER TABLE ONLY public.invalidation_out
     ADD CONSTRAINT invalidation_out_pkey PRIMARY KEY (entity_id, entity_type);
-
-
---
--- Name: my_images my_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.my_images
-    ADD CONSTRAINT my_images_pkey PRIMARY KEY (name);
 
 
 --
