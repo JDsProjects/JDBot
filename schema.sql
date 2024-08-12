@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.7 (Ubuntu 14.7-1.pgdg20.04+1)
--- Dumped by pg_dump version 14.7 (Ubuntu 14.7-1.pgdg20.04+1)
+-- Dumped from database version 16.4 (Ubuntu 16.4-1.pgdg22.04+1)
+-- Dumped by pg_dump version 16.4 (Ubuntu 16.4-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -15,6 +15,13 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
 
 SET default_tablespace = '';
 
@@ -49,17 +56,6 @@ CREATE TABLE public.economy (
     user_id bigint NOT NULL,
     bank bigint DEFAULT 0,
     wallet bigint DEFAULT 100
-);
-
-
---
--- Name: global_link; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.global_link (
-    guild_id bigint NOT NULL,
-    channel_id bigint,
-    webhook_url text
 );
 
 
@@ -205,14 +201,6 @@ ALTER TABLE ONLY public.economy
 
 
 --
--- Name: global_link global_link_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.global_link
-    ADD CONSTRAINT global_link_pkey PRIMARY KEY (guild_id);
-
-
---
 -- Name: invalidation_config invalidation_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -242,6 +230,14 @@ ALTER TABLE ONLY public.my_images
 
 ALTER TABLE ONLY public.todo
     ADD CONSTRAINT todo_pkey PRIMARY KEY (user_id, text);
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: -
+--
+
+REVOKE USAGE ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
