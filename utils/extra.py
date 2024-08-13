@@ -279,6 +279,7 @@ async def asset_converter(ctx, assets):
 
     return images[:10]
 
+
 class TemperatureReadings(NamedTuple):
     celsius: float
     fahrenheit: float
@@ -404,4 +405,3 @@ class InvalidateType(enum.IntEnum):
     guild = 1
     dm = 2
     channel = 3
-
