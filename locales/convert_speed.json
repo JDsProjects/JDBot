@@ -405,7 +405,7 @@
             "meters": "미터",
             "feet": "피트",
             "megameters": "메가미터",
-            "light": "상수 (빛의 속도)"
+            "light": "상수 (광속)"
         },
         "desc": {
             "text": "선택한 온도:"
@@ -463,7 +463,7 @@
         },
         "speed": {
             "name": "velocidad",
-            "description": "Porfavor inserte un número"
+            "description": "Por favor inserte un número"
         },
         "translator_id": "311977922481356801"
     },
@@ -502,7 +502,7 @@
         },
         "speed": {
             "name": "velocidad",
-            "description": "Porfavor inserte un número"
+            "description": "Por favor inserte un número"
         },
         "translator_id": "311977922481356801"
     },

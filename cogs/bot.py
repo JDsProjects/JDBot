@@ -335,7 +335,9 @@ class Bot(commands.Cog):
             return command_wanted.callback, item
 
     def process_source(self, src):
-        module = src.__module__
+        module = getattr(src, "__module__", None) or getattr(src, "__name__", "None") or ""
+        # adds # just in case.
+
         try:
             filename = inspect.getsourcefile(src)
         except TypeError:
@@ -851,6 +853,7 @@ class Bot(commands.Cog):
         }
 
         # might be good paginating this soon.
+        # might be worth paginating now.
 
         users = sorted(
             [

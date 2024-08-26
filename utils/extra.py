@@ -280,102 +280,6 @@ async def asset_converter(ctx, assets):
     return images[:10]
 
 
-class InvalidateType(enum.IntEnum):
-    everywhere = 0
-    guild = 1
-    dm = 2
-    channel = 3
-
-
-class InvalidationConfig:
-    def __init__(self, entity_id: int, entity_type: int, bot: JDBot):
-        self.entity_id = entity_id
-        self.raw_entity_type = entity_type
-        self.entity_id = InvalidateType(entity_type)
-        self.bot = bot
-
-    @property
-    def entity(self):
-        match self.entity_type:
-            case InvalidateType.everywhere:
-                return self.bot.get_user(self.entity_id)
-
-            case InvalidateType.guild:
-                return self.bot.get_guild(self.entity_id)
-
-            case InvalidateType.dm:
-                user = self.bot.get_user(self.entity_id)
-                if user:
-                    return user.dm_channel
-
-                return None
-                # or maybe pass user idk.
-
-            case InvalidateType.channel:
-                return self.bot.get_channel(self.entity_id)
-
-
-# make helper methods to add, remove, and get from the cache outside the class.
-# maybe make the cache not in cogs.DevTools but in class.
-# wait no that wouldn't work because this is an object only.
-# although I could add and remove from the cache in the commands to add/remove
-
-
-# replace with sqlachemly maybe?
-
-
-async def add_invalidation_entity(entity_id: int, entity_type: InvalidateType, bot: JDBot, in_choosen=True):
-    if in_choosen:
-        await bot.db.execute(
-            "INSERT INTO invalidation_config (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type.value
-        )
-
-    if not in_choosen:
-        await bot.db.execute(
-            "INSERT INTO invalidation_out (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type.value
-        )
-
-    # also return result from bot.db execute
-    return InvalidationConfig(entity_id, entity_type)
-
-
-async def verify_invalidation_entity(entity_id: int, entity_type: InvalidateType, bot: JDBot, in_choosen=True):
-    if in_choosen:
-        return await bot.db.fetchrow(
-            "SELECT * FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
-        )
-
-    if not in_choosen:
-        return await bot.db.fetchrow(
-            "SELECT * FROM invalidation_out WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
-        )
-
-    return None
-
-
-async def remove_invalidation_entity(entity_id: int, entity_type: int, bot: JDBot, in_choosen=True):
-    if in_choosen:
-        return await bot.db.execute(
-            "DELETE FROM invalidation_config WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
-        )
-
-    if not in_choosen:
-        return await bot.db.execute(
-            "DELETE FROM invalidation_out WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
-        )
-
-    return None
-
-
-def invalidation_check(cache: list[InvalidationConfig], entity_id: int, entity_type: InvalidateType):
-    cache = [x for x in cache if x.entity_id == entity_id and x.entity_type == entity_type]
-
-    if cache:
-        return cache[0]
-
-    return None
-
-
 class TemperatureReadings(NamedTuple):
     celsius: float
     fahrenheit: float
@@ -494,3 +398,10 @@ class Speed(enum.Enum):
             round(megameters, 2),
             round(light, 2),
         )
+
+
+class InvalidateType(enum.IntEnum):
+    everywhere = 0
+    guild = 1
+    dm = 2
+    channel = 3

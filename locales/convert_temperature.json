@@ -465,7 +465,7 @@
             "text": "Temperatura:"
         },
         "unit_names": {
-            "celsius": "Celcius:",
+            "celsius": "Celsius:",
             "fahrenheit": "Fahrenheit:",
             "kelvin": "Kelvin:",
             "rankine": "Rankine:"
@@ -500,7 +500,7 @@
             "text": "Temperatura:"
         },
         "unit_names": {
-            "celsius": "Celcius:",
+            "celsius": "Celsius:",
             "fahrenheit": "Fahrenheit:",
             "kelvin": "Kelvin:",
             "rankine": "Rankine:"
