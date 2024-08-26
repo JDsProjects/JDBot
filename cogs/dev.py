@@ -1,9 +1,5 @@
 import asyncio
 import base64
-import contextlib
-import functools
-import io
-import itertools
 import os
 import random
 import re
@@ -11,11 +7,9 @@ import secrets
 import textwrap
 import typing
 import unicodedata
-from difflib import SequenceMatcher, get_close_matches
 
 import async_tio
 import discord
-import emoji
 import github
 from discord import app_commands
 from discord.app_commands import Choice
