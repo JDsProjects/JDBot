@@ -330,7 +330,7 @@ class DevTools(commands.Cog):
             results = results[:10]
             embed.description = "\n".join(f"[`{result}`]({result.url})" for result in results)
             reference = utils.reference(ctx.message)
-            await ctx
+            await ctx.send(embed=embed, reference=reference)
 
     @commands.command(
         aliases=["rtd", "rtfs", "rtdm"],
