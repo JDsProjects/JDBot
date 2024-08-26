@@ -10,6 +10,8 @@ import re
 import secrets
 import textwrap
 import typing
+import unicodedata
+
 from difflib import SequenceMatcher, get_close_matches
 
 import async_tio
