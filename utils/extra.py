@@ -27,7 +27,7 @@ async def google_tts(bot: JDBot, text: str, language: str = "en") -> discord.Fil
         params={"text": text, "language": language},
     ) as response:
         mp3_data = await response.read()
-    
+
     mp3_fp = io.BytesIO(mp3_data)
     return discord.File(mp3_fp, f"{language}_tts.mp3")
 
@@ -88,8 +88,7 @@ async def post(bot: JDBot, code: str) -> str:
 
 async def get_paste(bot: JDBot, paste_id: str) -> Optional[str]:
     async with bot.session.get(
-        f"https://api.senarc.net/bin/{paste_id}", 
-        headers={"accept": "application/json", "headless": "true"}
+        f"https://api.senarc.net/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
     ) as response:
         json_data: dict = await response.json()
         return json_data.get("content")
@@ -101,17 +100,9 @@ def groupby(iterable: list[Any], count: int) -> list[list[Any]]:
 
 def npm_create_embed(data: dict) -> discord.Embed:
     e = discord.Embed(title=f"Package information for **{data.get('name')}**")
-    e.add_field(
-        name="**Latest Version:**", 
-        value=f"\n{data.get('latest_version', 'None Provided')}", 
-        inline=False
-    )
-    e.add_field(
-        name="**Description:**", 
-        value=f"\n{data.get('description', 'None Provided')}", 
-        inline=False
-    )
-    
+    e.add_field(name="**Latest Version:**", value=f"\n{data.get('latest_version', 'None Provided')}", inline=False)
+    e.add_field(name="**Description:**", value=f"\n{data.get('description', 'None Provided')}", inline=False)
+
     formatted_author = ""
     authors = data.get("authors", [])
     if isinstance(authors, list):
@@ -122,14 +113,14 @@ def npm_create_embed(data: dict) -> discord.Embed:
 
     e.add_field(name="**Author:**", value=f"\n{formatted_author}", inline=False)
     e.add_field(name="**License:**", value=f"\n{data.get('license', 'None Provided')}", inline=False)
-    
+
     dependencies = [[lib, min_version] for lib, min_version in data.get("dependencies", {}).items()]
     e.add_field(
         name="Dependencies:",
         value=f"\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}",
         inline=False,
     )
-    
+
     if next_version := data.get("next_version"):
         e.add_field(name="**Upcoming Version:**", value=f"\n{next_version}")
 
@@ -139,7 +130,7 @@ def npm_create_embed(data: dict) -> discord.Embed:
 def get_required_npm(data: dict) -> dict:
     latest = data["dist-tags"]["latest"]
     version_data = data["versions"][latest]
-    
+
     return {
         "latest_version": latest,
         "next_version": data["dist-tags"].get("next"),
@@ -363,8 +354,9 @@ class InvalidateType(enum.IntEnum):
     DM = 2
     CHANNEL = 3
 
+
 class InvalidationConfig:
-    def __init__(self, entity_id: int, entity_type: InvalidateType, bot: 'JDBot'):
+    def __init__(self, entity_id: int, entity_type: InvalidateType, bot: "JDBot"):
         self.entity_id = entity_id
         self.entity_type = entity_type
         self.bot = bot
@@ -383,34 +375,41 @@ class InvalidationConfig:
                 return self.bot.get_channel(self.entity_id)
         return None
 
+
 class InvalidationManager:
-    def __init__(self, bot: 'JDBot'):
+    def __init__(self, bot: "JDBot"):
         self.bot = bot
 
-    async def add_entity(self, entity_id: int, entity_type: InvalidateType, in_chosen: bool = True) -> InvalidationConfig:
+    async def add_entity(
+        self, entity_id: int, entity_type: InvalidateType, in_chosen: bool = True
+    ) -> InvalidationConfig:
         table = "invalidation_config" if in_chosen else "invalidation_out"
         await self.bot.db.execute(
-            f"INSERT INTO {table} (entity_id, entity_type) VALUES ($1, $2)",
-            entity_id, entity_type.value
+            f"INSERT INTO {table} (entity_id, entity_type) VALUES ($1, $2)", entity_id, entity_type.value
         )
         return InvalidationConfig(entity_id, entity_type, self.bot)
 
-    async def verify_entity(self, entity_id: int, entity_type: InvalidateType, in_chosen: bool = True) -> Optional[dict]:
+    async def verify_entity(
+        self, entity_id: int, entity_type: InvalidateType, in_chosen: bool = True
+    ) -> Optional[dict]:
         table = "invalidation_config" if in_chosen else "invalidation_out"
         return await self.bot.db.fetchrow(
-            f"SELECT * FROM {table} WHERE entity_id = $1 AND entity_type = $2",
-            entity_id, entity_type.value
+            f"SELECT * FROM {table} WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
         )
 
     async def remove_entity(self, entity_id: int, entity_type: InvalidateType, in_chosen: bool = True) -> None:
         table = "invalidation_config" if in_chosen else "invalidation_out"
         await self.bot.db.execute(
-            f"DELETE FROM {table} WHERE entity_id = $1 AND entity_type = $2",
-            entity_id, entity_type.value
+            f"DELETE FROM {table} WHERE entity_id = $1 AND entity_type = $2", entity_id, entity_type.value
         )
 
-    def check_invalidation(self, cache: list[InvalidationConfig], entity_id: int, entity_type: InvalidateType) -> Optional[InvalidationConfig]:
-        return next((config for config in cache if config.entity_id == entity_id and config.entity_type == entity_type), None)
+    def check_invalidation(
+        self, cache: list[InvalidationConfig], entity_id: int, entity_type: InvalidateType
+    ) -> Optional[InvalidationConfig]:
+        return next(
+            (config for config in cache if config.entity_id == entity_id and config.entity_type == entity_type), None
+        )
+
 
 # Usage example:
 # invalidation_manager = InvalidationManager(bot)
