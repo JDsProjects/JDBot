@@ -13,47 +13,36 @@ import aiohttp
 import black
 import discord
 import tabulate
+import enum
+from typing import Optional, Union
+from discord import User, Guild, DMChannel, TextChannel
 
 if TYPE_CHECKING:
     from ..main import JDBot
 
 
-async def google_tts(bot: JDBot, text: str) -> discord.File:
-    mp3_fp = io.BytesIO(
-        await (
-            await bot.session.get(
-                "https://api.jdjgbot.com/api/tts",
-                params={"text": text, "language": "en"},
-            )
-        ).read()
-    )
-    mp3_fp.seek(0)
-    return discord.File(mp3_fp, "tts.mp3")
+async def google_tts(bot: JDBot, text: str, language: str = "en") -> discord.File:
+    async with bot.session.get(
+        "https://api.jdjgbot.com/api/tts",
+        params={"text": text, "language": language},
+    ) as response:
+        mp3_data = await response.read()
+    
+    mp3_fp = io.BytesIO(mp3_data)
+    return discord.File(mp3_fp, f"{language}_tts.mp3")
 
 
 async def latin_google_tts(bot: JDBot, text: str) -> discord.File:
-    mp3_fp = io.BytesIO(
-        await (
-            await bot.session.get(
-                "https://api.jdjgbot.com/api/tts",
-                params={"text": text, "language": "la"},
-            )
-        ).read()
-    )
-    mp3_fp.seek(0)
-    return discord.File(mp3_fp, "latin_tts.mp3")
+    return await google_tts(bot, text, language="la")
 
 
-def reference(message) -> discord.MessageReference | None:
-    reference = message.reference
-    if reference and isinstance(reference.resolved, discord.Message):
-        return reference.resolved.to_reference()
-
+def reference(message: discord.Message) -> Optional[discord.MessageReference]:
+    if message.reference and isinstance(message.reference.resolved, discord.Message):
+        return message.reference.resolved.to_reference()
     return None
 
 
-#: Address pairs used for RRGG, BB00 values.
-_addr_pairs = [
+_ADDR_PAIRS = [
     ("8107EC20", "8107EC22"),
     ("8107EC28", "8107EC2A"),
     ("8107EC38", "8107EC3A"),
@@ -75,7 +64,7 @@ def _colored_addr_pair(addr1: str, addr2: str) -> str:
 
 
 def cc_generate() -> str:
-    return "\n".join(_colored_addr_pair(*addrs) for addrs in _addr_pairs)
+    return "\n".join(_colored_addr_pair(*addrs) for addrs in _ADDR_PAIRS)
 
 
 async def post(bot: JDBot, code: str) -> str:
@@ -88,21 +77,22 @@ async def post(bot: JDBot, code: str) -> str:
         "embed_colour": "#FFFFFF",
     }
 
-    async with await bot.session.post(
+    async with bot.session.post(
         "https://api.senarc.net/paste",
         json=paste_body,
         headers={"accept": "application/json", "Content-Type": "application/json"},
     ) as response:
-        json: dict = await response.json()
-        return json.get("url")
+        json_data: dict = await response.json()
+        return json_data.get("url")
 
 
-async def get_paste(bot: JDBot, paste_id: str):
-    async with await bot.session.get(
-        f"https://api.senarc.net/bin/{paste_id}", headers={"accept": "application/json", "headless": "true"}
+async def get_paste(bot: JDBot, paste_id: str) -> Optional[str]:
+    async with bot.session.get(
+        f"https://api.senarc.net/bin/{paste_id}", 
+        headers={"accept": "application/json", "headless": "true"}
     ) as response:
-        json: dict = await response.json()
-        return json.get("content")
+        json_data: dict = await response.json()
+        return json_data.get("content")
 
 
 def groupby(iterable: list[Any], count: int) -> list[list[Any]]:
@@ -112,64 +102,58 @@ def groupby(iterable: list[Any], count: int) -> list[list[Any]]:
 def npm_create_embed(data: dict) -> discord.Embed:
     e = discord.Embed(title=f"Package information for **{data.get('name')}**")
     e.add_field(
-        name="**Latest Version:**", value=f"```py\n{data.get('latest_version', 'None Provided')}```", inline=False
+        name="**Latest Version:**", 
+        value=f"\n{data.get('latest_version', 'None Provided')}", 
+        inline=False
     )
-    e.add_field(name="**Description:**", value=f"```py\n{data.get('description', 'None Provided')}```", inline=False)
+    e.add_field(
+        name="**Description:**", 
+        value=f"\n{data.get('description', 'None Provided')}", 
+        inline=False
+    )
+    
     formatted_author = ""
-
-    if isinstance(data.get("authors"), list):
-        for author_data in data["authors"]:
+    authors = data.get("authors", [])
+    if isinstance(authors, list):
+        for author_data in authors:
             formatted_author += f"Email: {author_data.get('email', 'None Provided')}\nName: {author_data['name']}\n\n"
-
     else:
-        formatted_author += f"Email: {data['authors'].get('email', 'None Provided')}\n{data['authors']['name']}"
+        formatted_author += f"Email: {authors.get('email', 'None Provided')}\n{authors['name']}"
 
-    e.add_field(name="**Author:**", value=f"```yaml\n{formatted_author}```", inline=False)
-    e.add_field(name="**License:**", value=f"```\n{data.get('license', 'None Provided')}```", inline=False)
-    dependencies = []
-    for lib, min_version in data.get("dependencies", {}).items():
-        dependencies.append([lib, min_version])
-
+    e.add_field(name="**Author:**", value=f"\n{formatted_author}", inline=False)
+    e.add_field(name="**License:**", value=f"\n{data.get('license', 'None Provided')}", inline=False)
+    
+    dependencies = [[lib, min_version] for lib, min_version in data.get("dependencies", {}).items()]
     e.add_field(
         name="Dependencies:",
-        value=f"```py\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}```",
+        value=f"\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}",
         inline=False,
     )
-    if data.get("next_version", "None Provided"):
-        e.add_field(name="**Upcoming Version:**", value=f"```py\n{data.get('next_version', 'None Provided')}```")
+    
+    if next_version := data.get("next_version"):
+        e.add_field(name="**Upcoming Version:**", value=f"\n{next_version}")
 
     return e
 
 
-def get_required_npm(data) -> dict:
+def get_required_npm(data: dict) -> dict:
     latest = data["dist-tags"]["latest"]
-    npm_next = data["dist-tags"].get("next")
     version_data = data["versions"][latest]
-    name = version_data["name"]
-    description = version_data["description"]
-    authors = data.get("author", data.get("maintainers"))
-    npm_license = version_data.get("license")
-    _dependencies = version_data.get("dependencies", {})
-    dependencies = {}
-    for lib, ver in _dependencies.items():
-        dependencies[lib] = ver.strip("^")
+    
     return {
         "latest_version": latest,
-        "next_version": npm_next,
-        "name": name,
-        "description": description,
-        "authors": authors,
-        "license": npm_license,
-        "dependencies": dependencies,
+        "next_version": data["dist-tags"].get("next"),
+        "name": version_data["name"],
+        "description": version_data["description"],
+        "authors": data.get("author", data.get("maintainers")),
+        "license": version_data.get("license"),
+        "dependencies": {lib: ver.strip("^") for lib, ver in version_data.get("dependencies", {}).items()},
     }
 
 
-def formatter(code, boolean):
-    src = code
-    mode = black.Mode(line_length=120) if boolean else black.Mode()
-    dst = black.format_str(src, mode=mode)
-    black.dump_to_file = lambda *args, **kwargs: None
-    return dst
+def formatter(code: str, use_long_lines: bool = False) -> str:
+    mode = black.Mode(line_length=120) if use_long_lines else black.Mode()
+    return black.format_str(code, mode=mode)
 
 
 def linecount() -> str:
@@ -200,7 +184,6 @@ def linecount() -> str:
     return f"Files: {fc}\nLines: {ls:,}\nClasses: {cl}\nFunctions: {fn}\nCoroutines: {cr}\nComments: {cm:,}\nImports: {im:,}"
 
 
-# will require a better name and variables down below
 class RtfmObject(NamedTuple):
     name: str
     url: str
@@ -210,39 +193,27 @@ class RtfmObject(NamedTuple):
 
 
 async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
-    # wip
-    async with await bot.session.get(f"{url}objects.inv") as response:
-        lines = (await response.read()).split(b"\n")
+    async with bot.session.get(f"{url}objects.inv") as response:
+        data = await response.read()
 
-    first_10_lines = lines[:10]
-    first_10_lines = [n for n in first_10_lines if not n.startswith(b"#")]
+    lines = data.split(b"\n")
+    header_lines = [line for line in lines[:10] if not line.startswith(b"#")]
+    content_lines = lines[10:]
 
-    lines = first_10_lines + lines[10:]
-    joined_lines = b"\n".join(lines)
-    full_data = zlib.decompress(joined_lines)
+    full_data = zlib.decompress(b"\n".join(header_lines + content_lines))
     normal_data = full_data.decode()
     new_list = normal_data.split("\n")
 
     results = []
-    for x in new_list:
+    for line in new_list:
         try:
-            name, python_type, number, fragment, *label = x.split(" ")
-            # fixes shadowing tested with print(name, type, _)
-            # ('discord.Activity.emoji', 'py:attribute', '1')
-
+            name, python_type, number, fragment, *label = line.split(" ")
             text = " ".join(label)
-
-            if text != "-":
-                label = text
-
-            else:
-                label = name
-
-        except:
+            label = text if text != "-" else name
+            fragment = fragment.replace("$", name)
+            results.append(RtfmObject(label, url + fragment))
+        except ValueError:
             continue
-
-        fragment = fragment.replace("$", name)
-        results.append(RtfmObject(label, url + fragment))
 
     return results
 
@@ -263,16 +234,11 @@ async def asset_converter(ctx, assets):
     for asset in assets:
         if isinstance(asset, discord.PartialEmoji):
             images.append(asset)
-
-        if isinstance(asset, (discord.User, discord.Member)):
-            avatar = asset.display_avatar
-            images.append(avatar)
-
-        if isinstance(asset, aiohttp.ClientResponse):
+        elif isinstance(asset, (discord.User, discord.Member)):
+            images.append(asset.display_avatar)
+        elif isinstance(asset, aiohttp.ClientResponse):
             if asset.content_type in ("image/png", "image/jpeg", "image/gif", "image/webp"):
                 images.append(asset)
-
-        print(type(asset))
 
     if not images:
         images.append(ctx.author.display_avatar)
@@ -300,19 +266,16 @@ class Temperature(enum.Enum):
                 k = c + 273.15
                 f = (c * 1.8) + 32
                 r = f + 459.67
-
             case Temperature.fahrenheit:
                 f = value
                 c = (f - 32) * 0.5556
                 k = c + 273.15
                 r = f + 459.67
-
             case Temperature.kelvin:
                 k = value
                 c = k - 273.15
                 f = (c * 1.8) + 32
                 r = f + 459.67
-
             case Temperature.rankine:
                 r = value
                 f = r - 459.67
@@ -348,8 +311,6 @@ class Speed(enum.Enum):
                 feet = 5280 * miles
                 megameters = kilometers / 1000
                 light = meters / 299792458
-                # https://en.wikipedia.org/wiki/Speed_of_light
-
             case Speed.kilometers:
                 kilometers = value
                 meters = kilometers * 1000
@@ -357,7 +318,6 @@ class Speed(enum.Enum):
                 feet = 5280 * miles
                 megameters = kilometers / 1000
                 light = meters / 299792458
-
             case Speed.meters:
                 meters = value
                 kilometers = meters / 1000
@@ -365,7 +325,6 @@ class Speed(enum.Enum):
                 light = meters / 299792458
                 miles = kilometers / 1.609344
                 feet = 5280 * miles
-
             case Speed.feet:
                 feet = value
                 miles = feet / 5280
@@ -373,7 +332,6 @@ class Speed(enum.Enum):
                 meters = kilometers * 1000
                 megameters = kilometers / 1000
                 light = meters / 299792458
-
             case Speed.megameters:
                 megameters = value
                 kilometers = megameters * 1000
@@ -381,7 +339,6 @@ class Speed(enum.Enum):
                 light = meters / 299792458
                 miles = kilometers / 1.609344
                 feet = 5280 * miles
-
             case Speed.light:
                 light = value
                 meters = light * 299792458
@@ -401,7 +358,63 @@ class Speed(enum.Enum):
 
 
 class InvalidateType(enum.IntEnum):
-    everywhere = 0
-    guild = 1
-    dm = 2
-    channel = 3
+    GLOBAL = 0
+    GUILD = 1
+    DM = 2
+    CHANNEL = 3
+
+class InvalidationConfig:
+    def __init__(self, entity_id: int, entity_type: InvalidateType, bot: 'JDBot'):
+        self.entity_id = entity_id
+        self.entity_type = entity_type
+        self.bot = bot
+
+    @property
+    def entity(self) -> Optional[Union[User, Guild, DMChannel, TextChannel]]:
+        match self.entity_type:
+            case InvalidateType.GLOBAL:
+                return self.bot.get_user(self.entity_id)
+            case InvalidateType.GUILD:
+                return self.bot.get_guild(self.entity_id)
+            case InvalidateType.DM:
+                user = self.bot.get_user(self.entity_id)
+                return user.dm_channel if user else None
+            case InvalidateType.CHANNEL:
+                return self.bot.get_channel(self.entity_id)
+        return None
+
+class InvalidationManager:
+    def __init__(self, bot: 'JDBot'):
+        self.bot = bot
+
+    async def add_entity(self, entity_id: int, entity_type: InvalidateType, in_chosen: bool = True) -> InvalidationConfig:
+        table = "invalidation_config" if in_chosen else "invalidation_out"
+        await self.bot.db.execute(
+            f"INSERT INTO {table} (entity_id, entity_type) VALUES ($1, $2)",
+            entity_id, entity_type.value
+        )
+        return InvalidationConfig(entity_id, entity_type, self.bot)
+
+    async def verify_entity(self, entity_id: int, entity_type: InvalidateType, in_chosen: bool = True) -> Optional[dict]:
+        table = "invalidation_config" if in_chosen else "invalidation_out"
+        return await self.bot.db.fetchrow(
+            f"SELECT * FROM {table} WHERE entity_id = $1 AND entity_type = $2",
+            entity_id, entity_type.value
+        )
+
+    async def remove_entity(self, entity_id: int, entity_type: InvalidateType, in_chosen: bool = True) -> None:
+        table = "invalidation_config" if in_chosen else "invalidation_out"
+        await self.bot.db.execute(
+            f"DELETE FROM {table} WHERE entity_id = $1 AND entity_type = $2",
+            entity_id, entity_type.value
+        )
+
+    def check_invalidation(self, cache: list[InvalidationConfig], entity_id: int, entity_type: InvalidateType) -> Optional[InvalidationConfig]:
+        return next((config for config in cache if config.entity_id == entity_id and config.entity_type == entity_type), None)
+
+# Usage example:
+# invalidation_manager = InvalidationManager(bot)
+# await invalidation_manager.add_entity(user_id, InvalidateType.GLOBAL)
+# result = await invalidation_manager.verify_entity(guild_id, InvalidateType.GUILD)
+# await invalidation_manager.remove_entity(channel_id, InvalidateType.CHANNEL)
+# config = invalidation_manager.check_invalidation(cache, user_id, InvalidateType.DM)
