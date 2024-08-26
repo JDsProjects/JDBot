@@ -347,10 +347,7 @@ class DevTools(commands.Cog):
 
     @app_commands.command(description="Looks up docs", name="rtfm")
     async def rtfm_slash(
-        self,
-        interaction: discord.Interaction,
-        library: typing.Optional[str] = None,
-        query: typing.Optional[str] = None
+        self, interaction: discord.Interaction, library: typing.Optional[str] = None, query: typing.Optional[str] = None
     ) -> None:
         """Looks up docs for a library with optionally a query."""
         libraries = dict(self.rtfm_dictionary)
@@ -361,27 +358,37 @@ class DevTools(commands.Cog):
             await interaction.response.send_message(f"Alright, let's see\n{library + query}")
 
     @rtfm_slash.autocomplete("library")
-    async def rtfm_library_autocomplete(self, interaction: discord.Interaction, current: str) -> list[app_commands.Choice]:
+    async def rtfm_library_autocomplete(
+        self, interaction: discord.Interaction, current: str
+    ) -> list[app_commands.Choice]:
         libraries = dict(self.rtfm_dictionary)
         all_choices = [app_commands.Choice(name=name, value=link) for name, link in libraries.items()]
         startswith = [choice for choice in all_choices if choice.name.lower().startswith(current.lower())]
         return (startswith or all_choices)[:25]
 
     @rtfm_slash.autocomplete("query")
-    async def rtfm_query_autocomplete(self, interaction: discord.Interaction, current: str) -> list[app_commands.Choice]:
+    async def rtfm_query_autocomplete(
+        self, interaction: discord.Interaction, current: str
+    ) -> list[app_commands.Choice]:
         url = interaction.namespace.library or dict(self.rtfm_dictionary)["master"]
         unfiltered_results = await utils.rtfm(self.bot, url)
-        all_choices = [app_commands.Choice(name=result.name, value=result.url.replace(url, "")) for result in unfiltered_results]
+        all_choices = [
+            app_commands.Choice(name=result.name, value=result.url.replace(url, "")) for result in unfiltered_results
+        ]
 
         if not current:
             return all_choices[:25]
 
         filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t.name)
-        return [app_commands.Choice(name=result.name, value=result.url.replace(url, "")) for result in filtered_results][:25]
+        return [
+            app_commands.Choice(name=result.name, value=result.url.replace(url, "")) for result in filtered_results
+        ][:25]
 
     @rtfm_slash.error
     async def rtfm_error(self, interaction: discord.Interaction, error: Exception) -> None:
-        await interaction.response.send_message(f"An error occurred: {error}. Please report this to my developer.", ephemeral=True)
+        await interaction.response.send_message(
+            f"An error occurred: {error}. Please report this to my developer.", ephemeral=True
+        )
         print(f"Error in {interaction.command}: {error}")
 
     def charinfo_converter(self, char: str) -> str:
@@ -423,7 +430,12 @@ class DevTools(commands.Cog):
         code = codeblock_converter(argument=modal.value)
 
         use_special_formatting = modal.value2 is True
-        await message.edit(content="Using special formatting (120 characters)" if use_special_formatting else "Using default formatting", view=None)
+        await message.edit(
+            content=(
+                "Using special formatting (120 characters)" if use_special_formatting else "Using default formatting"
+            ),
+            view=None,
+        )
 
         try:
             formatted_code = await asyncio.to_thread(utils.formatter, code.content, use_special_formatting)
@@ -443,7 +455,7 @@ class DevTools(commands.Cog):
         avatar = ctx.author.display_avatar
         file_extension = ".gif" if avatar.is_animated() else ".png"
         file = await avatar.to_file(filename=f"pfp{file_extension}")
-        
+
         try:
             await ctx.send("Here's your avatar:", file=file)
         except discord.HTTPException:
@@ -456,15 +468,18 @@ class DevTools(commands.Cog):
 
         async with self.bot.session.get(f"https://pypi.org/pypi/{package_name}/json") as response:
             if not response.ok:
-                return await ctx.send(f"Could not find package **{package_name}** on PyPI.", allowed_mentions=discord.AllowedMentions.none())
+                return await ctx.send(
+                    f"Could not find package **{package_name}** on PyPI.",
+                    allowed_mentions=discord.AllowedMentions.none(),
+                )
 
             pypi_data = (await response.json())["info"]
 
         embed = discord.Embed(
             title=f"{pypi_data.get('name', 'N/A')} {pypi_data.get('version', 'N/A')}",
-            url=pypi_data.get('release_url', 'https://pypi.org'),
-            description=pypi_data.get('summary', 'No summary provided'),
-            color=discord.Color.random()
+            url=pypi_data.get("release_url", "https://pypi.org"),
+            description=pypi_data.get("summary", "No summary provided"),
+            color=discord.Color.random(),
         )
 
         embed.set_thumbnail(url="https://i.imgur.com/oP0e7jK.png")
@@ -472,16 +487,16 @@ class DevTools(commands.Cog):
         embed.add_field(
             name="Author Info",
             value=f"**Name:** {pypi_data.get('author', 'N/A')}\n**Email:** {pypi_data.get('author_email', 'N/A')}",
-            inline=False
+            inline=False,
         )
         embed.add_field(
             name="Package Info",
             value=f"**Download URL:** {pypi_data.get('download_url', 'N/A')}\n"
-                  f"**Documentation:** {pypi_data.get('docs_url', 'N/A')}\n"
-                  f"**Home Page:** {pypi_data.get('home_page', 'N/A')}\n"
-                  f"**Keywords:** {pypi_data.get('keywords', 'N/A')}\n"
-                  f"**License:** {pypi_data.get('license', 'N/A')}",
-            inline=False
+            f"**Documentation:** {pypi_data.get('docs_url', 'N/A')}\n"
+            f"**Home Page:** {pypi_data.get('home_page', 'N/A')}\n"
+            f"**Keywords:** {pypi_data.get('keywords', 'N/A')}\n"
+            f"**License:** {pypi_data.get('license', 'N/A')}",
+            inline=False,
         )
 
         await ctx.send(embed=embed)
@@ -495,8 +510,14 @@ class DevTools(commands.Cog):
         slash_invite = discord.utils.oauth_url(client_id=user.id)
 
         view = discord.ui.View()
-        view.add_item(discord.ui.Button(label=f"{user.name}'s Normal Invite", url=invite, style=discord.ButtonStyle.link))
-        view.add_item(discord.ui.Button(label=f"{user.name}'s Invite With Slash Commands", url=slash_invite, style=discord.ButtonStyle.link))
+        view.add_item(
+            discord.ui.Button(label=f"{user.name}'s Normal Invite", url=invite, style=discord.ButtonStyle.link)
+        )
+        view.add_item(
+            discord.ui.Button(
+                label=f"{user.name}'s Invite With Slash Commands", url=slash_invite, style=discord.ButtonStyle.link
+            )
+        )
 
         await ctx.send("Invite with slash commands and the bot scope or only with a bot scope:", view=view)
 
@@ -521,7 +542,7 @@ class DevTools(commands.Cog):
             f"Mention: {user.mention} was created:\n"
             f"{creation_info}\n"
             f"Raw Version: {creation_info}",
-            allowed_mentions=discord.AllowedMentions.none()
+            allowed_mentions=discord.AllowedMentions.none(),
         )
 
     @commands.command(brief="Makes a fake user ID based on the current time.")
@@ -537,7 +558,7 @@ class DevTools(commands.Cog):
         embed = discord.Embed(title="❄️ Snowflake Info:", color=discord.Color.blue())
         embed.add_field(
             name="Created At:",
-            value=f"{discord.utils.format_dt(snowflake.created_at, style='D')}\n{discord.utils.format_dt(snowflake.created_at, style='T')}"
+            value=f"{discord.utils.format_dt(snowflake.created_at, style='D')}\n{discord.utils.format_dt(snowflake.created_at, style='T')}",
         )
         embed.add_field(name="Worker ID:", value=str(snowflake.worker_id))
         embed.add_field(name="Process ID:", value=str(snowflake.process_id))
@@ -558,9 +579,9 @@ class DevTools(commands.Cog):
         embed = discord.Embed(
             title="Newly Generated Fake Token",
             description=f"ID: `{discord_object.id}`\n"
-                        f"Created at:\n"
-                        f"{discord.utils.format_dt(discord_object.created_at, style='D')}\n"
-                        f"{discord.utils.format_dt(discord_object.created_at, style='T')}"
+            f"Created at:\n"
+            f"{discord.utils.format_dt(discord_object.created_at, style='D')}\n"
+            f"{discord.utils.format_dt(discord_object.created_at, style='T')}",
         )
         embed.add_field(name="Generated Token:", value=f"`{first_bit}.{second_bit}.{last_bit}`")
         embed.set_thumbnail(url=ctx.author.display_avatar.url)
@@ -587,17 +608,21 @@ class DevTools(commands.Cog):
         member = await self.bot.try_member(guild, ctx.author.id)
         if member is None:
             view = discord.ui.View()
-            view.add_item(discord.ui.Button(label="Test Guild Invite", url="https://discord.gg/hKn8qgCDzK", style=discord.ButtonStyle.link))
+            view.add_item(
+                discord.ui.Button(
+                    label="Test Guild Invite", url="https://discord.gg/hKn8qgCDzK", style=discord.ButtonStyle.link
+                )
+            )
             return await message.edit(
                 content="Make sure to join the guild linked soon... then rerun the command. If you are in the guild, contact the owner (listed in the owner command).",
-                view=view
+                view=view,
             )
 
         embed = discord.Embed(
             title="Bot Request",
             colour=discord.Colour.blurple(),
             description=f"Reason:\n{modal.value}\n\n[Invite URL]({discord.utils.oauth_url(client_id=user.id, scopes=('bot',))})",
-            timestamp=ctx.message.created_at
+            timestamp=ctx.message.created_at,
         )
 
         embed.add_field(name="Author", value=f"{ctx.author} (ID: {ctx.author.id})", inline=False)
