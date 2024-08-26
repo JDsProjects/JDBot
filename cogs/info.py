@@ -41,7 +41,7 @@ class Info(commands.Cog):
         if not guild:
             return await ctx.send("Could not find the guild you were looking for.")
 
-        embed = discord.Embed(title=str(guild), color=discord.Color.random(), timestamp=ctx.message.created_at)
+        embed = discord.Embed(title=str(guild), color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
         embed.set_thumbnail(url=guild.icon.url if guild.icon else "https://i.imgur.com/3ZUrjUP.png")
 
         view = utils.GuildInfoView(ctx, guild)
@@ -53,7 +53,7 @@ class Info(commands.Cog):
         help="This can work with mentions, ids, usernames, and even full names.",
     )
     async def userinfo(self, ctx, *, user: utils.SuperConverter = commands.Author):
-        embed = discord.Embed(title=str(user), color=discord.Color.random(), timestamp=ctx.message.created_at)
+        embed = discord.Embed(title=str(user), color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
         embed.set_image(url=user.display_avatar.url)
 
         view = utils.UserInfoSuper(ctx, user)
@@ -73,7 +73,7 @@ class Info(commands.Cog):
             user = await self.bot.try_member(user.guild, user.id)
 
         ctx = await self.bot.get_context(interaction)
-        embed = discord.Embed(title=str(user), color=discord.Color.random(), timestamp=ctx.message.created_at)
+        embed = discord.Embed(title=str(user), color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
         embed.set_image(url=user.display_avatar.url)
 
         view = utils.UserInfoSuper(ctx, user)
@@ -133,7 +133,7 @@ class Info(commands.Cog):
             await ctx.send("No file submitted")
             return
 
-        embed = discord.Embed(title="Attachment info", color=discord.Color.random())
+        embed = discord.Embed(title="Attachment info", color=random.randint(0, 16777215))
         for a in ctx.message.attachments:
             embed.add_field(name=f"ID: {a.id}", value=f"[{a.filename}]({a.url})")
         embed.set_footer(text="Check on the url/urls to get a direct download to the url.")
@@ -145,7 +145,7 @@ class Info(commands.Cog):
         aliases=["pfp", "av"],
     )
     async def avatar(self, ctx, *, user: utils.SuperConverter = commands.Author):
-        embed = discord.Embed(color=discord.Color.random())
+        embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name=f"{user.name}'s avatar:", icon_url=user.display_avatar.url)
         embed.set_image(url=user.display_avatar.url)
         embed.set_footer(text=f"Requested by {ctx.author}")
@@ -217,7 +217,7 @@ class Info(commands.Cog):
                 ) or await commands.PartialEmojiConverter().convert(ctx, emoji_message)
 
         if emoji:
-            embed = discord.Embed(description=f"Emoji ID: {emoji.id}", color=discord.Color.random())
+            embed = discord.Embed(description=f"Emoji ID: {emoji.id}", color=random.randint(0, 16777215))
             embed.set_image(url=emoji.url)
             await ctx.send(embed=embed)
         else:
@@ -301,7 +301,7 @@ class DevTools(commands.Cog):
         embed = discord.Embed(
             title="Token Snipper Tool",
             description="It tells the bot if it should invalidate any discord tokens sent into chat",
-            color=discord.Color.random(),
+            color=random.randint(0, 16777215),
             timestamp=ctx.message.created_at,
         )
         embed.set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
@@ -326,7 +326,7 @@ class DevTools(commands.Cog):
         if isinstance(results, str):
             await ctx.send(results, allowed_mentions=discord.AllowedMentions.none())
         else:
-            embed = discord.Embed(color=discord.Color.random())
+            embed = discord.Embed(color=random.randint(0, 16777215))
             results = results[:10]
             embed.description = "\n".join(f"[`{result}`]({result.url})" for result in results)
             reference = utils.reference(ctx.message)
@@ -445,7 +445,7 @@ class DevTools(commands.Cog):
         embed = discord.Embed(
             title="Reformatted with Black",
             description=f"Formatted code:\n\n{formatted_code}",
-            color=discord.Color.random(),
+            color=random.randint(0, 16777215),
         )
         embed.set_footer(text="Make sure you use Python code, otherwise it may not work properly.")
         await message.edit(embed=embed)
@@ -479,7 +479,7 @@ class DevTools(commands.Cog):
             title=f"{pypi_data.get('name', 'N/A')} {pypi_data.get('version', 'N/A')}",
             url=pypi_data.get("release_url", "https://pypi.org"),
             description=pypi_data.get("summary", "No summary provided"),
-            color=discord.Color.random(),
+            color=random.randint(0, 16777215),
         )
 
         embed.set_thumbnail(url="https://i.imgur.com/oP0e7jK.png")
@@ -523,7 +523,7 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Puts the message time as a timestamp")
     async def message_time(self, ctx):
-        embed = discord.Embed(title="Message Time", color=discord.Color.random(), timestamp=ctx.message.created_at)
+        embed = discord.Embed(title="Message Time", color=random.randint(0, 16777215), timestamp=ctx.message.created_at)
         embed.set_footer(text=str(ctx.message.id))
         await ctx.send(content="Message timestamp:", embed=embed)
 
