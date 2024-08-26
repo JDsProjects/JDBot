@@ -26,6 +26,7 @@ from jishaku.codeblocks import codeblock_converter
 import utils
 from utils import fuzzy
 
+
 class DevTools(commands.Cog):
     "Helpful commands for developers in general"
 
@@ -527,6 +528,7 @@ class DevTools(commands.Cog):
         embed.set_footer(text="Powered by Tio.run")
 
         await ctx.send(content="I executed your code in a sandbox", embed=embed)
+
 
 async def setup(bot):
     await bot.add_cog(DevTools(bot))

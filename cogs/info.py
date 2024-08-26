@@ -295,5 +295,6 @@ class Info(commands.Cog):
         if not role:
             await ctx.send("The role you wanted was not found.")
 
+
 async def setup(bot):
     await bot.add_cog(Info(bot))
