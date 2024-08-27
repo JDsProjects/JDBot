@@ -622,7 +622,7 @@ class Extra(commands.Cog):
 
         user_link = f"discord:///users/{user.id}"
         view = discord.ui.View()
-        view.add_item(discord.ui.Button(label=f"{user}'s profile link", url=user_link, style=discord.ButtonStyle.link)
+        view.add_item(discord.ui.Button(label=f"{user}'s profile link", url=user_link, style=discord.ButtonStyle.link))
         await ctx.send(f"The profile for {user} is https://discord.com/users/{user.id}", view=view)
 
     @commands.command(bried="tells you the current time with discord's speacil time converter", name="time")
