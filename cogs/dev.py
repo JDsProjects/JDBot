@@ -304,7 +304,7 @@ class DevTools(commands.Cog):
 
     @commands.command(brief="Tells a user's creation time.")
     async def created_at(self, ctx, *, user: utils.SuperConverter = commands.Author):
-        creation_info = f"{discord.utils.format_dt(user.created_at, style='D')}\n{discord.utils.format_dt(user.created_at, style='T')}"
+        creation_info = f"{discord.utils.format_dt(user.created_at, style='d')}\n{discord.utils.format_dt(user.created_at, style='T')}"
         await ctx.send(
             f"Name: {user}\n"
             f"Mention: {user.mention} was created:\n"
@@ -326,7 +326,7 @@ class DevTools(commands.Cog):
         embed = discord.Embed(title="❄️ Snowflake Info:", color=discord.Color.blue())
         embed.add_field(
             name="Created At:",
-            value=f"{discord.utils.format_dt(snowflake.created_at, style='D')}\n{discord.utils.format_dt(snowflake.created_at, style='T')}",
+            value=f"{discord.utils.format_dt(snowflake.created_at, style='d')}\n{discord.utils.format_dt(snowflake.created_at, style='T')}",
         )
         embed.add_field(name="Worker ID:", value=str(snowflake.worker_id))
         embed.add_field(name="Process ID:", value=str(snowflake.process_id))
@@ -348,7 +348,7 @@ class DevTools(commands.Cog):
             title="Newly Generated Fake Token",
             description=f"ID: `{discord_object.id}`\n"
             f"Created at:\n"
-            f"{discord.utils.format_dt(discord_object.created_at, style='D')}\n"
+            f"{discord.utils.format_dt(discord_object.created_at, style='d')}\n"
             f"{discord.utils.format_dt(discord_object.created_at, style='T')}",
         )
         embed.add_field(name="Generated Token:", value=f"`{first_bit}.{second_bit}.{last_bit}`")
