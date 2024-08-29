@@ -12,7 +12,6 @@ async-cse = ">=0.3.0"
 asyncdagpi = ">=3.3.2"
 "discordlists.py" = ">=1.1.1"
 emoji = ">=1.2.0"
-"alexflipnote.py" = ">=2.4.0"
 asyncpraw = ">=7.3.1"
 tweepy = {git = "https://github.com/tweepy/tweepy.git", extras=["async"], branch="master"}
 topggpy = ">=1.1.0"

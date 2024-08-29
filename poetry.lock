@@ -230,20 +230,6 @@ files = [
 docs = ["furo", "sphinx", "sphinx-copybutton", "sphinxext-opengraph"]
 
 [[package]]
-name = "alexflipnote-py"
-version = "4.0.2"
-description = ""
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "alexflipnote.py-4.0.2-py3-none-any.whl", hash = "sha256:8e426b539f108ac1b86134b20ad5eb80ee99947e3adffbb9277eb1412f9dae7e"},
-    {file = "alexflipnote.py-4.0.2.tar.gz", hash = "sha256:eae7381bea3c80e0251a2ef4200d4e1d60e66ba81e5d3c656fe524f9a08160a4"},
-]
-
-[package.dependencies]
-aiohttp = ">=3.7.0,<4.0.0"
-
-[[package]]
 name = "asuna-api"
 version = "0.3.3"
 description = "An async python wrapper for the asuna api"
@@ -909,7 +895,7 @@ resolved_reference = "585e0dddb24aefbcc16569a2f7db44d1d194107a"
 
 [[package]]
 name = "discord.py"
-version = "2.5.0a5083+g6d8198126"
+version = "2.5.0a5085+gdee5bf65c"
 description = "A Python wrapper for the Discord API"
 optional = false
 python-versions = ">=3.8"
@@ -934,7 +920,7 @@ voice = ["PyNaCl (>=1.3.0,<1.6)"]
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
 reference = "master"
-resolved_reference = "6d8198126a34b33b38a7a32391065f8dd5e2fab7"
+resolved_reference = "dee5bf65c63fc2feca00d32e5f4a9fa293636291"
 
 [[package]]
 name = "discord-py-paginators"
@@ -2012,4 +1998,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">= 3.10,<4.0.0"
-content-hash = "1e8b89a785ad708b549e79f330ef268818bada34ffd96d7ccf1e74a460351b07"
+content-hash = "4c06d84f4e8d4c9f5477b6fb27de895683d06346b2afb0c19684e69a06b35533"
