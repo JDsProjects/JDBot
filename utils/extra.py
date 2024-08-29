@@ -221,7 +221,7 @@ async def rtfm2(bot: JDBot, url: str) -> list[RtfmObject]:
         data = await response.read()
 
     lines = data.split(b"\n")
-    header_lines = [line for line in lines[:10] if not n.startswith(b"#")]
+    header_lines = [line for line in lines[:10] if not line.startswith(b"#")]
 
     lines = header_lines + lines[10:]
     joined_lines = b"\n".join(lines)
