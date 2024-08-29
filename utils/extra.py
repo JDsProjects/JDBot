@@ -29,6 +29,7 @@ async def google_tts(bot: JDBot, text: str, language: Optional[str] = "en") -> d
     mp3_fp = io.BytesIO(mp3_data)
     return discord.File(mp3_fp, f"{language}_tts.mp3")
 
+
 def reference(message: discord.Message) -> Optional[discord.MessageReference]:
     if message.reference and isinstance(message.reference.resolved, discord.Message):
         return message.reference.resolved.to_reference()
@@ -86,6 +87,7 @@ async def get_paste(bot: JDBot, paste_id: str) -> Optional[str]:
     ) as response:
         json_data: dict = await response.json()
         return json_data.get("content")
+
 
 def groupby(iterable: list[Any], count: int) -> list[list[Any]]:
     return [iterable[i : i + count] for i in range(0, len(iterable), count)]
@@ -210,6 +212,7 @@ async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
             continue
 
     return results
+
 
 async def asset_converter(ctx, assets):
     assets = list(assets)
