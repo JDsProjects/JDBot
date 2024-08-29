@@ -10,6 +10,7 @@ import traceback
 import typing
 import zoneinfo
 
+import aiohttp
 import alexflipnote
 import asuna_api
 import asyncpraw
