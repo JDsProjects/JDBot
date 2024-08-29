@@ -250,7 +250,7 @@ class Extra(commands.Cog):
 
         else:
             time_before = time.perf_counter()
-            file = await utils.latin_google_tts(self.bot, args)
+            file = await utils.google_tts(self.bot, args, "la")
             time_after = time.perf_counter()
 
             await ctx.send(content=f"Time to do this: {int((time_after - time_before)*1000)} ms", file=file)
@@ -260,12 +260,14 @@ class Extra(commands.Cog):
         brief="this will give you a message of JDJG's classic wanted xbox design.",
     )
     async def sc(self, ctx):
+        favorite_color = "Zest Orange"
+
         embed = discord.Embed(color=random.randint(0, 16777215))
         embed.set_author(name="Secret Xbox Image:")
-        embed.add_field(name="Body:", value="Zest Orange")
-        embed.add_field(name="Back:", value="Zest Orange")
-        embed.add_field(name="Bumpers:", value="Zest Orange")
-        embed.add_field(name="Triggers:", value="Zest Orange")
+        embed.add_field(name="Body:", value=favorite_color)
+        embed.add_field(name="Back:", value=favorite_color)
+        embed.add_field(name="Bumpers:", value=favorite_color)
+        embed.add_field(name="Triggers:", value=favorite_color)
         embed.add_field(name="D-pad:", value="Electric Green")
         embed.add_field(name="Thumbsticks:", value="Electric Green")
         embed.add_field(name="ABXY:", value="Colors on Black")
