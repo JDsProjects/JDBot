@@ -6,7 +6,6 @@ aiohttp==3.10.5
 aiosignal==1.3.1 
 aiosqlite==0.17.0 
 akinator-py==0.2.5 
-alexflipnote-py==4.0.2 
 asuna-api==0.3.3 
 async-cse==0.3.0 
 async-lru==2.0.4 
@@ -30,9 +29,9 @@ chess==1.10.0
 click==8.1.7 
 colorama==0.4.6 
 discord-games @ git+https://github.com/Tom-the-Bomb/Discord-Games@585e0dddb24aefbcc16569a2f7db44d1d194107a 
-discord-py @ git+https://github.com/Rapptz/discord.py.git@6d8198126a34b33b38a7a32391065f8dd5e2fab7 
+discord-py @ git+https://github.com/Rapptz/discord.py.git@dee5bf65c63fc2feca00d32e5f4a9fa293636291 
 discord-py-paginators @ git+https://github.com/Soheab/discord-py-paginators@380deed04647a9a729715d0a73e6e711b2a25c50 
-discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@6d8198126a34b33b38a7a32391065f8dd5e2fab7 
+discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@dee5bf65c63fc2feca00d32e5f4a9fa293636291 
 discordlists-py==1.1.1 
 emoji==2.12.1 
 english-words==2.0.1 
