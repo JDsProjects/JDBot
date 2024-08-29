@@ -109,7 +109,7 @@ def npm_create_embed(data: dict) -> discord.Embed:
         formatted_author += f"Email: {data['authors'].get('email', 'None Provided')}\n{data['authors']['name']}"
 
     e.add_field(name="**Author:**", value=f"```yaml\n{formatted_author}```", inline=False)
-    e.add_field(name="**License:**", value=f"```\n{data.get('license', 'None Provided')}```", inline=False)
+    e.add_field(name="**License:**", value=f"```yaml\n{data.get('license', 'None Provided')}```", inline=False)
     dependencies = []
     for lib, min_version in data.get("dependencies", {}).items():
         dependencies.append([lib, min_version])
