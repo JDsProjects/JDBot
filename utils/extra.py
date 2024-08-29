@@ -29,6 +29,15 @@ async def google_tts(bot: JDBot, text: str, language: Optional[str] = "en") -> d
     mp3_fp = io.BytesIO(mp3_data)
     return discord.File(mp3_fp, f"{language}_tts.mp3")
 
+async def alexflipnote_api(session: aiohttp.ClientSession, endpoint: str) -> str:
+    async with session.get(f"https://api.alexflipnote.dev/{endpoint}") as response:
+        if not response.ok:
+            return "Api returned an error try again later"
+
+        data = await response.json()
+        url = data["file"]
+        return url
+
 
 def reference(message: discord.Message) -> Optional[discord.MessageReference]:
     if message.reference and isinstance(message.reference.resolved, discord.Message):
