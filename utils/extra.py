@@ -36,7 +36,7 @@ async def alexflipnote_api(session: aiohttp.ClientSession, endpoint: str) -> str
             return "Api returned an error try again later"
 
         data = await response.json()
-        url = data["file"]
+        url = data.get("file", "Url Not Found")
         return url
 
 
