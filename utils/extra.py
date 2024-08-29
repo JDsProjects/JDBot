@@ -116,11 +116,11 @@ def npm_create_embed(data: dict) -> discord.Embed:
 
     e.add_field(
         name="Dependencies:",
-        value=f"```py\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}```",
+        value=f"```yaml\n{tabulate.tabulate(dependencies, ['Library', 'Minimum version'])}```",
         inline=False,
     )
     if data.get("next_version", "None Provided"):
-        e.add_field(name="**Upcoming Version:**", value=f"```py\n{data.get('next_version', 'None Provided')}```")
+        e.add_field(name="**Upcoming Version:**", value=f"```yaml\n{data.get('next_version', 'None Provided')}```")
 
     return e
 
