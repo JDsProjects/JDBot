@@ -95,8 +95,8 @@ def groupby(iterable: list[Any], count: int) -> list[list[Any]]:
 
 def npm_create_embed(data: dict) -> discord.Embed:
     e = discord.Embed(title=f"Package information for **{data.get('name')}**")
-    e.add_field(name="**Latest Version:**", value=f"\n{data.get('latest_version', 'None Provided')}", inline=False)
-    e.add_field(name="**Description:**", value=f"\n{data.get('description', 'None Provided')}", inline=False)
+    e.add_field(name="**Latest Version:**", value=f"```yaml\n{data.get('latest_version', 'None Provided')}```", inline=False)
+    e.add_field(name="**Description:**", value=f"```yaml\n{data.get('description', 'None Provided')}```", inline=False)
     formatted_author = ""
 
     if isinstance(data.get("authors"), list):
