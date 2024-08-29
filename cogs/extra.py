@@ -374,7 +374,7 @@ class Extra(commands.Cog):
             embed_message.set_thumbnail(url="https://i.imgur.com/PfWlEd5.png")
             await apply_user.send(embed=embed_message)
 
-    async def alexflipnote_api(session: aiohttp.ClientSession, endpoint: str) -> str:
+    async def alexflipnote_api(self, session: aiohttp.ClientSession, endpoint: str) -> str:
         response = await self.bot.session.get(f"https://api.alexflipnote.dev/{endpoint}")
         if not response.ok:
             return "Api returned an error try again later"
