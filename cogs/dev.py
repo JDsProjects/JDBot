@@ -55,6 +55,7 @@ class DevTools(commands.Cog):
             return
 
         # filter based on entity_type
+        # if the value conflicts with a setting of invalidation_out, it should return
 
         match = self.TOKEN_RE.findall(message.content)
         if match:
