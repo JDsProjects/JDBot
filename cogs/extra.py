@@ -374,14 +374,14 @@ class Extra(commands.Cog):
             await apply_user.send(embed=embed_message)
 
     async def alexflipnote_api(session: aiohttp.ClientSession, endpoint: str) -> str:
-            response = await self.bot.session.get(f"https://api.alexflipnote.dev/{endpoint}")
-            if not response.ok:
-                return "Api returned an error try again later"
-            
-            data = await response.json()
-            url = data["file"]
-            return url
-    
+        response = await self.bot.session.get(f"https://api.alexflipnote.dev/{endpoint}")
+        if not response.ok:
+            return "Api returned an error try again later"
+
+        data = await response.json()
+        url = data["file"]
+        return url
+
     @commands.command(aliases=["bird", "birb"])
     async def caw(self, ctx):
         url = await self.alexflipnote_api(self.bot.session, "birb")
