@@ -217,22 +217,22 @@ async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
 
 
 async def rtfm2(bot: JDBot, url: str) -> list[RtfmObject]:
-    async with bot.session.get(f"{url}objects.inv") as response:
-        data = await response.read()
+    async with await bot.session.get(f"{url}objects.inv") as response:
+        lines = (await response.read()).split(b"\n")
 
-    lines = data.split(b"\n")
-    header_lines = [line for line in lines[:10] if not line.startswith(b"#")]
+    first_10_lines = lines[:10]
+    first_10_lines = [n for n in first_10_lines if not n.startswith(b"#")]
 
-    lines = header_lines + lines[10:]
+    lines = first_10_lines + lines[10:]
     joined_lines = b"\n".join(lines)
     full_data = zlib.decompress(joined_lines)
     normal_data = full_data.decode()
     new_list = normal_data.split("\n")
 
     results = []
-    for line in new_list:
+    for x in new_list:
         try:
-            name, python_type, number, fragment, *label = line.split(" ")
+            name, python_type, number, fragment, *label = x.split(" ")
 
             text = " ".join(label)
 
