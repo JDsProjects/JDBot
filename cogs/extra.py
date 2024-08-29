@@ -373,26 +373,29 @@ class Extra(commands.Cog):
             embed_message.set_thumbnail(url="https://i.imgur.com/PfWlEd5.png")
             await apply_user.send(embed=embed_message)
 
+    async def alexflipnote_api(session: aiohttp.ClientSession, endpoint: str) -> str:
+            response = await self.bot.session.get(f"https://api.alexflipnote.dev/{endpoint}")
+            if not response.ok:
+                return "Api returned an error try again later"
+            
+            data = await response.json()
+            url = data["file"]
+            return url
+    
     @commands.command(aliases=["bird", "birb"])
     async def caw(self, ctx):
-        alex_api = alexflipnote.Client(os.environ["alex_apikey"], session=self.bot.session)
-        url = await alex_api.birb()
+        url = await self.alexflipnote_api(self.bot.session, "birb")
         await ctx.send(url)
-        # Key doesn't seem to be needed (do a local aiohttp thing rather having alexflipnote thing installed).
 
     @commands.command(aliases=["bark", "dogs"])
     async def dog(self, ctx):
-        alex_api = alexflipnote.Client(os.environ["alex_apikey"], session=self.bot.session)
-        url = await alex_api.dogs()
+        url = await self.alexflipnote_api(self.bot.session, "dogs")
         await ctx.send(url)
-        # Key doesn't seem to be needed (do a local aiohttp thing rather having alexflipnote thing installed).
 
     @commands.command(aliases=["meow", "cats"])
     async def cat(self, ctx):
-        alex_api = alexflipnote.Client(os.environ["alex_apikey"], session=self.bot.session)
-        url = await alex_api.cats()
+        url = await self.alexflipnote_api(self.bot.session, "cats")
         await ctx.send(url)
-        # Key doesn't seem to be needed (do a local aiohttp thing rather having alexflipnote thing installed).
 
     @commands.command(aliases=["joke"])
     async def jokeapi(self, ctx):
