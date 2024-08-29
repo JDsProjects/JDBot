@@ -432,3 +432,4 @@ class InvalidationManager:
 # result = await invalidation_manager.verify_entity(guild_id, InvalidateType.GUILD)
 # await invalidation_manager.remove_entity(channel_id, InvalidateType.CHANNEL)
 # config = invalidation_manager.check_invalidation(cache, user_id, InvalidateType.DM)
+# bool may be needed to be passed in for some versions
