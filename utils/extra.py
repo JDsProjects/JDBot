@@ -217,7 +217,7 @@ async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
 
 
 async def rtfm2(bot: JDBot, url: str) -> list[RtfmObject]:
-    async with await bot.session.get(f"{url}objects.inv") as response:
+    async with bot.session.get(f"{url}objects.inv") as response:
         lines = (await response.read()).split(b"\n")
 
     first_10_lines = lines[:10]
