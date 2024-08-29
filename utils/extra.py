@@ -216,6 +216,41 @@ async def rtfm(bot: JDBot, url: str) -> list[RtfmObject]:
     return results
 
 
+async def rtfm2(bot: JDBot, url: str) -> list[RtfmObject]:
+    async with  bot.session.get(f"{url}objects.inv") as response:
+        data = await response.read()
+
+    lines = split(b"\n")
+    header_lines = [line for line in lines[:10] if not n.startswith(b"#")]
+
+    lines = header_lines + lines[10:]
+    joined_lines = b"\n".join(lines)
+    full_data = zlib.decompress(joined_lines)
+    normal_data = full_data.decode()
+    new_list = normal_data.split("\n")
+
+    results = []
+    for line in new_list:
+        try:
+            name, python_type, number, fragment, *label = line.split(" ")
+
+            text = " ".join(label)
+
+            if text != "-":
+                label = text
+
+            else:
+                label = name
+
+        except:
+            continue
+
+        fragment = fragment.replace("$", name)
+        results.append(RtfmObject(label, url + fragment))
+
+    return results
+
+
 async def asset_converter(ctx, assets):
     assets = list(assets)
     attachments = ctx.message.attachments
