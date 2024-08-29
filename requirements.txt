@@ -17,6 +17,7 @@ asyncpg==0.29.0
 asyncpraw==7.7.1 
 asyncprawcore==2.4.0 
 attrs==24.2.0 
+audioop-lts==0.2.1 
 better-profanity==0.7.0 
 black==24.8.0 
 braceexpand==0.1.7 
@@ -29,19 +30,19 @@ chess==1.10.0
 click==8.1.7 
 colorama==0.4.6 
 discord-games @ git+https://github.com/Tom-the-Bomb/Discord-Games@585e0dddb24aefbcc16569a2f7db44d1d194107a 
-discord-py @ git+https://github.com/Rapptz/discord.py.git@ff638d393d0f5a83639ccc087bec9bf588b59a22 
+discord-py @ git+https://github.com/Rapptz/discord.py.git@463b4bd570faba36f1d8eac1ae29413bce3da9a6 
 discord-py-paginators @ git+https://github.com/Soheab/discord-py-paginators@380deed04647a9a729715d0a73e6e711b2a25c50 
-discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@ff638d393d0f5a83639ccc087bec9bf588b59a22 
+discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@463b4bd570faba36f1d8eac1ae29413bce3da9a6 
 discordlists-py==1.1.1 
 emoji==2.12.1 
 english-words==2.0.1 
 filetype==1.2.0 
 frozenlist==1.4.1 
 github @ git+https://github.com/VarMonke/Github-Api-Wrapper@a1ef2e96f0f5df77340de69e9fe66c10410284cb 
-idna==3.7 
+idna==3.8 
 import-expression==2.1.0.post1 
 jeyyapi @ git+https://github.com/JeyyGit/jeyyapi@8f5064d8a626cf2f92b399da1f4144b63d8bfd70 
-jishaku @ git+https://github.com/Gorialis/jishaku@4408b2a11a6cc000b78edaaa03f88abbc9795a17 
+jishaku @ git+https://github.com/Gorialis/jishaku@0c16ddca174726966704a8f12f6e8f0e26528202 
 mathjspy==0.0.9 
 multidict==6.0.5 
 mypy-extensions==1.0.0 
