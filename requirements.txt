@@ -21,7 +21,7 @@ better-profanity==0.7.0
 black==24.8.0 
 braceexpand==0.1.7 
 brotli==1.1.0 
-certifi==2024.7.4 
+certifi==2024.8.30 
 cffi==1.17.0 
 chardet==5.2.0 
 charset-normalizer==3.3.2 
@@ -29,9 +29,9 @@ chess==1.10.0
 click==8.1.7 
 colorama==0.4.6 
 discord-games @ git+https://github.com/Tom-the-Bomb/Discord-Games@585e0dddb24aefbcc16569a2f7db44d1d194107a 
-discord-py @ git+https://github.com/Rapptz/discord.py.git@dee5bf65c63fc2feca00d32e5f4a9fa293636291 
+discord-py @ git+https://github.com/Rapptz/discord.py.git@59f877fcf013c4ddeeb2b39fc21f03e76f995461 
 discord-py-paginators @ git+https://github.com/Soheab/discord-py-paginators@380deed04647a9a729715d0a73e6e711b2a25c50 
-discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@dee5bf65c63fc2feca00d32e5f4a9fa293636291 
+discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@59f877fcf013c4ddeeb2b39fc21f03e76f995461 
 discordlists-py==1.1.1 
 emoji==2.12.1 
 english-words==2.0.1 
@@ -70,4 +70,4 @@ typing-extensions==4.12.2
 update-checker==0.18.0 
 urllib3==2.2.2 
 wand==0.6.13 
-yarl==1.9.4 
+yarl==1.9.7 
