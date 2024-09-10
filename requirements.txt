@@ -22,7 +22,7 @@ black==24.8.0
 braceexpand==0.1.7 
 brotli==1.1.0 
 certifi==2024.8.30 
-cffi==1.17.0 
+cffi==1.17.1 
 chardet==5.2.0 
 charset-normalizer==3.3.2 
 chess==1.10.0 
@@ -43,7 +43,7 @@ import-expression==2.1.0.post1
 jeyyapi @ git+https://github.com/JeyyGit/jeyyapi@8f5064d8a626cf2f92b399da1f4144b63d8bfd70 
 jishaku @ git+https://github.com/Gorialis/jishaku@0c16ddca174726966704a8f12f6e8f0e26528202 
 mathjspy==0.0.9 
-multidict==6.0.5 
+multidict==6.1.0 
 mypy-extensions==1.0.0 
 mystbin-py==7.0.2 
 oauthlib==3.2.2 
@@ -51,7 +51,7 @@ orjson==3.10.7
 packaging==24.1 
 pathspec==0.12.1 
 pillow==10.4.0 
-platformdirs==4.2.2 
+platformdirs==4.3.2 
 psutil==6.0.0 
 pycares==4.4.0 
 pycparser==2.22 
@@ -70,4 +70,4 @@ typing-extensions==4.12.2
 update-checker==0.18.0 
 urllib3==2.2.2 
 wand==0.6.13 
-yarl==1.9.7 
+yarl==1.11.1 
