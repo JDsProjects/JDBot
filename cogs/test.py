@@ -9,8 +9,8 @@ import time
 import traceback
 import typing
 
-from better_profanity import profanity
 import discord
+from better_profanity import profanity
 from discord import app_commands
 from discord.app_commands import Choice
 from discord.ext import commands
