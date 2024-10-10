@@ -305,9 +305,8 @@ class Test(commands.Cog):
 
         # I need to fetch soundboards names with using the sound id and then grab from the guild's soundboard cache?
 
-
         await interaction.response.send_message("WIP")
-        
+
         """
         print(effect.channel)
         # could always send the file to that channel?
@@ -333,8 +332,6 @@ class Test(commands.Cog):
 
         Basically fancy embed shengians
         """
-
-
 
 
 class Slash(commands.Cog):
