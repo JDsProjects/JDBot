@@ -2,7 +2,7 @@ aiodns==3.2.0
 aiofiles==0.8.0 
 aiogifs @ git+https://github.com/moanie/aiogifs.git@730fdb7bca18842db93b71cf0c50b93f9cc3c31a 
 aiohappyeyeballs==2.4.3 
-aiohttp==3.10.8 
+aiohttp==3.10.9 
 aiosignal==1.3.1 
 aiosqlite==0.17.0 
 akinator-py==0.2.5 
@@ -18,22 +18,22 @@ asyncprawcore==2.4.0
 attrs==24.2.0 
 audioop-lts==0.2.1 
 better-profanity==0.7.0 
-black==24.8.0 
+black==24.10.0 
 braceexpand==0.1.7 
 brotli==1.1.0 
 certifi==2024.8.30 
 cffi==1.17.1 
 chardet==5.2.0 
-charset-normalizer==3.3.2 
-chess==1.10.0 
+charset-normalizer==3.4.0 
+chess==1.11.1 
 click==8.1.7 
 colorama==0.4.6 
 discord-games @ git+https://github.com/Tom-the-Bomb/Discord-Games@585e0dddb24aefbcc16569a2f7db44d1d194107a 
-discord-py @ git+https://github.com/Rapptz/discord.py.git@59f877fcf013c4ddeeb2b39fc21f03e76f995461 
+discord-py @ git+https://github.com/Rapptz/discord.py.git@9d7c253535fa3b2060a0769df6d19230ef45f1e2 
 discord-py-paginators @ git+https://github.com/Soheab/discord-py-paginators@380deed04647a9a729715d0a73e6e711b2a25c50 
-discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@59f877fcf013c4ddeeb2b39fc21f03e76f995461 
+discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@9d7c253535fa3b2060a0769df6d19230ef45f1e2 
 discordlists-py==1.1.1 
-emoji==2.13.2 
+emoji==2.14.0 
 english-words==2.0.1 
 filetype==1.2.0 
 frozenlist==1.4.1 
@@ -52,6 +52,7 @@ packaging==24.1
 pathspec==0.12.1 
 pillow==10.4.0 
 platformdirs==4.3.6 
+propcache==0.2.0 
 psutil==6.0.0 
 pycares==4.4.0 
 pycparser==2.22 
@@ -70,4 +71,5 @@ typing-extensions==4.12.2
 update-checker==0.18.0 
 urllib3==2.2.3 
 wand==0.6.13 
-yarl==1.13.1 
+yarl==1.14.0 
+zstandard==0.23.0 
