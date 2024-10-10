@@ -339,7 +339,9 @@ class Test(commands.Cog):
         """
 
     @played_soundboard_grab.autocomplete("server")
-    async def played_soundboard_guild_autocomplete(self, interaction: discord.Interaction, current: str) -> List[Choice]:
+    async def played_soundboard_guild_autocomplete(
+        self, interaction: discord.Interaction, current: str
+    ) -> List[Choice]:
 
         guild_ids = self.played_soundboards.keys
         guilds = [bot.get_guild(guild_id) for guild_id in guild_ids]
@@ -363,12 +365,15 @@ class Test(commands.Cog):
 
         if guild_id:
             soundboard_effects = self.played_soundboards[guild_id]
-        
+
         else:
             soundboard_effects = self.played_soundboards.values()
-        
+
         soundboards = [bot.get_soundboard_sound(effect.sound.id) for effect in soundboard_effects]
-        choices: list[Choice] = [Choice(name=f"{profanity.censor(soundboard.name, censor_char='⚠️')}", value=str(soundboard.id)) for soundboard in soundboards]
+        choices: list[Choice] = [
+            Choice(name=f"{profanity.censor(soundboard.name, censor_char='⚠️')}", value=str(soundboard.id))
+            for soundboard in soundboards
+        ]
 
         startswith: list[Choice] = [choices for choices in guilds if choices.name.startswith(current)]
 
@@ -376,6 +381,7 @@ class Test(commands.Cog):
             return choices[0:25]
 
         return startswith[0:25]
+
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
