@@ -9,8 +9,10 @@ import time
 import traceback
 import typing
 
+from better_profanity import profanity
 import discord
 from discord import app_commands
+from discord.app_commands import Choice
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord.ext.paginators.button_paginator import PaginatorButton
@@ -300,12 +302,15 @@ class Test(commands.Cog):
             self.played_soundboards[effect.channel.guild.id].append(effect)
             # I can just use effect information I suppose.
 
-    @app_commands.command()
-    async def played_soundboard_grab(self, name: str, server: str):
+    @app_commands.command(description="Grabs played soundboards you have access to")
+    async def played_soundboard_grab(self, name: str, server: typing.Optional[str] = None):
 
         # I need to fetch soundboards names with using the sound id and then grab from the guild's soundboard cache?
 
         await interaction.response.send_message("WIP")
+
+        [effect for effect in self.played_soundboards if effect.sound.id == name][0]
+        # I have no idea what this garbage is.
 
         """
         print(effect.channel)
@@ -333,6 +338,44 @@ class Test(commands.Cog):
         Basically fancy embed shengians
         """
 
+    @played_soundboard_grab.autocomplete("server")
+    async def played_soundboard_guild_autocomplete(self, interaction: discord.Interaction, current: str) -> List[Choice]:
+
+        guild_ids = self.played_soundboards.keys
+        guilds = [bot.get_guild(guild_id) for guild_id in guild_ids]
+
+        mutual_guilds = set(guilds)
+        mutual_guilds2 = set(bot.mutual_guilds)
+        filtered_guilds = list(mutual_guilds.intersection(mutual_guilds2))
+
+        choices: list[Choice] = [Choice(name=f"{guild}", value=str(guild.id)) for guild in filtered_guilds]
+        startswith: list[Choice] = [choices for choices in guilds if choices.name.startswith(current)]
+
+        if not (current and startswith):
+            return choices[0:25]
+
+        return startswith[0:25]
+
+    @played_soundboard_grab.autocomplete("name")
+    async def played_soundboard_name_autocomplete(self, interaction: discord.Interaction, current: str) -> List[Choice]:
+
+        guild_id = interaction.client.rtfm_libraries.get(interaction.namespace.server, None)
+
+        if guild_id:
+            soundboard_effects = self.played_soundboards[guild_id]
+        
+        else:
+            soundboard_effects = self.played_soundboards.values()
+        
+        soundboards = [bot.get_soundboard_sound(effect.sound.id) for effect in soundboard_effects]
+        choices: list[Choice] = [Choice(name=f"{profanity.censor(soundboard.name, censor_char='⚠️')}", value=str(soundboard.id)) for soundboard in soundboards]
+
+        startswith: list[Choice] = [choices for choices in guilds if choices.name.startswith(current)]
+
+        if not (current and startswith):
+            return choices[0:25]
+
+        return startswith[0:25]
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
