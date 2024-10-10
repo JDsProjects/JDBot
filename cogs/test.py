@@ -23,7 +23,7 @@ class Test(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.played_soundboards: dict[int, list] = []
+        self.played_soundboards: collections.defaultdict[int, list] = collections.defaultdict(list)
 
     @commands.command(brief="this command will error by sending no content")
     async def te(self, ctx):
@@ -299,6 +299,42 @@ class Test(commands.Cog):
 
             self.played_soundboards[effect.channel.guild.id].append(effect)
             # I can just use effect information I suppose.
+
+    @app_commands.command()
+    async def played_soundboard_grab(self, name: str, server: str):
+
+        # I need to fetch soundboards names with using the sound id and then grab from the guild's soundboard cache?
+
+
+        await interaction.response.send_message("WIP")
+        
+        """
+        print(effect.channel)
+        # could always send the file to that channel?
+        print(effect.user_id)
+        # will try to use the user_id for the output.
+        print(effect.emoji)
+        # will be used for shengians
+        print(effect.sound)
+        # actual sound information
+        print(effect.sound.created_at)
+        # useful for the information command linking to the soundboard.
+        print(effect.sound.is_default())
+        # if it is default then it would be good to have it say it or not.
+        print(effect.sound.id)
+        # useful for id information for the user
+        print(effect.sound.volume)
+        # good for extra information
+
+        print(effect.sound.url)
+        # also useful but we can use just use sound.to_file when we put into cache.
+
+        # if it is not a sound it is not reveleant to soundboard downloads
+
+        Basically fancy embed shengians
+        """
+
+
 
 
 class Slash(commands.Cog):
