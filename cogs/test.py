@@ -384,7 +384,7 @@ class Test(commands.Cog):
 
     @app_commands.command(description="Grabs soundboards you have access to including default ones")
     async def soundboard_grab(self, name: str, server: typing.Optional[str] = None):
-        
+
         # name filtering is very important.
         # server can be totally optional though.
         await interaction.response.send_message("WIP")
