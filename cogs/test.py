@@ -23,6 +23,7 @@ class Test(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.played_soundboards: dict[int, list] = []
 
     @commands.command(brief="this command will error by sending no content")
     async def te(self, ctx):
@@ -313,6 +314,12 @@ class Test(commands.Cog):
             # also useful but we can use just use sound.to_file when we put into cache.
 
             # if it is not a sound it is not reveleant to soundboard downloads
+
+            if not self.played_soundboards.get(effect.channel.guild.id):
+                self.played_soundboards[effect.channel.guild.id] = []
+
+            self.played_soundboards[effect.channel.guild.id].append(effect)
+            # I can just use effect information I suppose.
 
 
 class Slash(commands.Cog):
