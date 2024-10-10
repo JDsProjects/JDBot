@@ -293,7 +293,7 @@ class Test(commands.Cog):
     @commands.Cog.listener()
     async def on_voice_channel_effect(self, effect):
         if effect.is_sound:
-            
+
             if not self.played_soundboards.get(effect.channel.guild.id):
                 self.played_soundboards[effect.channel.guild.id] = []
 
