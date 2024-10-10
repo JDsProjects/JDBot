@@ -387,6 +387,7 @@ class Test(commands.Cog):
 
         # name filtering is very important.
         # server can be totally optional though.
+        # for defaults one those will need to be fetched and first cached how do I handle this?.
         await interaction.response.send_message("WIP")
 
 
