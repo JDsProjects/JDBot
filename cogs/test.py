@@ -293,28 +293,7 @@ class Test(commands.Cog):
     @commands.Cog.listener()
     async def on_voice_channel_effect(self, effect):
         if effect.is_sound:
-            print(effect.channel)
-            # could always send the file to that channel?
-            print(effect.user_id)
-            # will try to use the user_id for the output.
-            print(effect.emoji)
-            # will be used for shengians
-            print(effect.sound)
-            # actual sound information
-            print(effect.sound.created_at)
-            # useful for the information command linking to the soundboard.
-            print(effect.sound.is_default())
-            # if it is default then it would be good to have it say it or not.
-            print(effect.sound.id)
-            # useful for id information for the user
-            print(effect.sound.volume)
-            # good for extra information
-
-            print(effect.sound.url)
-            # also useful but we can use just use sound.to_file when we put into cache.
-
-            # if it is not a sound it is not reveleant to soundboard downloads
-
+            
             if not self.played_soundboards.get(effect.channel.guild.id):
                 self.played_soundboards[effect.channel.guild.id] = []
 
