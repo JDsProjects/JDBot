@@ -314,9 +314,6 @@ class Test(commands.Cog):
         
             # if it is not a sound it is not reveleant to soundboard downloads
 
-        # regular emoji reactions may be good to put here too
-        # https://discordpy.readthedocs.io/en/latest/api.html?highlight=voice%20channel#discord.VoiceChannelEffect
-
 
 class Slash(commands.Cog):
     """A Testing Category for Slash Commands"""
