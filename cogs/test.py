@@ -303,7 +303,7 @@ class Test(commands.Cog):
             # I can just use effect information I suppose.
 
     @app_commands.command(description="Grabs played soundboards you have access to")
-    async def played_soundboard_grab(self, name: str, server: typing.Optional[str] = None):
+    async def played_soundboard_grab(self, interaction: discord.Interaction, name: str, server: typing.Optional[str] = None):
 
         # I need to fetch soundboards names with using the sound id and then grab from the guild's soundboard cache?
 
@@ -385,7 +385,7 @@ class Test(commands.Cog):
         return startswith[0:25]
 
     @app_commands.command(description="Grabs soundboards you have access to including default ones")
-    async def soundboard_grab(self, name: str, server: typing.Optional[str] = None):
+    async def soundboard_grab(self, interaction: discord.Interaction, name: str, server: typing.Optional[str] = None):
 
         # name filtering is very important.
         # server can be totally optional though.
