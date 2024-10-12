@@ -359,7 +359,9 @@ class Test(commands.Cog):
         return startswith[0:25]
 
     @played_soundboard_grab.autocomplete("name")
-    async def played_soundboard_name_autocomplete(self, interaction: discord.Interaction, current: str) -> typing.List[Choice]:
+    async def played_soundboard_name_autocomplete(
+        self, interaction: discord.Interaction, current: str
+    ) -> typing.List[Choice]:
 
         guild_id = interaction.client.rtfm_libraries.get(interaction.namespace.server, None)
 
