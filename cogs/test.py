@@ -343,7 +343,7 @@ class Test(commands.Cog):
         self, interaction: discord.Interaction, current: str
     ) -> typing.List[Choice]:
 
-        guild_ids = self.played_soundboards.keys
+        guild_ids = self.played_soundboards.keys()
         guilds = [self.bot.get_guild(guild_id) for guild_id in guild_ids]
 
         mutual_guilds = set(guilds)
