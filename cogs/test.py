@@ -341,7 +341,7 @@ class Test(commands.Cog):
     @played_soundboard_grab.autocomplete("server")
     async def played_soundboard_guild_autocomplete(
         self, interaction: discord.Interaction, current: str
-    ) -> List[Choice]:
+    ) -> typing.List[Choice]:
 
         guild_ids = self.played_soundboards.keys
         guilds = [bot.get_guild(guild_id) for guild_id in guild_ids]
@@ -359,7 +359,7 @@ class Test(commands.Cog):
         return startswith[0:25]
 
     @played_soundboard_grab.autocomplete("name")
-    async def played_soundboard_name_autocomplete(self, interaction: discord.Interaction, current: str) -> List[Choice]:
+    async def played_soundboard_name_autocomplete(self, interaction: discord.Interaction, current: str) -> typing.List[Choice]:
 
         guild_id = interaction.client.rtfm_libraries.get(interaction.namespace.server, None)
 
