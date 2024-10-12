@@ -338,26 +338,6 @@ class Test(commands.Cog):
         Basically fancy embed shengians
         """
 
-    @played_soundboard_grab.autocomplete("server")
-    async def played_soundboard_guild_autocomplete(
-        self, interaction: discord.Interaction, current: str
-    ) -> typing.List[Choice]:
-
-        guild_ids = self.played_soundboards.keys()
-        guilds = [self.bot.get_guild(guild_id) for guild_id in guild_ids]
-
-        mutual_guilds = set(guilds)
-        mutual_guilds2 = set(self.bot.mutual_guilds)
-        filtered_guilds = list(mutual_guilds.intersection(mutual_guilds2))
-
-        choices: list[Choice] = [Choice(name=f"{guild}", value=str(guild.id)) for guild in filtered_guilds]
-        startswith: list[Choice] = [choices for choices in guilds if choices.name.startswith(current)]
-
-        if not (current and startswith):
-            return choices[0:25]
-
-        return startswith[0:25]
-
     @played_soundboard_grab.autocomplete("name")
     async def played_soundboard_name_autocomplete(
         self, interaction: discord.Interaction, current: str
@@ -377,6 +357,26 @@ class Test(commands.Cog):
             for soundboard in soundboards
         ]
 
+        startswith: list[Choice] = [choices for choices in guilds if choices.name.startswith(current)]
+
+        if not (current and startswith):
+            return choices[0:25]
+
+        return startswith[0:25]
+
+    @played_soundboard_grab.autocomplete("server")
+    async def played_soundboard_guild_autocomplete(
+        self, interaction: discord.Interaction, current: str
+    ) -> typing.List[Choice]:
+
+        guild_ids = self.played_soundboards.keys()
+        guilds = [self.bot.get_guild(guild_id) for guild_id in guild_ids]
+
+        mutual_guilds = set(guilds)
+        mutual_guilds2 = set(self.bot.mutual_guilds)
+        filtered_guilds = list(mutual_guilds.intersection(mutual_guilds2))
+
+        choices: list[Choice] = [Choice(name=f"{guild}", value=str(guild.id)) for guild in filtered_guilds]
         startswith: list[Choice] = [choices for choices in guilds if choices.name.startswith(current)]
 
         if not (current and startswith):
