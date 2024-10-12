@@ -344,10 +344,10 @@ class Test(commands.Cog):
     ) -> typing.List[Choice]:
 
         guild_ids = self.played_soundboards.keys
-        guilds = [bot.get_guild(guild_id) for guild_id in guild_ids]
+        guilds = [self.bot.get_guild(guild_id) for guild_id in guild_ids]
 
         mutual_guilds = set(guilds)
-        mutual_guilds2 = set(bot.mutual_guilds)
+        mutual_guilds2 = set(self.bot.mutual_guilds)
         filtered_guilds = list(mutual_guilds.intersection(mutual_guilds2))
 
         choices: list[Choice] = [Choice(name=f"{guild}", value=str(guild.id)) for guild in filtered_guilds]
@@ -371,7 +371,7 @@ class Test(commands.Cog):
         else:
             soundboard_effects = self.played_soundboards.values()
 
-        soundboards = [bot.get_soundboard_sound(effect.sound.id) for effect in soundboard_effects]
+        soundboards = [self.bot.get_soundboard_sound(effect.sound.id) for effect in soundboard_effects]
         choices: list[Choice] = [
             Choice(name=f"{profanity.censor(soundboard.name, censor_char='⚠️')}", value=str(soundboard.id))
             for soundboard in soundboards
