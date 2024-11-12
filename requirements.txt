@@ -28,27 +28,27 @@ charset-normalizer==3.4.0
 chess==1.11.1 
 click==8.1.7 
 colorama==0.4.6 
-discord-games @ git+https://github.com/Tom-the-Bomb/Discord-Games@585e0dddb24aefbcc16569a2f7db44d1d194107a 
-discord-py @ git+https://github.com/Rapptz/discord.py.git@354ae4208c860f68d0404f8b86b53af7724411ff 
+discord-games @ git+https://github.com/Tom-the-Bomb/Discord-Games@40e1a462c4acdee35e81c5942aca393c3f6aa29e 
+discord-py @ git+https://github.com/Rapptz/discord.py.git@7db879b5bd7008a28613cf107f434a18b8ea7303 
 discord-py-paginators @ git+https://github.com/Soheab/discord-py-paginators@380deed04647a9a729715d0a73e6e711b2a25c50 
-discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@354ae4208c860f68d0404f8b86b53af7724411ff 
+discord-py[speed,voice] @ git+https://github.com/Rapptz/discord.py.git@7db879b5bd7008a28613cf107f434a18b8ea7303 
 discordlists-py==1.1.1 
 emoji==2.14.0 
 english-words==2.0.1 
 filetype==1.2.0 
-frozenlist==1.4.1 
+frozenlist==1.5.0 
 github @ git+https://github.com/VarMonke/Github-Api-Wrapper@a1ef2e96f0f5df77340de69e9fe66c10410284cb 
 idna==3.10 
-import-expression==2.1.0.post1 
+import-expression==2.2.1.post1 
 jeyyapi @ git+https://github.com/JeyyGit/jeyyapi@8f5064d8a626cf2f92b399da1f4144b63d8bfd70 
-jishaku @ git+https://github.com/Gorialis/jishaku@126d2c4d7e073dcd844014fd024300b6b1c9fb38 
+jishaku @ git+https://github.com/Gorialis/jishaku@49374cf4541b4d72778fd24f1191d3f29cf5d67c 
 mathjspy==0.0.9 
 multidict==6.1.0 
 mypy-extensions==1.0.0 
 mystbin-py==7.0.2 
 oauthlib==3.2.2 
-orjson==3.10.9 
-packaging==24.1 
+orjson==3.10.11 
+packaging==24.2 
 pathspec==0.12.1 
 pillow==11.0.0 
 platformdirs==4.3.6 
@@ -64,12 +64,12 @@ requests==2.32.3
 six==1.16.0 
 somerandomapi-py==0.0.7 
 tabulate==0.9.0 
-tomli==2.0.2 
+tomli==2.1.0 
 topggpy==1.4.0 
 tweepy[async] @ git+https://github.com/tweepy/tweepy.git@91a41c6e1c955d278c370d51d5cf43b05f7cd979 
 typing-extensions==4.12.2 
 update-checker==0.18.0 
 urllib3==2.2.3 
 wand==0.6.13 
-yarl==1.15.5 
+yarl==1.17.1 
 zstandard==0.23.0 
