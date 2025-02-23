@@ -59,7 +59,7 @@ async def cdn_upload(bot, image_bytes):
     form.add_field("file", image_bytes, content_type="application/octet-stream")
     # debate about the content_type exists, but it seems to be fine, so I will leave for now.
     resp = await bot.session.post(
-        "https://cdn.jdjgbot.com/upload", data=form, headers={"Authorization": os.environ["cdn_key"]}
+        "https://cdn.jdjgbot.xyz/upload", data=form, headers={"Authorization": os.environ["cdn_key"]}
     )
     returned_data = await resp.json()
 
@@ -69,7 +69,7 @@ async def cdn_upload(bot, image_bytes):
 
     ext = kind.extension if kind else "gif"
 
-    url = f"https://cdn.jdjgbot.com/image/{returned_data.get('keys')[0]}.{ext}?opengraph_pass=true"
+    url = f"https://cdn.jdjgbot.xyz/image/{returned_data.get('keys')[0]}.{ext}?opengraph_pass=true"
     # I have to do this opengraph pass thing because the cdn is a bit weird and doesn't like it if I don't
     # because opengraph is enabled, I have to do this.
 

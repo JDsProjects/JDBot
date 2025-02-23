@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
 async def google_tts(bot: JDBot, text: str, language: Optional[str] = "en") -> discord.File:
     async with bot.session.get(
-        "https://api.jdjgbot.com/api/tts",
+        "https://api.jdjgbot.xyz/api/tts",
         params={"text": text, "language": language},
     ) as response:
         mp3_data = await response.read()
