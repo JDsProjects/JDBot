@@ -4,7 +4,7 @@ aiogifs @ git+https://github.com/moanie/aiogifs.git@730fdb7bca18842db93b71cf0c50
 aiohappyeyeballs==2.4.6 
 aiohttp==3.11.12 
 aiosignal==1.3.2 
-aiosqlite==0.17.0 
+aiosqlite==0.21.0 
 akinator-py==0.2.5 
 asuna-api==0.3.3 
 async-cse==0.3.0 
