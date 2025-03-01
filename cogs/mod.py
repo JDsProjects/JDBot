@@ -79,7 +79,7 @@ class Moderation(commands.Cog):
                 await ctx.send("No Bad users found.")
 
             else:
-                menu = utils.ScanGlobalEmbed(pag.pages, ctx=ctx, delete_after=True)
+                menu = utils.ScanGuildEmbed(pag.pages, ctx=ctx, delete_after=True)
                 await menu.send()
 
         if isinstance(ctx.channel, discord.DMChannel):
