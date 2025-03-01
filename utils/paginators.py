@@ -355,6 +355,7 @@ class ScanGlobalEmbed(Paginator):
         embed.set_footer(text=f"Sus Reason : {await get_sus_reason(self.ctx, item)}")
         return embed
 
+
 class ScanGuildEmbed(Paginator):
     async def format_page(self, item):
         embed = discord.Embed(title="Found users:", description=item, color=random.randint(0, 16777215))
