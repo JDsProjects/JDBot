@@ -67,14 +67,20 @@ class Moderation(commands.Cog):
 
             await ctx.guild.query_members(limit=100, cache=True, user_ids=ids)
 
+            pag = commands.Paginator(prefix="", suffix="")
+
             for x in sus_users:
                 user = ctx.guild.get_member(x)
                 if user:
                     count += 1
-                    await ctx.send(f"Found {x}. \nUsername: {user.name} \nReason: {sus_users[x]}")
+                    pag.add_line(f"Found {x}. \nUsername: {user} \nReason: {sus_users[x]}")
 
             if count < 1:
                 await ctx.send("No Bad users found.")
+
+            else:
+                menu = utils.ScanGlobalEmbed(pag.pages, ctx=ctx, delete_after=True)
+                await menu.send()
 
         if isinstance(ctx.channel, discord.DMChannel):
             await ctx.send("please use the global version")
@@ -84,7 +90,7 @@ class Moderation(commands.Cog):
     async def scan_global(self, ctx):
         sus_users = dict(await self.bot.db.fetch("SELECT * FROM SUS_USERS;"))
 
-        ss_users = [await self.bot.try_user(u) for u in sus_users if not None]
+        ss_users = [self.bot.get_user(u) for u in sus_users if not None]
 
         if not (ss_users):
             await ctx.send("no sus users found")
