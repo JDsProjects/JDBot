@@ -358,7 +358,7 @@ class ScanGlobalEmbed(Paginator):
 
 class ScanGuildEmbed(Paginator):
     async def format_page(self, item):
-        embed = discord.Embed(title="Found users:", description=item, color=random.randint(0, 16777215))
+        embed = discord.Embed(title="Problematic users:", description=item, color=random.randint(0, 16777215))
         return embed
 
 

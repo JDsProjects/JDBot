@@ -73,7 +73,10 @@ class Moderation(commands.Cog):
                 user = ctx.guild.get_member(x)
                 if user:
                     count += 1
-                    pag.add_line(f"Found {x}. \nUsername: {user} \nReason: {sus_users[x]}")
+                    text = f"Found {x}. \nUsername: {user} \nReason: {sus_users[x]}"
+                    pag.add_line(text)
+                    pag.add_line(len(text) * "-")
+
 
             if count < 1:
                 await ctx.send("No Bad users found.")
