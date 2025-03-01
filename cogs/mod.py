@@ -79,6 +79,7 @@ class Moderation(commands.Cog):
                 await ctx.send("No Bad users found.")
 
             else:
+                print(pag.pages)
                 menu = utils.ScanGuildEmbed(pag.pages, ctx=ctx, delete_after=True)
                 await menu.send()
 
