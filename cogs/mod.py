@@ -92,6 +92,8 @@ class Moderation(commands.Cog):
 
         ss_users = [self.bot.get_user(u) for u in sus_users if not None]
 
+        ss_users = list(filter(lambda user: user is not None, ss_users))
+
         if not (ss_users):
             await ctx.send("no sus users found")
 
