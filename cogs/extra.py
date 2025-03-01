@@ -436,7 +436,7 @@ class Extra(commands.Cog):
     async def edit_that(self, ctx):
         message = await ctx.send("Hello guys I am going to be edited")
         await asyncio.sleep(2)
-        await message.edit(content="hello guys I am going to be edited \u202B  Heck yeah")
+        await message.edit(content="hello guys I am going to be edited \u202b  Heck yeah")
 
     @commands.cooldown(1, 30, BucketType.user)
     @commands.command(

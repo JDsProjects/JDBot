@@ -1,4 +1,4 @@
-""" CREDITS: https://github.com/jay3332/pilmoji"""
+"""CREDITS: https://github.com/jay3332/pilmoji"""
 
 from __future__ import annotations
 
