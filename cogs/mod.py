@@ -77,7 +77,6 @@ class Moderation(commands.Cog):
                     pag.add_line(text)
                     pag.add_line(len(text) * "-")
 
-
             if count < 1:
                 await ctx.send("No Bad users found.")
 
