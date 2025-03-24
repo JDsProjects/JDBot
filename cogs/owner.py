@@ -189,28 +189,40 @@ class Owner(commands.Cog):
 
     @commands.command(brief="A command to add sus_users with a reason")
     async def addsus(self, ctx, *, user: utils.SuperConverter = None):
-        if user is None:
-            await ctx.send("can't have a user be none.")
+        if not user:
+            return await ctx.send("Can not add an invalid user.")
 
-        if user:
-            await ctx.reply("Please give me a reason why:")
-            reason = await self.bot.wait_for("message", check=utils.check(ctx))
-            # make it use modals when modals release.
+        if await self.bot.is_owner(user):
+            return await ctx.send(f"You can not put {user} as they are an owner.")
 
-            await self.bot.db.execute("INSERT INTO sus_users VALUES ($1, $2)", user.id, reason.content)
-            self.bot.sus_users[user.id] = reason.content
-            await ctx.send("added sus users, succesfully")
+        row = await self.bot.db.fetchrow("SELECT * FROM sus_users WHERE user_id = $1", user.id)
+
+        if row:
+            return await ctx.send(f"{user} was already added into sus_users.")
+
+        await ctx.reply("Please give me a reason why:")
+        reason = await self.bot.wait_for("message", check=utils.check(ctx))
+        # make it use modals when modals release.
+        # definetly update this soon.
+
+        await self.bot.db.execute("INSERT INTO sus_users VALUES ($1, $2)", user.id, reason.content)
+        self.bot.sus_users[user.id] = reason.content
+        await ctx.send(f"added {user} into the sus users, succesfully")
 
     @commands.command(brief="a command to remove sus users.")
     async def removesus(self, ctx, *, user: utils.SuperConverter = None):
-        if user is None:
-            await ctx.send("You can't have a none user.")
+        if not user:
+            return await ctx.send("You can't remove an invalid user.")
 
-        if user:
-            await self.bot.db.execute("DELETE FROM sus_users WHERE user_id = $1", user.id)
-            if user.id in self.bot.sus_users:
-                del self.bot.sus_users[user.id]
-            await ctx.send("Removed sus users.")
+        row = await self.bot.db.fetchrow("SELECT * FROM sus_users WHERE user_id = $1", user.id)
+
+        if not row:
+            return await ctx.send("No need to remove the user id as it is not in my suspicious users list")
+
+        await self.bot.db.execute("DELETE FROM sus_users WHERE user_id = $1", user.id)
+        if user.id in self.bot.sus_users:
+            del self.bot.sus_users[user.id]
+        await ctx.send("Removed sus users.")
 
     @commands.command(brief="a command to grab all in the sus_users list")
     async def sus_users(self, ctx):
